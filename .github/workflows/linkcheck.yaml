@@ -10,6 +10,13 @@
 
 name: Link Check
 
+env:
+  # Current supported Python version. For applications, there is generally no
+  # reason to support multiple Python versions, so all actions are run with
+  # this version. Quote the version to avoid interpretation as a floating
+  # point number.
+  PYTHON_VERSION: "3.13"
+
 "on":
   push:
     branches-ignore:
@@ -48,7 +55,7 @@ jobs:
       - name: Check links
         uses: lsst-sqre/run-tox@v1
         with:
-          python-version: "3.12"
+          python-version: ${{ env.PYTHON_VERSION }}
           tox-envs: docs-linkcheck
           tox-requirements: requirements/tox.txt
           cache-key-prefix: docs-linkcheck

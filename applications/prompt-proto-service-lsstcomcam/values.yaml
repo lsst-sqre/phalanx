@@ -4,13 +4,16 @@ prompt-proto-service:
   # @default -- See the `values.yaml` file.
   podAnnotations:
     autoscaling.knative.dev/min-scale: "3"
-    autoscaling.knative.dev/max-scale: "30"
+    # Expect to need roughly n_detector × request_latency / survey_cadence pods
+    # For a 30 s ComCam survey with 500 s latency, this is 150
+    # Add some buffer for fast twilight survey
+    autoscaling.knative.dev/max-scale: "200"
     autoscaling.knative.dev/target-utilization-percentage: "60"
     autoscaling.knative.dev/target-burst-capacity: "-1"
-    queue.sidecar.serving.knative.dev/cpu-resource-request: "1"
-    queue.sidecar.serving.knative.dev/cpu-resource-limit: "2"
-    queue.sidecar.serving.knative.dev/memory-resource-request: "1Gi"
-    queue.sidecar.serving.knative.dev/memory-resource-limit: "2Gi"
+    queue.sidecar.serving.knative.dev/cpu-resource-request: "25m"
+    queue.sidecar.serving.knative.dev/cpu-resource-limit: "1000m"
+    queue.sidecar.serving.knative.dev/memory-resource-request: "400Mi"
+    queue.sidecar.serving.knative.dev/memory-resource-limit: "800Mi"
     queue.sidecar.serving.knative.dev/ephemeral-storage-resource-request: "400Mi"
     queue.sidecar.serving.knative.dev/ephemeral-storage-resource-limit: "450Mi"
     # Update this field if using latest or static image tag in dev
@@ -36,17 +39,24 @@ prompt-proto-service:
 
   instrument:
     # -- The "short" name of the instrument
-    name: ""
+    name: LSSTComCam
     pipelines:
-      # -- Machine-readable string describing which pipeline(s) should be run for which visits.
-      # Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
+      # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
+      # if the result (including any comments) is longer than 72 characters.
+      # The config will get corrupted after template substitution.
+      # Block-style mappings can have lines of any length.
+
+      # -- YAML-formatted config describing which pipeline(s) should be run for which visits' raws.
+      # Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
       # @default -- None, must be set
       main: ""
-      # -- Machine-readable string describing which pipeline(s) should be run before which visits' raw arrival.
+      # -- YAML-formatted config describing which pipeline(s) should be run before which visits' raw arrival.
       # @default -- None, must be set
       preprocessing: ""
     # -- Skymap to use with the instrument
-    skymap: ""
+    skymap: "lsst_cells_v1"
+    # -- Number of arcseconds to pad the spatial region in preloading.
+    preloadPadding: 50
     # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
@@ -57,9 +67,9 @@ prompt-proto-service:
     # The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache.
     baseSize: 3
     # -- A factor by which to multiply `baseSize` for refcat datasets.
-    refcatsPerImage: 4
+    refcatsPerImage: 6
     # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
-    patchesPerImage: 4
+    patchesPerImage: 16
 
   s3:
     # -- Bucket containing the incoming raw images
@@ -72,10 +82,8 @@ prompt-proto-service:
     auth_env: true
     # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
     disableBucketValidation: 0
-
-  # -- The URI to a microservice that maps image metadata to a file location.
-  # If empty, Prompt Processing does not use a microservice.
-  raw_microservice: ""
+    # -- If set, configure S3 checksum options.
+    checksum: WHEN_REQUIRED
 
   imageNotifications:
     # -- Hostname and port of the Kafka provider
@@ -84,6 +92,8 @@ prompt-proto-service:
     # -- Topic where raw image arrival notifications appear
     # @default -- None, must be set
     topic: ""
+    # -- Kafka consumer offset reset setting for image arrival notifications
+    consumerOffsetReset: "latest"
     # -- Timeout to wait after expected script completion for raw image arrival (seconds).
     imageTimeout: 20
 
@@ -97,9 +107,8 @@ prompt-proto-service:
     # -- Username for sending alerts to the alert stream
     username: "kafka-admin"
     # -- Server address for the alert stream
-    server: "usdf-alert-stream-dev-broker-0.lsst.cloud:9094"
+    server: "usdf-alert-stream-dev.lsst.cloud:9094"
     # -- Topic name where alerts will be sent
-    # @default -- None, must be set
     topic: ""
 
   registry:
@@ -108,7 +117,7 @@ prompt-proto-service:
 
   # -- Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level).
   # @default -- log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING.
-  logLevel: ""
+  logLevel: "timer.lsst.activator=DEBUG"
 
   sasquatch:
     # -- Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload.
@@ -128,10 +137,10 @@ prompt-proto-service:
     cpuLimit: 1
     # -- The storage space reserved for each container (mostly local Butler).
     # This allocation is for the full pod (see `containerConcurrency`)
-    ephemeralStorageRequest: "5Gi"
+    ephemeralStorageRequest: "8Gi"
     # -- The maximum storage space allowed for each container (mostly local Butler).
     # This allocation is for the full pod (see `containerConcurrency`)
-    ephemeralStorageLimit: "5Gi"
+    ephemeralStorageLimit: "8Gi"
     # -- GPUs enabled.
     gpu: false
     # -- The number of GPUs to request for the full pod (see `containerConcurrency`).
@@ -140,17 +149,14 @@ prompt-proto-service:
     memoryRequest: "2Gi"
     # -- The maximum memory limit for the full pod (see `containerConcurrency`).
     memoryLimit: "8Gi"
-    # -- To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`.
-    # This parameter adds extra time to that minimum (seconds).
-    extraTimeout: 10
     # -- Maximum time that a container can send nothing to Knative (seconds).
     # This is only useful if the container runs async workers.
     # If 0, idle timeout is ignored.
-    idleTimeout: 0
+    idleTimeout: 900
     # -- Maximum time that a container can send nothing to Knative after initial submission (seconds).
     # This is only useful if the container runs async workers.
     # If 0, idle timeout is ignored.
-    responseStartTimeout: 0
+    responseStartTimeout: 900
 
   # -- The number of Knative requests that can be handled simultaneously by one container
   containerConcurrency: 1

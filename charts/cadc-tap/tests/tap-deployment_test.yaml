@@ -70,13 +70,13 @@ tests:
         name: "ssotap"
     asserts:
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Duws.username=mydb"
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Duws.url=jdbc:postgresql://localhost:5432/mydb"
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Duws.password="
       - equal:
           path: spec.template.spec.serviceAccountName
@@ -105,13 +105,13 @@ tests:
             pullPolicy: "IfNotPresent"
     asserts:
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Duws.username=mydb"
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Duws.url=jdbc:postgresql://localhost:5432/mydb"
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Duws.password="
       - equal:
           path: spec.template.spec.serviceAccountName
@@ -131,7 +131,7 @@ tests:
           path: spec.template.spec.containers[0].env[0].value
           pattern: "-Duws.url=jdbc:postgresql://cadc-tap-uws-db/"
 
-  - it: should create two containers if cloudsql is enabled
+  - it: should create an init containers if cloudsql is enabled
     set:
       global:
         host: "example.com"
@@ -154,8 +154,8 @@ tests:
             pullPolicy: "IfNotPresent"
     asserts:
       - lengthEqual:
-          path: spec.template.spec.containers
-          count: 2
+          path: spec.template.spec.initContainers
+          count: 1
 
   - it: should setup TAP_SCHEMA database configuration
     set:
@@ -199,31 +199,31 @@ tests:
         gcsBucketType: "S3"
     asserts:
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Duws.username=mydb"
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Duws.url=jdbc:postgresql://localhost:5432/mydb"
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Duws.password="
       - equal:
           path: spec.template.spec.serviceAccountName
           value: "sa"
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Dqservuser.username=qsmaster"
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Dqservuser.url=jdbc:mysql://qserv:30040/"
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Dgcs_bucket=async-results.lsst.codes"
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Dgcs_bucket_url=https://async-results.codes:8080"
       - matchRegex:
-          path: spec.template.spec.containers[1].env[0].value
+          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Dgcs_bucket_type=S3"
 
   - it: Test that deployment build fails when cloudsql is enabled but no instanceConnectionName
@@ -231,6 +231,7 @@ tests:
       cloudsql:
         enabled: true
         serviceAccount: "sa@xyz"
+        database: "mydb"
       global:
         host: "example.com"
     asserts:

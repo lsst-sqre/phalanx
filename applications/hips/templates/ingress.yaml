@@ -9,6 +9,7 @@ config:
   scopes:
     all:
       - "read:image"
+  service: "hips"
 template:
   metadata:
     name: "hips"

@@ -364,7 +364,7 @@ data:
 
     antiEntropy:
       # -- Enable the anti-entropy service, which copies and repairs shards
-      enabled: true
+      enabled: false
 
     http:
       # -- Whether to enable the Flux query endpoint

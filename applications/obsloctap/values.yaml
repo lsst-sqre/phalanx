@@ -27,7 +27,7 @@ config:
   persistentVolumeClaims: []
 
   # -- Whether to use the new secrets management scheme
-  separateSecrets: false
+  separateSecrets: true
 
   # -- limit for obsplan query
   obsplanLimit: 1000

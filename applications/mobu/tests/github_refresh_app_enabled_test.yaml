@@ -2,14 +2,14 @@ suite: Github Refresh App Integration Enabled
 set:
   config:
     githubRefreshApp:
-      accepted_github_orgs:
+      acceptedGithubOrgs:
         - "org1"
         - "org2"
   global:
     host: "example.com"
 tests:
   - it: "Should create an anonymous ingress"
-    template: "ingress-github-refresh-app.yaml"
+    template: "ingress-github-refresh.yaml"
     asserts:
       - containsDocument:
           kind: "GafaelfawrIngress"
@@ -25,21 +25,34 @@ tests:
           path: "spec.template.spec.containers[0].env"
           any: true
           content:
-            name: "MOBU_GITHUB_REFRESH_APP_CONFIG_PATH"
-      - contains:
-          path: "spec.template.spec.containers[0].env"
-          any: true
-          content:
             name: "MOBU_GITHUB_REFRESH_APP_WEBHOOK_SECRET"
   - it: "Should create a ConfigMap"
-    template: "configmap-github-refresh-app.yaml"
+    template: "configmap.yaml"
     asserts:
       - containsDocument:
           kind: "ConfigMap"
           apiVersion: v1
       - equal:
-          path: "data['github-refresh-app.yaml']"
+          path: "data['config.yaml']"
           value: |
-            accepted_github_orgs:
-            - org1
-            - org2
+            autostart: []
+            availableServices: []
+            githubCiApp: null
+            githubRefreshApp:
+              acceptedGithubOrgs:
+              - org1
+              - org2
+            logLevel: INFO
+            metrics:
+              application: mobu
+              enabled: false
+              events:
+                topicPrefix: lsst.square.metrics.events
+              schemaManager:
+                registryUrl: http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081
+                suffix: ""
+            pathPrefix: /mobu
+            profile: production
+            sentryEnvironment: null
+            sentryTracesSampleConfig: 0
+            slackAlerts: true

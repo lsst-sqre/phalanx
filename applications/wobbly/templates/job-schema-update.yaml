@@ -1,0 +1,115 @@
+{{- if .Values.config.updateSchema -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "wobbly-schema-update"
+  annotations:
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "hook-succeeded"
+    helm.sh/hook-weight: "1"
+  labels:
+    {{- include "wobbly.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "wobbly.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "schema-update"
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.cloudsql.enabled }}
+      serviceAccountName: "wobbly"
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        - name: "wobbly"
+          command:
+            - "wobbly"
+            - "update-schema"
+          env:
+            - name: "WOBBLY_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "wobbly"
+                  key: "database-password"
+            {{- if .Values.config.metrics.enabled }}
+            - name: "KAFKA_BOOTSTRAP_SERVERS"
+              valueFrom:
+                secretKeyRef:
+                  name: "wobbly-kafka"
+                  key: "bootstrapServers"
+            - name: "KAFKA_CLIENT_CERT_PATH"
+              value: "/etc/wobbly-kafka/user.crt"
+            - name: "KAFKA_CLIENT_KEY_PATH"
+              value: "/etc/wobbly-kafka/user.key"
+            - name: "KAFKA_CLUSTER_CA_PATH"
+              value: "/etc/wobbly-kafka/ca.crt"
+            - name: "KAFKA_SECURITY_PROTOCOL"
+              valueFrom:
+                secretKeyRef:
+                  name: "wobbly-kafka"
+                  key: "securityProtocol"
+            {{- end }}
+          envFrom:
+            - configMapRef:
+                name: "wobbly"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            {{- if .Values.config.metrics.enabled }}
+            - name: "kafka"
+              mountPath: "/etc/wobbly-kafka/ca.crt"
+              readOnly: true
+              subPath: "ssl.truststore.crt"
+            - name: "kafka"
+              mountPath: "/etc/wobbly-kafka/user.crt"
+              readOnly: true
+              subPath: "ssl.keystore.crt"
+            - name: "kafka"
+              mountPath: "/etc/wobbly-kafka/user.key"
+              readOnly: true
+              subPath: "ssl.keystore.key"
+            {{- end }}
+      {{- if .Values.cloudsql.enabled }}
+      initContainers:
+        {{- include "wobbly.cloudsqlSidecar" . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: "Never"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        {{- if .Values.config.metrics.enabled }}
+        - name: "kafka"
+          secret:
+            secretName: "wobbly-kafka"
+        {{- end }}
+{{- end }}

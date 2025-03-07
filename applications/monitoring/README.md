@@ -43,6 +43,7 @@ Monitoring suite: InfluxDB2, Chronograf, telegraf
 | influxdb2.ingress | object | disabled, must be enabled and configured at each site | InfluxDB2 ingress configuration. |
 | influxdb2.livenessProbe.failureThreshold | int | `10` | Number of checks to conclude whether InfluxDB has died |
 | influxdb2.livenessProbe.periodSeconds | int | `10` | Period between checks for whether InfluxDB is still alive |
+| influxdb2.pdb | object | disabled; nonsensical for single replica | InfluxDB2 pod disruption budget. |
 | influxdb2.resources | object | See `values.yaml` | Resource limits and requests for the InfluxDB server instance |
 | influxdb2.startupProbe.enabled | bool | `true` | Whether to enable a startup probe |
 | influxdb2.startupProbe.failureThreshold | int | `60` | Number of checks to conclude whether InfluxDB won't start.  High to allow up to 10 minutes for startup, because checking many shards can be slow. |

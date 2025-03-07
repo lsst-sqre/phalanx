@@ -1,0 +1,33 @@
+image:
+  tag: rust_0.1.5
+  pullPolicy: Always
+  # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled
+  nexus3: nexus3-docker
+initialDelaySeconds: 5
+timeoutSeconds: 120
+periodSeconds: 600
+vaultPrefixPath: secret/k8s_operator/summit-lsp.lsst.codes
+pullSecretsPath: pull-secret
+credentialSecretsPath: rolex2
+imagePullSecrets:
+- name: rolex2-pull-secret
+metadata:
+  name: rolex2
+  namespace: rolex2
+  labels:
+    app.kubernetes.io/name: rolex2
+service:
+  port: 3000
+  path: /
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: '1800'
+    nginx.ingress.kubernetes.io/proxy-send-timeout: '1800'
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '1800'
+  hosts:
+  - host: summit-lsp.lsst.codes
+    paths:
+    - path: /rolex2
+      pathType: Prefix

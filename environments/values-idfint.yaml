@@ -3,6 +3,7 @@ fqdn: "data-int.lsst.cloud"
 appOfAppsName: "science-platform"
 butlerServerRepositories:
   dp02: "https://data-int.lsst.cloud/api/butler/repo/dp02/butler.yaml"
+  dp1: "https://data-int.lsst.cloud/api/butler/repo/dp1/butler.yaml"
 gcp:
   projectId: "science-platform-int-dc5d"
   region: "us-central1"
@@ -19,11 +20,11 @@ applications:
   ghostwriter: true
   hips: true
   mobu: true
+  noteburst: true
   nublado: true
-  plot-navigator: true
   portal: true
   sasquatch: true
-  siav2: false
+  sia: true
   ssotap: true
   production-tools: true
   sasquatch-backpack: true
@@ -31,8 +32,10 @@ applications:
   sqlproxy-cross-project: true
   squareone: true
   strimzi: true
+  strimzi-access-operator: true
   tap: true
   telegraf: true
   telegraf-ds: true
   times-square: true
   vo-cutouts: true
+  wobbly: true

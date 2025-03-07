@@ -1,0 +1,14 @@
+fqdn: "usdf-rapid-analysis.slac.stanford.edu"
+name: "usdf-rapid-analysis"
+appOfAppsName: "science-platform"
+vaultUrl: "https://vault.slac.stanford.edu"
+vaultPathPrefix: "secret/rubin/usdf-rapid-analysis"
+
+applications:
+  # This environment uses an ingress managed in a separate Kubernetes cluster,
+  # despite that configuration not being officially supported by Phalanx.
+  cert-manager: false
+  ingress-nginx: false
+  gafaelfawr: true
+
+  postgres: true

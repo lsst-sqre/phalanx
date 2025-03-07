@@ -1,0 +1,13 @@
+config:
+  profiles:
+    - name: embargo
+      url: "https://sdfembs3.sdf.slac.stanford.edu/"
+  s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu/"
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 1Gi
+  requests:
+    cpu: 200m
+    memory: 100Mi

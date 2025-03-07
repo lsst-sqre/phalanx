@@ -19,7 +19,7 @@ Git-LFS server with GCS S3 backend, with Rubin-specific auth
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the giftless image |
-| image.repository | string | `"docker.io/datopian/giftless"` | Giftless image to use |
+| image.repository | string | `"ghcr.io/datopian/giftless"` | Giftless image to use |
 | image.tag | string | The appVersion of the chart | Tag of giftless image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | ingress.hostname | object | Must be overridden in environment-specific values file | FQDNs of giftless ingresses |
@@ -30,12 +30,14 @@ Git-LFS server with GCS S3 backend, with Rubin-specific auth
 | podAnnotations | object | `{}` | Annotations for the giftless frontend pod |
 | resources | object | See `values.yaml` | Resource limits and requests for the giftless frontend pod |
 | server.debug | bool | `false` | Turn on debugging mode |
-| server.readonly | object | `{"processes":2,"replicas":1,"threads":2}` | Values for readonly server |
-| server.readonly.processes | int | `2` | Number of processes for readonly server |
+| server.readonly.processes | int | `4` | Number of processes for readonly server |
+| server.readonly.queue | int | `1024` | Socket listen queue depth |
 | server.readonly.replicas | int | `1` | Number of replicas for readonly server |
 | server.readonly.threads | int | `2` | Number of threads per readonly process |
-| server.readwrite | object | `{"processes":2,"replicas":1,"threads":2}` | Values for readwrite server |
-| server.readwrite.processes | int | `2` | Number of processes for readwrite server |
+| server.readonly.timeout | int | `86400` | Kill stuck worker after this many seconds |
+| server.readwrite.processes | int | `4` | Number of processes for readwrite server |
+| server.readwrite.queue | int | `1024` | Socket listen queue depth |
 | server.readwrite.replicas | int | `1` | Number of replicas for readwrite server |
 | server.readwrite.threads | int | `2` | Number of threads per readwrite process |
+| server.readwrite.timeout | int | `86400` | Kill stuck worker after this many seconds |
 | tolerations | list | `[]` | Tolerations for the giftless frontend pod |

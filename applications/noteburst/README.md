@@ -19,6 +19,11 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | config.hubPathPrefix | string | `"/nb"` | URL path prefix for the JupyterHub service |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
+| config.metrics.application | string | `"noteburst"` | Name under which to log metrics. Generally there is no reason to change this. |
+| config.metrics.enabled | bool | `false` | Whether to enable sending metrics |
+| config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
+| config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
+| config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.nubladoControllerPathPrefix | string | `"/nublado"` | URL path prefix for the Nublado JupyterLab Controller service |
 | config.worker.identities | list | `[]` | Science Platform user identities that workers can acquire. Each item is an object with username and uuid keys |
 | config.worker.imageReference | string | `""` | Nublado image reference, applicable when imageSelector is "reference" |

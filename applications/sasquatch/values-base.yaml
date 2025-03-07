@@ -35,7 +35,7 @@ strimzi-kafka:
       tls:
         enabled: true
       bootstrap:
-        loadBalancerIP: "139.229.153.65"
+        loadBalancerIP: "139.229.151.176"
         host: sasquatch-base-kafka-bootstrap.lsst.codes
       brokers:
         - broker: 6
@@ -49,11 +49,11 @@ strimzi-kafka:
           host: sasquatch-base-kafka-2.lsst.codes
     resources:
       requests:
-        memory: 48Gi
-        cpu: 4
+        memory: 128Gi
+        cpu: 32
       limits:
-        memory: 48Gi
-        cpu: 4
+        memory: 128Gi
+        cpu: 32
     metricsConfig:
       enabled: true
   kafkaExporter:
@@ -61,11 +61,11 @@ strimzi-kafka:
     enableSaramaLogging: true
     resources:
       requests:
-        cpu: 200m
-        memory: 64Mi
-      limits:
         cpu: 500m
-        memory: 128Mi
+        memory: 512Mi
+      limits:
+        cpu: 1500m
+        memory: 1Gi
   kraft:
     enabled: true
   kafkaController:
@@ -82,6 +82,9 @@ strimzi-kafka:
       enabled: true
     tsSalKafka:
       enabled: true
+      topics:
+        - lsst.s3.raw.latiss
+        - lsst.s3.raw.lsstcam
     kafdrop:
       enabled: true
     telegraf:
@@ -119,17 +122,33 @@ strimzi-kafka:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: local-storage
+                - key: kafka-broker
                   operator: In
                   values:
                     - "true"
+    tolerations:
+      - key: "kafka-broker"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
 
 influxdb:
+  ingress:
+    enabled: false
+    hostname: base-lsp.lsst.codes
   persistence:
     storageClass: rook-ceph-block
-  ingress:
-    enabled: true
-    hostname: base-lsp.lsst.codes
+  resources:
+    requests:
+      memory: 64Gi
+      cpu: 8
+    limits:
+      memory: 64Gi
+      cpu: 8
+
+customInfluxDBIngress:
+  enabled: true
+  hostname: base-lsp.lsst.codes
 
 telegraf-kafka-consumer:
   enabled: true
@@ -138,7 +157,7 @@ telegraf-kafka-consumer:
       enabled: true
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.ATAOS", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
+        [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
       debug: true
     maintel:
       enabled: true
@@ -152,11 +171,11 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
       debug: true
-    eas:
+    envsys:
       enabled: true
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.DIMM", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+        [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
       debug: true
     latiss:
       enabled: true
@@ -166,6 +185,7 @@ telegraf-kafka-consumer:
       debug: true
     m1m3:
       enabled: true
+      metric_batch_size: 2500
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTM1M3" ]
@@ -214,9 +234,24 @@ telegraf-kafka-consumer:
       debug: true
     lsstcam:
       enabled: true
+      metric_batch_size: 250
+      max_undelivered_messages: 5000
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
+      debug: true
+    calsys:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
+      debug: true
+    mtvms:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTVMS" ]
       debug: true
     obsenv:
       enabled: true
@@ -226,9 +261,15 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.obsenv" ]
       debug: true
+  resources:
+    limits:
+      cpu: "2"
+      memory: "8Gi"
+    requests:
+      cpu: "2"
+      memory: "8Gi"
 
 kafdrop:
-  cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
   ingress:
     enabled: true
     hostname: base-lsp.lsst.codes
@@ -242,10 +283,9 @@ rest-proxy:
     "access.control.allow.origin": https://base-lsp.lsst.codes/love
   kafka:
     topics:
-      - test.next-visit
+      - lsst.obsenv.action
+      - lsst.obsenv.summary
     topicPrefixes:
-      - test
-      - lsst.dm
       - lsst.obsenv
 
 chronograf:
@@ -269,3 +309,16 @@ chronograf:
 kapacitor:
   persistence:
     storageClass: rook-ceph-block
+
+backup:
+  enabled: true
+  persistence:
+    size: 100Gi
+    storageClass: rook-ceph-block
+  backupItems:
+    - name: chronograf
+      enabled: true
+      retentionDays: 7
+    - name: kapacitor
+      enabled: true
+      retentionDays: 7

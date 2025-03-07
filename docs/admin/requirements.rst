@@ -49,7 +49,10 @@ This setup is also required to install or maintain a Phalanx environment.
 For installing an environment, you will also need the following tools:
 
 - Argo CD's command-line tool.
-  It may be necessary to update this regularly to match the version of Argo CD that Phalanx, since Argo CD tends to break backward compatibility for its command-line API.
+  See the `Argo CD installation instructions <https://argo-cd.readthedocs.io/en/stable/cli_installation/>`__ for download details.
+
+  It is often necessary to update this tool to match the version of Argo CD that Phalanx is using
+  Argo CD tends to break backward compatibility for its command-line API.
   To see the version of the client that is currently tested, search for ``argocd-linux`` in `.github/workflows/ci.yaml <https://github.com/lsst-sqre/phalanx/blob/main/.github/workflows/ci.yaml>`__.
 
   .. warning::
@@ -58,6 +61,8 @@ For installing an environment, you will also need the following tools:
      All Argo CD applications should be managed through Phalanx and the ``science-platform`` app of apps.
 
 - The Vault command-line client.
+  See the `Vault installation instructions <https://developer.hashicorp.com/vault/install>`__ for download details.
+
   Any recent version of the client should work.
   To see the version currently used for testing, search for ``vault_`` in `.github/workflows/ci.yaml <https://github.com/lsst-sqre/phalanx/blob/main/.github/workflows/ci.yaml>`__.
 

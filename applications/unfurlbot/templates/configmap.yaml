@@ -16,3 +16,6 @@ data:
   UNFURLBOT_JIRA_PROJECTS: {{ .Values.config.jiraProjects | quote }}
   UNFURLBOT_REDIS_URL: {{ .Values.config.redisUrl | quote }}
   UNFURLBOT_JIRA_ROOT_URL: {{ .Values.config.jiraUrl | quote }}
+  UNFURLBOT_JIRA_TIMEOUT: {{ .Values.config.jiraTimeout | quote }}
+  UNFURLBOT_SLACK_TRIGGER_MESSAGE_TTL: {{ .Values.config.slackTriggerMessageTtl | quote }}
+  UNFURLBOT_SLACK_DEBOUNCE_TIME: {{ .Values.config.slackDebounceTime | quote }}

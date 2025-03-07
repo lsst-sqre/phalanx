@@ -15,9 +15,10 @@ spec:
       {{- include "rapid-analysis.selectorLabels" $ | nindent 6 }}
   template:
     metadata:
-      {{- with $.Values.podAnnotations }}
+      {{- if or $.Values.podAnnotations $script.podAnnotations }}
+      {{- $podAnnotations := $script.podAnnotations | default $.Values.podAnnotations }}
       annotations:
-        {{- toYaml $ | nindent 8 }}
+        {{- toYaml $podAnnotations | nindent 8 }}
       {{- end }}
       labels:
         {{- include "rapid-analysis.selectorLabels" $ | nindent 8 }}
@@ -90,22 +91,27 @@ spec:
               readOnly: true
           {{- if $.Values.nfsMountpoint }}
           {{- range $values := $.Values.nfsMountpoint }}
+          {{- if (has $values.name $script.mounts) }}
             - name: {{ $values.name }}
               mountPath: {{ $values.containerPath }}
               readOnly: {{ $values.readOnly }}
           {{- end }}
           {{- end }}
+          {{- end }}
           {{- if $.Values.pvcMountpoint }}
           {{- range $values := $.Values.pvcMountpoint }}
+          {{- if (has $values.name $script.mounts) }}
             - name: {{ $values.name }}
               mountPath: {{ $values.containerPath }}
               {{- if ($values.subPath) }}
               subPath: {{ $values.subPath }}
               {{- end }}
+          {{- end }}
           {{- end }}
           {{- end }}
           {{- if $.Values.pvcMountpointClaim }}
           {{- range $values := $.Values.pvcMountpointClaim }}
+          {{- if (has $values.name $script.mounts) }}
             - name: {{ $values.name }}
               mountPath: {{ $values.containerPath }}
               {{- if ($values.subPath) }}
@@ -113,23 +119,19 @@ spec:
               {{- end }}
           {{- end }}
           {{- end }}
+          {{- end }}
           {{- if $.Values.butlerSecret }}
-            - name: {{ $.Release.Name }}-butler-secret
+            - name: butler-secret
               mountPath: {{ $.Values.butlerSecret.containerPath }}
           {{- end }}
           {{- if or $.Values.resources $script.resources }}
-          {{- $resources := "" }}
-          {{- if $script.resources }}
-          {{- $resources = $script.resources }}
-          {{- else }}
-          {{- $resources = $.Values.resources }}
-          {{- end }}
+          {{- $resources := $script.resources | default $.Values.resources }}
           resources:
             {{- toYaml $resources | nindent 12 }}
           {{- end }}
       {{- if $.Values.butlerSecret }}
       initContainers:
-        - name: {{ $.Release.Name }}-butler-secret-perm-fixer
+        - name: butler-secret-perm-fixer
           image: "alpine:latest"
           command:
             - "/bin/ash"
@@ -144,10 +146,10 @@ spec:
               chown 73006:73006 /secrets/*
               chmod 0600 /secrets/*
           volumeMounts:
-            - name: {{ $.Release.Name }}-raw-butler-secret
+            - name: raw-butler-secret
               mountPath: /secrets-raw
               readOnly: true
-            - name: {{ $.Release.Name }}-butler-secret
+            - name: butler-secret
               mountPath: /secrets
             - name: rubintv-aws-creds
               mountPath: /secrets-rubintv
@@ -162,6 +164,7 @@ spec:
             secretName: rubintv-secrets
       {{- if $.Values.nfsMountpoint }}
       {{- range $values := $.Values.nfsMountpoint }}
+      {{- if (has $values.name $script.mounts) }}
         - name: {{ $values.name }}
           nfs:
             path: {{ $values.serverPath }}
@@ -169,55 +172,45 @@ spec:
             server: {{ $values.server }}
       {{- end }}
       {{- end }}
+      {{- end }}
       {{- if $.Values.pvcMountpoint }}
       {{- range $values := $.Values.pvcMountpoint }}
+      {{- if (has $values.name $script.mounts) }}
         - name: {{ $values.name }}
           persistentVolumeClaim:
             claimName: {{ $values.name }}
+      {{- end }}
       {{- end }}
       {{- end }}
       {{- if $.Values.pvcMountpointClaim }}
       {{- range $values := $.Values.pvcMountpointClaim }}
+      {{- if (has $values.name $script.mounts) }}
         - name: {{ $values.name }}
           persistentVolumeClaim:
             claimName: {{ $values.name }}
       {{- end }}
       {{- end }}
+      {{- end }}
       {{- if $.Values.butlerSecret }}
-        - name: {{ $.Release.Name }}-butler-secret
+        - name: butler-secret
           emptyDir: {}
-        - name: {{ $.Release.Name }}-raw-butler-secret
+        - name: raw-butler-secret
           secret:
             secretName: butler-secret
             defaultMode: 0600
       {{- end }}
       {{- if or $.Values.nodeSelector $script.nodeSelector }}
-      {{- $nodeSelector := "" }}
-      {{- if $script.nodeSelector }}
-      {{- $nodeSelector = $script.nodeSelector }}
-      {{- else }}
-      {{- $nodeSelector = $.Values.nodeSelector }}
-      {{- end }}
+      {{- $nodeSelector := $script.nodeSelector | default $.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml $nodeSelector | nindent 8 }}
       {{- end }}
       {{- if or $.Values.affinity $script.affinity }}
-      {{- $affinity := "" }}
-      {{- if $script.affinity }}
-      {{- $affinity = $script.affinity }}
-      {{- else }}
-      {{- $affinity = $.Values.affinity }}
-      {{- end }}
+      {{- $affinity := $script.affinity | default $.Values.affinity }}
       affinity:
         {{- toYaml $affinity | nindent 8 }}
       {{- end }}
       {{- if or $.Values.tolerations $script.tolerations }}
-      {{- $tolerations := "" }}
-      {{- if $script.tolerations }}
-      {{- $tolerations = $script.tolerations }}
-      {{- else }}
-      {{- $tolerations = $.Values.tolerations }}
-      {{- end }}
+      {{- $tolerations := $script.tolerations | default $.Values.tolerations }}
       tolerations:
         {{- toYaml $tolerations | nindent 8 }}
       {{- end }}

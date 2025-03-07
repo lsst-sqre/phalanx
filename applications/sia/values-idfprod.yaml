@@ -1,0 +1,10 @@
+config:
+
+  # Data (Butler) Collections
+  butlerDataCollections:
+    - config: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp02.yaml"
+      label: "LSST.DP02"
+      name: "dp02"
+      butler_type: "REMOTE"
+      repository: "https://data.lsst.cloud/api/butler/repo/dp02/butler.yaml"
+      datalink_url: "https://data.lsst.cloud/api/datalink/links?ID=butler%3A//dp02/{id}"

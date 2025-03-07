@@ -1,0 +1,44 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ template "sia.fullname" . }}-anonymous
+  labels:
+    {{- include "sia.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    anonymous: true
+template:
+  metadata:
+    name: {{ template "sia.fullname" . }}-anonymous
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      nginx.ingress.kubernetes.io/use-regex: "true"
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.ingress.path }}/openapi.json"
+              pathType: "Exact"
+              backend:
+                service:
+                  name: {{ template "sia.fullname" . }}
+                  port:
+                    number: 8080
+            - path: "{{ .Values.ingress.path }}/.+/capabilities"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: {{ template "sia.fullname" . }}
+                  port:
+                    number: 8080
+            - path: "{{ .Values.ingress.path }}/.+/availability"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: {{ template "sia.fullname" . }}
+                  port:
+                    number: 8080

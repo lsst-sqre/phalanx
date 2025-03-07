@@ -1,0 +1,4 @@
+apiVersion: v2
+name: rolex2
+description: Helm chart for the Rubin Observatory Log EXplorer (ROLEX) v2 app.
+version: 1.0.0

@@ -12,7 +12,6 @@ Real-time display front end development application
 |-----|------|---------|-------------|
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
-| global.tsVaultSecretsPath | string | `""` | Relative path for tsVault secrets |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
 | redis.config.secretKey | string | `"redis-password"` | Key inside secret from which to get the Redis password (do not change) |
@@ -41,7 +40,6 @@ Real-time display front end development application
 | rubintv.imagePullSecrets | list | See `values.yaml` | Image pull secrets. |
 | rubintv.ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | rubintv.nameOverride | string | `""` | Override the base name for resources |
-| rubintv.separateSecrets | bool | `false` | Whether to use the new secrets management scheme |
 | rubintv.siteTag | string | `""` | A special tag for letting the scripts know where they are running.  Must be overridden at each site |
 | rubintv.workers.affinity | object | `{}` | Affinity rules for the rubintv-dev worker pods |
 | rubintv.workers.debug | bool | `false` | If set to true, enable more verbose logging. |

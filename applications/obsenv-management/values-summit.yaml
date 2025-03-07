@@ -1,0 +1,18 @@
+obsenv-api:
+  image:
+    repository: rubin-cr.lsst.org/obsenv-api
+    tag: 0.2.0
+    pullPolicy: Always
+  config:
+    logLevel: "DEBUG"
+  nfsMount:
+    server: nfs-obs-env.cp.lsst.org
+
+obsenv-ui:
+  image:
+    repository: rubin-cr.lsst.org/obsenv-ui
+    tag: 0.3.0
+    pullPolicy: Always
+  config:
+    pathPrefix: /obsenv-management
+    authGroup: obsenv-admins

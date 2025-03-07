@@ -119,6 +119,10 @@ config:
   # @default -- None, must be set
   databaseUrl: ""
 
+  # -- Whether to run the database migration job
+  # @default -- false to disable schema upgrades
+  updateSchema: false
+
   # -- URL for Redis html / noteburst job cache database
   # @default -- Points to embedded Redis
   redisCacheUrl: "redis://times-square-redis:6379/0"
@@ -142,9 +146,21 @@ config:
   # -- Default execution timeout for notebooks in seconds
   defaultExecutionTimeout: "300" # 5 minutes
 
+  # Sentry tracing sample rate
+  sentryTracesSampleRate: 0.0
+
   worker:
     # -- Enable liveness checks for the arq queue
     enableLivenessCheck: true
+
+  htmlKeyMigration:
+    enabled: false
+
+    # -- Whether to run the HTML key migration job as a dry-run only
+    dryRun: true
+
+    # -- The name of the page to migrate, if set
+    page: ""
 
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
@@ -156,13 +172,13 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.0"
+    tag: "1.37.5"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
 
     # -- Resource requests and limits for Cloud SQL pod
-    # @default -- see `values.yaml`
+    # @default -- See `values.yaml`
     resources:
       limits:
         cpu: "1"
@@ -221,6 +237,10 @@ global:
   # -- Base URL for the environment
   # @default -- Set by times-square Argo CD Application
   baseUrl: ""
+
+  # -- Name of enviroment
+  # @default -- Set by times-square Argo CD Application
+  enviromentName: ""
 
   # -- Host name for ingress
   # @default -- Set by times-square Argo CD Application

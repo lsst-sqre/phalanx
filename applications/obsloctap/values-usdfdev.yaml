@@ -11,6 +11,7 @@ environment:
   obsloctapVaultPrefix: secret/rubin/usdf-butler/postgres
 
 config:
+  separateSecrets: false
   volumes:
     - name: sdf-group-rubin
       persistentVolumeClaim:
@@ -31,7 +32,6 @@ config:
 
 image:
   pullPolicy: Always
-
 
 controller:
   config:

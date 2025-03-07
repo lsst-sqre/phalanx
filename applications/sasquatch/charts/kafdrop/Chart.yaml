@@ -4,4 +4,4 @@ version: 1.0.0
 description: A subchart to deploy the Kafdrop UI for Sasquatch.
 sources:
   - https://github.com/obsidiandynamics/kafdrop
-appVersion: 3.30.0
+appVersion: 4.1.0

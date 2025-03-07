@@ -23,7 +23,7 @@ spec:
 {{- end }}
         paths:
           - path: {{ .Values.meta.ingress.path }}
-            pathType: Prefix
+            pathType: ImplementationSpecific
             backend:
               service:
                 name:  {{ template "influxdb-enterprise.fullname" . }}-meta

@@ -1,0 +1,19 @@
+replicaCount:
+  api: 2
+  worker: 2
+config:
+  databaseUrl: "postgresql://timessquare@postgres.postgres/timessquare"
+  githubAppId: "1112177"
+  enableGitHubApp: "True"
+  sentryTracesSampleRate: 1
+cloudsql:
+  enabled: false
+redis:
+  persistence:
+    storageClass: "wekafs--sdf-k8s01"
+    size: "64Gi"
+  resources:
+    requests:
+      memory: "8Gi"
+    limits:
+      memory: "24Gi"

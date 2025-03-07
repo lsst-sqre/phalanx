@@ -1,3 +1,14 @@
+x-butler-secret:
+  &butler-secret
+  butlerSecret:
+    containerPath: &bs-cp /home/saluser/.lsst
+    dbUser: oods
+    secretFilename: &bs-fn postgres-credentials.txt
+  secretFixup:
+    containerPath: *bs-cp
+    filenames:
+    - *bs-fn
+
 ccheaderservice:
   enabled: true
   image:
@@ -25,10 +36,7 @@ ccoods:
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     CTRL_OODS_CONFIG_FILE: /etc/ccoods.yaml
-  butlerSecret:
-    containerPath: &bS-cP /home/saluser/.lsst
-    dbUser: &bS-dbU oods
-    secretFilename: &bS-sFn postgres-credentials.txt
+  <<: *butler-secret
   nfsMountpoint:
   - name: comcam-gen3-butler
     containerPath: /repo/LSSTComCam
@@ -121,10 +129,7 @@ mtaos:
   image:
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
-  butlerSecret:
-    containerPath: *bS-cP
-    dbUser: *bS-dbU
-    secretFilename: *bS-sFn
+  <<: *butler-secret
   nfsMountpoint:
   - name: comcam-gen3-butler
     containerPath: /repo/LSSTComCam

@@ -50,12 +50,16 @@ mtheaderservice:
   # -- Enable the MTHeaderService CSC
   enabled: false
 
-m1m3:
+mtm1m3:
   # -- Enable the MTM1M3 hardware simulator CSC
   enabled: false
 
-m1m3-sim:
+mtm1m3-sim:
   # -- Enable the MTM1M3 simulator CSC
+  enabled: false
+
+mtm1m3ts-sim:
+  # -- Enable the MTM1M3TS simulator CSC
   enabled: false
 
 mtm2:
@@ -82,12 +86,20 @@ mtmount-sim:
   # -- Enable the MTMount simulator CSC
   enabled: false
 
+mtoods:
+  # -- Enable the MTOODS simulator CSC
+  enabled: false
+
 mtrotator:
   # -- Enable the MTRotator CSC
   enabled: false
 
 mtrotator-sim:
   # -- Enable the MTRotator simulator CSC
+  enabled: false
+
+mtvms-m1m3-sim:
+  # -- Enable the MTVMS:1 simulator CSC
   enabled: false
 
 # The following will be set by parameters injected by Argo CD and should not

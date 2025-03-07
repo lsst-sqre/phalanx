@@ -1,6 +1,5 @@
 rubintv:
   siteTag: "tucson"
-  separateSecrets: true
 
   imagePullSecrets:
   - name: pull-secret
@@ -37,6 +36,3 @@ rubintv:
       limits:
         cpu: 2.0
         memory: "8Gi"
-
-global:
-  tsVaultSecretsPath: ""

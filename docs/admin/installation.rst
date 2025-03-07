@@ -3,10 +3,17 @@ Installing a Phalanx environment
 ################################
 
 Once you have :doc:`created the configuration for your new environment <create-environment>` and :doc:`set up secrets <secrets-setup>`, you are ready to do the installation.
-Before starting this process, ensure that you have met the :doc:`requirements to run Phalanx <requirements>`.
 
 If you are setting up an environment that will be running a 1Password Connect server for itself, you will need to take special bootstrapping steps.
 See :px-app-bootstrap:`onepassword-connect` for more information.
+
+.. warning::
+
+   Before starting this process, ensure that you have met the :doc:`requirements to run Phalanx <requirements>`.
+
+   If you get a message indicating that Argo CD login has failed, this usually indicates that you have too old of a version of the ``argocd`` command-line tool installed.
+   Update it ``argocd`` and try again.
+   See :ref:`admin-tooling` for more details.
 
 Installing Phalanx
 ==================
@@ -15,6 +22,8 @@ Follow these steps to install Phalanx.
 These can be run repeatedly to reinstall Phalanx over an existing deployment.
 
 #. Create a Vault AppRole that will be used by Vault Secrets Operator.
+   This will invalidate any existing AppRole for that environment.
+
    Set the ``VAULT_TOKEN`` environment variable to a token with the ability to create new AppRoles (for SQuaRE clusters, use the admin token), and then run:
 
    .. prompt:: bash
@@ -23,9 +32,15 @@ These can be run repeatedly to reinstall Phalanx over an existing deployment.
 
    Unset ``VAULT_TOKEN`` when this command finishes.
 
-   Be aware that this will invalidate any existing AppRole for that environment.
-
 #. Set the environment variables ``VAULT_ROLE_ID`` and ``VAULT_SECRET_ID`` to the Role ID and Secret ID printed out by that command.
+   Do not otherwise store these values.
+   If you need to start over, return to the previous step and generate new values.
+
+#. If you are doing a complete reinstallation of a Phalanx instance, such as when the Kubernetes cluster has been completely destroyed and recreated, you may want to regenerate all generated secrets.
+   This ensures that any left-over or leaked secrets that do not come from your static secrets store are invalidated.
+
+   To do this, run :command:`phalanx secrets sync --regenerate <environment>`.
+   This will invalidate all existing Gafaelfawr tokens and will require redoing portions of the Sasquatch setup.
 
 #. Ensure that your default Kubernetes cluster for :command:`kubectl` and :command:`helm` is set to point to the Kubernetes cluster into which you want to install the Phalanx environment.
    You can verify this with :command:`kubectl config current-context`.
@@ -39,10 +54,12 @@ These can be run repeatedly to reinstall Phalanx over an existing deployment.
    You will be prompted to confirm that you want to proceed.
 
 #. If the installation is using a dynamically-assigned IP address, you will need to set up the A record (and AAAA record if using IPv6) in DNS once that address has been assigned.
+
    Wait until the ``ingress-nginx`` application has been installed, which happens after Argo CD has been installed but before most applications are synced.
    Then, wait for it to be assigned an external IP address.
    Obtain that IP address with :command:`kubectl get -n ingress-nginx service` (look for the external IP).
    Then, set the A record in DNS for your environment to that address.
+
    For installations that are intended to be long-lived and that can reliably request the same address, add that IP address to the :file:`values-{environment}.yaml` file in :file:`applications/ingress-nginx` for your environment.
    The setting to use is ``ingress-nginx.controller.service.loadBalancerIP``.
    This ensures that ingress-nginx will always request that address.

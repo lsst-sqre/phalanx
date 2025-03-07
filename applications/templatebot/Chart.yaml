@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "tickets-DM-43699"
+appVersion: "0.3.0"
 description: Create new projects
 name: templatebot
 sources:

@@ -28,7 +28,13 @@ spec:
           value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"
+      valuesObject:
+        config:
+          availableServices:
+            {{- include "enabledServicesYamlList" . | nindent 12 }}
 {{- end -}}

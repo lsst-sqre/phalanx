@@ -176,14 +176,10 @@ Switch to the new secrets tree
    On your working branch, add the necessary settings for those applications to their :file:`values-{environment}.yaml` files for your environment.
    Applications to review:
 
-   - :px-app:`datalinker` (``config.separateSecrets``)
-   - :px-app:`nightreport` (``global.tsVaultSecretsPath``)
-   - :px-app:`nublado` (``hub.internalDatabase``, ``secrets.templateSecrets``)
+   - :px-app:`nublado` (``secrets.templateSecrets``)
    - :px-app:`obsloctap` (``config.separateSecrets``)
    - :px-app:`plot-navigator` (``config.separateSecrets``)
-   - :px-app:`production-tools` (``config.separateSecrets``)
-   - :px-app:`rubintv` (``rubintv.separateSecrets``, ``global.tsVaultSecretsPath``)
-   - :px-app:`rubintv-dev` (``rubintv.separateSecrets``, ``global.tsVaultSecretsPath``)
+   - :px-app:`rubintv` (``rubintv.separateSecrets``)
 
 #. You're now ready to test the new secrets tree.
    You can do this on a branch that contains the changes you made above.

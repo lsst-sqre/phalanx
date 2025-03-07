@@ -1,16 +1,10 @@
 strimzi-kafka:
   kafka:
-    minInsyncReplicas: 1
-    listeners:
-      tls:
-        enabled: true
-      plain:
-        enabled: true
-      external:
-        enabled: true
     config:
       # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
       replica.lag.time.max.ms: 120000
+      log.retention.minutes: 10080
+      offsets.retention.minutes: 10080
 
   connect:
     enabled: true
@@ -36,8 +30,6 @@ strimzi-kafka:
     kafdrop:
       enabled: true
     telegraf:
-      enabled: true
-    kafkaConnectManager:
       enabled: true
     promptProcessing:
       enabled: true
@@ -69,7 +61,7 @@ strimzi-kafka:
                   operator: In
                   values:
                     - sdfk8sn004
-                    - sdfk8sn005
+                    - sdfk8sn003
                     - sdfk8sn007
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -143,6 +135,7 @@ telegraf-kafka-consumer:
     # CSC connectors
     maintel:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -150,6 +143,7 @@ telegraf-kafka-consumer:
       debug: true
     mtmount:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -157,20 +151,24 @@ telegraf-kafka-consumer:
       debug: true
     comcam:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
       debug: true
-    eas:
+    envsys:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
-         [ "lsst.sal.DIMM", "lsst.sal.ESS", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+         [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.EAS", "lsst.sal.ESS", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
       debug: true
     m1m3:
       enabled: true
+      repair: false
+      metric_batch_size: 2500
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -178,6 +176,7 @@ telegraf-kafka-consumer:
       debug: true
     m2:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -185,6 +184,7 @@ telegraf-kafka-consumer:
       debug: true
     obssys:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -192,6 +192,7 @@ telegraf-kafka-consumer:
       debug: true
     ocps:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -199,6 +200,7 @@ telegraf-kafka-consumer:
       debug: true
     pmd:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -206,13 +208,15 @@ telegraf-kafka-consumer:
       debug: true
     calsys:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
-        [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
+        [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
       debug: true
     mtaircompressor:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -220,6 +224,7 @@ telegraf-kafka-consumer:
       debug: true
     genericcamera:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -227,13 +232,23 @@ telegraf-kafka-consumer:
       debug: true
     gis:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.GIS" ]
       debug: true
+    mtvms:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTVMS" ]
+      debug: true
     lsstcam:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -241,13 +256,15 @@ telegraf-kafka-consumer:
       debug: true
     auxtel:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
-        [ "lsst.sal.ATAOS", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
+        [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
       debug: true
     latiss:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -255,6 +272,7 @@ telegraf-kafka-consumer:
       debug: true
     test:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -262,6 +280,7 @@ telegraf-kafka-consumer:
       debug: true
     lasertracker:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -326,6 +345,9 @@ chronograf:
   ingress:
     enabled: true
     hostname: usdf-rsp.slac.stanford.edu
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
   env:
     GENERIC_NAME: "OIDC"
     GENERIC_AUTH_URL: https://usdf-rsp.slac.stanford.edu/auth/openid/login
@@ -340,3 +362,25 @@ chronograf:
 
 kapacitor:
   influxURL: http://sasquatch-influxdb-enterprise-data.sasquatch:8086
+
+app-metrics:
+  enabled: true
+  apps:
+    - noteburst
+  influxdb:
+    url: http://sasquatch-influxdb-enterprise-data.sasquatch:8086
+
+backup:
+  enabled: true
+  persistence:
+    size: 100Ti
+    storageClass: wekafs--sdf-k8s01
+  backupItems:
+    - name: chronograf
+      enabled: true
+      retentionDays: 7
+    - name: kapacitor
+      enabled: true
+      retentionDays: 7
+    - name: influxdb-enterprise-incremental
+      enabled: true

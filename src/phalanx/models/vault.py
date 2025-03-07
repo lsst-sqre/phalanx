@@ -5,6 +5,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from base64 import b64encode
 from datetime import datetime
+from typing import override
 
 import yaml
 from pydantic import BaseModel, Field
@@ -121,6 +122,7 @@ class VaultAppRoleCredentials(VaultCredentials):
     secret_id: str
     """Authentication credentials for the AppRole."""
 
+    @override
     def to_kubernetes_secret(self, name: str) -> str:
         role_id = b64encode(self.role_id.encode()).decode()
         secret_id = b64encode(self.secret_id.encode()).decode()
@@ -135,6 +137,7 @@ class VaultTokenCredentials(VaultCredentials):
     token: str
     """Vault token."""
 
+    @override
     def to_kubernetes_secret(self, name: str) -> str:
         token = b64encode(self.token.encode()).decode()
         return VAULT_TOKEN_SECRET_TEMPLATE.format(name=name, token=token)

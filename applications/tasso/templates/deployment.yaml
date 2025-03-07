@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "tasso"
+  labels:
+    {{- include "tasso.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "tasso.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "tasso.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          env:
+            {{- if .Values.config.slackAlerts }}
+            - name: "TASSO_SLACK_WEBHOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "tasso"
+                  key: "slack-webhook"
+            {{- end }}
+            - name: "S3_ENDPOINT_URL"
+              value: {{ .Values.s3.endpointUrl}}
+            - name: "IMAGE_BUCKET"
+              value: {{ .Values.s3.imageBucket }}
+            - name: "AWS_ACCESS_KEY_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "tasso.fullname" . }}-secret
+                  key: "AWS_ACCESS_KEY_ID"
+            - name: "AWS_SECRET_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "s3"
+                  name: {{ template "tasso.fullname" . }}-secret
+                  key: "AWS_SECRET_ACCESS_KEY"
+            - name: "TASSO_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "tasso.fullname" . }}-secret
+                  key: "TASSO_DATABASE_PASSWORD"
+          envFrom:
+            - configMapRef:
+                name: {{ include "tasso.fullname" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000

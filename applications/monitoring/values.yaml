@@ -23,6 +23,11 @@ influxdb2:
     # -- Where we store secrets to run the server
     existingSecret: monitoring
 
+  # -- InfluxDB2 pod disruption budget.
+  # @default -- disabled; nonsensical for single replica
+  pdb:
+    create: false
+
   # -- InfluxDB2 ingress configuration.
   # @default -- disabled, must be enabled and configured at each site
   ingress:
@@ -76,7 +81,7 @@ chronograf:
   # @default -- quay.io/influxdb/chronograf 1.10.3
   image:
     repository: "quay.io/influxdb/chronograf"
-    tag: 1.10.5
+    tag: 1.10.6
     pullPolicy: IfNotPresent
 
   ## Specify a service type

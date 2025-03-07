@@ -1,5 +1,5 @@
-{{- if .Values.workers.volumes }}
-{{- range $vol := .Values.workers.volumes }}
+{{- if .Values.workers.pvcMountpoint }}
+{{- range $vol := .Values.workers.pvcMountpoint }}
 {{- if $vol.persistentVolumeClaim }}
 ---
 kind: PersistentVolumeClaim

@@ -19,16 +19,16 @@ spec:
       - name: pull-secret
       initContainers:
       - name: love-frontend
-        {{- $feImageTag := .Values.initContainers.frontend.image.tag | default $.Values.global.controlSystem.imageTag }}
-        image: "{{ .Values.initContainers.frontend.image.repository }}:{{ $feImageTag }}"
+        {{- $image := dict "repo" .Values.initContainers.frontend.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" .Values.initContainers.frontend.image.revision }}
+        image: {{ include "helpers.makeImage" $image }}
         imagePullPolicy: {{ .Values.initContainers.frontend.image.pullPolicy }}
         command: ["/bin/sh", "-c", "mkdir -p /usr/src/love-frontend; cp -Rv /usr/src/love/ /usr/src/love-frontend"]
         volumeMounts:
           - mountPath: /usr/src
             name: {{ .Values.staticStore.name }}
       - name: love-manager-static
-        {{- $mgImageTag := .Values.initContainers.manager.image.tag | default $.Values.global.controlSystem.imageTag }}
-        image: "{{ .Values.initContainers.manager.image.repository }}:{{ $mgImageTag }}"
+        {{- $image := dict "repo" .Values.initContainers.manager.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" .Values.initContainers.manager.image.revision }}
+        image: {{ include "helpers.makeImage" $image }}
         imagePullPolicy: {{ .Values.initContainers.manager.image.pullPolicy }}
         {{- with .Values.initContainers.manager.command }}
         command:

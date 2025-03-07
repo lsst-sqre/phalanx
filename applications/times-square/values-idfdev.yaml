@@ -9,6 +9,7 @@ config:
   enableGitHubApp: "True"
   githubCheckRunTimeout: "600" # 10 minutes
   defaultExecutionTimeout: "60" # 1 minute
+  sentryTracesSampleRate: 1
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"

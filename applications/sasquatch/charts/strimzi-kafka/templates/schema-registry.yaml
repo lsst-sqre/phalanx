@@ -5,6 +5,7 @@ metadata:
 spec:
   listener: tls
   compatibilityLevel: none
+  registryImageTag: "7.7.1"
   cpuLimit: {{ .Values.registry.resources.limits.cpu | quote }}
   cpuRequest: {{ .Values.registry.resources.requests.cpu | quote }}
   memoryLimit: {{ .Values.registry.resources.limits.memory | quote }}

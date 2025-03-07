@@ -1,18 +1,19 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: {{ template "mobu.fullname" . }}
+  name: "mobu"
   labels:
     {{- include "mobu.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
+  loginRedirect: true
   scopes:
     all:
       - "exec:admin"
-  loginRedirect: true
+  service: "mobu"
 template:
   metadata:
-    name: {{ template "mobu.fullname" . }}
+    name: "mobu"
     {{- with .Values.ingress.annotations }}
     annotations:
       {{- toYaml . | nindent 6 }}
@@ -26,6 +27,6 @@ template:
               pathType: "Prefix"
               backend:
                 service:
-                  name: {{ template "mobu.fullname" . }}
+                  name: "mobu"
                   port:
                     number: 8080

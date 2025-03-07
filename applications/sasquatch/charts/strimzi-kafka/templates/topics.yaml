@@ -1,0 +1,15 @@
+{{- if .Values.users.tsSalKafka.enabled }}
+{{- $cluster := .Values.cluster.name }}
+{{- range $topic := .Values.users.tsSalKafka.topics }}
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: {{ $topic }}
+  labels:
+      strimzi.io/cluster: {{ $cluster }}
+spec:
+  replicas: 3
+  partitions: 1
+{{- end }}
+{{- end }}

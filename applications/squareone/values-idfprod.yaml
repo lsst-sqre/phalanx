@@ -5,6 +5,11 @@ ingress:
 
 config:
   siteName: "Rubin Science Platform"
+  docsBaseUrl: "https://rsp.lsst.io"
   semaphoreUrl: "https://data.lsst.cloud/semaphore"
+  timesSquareUrl: "https://data.lsst.cloud/times-square/api"
   coManageRegistryUrl: "https://id.lsst.cloud"
   plausibleDomain: "data.lsst.cloud"
+  enableSentry: true
+  sentryTracesSampleRate: 1.0
+  sentryReplaysOnErrorSampleRate: 1.0

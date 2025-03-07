@@ -219,7 +219,7 @@ class MissingOnepasswordSecretsError(UsageError):
 
     def __init__(self, secrets: Iterable[str]) -> None:
         self.secrets = list(secrets)
-        msg = f'Missing 1Password items or fields: {", ".join(self.secrets)}'
+        msg = f"Missing 1Password items or fields: {', '.join(self.secrets)}"
         super().__init__(msg)
 
 
@@ -250,7 +250,7 @@ class UnresolvedSecretsError(UsageError):
 
     def __init__(self, secrets: Iterable[Secret]) -> None:
         self.secrets = [f"{u.application}/{u.key}" for u in secrets]
-        msg = f'Some secrets could not be resolved: {", ".join(self.secrets)}'
+        msg = f"Some secrets could not be resolved: {', '.join(self.secrets)}"
         super().__init__(msg)
 
 

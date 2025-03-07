@@ -36,7 +36,11 @@ influxdb:
 
   image:
     # -- InfluxDB image tag
-    tag: "1.8.10"
+    tag: "1.11.8"
+
+  livenessProbe:
+    # -- Liveness probe initial delay in seconds
+    initialDelaySeconds: 60
 
   persistence:
     # -- Whether to use persistent volume claims. By default, `storageClass`
@@ -78,6 +82,12 @@ influxdb:
     # @default -- `"/influxdb(/\|$)(.*)"`
     path: "/influxdb(/|$)(.*)"
 
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1500
+    runAsGroup: 1500
+    fsGroup: 1500
+
   # See https://docs.influxdata.com/influxdb/v1.8/administration/config
   config:
     data:
@@ -92,6 +102,11 @@ influxdb:
       # -- Whether to enable verbose logging of additional debug information
       # within the TSM engine and WAL
       trace-logging-enabled: true
+
+      # -- Maximum number of series allowed per database before writes are
+      # dropped. Change the setting to 0 to allow an unlimited number of series per
+      # database.
+      max-series-per-database: 0
 
     http:
       # -- Whether to enable the HTTP endpoints
@@ -114,10 +129,10 @@ influxdb:
 
       # -- Maximum number of running queries allowed on the instance (0 is
       # unlimited)
-      max-concurrent-queries: 1000
+      max-concurrent-queries: 500
 
       # -- Maximum duration a query is allowed to run before it is killed
-      query-timeout: "30s"
+      query-timeout: "15s"
 
       # -- Maximum duration a query can run before InfluxDB logs it as a slow
       # query
@@ -149,6 +164,23 @@ influxdb:
       memory: 96Gi
       cpu: 8
 
+customInfluxDBIngress:
+  # -- Whether to enable the custom ingress for InfluxDB OSS
+  enabled: false
+
+  # -- Hostname of the ingress
+  # @default -- None, must be set if the ingress is enabled
+  hostname: ""
+
+  # -- Annotations to add to the ingress
+  # @default -- See `values.yaml`
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+
+  # -- Path for the ingress
+  # @default -- `"/influxdb(/\|$)(.*)"`
+  path: "/influxdb(/|$)(.*)"
+
 influxdb-enterprise:
   # -- Whether to use influxdb-enterprise
   enabled: false
@@ -176,7 +208,11 @@ chronograf:
     repository: "quay.io/influxdb/chronograf"
 
     # -- Docker tag to use for Chronograf
-    tag: 1.10.5
+    tag: 1.10.6
+
+  updateStrategy:
+    # -- Deployment strategy, use recreate with persistence enabled
+    type: "Recreate"
 
   persistence:
     # -- Whether to enable persistence for Chronograf data
@@ -200,8 +236,8 @@ chronograf:
     className: "nginx"
 
     # -- Path for the ingress
-    # @default -- `"/chronograf(/\|$)"`
-    path: "/chronograf(/|$)"
+    # @default -- `"/chronograf"`
+    path: "/chronograf"
 
   # -- Additional environment variables for Chronograf
   # @default -- See `values.yaml`
@@ -232,7 +268,11 @@ kapacitor:
     repository: kapacitor
 
     # -- Tag to use for Kapacitor
-    tag: 1.7.5
+    tag: 1.7.6
+
+  strategy:
+    # -- Deployment strategy, use recreate with persistence enabled
+    type: "Recreate"
 
   persistence:
     # -- Whether to enable Kapacitor data persistence
@@ -271,6 +311,10 @@ squareEvents:
   # -- Enable the Square Events subchart with topic and user configurations
   enabled: false
 
+backup:
+  # -- Whether to enable Sasquatch backups
+  enabled: false
+
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
@@ -285,7 +329,8 @@ global:
   vaultSecretsPath: ""
 
 app-metrics:
-  # -- Enable the app-metrics subchart with topic, user, and telegraf configurations
+  # -- Enable the app-metrics subchart with topic, user, and telegraf
+  # configurations
   enabled: false
 
   # -- The apps to create configuration for.

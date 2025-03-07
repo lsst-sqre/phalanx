@@ -34,7 +34,7 @@
    * - Namespace
      - {{ app.namespace }}
    * - Argo CD Project
-     - {{ app.project }}
+     - {{ app.project.value }}
    * - Environments
      {%- if app.active_environments %}
      - .. list-table::

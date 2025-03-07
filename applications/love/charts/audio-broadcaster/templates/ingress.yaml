@@ -1,0 +1,29 @@
+---
+{{- if and (eq .Values.serviceType "ClusterIP") (gt (len .Values.microphones) 0) }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-audio-broadcaster-ingress
+  namespace: {{ .Values.namespace }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  rules:
+    - host: {{ required "ingress.host must be set" .Values.ingress.hostname | quote }}
+      http:
+        paths:
+        {{- range $index, $mic := .Values.microphones }}
+          - path: {{ $.Values.ingress.httpPath }}/{{ add $index 1 }}
+            pathType: {{ default "Prefix" $.Values.ingress.pathType }}
+            backend:
+              service:
+                name: {{ include "audio-broadcaster.fullname" $ }}-service-{{ add $index 1 }}
+                port:
+                  number: {{ $.Values.ports.container }}
+        {{- end }}
+{{- end }}

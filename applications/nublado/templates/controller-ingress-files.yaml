@@ -10,9 +10,10 @@ config:
   scopes:
     all:
       - "write:files"
+  service: "nublado-files"
   delegate:
     internal:
-      service: "nublado"
+      service: "nublado-files"
       scopes: []
 template:
   metadata:

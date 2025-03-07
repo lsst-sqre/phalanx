@@ -100,6 +100,7 @@ class SecretsService:
     def audit(
         self,
         env_name: str,
+        exclude: set[str],
         static_secrets: StaticSecrets | None = None,
     ) -> str:
         """Compare existing secrets to configuration and report problems.
@@ -114,6 +115,8 @@ class SecretsService:
         ----------
         env_name
             Name of the environment to audit.
+        exclude
+            Applications to exclude from the audit.
         static_secrets
             User-provided static secrets.
 
@@ -134,9 +137,9 @@ class SecretsService:
 
         # Retrieve all the current secrets from Vault and resolve all of the
         # secrets.
-        secrets = environment.all_secrets()
+        secrets = environment.all_secrets(exclude)
         try:
-            vault_secrets = vault_client.get_environment_secrets()
+            vault_secrets = vault_client.get_environment_secrets(exclude)
         except VaultNotFoundError:
             vault_secrets = {}
         try:
@@ -237,6 +240,7 @@ class SecretsService:
     def sync(
         self,
         env_name: str,
+        exclude: set[str],
         static_secrets: StaticSecrets | None = None,
         *,
         regenerate: bool = False,
@@ -256,6 +260,8 @@ class SecretsService:
         ----------
         env_name
             Name of the environment.
+        exclude
+            Applications to exclude from the sync.
         static_secrets
             User-provided static secrets.
         regenerate
@@ -267,9 +273,9 @@ class SecretsService:
         if not static_secrets:
             static_secrets = self._get_onepassword_secrets(environment)
         vault_client = self._get_vault_client(environment, static_secrets)
-        secrets = environment.all_secrets()
+        secrets = environment.all_secrets(exclude)
         try:
-            vault_secrets = vault_client.get_environment_secrets()
+            vault_secrets = vault_client.get_environment_secrets(exclude)
         except VaultNotFoundError:
             vault_secrets = {}
 

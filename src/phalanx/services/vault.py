@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import json
 from contextlib import suppress
-from datetime import timedelta
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import jinja2
 from hvac.exceptions import Forbidden
-from safir.datetime import current_datetime, format_datetime_for_logging
+from safir.datetime import format_datetime_for_logging
 
 from ..constants import VAULT_WRITE_TOKEN_WARNING_LIFETIME
 from ..exceptions import VaultPathConflictError
@@ -283,7 +283,7 @@ class VaultService:
         expected = template.render({"path": config.vault_path})
         policy = vault_client.get_policy(config.vault_write_policy)
 
-        now = current_datetime()
+        now = datetime.now(tz=UTC)
         policies = {config.vault_write_policy}
         for token in tokens:
             errors = []

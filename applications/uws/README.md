@@ -20,6 +20,7 @@ Deployment for the UWS and DM OCPS CSCs
 | atocps.enabled | bool | `false` | Enable the OCPS:1 CSC |
 | ccocps.enabled | bool | `false` | Enable the OCPS:2 CSC |
 | mtocps.enabled | bool | `false` | Enable the OCPS:3 CSC |
+| raocps.enabled | bool | `false` | Enable the OCPS:101 CSC |
 | uws-api-server.basePath | string | `"uws-server"` | The base path for the client ingress |
 | uws-api-server.butlerPg | object | `{}` | Configuration for Postgres backed butlers The object must have the following attributes defined: _secretName_ (A label that points to the VaultSecret for the postgres credentials) _containerPath_ (The directory location in the container for the Butler secret) _dbUser_ (The database user name for butler access) |
 | uws-api-server.client.enabled | bool | `false` | Turn on the UWS client system if desired |
@@ -34,10 +35,12 @@ Deployment for the UWS and DM OCPS CSCs
 | uws-api-server.job.securityContext.runAsUser | int | `1000` | Set the UID for the UWS job container entrypoint |
 | uws-api-server.logLevel | string | `"WARNING"` | Log level of server. Set to "DEBUG" for highest verbosity |
 | uws-api-server.replicaCount | int | `1` | Set the replica count for the UWS server |
+| uws-api-server.s3ButlerStorage | object | `{}` | Configuration for S3 Butler storage The object must have the following attributes defined: _endpointURL_ (The URL for the S3 Butler storage) _containerPath_ (The directory location in the container for the S3 Butler credentials) |
 | uws-api-server.server.securityContext.fsGroup | int | `202` | Set the filesystem GID for the mounted volumes in the UWS server container |
 | uws-api-server.server.securityContext.runAsGroup | int | `202` | Set the GID for the UWS server container entrypoint |
 | uws-api-server.server.securityContext.runAsUser | int | `1000` | Set the UID for the UWS server container entrypoint |
 | uws-api-server.targetCluster | string | `""` | Target Kubernetes cluster |
+| uws-api-server.ttlSecondsAfterFinished | int | `0` | Time to live (in seconds) for pod after it completes Allows logs to be inspected. |
 | uws-api-server.vaultPathPrefix | string | `""` | Site-specific Vault path for secrets. |
 | uws-api-server.volumes | list | `[]` | Central data volumes to be mounted in job containers. Each object listed can have the following attributes defined: _name_ (A label identifier for the data volume mount) _server_ (The hostname for the NFS server with the data volume mount) _claimName_ (The PVC claim name for the data volume mount) _mountPath_ (The mount path in the server container for the data volume mount) _exportPath_ (The export path on the NFS server for the data volume mount) _subPath_ (A possible sub path for the data volume mount) _readOnly_ (Flag to mark the data volume mount as read only or read/write) |
 | uws-api-server.workingVolume.claimName | string | `""` | The PVC claim name for the working volume |

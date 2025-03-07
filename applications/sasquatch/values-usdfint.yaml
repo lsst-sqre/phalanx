@@ -27,11 +27,15 @@ strimzi-kafka:
 
 influxdb:
   ingress:
-    enabled: true
+    enabled: false
     hostname: usdf-rsp-int.slac.stanford.edu
   persistence:
     enabled: true
     size: 15Ti
+
+customInfluxDBIngress:
+  enabled: true
+  hostname: usdf-rsp-int.slac.stanford.edu
 
 kafka-connect-manager:
   influxdbSink:
@@ -173,3 +177,16 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://usdf-rsp-int.slac.stanford.edu/
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/usdfint.json
+
+backup:
+  enabled: true
+  persistence:
+    size: 100Gi
+    storageClass: wekafs--sdf-k8s01
+  backupItems:
+    - name: chronograf
+      enabled: true
+      retentionDays: 7
+    - name: kapacitor
+      enabled: true
+      retentionDays: 7

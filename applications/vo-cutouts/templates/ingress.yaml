@@ -9,6 +9,7 @@ config:
   scopes:
     all:
       - "read:image"
+  service: "vo-cutouts"
   # Request a delegated token to use for making calls to Butler server with the
   # end-user's credentials.
   delegate:

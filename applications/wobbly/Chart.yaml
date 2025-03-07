@@ -1,0 +1,14 @@
+apiVersion: v2
+name: wobbly
+type: application
+version: 1.0.0
+description: "IVOA UWS database storage"
+sources:
+  - https://github.com/lsst-sqre/wobbly
+appVersion: 0.2.1
+
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-096"
+      title: "UWS data service"
+      url: "https://sqr-096.lsst.io/"

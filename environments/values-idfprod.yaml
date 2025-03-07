@@ -20,14 +20,19 @@ applications:
   ghostwriter: true
   hips: true
   mobu: true
+  noteburst: true
   nublado: true
   portal: true
+  sasquatch: true
   semaphore: true
-  siav2: false
+  sia: true
   squareone: true
+  strimzi: true
+  strimzi-access-operator: true
   ssotap: true
   tap: true
   telegraf: true
   telegraf-ds: true
   times-square: true
   vo-cutouts: true
+  wobbly: true

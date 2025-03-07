@@ -30,9 +30,9 @@ def all_charts(
 def test_application_names() -> None:
     """All applications must have valid names."""
     for application in all_charts("applications"):
-        assert re.match(
-            "[a-z][a-z0-9-]+$", application.name
-        ), f"Application {application.name} has invalid name"
+        assert re.match("[a-z][a-z0-9-]+$", application.name), (
+            f"Application {application.name} has invalid name"
+        )
 
 
 def test_application_projects() -> None:
@@ -69,16 +69,16 @@ def test_application_version() -> None:
     """All application charts should have version 1.0.0."""
     for application in all_charts("applications"):
         chart = yaml.safe_load((application / "Chart.yaml").read_text())
-        assert (
-            chart["version"] == "1.0.0"
-        ), f"Chart for application {application.name} has incorrect version"
+        assert chart["version"] == "1.0.0", (
+            f"Chart for application {application.name} has incorrect version"
+        )
 
     # Check the same thing for shared charts.
     for shared_chart in all_charts("charts"):
         chart = yaml.safe_load((shared_chart / "Chart.yaml").read_text())
-        assert (
-            chart["version"] == "1.0.0"
-        ), f"Shared chart {shared_chart.name} has incorrect version"
+        assert chart["version"] == "1.0.0", (
+            f"Shared chart {shared_chart.name} has incorrect version"
+        )
 
 
 def test_enviroments() -> None:
@@ -103,9 +103,9 @@ def test_projects() -> None:
         / "projects"
     )
     for project in Project:
-        assert (
-            template_path / f"{project.value}.yaml"
-        ).exists(), f"Project {project.value} is not defined"
+        assert (template_path / f"{project.value}.yaml").exists(), (
+            f"Project {project.value} is not defined"
+        )
 
 
 def test_secrets_defined() -> None:
@@ -148,12 +148,12 @@ def test_shared_subcharts() -> None:
             repository = dependency["repository"]
             m = re.match(r"file://[.][.]/[.][.]/charts/([^/]+)$", repository)
             assert m, f"Incorrect shared chart URL in {name}: {repository}"
-            assert (
-                m.group(1) in available
-            ), f"Missing shared chart dependency {m.group(1)} in {name}"
-            assert (
-                dependency["version"] == "1.0.0"
-            ), f"Incorrect shared chart version in {name}: {version} != 1.0.0"
+            assert m.group(1) in available, (
+                f"Missing shared chart dependency {m.group(1)} in {name}"
+            )
+            assert dependency["version"] == "1.0.0", (
+                f"Incorrect shared chart version in {name}: {version} != 1.0.0"
+            )
 
 
 def test_applications_enabled() -> None:

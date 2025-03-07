@@ -4,10 +4,14 @@ uws-api-server:
   image:
     tag: latest
   logLevel: INFO
+  ttlSecondsAfterFinished: 3600
   butlerPg:
     secretName: uws
-    containerPath: /home/lsst/.lsst
+    containerPath: &cp /home/lsst/.lsst
     dbUser: oods
+  s3ButlerStorage:
+    endpointURL: https://s3-butler.ls.lsst.org
+    containerPath: *cp
   workingVolume:
     name: job-files
     server: nfs-scratch.ls.lsst.org
@@ -24,10 +28,10 @@ uws-api-server:
     subPath: ""
     readOnly: false
   - name: home
-    server: nfs-jhome.ls.lsst.org
+    server: nfs-rsphome.ls.lsst.org
     claimName: home-pvc
-    mountPath: "/jhome"
-    exportPath: "/jhome"
+    mountPath: "/rsphome"
+    exportPath: "/rsphome"
     subPath: ""
     readOnly: false
   - name: repo-latiss
@@ -44,6 +48,13 @@ uws-api-server:
     exportPath: "/auxtel/lsstdata/BTS/auxtel"
     subPath: ""
     readOnly: true
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi
 
 atocps:
   enabled: true
@@ -53,3 +64,31 @@ atocps:
     pullPolicy: Always
   env:
     RUN_ARG: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi
+
+raocps:
+  enabled: true
+  classifier: ocps101
+  image:
+    repository: ts-dockerhub.lsst.org/dmocps
+    pullPolicy: Always
+  env:
+    RUN_ARG: 101
+    REDIS_HOST: redis-service.rapid-analysis.svc.cluster.local
+    REDIS_PORT: 6379
+  envSecrets:
+  - name: REDIS_PASSWORD
+    key: redis-password
+  resources:
+    limits:
+      cpu: 100m
+      memory: 500Mi
+    requests:
+      cpu: 1m
+      memory: 100Mi

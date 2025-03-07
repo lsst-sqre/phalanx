@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: production-tools
+  labels:
+    {{- include "plot-navigator.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "plot-navigator.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: production-tools
+  template:
+    metadata:
+      labels:
+        {{- include "plot-navigator.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: production-tools
+    spec:
+      volumes:
+        - name: "butler-secrets-raw"
+          secret:
+            secretName: {{ include "plot-navigator.fullname" . }}
+        - name: "butler-secrets"
+          emptyDir:
+            sizeLimit: 50Mi
+        {{- with .Values.productionTools.volumes }}
+        {{- . | toYaml | nindent 8 }}
+        {{- end }}
+      containers:
+      - name: plot-navigator
+        image: {{ .Values.productionTools.image.repository }}:{{ .Values.productionTools.image.tag | default .Chart.AppVersion}}
+        imagePullPolicy: Always
+        env:
+{{- range $key, $value := .Values.productionTools.env }}
+          - name: {{ $key | quote }}
+            value: {{ $value | quote }}
+{{- end }}
+          - name: S3_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "plot-navigator.fullname" . }}
+                key: S3_KEY
+          - name: S3_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "plot-navigator.fullname" . }}
+                key: S3_SECRET
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: redis-secret
+                key: password
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+        {{- if .Values.productionTools.envFromSecretPath }}
+        envFrom:
+          - secretRef: {{ include "plot-navigator.fullname" . }}
+        {{- end }}
+        {{- if .Values.productionTools.volume_mounts }}
+        volumeMounts:
+          - name: "butler-secrets"
+            mountPath: "/opt/lsst/butler/secrets"
+        {{- with .Values.productionTools.volume_mounts }}
+          {{- . | toYaml | nindent 10 }}
+          {{- end }}
+        {{- end }}
+      initContainers:
+        # To deal with the Postgres file permission issues,
+        # copy the secrets from butler-secrets-raw to butler-secrets.
+        - name: fix-secret-permissions
+          image: "alpine:latest"
+          imagePullPolicy: IfNotPresent
+          command:
+            - "/bin/ash"
+            - "-c"
+            - |
+              cp -RL /secrets-raw/* /opt/lsst/butler/secrets/
+              chown 1000:4085 /opt/lsst/butler/secrets/*
+              chmod 0400 /opt/lsst/butler/secrets/*
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+          volumeMounts:
+            - name: "butler-secrets"
+              mountPath: "/opt/lsst/butler/secrets"
+            - name: "butler-secrets-raw"
+              mountPath: "/secrets-raw"
+              readOnly: true
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 4085

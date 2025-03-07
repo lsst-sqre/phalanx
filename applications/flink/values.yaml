@@ -1,0 +1,36 @@
+# Default values for flink.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+flink:
+  # -- Whether to enable the Flink Kubernetes Operator
+  enabled: true
+
+  # -- List of kubernetes namespaces to watch for FlinkDeployment changes
+  watchNamespaces:
+    - "sasquatch"
+
+  # -- Kubernetes requests and limits for the Flink Job Manager
+  operatorPod:
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "1"
+      limits:
+        memory: "2Gi"
+        cpu: "4"
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

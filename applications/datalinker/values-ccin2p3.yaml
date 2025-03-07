@@ -1,3 +1,2 @@
 config:
-  separateSecrets: true
   tapMetadataUrl: "https://github.com/gabrimaine/sdm_schemas/releases/download/2.4.1/datalink-columns.zip"

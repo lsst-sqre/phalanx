@@ -1,0 +1,35 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "s3proxy"
+  labels:
+    {{- include "s3proxy.labels" . | nindent 4 }}
+config:
+  authCacheDuration: 5m
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  loginRedirect: true
+  onlyServices:
+    - portal
+  scopes:
+    all:
+      - "read:image"
+  service: "s3proxy"
+template:
+  metadata:
+    name: "s3proxy"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.config.pathPrefix | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "s3proxy"
+                  port:
+                    number: 8080

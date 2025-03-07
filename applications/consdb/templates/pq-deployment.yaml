@@ -49,7 +49,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: consdb
-                  key: "oods-password"
+                  key: "{{ .Values.db.passwordkey }}"
             - name: "DB_USER"
               value: "{{ .Values.db.user }}"
             - name: "DB_NAME"

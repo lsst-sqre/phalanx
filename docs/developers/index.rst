@@ -52,3 +52,8 @@ Individual applications are documented in the :doc:`/applications/index` section
 
    secrets-spec
    injected-values
+
+.. seealso::
+
+   SQuaRE ran a bootcamp for Phalanx application developers in May of 2024.
+   Rubin affiliates can watch the session recordings and see the slides of those presentations on the `SQuaRE bootcamp Confluence page <https://rubinobs.atlassian.net/wiki/spaces/DM/pages/48836049/SQuaRE+Bootcamp+-+May+6-10+2024>`__.

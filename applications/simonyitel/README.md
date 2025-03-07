@@ -21,8 +21,6 @@ Deployment for the Simonyi Survey Telescope CSCs
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | lasertracker1-sim.enabled | bool | `false` | Enable the LaserTracker:1 simulator CSC |
 | lasertracker1.enabled | bool | `false` | Enable the LaserTracker:1 CSC |
-| m1m3-sim.enabled | bool | `false` | Enable the MTM1M3 simulator CSC |
-| m1m3.enabled | bool | `false` | Enable the MTM1M3 hardware simulator CSC |
 | mtaircompressor1-sim.enabled | bool | `false` | Enable the MTAirCompressor:1 simulator CSC |
 | mtaircompressor1.enabled | bool | `false` | Enable the MTAirCompressor:1 CSC |
 | mtaircompressor2-sim.enabled | bool | `false` | Enable the MTAirCompressor:2 simulator CSC |
@@ -32,11 +30,16 @@ Deployment for the Simonyi Survey Telescope CSCs
 | mtdome-sim.enabled | bool | `false` | Enable the MTDome simulator CSC |
 | mtdome.enabled | bool | `false` | Enable the MTDome CSC |
 | mtheaderservice.enabled | bool | `false` | Enable the MTHeaderService CSC |
+| mtm1m3-sim.enabled | bool | `false` | Enable the MTM1M3 simulator CSC |
+| mtm1m3.enabled | bool | `false` | Enable the MTM1M3 hardware simulator CSC |
+| mtm1m3ts-sim.enabled | bool | `false` | Enable the MTM1M3TS simulator CSC |
 | mtm2-sim.enabled | bool | `false` | Enable the MTM2 simulator CSC |
 | mtm2.enabled | bool | `false` | Enable the MTM2 CSC |
 | mtm2hexapod-sim.enabled | bool | `false` | Enable the MTHexapod:2 simulator CSC |
 | mtm2hexapod.enabled | bool | `false` | Enable the MTHexapod:2 CSC |
 | mtmount-sim.enabled | bool | `false` | Enable the MTMount simulator CSC |
 | mtmount.enabled | bool | `false` | Enable the MTMount CSC |
+| mtoods.enabled | bool | `false` | Enable the MTOODS simulator CSC |
 | mtrotator-sim.enabled | bool | `false` | Enable the MTRotator simulator CSC |
 | mtrotator.enabled | bool | `false` | Enable the MTRotator CSC |
+| mtvms-m1m3-sim.enabled | bool | `false` | Enable the MTVMS:1 simulator CSC |

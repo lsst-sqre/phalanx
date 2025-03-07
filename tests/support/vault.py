@@ -6,14 +6,14 @@ import json
 import os
 from collections import defaultdict
 from collections.abc import Iterator
-from datetime import timedelta
+from datetime import UTC, datetime, timedelta
 from typing import Any
 from unittest.mock import patch
 from uuid import uuid4
 
 import hvac
 from hvac.exceptions import InvalidPath
-from safir.datetime import current_datetime, isodatetime
+from safir.datetime import isodatetime
 
 from phalanx.models.vault import VaultAppRoleMetadata, VaultToken
 
@@ -94,15 +94,15 @@ class MockVaultClient:
         """
         assert ttl[-1] == "d"
         if create_expired_token:
-            expires = current_datetime() - timedelta(days=1)
+            expires = datetime.now(tz=UTC) - timedelta(days=1)
         else:
-            expires = current_datetime() + timedelta(days=int(ttl[:-1]))
+            expires = datetime.now(tz=UTC) + timedelta(days=int(ttl[:-1]))
         token = VaultToken(
             display_name=f"token-{display_name}",
             token=f"s.{os.urandom(16).hex()}",
             accessor=os.urandom(16).hex(),
             policies=policies,
-            expires=expires,
+            expires=expires.replace(microsecond=0),
         )
         self._tokens.append(token)
         return {

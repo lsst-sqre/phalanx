@@ -26,6 +26,23 @@ config:
   # -- Use fake obsenv management system
   useFakeObsenvManager: false
 
+securityContext:
+  # -- User ID
+  user: 72091
+
+  # -- Group ID
+  group: 72089
+
+nfsMount:
+  # -- Path to mount obs-env directory into container
+  containerPath: /net/obs-env
+
+  # -- Path on the server where the data lives
+  serverPath: /obs-env
+
+  # -- Server where the data lives
+  server: ""
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}

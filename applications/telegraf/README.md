@@ -28,6 +28,7 @@ Application telemetry collection service
 | telegraf.env[0].valueFrom.secretKeyRef.name | string | `"telegraf"` |  |
 | telegraf.mountPoints[0].mountPath | string | `"/etc/telegraf-generated"` |  |
 | telegraf.mountPoints[0].name | string | `"telegraf-generated-config"` |  |
+| telegraf.pdb.create | bool | `false` |  |
 | telegraf.podLabels."hub.jupyter.org/network-access-hub" | string | `"true"` |  |
 | telegraf.rbac.clusterWide | bool | `true` |  |
 | telegraf.resources.limits.cpu | string | `"1"` |  |

@@ -86,6 +86,7 @@ spec:
               containerPort: 25826
               protocol: UDP
           livenessProbe:
+            failureThreshold: 6
             httpGet:
               path: /ping
               port: http

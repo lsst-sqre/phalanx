@@ -23,12 +23,18 @@ Rubin Observatory Environment Management System
 | obsenv-api.image.repository | string | `"rubincr.lsst.org/obsenv-api"` | Image to use in the obsenv-api deployment |
 | obsenv-api.image.tag | string | The appVersion of the chart | Tag of image to use |
 | obsenv-api.ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
+| obsenv-api.nfsMount.containerPath | string | `"/net/obs-env"` | Path to mount obs-env directory into container |
+| obsenv-api.nfsMount.server | string | `""` | Server where the data lives |
+| obsenv-api.nfsMount.serverPath | string | `"/obs-env"` | Path on the server where the data lives |
 | obsenv-api.nodeSelector | object | `{}` | Node selection rules for the obsenv-api deployment pod |
 | obsenv-api.podAnnotations | object | `{}` | Annotations for the obsenv-api deployment pod |
 | obsenv-api.replicaCount | int | `1` | Number of web deployment pods to start |
 | obsenv-api.resources | object | See `values.yaml` | Resource limits and requests for the obsenv-api deployment pod |
+| obsenv-api.securityContext.group | int | `72089` | Group ID |
+| obsenv-api.securityContext.user | int | `72091` | User ID |
 | obsenv-api.tolerations | list | `[]` | Tolerations for the obsenv-api deployment pod |
 | obsenv-ui.affinity | object | `{}` | Affinity rules for the obsenv-ui deployment pod |
+| obsenv-ui.config.authGroup | string | `"test-group"` | The group used to authorize users to change the package versions |
 | obsenv-ui.config.logLevel | string | `"INFO"` | Logging level |
 | obsenv-ui.config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | obsenv-ui.config.pathPrefix | string | `"/obsenv-ui"` | URL path prefix |

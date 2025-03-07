@@ -40,7 +40,7 @@ Log messages related to an exposure
 | image.pullPolicy | string | `"Always"` | Pull policy for the exposurelog image |
 | image.repository | string | `"lsstsqre/exposurelog"` | exposurelog image to use |
 | image.tag | string | The appVersion of the chart | Tag of exposure image to use |
-| ingress.gafaelfawrAuthQuery | string | `""` | Gafaelfawr auth query string |
+| ingress.auth.enabled | bool | `false` | Whether to require Gafaelfawr authentication for access |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the exposurelog pod |
 | podAnnotations | object | `{}` | Annotations for the exposurelog pod |

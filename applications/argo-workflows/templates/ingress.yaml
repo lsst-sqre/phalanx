@@ -4,9 +4,10 @@ metadata:
   name: argo-workflows
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
+  loginRedirect: true
   scopes:
     all: {{ .Values.ingress.scopes }}
-  loginRedirect: true
+  service: "argo-workflows"
 template:
   metadata:
     name: argo-workflows

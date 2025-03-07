@@ -234,16 +234,27 @@ class VaultClient:
             role_id=role_id, policies=r["data"]["token_policies"]
         )
 
-    def get_environment_secrets(self) -> dict[str, dict[str, SecretStr]]:
+    def get_environment_secrets(
+        self, exclude: set[str] | None = None
+    ) -> dict[str, dict[str, SecretStr]]:
         """Get the secrets for an environment currently stored in Vault.
+
+        Parameters
+        ----------
+        exclude
+            Applications to exclude, ignoring their Vault entries.
 
         Returns
         -------
         dict of dict
             Mapping from application to secret key to its secret from Vault.
         """
+        if not exclude:
+            exclude = set()
         vault_secrets = {}
         for application in self.list_application_secrets():
+            if application in exclude:
+                continue
             with suppress(VaultNotFoundError):
                 vault_secret = self.get_application_secret(application)
                 vault_secrets[application] = vault_secret

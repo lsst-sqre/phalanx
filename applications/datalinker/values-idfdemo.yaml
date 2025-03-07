@@ -1,3 +1,2 @@
 config:
-  separateSecrets: true
   slackAlerts: true

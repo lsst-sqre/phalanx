@@ -1,5 +1,5 @@
 ###############################
-Nublado Major Version Migration
+Nublado major version migration
 ###############################
 
 Currently we only discuss nublado v2 to nublado v3 migration; when the

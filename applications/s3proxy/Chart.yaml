@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 1.0.0
+description: Simple application to gateway S3 URLs to HTTPS
+name: s3proxy
+sources:
+- https://github.com/lsst-dm/s3proxy
+type: application
+version: 1.0.0

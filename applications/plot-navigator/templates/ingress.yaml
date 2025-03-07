@@ -6,10 +6,11 @@ metadata:
     {{- include "plot-navigator.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
+  loginRedirect: true
   scopes:
     all:
       - "exec:portal"
-  loginRedirect: true
+  service: "plot-navigator"
   delegate:
     internal:
       scopes: []
@@ -33,3 +34,24 @@ template:
               name: "plot-navigator"
               port:
                 number: 80
+        - path: "/plot-navigator/metrics"
+          pathType: "Prefix"
+          backend:
+            service:
+              name: "production-tools"
+              port:
+                number: 8080
+        - path: "/plot-navigator/bokeh"
+          pathType: "Prefix"
+          backend:
+            service:
+              name: "production-tools"
+              port:
+                number: 8080
+        - path: "/plot-navigator/images"
+          pathType: "Prefix"
+          backend:
+            service:
+              name: "production-tools"
+              port:
+                number: 8080

@@ -7,6 +7,7 @@ Helm chart for the Observatory Environment Management UI.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the obsenv-ui deployment pod |
+| config.authGroup | string | `"test-group"` | The group used to authorize users to change the package versions |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/obsenv-ui"` | URL path prefix |

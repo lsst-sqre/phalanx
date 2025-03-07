@@ -32,7 +32,7 @@ Phalanx comes with a Python command-line tool which depends on a variety of Pyth
 To ensure consistent behavior, those dependencies are pinned to specific versions.
 This tool should therefore always be run from inside a Python virtual environment or venv_.
 
-Ensure that you have Python 3.11 or later available.
+Ensure that you have Python 3.12 or later available.
 Then, create a virtual environment for that version of Python with your method of choice.
 virtualenvwrapper_ is one popular approach.
 

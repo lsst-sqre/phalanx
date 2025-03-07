@@ -2,6 +2,8 @@ apiVersion: access.strimzi.io/v1alpha1
 kind: KafkaAccess
 metadata:
   name: {{ include "squarebot.fullname" . }}-kafka
+  labels:
+    {{- include "squarebot.labels" . | nindent 4 }}
 spec:
   kafka:
     name: sasquatch

@@ -5,6 +5,8 @@ metadata:
   name: controller
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
+  annotations:
+    strimzi.io/next-node-ids: "[3,4,5]"
 spec:
   replicas: {{ .Values.kafka.replicas }}
   roles:
@@ -33,7 +35,7 @@ metadata:
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
   annotations:
-    strimzi.io/next-node-ids: "[0-99]"
+    strimzi.io/next-node-ids: "[0,1,2]"
 spec:
   replicas: {{ .Values.kafka.replicas }}
   roles:
@@ -62,7 +64,7 @@ metadata:
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
   annotations:
-    strimzi.io/next-node-ids: "[6-99]"
+    strimzi.io/next-node-ids: "[6,7,8]"
 spec:
   replicas: {{ .Values.kafka.replicas }}
   roles:
@@ -83,6 +85,10 @@ spec:
       affinity:
         {{- toYaml . | nindent 10 }}
       {{- end }}
+      {{- with .Values.brokerStorage.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 10 }}
+      {{- end}}
   {{- with .Values.kafka.resources }}
   resources:
     {{- toYaml . | nindent 6 }}

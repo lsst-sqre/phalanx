@@ -11,7 +11,7 @@ image:
   pullPolicy: IfNotPresent
 
   # -- Kafdrop image version
-  tag: 4.0.2
+  tag: 4.1.0
 
 kafka:
   # -- Bootstrap list of Kafka host/port pairs
@@ -47,7 +47,7 @@ existingSecret: ""
 
 # -- Command line arguments to Kafdrop
 # @default -- See `values.yaml`
-cmdArgs: "--message.format=AVRO --topic.deleteEnabled=false --topic.createEnabled=false"
+cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
 
 service:
   # -- Additional annotations to add to the service

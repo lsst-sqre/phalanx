@@ -19,5 +19,6 @@ Secret Storage
 | vault.server.ingress.hosts[0].paths[0] | string | `"/"` |  |
 | vault.server.ingress.tls[0].hosts[0] | string | `"vault.lsst.cloud"` |  |
 | vault.server.ingress.tls[0].secretName | string | `"vault-ingress-tls"` |  |
+| vault.server.readinessProbe.timeoutSeconds | int | `10` |  |
 | vault.server.resources | object | See `values.yaml` | Resource requests and limits for vault server pod |
 | vault.server.standalone.enabled | bool | `false` |  |

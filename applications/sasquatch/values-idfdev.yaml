@@ -54,7 +54,7 @@ strimzi-kafka:
 
 influxdb:
   ingress:
-    enabled: true
+    enabled: false
     hostname: data-dev.lsst.cloud
   resources:
     requests:
@@ -63,6 +63,55 @@ influxdb:
     limits:
       memory: 16Gi
       cpu: 2
+
+customInfluxDBIngress:
+  enabled: true
+  hostname: data-dev.lsst.cloud
+
+influxdb-enterprise:
+  enabled: true
+  license:
+    secret:
+      name: sasquatch
+      key: influxdb-enterprise-license
+  meta:
+    ingress:
+      enabled: true
+      hostname: data-dev.lsst.cloud
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 16Gi
+    sharedSecret:
+      secret:
+        name: sasquatch
+        key: influxdb-enterprise-shared-secret
+    resources:
+      requests:
+        memory: 2Gi
+        cpu: 1
+      limits:
+        memory: 4Gi
+        cpu: 2
+  data:
+    replicas: 2
+    config:
+      antiEntropy:
+        enabled: true
+    ingress:
+      enabled: true
+      hostname: data-dev.lsst.cloud
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 1Ti
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: 2
+      limits:
+        memory: 16Gi
+        cpu: 4
 
 telegraf-kafka-consumer:
   enabled: true
@@ -75,7 +124,7 @@ telegraf-kafka-consumer:
         [ "lsst.Test.*" ]
 
 kafdrop:
-  cmdArgs: "--message.format=AVRO --topic.deleteEnabled=true --topic.createEnabled=true"
+  cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=true --topic.createEnabled=true"
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
@@ -108,3 +157,34 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://data-dev.lsst.cloud/
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/idfdev.json
+
+app-metrics:
+  enabled: true
+  apps:
+    - gafaelfawr
+    - mobu
+    - noteburst
+    - nublado
+    - wobbly
+
+backup:
+  enabled: true
+  persistence:
+    size: 500Gi
+    storageClass: standard
+  backupItems:
+    - name: "chronograf"
+      enabled: true
+      retentionDays: 3
+    - name: "kapacitor"
+      enabled: true
+      retentionDays: 3
+    - name: "influxdb-enterprise-incremental"
+      enabled: true
+    - name: "influxdb-oss-full"
+      enabled: true
+      retentionDays: 3
+  restoreItems:
+    - name: "influxdb-oss-full"
+      enabled: true
+      backupTimestamp: "20250113T030120Z"

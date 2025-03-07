@@ -21,20 +21,22 @@ Event-driven processing of camera images
 | cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
 | cache.patchesPerImage | int | `4` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
 | cache.refcatsPerImage | int | `4` | A factor by which to multiply `baseSize` for refcat datasets. |
-| cacheCalibs | bool | `true` | Whether or not calibs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances, and only in the development environment. |
 | containerConcurrency | int | `1` | The number of Knative requests that can be handled simultaneously by one container |
+| debug.exportOutputs | bool | `true` | Whether or not pipeline outputs should be exported to the central repo. This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination. |
 | fullnameOverride | string | `"prompt-proto-service"` | Override the full name for resources (includes the release name) |
 | image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
 | image.tag | string | `"latest"` | Overrides the image tag whose default is the chart appVersion. |
+| imageNotifications.consumerOffsetReset | string | `"latest"` | Kafka consumer offset reset setting for image arrival notifications |
 | imageNotifications.imageTimeout | int | `20` | Timeout to wait after expected script completion for raw image arrival (seconds). |
 | imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
 | imagePullSecrets | list | `[]` |  |
 | instrument.calibRepo | string | None, must be set | URI to the shared repo used for calibrations, templates, and pipeline outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
 | instrument.name | string | None, must be set | The "short" name of the instrument |
-| instrument.pipelines.main | string | None, must be set | Machine-readable string describing which pipeline(s) should be run for which visits' raws. Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
-| instrument.pipelines.preprocessing | string | None, must be set | Machine-readable string describing which pipeline(s) should be run before which visits' raw arrival. |
+| instrument.pipelines.main | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run for which visits' raws. Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
+| instrument.pipelines.preprocessing | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run before which visits' raw arrival. |
+| instrument.preloadPadding | int | `30` | Number of arcseconds to pad the spatial region in preloading. |
 | instrument.skymap | string | `""` | Skymap to use with the instrument |
 | knative.cpuLimit | int | `1` | The maximum cpu cores for the full pod (see `containerConcurrency`). |
 | knative.cpuRequest | int | `1` | The cpu cores requested for the full pod (see `containerConcurrency`). |

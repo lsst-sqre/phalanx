@@ -2,4 +2,8 @@ gafaelfawr_db:
   user: 'gafaelfawr'
   db: 'gafaelfawr'
 
+cmservice_db:
+  user: 'cmservice'
+  db: 'cmservice'
+
 postgresStorageClass: 'wekafs--sdf-k8s01'

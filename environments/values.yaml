@@ -66,8 +66,8 @@ applications:
   # -- Eanble the datalinker application
   datalinker: false
 
-  # -- Enable the eas control system application
-  eas: false
+  # -- Enable the envsys control system application
+  envsys: false
 
   # -- Enable the exposurelog application
   exposurelog: false
@@ -78,12 +78,15 @@ applications:
   # -- Enable the filestore-backup application
   filestore-backup: false
 
+  # -- Enable the flink application
+  flink: false
+
   # -- Enable the Gafaelfawr application. This is required by Phalanx since
   # most other applications use `GafaelfawrIngress`
   gafaelfawr: true
 
-  # -- Enable the gai-helpers application
-  gai-helpers: false
+  # -- Enable the rubin-rag application
+  rubin-rag: false
 
   # -- Enable the ghostwriter application
   ghostwriter: false
@@ -103,8 +106,8 @@ applications:
   # -- Enable the jira-data-proxy application
   jira-data-proxy: false
 
-  # -- Enable the kubernetes-replicator application
-  kubernetes-replicator: false
+  # -- Enable the keda application
+  keda: false
 
   # -- Enable the livetap application
   livetap: false
@@ -123,6 +126,9 @@ applications:
 
   # -- Enable the next-visit-fan-out application
   next-visit-fan-out: false
+
+  # -- Enable the next-visit-fan-out-keda application
+  next-visit-fan-out-keda: false
 
   # -- Enable the noteburst application (required by times-square)
   noteburst: false
@@ -159,11 +165,29 @@ applications:
   # -- Enable the ppdb-replication application
   ppdb-replication: false
 
+  # -- Enable the prompt-keda-hsc application
+  prompt-keda-hsc: false
+
+  # -- Enable the prompt-keda-latiss application
+  prompt-keda-latiss: false
+
+  # -- Enable the prompt-keda-lsstcamimsim application
+  prompt-keda-lsstcamimsim: false
+
+  # -- Enable the prompt-keda-lsstcomcamsim application
+  prompt-keda-lsstcomcamsim: false
+
+  # -- Enable the prompt-redis application
+  prompt-redis: false
+
   # -- Enable the rubintv application
   rubintv: false
 
   # -- Enable the rubintv-dev application
   rubintv-dev: false
+
+  # -- Enable the s3proxy application
+  s3proxy: false
 
   # -- Enable the sasquatch application
   sasquatch: false
@@ -174,8 +198,8 @@ applications:
   # -- Enable the schedview-snapshot application
   schedview-snapshot: false
 
-  # -- Enable the siav2 application
-  siav2: false
+  # -- Enable the sia over butler application
+  sia: false
 
   # -- Enable the simonyitel control system application
   simonyitel: false
@@ -200,6 +224,9 @@ applications:
 
   # -- Enable the prompt-proto-service-lsstcam application
   prompt-proto-service-lsstcam: false
+
+  # -- Enable the prompt-proto-service-lsstcamimsim application
+  prompt-proto-service-lsstcamimsim: false
 
   # -- Enable the prompt-proto-service-lsstcomcam application
   prompt-proto-service-lsstcomcam: false
@@ -227,6 +254,9 @@ applications:
 
   # -- Enable the tap application
   tap: false
+
+  # -- Enable the tasso application
+  tasso: false
 
   # -- Enable the telegraf application
   telegraf: false
@@ -259,6 +289,10 @@ applications:
   # -- Enable the vo-cutouts application
   vo-cutouts: false
 
+  # -- Enable the wobbly application, required if the environment will be
+  # running any Safir-based UWS services
+  wobbly: false
+
 # -- Add labels for application namespaces.
 namespaceLabels: {}
 
@@ -280,7 +314,7 @@ controlSystem:
   topicName: sal
 
   # -- Kafka broker address for the control system deployment
-  kafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
+  kafkaBrokerAddress: sasquatch-kafka-bootstrap.sasquatch:9092
 
   # -- Kafka topic replication factor for control system topics
   kafkaTopicReplicationFactor: 3

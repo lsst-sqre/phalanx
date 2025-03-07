@@ -1,0 +1,16 @@
+image:
+  # -- Pull policy for the tasso image
+  pullPolicy: Always
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: v1.0.1
+
+config:
+  logLevel: "DEBUG"
+
+  databaseUrl: "postgresql://rubin@usdf-prompt-processing-dev.slac.stanford.edu/lsst-devl"
+
+s3:
+  imageBucket: rubin-ap-cutouts
+  endpointUrl: https://s3dfrgw.slac.stanford.edu

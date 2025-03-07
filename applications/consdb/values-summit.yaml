@@ -1,5 +1,6 @@
 db:
   user: "oods"
+  passwordkey: "oods-password"
   host: "postgresdb01.cp.lsst.org"
   database: "exposurelog"
 lfa:
@@ -7,15 +8,15 @@ lfa:
 hinfo:
   latiss:
     enable: true
-    tag: "tickets-DM-44551"
+    tag: "24.10.3"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcomcam:
     enable: true
-    tag: "tickets-DM-44551"
+    tag: "24.10.3"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcam:
     enable: false
-    tag: "tickets-DM-44551"
+    tag: "24.10.3"
 pq:
   image:
-    tag: "main"
+    tag: "24.10.3"

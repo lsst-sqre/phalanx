@@ -1,9 +1,93 @@
+cbp:
+  # -- Enable the CBP:0 CSC
+  enabled: false
+
+electrometer101:
+  # -- Enable the Electrometer:101 CSC
+  enabled: false
+
+electrometer101-sim:
+  # -- Enable the Electrometer:11 simulator CSC
+  enabled: false
+
+electrometer102:
+  # -- Enable the Electrometer:102 CSC
+  enabled: false
+
+electrometer102-sim:
+  # -- Enable the Electrometer:102 simulator CSC
+  enabled: false
+
+electrometer201:
+  # -- Enable the Electrometer:201 CSC
+  enabled: false
+
+electrometer201-sim:
+  # -- Enable the Electrometer:201 simulator CSC
+  enabled: false
+
 gcheaderservice1:
   # -- Enable the GCHeaderService:1 CSC
   enabled: false
 
+ledprojector:
+  # -- Enabled the LedProjector:0 CSC
+  enabled: false
+
+ledprojector-sim:
+  # -- Enabled the LedProjector:0 simulator CSC
+  enabled: false
+
+linearstage101:
+  # -- Enable the LinearStage:101 CSC
+  enabled: false
+
+linearstage101-sim:
+  # -- Enable the LinearStage:101 simulator CSC
+  enabled: false
+
+linearstage102:
+  # -- Enable the LinearStage:102 CSC
+  enabled: false
+
+linearstage102-sim:
+  # -- Enable the LinearStage:102 simulator CSC
+  enabled: false
+
+linearstage103:
+  # -- Enable the LinearStage:103 CSC
+  enabled: false
+
+linearstage103-sim:
+  # -- Enable the LinearStage:103 simulator CSC
+  enabled: false
+
+linearstage104:
+  # -- Enable the LinearStage:104 CSC
+  enabled: false
+
+linearstage104-sim:
+  # -- Enable the LinearStage:104 simulator CSC
+  enabled: false
+
 simulation-gencam:
   # -- Enabled the GenericCamera:1 CSC
+  enabled: false
+
+tunablelaser:
+  # -- Enabled the TunableLaser:0 CSC
+  enabled: false
+
+tunablelaser-sim:
+  # -- Enabled the TunableLaser:0 simulator CSC
+  enabled: false
+
+atmonochromator:
+  # -- Enabled the ATMonochromator CSC
+  enabled: false
+
+atwhitelight:
+  # -- Enabled the ATWhitelight CSC
   enabled: false
 
 # The following will be set by parameters injected by Argo CD and should not

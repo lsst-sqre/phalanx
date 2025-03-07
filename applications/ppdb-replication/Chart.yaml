@@ -3,6 +3,6 @@ appVersion: 0.1.0
 description: Replicates data from the APDB to the PPDB
 name: ppdb-replication
 sources:
-- https://github.com/lsst/dax_ppdb.git
+  - https://github.com/lsst/dax_ppdb
 type: application
 version: 1.0.0

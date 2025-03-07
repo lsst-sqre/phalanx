@@ -7,13 +7,28 @@ ingress-nginx:
     allowSnippetAnnotations: true
 
     config:
+      # -- Level of dangerous annotations allowed. Must be set to `Critical`
+      # to allow snippets.
+      annotations-risk-level: "Critical"
+
       # -- Put the complete path in `X-Forwarded-For`, not just the last hop,
       # so that the client IP will be exposed to Gafaelfawr
       compute-full-forwarded-for: "true"
 
+      # -- Size and number of the buffers used to read HTTP headers from
+      # clients. Increase this from its default size in case clients send
+      # large cookies.
+      large-client-header-buffers: "4 64k"
+
       # -- Maximum size of the client request body (needs to be large enough
       # to allow table uploads)
       proxy-body-size: "100m"
+
+      # -- Maximum size of the buffer used to read HTTP headers from the
+      # backend or auth subrequest handler. This needs to be larger than the
+      # default because Gafaelfawr reflects all of the user's cookies other
+      # than the Gafaelfawr one.
+      proxy-buffer-size: "64k"
 
       # -- Redirect all non-SSL access to SSL
       ssl-redirect: "true"
@@ -26,6 +41,12 @@ ingress-nginx:
       # @default -- See `values.yaml`
       server-snippet: |
         set $auth_error_body '';
+        set $auth_ratelimit_limit '';
+        set $auth_ratelimit_remaining '';
+        set $auth_ratelimit_reset '';
+        set $auth_ratelimit_resource '';
+        set $auth_ratelimit_used '';
+        set $auth_retry_after '';
         set $auth_status '';
         set $auth_www_authenticate '';
         location @autherror {
@@ -34,6 +55,16 @@ ingress-nginx:
             add_header Cache-Control "no-cache, must-revalidate" always;
             add_header WWW-Authenticate $auth_www_authenticate always;
             return 400 $auth_error_body;
+          }
+          if ($auth_status = 429) {
+            add_header Cache-Control "no-cache, must-revalidate" always;
+            add_header Retry-After $auth_retry_after always;
+            add_header X-RateLimit-Limit $auth_ratelimit_limit always;
+            add_header X-RateLimit-Remaining $auth_ratelimit_remaining always;
+            add_header X-RateLimit-Reset $auth_ratelimit_reset always;
+            add_header X-RateLimit-Resource $auth_ratelimit_resource always;
+            add_header X-RateLimit-Used $auth_ratelimit_used always;
+            return 429 $auth_error_body;
           }
           add_header Cache-Control "no-cache, must-revalidate" always;
           add_header WWW-Authenticate $auth_www_authenticate always;

@@ -23,7 +23,9 @@ applications:
   sasquatch: true
   schedview-snapshot: true
   semaphore: true
+  sia: false
   ssotap: true
   squareone: true
   strimzi: true
+  strimzi-access-operator: true
   tap: true

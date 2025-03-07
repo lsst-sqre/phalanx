@@ -1,0 +1,102 @@
+{{- if .Values.config.updateSchema -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "times-square-schema-update"
+  annotations:
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "hook-succeeded"
+    helm.sh/hook-weight: "1"
+  labels:
+    {{- include "times-square.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "times-square.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "schema-update"
+        times-square-redis-client: "true"
+    spec:
+      {{- if .Values.cloudsql.enabled }}
+      serviceAccountName: {{ include "times-square.serviceAccountName" . }}
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        - name: "times-square"
+          command:
+            - "times-square"
+            - "update-db-schema"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          envFrom:
+            - configMapRef:
+                name: {{ include "times-square.fullname" . }}
+          env:
+            - name: "TS_GAFAELFAWR_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-gafaelfawr-token
+                  key: "token"
+            - name: "TS_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_DATABASE_PASSWORD"
+            - name: "TS_GITHUB_WEBHOOK_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_GITHUB_WEBHOOK_SECRET"
+            - name: "TS_GITHUB_WEBHOOK_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_GITHUB_WEBHOOK_SECRET"
+            - name: "TS_GITHUB_APP_PRIVATE_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_GITHUB_APP_PRIVATE_KEY"
+            - name: "TS_SLACK_WEBHOOK_URL"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_SLACK_WEBHOOK_URL"
+      {{- if .Values.cloudsql.enabled }}
+      initContainers:
+        {{- include "times-square.cloudsqlSidecar" . | nindent 8 }}
+      {{- end }}
+      restartPolicy: "Never"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

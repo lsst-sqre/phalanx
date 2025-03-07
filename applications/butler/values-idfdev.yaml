@@ -3,9 +3,14 @@ image:
 
 config:
   dp02ClientServerIsDefault: true
-  dp02PostgresUri: postgresql://postgres@sqlproxy-butler-int.sqlproxy-cross-project:5432/dp02
+  # butler-registry-dp02-dev Google Cloud SQL instance in science-platform-dev
+  dp02PostgresUri: postgresql://butler@dp02.rsp-sql-dev.internal:5432/dp02
+  dp02UseSlacDatastore: true
+  dp1PostgresUri: postgresql://butler@dp1.rsp-sql-dev.internal:5432/dp1
   s3EndpointUrl: "https://storage.googleapis.com"
-  additionalS3ProfileName: "ir2"
   repositories:
-    dp02: "file:///opt/lsst/butler/config/dp02.yaml"
-    ir2: "s3://butler-us-central1-panda-dev/ir2/butler-ir2.yaml"
+    dp02: "file:///opt/lsst/butler/public/config/dp02-server.yaml"
+    dp1: "file:///opt/lsst/butler/config/dp1.yaml"
+  shareNubladoSecrets: false
+  additionalS3EndpointUrls:
+    slac: "https://sdfdatas3.slac.stanford.edu"

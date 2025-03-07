@@ -3,7 +3,9 @@ ingress:
 
 config:
   siteName: "Rubin Science Platform @ data-int"
+  docsBaseUrl: "https://rsp.lsst.io/v/idfint"
   semaphoreUrl: "https://data-int.lsst.cloud/semaphore"
+  timesSquareUrl: "https://data-int.lsst.cloud/times-square/api"
   coManageRegistryUrl: "https://id-int.lsst.cloud"
   apiAspectPageMdx: |
     # Rubin Science Platform APIs
@@ -170,3 +172,7 @@ config:
     [#dm-rsp-team channel](https://lsstc.slack.com/archives/C8EEUGDSA).
 
     Don't forget to check the <Link href="/docs">documentation</Link>.
+
+  enableSentry: true
+  sentryTracesSampleRate: 1.0
+  sentryReplaysOnErrorSampleRate: 1.0

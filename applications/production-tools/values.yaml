@@ -32,10 +32,6 @@ ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
 
-config:
-  # -- Whether to use the new secrets management scheme
-  separateSecrets: false
-
 # -- Resource limits and requests for the production-tools deployment pod
 resources: {}
 

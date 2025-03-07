@@ -2,7 +2,7 @@
 Audit secrets for an environment
 ################################
 
-To check that all of the necessary secrets for an environment named ``<environment>`` are in Vault and appear to have the proper form, run:
+To check that all of the necessary secrets for an environment named ``<environment>`` are in Vault and appear to have the proper form, and to see exactly what a :doc:`syncing secrets for that environment <sync-secrets>` would do, run:
 
 .. prompt:: bash
 

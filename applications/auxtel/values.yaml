@@ -2,6 +2,10 @@ hexapod-sim:
   # -- Enable the hexapod controller simulator
   enabled: false
 
+atbuilding:
+  # -- Enable the ATBuilding CSC
+  enabled: false
+
 atdome:
   # -- Enable the ATDome CSC
   enabled: false
@@ -40,6 +44,10 @@ atspectrograph:
 
 atspectrograph-sim:
   # -- Enable the ATSpectograph simulator CSC
+  enabled: false
+
+pmd1:
+  # -- Enable the PMD1 CSC
   enabled: false
 
 # The following will be set by parameters injected by Argo CD and should not

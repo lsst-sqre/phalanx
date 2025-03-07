@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "rolex2.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "rolex2.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "rolex2.selectorLabels" . | nindent 4 }}

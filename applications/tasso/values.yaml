@@ -1,0 +1,82 @@
+# Default values for tasso.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the tasso deployment
+  repository: "ghcr.io/lsst-dm/tasso"
+
+  # -- Pull policy for the tasso image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+config:
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/tasso-api"
+
+  # -- Whether to send Slack alerts for unexpected failures
+  slackAlerts: false
+
+  # -- database connection url
+  databaseUrl: ""
+
+  # -- database schema
+  databaseSchema: "tasso"
+
+s3:
+  # -- Bucket containing the incoming raw images
+  # @default -- None, must be set
+  imageBucket: ""
+  # -- S3 endpoint containing `imageBucket`
+  # @default -- None, must be set
+  endpointUrl: ""
+  # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
+  disableBucketValidation: 0
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# -- Affinity rules for the tasso deployment pod
+affinity: {}
+
+# -- Node selection rules for the tasso deployment pod
+nodeSelector: {}
+
+# -- Annotations for the tasso deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the tasso deployment pod
+# @default -- See `values.yaml`
+resources: {}
+
+# -- Tolerations for the tasso deployment pod
+tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

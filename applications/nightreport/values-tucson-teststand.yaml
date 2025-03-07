@@ -1,10 +1,8 @@
 image:
   repository: ts-dockerhub.lsst.org/nightreport
-  tag: c0037
+  tag: c0039
   pullPolicy: Always
 config:
   site_id: tucson
 db:
   host: postgresdb01.tu.lsst.org
-global:
-  tsVaultSecretsPath: ""

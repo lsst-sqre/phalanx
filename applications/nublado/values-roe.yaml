@@ -14,7 +14,7 @@ controller:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "6.3.0"
+            tag: "8.4.1"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -51,7 +51,13 @@ proxy:
       nginx.ingress.kubernetes.io/proxy-read-timeout: "50s"
       nginx.ingress.kubernetes.io/client-max-body-size: "50m"
 
+hub:
+  internalDatabase: true
+
 jupyterhub:
   hub:
     db:
       upgrade: true
+
+secrets:
+  templateSecrets: false

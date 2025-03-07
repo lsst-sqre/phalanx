@@ -5,14 +5,13 @@ from __future__ import annotations
 import os
 import re
 from base64 import b64decode, b64encode
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import bcrypt
 import click
 import yaml
 from cryptography.fernet import Fernet
-from safir.datetime import current_datetime
 
 from phalanx.factory import Factory
 from phalanx.models.gafaelfawr import Token
@@ -64,6 +63,33 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
     )
     assert result.exit_code == 1
     assert result.output == read_output_data("idfdev", "secrets-audit")
+
+
+def test_audit_exclude(factory: Factory, mock_vault: MockVaultClient) -> None:
+    input_path = phalanx_test_path()
+    config_storage = factory.create_config_storage()
+    environment = config_storage.load_environment("idfdev")
+    mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
+
+    secrets_path = input_path / "secrets" / "idfdev.yaml"
+    result = run_cli(
+        "secrets",
+        "audit",
+        "--secrets",
+        str(secrets_path),
+        "--exclude",
+        "argocd",
+        "--exclude",
+        "unknown",
+        "idfdev",
+        env={"VAULT_TOKEN": "sometoken"},
+    )
+    assert result.exit_code == 1
+    all_output = read_output_data("idfdev", "secrets-audit").split("\n")
+    expected = "\n".join(
+        o for o in all_output if "argocd" not in o and "unknown" not in o
+    )
+    assert result.output == expected
 
 
 def test_audit_onepassword_missing(
@@ -429,5 +455,32 @@ def test_sync_regenerate(
 
     # Check whether mtime secrets are generated properly.
     mtime = datetime.fromisoformat(argocd["admin.passwordMtime"])
-    now = current_datetime()
+    now = datetime.now(tz=UTC)
     assert now - timedelta(seconds=5) <= mtime <= now
+
+
+def test_sync_exclude(factory: Factory, mock_vault: MockVaultClient) -> None:
+    input_path = phalanx_test_path()
+    secrets_path = input_path / "secrets" / "idfdev.yaml"
+    config_storage = factory.create_config_storage()
+    environment = config_storage.load_environment("idfdev")
+    mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
+
+    result = run_cli(
+        "secrets",
+        "sync",
+        "--secrets",
+        str(secrets_path),
+        "--exclude",
+        "argocd",
+        "--exclude",
+        "portal",
+        "idfdev",
+        env={"VAULT_TOKEN": "sometoken"},
+    )
+    assert result.exit_code == 0
+    all_output = read_output_data("idfdev", "sync-output").split("\n")
+    expected = "\n".join(
+        o for o in all_output if "argocd" not in o and "portal" not in o
+    )
+    assert result.output == expected

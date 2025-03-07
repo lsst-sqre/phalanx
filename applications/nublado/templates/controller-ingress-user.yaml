@@ -9,6 +9,7 @@ config:
   scopes:
     all:
       - "exec:notebook"
+  service: "nublado-controller"
   delegate:
     notebook: {}
 template:

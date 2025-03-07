@@ -23,6 +23,9 @@ config:
   # -- URL path prefix
   pathPrefix: "/obsenv-ui"
 
+  # -- The group used to authorize users to change the package versions
+  authGroup: "test-group"
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}

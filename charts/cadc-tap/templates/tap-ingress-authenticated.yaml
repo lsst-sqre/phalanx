@@ -6,14 +6,15 @@ metadata:
     {{- include "cadc-tap.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
+  authType: "basic"
   scopes:
     all:
       - "read:tap"
-  authType: "basic"
+  service: {{ required "config.serviceName must be set" .Values.config.serviceName | quote }}
   delegate:
     internal:
       scopes: []
-      service: "tap"
+      service: {{ .Values.config.serviceName | quote }}
     useAuthorization: true
 template:
   metadata:
@@ -23,8 +24,8 @@ template:
       nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
       nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
       nginx.ingress.kubernetes.io/rewrite-target: "/tap/$2"
-      nginx.ingress.kubernetes.io/proxy-redirect-from: "http://$host/tap/"
-      nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$host/api/{{ .Values.ingress.path }}/"
+      nginx.ingress.kubernetes.io/proxy-redirect-from: "http://{{ .Values.global.host }}/tap/"
+      nginx.ingress.kubernetes.io/proxy-redirect-to: "https://{{ .Values.global.host }}/api/{{ .Values.ingress.path }}/"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/use-regex: "true"
       nginx.ingress.kubernetes.io/configuration-snippet: |

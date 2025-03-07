@@ -45,6 +45,8 @@ atmcs-sim:
   image:
     repository: ts-dockerhub.lsst.org/atmcs_sim
     pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
 
 atoods:
   image:
@@ -54,9 +56,13 @@ atoods:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
   butlerSecret:
-    containerPath: /home/saluser/.lsst
+    containerPath: &bs-cp /home/saluser/.lsst
     dbUser: oods
-    secretFilename: postgres-credentials.txt
+    secretFilename: &bs-fn postgres-credentials.txt
+  secretFixup:
+    containerPath: *bs-cp
+    filenames:
+    - *bs-fn
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS
@@ -126,6 +132,8 @@ atpneumatics-sim:
   image:
     repository: ts-dockerhub.lsst.org/at_pneumatics_sim
     pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
 
 atptg:
   image:

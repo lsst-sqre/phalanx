@@ -101,12 +101,16 @@ redis:
 
 
 # -- Configuration for checkerboard server
+# @default -- See `values.yaml`
 config:
   # -- Choose from the text form of Python logging levels
   logLevel: "INFO"
 
   # -- application Safir profile ("production" or "development")
   profile: "production"
+
+  # -- name of Slack profile field for GitHub username (case-sensitive)
+  slackProfileField: "GitHub username"
 
 global:
   # -- Base URL for the environment

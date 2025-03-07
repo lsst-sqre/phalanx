@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sasquatch-backup
+  labels:
+    {{- include "backup.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          {{- if .Values.podAnnotations }}
+          annotations:
+            {{ toYaml .Values.podAnnotations | nindent 12 }}
+          {{- end }}
+          labels:
+            {{- include "backup.selectorLabels" . | nindent 12 }}
+        spec:
+          serviceAccountName: sasquatch-backup
+          restartPolicy: OnFailure
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+          volumes:
+          - name: backup
+            persistentVolumeClaim:
+              claimName: sasquatch-backup
+          containers:
+          - name: sasquatch-backup
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+            volumeMounts:
+            - name: backup
+              mountPath: /backup
+            command:
+            - /bin/sh
+            - -c
+            - backup.sh
+            resources:
+              {{- toYaml .Values.resources | nindent 14 }}
+            env:
+            - name: BACKUP_ITEMS
+              value: {{ .Values.backupItems | toJson | quote }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+             {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}

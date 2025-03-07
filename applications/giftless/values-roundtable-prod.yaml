@@ -1,10 +1,11 @@
-image:
-  pullPolicy: "Always"
-  repository: "docker.io/lsstsqre/giftless"
-  tag: "upstream"
 server:
   readonly:
-    replicas: 3
+    replicas: 5
+    processes: 6
+    timeout: 1800
+  readwrite:
+    processes: 4
+    timeout: 1800
 ingress:
   hostname:
     readonly: "git-lfs.lsst.cloud"

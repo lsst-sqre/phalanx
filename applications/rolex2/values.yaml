@@ -1,0 +1,74 @@
+# -- Number of replicas.
+replicaCount: 1
+
+# -- This section holds the configuration of the container image.
+image:
+  # -- The Docker registry name of the container image
+  repository: lsstts/rolex
+  # -- The policy to apply when pulling an image for deployment
+  pullPolicy: IfNotPresent
+  # -- The tag of the container image
+  tag: ""
+  # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled
+  nexus3:
+
+# -- This is the namespace in which rolex will be placed
+namespace: rolex2
+# -- The list of pull secrets needed for the images.
+imagePullSecrets: []
+# -- Adds an extra string to the release name.
+nameOverride: ""
+# -- Specify the deployed application name specifically. Overrides all other names.
+fullnameOverride: ""
+# -- This allows the specification of pod annotations.
+podAnnotations: {}
+
+service:
+  # -- (string) The Service type for the application.
+  # This is either ClusterIP (internal access) or LoadBalancer (external access)
+  type: ClusterIP
+  # -- (int) The internal port number to use for the Service.
+  port: 80
+  # -- (string) The internal path to the service.
+  path: ""
+
+# -- Initial delay in verifying service liveness status
+initialDelaySeconds: 10
+# -- Response timeout when verifying service liveness status
+timeoutSeconds: 30
+# -- How frequent to verify service liveness status
+periodSeconds: 300
+
+ingress:
+  # -- (bool) Enable ingress
+  enabled: false
+  # -- (string) Assign the Ingress class name
+  className: ""
+  # -- Annotations for the ingress
+  annotations: {}
+  hosts:
+      # -- Hostname for the ingress service
+    - host: chart-example.local
+      # -- Paths for the ingress service
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+
+# -- Reserved resources for the deployment.
+resources: {}
+
+# -- Auto scaling configuration.
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+# -- Configurations for the deployment node selector
+nodeSelector: {}
+
+# -- Configuration for deployment toleration
+tolerations: []
+
+# -- Configuration for deployment affinity
+affinity: {}

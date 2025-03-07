@@ -3,7 +3,7 @@ Write the values.yaml file
 ##########################
 
 The :file:`values.yaml` file contains the customizable settings for your application.
-Those settings can be overriden for each environment in :file:`values-{environmet}.yaml`.
+Those settings can be overriden for each environment in :file:`values-{environment}.yaml`.
 
 As a general rule, only use :file:`values.yaml` settings for things that may vary between Phalanx environments.
 If something is the same in every Phalanx environment, it can be hard-coded into the Kubernetes resource templates.

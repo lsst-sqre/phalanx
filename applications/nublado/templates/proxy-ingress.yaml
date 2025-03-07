@@ -7,10 +7,11 @@ metadata:
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   authCacheDuration: "5m"
+  loginRedirect: true
   scopes:
     all:
       - "exec:notebook"
-  loginRedirect: true
+  service: "nublado"
   delegate:
     notebook: {}
 template:

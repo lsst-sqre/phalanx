@@ -40,26 +40,6 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
       containers:
-        {{- if .Values.cloudsql.enabled }}
-        - name: "cloud-sql-proxy"
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - "all"
-            readOnlyRootFilesystem: true
-            runAsNonRoot: true
-            runAsUser: 65532
-            runAsGroup: 65532
-          image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
-          imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
-          command:
-            - "/cloud_sql_proxy"
-            - "-ip_address_types=PRIVATE"
-            - "-log_debug_stdout=true"
-            - "-structured_logs=true"
-            - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
-        {{- end }}
         - name: {{ .Chart.Name }}
           securityContext:
             allowPrivilegeEscalation: false
@@ -75,11 +55,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /healthcheck
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /healthcheck
               port: http
           resources:
             {{- toYaml .Values.resources.timesSquare | nindent 12 }}
@@ -117,6 +97,15 @@ spec:
                 secretKeyRef:
                   name: {{ template "times-square.fullname" . }}-secret
                   key: "TS_SLACK_WEBHOOK_URL"
+            - name: "TS_SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_SENTRY_DSN"
+      {{- if .Values.cloudsql.enabled }}
+      initContainers:
+        {{- include "times-square.cloudsqlSidecar" . | nindent 8 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

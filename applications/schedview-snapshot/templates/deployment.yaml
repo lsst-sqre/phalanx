@@ -58,10 +58,6 @@ spec:
             - name: "schedview-snapshot-secrets"
               mountPath: "/opt/schedview"
               readOnly: true
-          command:
-            - /bin/bash
-            - -c
-            - micromamba run scheduler_dashboard --lfa
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

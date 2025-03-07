@@ -6,12 +6,6 @@ metadata:
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:
-  template:
-      secret:
-        metadata:
-          annotations:
-            replicator.v1.mittwald.de/replication-allowed: "true"
-            replicator.v1.mittwald.de/replication-allowed-namespaces: "squarebot"
   authentication:
     type: tls
   authorization:

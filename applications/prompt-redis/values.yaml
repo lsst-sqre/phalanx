@@ -1,0 +1,60 @@
+# Default values for prompt-redis.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+redis:
+  persistence:
+    # -- Whether to persist Redis storage and thus tokens. Setting this to
+    # false will use `emptyDir` and reset all tokens on every restart. Only
+    # use this for a test deployment.
+    enabled: true
+
+    # -- Amount of persistent storage to request
+    size: "1Gi"
+
+    # -- Class of storage to request
+    storageClass: ""
+
+    # -- Access mode of storage to request
+    accessMode: "ReadWriteOnce"
+
+    # -- Use an existing PVC, not dynamic provisioning. If this is set, the
+    # size, storageClass, and accessMode settings are ignored.
+    volumeClaimName: ""
+
+  # -- Resource limits and requests for the persistent Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "40Mi"
+    requests:
+      cpu: "50m"
+      memory: "15Mi"
+
+  # -- Affinity rules for the persistent Redis pod
+  affinity: {}
+
+  # -- Node selection rules for the persistent Redis pod
+  nodeSelector: {}
+
+  # -- Pod annotations for the persistent Redis pod
+  podAnnotations: {}
+
+  # -- Tolerations for the persistent Redis pod
+  tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

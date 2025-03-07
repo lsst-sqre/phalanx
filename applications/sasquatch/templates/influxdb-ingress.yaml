@@ -1,0 +1,26 @@
+{{- if .Values.customInfluxDBIngress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sasquatch-influxdb
+  labels:
+    app.kubernetes.io/instance: sasquatch
+    app.kubernetes.io/name: influxdb
+{{- if .Values.customInfluxDBIngress.annotations }}
+  annotations:
+{{ toYaml .Values.customInfluxDBIngress.annotations | indent 4 }}
+{{- end }}
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.customInfluxDBIngress.hostname | quote }}
+      http:
+        paths:
+          - path: {{ .Values.customInfluxDBIngress.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: sasquatch-influxdb
+                port:
+                  number: 8086
+{{- end }}

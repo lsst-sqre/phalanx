@@ -11,7 +11,6 @@ A collection of utility pages for monitoring data processing.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the production-tools deployment pod |
-| config.separateSecrets | bool | `false` | Whether to use the new secrets management scheme |
 | environment | object | `{}` |  |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |

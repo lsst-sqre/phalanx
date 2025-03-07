@@ -26,32 +26,8 @@ spec:
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.cloudsql.enabled }}
-      serviceAccountName: "<CHARTNAME>"
-      {{- else }}
       automountServiceAccountToken: false
-      {{- end }}
       containers:
-        {{- if .Values.cloudsql.enabled }}
-        - name: "cloud-sql-proxy"
-          command:
-            - "/cloud_sql_proxy"
-            - "-ip_address_types=PRIVATE"
-            - "-log_debug_stdout=true"
-            - "-structured_logs=true"
-            - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
-          image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
-          imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - "all"
-            readOnlyRootFilesystem: true
-            runAsNonRoot: true
-            runAsUser: 65532
-            runAsGroup: 65532
-        {{- end }}
         - name: "db-worker"
           command:
             - "arq"
@@ -62,11 +38,13 @@ spec:
                 secretKeyRef:
                   name: "<CHARTNAME>"
                   key: "redis-password"
-            - name: "<CHARTENVPREFIX>_DATABASE_PASSWORD"
+            {{- if .Values.config.slackAlerts }}
+            - name: "<CHARTENVPREFIX>_SLACK_WEBHOOK"
               valueFrom:
                 secretKeyRef:
                   name: "<CHARTNAME>"
-                  key: "database-password"
+                  key: "slack-webhook"
+            {{- end }}
           envFrom:
             - configMapRef:
                 name: "<CHARTNAME>"

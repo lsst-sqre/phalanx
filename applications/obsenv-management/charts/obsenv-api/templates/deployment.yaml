@@ -47,6 +47,10 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+          volumeMounts:
+          - name: obsenv
+            mountPath: {{ .Values.nfsMount.containerPath }}
+            readOnly: false
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -57,5 +61,11 @@ spec:
       {{- end }}
       securityContext:
         runAsNonRoot: true
-        runAsUser: 72091
-        runAsGroup: 72089
+        runAsUser: {{ .Values.securityContext.user }}
+        runAsGroup: {{ .Values.securityContext.group }}
+      volumes:
+      - name: obsenv
+        nfs:
+          path: {{ .Values.nfsMount.serverPath }}
+          readOnly: false
+          server: {{ .Values.nfsMount.server }}

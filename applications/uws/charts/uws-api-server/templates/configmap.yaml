@@ -4,6 +4,7 @@ metadata:
   name: {{ .Release.Name }}-configmap
 data:
   config: |
+    ttlSecondsAfterFinished: "{{ .Values.ttlSecondsAfterFinished }}"
     workingVolume:
       {{- toYaml .Values.workingVolume | nindent 6 }}
     volumes:
@@ -25,4 +26,9 @@ data:
       containerPath: "{{ .Values.butlerPg.containerPath }}"
       dbUser: "{{ .Values.butlerPg.dbUser }}"
       secretName: "{{ .Values.butlerPg.secretName }}"
+    {{- end }}
+    {{- if .Values.s3ButlerStorage }}
+    s3ButlerStorage:
+      endpointURL: "{{ .Values.s3ButlerStorage.endpointURL }}"
+      containerPath: "{{ .Values.s3ButlerStorage.containerPath }}"
     {{- end }}

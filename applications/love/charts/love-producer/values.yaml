@@ -3,8 +3,8 @@ replicaCount: 1
 image:
   # -- The LOVE producer image to use
   repository: lsstts/love-producer
-  # str -- The tag to use for the LOVE producer image
-  tag:
+  # -- (int) The cycle revision to add to the image tag
+  revision:
   # -- The pull policy on the LOVE producer image
   pullPolicy: IfNotPresent
 # -- This section holds a set of key, value pairs for environmental variables

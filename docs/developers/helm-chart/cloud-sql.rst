@@ -30,34 +30,36 @@ Running a Cloud SQL sidecar container
 A sidecar container is the best approach if the only portions of your application that need to access Cloud SQL are long-running deployments, and particularly if there is only one such deployment.
 If your application uses a ``CronJob`` or other type of short-lived pod, you may find it easier to run a proxy service as described below.
 
-To set up the Cloud SQL proxy, add code like the following to the ``spec.template.spec.containers`` field of your deployment:
+To set up the Cloud SQL proxy, add code like the following to the ``spec.template.spec`` field of your deployment:
 
 .. code-block:: yaml
    :caption: templates/deployment.yaml
 
    {{- if .Values.cloudsql.enabled }}
-   - name: "cloud-sql-proxy"
-     command:
-       - "/cloud_sql_proxy"
-       - "-ip_address_types=PRIVATE"
-       - "-log_debug_stdout=true"
-       - "-structured_logs=true"
-       - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
-     image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
-     imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
-     {{- with .Values.cloudsql.resources }}
-     resources:
-       {{- toYaml . | nindent 12 }}
-     {{- end }}
-     securityContext:
-       allowPrivilegeEscalation: false
-       capabilities:
-         drop:
-           - "all"
-       readOnlyRootFilesystem: true
-       runAsNonRoot: true
-       runAsUser: 65532
-       runAsGroup: 65532
+   initContainers:
+     - name: "cloud-sql-proxy"
+       command:
+         - "/cloud_sql_proxy"
+         - "-ip_address_types=PRIVATE"
+         - "-log_debug_stdout=true"
+         - "-structured_logs=true"
+         - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
+       image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
+       imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
+       {{- with .Values.cloudsql.resources }}
+       resources:
+         {{- toYaml . | nindent 12 }}
+       {{- end }}
+       restartPolicy: "Always"
+       securityContext:
+         allowPrivilegeEscalation: false
+         capabilities:
+           drop:
+             - "all"
+         readOnlyRootFilesystem: true
+         runAsNonRoot: true
+         runAsUser: 65532
+         runAsGroup: 65532
    {{- end }}
 
 The corresponding additional stanza for :file:`values.yaml` is:

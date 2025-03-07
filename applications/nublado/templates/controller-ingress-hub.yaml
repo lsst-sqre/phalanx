@@ -9,6 +9,7 @@ config:
   scopes:
     all:
       - "admin:jupyterlab"
+  service: "nublado-controller"
 template:
   metadata:
     name: "controller-hub"

@@ -47,7 +47,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: consdb
-                  key: "oods-password"
+                  key: "{{ .Values.db.passwordkey }}"
             - name: "DB_USER"
               value: "{{ .Values.db.user }}"
             - name: "DB_NAME"
@@ -73,12 +73,22 @@ spec:
             - name: "KAFKA_PASSWORD"
               valueFrom:
                 secretKeyRef:
-                  name: sasquatch
+                  name: consdb
                   key: "consdb-password"
             - name: "KAFKA_GROUP_ID"
-              value: "{{ .Values.kafka.group_id }}"
+              value: "{{ .Values.kafka.group_id }}-latiss"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
+          volumeMounts:
+            - name: "tmp"
+              mountPath: "/tmp"
+            - name: "astropy"
+              mountPath: "/home/lsst/.astropy"
+      volumes:
+        - name: "tmp"
+          emptyDir: {}
+        - name: "astropy"
+          emptyDir: {}
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -145,7 +155,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: consdb
-                  key: "oods-password"
+                  key: "{{ .Values.db.passwordkey }}"
             - name: "DB_USER"
               value: "{{ .Values.db.user }}"
             - name: "DB_NAME"
@@ -171,12 +181,22 @@ spec:
             - name: "KAFKA_PASSWORD"
               valueFrom:
                 secretKeyRef:
-                  name: sasquatch
+                  name: consdb
                   key: "consdb-password"
             - name: "KAFKA_GROUP_ID"
-              value: "{{ .Values.kafka.group_id }}"
+              value: "{{ .Values.kafka.group_id }}-lsstcomcam"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
+          volumeMounts:
+            - name: "tmp"
+              mountPath: "/tmp"
+            - name: "astropy"
+              mountPath: "/home/lsst/.astropy"
+      volumes:
+        - name: "tmp"
+          emptyDir: {}
+        - name: "astropy"
+          emptyDir: {}
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -243,7 +263,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: consdb
-                  key: "oods-password"
+                  key: "{{ .Values.db.passwordkey }}"
             - name: "DB_USER"
               value: "{{ .Values.db.user }}"
             - name: "DB_NAME"
@@ -269,12 +289,22 @@ spec:
             - name: "KAFKA_PASSWORD"
               valueFrom:
                 secretKeyRef:
-                  name: sasquatch
+                  name: consdb
                   key: "consdb-password"
             - name: "KAFKA_GROUP_ID"
-              value: "{{ .Values.kafka.group_id }}"
+              value: "{{ .Values.kafka.group_id }}-lsstcam"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
+          volumeMounts:
+            - name: "tmp"
+              mountPath: "/tmp"
+            - name: "astropy"
+              mountPath: "/home/lsst/.astropy"
+      volumes:
+        - name: "tmp"
+          emptyDir: {}
+        - name: "astropy"
+          emptyDir: {}
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

@@ -1,0 +1,136 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "wobbly"
+  labels:
+    {{- include "wobbly.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "wobbly.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "wobbly.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.cloudsql.enabled }}
+      serviceAccountName: "wobbly"
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          env:
+            - name: "WOBBLY_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "wobbly"
+                  key: "database-password"
+            {{- if .Values.config.slackAlerts }}
+            - name: "WOBBLY_SLACK_WEBHOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "wobbly"
+                  key: "slack-webhook"
+            {{- end }}
+            {{- if .Values.config.metrics.enabled }}
+            - name: "KAFKA_BOOTSTRAP_SERVERS"
+              valueFrom:
+                secretKeyRef:
+                  name: "wobbly-kafka"
+                  key: "bootstrapServers"
+            - name: "KAFKA_CLIENT_CERT_PATH"
+              value: "/etc/wobbly-kafka/user.crt"
+            - name: "KAFKA_CLIENT_KEY_PATH"
+              value: "/etc/wobbly-kafka/user.key"
+            - name: "KAFKA_CLUSTER_CA_PATH"
+              value: "/etc/wobbly-kafka/ca.crt"
+            - name: "KAFKA_SECURITY_PROTOCOL"
+              valueFrom:
+                secretKeyRef:
+                  name: "wobbly-kafka"
+                  key: "securityProtocol"
+            {{- end }}
+          envFrom:
+            - configMapRef:
+                name: "wobbly"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          livenessProbe:
+            httpGet:
+              path: "/health"
+              port: "http"
+            periodSeconds: 300
+            timeoutSeconds: 10
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          {{- if (gt (int .Values.replicaCount) 1) }}
+          readinessProbe:
+            httpGet:
+              path: "/health"
+              port: "http"
+            periodSeconds: 60
+            timeoutSeconds: 10
+          {{- else }}
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          {{- if .Values.config.metrics.enabled }}
+          volumeMounts:
+            - name: "kafka"
+              mountPath: "/etc/wobbly-kafka/ca.crt"
+              readOnly: true
+              subPath: "ssl.truststore.crt"
+            - name: "kafka"
+              mountPath: "/etc/wobbly-kafka/user.crt"
+              readOnly: true
+              subPath: "ssl.keystore.crt"
+            - name: "kafka"
+              mountPath: "/etc/wobbly-kafka/user.key"
+              readOnly: true
+              subPath: "ssl.keystore.key"
+          {{- end }}
+      {{- if .Values.cloudsql.enabled }}
+      initContainers:
+        {{- include "wobbly.cloudsqlSidecar" . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.config.metrics.enabled }}
+      volumes:
+        - name: "kafka"
+          secret:
+            secretName: "wobbly-kafka"
+      {{- end }}

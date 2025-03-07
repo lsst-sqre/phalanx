@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: "unfurlbot"
+  labels:
+    {{- include "unfurlbot.labels" . | nindent 4 }}
 spec:
   podSelector:
     matchLabels:

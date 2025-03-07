@@ -1,0 +1,39 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "tasso"
+  labels:
+    {{- include "tasso.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "read:image"
+  service: "tasso"
+  loginRedirect: true
+template:
+  metadata:
+    name: "tasso"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.config.pathPrefix | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "tasso"
+                  port:
+                    number: 8080
+            - path: "/tasso"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "tasso"
+                  port:
+                    number: 8080

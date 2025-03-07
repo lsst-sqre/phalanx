@@ -13,6 +13,8 @@ telegraf:
     requests:
       memory: "350Mi"
       cpu: "50m"
+  pdb:
+    create: false
   args:
   - "--config"
   - "/etc/telegraf-generated/telegraf-generated.conf"
