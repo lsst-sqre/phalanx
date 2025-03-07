@@ -34,7 +34,7 @@ config:
       - "read:tap"
   autostart:
     - name: "tap-scale"
-      count: 100
+      count: 90
       user_spec:
         username_prefix: "bot-mobu-scale-tap"
       scopes: ["read:tap"]
@@ -42,7 +42,6 @@ config:
         type: "TAPQuerySetRunner"
         options:
           query_set: "dp0.2"
-          sync: false
         restart: true
     # - name: "scale-test-tap-notebook"
     #   count: 100
