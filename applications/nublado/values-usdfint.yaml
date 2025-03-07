@@ -7,7 +7,7 @@ controller:
              - key: node-role.kubernetes.io/crowdstrike
                operator: In
                values:
-               - ""
+               - ''
   config:
     logLevel: "DEBUG"
     images:
