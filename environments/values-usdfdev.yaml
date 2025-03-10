@@ -16,6 +16,7 @@ applications:
   consdb: true
   datalinker: true
   exposurelog: true
+  gai-helpers: true
   jira-data-proxy: true
   livetap: true
   mobu: true
