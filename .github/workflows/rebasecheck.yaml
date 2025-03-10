@@ -7,4 +7,5 @@ name: Git
 
 jobs:
   call-workflow:
+    if: github.event_name == 'pull_request'
     uses: lsst/rubin_workflows/.github/workflows/rebase_checker.yaml@main
