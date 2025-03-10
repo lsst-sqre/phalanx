@@ -3,6 +3,7 @@ image:
   pullPolicy: "Always"
 config:
   logLevel: DEBUG
+  logMonkeysToFile: false
   profile: development
   metrics:
     enabled: true
