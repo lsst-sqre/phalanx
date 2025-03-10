@@ -1,3 +1,6 @@
+image:
+  tag: "tickets-DM-49388"
+  pullPolicy: "Always"
 config:
   slackAlerts: false
 resources: {}
