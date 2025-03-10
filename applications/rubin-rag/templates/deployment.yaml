@@ -37,10 +37,20 @@ spec:
                 name: rubin-rag
                 key: "OPENAI_API_KEY"
           - name: GRPC_HOST
+<<<<<<< HEAD
             value: "weaviate-grpc.rubin-rag.svc.cluster.local"
           - name: HTTP_HOST
             value: "weaviate-headless.rubin-rag.svc.cluster.local"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+=======
+            value: weaviate-grpc.rubin-rag.svc.cluster.local
+          - name: HTTP_HOST
+            valueFrom:
+              secretKeyRef:
+                name: rubin-rag
+                key: "HTTP_HOST"
+          image: "{{ .Values.image.repository }}:main"
+>>>>>>> f29e5c35b (Add rubin-rag)
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
             - name: "http"
