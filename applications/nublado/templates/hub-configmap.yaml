@@ -25,7 +25,7 @@ data:
     {{- if .Values.hub.useSubdomains }}
 
     # Use separate hostnames for each user lab.
-    c.JupyterHub.subdomain_host = "nb.{{ .Values.global.host }}"
+    c.JupyterHub.subdomain_host = "https://nb.{{ .Values.global.host }}"
     {{- end }}
 
     # Enable stored auth state.
