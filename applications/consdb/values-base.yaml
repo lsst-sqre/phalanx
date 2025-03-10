@@ -11,11 +11,11 @@ hinfo:
     tag: "25.3.1"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcomcam:
-    enable: false
+    enable: true
     tag: "25.3.1"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcam:
-    enable: false
+    enable: true
     tag: "25.3.1"
 pq:
   image:
