@@ -1,0 +1,10 @@
+---
+name: Git
+
+"on":
+  merge_group: {}
+  pull_request: {}
+
+jobs:
+  call-workflow:
+    uses: lsst/rubin_workflows/.github/workflows/rebase_checker.yaml@main
