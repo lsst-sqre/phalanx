@@ -13,7 +13,7 @@ config:
         - "read:image"
         - "read:tap"
       business:
-        type: "NotebookRunner"
+        type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_ref: "prod"

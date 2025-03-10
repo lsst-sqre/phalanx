@@ -27,6 +27,10 @@ config:
   # Each flock listed will be automatically started when mobu is started.
   autostart: []
 
+  # -- Timeout for Gafaelfawr token creation requests during flock startup
+  # @default -- Use the default timeout for the Safir connection pool
+  gafaelfawrTimeout: null
+
   # -- Configuration for the GitHub refresh app integration.
   # See [the Mobu documentation](https://mobu.lsst.io/operations/github_refresh_app.html#add-phalanx-configuration)
   # @default -- disabled.
