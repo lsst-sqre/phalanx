@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "rubin-rag"
+  labels:
+    {{- include "rubin-rag.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: 8501
+      targetPort: "http"
+      protocol: "TCP"
+  selector:
+    {{- include "rubin-rag.selectorLabels" . | nindent 4 }}
