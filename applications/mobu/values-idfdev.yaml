@@ -29,7 +29,7 @@ config:
       scopes:
         - "exec:notebook"
       business:
-        type: "NotebookRunner"
+        type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst-sqre/dfuchs-test-mobu.git"
           repo_ref: "main"
@@ -44,7 +44,7 @@ config:
         - "read:image"
         - "read:tap"
       business:
-        type: "NotebookRunner"
+        type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_ref: "prod"
@@ -59,7 +59,7 @@ config:
         - "read:image"
         - "read:tap"
       business:
-        type: "NotebookRunner"
+        type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst/tutorial-notebooks.git"
           repo_ref: "main"

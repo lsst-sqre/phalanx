@@ -37,6 +37,7 @@ tests:
           value: |
             autostart: []
             availableServices: []
+            gafaelfawrTimeout: null
             githubCiApp: null
             githubRefreshApp:
               acceptedGithubOrgs:
