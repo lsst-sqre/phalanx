@@ -15,6 +15,7 @@ Continuous integration testing
 | affinity | object | `{}` | Affinity rules for the mobu frontend pod |
 | config.autostart | list | `[]` | Autostart specification. Must be a list of mobu flock specifications. Each flock listed will be automatically started when mobu is started. |
 | config.availableServices | list | `[]` | Which applications (tap, butler, etc.) are available in this environment. Notebooks can specify a `mobu.required_services` list in their metadata, and mobu will only run them if all services in that list are in this `availableServices` list. See [the Mobu documentation](https://mobu.lsst.io/user_guide/in_repo_config.html#service-specific-notebooks) |
+| config.gafaelfawrTimeout | string | Use the default timeout for the Safir connection pool | Timeout for Gafaelfawr token creation requests during flock startup |
 | config.githubCiApp | string | disabled. | Configuration for the GitHub CI app integration. See [the Mobu documentation](https://mobu.lsst.io/operations/github_ci_app.html#add-phalanx-configuration) |
 | config.githubRefreshApp | string | disabled. | Configuration for the GitHub refresh app integration. See [the Mobu documentation](https://mobu.lsst.io/operations/github_refresh_app.html#add-phalanx-configuration) |
 | config.logLevel | string | `"INFO"` | Log level. Set to 'DEBUG' to include the output from all flocks in the main mobu log. |
