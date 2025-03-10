@@ -1,5 +1,6 @@
 config:
   logLevel: DEBUG
+  logMonkeysToFile: false
   profile: development
   metrics:
     enabled: true
