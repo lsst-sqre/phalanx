@@ -84,7 +84,11 @@ controller:
             serverPath: "/test07-share1/scratch"
             server: "10.234.16.4"
             storageClassName: "standard"
-            accessModes: ["ReadWriteMany", "ReadOnlyMany"]
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: 3000Gi
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
