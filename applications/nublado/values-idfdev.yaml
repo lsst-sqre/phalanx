@@ -80,9 +80,11 @@ controller:
             server: "10.234.16.4"
         - name: "scratch"
           source:
-            type: nfs
+            type: "nfsPvc"
             serverPath: "/test07-share1/scratch"
             server: "10.234.16.4"
+            storageClassName: "standard"
+            accessModes: ["ReadWriteMany", "ReadOnlyMany"]
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
