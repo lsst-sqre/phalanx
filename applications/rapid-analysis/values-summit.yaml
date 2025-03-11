@@ -11,83 +11,83 @@ scripts:
 ###
 ### AuxTel pods
 ###
-- name: summit/auxTel/runBackgroundService.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - allsky-data
-  - project-shared
-  resources:
-    requests:
-      cpu: 0.5
-      memory: 4G
-    limits:
-      cpu: 1.0
-      memory: 10G
-- name: summit/auxTel/runButlerWatcher.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-- name: summit/auxTel/runCalibrateCcdRunner.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-- name: summit/auxTel/runImExaminer.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-- name: summit/auxTel/runIsrRunner.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-- name: summit/auxTel/runMetadataCreator.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-- name: summit/auxTel/runMetadataServer.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-- name: summit/auxTel/runMonitor.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-  resources:
-    requests:
-      cpu: 0.5
-      memory: 1G
-    limits:
-      cpu: 1.0
-      memory: 10G
-- name: summit/auxTel/runMountTorquePlotter.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-- name: summit/auxTel/runNightReporter.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-- name: summit/auxTel/runSpecExaminer.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-  resources:
-    requests:
-      cpu: 0.5
-      memory: 2G
-    limits:
-      cpu: 1.0
-      memory: 4G
+# - name: summit/auxTel/runBackgroundService.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - allsky-data
+#   - project-shared
+#   resources:
+#     requests:
+#       cpu: 0.5
+#       memory: 4G
+#     limits:
+#       cpu: 1.0
+#       memory: 10G
+# - name: summit/auxTel/runButlerWatcher.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runCalibrateCcdRunner.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runImExaminer.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runIsrRunner.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runMetadataCreator.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runMetadataServer.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runMonitor.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+#   resources:
+#     requests:
+#       cpu: 0.5
+#       memory: 1G
+#     limits:
+#       cpu: 1.0
+#       memory: 10G
+# - name: summit/auxTel/runMountTorquePlotter.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runNightReporter.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runSpecExaminer.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+#   resources:
+#     requests:
+#       cpu: 0.5
+#       memory: 2G
+#     limits:
+#       cpu: 1.0
+#       memory: 4G
 ###
 ### ComCamSim pods
 ###
