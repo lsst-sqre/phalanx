@@ -1,4 +1,13 @@
 controller:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role.kubernetes.io/crowdstrike
+                operator: In
+                values:
+                  - ''
   config:
     logLevel: "DEBUG"
     images:
@@ -26,7 +35,7 @@ controller:
         LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
       homedirSchema: "initialThenUsername"
       nodeSelector:
-        "edu.stanford.slac.sdf.project/rubin": "true"
+        node-role.kubernetes.io/crowdstrike: ""
       nss:
         # Add rubin_users group (there is not yet a simpler way to do this).
         baseGroup: |
