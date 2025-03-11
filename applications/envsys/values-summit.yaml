@@ -147,10 +147,10 @@ dream:
     pullPolicy: Always
   resources:
     requests:
-      cpu: 30m
+      cpu: 70m
       memory: 96Mi
     limits:
-      cpu: 300m
+      cpu: 700m
       memory: 300Mi
 
 earthquake-ess302:
@@ -176,10 +176,10 @@ eas:
     pullPolicy: Always
   resources:
     requests:
-      cpu: 40m
+      cpu: 150m
       memory: 125Mi
     limits:
-      cpu: 400m
+      cpu: 750m
       memory: 375Mi
 
 epm-ess303:
