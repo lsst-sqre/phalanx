@@ -44,6 +44,11 @@ scripts:
 #   - auxtel-data
 #   - auxtel-gen3-data
 #   - project-shared
+- name: LATISS/runOneOffExpRecord.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
 - name: LATISS/runOneOffPostIsr.py
   mounts:
   - auxtel-data
