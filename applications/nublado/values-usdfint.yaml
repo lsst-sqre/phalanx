@@ -18,15 +18,6 @@ controller:
       pin:
         - "w_2024_50"
     lab:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: node-role.kubernetes.io/crowdstrike
-                    operator: In
-                    values:
-                      - ''
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
@@ -44,7 +35,7 @@ controller:
         LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
       homedirSchema: "initialThenUsername"
       nodeSelector:
-        "edu.stanford.slac.sdf.project/rubin": "true"
+        node-role.kubernetes.io/crowdstrike: ""
       nss:
         # Add rubin_users group (there is not yet a simpler way to do this).
         baseGroup: |
