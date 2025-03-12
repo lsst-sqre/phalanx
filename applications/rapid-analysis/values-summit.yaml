@@ -54,6 +54,13 @@ scripts:
   - auxtel-data
   - auxtel-gen3-data
   - project-shared
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 6G
+    limits:
+      cpu: 1.0
+      memory: 12G
 # - name: summit/auxTel/runCalibrateCcdRunner.py
 #   mounts:
 #   - auxtel-data
