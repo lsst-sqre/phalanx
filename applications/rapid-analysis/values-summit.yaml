@@ -311,10 +311,10 @@ scripts:
 ###
 ### LSSTCam pods
 ###
-# - name: LSSTCam/runButlerWatcher.py
-#   mounts:
-#   - lsstcam-data
-#   - project-shared
+- name: LSSTCam/runButlerWatcher.py
+  mounts:
+  - lsstcam-data
+  - project-shared
 - name: LSSTCam/runHeadNode.py
   mounts:
   - lsstcam-data
@@ -470,7 +470,7 @@ lsstcamWorkerSet:
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 1
+  replicas: 189
   resources:
     requests:
       cpu: 1.0
