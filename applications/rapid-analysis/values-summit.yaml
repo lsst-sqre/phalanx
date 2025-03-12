@@ -333,8 +333,8 @@ scripts:
 latissWorkerSet:
   name: LATISS/runSfmRunner.py
   mounts:
-  - comcam-data
-  - comcam-gen3-data
+  - auxtel-data
+  - auxtel-gen3-data
   - project-shared
   replicas: 5
   resources:
