@@ -70,14 +70,26 @@ controller:
       volumes:
         - name: "home"
           source:
-            type: nfs
+            type: "nfsPvc"
             serverPath: "/test07-share1/home"
             server: "10.234.16.4"
+            storageClassName: "standard"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: 3000Gi
         - name: "project"
           source:
-            type: nfs
+            type: "nfsPvc"
             serverPath: "/test07-share1/project"
             server: "10.234.16.4"
+            storageClassName: "standard"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: 3000Gi
         - name: "scratch"
           source:
             type: "nfsPvc"
