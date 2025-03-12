@@ -323,6 +323,10 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
+- name: LSSTCam/runOneOffExpRecord.py
+  mounts:
+  - lsstcam-data
+  - project-shared
 - name: LSSTCam/runPlotter.py
   mounts:
   - lsstcam-data
