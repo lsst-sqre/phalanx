@@ -16,7 +16,7 @@ hinfo:
     logConfig: "consdb.hinfo=DEBUG"
   lsstcam:
     enable: true
-    tag: "25.3.1"
+    tag: "tickets-DM-49406"
 pq:
   image:
     tag: "main"
