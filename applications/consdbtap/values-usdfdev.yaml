@@ -1,0 +1,5 @@
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstsqre/tap-schema-usdf-dev-cdb"
+      tag: "main"

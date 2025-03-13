@@ -1,0 +1,12 @@
+apiVersion: v2
+name: consdbtap
+version: 1.0.0
+description: IVOA TAP service for the Consolidated Database (ConsDB)
+sources:
+  - https://github.com/lsst-sqre/tap-postgres
+  - https://github.com/opencadc/tap
+
+dependencies:
+  - name: cadc-tap
+    version: 1.0.0
+    repository: "file://../../charts/cadc-tap"
