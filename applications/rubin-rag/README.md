@@ -4,7 +4,7 @@ RAG helpers for documentation searches
 
 ## Source Code
 
-* <https://github.com/lsst-sqre/rubin-rag>
+* <https://github.com/lsst-dm/rubin_rag>
 
 ## Values
 
@@ -18,7 +18,7 @@ RAG helpers for documentation searches
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"Always"` | Pull policy for the rubin-rag image |
-| image.repository | string | `"ghcr.io/lsst-dm/rubin-rag"` | Image to use in the rubin-rag deployment |
+| image.repository | string | `"ghcr.io/lsst-dm/rubin_rag"` | Image to use in the rubin-rag deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the rubin-rag deployment pod |
