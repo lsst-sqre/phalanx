@@ -5,10 +5,14 @@ RAG helpers for documentation searches
 ## Source Code
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 * <https://github.com/lsst-dm/rubin_rag>
 =======
 * <https://github.com/lsst-sqre/rubin-rag>
 >>>>>>> f29e5c35b (Add rubin-rag)
+=======
+* <https://github.com/lsst-dm/rubin_rag>
+>>>>>>> 0bee74e44 (Change dash to underscore)
 
 ## Values
 
@@ -23,10 +27,14 @@ RAG helpers for documentation searches
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"Always"` | Pull policy for the rubin-rag image |
 <<<<<<< HEAD
+<<<<<<< HEAD
 | image.repository | string | `"ghcr.io/lsst-dm/rubin_rag"` | Image to use in the rubin-rag deployment |
 =======
 | image.repository | string | `"ghcr.io/lsst-dm/rubin-rag"` | Image to use in the rubin-rag deployment |
 >>>>>>> f29e5c35b (Add rubin-rag)
+=======
+| image.repository | string | `"ghcr.io/lsst-dm/rubin_rag"` | Image to use in the rubin-rag deployment |
+>>>>>>> 0bee74e44 (Change dash to underscore)
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the rubin-rag deployment pod |
