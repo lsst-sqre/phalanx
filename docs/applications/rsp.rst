@@ -10,6 +10,7 @@ Argo CD project: ``rsp``
    :maxdepth: 1
 
    butler/index
+   consdbtap/index
    datalinker/index
    filestore-backup/index
    hips/index
