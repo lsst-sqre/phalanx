@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the rubin-rag deployment
-  repository: "ghcr.io/lsst-dm/rubin-rag"
+  repository: "ghcr.io/lsst-dm/rubin_rag"
 
   # -- Pull policy for the rubin-rag image
   pullPolicy: "Always"
