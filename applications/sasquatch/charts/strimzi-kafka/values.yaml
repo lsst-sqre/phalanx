@@ -286,6 +286,10 @@ users:
     # -- Enable user consdb
     enabled: false
 
+  obsloctap:
+    # -- Enable user obsloctap
+    enabled: false
+
 
 mirrormaker2:
   # -- Enable replication in the target (passive) cluster
