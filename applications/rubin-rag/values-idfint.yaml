@@ -1,2 +1,6 @@
 image:
+<<<<<<< HEAD
+=======
+  tag: latest
+>>>>>>> 45da17e1e (Add content to values-idfint)
   pullPolicy: Always
