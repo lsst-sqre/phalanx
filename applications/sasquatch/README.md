@@ -440,6 +440,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.users.consdb.enabled | bool | `false` | Enable user consdb |
 | strimzi-kafka.users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
 | strimzi-kafka.users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
+| strimzi-kafka.users.obsloctap.enabled | bool | `false` | Enable user obsloctap |
 | strimzi-kafka.users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |
 | strimzi-kafka.users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | strimzi-kafka.users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
