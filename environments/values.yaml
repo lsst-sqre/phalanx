@@ -60,6 +60,9 @@ applications:
   # -- Enable the cm-service application
   cm-service: false
 
+  # -- Enable the consdbtap application
+  consdbtap: false
+
   # -- Enable the control-system-test application
   control-system-test: false
 
