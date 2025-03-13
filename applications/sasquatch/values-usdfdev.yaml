@@ -24,6 +24,8 @@ strimzi-kafka:
       enabled: true
     consdb:
       enabled: true
+    obsloctap:
+      enabled: true
   kraft:
     enabled: true
   kafkaController:
