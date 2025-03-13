@@ -51,7 +51,7 @@ controller:
           privileged: true
           volumeMounts:
             - containerPath: "/home"
-              volumeName: "inithome"
+              volumeName: "home"
       nodeSelector:
         node_pool: "user-lab-pool"
       secrets:
@@ -79,18 +79,18 @@ controller:
             resources:
               requests:
                 storage: 3000Gi
-        - name: "inithome"  # 1-to-1 PVC bindings mean we must duplicate it.
-          source:
-            type: "nfsPvc"
-            serverPath: "/test07-share1/home"
-            server: "10.234.16.4"
-            storageClassName: "standard"
-            accessModes:
-              - "ReadWriteMany"
-            resources:
-              requests:
-                storage: 3000Gi
-        - name: "fileserverhome"  # OK, fine, "triplicate"
+        # - name: "inithome"  # 1-to-1 PVC bindings mean we must duplicate it.
+        #   source:
+        #     type: "nfsPvc"
+        #     serverPath: "/test07-share1/home"
+        #     server: "10.234.16.4"
+        #     storageClassName: "standard"
+        #     accessModes:
+        #       - "ReadWriteMany"
+        #     resources:
+        #       requests:
+        #         storage: 3000Gi
+        - name: "fileserverhome"
           source:
             # type: "nfsPvc"
             type: "nfs"
