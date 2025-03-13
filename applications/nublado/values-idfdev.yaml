@@ -27,7 +27,7 @@ controller:
           effect: "NoExecute"
       volumeMounts:
         - containerPath: "/home"
-          volumeName: "home"  # Needs fixing for NFSPVC
+          volumeName: "home"
     images:
       source:
         type: "google"
@@ -51,7 +51,7 @@ controller:
           privileged: true
           volumeMounts:
             - containerPath: "/home"
-              volumeName: "home"  # Needs NFSPVC fixing
+              volumeName: "inithome"
       nodeSelector:
         node_pool: "user-lab-pool"
       secrets:
@@ -80,17 +80,17 @@ controller:
             # resources:
             #   requests:
             #     storage: 3000Gi
-        # - name: "inithome"  # 1-to-1 PVC bindings mean we must duplicate it.
-        #   source:
-        #     type: "nfsPvc"
-        #     serverPath: "/test07-share1/home"
-        #     server: "10.234.16.4"
-        #     storageClassName: "standard"
-        #     accessModes:
-        #       - "ReadWriteMany"
-        #     resources:
-        #       requests:
-        #         storage: 3000Gi
+        - name: "inithome"  # 1-to-1 PVC bindings mean we must duplicate it.
+          source:
+            type: "nfsPvc"
+            serverPath: "/test07-share1/home"
+            server: "10.234.16.4"
+            storageClassName: "standard"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: 3000Gi
         # - name: "fileserverhome"  # OK, fine, "triplicate"
         #   source:
         #     type: "nfsPvc"
