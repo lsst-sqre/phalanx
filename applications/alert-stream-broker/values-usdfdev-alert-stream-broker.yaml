@@ -71,7 +71,7 @@ alert-stream-broker:
       groups: ["rubin-devel-idfint"]
 
     # A user used by the Rubin team but with similar access to the community
-    # broker users.
+    # broker users. Currently disabled.
     # - username: "rubin-communitybroker-idfint"
     #  readonlyTopics: ["alerts-simulated"]
     #  groups: ["rubin-communitybroker-idfint"]
@@ -149,23 +149,9 @@ alert-database:
       port: 9092
       topic: alerts-simulated
 
-    gcp:
-      serviceAccountName: alertdb-writer
-      projectID: science-platform-int-dc5d
-      outsideGCP: true
-
   server:
     serviceAccountName: alert-database-reader
 
-    gcp:
-      serviceAccountName: alertdb-reader
-      projectID: science-platform-int-dc5d
-
+  # Ingress currently disabled at USDF
   ingress:
     enabled: false
-
-  storage:
-    gcp:
-      project: science-platform-int-dc5d
-      alertBucket: rubin-alertdb-int-us-central1-packets
-      schemaBucket: rubin-alertdb-int-us-central1-schemas

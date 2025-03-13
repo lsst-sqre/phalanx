@@ -16,18 +16,20 @@ Alert transmission to community brokers
 | strimzi-registry-operator.operatorNamespace | string | `"alert-stream-broker"` |  |
 | strimzi-registry-operator.watchNamespace | string | `"alert-stream-broker"` |  |
 | alert-database.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| alert-database.ingester.gcp.outsideGCP | bool | `true` |  |
-| alert-database.ingester.gcp.projectID | string | `""` | Project ID which has the above GCP IAM service account |
-| alert-database.ingester.gcp.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
-| alert-database.ingester.image.imagePullPolicy | string | `"IfNotPresent"` |  |
+| alert-database.ingester.image.imagePullPolicy | string | `"Always"` |  |
 | alert-database.ingester.image.repository | string | `"lsstdm/alert_database_ingester"` |  |
-| alert-database.ingester.image.tag | string | `"v2.0.2"` |  |
+| alert-database.ingester.image.tag | string | `"tickets-DM-44907"` |  |
 | alert-database.ingester.kafka.cluster | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
 | alert-database.ingester.kafka.port | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal listener that expects SCRAM SHA-512 auth. |
 | alert-database.ingester.kafka.strimziAPIVersion | string | `"v1beta2"` | API version of the Strimzi installation's custom resource definitions |
 | alert-database.ingester.kafka.topic | string | `"alerts-simulated"` | Name of the topic which will holds alert data. |
 | alert-database.ingester.kafka.user | string | `"alert-database-ingester"` | The username of the Kafka user identity used to connect to the broker. |
 | alert-database.ingester.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
+| alert-database.ingester.s3.alertBucket | string | `"alert-archive"` |  |
+| alert-database.ingester.s3.endpointURL | string | `"https://sdfembs3.sdf.slac.stanford.edu/"` |  |
+| alert-database.ingester.s3.schemaBucket | string | `"alert-archive"` |  |
+| alert-database.ingester.s3.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
+| alert-database.ingester.s3.usdf | bool | `true` |  |
 | alert-database.ingester.schemaRegistryURL | string | `""` | URL of a schema registry instance |
 | alert-database.ingester.serviceAccountName | string | `"alert-database-ingester"` | The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM service account!) which is used by the alert database ingester. |
 | alert-database.ingress.annotations | object | `{}` |  |
@@ -36,18 +38,20 @@ Alert transmission to community brokers
 | alert-database.ingress.path | string | `"/alertdb"` | Subpath to host the alert database application under the ingress |
 | alert-database.ingress.tls | list | `[]` | Configures TLS for the ingress if needed. If multiple ingresses share the same hostname, only one of them needs a TLS configuration. |
 | alert-database.nameOverride | string | `""` | Override the base name for resources |
-| alert-database.server.gcp.projectID | string | `""` | Project ID which has the above GCP IAM service account |
-| alert-database.server.gcp.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
-| alert-database.server.image.imagePullPolicy | string | `"IfNotPresent"` |  |
+| alert-database.server.image.imagePullPolicy | string | `"Always"` |  |
 | alert-database.server.image.repository | string | `"lsstdm/alert_database_server"` |  |
-| alert-database.server.image.tag | string | `"v2.1.0"` |  |
+| alert-database.server.image.tag | string | `"tickets-DM-44907"` |  |
 | alert-database.server.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
+| alert-database.server.s3.alertBucket | string | `"alert-archive"` |  |
+| alert-database.server.s3.endpointURL | string | `"https://sdfembs3.sdf.slac.stanford.edu/"` | Project ID which has the above GCP IAM service account |
+| alert-database.server.s3.schemaBucket | string | `"alert-archive"` |  |
+| alert-database.server.s3.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
 | alert-database.server.service.port | int | `3000` |  |
 | alert-database.server.service.type | string | `"ClusterIP"` |  |
 | alert-database.server.serviceAccountName | string | `"alertdb-reader"` | The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM service account!) which is used by the alert database server. |
-| alert-database.storage.gcp.alertBucket | string | `""` | Name of a Google Cloud Storage bucket in GCP with alert data |
-| alert-database.storage.gcp.project | string | `""` | Name of a GCP project that has a bucket for database storage |
-| alert-database.storage.gcp.schemaBucket | string | `""` | Name of a Google Cloud Storage bucket in GCP with schema data |
+| alert-database.storage.s3.alertBucket | string | `"alert-archive"` | Name of a s3 storage bucket with alert data |
+| alert-database.storage.s3.endpointURL | string | `"https://sdfembs3.sdf.slac.stanford.edu/"` |  |
+| alert-database.storage.s3.schemaBucket | string | `"alert-archive"` | Name of a s3 storage bucket with schema data |
 | alert-stream-broker.cluster.name | string | `"alert-broker"` | Name used for the Kafka broker, and used by Strimzi for many annotations. |
 | alert-stream-broker.clusterName | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
 | alert-stream-broker.clusterPort | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal TLS listener. |
