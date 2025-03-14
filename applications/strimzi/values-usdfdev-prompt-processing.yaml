@@ -6,5 +6,5 @@ strimzi-kafka-operator:
       memory: "512Mi"
   watchNamespaces:
     - "kafka"
-    - "prompt-processing-kafka"
+    - "prompt-kafka"
   logLevel: "INFO"

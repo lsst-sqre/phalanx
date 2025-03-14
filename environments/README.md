@@ -47,6 +47,7 @@
 | applications.postgres | bool | `false` | Enable the in-cluster PostgreSQL server. Use of this server is discouraged in favor of using infrastructure SQL, but will remain supported for use cases such as minikube test deployments. |
 | applications.ppdb-replication | bool | `false` | Enable the ppdb-replication application |
 | applications.production-tools | bool | `false` | Enable the production-tools application |
+| applications.prompt-kafka | bool | `false` | Enable the prompt-kafka application |
 | applications.prompt-keda-hsc | bool | `false` | Enable the prompt-keda-hsc application |
 | applications.prompt-keda-latiss | bool | `false` | Enable the prompt-keda-latiss application |
 | applications.prompt-keda-lsstcamimsim | bool | `false` | Enable the prompt-keda-lsstcamimsim application |

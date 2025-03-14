@@ -1,0 +1,5 @@
+apiVersion: v2
+name: strimzi-kafka
+version: 1.0.0
+description: A subchart to deploy Strimzi Kafka components for Prompt Processing.
+appVersion: 0.42.0
