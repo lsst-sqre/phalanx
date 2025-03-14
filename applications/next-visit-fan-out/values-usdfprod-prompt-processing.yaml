@@ -1,3 +1,5 @@
+platform: knative
+
 knative:
   maxMessages: 1000 # Kubernetes can't support more pods yet
 
