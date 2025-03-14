@@ -1,9 +1,14 @@
+image:
+  tag: "tickets-DM-49493"
+  pullPolicy: "Always"
+
 # Use the CSI storage class so that we can use snapshots.
 redis:
   persistence:
     storageClass: "standard-rwo"
 
 config:
+  allowSubdomains: true
   logLevel: "DEBUG"
   slackAlerts: true
 

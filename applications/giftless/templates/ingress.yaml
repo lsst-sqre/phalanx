@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "giftless.labels" . | nindent 4 }}
 config:
-  baseUrl: "https://{{ .Values.ingress.hostname.readonly }}"
+  allowCookies: false
   scopes:
     anonymous: true
 template:
@@ -33,17 +33,16 @@ template:
                   port:
                     number: 5000
 ---
-#
-# We need this one because the default Giftless transfer implementation
-# generates a Bearer token for verification...but since we're going
-# through Gafaelfawr, that gets replaced with the Gafaelfawr token.
-# Then verification fails but the upload succeeds.
-#
-# This just means Gafaelfawr lets any verification request through.
-# That does mean that absolutely anyone can verify stored objects.
-# Since we already provide exactly that service anonymously on the
-# readonly endpoint, I don't think this changes anything.
-#
+{{/*
+We cannot use an authenticated Gafaelfawr ingress here because the default
+Giftless transfer implementation generates a Bearer token for verification
+that is unrelated to the Gafaelfawr token.
+
+Since this is an anonymous ingress, Gafaelfawr lets any verification request
+through. Therefore, anyone can verify stored objects, but this should be
+equivalent to functionality already provided on the read-only endpoint, which
+is also anonymous.
+*/}}
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
@@ -51,7 +50,6 @@ metadata:
   labels:
     {{- include "giftless.labels" . | nindent 4 }}
 config:
-  baseUrl: "https://{{ .Values.ingress.hostname.readwrite }}"
   scopes:
     anonymous: true
 template:
@@ -87,7 +85,7 @@ metadata:
   labels:
     {{- include "giftless.labels" . | nindent 4 }}
 config:
-  baseUrl: "https://{{ .Values.ingress.hostname.readwrite }}"
+  allowCookies: false
   scopes:
     all:
       - "write:git-lfs"

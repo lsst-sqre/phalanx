@@ -9,7 +9,7 @@ config:
           gidnumber: 1021
       scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
       business:
-        type: "NotebookRunner"
+        type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_branch: "prod"
@@ -23,7 +23,7 @@ config:
           gidnumber: 1021
       scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
       business:
-        type: "NotebookRunner"
+        type: "NotebookRunnerCounting"
         options:
           image:
             image_class: "latest-weekly"
