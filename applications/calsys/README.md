@@ -13,6 +13,8 @@ Deployment for the Calibration System CSCs
 | electrometer101.enabled | bool | `false` | Enable the Electrometer:101 CSC |
 | electrometer102-sim.enabled | bool | `false` | Enable the Electrometer:102 simulator CSC |
 | electrometer102.enabled | bool | `false` | Enable the Electrometer:102 CSC |
+| electrometer103-sim.enabled | bool | `false` | Enable the Electrometer:103 simulator CSC |
+| electrometer103.enabled | bool | `false` | Enable the Electrometer:103 CSC |
 | electrometer201-sim.enabled | bool | `false` | Enable the Electrometer:201 simulator CSC |
 | electrometer201.enabled | bool | `false` | Enable the Electrometer:201 CSC |
 | gcheaderservice1.enabled | bool | `false` | Enable the GCHeaderService:1 CSC |

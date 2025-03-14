@@ -18,6 +18,14 @@ electrometer102-sim:
   # -- Enable the Electrometer:102 simulator CSC
   enabled: false
 
+electrometer103:
+  # -- Enable the Electrometer:103 CSC
+  enabled: false
+
+electrometer103-sim:
+  # -- Enable the Electrometer:103 simulator CSC
+  enabled: false
+
 electrometer201:
   # -- Enable the Electrometer:201 CSC
   enabled: false

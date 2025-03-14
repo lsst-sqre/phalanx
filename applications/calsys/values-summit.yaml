@@ -79,6 +79,27 @@ electrometer102:
       cpu: 10m
       memory: 115Mi
 
+electrometer103:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/electrometer
+    pullPolicy: Always
+  env:
+    RUN_ARG: 103
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 100m
+      memory: 350Mi
+    requests:
+      cpu: 10m
+      memory: 115Mi
+
 electrometer201:
   enabled: true
   image:

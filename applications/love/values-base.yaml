@@ -513,6 +513,9 @@ love-producer:
   - name: electrometer102
     csc: Electrometer:102 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: electrometer103
+    csc: Electrometer:103 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: electrometer201
     csc: Electrometer:201 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
