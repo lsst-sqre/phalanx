@@ -1,0 +1,11 @@
+---
+name: Git
+
+"on":
+  merge_group: {}
+  pull_request: {}
+
+jobs:
+  call-workflow:
+    if: github.event_name == 'pull_request'
+    uses: lsst/rubin_workflows/.github/workflows/rebase_checker.yaml@main
