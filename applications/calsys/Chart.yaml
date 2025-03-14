@@ -47,6 +47,16 @@ dependencies:
   condition: electrometer102-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: electrometer103
+  version: 1.0.0
+  condition: electrometer103.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: electrometer103-sim
+  version: 1.0.0
+  condition: electrometer103-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: electrometer201
   version: 1.0.0
   condition: electrometer201.enabled
