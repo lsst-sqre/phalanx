@@ -1,3 +1,5 @@
+platform: knative
+
 knative:
   maxMessages: 2000
   retryRequests: false
