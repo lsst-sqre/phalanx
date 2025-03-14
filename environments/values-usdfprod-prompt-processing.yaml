@@ -18,4 +18,5 @@ applications:
   prompt-proto-service-lsstcomcam: false
   prompt-proto-service-lsstcomcamsim: false
   prompt-redis: true
+  strimzi: true
   vault-secrets-operator: false

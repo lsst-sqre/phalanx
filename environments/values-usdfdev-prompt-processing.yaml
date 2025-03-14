@@ -10,6 +10,7 @@ applications:
   keda: true
   next-visit-fan-out: true
   next-visit-fan-out-keda: true
+  prompt-kafka: true
   prompt-keda-hsc: true
   prompt-keda-latiss: true
   prompt-keda-lsstcamimsim: true
@@ -22,4 +23,5 @@ applications:
   prompt-proto-service-lsstcomcam: true
   prompt-proto-service-lsstcomcamsim: true
   prompt-redis: true
+  strimzi: true
   vault-secrets-operator: false
