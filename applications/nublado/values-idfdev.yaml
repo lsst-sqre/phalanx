@@ -71,7 +71,7 @@ controller:
         - name: "home"
           source:
             type: "nfsPvc"
-            serverPath: "/test07-share1/home"
+            serverPath: "/test08-share1/home"
             server: "10.234.16.4"
             storageClassName: "standard"
             accessModes:
@@ -82,7 +82,7 @@ controller:
         - name: "project"
           source:
             type: "nfsPvc"
-            serverPath: "/test07-share1/project"
+            serverPath: "/test08-share1/project"
             server: "10.234.16.4"
             storageClassName: "standard"
             accessModes:
@@ -93,7 +93,7 @@ controller:
         - name: "scratch"
           source:
             type: "nfsPvc"
-            serverPath: "/test07-share1/scratch"
+            serverPath: "/test08-share1/scratch"
             server: "10.234.16.4"
             storageClassName: "standard"
             accessModes:
