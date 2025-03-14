@@ -581,6 +581,12 @@ love-producer:
   - name: epm-ess303
     csc: ESS:303 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: fiberspectrograph101
+    csc: FiberSpectrograph:101 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: fiberspectrograph102
+    csc: FiberSpectrograph:102 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: fiberspectrograph3
     csc: FiberSpectrograph:3 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
