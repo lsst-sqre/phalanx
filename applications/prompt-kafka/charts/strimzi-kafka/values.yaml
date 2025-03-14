@@ -1,0 +1,285 @@
+# Default values for Kafka used in Prompt Processing Kafka.
+
+cluster:
+  # -- Name used for the Kafka cluster, and used by Strimzi for many
+  # annotations
+  name: prompt-kafka
+
+  # -- Site wide label required for gathering Prometheus metrics if they are
+  # enabled
+  monitorLabel: {}
+
+# TODO.  update structure.  temporary set.
+cruiseControl:
+  enabled: false
+
+kafka:
+  # -- Version of Kafka to deploy
+  version: "3.8.1"
+
+  # -- Number of Kafka broker replicas to run
+  replicas: 3
+
+  # -- The minimum number of in-sync replicas that must be available for the producer to successfully send records
+  # Cannot be greater than the number of replicas.
+  minInsyncReplicas: 2
+
+  storage:
+    # -- Size of the backing storage disk for each of the Kafka brokers
+    size: 500Gi
+
+    # -- Name of a StorageClass to use when requesting persistent volumes
+    storageClassName: ""
+
+  config:
+    # -- Number of minutes for a consumer group's offsets to be retained
+    offsets.retention.minutes: 2880
+
+    # -- Number of days for a topic's data to be retained
+    log.retention.hours: 48
+
+    # -- How much disk space Kafka will ensure is available, set to 70% of the
+    # data partition size
+    log.retention.bytes: "350000000000"
+
+    # -- The largest record batch size allowed by Kafka
+    message.max.bytes: 10485760
+
+    # -- The number of bytes of messages to attempt to fetch for each partition
+    replica.fetch.max.bytes: 10485760
+
+  metricsConfig:
+    # -- Whether metric configuration is enabled
+    enabled: false
+
+  listeners:
+    noauth:
+      # -- Whether internal noauth listener is enabled
+      enabled: false
+
+    plain:
+      # -- Whether internal plaintext listener is enabled
+      enabled: false
+
+    tls:
+      # -- Whether internal TLS listener is enabled
+      enabled: false
+
+    external:
+      # -- Whether external listener is enabled
+      enabled: false
+
+  externalListener:
+    tls:
+      # -- Whether TLS encryption is enabled
+      enabled: false
+
+      # -- Name of a ClusterIssuer capable of provisioning a TLS certificate
+      # for the broker
+      certIssuerName: "letsencrypt-dns"
+
+    bootstrap:
+      # Load balancer IP configuration
+      #
+      # The loadbalancer is requested with the IP address specified in this
+      # field.  This feature depends on whether the underlying cloud provider
+      # supports specifying the loadBalancerIP when a load balancer is
+      # created.  This field is ignored if the cloud provider does not support
+      # the feature.
+      #
+      # Once the IP address is provisioned this option make it possible to pin
+      # the IP address.  We can request the same IP next time it is
+      # provisioned. This is important because it lets us configure a DNS
+      # record, associating a hostname with that pinned IP address.
+      #
+      # -- Request this load balancer IP. See `values.yaml` for more
+      # discussion
+      # @default -- Do not request a load balancer IP
+      loadBalancerIP: ""
+
+      # -- Name used for TLS hostname verification
+      # @default -- Do not configure TLS
+      host: ""
+
+      # -- Annotations that will be added to the Ingress, Route, or Service
+      # resource
+      annotations: {}
+
+    # -- Brokers configuration. _host_ is used in the brokers'
+    # advertised.brokers configuration and for TLS hostname verification.  The
+    # format is a list of maps.
+    brokers: []
+    # For example:
+    # brokers:
+    #   - broker: 0
+    #     loadBalancerIP: "192.168.1.1"
+    #     host: broker-0.example
+    #     annotations:
+    #       metallb.universe.tf/address-pool: sdf-dmz
+    #   - broker: 1
+    #     loadBalancerIP: "192.168.1.2"
+    #     host: broker-1.example
+    #     annotations:
+    #       metallb.universe.tf/address-pool: sdf-dmz
+
+  # -- Affinity for Kafka pod assignment
+  # @default -- See `values.yaml`
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: "app.kubernetes.io/name"
+                operator: In
+                values:
+                  - kafka
+          topologyKey: "kubernetes.io/hostname"
+
+  # -- Tolerations for Kafka broker pod assignment
+  tolerations: []
+
+  # -- Kubernetes requests and limits for the Kafka brokers
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      memory: 32Gi
+      cpu: "4"
+    limits:
+      memory: 64Gi
+      cpu: "8"
+
+kraft:
+  # -- Enable KRaft mode for Kafka
+  enabled: false
+
+kafkaController:
+  # -- Enable Kafka Controller
+  enabled: false
+
+  storage:
+    # -- Size of the backing storage disk for each of the Kafka controllers
+    size: 20Gi
+
+    # -- Name of a StorageClass to use when requesting persistent volumes
+    storageClassName: ""
+
+  # -- Kubernetes requests and limits for the Kafka Controller
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      memory: 32Gi
+      cpu: "4"
+    limits:
+      memory: 64Gi
+      cpu: "8"
+
+kafkaExporter:
+  # -- Enable Kafka exporter
+  enabled: false
+
+  # -- Kafka topics to monitor
+  topicRegex: ".*"
+
+  # -- Consumer groups to monitor
+  groupRegex: ".*"
+
+  # -- Logging level
+  logging: info
+
+  # -- Enable Sarama logging for pod
+  enableSaramaLogging: false
+
+  # -- Kubernetes requests and limits for the Kafka exporter
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "256Mi"
+    requests:
+      cpu: "375m"
+      memory: "100Mi"
+
+registry:
+  ingress:
+    # -- Whether to enable an ingress for the Schema Registry
+    enabled: false
+
+    # -- Hostname for the Schema Registry
+    # @default -- None, must be set if ingress is enabled
+    hostname: ""
+
+    # -- Annotations that will be added to the Ingress resource
+    annotations: {}
+
+  # -- Name of the topic used by the Schema Registry
+  schemaTopic: registry-schemas
+
+  # -- Kubernetes requests and limits for the Schema Registry
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "5m"
+    limits:
+      memory: "2Gi"
+      cpu: "1"
+
+# -- A list of usernames for users who should have global admin permissions.
+# These users will be created, along with their credentials.
+superusers:
+  - kafka-admin
+
+# -- Topic configuration.  Enable for supporting certain instruments.
+topics:
+  hsc:
+    # -- Enable hsc topic
+    enabled: false
+    # -- Number of partitions on topic
+    partitions: 1
+    # -- Number of replicas
+    replicas: 1
+    retention: 3600000
+  latiss:
+    # -- Enable latiss topic
+    enabled: false
+    # -- Number of partitions on topic
+    partitions: 1
+    # -- Number of replicas
+    replicas: 1
+    # -- Retention time of events in milliseconds
+    retention: 3600000
+  lsstcam:
+    # -- Enable lsstcam topic
+    enabled: false
+    # -- Number of partitions on topic
+    partitions: 1
+    # -- Number of replicas
+    replicas: 1
+    # -- Retention time of events in milliseconds
+    retention: 3600000
+  lsstcomcam:
+    # -- Enable lsstcomcam topic
+    enabled: false
+    # -- Number of partitions on topic
+    partitions: 1
+    # -- Number of replicas
+    replicas: 1
+    # -- Retention time of events in milliseconds
+    retention: 3600000
+  lsstcomcamsim:
+    # -- Enable lsstcomcamsim topic
+    enabled: false
+    # -- Number of partitions on topic
+    partitions: 1
+    # -- Number of replicas
+    replicas: 1
+    # -- Retention time of events in milliseconds
+    retention: 3600000
+
+users:
+  butlerWriter:
+    # -- Enable user butler-writer (deployed by parent Prompt Kafka chart).
+    enabled: true
+  kafdrop:
+    # -- Enable user Kafdrop (deployed by parent Prompt Kafka chart).
+    enabled: true
