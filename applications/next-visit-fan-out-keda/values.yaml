@@ -24,11 +24,11 @@ keda:
   # -- Maximum delay time for Redis retries in seconds
   redisRetryDelayCap: 5
   # -- Initial delay for first Redis retry in seconds
-  redisRetryInitialDelay:
+  redisRetryInitialDelay: 1
   # -- Redis max retry count
-  redisRetryCount:
+  redisRetryCount: 3
   # -- Redis health check interval
-  redisHealthCheckInterval:
+  redisHealthCheckInterval: 3
   # -- A mapping of instrument to that instrument's Keda Scaled Job.
   # @default -- See `values.yaml`.
   redisStreams:

@@ -21,11 +21,11 @@ Temporary application for processing next visit events with keda.
 | kafka.offset | string | `"latest"` |  |
 | kafka.saslMechamism | string | `"SCRAM-SHA-512"` |  |
 | kafka.securityProtocol | string | `"SASL_PLAINTEXT"` |  |
-| keda.redisHealthCheckInterval | string | `nil` | Redis health check interval |
+| keda.redisHealthCheckInterval | int | `3` | Redis health check interval |
 | keda.redisHost | string | See `values.yaml`. | Redis cluster host. |
-| keda.redisRetryCount | string | `nil` | Redis max retry count |
+| keda.redisRetryCount | int | `3` | Redis max retry count |
 | keda.redisRetryDelayCap | int | `5` | Maximum delay time for Redis retries in seconds |
-| keda.redisRetryInitialDelay | string | `nil` | Initial delay for first Redis retry in seconds |
+| keda.redisRetryInitialDelay | int | `1` | Initial delay for first Redis retry in seconds |
 | keda.redisStreams | object | See `values.yaml`. | A mapping of instrument to that instrument's Keda Scaled Job. |
 | knative.maxMessages | string | None, must be set. | The maximum number of messages that can be forwarded to all Knative instances combined. |
 | knative.retryRequests | bool | `true` | Whether or not to retry requests that returned a suitable response. |
