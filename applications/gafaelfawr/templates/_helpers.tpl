@@ -133,10 +133,6 @@ Common environment variables
       name: "gafaelfawr"
       key: "signing-key"
 {{- end }}
-{{- if (not .Values.config.realm) }}
-- name: "GAFAELFAWR_REALM"
-  value: {{ required "global.host must be set" .Values.global.host | quote }}
-{{- end }}
 - name: "GAFAELFAWR_REDIRECT_URL"
   value: "{{ .Values.global.baseUrl }}/login"
 - name: "GAFAELFAWR_REDIS_PASSWORD"
