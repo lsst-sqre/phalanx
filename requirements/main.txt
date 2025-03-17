@@ -41,9 +41,9 @@ annotated-types==0.7.0 \
     --hash=sha256:1f02e8b43a8fbbc3f3e0d4f0f4bfc8131bcb4eebe8849b8e5c773f3a1c582a53 \
     --hash=sha256:aff07c09a53a08bc8cfccb9c85b05f1aa9a2a6f23728d790723543408344ce89
     # via pydantic
-anyio==4.8.0 \
-    --hash=sha256:1d9fe889df5212298c0c0723fa20479d1b94883a2df44bd3897aa91083316f7a \
-    --hash=sha256:b5011f270ab5eb0abf13385f851315585cc37ef330dd88e27ec3d34d651fd47a
+anyio==4.9.0 \
+    --hash=sha256:673c0c244e15788651a4ff38710fea9675823028a6f08a5eda409e0c9840a028 \
+    --hash=sha256:9f76d541cad6e36af7beb62e978876f3b41e3e04f2c1fbf0884604c0a9c4d93c
     # via
     #   fast-depends
     #   faststream
@@ -53,9 +53,9 @@ async-timeout==5.0.1 \
     --hash=sha256:39e3809566ff85354557ec2398b55e096c8364bacac9405a7a1fa429e77fe76c \
     --hash=sha256:d9321a7a3d5a6a5e187e824d2fa0793ce379a202935782d555d6e9d2735677d3
     # via aiokafka
-attrs==25.1.0 \
-    --hash=sha256:1c97078a80c814273a76b2a298a932eb681c87415c11dee0a6921de7f1b02c3e \
-    --hash=sha256:c75a69e28a550a7e93789579c22aa26b0f5b83b75dc4e08fe092980051e1090a
+attrs==25.3.0 \
+    --hash=sha256:427318ce031701fea540783410126f03899a97ffc6f61596ad581ac2e40e3bc3 \
+    --hash=sha256:75d7cefc7fb576747b2c81b4442d4d4a1ce0900973527c011d1030fd3bf4af1b
     # via
     #   jsonschema
     #   referencing
@@ -837,9 +837,9 @@ safir-logging==10.0.0 \
     --hash=sha256:7aa9fd0f194404bddbb1945c3cbf175b32b2331736886512998b91eea9626ecb \
     --hash=sha256:8c4aa0e551a34077f8c680d1f7279a651a2de54299a758aefa0cbeaedecad156
     # via safir
-sentry-sdk==2.22.0 \
-    --hash=sha256:3d791d631a6c97aad4da7074081a57073126c69487560c6f8bffcf586461de66 \
-    --hash=sha256:b4bf43bb38f547c84b2eadcefbe389b36ef75f3f38253d7a74d6b928c07ae944
+sentry-sdk==2.23.1 \
+    --hash=sha256:2288320465065f3f056630ce55936426204f96f63f1208edb79e033ed03774db \
+    --hash=sha256:42ef3a6cc1db3d22cb2ab24163d75b23f291ad9892b1a8c44075ce809a32b191
     # via safir
 six==1.17.0 \
     --hash=sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274 \
@@ -863,9 +863,9 @@ starlette==0.46.1 \
     # via
     #   fastapi
     #   safir
-structlog==25.1.0 \
-    --hash=sha256:2ef2a572e0e27f09664965d31a576afe64e46ac6084ef5cec3c2b8cd6e4e3ad3 \
-    --hash=sha256:843fe4f254540329f380812cbe612e1af5ec5b8172205ae634679cd35a6d6321
+structlog==25.2.0 \
+    --hash=sha256:0fecea2e345d5d491b72f3db2e5fcd6393abfc8cd06a4851f21fcd4d1a99f437 \
+    --hash=sha256:d9f9776944207d1035b8b26072b9b140c63702fd7aa57c2f85d28ab701bd8e92
     # via
     #   safir
     #   safir-logging
