@@ -16,4 +16,4 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: tickets-DM-48978
 
-instruments: "LATISS LSSTCam-imSim LSSTComCam LSSTComCamSim HSC"
+instruments: "LATISS LSSTCam LSSTCam-imSim LSSTComCam LSSTComCamSim HSC"
