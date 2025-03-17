@@ -88,10 +88,8 @@ Common environment variables
       key: "database-password"
 {{- if (or .Values.cloudsql.enabled .Values.config.internalDatabase) }}
 - name: "GAFAELFAWR_DATABASE_URL"
-  {{- if (and .sidecar .Values.cloudsql.enabled) }}
+  {{- if .Values.cloudsql.enabled }}
   value: "postgresql://gafaelfawr@localhost/gafaelfawr"
-  {{- else if .Values.cloudsql.enabled }}
-  value: "postgresql://gafaelfawr@cloud-sql-proxy/gafaelfawr"
   {{- else if .Values.config.internalDatabase }}
   value: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
   {{- end }}

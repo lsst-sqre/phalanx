@@ -34,7 +34,7 @@ spec:
             - "gafaelfawr"
             - "update-schema"
           env:
-            {{- include "gafaelfawr.envVars" (dict "Chart" .Chart "Release" .Release "Values" .Values "sidecar" true) | nindent 12 }}
+            {{- include "gafaelfawr.envVars" (dict "Chart" .Chart "Release" .Release "Values" .Values) | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           {{- with .Values.resources }}
