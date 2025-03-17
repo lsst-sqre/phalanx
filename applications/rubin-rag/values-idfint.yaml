@@ -1,3 +1,3 @@
 image:
-  tag: latest
+  tag: tickets-sp-2028
   pullPolicy: Always
