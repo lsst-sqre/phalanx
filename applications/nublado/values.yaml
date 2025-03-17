@@ -425,6 +425,11 @@ hub:
     # takes over 60 seconds for reasons we don't understand.
     startup: 90
 
+  # -- Whether to put each user's lab in a separate domain. This is strongly
+  # recommended for security, but requires wildcard DNS and cert-manager
+  # support and requires subdomain support be enabled in Gafaelfawr.
+  useSubdomains: false
+
 # Configuration for the Zero to JupyterHub subchart.
 jupyterhub:
   cull:

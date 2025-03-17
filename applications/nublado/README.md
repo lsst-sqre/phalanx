@@ -97,6 +97,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | hub.minimumTokenLifetime | string | `jupyterhub.cull.maxAge` if lab culling is enabled, else none | Minimum remaining token lifetime when spawning a lab. The token cannot be renewed, so it should ideally live as long as the lab does. If the token has less remaining lifetime, the user will be redirected to reauthenticate before spawning a lab. |
 | hub.resources | object | See `values.yaml` | Resource limits and requests for the Hub |
 | hub.timeout.startup | int | `90` | Timeout for JupyterLab to start in seconds. Currently this sometimes takes over 60 seconds for reasons we don't understand. |
+| hub.useSubdomains | bool | `false` | Whether to put each user's lab in a separate domain. This is strongly recommended for security, but requires wildcard DNS and cert-manager support and requires subdomain support be enabled in Gafaelfawr. |
 | jupyterhub.cull.enabled | bool | `true` | Enable the lab culler. |
 | jupyterhub.cull.every | int | 300 (5 minutes) | How frequently to check for idle labs in seconds |
 | jupyterhub.cull.maxAge | int | 2160000 (25 days) | Maximum age of a lab regardless of activity |
