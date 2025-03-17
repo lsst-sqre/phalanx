@@ -23,7 +23,7 @@ spec:
         operation: All
       - resource:
           type: topic
-          name: "butlerWriter"
+          name: butler-writer
           patternType: literal
         type: allow
         host: "*"
