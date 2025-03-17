@@ -4,7 +4,7 @@ RAG helpers for documentation searches
 
 ## Source Code
 
-* <https://github.com/lsst-sqre/rubin-rag>
+* <https://github.com/lsst-dm/rubin_rag>
 
 ## Values
 
