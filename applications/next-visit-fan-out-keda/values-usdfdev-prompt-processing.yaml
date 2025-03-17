@@ -1,5 +1,5 @@
 knative:
-  maxMessages: 150
+  maxMessages: 2000
   retryRequests: false
 
 kafka:
