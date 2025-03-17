@@ -162,6 +162,9 @@ applications:
   # -- Enable the ppdb-replication application
   ppdb-replication: false
 
+  # -- Enable the prompt-kafka application
+  prompt-kafka: false
+
   # -- Enable the prompt-keda-hsc application
   prompt-keda-hsc: false
 

@@ -1,0 +1,10 @@
+strimzi-kafka-operator:
+  resources:
+    limits:
+      memory: "1Gi"
+    requests:
+      memory: "512Mi"
+  watchNamespaces:
+    - "kafka"
+    - "prompt-kafka"
+  logLevel: "INFO"

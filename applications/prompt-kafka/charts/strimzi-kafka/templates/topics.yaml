@@ -1,0 +1,13 @@
+{{- if .Values.topics.butlerWriter.enabled }}
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: butler-writer
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: {{ .Values.topics.butlerWriter.partitions }}
+  replicas: {{ .Values.topics.butlerWriter.replicas }}
+  config:
+    retention.ms: {{ .Values.topics.butlerWriter.retention }}
+{{- end }}
