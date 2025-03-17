@@ -25,11 +25,3 @@ app.kubernetes.io/name: "sasquatch-backpack"
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-
-{{/*
-Common environment variables
-*/}}
-{{- define "sasquatch-backpack.envVars" -}}
-- name: "BACKPACK_REDIS_URL"
-  value: "redis://sasqautch-backpack-redis.{{ .Release.Namespace }}:6379/0"
-{{- end }}
