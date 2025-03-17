@@ -43,7 +43,7 @@ spec:
               secretKeyRef:
                 name: rubin-rag
                 key: "HTTP_HOST"
-          image: "{{ .Values.image.repository }}:main"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
             - name: "http"
