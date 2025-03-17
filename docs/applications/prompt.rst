@@ -13,6 +13,7 @@ Argo CD project: ``prompt``
    next-visit-fan-out-keda/index
    prompt-keda-hsc/index
    prompt-keda-latiss/index
+   prompt-keda-lsstcam/index
    prompt-keda-lsstcamimsim/index
    prompt-keda-lsstcomcam/index
    prompt-keda-lsstcomcamsim/index
