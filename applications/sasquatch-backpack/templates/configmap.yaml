@@ -9,4 +9,4 @@ data:
   SASQUATCH_BACKPACK_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
   SASQUATCH_BACKPACK_PROFILE: {{ .Values.config.logProfile | quote }}
   SASQUATCH_REST_PROXY_URL: {{ .Values.config.sasquatchRestProxyUrl | quote }}
-  BACKPACK_REDIS_URL: "redis://sasquatch-backpack-redis.sasquatch-backpack:6379/0"
+  BACKPACK_REDIS_URL: {{ .Values.config.backpackRedisUrl | quote }}
