@@ -13,6 +13,7 @@ Collection of APIs that feed into Sasquatch
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the sasquatch-backpack deployment pod |
+| config.backpackRedisUrl | string | `"redis://sasquatch-backpack-redis.sasquatch-backpack:6379/0"` | Backpack Redis URL |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/sasquatch-backpack"` | URL path prefix |
