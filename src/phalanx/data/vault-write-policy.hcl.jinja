@@ -1,21 +1,21 @@
-path "secret/data/{{ path }}" {
+path "{{ mount_point }}/data/{{ path }}" {
   capabilities = ["create", "delete", "read", "update"]
 }
-path "secret/data/{{ path }}/+" {
+path "{{ mount_point }}/data/{{ path }}/+" {
   capabilities = ["create", "delete", "read", "update"]
 }
-path "secret/metadata/{{ path }}" {
+path "{{ mount_point }}/metadata/{{ path }}" {
   capabilities = ["delete", "list", "read", "update"]
 }
-path "secret/metadata/{{ path }}/+" {
+path "{{ mount_point }}/metadata/{{ path }}/+" {
   capabilities = ["delete", "list", "read", "update"]
 }
-path "secret/delete/{{ path }}/+" {
+path "{{ mount_point }}/delete/{{ path }}/+" {
   capabilities = ["update"]
 }
-path "secret/destroy/{{ path }}/+" {
+path "{{ mount_point }}/destroy/{{ path }}/+" {
   capabilities = ["update"]
 }
-path "secret/undelete/{{ path }}/+" {
+path "{{ mount_point }}/undelete/{{ path }}/+" {
   capabilities = ["update"]
 }

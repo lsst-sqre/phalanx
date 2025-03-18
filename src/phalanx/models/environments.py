@@ -276,6 +276,12 @@ class EnvironmentBaseConfig(BaseModel):
         return path
 
     @property
+    def vault_mount_point(self) -> str:
+        """Vault mount point."""
+        mount_point, _ = self.vault_path_prefix.split("/", 1)
+        return mount_point
+
+    @property
     def vault_read_approle(self) -> str:
         """Name of the Vault read AppRole for this environment."""
         # AppRole names cannot contain /, so we'll use only the final
