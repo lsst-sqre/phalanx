@@ -17,16 +17,26 @@ data:
         + str(os.environ["HUB_SERVICE_PORT"])
     )
 
+    # JupyterHub uses a single database connection for all database activity
+    # and JupyterLab by default sends activity updates every 30 seconds. By
+    # the time we reach 1,000 active users, this is completely saturating
+    # JupyterHub and it stops being able to do work. This interval controls
+    # how frequently JupyterHub is willing to update activity information in
+    # the database. Increase it to 10 minutes, which is still a very long time
+    # compared to our idle thresholds.
+    c.JupyterHub.activity_resolution = 600
+    c.JupyterHub.last_activity_interval = 600
+
     # Turn off concurrent spawn limit.
     c.JupyterHub.concurrent_spawn_limit = 0
-
-    # Add custom templates.
-    c.JupyterHub.template_paths = [ "/usr/local/etc/jupyterhub/templates" ]
     {{- if .Values.hub.useSubdomains }}
 
     # Use separate hostnames for each user lab.
     c.JupyterHub.subdomain_host = "https://nb.{{ .Values.global.host }}"
     {{- end }}
+
+    # Add custom templates.
+    c.JupyterHub.template_paths = [ "/usr/local/etc/jupyterhub/templates" ]
 
     # Enable stored auth state.
     c.Authenticator.enable_auth_state = True
