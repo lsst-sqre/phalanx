@@ -39,10 +39,7 @@ spec:
           - name: GRPC_HOST
             value: weaviate-grpc.rubin-rag.svc.cluster.local
           - name: HTTP_HOST
-            valueFrom:
-              secretKeyRef:
-                name: rubin-rag
-                key: "HTTP_HOST"
+            value: weaviate-headless
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
