@@ -540,7 +540,11 @@ jupyterhub:
       server:
         # -- Default scopes for the user's lab, overridden to allow the lab to
         # delete itself (which we use for our added menu items)
-        scopes: ["self"]
+        # @default -- See `values.yaml`
+        scopes:
+          - "access:servers!user"
+          - "delete:servers!user"
+          - "users:activity!user"
 
   ingress:
     # -- Whether to enable the default ingress. Should always be disabled
