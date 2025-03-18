@@ -1,7 +1,7 @@
 suite: terminationGracePeriod set
 tests:
-  - it: "Should set terminationGracePeriod in the deployment pod spec"
-    template: "deployment.yaml"
+  - it: "Should set terminationGracePeriod in the StaefulSet pod spec"
+    template: "stateful-set.yaml"
     set:
       terminationGracePeriodSeconds: 500
       global:
@@ -10,8 +10,8 @@ tests:
       - equal:
           path: "spec.template.spec.terminationGracePeriodSeconds"
           value: 500
-  - it: "Should set terminationGracePeriod in the deployment pod spec"
-    template: "deployment.yaml"
+  - it: "Should set terminationGracePeriod in the StatefulSet pod spec"
+    template: "stateful-set.yaml"
     set:
       terminationGracePeriodSeconds: null
       global:
