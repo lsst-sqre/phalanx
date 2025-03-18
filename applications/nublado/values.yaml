@@ -579,8 +579,8 @@ jupyterhub:
       # @default -- See `values.yaml`
       resources:
         limits:
-          cpu: "150m"
-          memory: "200Mi"
+          cpu: "1"
+          memory: "400Mi"
         requests:
           cpu: "5m"
           memory: "30Mi"
