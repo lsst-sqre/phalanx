@@ -69,8 +69,6 @@ prompt-keda:
     namespace: lsst.prompt.prod
     auth_env: false
 
-  logLevel: timer.lsst.activator=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE lsst.resources=DEBUG
-
   podAnnotations: {
     edu.stanford.slac.sdf.project/usdf-embargo: "true"
   }
