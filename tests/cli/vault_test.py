@@ -161,7 +161,7 @@ def test_create_read_approle(
 ) -> None:
     config_storage = factory.create_config_storage()
     environment = config_storage.load_environment_config("idfdev")
-    _, vault_path = environment.vault_path_prefix.split("/", 1)
+    mount_point, vault_path = environment.vault_path_prefix.split("/", 1)
 
     result = run_cli(
         "vault",
@@ -184,7 +184,9 @@ def test_create_read_approle(
     r = mock_vault.read_policy(approle.policies[0])
     seen_policy = r["rules"]
     template = templates.get_template("vault-read-policy.hcl.jinja")
-    expected_policy = template.render({"path": vault_path})
+    expected_policy = template.render(
+        {"path": vault_path, "mount_point": mount_point}
+    )
     assert seen_policy == expected_policy
 
     # Check that it has only one SecretID.
@@ -236,7 +238,7 @@ def test_create_write_token(
 ) -> None:
     config_storage = factory.create_config_storage()
     environment = config_storage.load_environment_config("idfdev")
-    _, vault_path = environment.vault_path_prefix.split("/", 1)
+    mount_point, vault_path = environment.vault_path_prefix.split("/", 1)
     if "/" in vault_path:
         display_name = "token-" + vault_path.rsplit("/", 1)[1]
     else:
@@ -265,7 +267,9 @@ def test_create_write_token(
     r = mock_vault.read_policy(token.policies[0])
     seen_policy = r["rules"]
     template = templates.get_template("vault-write-policy.hcl.jinja")
-    expected_policy = template.render({"path": vault_path})
+    expected_policy = template.render(
+        {"path": vault_path, "mount_point": mount_point}
+    )
     assert seen_policy == expected_policy
 
 
