@@ -48,6 +48,8 @@ chronograf:
     INFLUX_DB_URL: "monitoring-dev.lsst.cloud"
   envFromSecret: "monitoring"
 cronjob:
+  image:
+    tag: "tickets-DM-49521"
   enabled: true
   debug: true
 ingress:
