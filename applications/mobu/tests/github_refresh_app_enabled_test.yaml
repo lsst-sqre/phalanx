@@ -18,8 +18,8 @@ tests:
           path: "config.scopes.anonymous"
           value: true
 
-  - it: "Should inject secrets into the Deployment env"
-    template: "deployment.yaml"
+  - it: "Should inject secrets into the StatefulSet env"
+    template: "stateful-set.yaml"
     asserts:
       - contains:
           path: "spec.template.spec.containers[0].env"

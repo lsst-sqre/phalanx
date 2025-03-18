@@ -38,6 +38,7 @@ Continuous integration testing
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | nodeSelector | object | `{}` | Node selector rules for the mobu frontend pod |
 | podAnnotations | object | `{}` | Annotations for the mobu frontend pod |
+| replicaCount | int | `1` | Number of mobu instances to start. Starting more than one should only be used temporarily in specific circumstances. See [the Mobu documentation](https://mobu.lsst.io/user-guide/multiple-replicas.html) |
 | resources | object | See `values.yaml` | Resource limits and requests for the mobu frontend pod |
 | terminationGracePeriodSeconds | string | Use the Kubernetes default | Number of seconds for Kubernetes to send SIGKILL after sending SIGTERM |
 | tolerations | list | `[]` | Tolerations for the mobu frontend pod |

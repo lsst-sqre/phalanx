@@ -1,5 +1,10 @@
 # Default values for mobu.
 
+# -- Number of mobu instances to start. Starting more than one should only be
+# used temporarily in specific circumstances. See [the Mobu
+# documentation](https://mobu.lsst.io/user-guide/multiple-replicas.html)
+replicaCount: 1
+
 image:
   # -- mobu image to use
   repository: "ghcr.io/lsst-sqre/mobu"
