@@ -14,3 +14,6 @@ controller:
   config:
     safir:
       logLevel: "DEBUG"
+
+lfa:
+  s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu/"
