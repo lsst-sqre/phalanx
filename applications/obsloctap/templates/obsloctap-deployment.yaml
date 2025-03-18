@@ -54,6 +54,8 @@ spec:
               {{- toYaml .Values.resources | nindent 12 }}
 
           env:
+            - name: "lfa"
+              value: "{{ .Values.lfa.s3EndpointUrl }}"
             - name: "database"
               valueFrom:
                 secretKeyRef:
@@ -81,7 +83,7 @@ spec:
             - name: "KAFKA_PASSWORD"
               valueFrom:
                 secretKeyRef:
-                  name: sasquatch
+                  name: obsloctap
                   key: "obsloctap-password"
             - name: "KAFKA_GROUP_ID"
               value: "{{ .Values.kafka.group_id }}"
