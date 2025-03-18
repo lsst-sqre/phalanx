@@ -1,5 +1,5 @@
 knative:
-  maxMessages: 1000 # Kubernetes can't support more pods yet
+  maxMessages: 2000
 
 kafka:
   schemaRegistryUrl: http://10.104.61.102:8081
