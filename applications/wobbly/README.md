@@ -39,7 +39,7 @@ IVOA UWS database storage
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | maintenance.cleanupSeconds | int | 86400 (1 day) | How long to keep old jobs around before deleting them |
 | maintenance.deadlineSeconds | int | 300 (5 minutes) | How long the job is allowed to run before it will be terminated |
-| maintenance.schedule | string | `"10 * * * *"` | Cron schedule string for Wobbly periodic maintenance (in UTC) |
+| maintenance.schedule | string | `"8 * * * *"` | Cron schedule string for Wobbly periodic maintenance (in UTC) |
 | nodeSelector | object | `{}` | Node selection rules for the wobbly deployment pod |
 | podAnnotations | object | `{}` | Annotations for the wobbly deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
