@@ -146,6 +146,9 @@ applications:
   # -- Enable the mobu application
   mobu: false
 
+  # -- Enable the mpsky application
+  mpsky: false
+
   # -- Enable the narrativelog application
   narrativelog: false
 
