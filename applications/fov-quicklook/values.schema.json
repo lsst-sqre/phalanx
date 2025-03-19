@@ -6,9 +6,6 @@
     "config": {
       "$ref": "#/definitions/config"
     },
-    "s3_repository": {
-      "$ref": "#/definitions/s3_config"
-    },
     "s3_tile": {
       "$ref": "#/definitions/s3_config"
     },
