@@ -1,0 +1,5 @@
+Updated Vault secret for gafaelfawr database-password
+Updated Vault secret for gafaelfawr session-secret
+Updated Vault secret for gafaelfawr signing-key
+Updated Vault secret for gafaelfawr slack-webhook
+Deleted Vault secret for gafaelfawr cilogon
