@@ -24,7 +24,7 @@ spec:
         env:
         - name: JUPYTER_ENABLE_LAB
           value: "yes"
-        {{- include "fov-quicklook.env.s3_repository" . | nindent 8 }}
+        {{- include "fov-quicklook.env.s3_tile" . | nindent 8 }}
         {{- with .Values.butler_settings }}
         {{- range .envs }}
         - name: {{ .name }}
