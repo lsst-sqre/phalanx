@@ -16,6 +16,7 @@ controller:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
 <<<<<<< HEAD:applications/nublado/values-ukidacprod.yaml
 <<<<<<< HEAD:applications/nublado/values-ukidacprod.yaml
+<<<<<<< HEAD:applications/nublado/values-ukidacprod.yaml
             tag: "8.8.0"
 =======
             tag: "8.3.0"
@@ -23,6 +24,9 @@ controller:
 =======
             tag: "8.4.1"
 >>>>>>> 1e73f2da6 (Upgrade Nublado to 8.4.1):applications/nublado/values-roe.yaml
+=======
+            tag: "8.7.1"
+>>>>>>> 8ecd73be3 (Update Nublado to 8.7.1):applications/nublado/values-roe.yaml
           privileged: true
           volumeMounts:
             - containerPath: "/home"
