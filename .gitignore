@@ -136,3 +136,6 @@ dmypy.json
 # Editor files
 .DS_Store
 .idea/
+
+# JOE editor backup files
+*~
