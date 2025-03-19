@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: CronJob
+metadata:
+  name: rumba-cronjob
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: rumba-cronjob
+              image: "ts-dockerhub.lsst.org/rumba:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+              envFrom:
+                - configMapRef:
+                    name: csc-env-config
+              env:
+                - name: LSST_KAFKA_SECURITY_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: control-system-test
+                      key: ts-salkafka-password
+              command:
+                - /bin/bash
+                - -c
+                - |
+                  echo "Creating credentials file..."
+                  KT_CREDENTIALS="/home/saluser/.auth/kafka-aclient-{{ .Values.ktSite }}.properties"
+                  mkdir -p /home/saluser/.auth  # Ensure directory exists
+                  echo "bootstrap.servers={{ .Values.kafkaBootstrapServer }}" > "$KT_CREDENTIALS"
+                  echo "sasl.mechanism=SCRAM-SHA-512" >> "$KT_CREDENTIALS"
+                  echo "sasl.password=$LSST_KAFKA_SECURITY_PASSWORD" >> "$KT_CREDENTIALS"
+                  echo "sasl.username=$LSST_KAFKA_SECURITY_USERNAME" >> "$KT_CREDENTIALS"
+                  echo "security.protocol=SASL_SSL" >> "$KT_CREDENTIALS"
+                  echo "Running cronjob..."
+                  exec /home/saluser/.startup.sh "kt consumers {{ .Values.ktSite }} delete"
