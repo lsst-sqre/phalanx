@@ -18,12 +18,6 @@ config:
   # -- URL path prefix
   pathPrefix: /fov-quicklook
 
-# -- S3 configuration for the repository
-s3_repository:
-  endpoint: sdfembs3.sdf.slac.stanford.edu:443
-  secure: true
-  bucket: fov-quicklook-repository
-
 # -- S3 configuration for the tile storage
 s3_tile:
   endpoint: sdfembs3.sdf.slac.stanford.edu:443
