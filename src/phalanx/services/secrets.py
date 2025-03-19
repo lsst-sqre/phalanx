@@ -679,7 +679,8 @@ class SecretsService:
         vault_client
             Client for talking to Vault for this environment.
         vault_secrets
-            Current secrets in Vault for this environment.
+            Current secrets in Vault for this environment. This is modified in
+            place as Vault secrets are updated.
         resolved
             Resolved secrets for this environment.
         """
@@ -687,6 +688,7 @@ class SecretsService:
             if application not in vault_secrets:
                 vault_client.store_application_secret(application, values)
                 print("Created Vault secret for", application)
+                vault_secrets[application] = values
                 continue
             vault_app_secrets = vault_secrets[application]
             for key, secret in values.items():
@@ -695,6 +697,7 @@ class SecretsService:
                         application, key, secret
                     )
                     print("Updated Vault secret for", application, key)
+                    vault_secrets[application][key] = secret
 
     def _sync_pull_secret(
         self,
