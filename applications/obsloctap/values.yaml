@@ -16,7 +16,7 @@ consumekafka:
     repository: "ghcr.io/lsst-dm/consumekafka"
 
     # -- Pull policy for the obsloctap image
-    pullPolicy: "IfNotPresent"
+    pullPolicy: "Always"
 
     # -- Tag of image to use
     # @default -- The appVersion of the chart
