@@ -28,4 +28,4 @@ template:
                 service:
                   name: "mpsky"
                   port:
-                    number: 8080
+                    number: 80
