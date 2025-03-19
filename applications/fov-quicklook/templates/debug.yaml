@@ -36,11 +36,15 @@ spec:
         - name: secret-volume
           mountPath: /secret
           readOnly: true
+        - name: empty
+          mountPath: /empty
       volumes:
       {{- .Values.butler_settings.volumes | toYaml | nindent 6 }}
       - name: secret-volume
         secret:
           secretName: fov-quicklook
+      - name: empty
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
