@@ -38,10 +38,10 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - "all"
+            allowPrivilegeEscalation: true
+#            capabilities:
+#              drop:
+#                - "all"
             readOnlyRootFilesystem: false
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -52,6 +52,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
+        runAsNonRoot: false
+#        runAsUser: 1000
+#        runAsGroup: 1000
