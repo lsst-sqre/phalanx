@@ -25,6 +25,7 @@ argo-cd:
         g, jsick@lsst.cloud, role:admin
         g, rra@lsst.cloud, role:admin
         g, svoutsin@lsst.cloud, role:admin
+        g, roceb@lsst.cloud, role:admin
       scopes: "[email]"
 
   server:
