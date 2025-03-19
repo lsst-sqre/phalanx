@@ -27,7 +27,7 @@ spec:
               value: {{ .Values.config.pathPrefix | quote }}
             - name: QUICKLOOK_admin_page
               value: {{ .Values.admin_page | quote }}
-            {{- include "fov-quicklook.env.s3_repository" . | nindent 12 }}
+            {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
             {{- include "fov-quicklook.butler-settings.env" . | nindent 12 }}
           volumeMounts:
             {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}
