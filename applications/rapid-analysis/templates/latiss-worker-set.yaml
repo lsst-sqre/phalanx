@@ -1,11 +1,11 @@
-{{ $_ := set $.Values "script" $.Values.comcamsimGather2aSet }}
-{{ $script := $.Values.comcamsimGather2aSet }}
+{{ $_ := set $.Values "script" $.Values.latissWorkerSet }}
+{{ $script := $.Values.latissWorkerSet }}
 {{- if $script.name }}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "rapid-analysis.deploymentName" $ }}-gather2aset
+  name: {{ include "rapid-analysis.deploymentName" $ }}-workerset
   namespace: {{ $.Values.namespace }}
   labels:
     {{- include "rapid-analysis.labels" $ | nindent 4 }}

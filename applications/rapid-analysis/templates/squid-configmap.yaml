@@ -1,0 +1,31 @@
+{{- if .Values.squid.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: squid-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "rapid-analysis.squid.labels" . | nindent 4 }}
+data:
+  squid.conf: |
+    # Squid minimal configuration
+
+    # Define which networks are allowed to use this proxy
+    acl localnet src all
+    http_access allow localnet
+    http_access deny all
+
+    # Disable caching
+    cache_dir null /dev/null
+    cache deny all
+
+    # The default port that Squid listens on
+    http_port 3128
+
+    # Optionally log to stdout instead of files
+    # TODO: enable logs to stdout
+    access_log /var/log/squid/access.log
+    #access_log none
+    cache_log /dev/null
+    cache_store_log none
+{{- end }}

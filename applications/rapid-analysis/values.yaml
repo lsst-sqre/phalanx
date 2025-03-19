@@ -128,3 +128,29 @@ redis:
   tolerations: []
   # -- Affinity rules for the redis pods
   affinity: {}
+squid:
+  # -- This specifies whether to use squid or not.
+  enabled: false
+  # -- The port to expose the squid service on.
+  port: 3128
+  image:
+    # -- The Docker registry name for the squid container image.
+    repository: ubuntu/squid
+    # -- The tag of the squid container image to use.
+    tag: edge
+    # -- The policy to apply when pulling an image for deployment.
+    pullPolicy: IfNotPresent
+  # -- This section holds a set of key, value pairs for environmental variables (ENV_VAR: value).
+  env: {}
+  # -- This section holds specifications for secret injection.
+  envSecrets: []
+  # -- This allows the specification of resources (CPU, memory) requires to run the squid container.
+  resources: {}
+  # -- Node selection rules for the squid pods
+  nodeSelector: {}
+  # -- Toleration specifications for the squid pods
+  tolerations: []
+  # -- Affinity rules for the squid pods
+  affinity: {}
+  # -- This allows the specification of pod annotations.
+  podAnnotations: {}
