@@ -16,7 +16,7 @@ Publish observing schedule
 | config.separateSecrets | bool | `true` | Whether to use the new secrets management scheme |
 | config.volume_mounts | list | `[]` | Mount points for additional volumes |
 | config.volumes | list | `[]` | Additional volumes to attach |
-| consumekafka.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the obsloctap image |
+| consumekafka.image.pullPolicy | string | `"Always"` | Pull policy for the obsloctap image |
 | consumekafka.image.repository | string | `"ghcr.io/lsst-dm/consumekafka"` | obsloctap image to use |
 | consumekafka.image.tag | string | The appVersion of the chart | Tag of image to use |
 | environment | object | `{}` | Environment variables (e.g. butler configuration/auth parms) for panel |

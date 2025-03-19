@@ -17,3 +17,7 @@ controller:
 
 lfa:
   s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu/"
+
+
+kafka:
+  sasquatchAddress: 10.100.226.209:9094
