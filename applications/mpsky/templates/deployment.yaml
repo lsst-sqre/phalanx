@@ -27,6 +27,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ['/entrypoint.sh', '--host', '0.0.0.0', '--port', '8080', '--verbose' ]
           ports:
             - name: "http"
               containerPort: 8080
@@ -43,6 +44,9 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "tmp"
+              mountPath: "/tmp"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -55,3 +59,6 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
+      volumes:
+        - name: tmp
+          emptyDir: {}

@@ -4,11 +4,14 @@ metadata:
   name: "mpsky"
   labels:
     {{- include "mpsky.labels" . | nindent 4 }}
+  annotations:
+#    metallb.universe.tf/address-pool: sdf-services
+    loadBalancerIP: 172.24.5.245
 spec:
-  type: "ClusterIP"
+  type: "LoadBalancer"
   ports:
-    - port: 8080
-      targetPort: "http"
+    - port: 80
+      targetPort: 8080
       protocol: "TCP"
       name: "http"
   selector:
