@@ -39,6 +39,8 @@ spec:
           volumeMounts:
             - mountPath: /dev/shm/quicklook
               name: shm
+            - mountPath: /tmp/quicklook/merge
+              name: merged-dir
             {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}
           securityContext:
             runAsNonRoot: true
@@ -49,6 +51,8 @@ spec:
         - name: shm
           emptyDir:
             medium: {{ .Values.generator.workdir.medium | quote }}
+        - name: merged-dir
+          emptyDir: {}
         {{- .Values.butler_settings.volumes | toYaml | nindent 8 }}
 ---
 apiVersion: networking.k8s.io/v1
