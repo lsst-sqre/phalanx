@@ -14,7 +14,7 @@ config:
   ssotap: "ssotap"
 
 image:
-  tag: "portal-2025.2_b2"
+  tag: "portal-2025.2_b3"
 
 resources:
   limits:
