@@ -10,10 +10,9 @@ dependencies:
   alias: test42
   version: 1.0.0
   repository: file://../../charts/csc
-- name: csc
-  alias: rumba
+- name: rumba
   version: 1.0.0
-  repository: file://../../charts/csc
+  condition: rumba.enabled
 - name: integration-testing
   version: 1.0.0
   condition: integration-testing.enabled
