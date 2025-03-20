@@ -16,4 +16,5 @@ Argo CD project: ``infrastructure``
    gafaelfawr/index
    keda/index
    mobu/index
+   trident/index
    vault-secrets-operator/index

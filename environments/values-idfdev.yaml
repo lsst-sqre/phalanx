@@ -36,6 +36,7 @@ applications:
   tap: true
   telegraf: true
   telegraf-ds: true
+  trident: true
   times-square: true
   vault-secrets-operator: true
   vo-cutouts: true

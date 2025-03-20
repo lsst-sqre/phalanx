@@ -388,9 +388,9 @@ fastavro==1.10.0 \
     # via
     #   dataclasses-avroschema
     #   python-schema-registry-client
-faststream==0.5.35 \
-    --hash=sha256:63b9c9b3abab3c8bf11c3e71b327a14b590be3be229d164c4e3504e8cdf611ab \
-    --hash=sha256:da81d95207cad177cd79042d59c76567ffec5a9528f5636ca63d6c10759467b6
+faststream==0.5.36 \
+    --hash=sha256:4d40f84aed539ffadb7800aa72e3c980eae20b7ff8ab77ad12c8ec7251ee209b \
+    --hash=sha256:cc8dc00be25cb90d58ea03062d0a3ea726c8c6d8586b27b3df7dc4ac94441c02
     # via safir
 gidgethub==5.3.0 \
     --hash=sha256:4dd92f2252d12756b13f9dd15cde322bfb0d625b6fb5d680da1567ec74b462c0 \
