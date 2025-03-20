@@ -105,7 +105,7 @@ spec:
                 {{- end }}
             - name: "PROPS_FIREFLY_OPTIONS"
               value: >-
-                $'{
+                {
                    "tap" : {
                       "additional": {
                           "services": [
@@ -146,7 +146,7 @@ spec:
                           ]
                       }
                    },
-                }'
+                }
             - name: "SERVER_CONFIG_DIR"
               value: "/firefly/config"
             - name: "CLEANUP_INTERVAL"
