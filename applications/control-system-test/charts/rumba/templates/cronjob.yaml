@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: CronJob
 metadata:
-  name: rumba-cronjob
+  name: rumba
   namespace: {{ .Values.namespace }}
 spec:
   schedule: {{ .Values.schedule | quote }}
@@ -10,7 +10,7 @@ spec:
       template:
         spec:
           containers:
-            - name: rumba-cronjob
+            - name: rumba
               image: "ts-dockerhub.lsst.org/rumba:{{ .Values.image.tag }}"
               imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
               envFrom:
