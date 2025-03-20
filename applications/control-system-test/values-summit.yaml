@@ -11,3 +11,8 @@ test42:
     requests:
       cpu: 15m
       memory: 95Mi
+
+rumba:
+  enabled: true
+  ktSite: summit
+  kafkaBootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
