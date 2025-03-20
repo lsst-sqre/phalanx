@@ -14,7 +14,6 @@ applications:
 
   butler: true
   consdb: true
-  consdbtap: true
   datalinker: true
   exposurelog: true
   livetap: true
