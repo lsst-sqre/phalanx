@@ -288,6 +288,9 @@ applications:
   # -- Enable the times-square application
   times-square: false
 
+  # -- Enable the trident application
+  trident: false
+
   # -- Enable the unfurlbot application
   unfurlbot: false
 
