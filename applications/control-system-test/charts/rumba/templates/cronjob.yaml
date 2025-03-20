@@ -10,7 +10,7 @@ spec:
       template:
         spec:
           imagePullSecrets:
-            - name: my-registry-secret
+            - name: pull-secret
           restartPolicy: OnFailure
           containers:
             - name: rumba
