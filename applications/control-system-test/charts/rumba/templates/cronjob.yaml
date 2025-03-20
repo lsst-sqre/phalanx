@@ -6,13 +6,15 @@ metadata:
 spec:
   schedule: {{ .Values.schedule | quote }}
   concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: {{ .Values.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.failedJobsHistoryLimit }}
   jobTemplate:
     spec:
       template:
         spec:
           imagePullSecrets:
             - name: pull-secret
-          restartPolicy: Never
+          restartPolicy: OnFailure
           containers:
             - name: rumba
               image: "ts-dockerhub.lsst.org/rumba:{{ .Values.image.tag }}"
