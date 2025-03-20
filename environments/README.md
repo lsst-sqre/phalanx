@@ -14,6 +14,7 @@
 | applications.cert-manager | bool | `true` | Enable the cert-manager application, required unless the environment makes separate arrangements to inject a current TLS certificate |
 | applications.checkerboard | bool | `false` | Enable the checkerboard application |
 | applications.cm-service | bool | `false` | Enable the cm-service application |
+| applications.consdbtap | bool | `false` | Enable the consdbtap application |
 | applications.control-system-test | bool | `false` | Enable the control-system-test application |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
 | applications.envsys | bool | `false` | Enable the envsys control system application |
