@@ -9,6 +9,7 @@ spec:
     spec:
       template:
         spec:
+          restartPolicy: OnFailure
           containers:
             - name: rumba
               image: "ts-dockerhub.lsst.org/rumba:{{ .Values.image.tag }}"
