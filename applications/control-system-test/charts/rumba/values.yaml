@@ -1,0 +1,11 @@
+# -- The Schedule for executing the job to clean up inactive consumers
+# @default -- "0 0 * * *" (run every hour)
+schedule: "0 * * * *"
+image:
+  # -- The image tag for the rumba cronjob container
+  tag: latest
+  pullPolicy:
+# -- Name of the site using kafka-tools nomenclature
+ktSite:
+# -- External address of the Kafka bootstrap server
+kafkaBootstrapServer:
