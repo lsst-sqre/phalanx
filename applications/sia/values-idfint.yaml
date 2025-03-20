@@ -7,7 +7,13 @@ config:
       name: "dp02"
       butler_type: "REMOTE"
       repository: "https://data-int.lsst.cloud/api/butler/repo/dp02/butler.yaml"
-      datalink_url: "https://data-int.lsst.cloud/api/datalink/links?ID=butler%3A//dp02/{id}"
+      datalink_url: "https://data-int.lsst.cloud/api/datalink/links?ID=ivo%3A%2F%2Forg.rubinobs%2Fusdac%2Fdp1%3Frepo%3Ddp1%26id%3D{id}"
+    - config: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp1.yaml"
+      label: "LSST.DP1"
+      name: "dp1"
+      butler_type: "REMOTE"
+      repository: "https://data-int.lsst.cloud/api/butler/repo/dp1/butler.yaml"
+      datalink_url: "https://data-int.lsst.cloud/api/datalink/links?ID=ivo%3A%2F%2Forg.rubinobs%2Fusdac%2Fdp1%3Frepo%3Ddp1%26id%3D{id}"
 
   enableSentry: true
   sentryTracesSampleRate: 1
