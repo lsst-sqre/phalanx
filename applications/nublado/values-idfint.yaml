@@ -113,8 +113,16 @@ controller:
     metrics:
       enabled: true
 
+hub:
+  useSubdomains: true
+
 jupyterhub:
   hub:
+    config:
+      JupyterHub:
+        # This has to exist for Zero to JupyterHub to configure the proxy
+        # correctly.
+        subdomain_host: "nb.data-int.lsst.cloud"
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
