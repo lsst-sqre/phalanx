@@ -116,7 +116,7 @@ prompt-keda:
   debug:
     # -- Whether or not pipeline outputs should be exported to the central repo.
     # This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination.
-    exportOutputs: true
+    exportOutputs: false
 
   keda:
     # Minimum number of replicas to start with.
