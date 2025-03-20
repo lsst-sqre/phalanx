@@ -31,4 +31,5 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | rumba.image.tag | string | `"latest"` | The image tag for the rumba cronjob container |
 | rumba.kafkaBootstrapServer | string | `nil` | External address of the Kafka bootstrap server |
 | rumba.ktSite | string | `nil` | Name of the site using kafka-tools nomenclature |
+| rumba.namespace | string | `"control-system-test"` | This is the namespace in which the rumba cronjob will be placed |
 | rumba.schedule | string | "*/10 * * * *" (every ten minutes) | The Schedule for executing the job to clean up inactive consumers |

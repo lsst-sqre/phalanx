@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: CronJob
 metadata:
   name: rumba-cronjob
+  namespace: {{ .Values.namespace }}
 spec:
   schedule: {{ .Values.schedule | quote }}
   jobTemplate:
