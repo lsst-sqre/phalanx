@@ -11,7 +11,7 @@ spec:
         spec:
           imagePullSecrets:
             - name: pull-secret
-          restartPolicy: OnFailure
+          restartPolicy: Never
           containers:
             - name: rumba
               image: "ts-dockerhub.lsst.org/rumba:{{ .Values.image.tag }}"
