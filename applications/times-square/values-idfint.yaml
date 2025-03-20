@@ -1,17 +1,19 @@
-image:
-  pullPolicy: Always
-ingress:
-  defaultScope: "exec:admin"
+replicaCount:
+  api: 2
+  worker: 2
 config:
-  logLevel: "DEBUG"
-  databaseUrl: "postgresql://times-square@localhost/times-square"
-  githubAppId: "952880"
+  databaseUrl: "postgresql://timessquare@postgres.postgres/timessquare"
+  githubAppId: "1161058"
   enableGitHubApp: "True"
   sentryTracesSampleRate: 1
 cloudsql:
-  enabled: true
-  instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
-  serviceAccount: "times-square@science-platform-int-dc5d.iam.gserviceaccount.com"
+  enabled: false
 redis:
   persistence:
-    storageClass: "standard-rwo"
+    storageClass: "wekafs--sdf-k8s01"
+    size: "64Gi"
+  resources:
+    requests:
+      memory: "8Gi"
+    limits:
+      memory: "24Gi"
