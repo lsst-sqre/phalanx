@@ -16,3 +16,8 @@ integration-testing:
   enabled: true
   envEfd: base_efd
   s3Bucket: rubinobs-lfa-ls
+
+rumba:
+  enabled: true
+  ktSite: bts
+  kafkaBootstrapServer: sasquatch-base-kafka-bootstrap.lsst.codes:9094
