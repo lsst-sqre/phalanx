@@ -27,9 +27,11 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | integration-testing.s3Bucket | string | `nil` | The S3 bucket name to use |
 | integration-testing.serviceAccount | string | `"integration-tests"` | This sets the service account name |
 | integration-testing.workflowName | string | `"integration-test-workflow"` | Name for the top-level workflow |
+| rumba.failedJobsHistoryLimit | int | `1` | The number of failed pods to keep |
 | rumba.image.pullPolicy | string | `"Always"` |  |
 | rumba.image.tag | string | `"latest"` | The image tag for the rumba cronjob container |
 | rumba.kafkaBootstrapServer | string | `nil` | External address of the Kafka bootstrap server |
 | rumba.ktSite | string | `nil` | Name of the site using kafka-tools nomenclature |
 | rumba.namespace | string | `"control-system-test"` | This is the namespace in which the rumba cronjob will be placed |
 | rumba.schedule | string | "*/10 * * * *" (every ten minutes) | The Schedule for executing the job to clean up inactive consumers |
+| rumba.successfulJobsHistoryLimit | int | `2` | The number of succesful pods to keep |
