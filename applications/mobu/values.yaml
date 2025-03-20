@@ -95,7 +95,11 @@ config:
 resources:
   limits:
     cpu: "1"
-    memory: "3.5Gi"
+    # This is specified in Mi instead of Gi because ArgoCD will always show
+    # OutOfSync because of a bug in value normalization for certain
+    # combinations of attributes in certain resources:
+    # https://github.com/argoproj/argo-cd/issues/16400
+    memory: "3584Mi"
   requests:
     cpu: "50m"
     memory: "1Gi"
