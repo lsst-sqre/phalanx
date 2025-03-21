@@ -46,6 +46,9 @@ data:
     # Enable stored auth state.
     c.Authenticator.enable_auth_state = True
 
+    # Redirect to the Gafaelfawr logout handler after logout.
+    c.GafaelfawrAuthenticator.after_logout_redirect = "{{ .Values.global.baseUrl }}/logout"
+
     # Turn off restart after n consecutive failures.
     c.Spawner.consecutive_failure_limit = 0
 
