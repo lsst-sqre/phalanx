@@ -1,16 +1,18 @@
-apiVersion: gafaelfawr.lsst.io/v1alpha1
-kind: GafaelfawrIngress
+#apiVersion: gafaelfawr.lsst.io/v1alpha1
+#kind: GafaelfawrIngress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: "mpsky"
   labels:
     {{- include "mpsky.labels" . | nindent 4 }}
-config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
-  scopes:
-    all:
-      - "read:image"
-  service: "mpsky"
-  loginRedirect: true
+#config:
+#  baseUrl: {{ .Values.global.baseUrl | quote }}
+#  scopes:
+#    all:
+#      - "read:image"
+#  service: "mpsky"
+#  loginRedirect: true
 template:
   metadata:
     name: "mpsky"
