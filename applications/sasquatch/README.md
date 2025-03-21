@@ -105,9 +105,9 @@ Rubin Observatory's telemetry service
 | app-metrics.envFromSecret | string | `""` | Name of the secret with values to be added to the environment |
 | app-metrics.globalAppConfig | object | See `values.yaml` | app-metrics configuration in any environment in which the subchart is enabled. This should stay globally specified here, and it shouldn't be overridden.  See [here](https://sasquatch.lsst.io/user-guide/app-metrics.html#configuration) for the structure of this value. |
 | app-metrics.globalInfluxTags | list | `["application"]` | Keys in an every event sent by any app that should be recorded in InfluxDB as "tags" (vs. "fields"). These will be concatenated with the `influxTags` from `globalAppConfig` |
-| app-metrics.image.pullPolicy | string | `"Always"` | Image pull policy |
-| app-metrics.image.repo | string | `"ghcr.io/lsst-sqre/telegraf"` | Telegraf image repository |
-| app-metrics.image.tag | string | `"nightly-alpine-2025-01-09"` | Telegraf image tag |
+| app-metrics.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| app-metrics.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
+| app-metrics.image.tag | string | `"1.34.0-alpine"` | Telegraf image tag |
 | app-metrics.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | app-metrics.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
 | app-metrics.nodeSelector | object | `{}` | Node labels for pod assignment |
