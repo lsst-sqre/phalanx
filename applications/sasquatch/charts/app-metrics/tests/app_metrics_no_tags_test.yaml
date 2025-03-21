@@ -1,0 +1,12 @@
+suite: App metrics app with no tags
+set:
+  globalAppConfig:
+    appWithTags:
+      influxTags: ["tag1, tag2"]
+    appWithoutTags:
+tests:
+  - it: "Should pass"
+    template: "telegraf-configmap.yaml"
+    asserts:
+      - isKind:
+          of: "ConfigMap"
