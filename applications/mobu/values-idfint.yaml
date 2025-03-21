@@ -1,8 +1,5 @@
 replicaCount: 4
 
-image:
-  tag: tickets-DM-49320-shush-with-the-hub-talk
-  pullPolicy: Always
 resources:
   limits:
     # memory: "3.5Gi"
