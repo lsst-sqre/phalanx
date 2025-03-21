@@ -244,6 +244,7 @@ chronograf:
   env:
     HOST_PAGE_DISABLED: true
     BASE_PATH: /chronograf
+    INACTIVITY_DURATION: 1h
 
   # -- Name of secret to use. The keys `generic_client_id`,
   # `generic_client_secret`, and `token_secret` should be set.
