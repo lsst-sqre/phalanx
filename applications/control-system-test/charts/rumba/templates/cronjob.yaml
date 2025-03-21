@@ -23,6 +23,10 @@ spec:
                 - configMapRef:
                     name: csc-env-config
               env:
+                - name: LSST_KAFKA_SECURITY_MECHANISM
+                  value: {{.Values.securityMechanism}}
+                - name: LSST_KAFKA_SECURITY_PROTOCOL
+                  value: {{.Values.securityProtocol}}
                 - name: LSST_KAFKA_SECURITY_PASSWORD
                   valueFrom:
                     secretKeyRef:
@@ -32,13 +36,13 @@ spec:
                 - /bin/bash
                 - -c
                 - |
-                  echo "Creating credentials file..."
-                  KT_CREDENTIALS="/home/saluser/.auth/kafka-aclient-{{ .Values.ktSite }}.properties"
-                  mkdir -p /home/saluser/.auth  # Ensure directory exists
-                  echo "bootstrap.servers={{ .Values.kafkaBootstrapServer }}" > "$KT_CREDENTIALS"
-                  echo "sasl.mechanism=SCRAM-SHA-512" >> "$KT_CREDENTIALS"
-                  echo "sasl.password=$LSST_KAFKA_SECURITY_PASSWORD" >> "$KT_CREDENTIALS"
-                  echo "sasl.username=ts-salkafka" >> "$KT_CREDENTIALS"
-                  echo "security.protocol=SASL_SSL" >> "$KT_CREDENTIALS"
+                  # echo "Creating credentials file..."
+                  # KT_CREDENTIALS="/home/saluser/.auth/kafka-aclient-{{ .Values.ktSite }}.properties"
+                  # mkdir -p /home/saluser/.auth  # Ensure directory exists
+                  # echo "bootstrap.servers={{ .Values.kafkaBootstrapServer }}" > "$KT_CREDENTIALS"
+                  # echo "sasl.mechanism=SCRAM-SHA-512" >> "$KT_CREDENTIALS"
+                  # echo "sasl.password=$LSST_KAFKA_SECURITY_PASSWORD" >> "$KT_CREDENTIALS"
+                  # echo "sasl.username=ts-salkafka" >> "$KT_CREDENTIALS"
+                  # echo "security.protocol=SASL_SSL" >> "$KT_CREDENTIALS"
                   echo "Running cronjob..."
-                  exec /home/saluser/.startup.sh kt consumers {{ .Values.ktSite }} delete
+                  exec /home/saluser/.startup.sh kt consumers envvar delete

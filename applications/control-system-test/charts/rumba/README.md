@@ -9,8 +9,8 @@ Helm chart for cronjob to clean-up inactive Kafka consumers.
 | failedJobsHistoryLimit | int | `1` | The number of failed pods to keep |
 | image.pullPolicy | string | `"Always"` |  |
 | image.tag | string | `"latest"` | The image tag for the rumba cronjob container |
-| kafkaBootstrapServer | string | `nil` | External address of the Kafka bootstrap server |
-| ktSite | string | `nil` | Name of the site using kafka-tools nomenclature |
 | namespace | string | `"control-system-test"` | This is the namespace in which the rumba cronjob will be placed |
 | schedule | string | "*/10 * * * *" (every ten minutes) | The Schedule for executing the job to clean up inactive consumers |
+| securityMechanism | string | `"SCRAM-SHA-512"` |  |
+| securityProtocol | string | `"SASL_SSL"` |  |
 | successfulJobsHistoryLimit | int | `2` | The number of succesful pods to keep |
