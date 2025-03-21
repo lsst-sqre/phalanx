@@ -61,8 +61,8 @@ config:
     #       idle_time: 0
     #       delete_lab: false
     #     restart: true
-    - name: "scale-test-empty-notebook"
-      count: 3000
+    - name: "scale-test-qserv"
+      count: 100
       user_spec:
         username_prefix: "bot-mobu-scale-notebook"
       scopes:
@@ -76,7 +76,8 @@ config:
         type: "NotebookRunnerInfinite"
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
-          repo_ref: "no-code"
-          idle_time: 0
+          repo_ref: "u/fe/qserv"
+          max_executions: 1
+          idle_time: "1m"
           delete_lab: false
         restart: true
