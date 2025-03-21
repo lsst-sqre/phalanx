@@ -19,5 +19,3 @@ integration-testing:
 
 rumba:
   enabled: true
-  ktSite: bts
-  kafkaBootstrapServer: sasquatch-base-kafka-bootstrap.lsst.codes:9094
