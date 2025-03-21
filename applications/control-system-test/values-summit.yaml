@@ -14,5 +14,3 @@ test42:
 
 rumba:
   enabled: true
-  ktSite: summit
-  kafkaBootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
