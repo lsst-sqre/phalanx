@@ -24,10 +24,10 @@ auxtel-ess202:
     RUN_ARG: 202
   resources:
     requests:
-      cpu: 400m
+      cpu: 1
       memory: 90Mi
     limits:
-      cpu: 800m
+      cpu: 3
       memory: 900Mi
 
 auxtel-ess203:
