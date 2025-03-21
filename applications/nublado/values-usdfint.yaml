@@ -1,13 +1,4 @@
 controller:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: node-role.kubernetes.io/crowdstrike
-                operator: In
-                values:
-                  - ''
   config:
     logLevel: "DEBUG"
     images:
