@@ -62,7 +62,7 @@ config:
     #       delete_lab: false
     #     restart: true
     - name: "scale-test-qserv"
-      count: 300
+      count: 20
       user_spec:
         username_prefix: "bot-mobu-scale-notebook"
       scopes:
@@ -78,6 +78,6 @@ config:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
           repo_ref: "u/fe/qserv"
           max_executions: 1
-          idle_time: "1m"
+          idle_time: "10s"
           delete_lab: false
         restart: true
