@@ -43,6 +43,13 @@ spec:
             {{- with .Values.frontend.env }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
+            {{- range $env := .Values.frontend.envSecrets }}
+            - name: {{ $env.name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $env.secretName }}
+                  key: {{ $env.secretKey }}
+            {{- end }}
           image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy | quote }}
           ports:

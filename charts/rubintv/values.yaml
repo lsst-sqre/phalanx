@@ -37,6 +37,19 @@ frontend:
     # @default -- The appVersion of the chart
     tag: ""
 
+  # -- This section holds a list of key, value pairs for environmental
+  # variables (name: key, value: value).
+  env: []
+
+  # -- This section holds specifications for secret injection.
+  # @default -- See `values.yaml`
+  envSecrets: []
+  # Each object in envSecrets must look like:
+  # { name: name-of-environment-variable,
+  #   secretName: name-of-secret-to-consult,
+  #   secretKey: key within that secret to use
+  # }
+
   # -- Resource limits and requests for the rubintv frontend pod
   resources: {}
 
