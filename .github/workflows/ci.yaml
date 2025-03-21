@@ -87,6 +87,9 @@ jobs:
       - name: Run helm unittest
         run: helm unittest {applications,charts}/*/tests/..
 
+      - name: Run helm unittest for sub-charts
+        run: helm unittest applications/*/charts/*/tests/..
+
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
