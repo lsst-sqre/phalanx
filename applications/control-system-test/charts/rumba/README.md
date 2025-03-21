@@ -11,6 +11,4 @@ Helm chart for cronjob to clean-up inactive Kafka consumers.
 | image.tag | string | `"latest"` | The image tag for the rumba cronjob container |
 | namespace | string | `"control-system-test"` | This is the namespace in which the rumba cronjob will be placed |
 | schedule | string | "*/10 * * * *" (every ten minutes) | The Schedule for executing the job to clean up inactive consumers |
-| securityMechanism | string | `"SCRAM-SHA-512"` |  |
-| securityProtocol | string | `"SASL_SSL"` |  |
 | successfulJobsHistoryLimit | int | `2` | The number of succesful pods to keep |

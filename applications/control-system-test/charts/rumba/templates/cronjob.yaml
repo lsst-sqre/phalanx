@@ -24,9 +24,9 @@ spec:
                     name: csc-env-config
               env:
                 - name: LSST_KAFKA_SECURITY_MECHANISM
-                  value: {{.Values.securityMechanism}}
+                  value: SCRAM-SHA-512
                 - name: LSST_KAFKA_SECURITY_PROTOCOL
-                  value: {{.Values.securityProtocol}}
+                  value: SASL_PLAINTEXT
                 - name: LSST_KAFKA_SECURITY_PASSWORD
                   valueFrom:
                     secretKeyRef:
