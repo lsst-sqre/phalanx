@@ -8,6 +8,7 @@ metadata:
     {{- include "mobu.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  podManagementPolicy: Parallel
   selector:
     matchLabels:
       {{- include "mobu.selectorLabels" . | nindent 6 }}
@@ -106,12 +107,12 @@ spec:
             - name: "http"
               containerPort: 8080
               protocol: "TCP"
-          # readinessProbe:
-          #   httpGet:
-          #     path: "/"
-          #     port: "http"
-          #   timeoutSeconds: 10
-          # {{- with .Values.resources }}
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+            timeoutSeconds: 10
+          {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
