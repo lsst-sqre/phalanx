@@ -62,7 +62,7 @@ config:
     #       delete_lab: false
     #     restart: true
     - name: "scale-test-qserv"
-      count: 100
+      count: 300
       user_spec:
         username_prefix: "bot-mobu-scale-notebook"
       scopes:
