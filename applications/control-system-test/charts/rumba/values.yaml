@@ -11,7 +11,5 @@ image:
   # -- The image tag for the rumba cronjob container
   tag: latest
   pullPolicy: Always
-# -- Name of the site using kafka-tools nomenclature
-ktSite:
-# -- External address of the Kafka bootstrap server
-kafkaBootstrapServer:
+securityMechanism: SCRAM-SHA-512
+securityProtocol: SASL_SSL

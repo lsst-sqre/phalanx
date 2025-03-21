@@ -30,8 +30,8 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | rumba.failedJobsHistoryLimit | int | `1` | The number of failed pods to keep |
 | rumba.image.pullPolicy | string | `"Always"` |  |
 | rumba.image.tag | string | `"latest"` | The image tag for the rumba cronjob container |
-| rumba.kafkaBootstrapServer | string | `nil` | External address of the Kafka bootstrap server |
-| rumba.ktSite | string | `nil` | Name of the site using kafka-tools nomenclature |
 | rumba.namespace | string | `"control-system-test"` | This is the namespace in which the rumba cronjob will be placed |
 | rumba.schedule | string | "*/10 * * * *" (every ten minutes) | The Schedule for executing the job to clean up inactive consumers |
+| rumba.securityMechanism | string | `"SCRAM-SHA-512"` |  |
+| rumba.securityProtocol | string | `"SASL_SSL"` |  |
 | rumba.successfulJobsHistoryLimit | int | `2` | The number of succesful pods to keep |
