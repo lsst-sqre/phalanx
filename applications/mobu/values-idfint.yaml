@@ -73,7 +73,7 @@ config:
       start_batch_size: 50
       start_batch_wait: "1m"
       business:
-        type: "NotebookRunnerInfinite"
+        type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
           repo_ref: "u/fe/qserv"
