@@ -8,6 +8,7 @@ metadata:
     {{- include "mobu.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  podManagementPolicy: Parallel
   selector:
     matchLabels:
       {{- include "mobu.selectorLabels" . | nindent 6 }}
