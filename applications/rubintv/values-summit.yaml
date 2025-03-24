@@ -17,6 +17,12 @@ rubintv:
       value: "/rubintv/ddv/"
     - name: DDV_CLIENT_WS_ADDRESS
       value: "rubintv/ws/ddv"
+    - name: RA_REDIS_HOST
+      value: "redis-service.rapid-analysis.svc.cluster.local"
+    envSecrets:
+    - name: RA_REDIS_PASSWORD
+      secretName: rubintv-secrets
+      secretKey: redis-password
     image:
       tag: v2.6.2
       pullPolicy: Always

@@ -12,6 +12,8 @@ Real-time display front end
 |-----|------|---------|-------------|
 | frontend.affinity | object | `{}` | Affinity rules for the rubintv frontend pod |
 | frontend.debug | bool | `false` | If set to true, enable more verbose logging. |
+| frontend.env | list | `[]` | This section holds a list of key, value pairs for environmental variables (name: key, value: value). |
+| frontend.envSecrets | list | See `values.yaml` | This section holds specifications for secret injection. |
 | frontend.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/lsst-ts/rubintv","tag":""}` | Settings for rubintv OCI image |
 | frontend.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the rubintv image |
 | frontend.image.repository | string | `"ghcr.io/lsst-ts/rubintv"` | rubintv frontend image to use |
