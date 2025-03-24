@@ -67,13 +67,18 @@ ccoods:
     pullPolicy: Always
   env:
     CTRL_OODS_CONFIG_FILE: /etc/ccoods.yaml
-    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
-    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  s3Credentials:
-  - lfa-credentials.ini
-  - oods-comcam-credentials.ini
   <<: *butler-secret
+  nfsMountpoint:
+  - name: comcam-gen3-butler
+    containerPath: /repo/LSSTComCam
+    readOnly: false
+    server: nfs-comcam.cp.lsst.org
+    serverPath: /comcam/repo/LSSTComCam
+  - name: comcam-oods-data
+    containerPath: /data
+    readOnly: false
+    server: nfs-comcam.cp.lsst.org
+    serverPath: /comcam
   resources:
     limits:
       cpu: 100m
@@ -86,41 +91,59 @@ ccoods:
     filename: ccoods.yaml
     content: |
       defaultInterval: &interval
-          days: 0
-          hours: 0
-          minutes: 0
-          seconds: 0
+           days: 0
+           hours: 0
+           minutes: 0
+           seconds: 0
 
-      ingester:
-          kafka:
-              brokers:
-                  - sasquatch-kafka-bootstrap.sasquatch:9092
-              topics:
-                - lsst.s3.raw.comcam
-              group_id: CCOODS-S3
-              max_messages: 250
-          butlers:
-              - butler:
-                  instrument: lsst.obs.lsst.LsstComCam
-                  class:
-                      import : lsst.ctrl.oods.messageAttendant
-                      name : MessageAttendant
-                  repoDirectory : s3://butler@rubinobs-butler-comcam
-                  s3profile: butler
-                  collections:
-                      - LSSTComCam/raw/all
-                  cleanCollections:
-                      - collection: LSSTComCam/raw/all
-                        filesOlderThan:
-                            <<: *interval
-                            days: 30
-                      - collection: LSSTComCam/quickLook
-                        filesOlderThan:
-                            <<: *interval
-                            days: 7
-                  scanInterval:
-                      <<: *interval
-                      hours: 1
+       ingester:
+           imageStagingDirectory: /data/staging/comcam/oods
+           butlers:
+               - butler:
+                   instrument: lsst.obs.lsst.LsstComCam
+                   class:
+                       import : lsst.ctrl.oods.gen3ButlerIngester
+                       name : Gen3ButlerIngester
+                   stagingDirectory : /data/lsstdata/base/comcam/oods/gen3butler/raw
+                   badFileDirectory: /data/lsstdata/base/comcam/oods/gen3butler/badfiles
+                   repoDirectory : /repo/LSSTComCam
+                   collections:
+                       - LSSTComCam/raw/all
+                       - LSSTComCamSim/raw/all
+                   cleanCollections:
+                       - LSSTComCam/raw/all
+                       - LSSTComCamSim/raw/all
+                       - LSSTComCamSim/quickLook
+                   scanInterval:
+                       <<: *interval
+                       hours: 1
+                   filesOlderThan:
+                       <<: *interval
+                       days: 30
+           batchSize: 20
+           scanInterval:
+               <<: *interval
+               seconds: 2
+
+       cacheCleaner:
+           # ONLY clean out empty directories here, never files
+           clearEmptyDirectories:
+               -  /data/lsstdata/base/comcam/oods/gen3butler/raw
+               -  /data/repo/LSSTComCam/LSSTComCamSim/quickLook
+           # clean out empty directories and old files from these directories
+           clearEmptyDirectoriesAndOldFiles:
+               - /data/lsstdata/base/comcam/oods/gen3butler/badfiles
+               - /data/staging/comcam/oods
+               - /data/staging/comcam/forwarder
+           scanInterval:
+               <<: *interval
+               hours: 1
+           filesOlderThan:
+               <<: *interval
+               days: 30
+           directoriesEmptyForMoreThan:
+               <<: *interval
+               days: 2
 
 gcheaderservice101:
   enabled: true
