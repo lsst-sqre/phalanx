@@ -29,7 +29,7 @@ client:
 job:
   image:
     # -- The Docker registry name of the UWS job container image
-    repository: "lsstsqre/centos"
+    repository: "ghcr.io/lsst/scipipe"
     # -- The tag of the UWS job container image
     tag: "d_latest"
   securityContext:
