@@ -349,9 +349,9 @@ fast-depends==2.4.12 \
     --hash=sha256:9393e6de827f7afa0141e54fa9553b737396aaf06bd0040e159d1f790487b16d \
     --hash=sha256:9e5d110ddc962329e46c9b35e5fe65655984247a13ee3ca5a33186db7d2d75c2
     # via faststream
-fastapi==0.115.11 \
-    --hash=sha256:32e1541b7b74602e4ef4a0260ecaf3aadf9d4f19590bba3e1bf2ac4666aa2c64 \
-    --hash=sha256:cc81f03f688678b92600a65a5e618b93592c65005db37157147204d8924bf94f
+fastapi==0.115.12 \
+    --hash=sha256:1e2c2a2646905f9e83d32f04a3f86aff4a286669c6c950ca95b5fd68c2602681 \
+    --hash=sha256:e94613d6c05e27be7ffebdd6ea5f388112e5e430c8f7d6494a9d1d88d43e814d
     # via safir
 fastavro==1.10.0 \
     --hash=sha256:0a678153b5da1b024a32ec3f611b2e7afd24deac588cb51dd1b0019935191a6d \
@@ -388,9 +388,9 @@ fastavro==1.10.0 \
     # via
     #   dataclasses-avroschema
     #   python-schema-registry-client
-faststream==0.5.35 \
-    --hash=sha256:63b9c9b3abab3c8bf11c3e71b327a14b590be3be229d164c4e3504e8cdf611ab \
-    --hash=sha256:da81d95207cad177cd79042d59c76567ffec5a9528f5636ca63d6c10759467b6
+faststream==0.5.37 \
+    --hash=sha256:2333f6efcc9cbb608cb64c2051805f7b0af06f5e25081aaa62a74755a0de2810 \
+    --hash=sha256:aadfe96080c894efc3e0afc55c739e21af858ca5425acac9c6db90894394b9b7
     # via safir
 gidgethub==5.3.0 \
     --hash=sha256:4dd92f2252d12756b13f9dd15cde322bfb0d625b6fb5d680da1567ec74b462c0 \
@@ -837,9 +837,9 @@ safir-logging==10.0.0 \
     --hash=sha256:7aa9fd0f194404bddbb1945c3cbf175b32b2331736886512998b91eea9626ecb \
     --hash=sha256:8c4aa0e551a34077f8c680d1f7279a651a2de54299a758aefa0cbeaedecad156
     # via safir
-sentry-sdk==2.23.1 \
-    --hash=sha256:2288320465065f3f056630ce55936426204f96f63f1208edb79e033ed03774db \
-    --hash=sha256:42ef3a6cc1db3d22cb2ab24163d75b23f291ad9892b1a8c44075ce809a32b191
+sentry-sdk==2.24.1 \
+    --hash=sha256:36baa6a1128b9d98d2adc5e9b2f887eff0a6af558fc2b96ed51919042413556d \
+    --hash=sha256:8ba3c29990fa48865b908b3b9dc5ae7fa7e72407c7c9e91303e5206b32d7b8b1
     # via safir
 six==1.17.0 \
     --hash=sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274 \
