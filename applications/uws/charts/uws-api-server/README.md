@@ -13,7 +13,7 @@ Helm chart for deploying the Universal Worker Service API Server
 | hostname | string | `""` | Hostname for the client ingress |
 | image.repository | string | `"lsstdm/uws-api-server"` | The Docker registry name of the UWS server container image |
 | image.tag | string | `"latest"` | The tag of the UWS server container image |
-| job.image.repository | string | `"lsstsqre/centos"` | The Docker registry name of the UWS job container image |
+| job.image.repository | string | `"ghcr.io/lsst/scipipe"` | The Docker registry name of the UWS job container image |
 | job.image.tag | string | `"d_latest"` | The tag of the UWS job container image |
 | job.securityContext.fsGroup | int | `202` | Set the filesystem GID for the mounted volumes in the UWS job container |
 | job.securityContext.runAsGroup | int | `202` | Set the GID for the UWS job container entrypoint |
