@@ -11,7 +11,7 @@ image:
   pullPolicy: IfNotPresent
 
   # -- Kafdrop image version
-  tag: 4.0.2
+  tag: 4.1.0
 
 kafka:
   # -- Bootstrap list of Kafka host/port pairs
