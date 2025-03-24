@@ -39,7 +39,7 @@ argo-cd:
     resources:
       limits:
         cpu: "8"
-        memory: "3Gi"
+        memory: "6Gi"
       requests:
         cpu: "1"
         memory: "1Gi"
