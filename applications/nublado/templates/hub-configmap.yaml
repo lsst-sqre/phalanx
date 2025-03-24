@@ -47,6 +47,10 @@ data:
     # Use JupyterLab by default.
     c.Spawner.default_url = "/lab"
 
+    # Only poll labs every five minutes because that's how frequently the
+    # controller checks their status in Kubernetes.
+    c.Spawner.poll_interval = 300
+
     # How long to wait for Kubernetes to start the lab. This must match the
     # corresponding setting in the Nublado controller.
     c.Spawner.start_timeout = {{ .Values.controller.config.lab.spawnTimeout }}
