@@ -73,10 +73,10 @@ electrometer102:
     key: aws-secret-access-key
   resources:
     limits:
-      cpu: 100m
+      cpu: 1
       memory: 350Mi
     requests:
-      cpu: 10m
+      cpu: 100m
       memory: 115Mi
 
 electrometer103:
@@ -94,10 +94,10 @@ electrometer103:
     key: aws-secret-access-key
   resources:
     limits:
-      cpu: 100m
+      cpu: 1
       memory: 350Mi
     requests:
-      cpu: 10m
+      cpu: 100m
       memory: 115Mi
 
 electrometer201:
@@ -115,10 +115,10 @@ electrometer201:
     key: aws-secret-access-key
   resources:
     limits:
-      cpu: 100m
+      cpu: 1
       memory: 330Mi
     requests:
-      cpu: 10m
+      cpu: 100m
       memory: 110Mi
 
 ledprojector:
