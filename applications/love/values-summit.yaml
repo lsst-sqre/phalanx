@@ -469,6 +469,13 @@ love-producer:
   - name: atheaderservice
     csc: ATHeaderService:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 50m
+        memory: 200Mi
+      limits:
+        cpu: 500m
+        memory: 600Mi
   - name: athexapod
     csc: ATHexapod:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -623,6 +630,13 @@ love-producer:
   - name: hvac
     csc: HVAC:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 50m
+        memory: 200Mi
+      limits:
+        cpu: 500m
+        memory: 600Mi
   - name: lasertracker1
     csc: LaserTracker:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -677,6 +691,13 @@ love-producer:
   - name: mtcamera
     csc: MTCamera:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 50m
+        memory: 200Mi
+      limits:
+        cpu: 500m
+        memory: 600Mi
   - name: mtdome
     csc: MTDome:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -735,9 +756,23 @@ love-producer:
   - name: mtm2
     csc: MTM2:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 1
+        memory: 600Mi
   - name: mtmount
     csc: MTMount:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 1
+        memory: 600Mi
   - name: mtoods
     csc: MTOODS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
