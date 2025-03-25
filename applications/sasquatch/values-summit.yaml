@@ -41,7 +41,7 @@ strimzi-kafka:
     enableSaramaLogging: true
     resources:
       requests:
-        cpu: "2"
+        cpu: 500m
         memory: 512Mi
       limits:
         cpu: "4"
