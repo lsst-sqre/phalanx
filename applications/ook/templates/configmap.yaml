@@ -9,5 +9,6 @@ data:
   SAFIR_PATH_PREFIX: {{ .Values.ingress.path | quote }}
   SAFIR_ENVIRONMENT_URL: {{ .Values.global.baseUrl | quote }}
   SAFIR_PROFILE: "production"
+  OOK_DATABASE_URL: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
   OOK_INGEST_KAFKA_TOPIC: {{ .Values.config.topics.ingest | quote }}
   ALGOLIA_DOCUMENT_INDEX: {{ .Values.config.algolia.documentIndex | quote }}
