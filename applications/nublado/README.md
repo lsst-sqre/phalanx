@@ -48,6 +48,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.images.pin | list | `[]` | List of additional image tags to prepull. Listing the image tagged as recommended here is recommended when using a Docker image source to ensure its name can be expanded properly in the menu. |
 | controller.config.images.recommendedTag | string | `"recommended"` | Tag marking the recommended image (shown first in the menu) |
 | controller.config.images.source | object | None, must be specified | Source for prepulled images. For Docker, set `type` to `docker`, `registry` to the hostname and `repository` to the name of the repository. For Google Artifact Repository, set `type` to `google`, `location` to the region, `projectId` to the Google project, `repository` to the name of the repository, and `image` to the name of the image. |
+| controller.config.lab.activityInterval | string | `"1h"` | How frequently the lab should report activity to JupyterHub in Safir `parse_timedelta` format |
 | controller.config.lab.affinity | object | `{}` | Affinity rules for user lab pods |
 | controller.config.lab.application | string | `"nublado-users"` | Argo CD application in which to collect user lab objects |
 | controller.config.lab.deleteTimeout | string | `"1m"` | Timeout for deleting a user's lab resources from Kubernetes in Safir `parse_timedelta` format |

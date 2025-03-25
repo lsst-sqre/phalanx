@@ -152,6 +152,10 @@ controller:
       aliasTags: []
 
     lab:
+      # -- How frequently the lab should report activity to JupyterHub in
+      # Safir `parse_timedelta` format
+      activityInterval: 1h
+
       # -- Affinity rules for user lab pods
       affinity: {}
 
