@@ -20,6 +20,8 @@ IVOA TAP service for the Consolidated Database (ConsDB)
 | cadc-tap.config.vaultSecretName | string | `"consdbtap"` | Vault secret name: the final key in the vault path |
 | cadc-tap.ingress.path | string | `"consdbtap"` | Ingress path that should be routed to this service |
 | cadc-tap.serviceAccount.name | string | `"consdbtap"` | Name of the Kubernetes `ServiceAccount`, used for CloudSQL access |
+| cadc-tap.tapSchema.resources.limits.memory | string | `"2Gi"` |  |
+| cadc-tap.tapSchema.resources.requests.memory | string | `"600Mi"` |  |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
