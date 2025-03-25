@@ -18,18 +18,25 @@ prompt-keda:
       preprocessing: |-
         - survey: SURVEY
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Preprocessing.yaml']
-    calibRepo: s3://rubin-pp-dev-users/central_repo_2
+    calibRepo: s3://rubin-summit-users
 
   s3:
-    imageBucket: rubin-pp-dev
-    endpointUrl: https://s3dfrgw.slac.stanford.edu
+    imageBucket: repo-test
+    endpointUrl: https://sdfembs3.sdf.slac.stanford.edu
+    # Do not set AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID. Use cred file
+    cred_file_auth: True
+    auth_env: False
+    aws_profile: embargo
+
+  raw_microservice: http://172.24.5.224:8080/presence
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
-    topic: prompt-processing-dev
+    topic: or5-ppdev-notification2
+    imageTimeout: 60
 
   apdb:
-    config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcomcam-dev.yaml
+    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcomcam-dev.py
 
   alerts:
     topic: "alert-stream-test"
@@ -37,5 +44,8 @@ prompt-keda:
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     auth_env: false
+
+  debug:
+    exportOutputs: false
 
   fullnameOverride: "prompt-keda-lsstcomcam"
