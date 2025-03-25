@@ -38,6 +38,9 @@ spec:
                 key: "OPENAI_API_KEY"
           - name: GRPC_HOST
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 76cf8ca1c (Add quotes to gRPC host)
             value: "weaviate-grpc.rubin-rag.svc.cluster.local"
           - name: HTTP_HOST
             value: "weaviate-headless.rubin-rag.svc.cluster.local"
