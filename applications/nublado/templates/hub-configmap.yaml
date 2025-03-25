@@ -18,14 +18,19 @@ data:
     )
 
     # JupyterHub uses a single database connection for all database activity
-    # and JupyterLab by default sends activity updates every 30 seconds. By
-    # the time we reach 1,000 active users, this is completely saturating
-    # JupyterHub and it stops being able to do work. This interval controls
-    # how frequently JupyterHub is willing to update activity information in
-    # the database. Increase it to 10 minutes, which is still a very long time
-    # compared to our idle thresholds.
-    c.JupyterHub.activity_resolution = 600
-    c.JupyterHub.last_activity_interval = 600
+    # and JupyterLab by default sends activity updates every five minutes
+    # (each of which turns into a lot of database activity). By the time we
+    # reach 1,000 active users, this is completely saturating JupyterHub and
+    # it stops being able to do work.
+    #
+    # We have reconfigured JupyterLab via the console to only send updates
+    # once an hour to prevent this problem. To protect against labs sending
+    # updates more frequently for some reason, also suppress updates more
+    # frequently than that. However, the lab randomizes the reporting interval
+    # by 10%, so set this limit to once per half-hour so that each update is
+    # recorded.
+    c.JupyterHub.activity_resolution = 1800
+    c.JupyterHub.last_activity_interval = 1800
 
     # Turn off concurrent spawn limit.
     c.JupyterHub.concurrent_spawn_limit = 0

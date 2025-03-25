@@ -442,8 +442,8 @@ jupyterhub:
     timeout: 432000
 
     # -- How frequently to check for idle labs in seconds
-    # @default -- 300 (5 minutes)
-    every: 300
+    # @default -- 3600 (1 hour)
+    every: 3600
 
     # -- Whether to log out the user (from JupyterHub) when culling their lab
     users: false
