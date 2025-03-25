@@ -1,6 +1,9 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
+  image:
+    tag: "tickets-DM-48780"
+    pullPolicy: "Always"
   config:
     dropdownMenu:
       release:
@@ -67,19 +70,37 @@ controller:
       volumes:
         - name: "home"
           source:
-            type: nfs
-            serverPath: "/share1/home"
-            server: "10.87.86.26"
+            type: "nfsPvc"
+            serverPath: "/test08-share1/home"
+            server: "10.234.16.4"
+            storageClassName: "standard"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: 3000Gi
         - name: "project"
           source:
-            type: nfs
-            serverPath: "/share1/project"
-            server: "10.87.86.26"
+            type: "nfsPvc"
+            serverPath: "/test08-share1/project"
+            server: "10.234.16.4"
+            storageClassName: "standard"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: 3000Gi
         - name: "scratch"
           source:
-            type: nfs
-            serverPath: "/share1/scratch"
-            server: "10.87.86.26"
+            type: "nfsPvc"
+            serverPath: "/test08-share1/scratch"
+            server: "10.234.16.4"
+            storageClassName: "standard"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: 3000Gi
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
