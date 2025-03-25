@@ -48,6 +48,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.images.pin | list | `[]` | List of additional image tags to prepull. Listing the image tagged as recommended here is recommended when using a Docker image source to ensure its name can be expanded properly in the menu. |
 | controller.config.images.recommendedTag | string | `"recommended"` | Tag marking the recommended image (shown first in the menu) |
 | controller.config.images.source | object | None, must be specified | Source for prepulled images. For Docker, set `type` to `docker`, `registry` to the hostname and `repository` to the name of the repository. For Google Artifact Repository, set `type` to `google`, `location` to the region, `projectId` to the Google project, `repository` to the name of the repository, and `image` to the name of the image. |
+| controller.config.lab.activityInterval | string | `"1h"` | How frequently the lab should report activity to JupyterHub in Safir `parse_timedelta` format |
 | controller.config.lab.affinity | object | `{}` | Affinity rules for user lab pods |
 | controller.config.lab.application | string | `"nublado-users"` | Argo CD application in which to collect user lab objects |
 | controller.config.lab.deleteTimeout | string | `"1m"` | Timeout for deleting a user's lab resources from Kubernetes in Safir `parse_timedelta` format |
@@ -116,7 +117,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/nublado-jupyterhub"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"8.7.1"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"8.8.0"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | See `values.yaml` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |

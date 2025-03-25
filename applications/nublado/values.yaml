@@ -152,6 +152,10 @@ controller:
       aliasTags: []
 
     lab:
+      # -- How frequently the lab should report activity to JupyterHub in
+      # Safir `parse_timedelta` format
+      activityInterval: 1h
+
       # -- Affinity rules for user lab pods
       affinity: {}
 
@@ -464,7 +468,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.7.1"
+      tag: "8.8.0"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
