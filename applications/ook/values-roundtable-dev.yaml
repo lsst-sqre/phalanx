@@ -3,6 +3,7 @@ image:
 
 config:
   logLevel: "DEBUG"
+  databaseUrl: "postgresql://ook@localhost/ook"
   algolia:
     documentIndex: "ook_documents_test"
 
@@ -13,3 +14,8 @@ audit:
 
 ingestUpdated:
   enabled: false
+
+cloudsql:
+  enabled: true
+  instanceConnectionName: "roundtable-dev-abe2:us-central1:roundtable-dev-572a252e"
+  serviceAccount: "ook-sa@roundtable-dev-abe2.iam.gserviceaccount.com"
