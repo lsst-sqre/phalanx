@@ -46,6 +46,7 @@ spec:
             value: weaviate-grpc.rubin-rag.svc.cluster.local
           - name: HTTP_HOST
 <<<<<<< HEAD
+<<<<<<< HEAD
             valueFrom:
               secretKeyRef:
                 name: rubin-rag
@@ -57,6 +58,9 @@ spec:
 =======
             value: weaviate-headless
 >>>>>>> 1660c7e87 (Change http host)
+=======
+            value: "weaviate-headless.rubin-rag.svc.cluster.local"
+>>>>>>> 7051ea65a (Change to weaviate-headless address)
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
 >>>>>>> 4ffecc61d (Point image tag at values file)
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
