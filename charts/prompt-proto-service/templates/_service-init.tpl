@@ -80,6 +80,18 @@ spec:
         {{- end }}
         - name: LSST_DB_AUTH
           value: /app/lsst-credentials/db-auth.yaml
+        {{- /* Job does not produce alerts, but PackageAlertsTask may ping the server. */}}
+        - name: AP_KAFKA_PRODUCER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "prompt-proto-service.fullname" . }}-secret
+              key: alert_stream_pass
+        - name: AP_KAFKA_PRODUCER_USERNAME
+          value: {{ .Values.alerts.username}}
+        - name: AP_KAFKA_SERVER
+          value: {{ .Values.alerts.server}}
+        - name: AP_KAFKA_TOPIC
+          value: {{ .Values.alerts.topic}}
         - name: SERVICE_LOG_LEVELS
           value: {{ .Values.logLevel }}
         volumeMounts:
