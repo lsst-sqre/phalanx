@@ -3,38 +3,38 @@ redis:
     storageClass: "cinder-csi"
 
 config:
-  logLevel: "DEBUG"
+  logLevel: "INFO"
   slackAlerts: false
 
-  #github:
-  #  clientId: "Ov23liKfYDkoJPekZaON"
+  github:
+    clientId: "Ov23liKfYDkoJPekZaON"
 
   databaseUrl: "postgresql://gafaelfawr@129.114.35.51/gafaelfawr01"
   updateSchema: true
 
   oidcServer:
-    enabled: true
+    enabled: false
 
-  oidc:
-    clientId: "rsp-tacc"
-    audience: "rsp-tacc"
-    loginUrl: "https://tacc.staging.tapis.io/v3/oauth2/authorize"
-    tokenUrl: "https://tacc.staging.tapis.io/v3/oauth2/tokens/oidc"
-    issuer: "https://tacc.staging.tapis.io/v3/tokens"
-    usernameClaim: "name"
+  #oidc:
+  #  clientId: "rsp-tacc"
+  #  audience: "rsp-tacc"
+  #  loginUrl: "https://tacc.staging.tapis.io/v3/oauth2/authorize"
+  #  tokenUrl: "https://tacc.staging.tapis.io/v3/oauth2/tokens/oidc"
+  #  issuer: "https://tacc.staging.tapis.io/v3/tokens"
+  #  usernameClaim: "name"
 
-  ldap:
-    url: ldap://ldap.tacc.utexas.edu
-    groupBaseDn: ou=Group,dc=tacc,dc=utexas,dc=edu
-    groupObjectClass: posixGroup
-    groupMemberAttr: memberUid
-    groupSearchByDn: false
-    userBaseDn: ou=Accounts,dc=tacc,dc=utexas,dc=edu
-    userSearchAttr: uid
-    addUserGroup: false
-    uidAttr: uidNumber
-    gidAttr: gidNumber
-    nameAttr: gecos
+  #ldap:
+  #  url: ldap://ldap.tacc.utexas.edu
+  #  groupBaseDn: ou=Group,dc=tacc,dc=utexas,dc=edu
+  #  groupObjectClass: posixGroup
+  #  groupMemberAttr: memberUid
+  #  groupSearchByDn: false
+  #  userBaseDn: ou=Accounts,dc=tacc,dc=utexas,dc=edu
+  #  userSearchAttr: uid
+  #  addUserGroup: false
+  #  uidAttr: uidNumber
+  #  gidAttr: gidNumber
+  #  nameAttr: gecos
 
   # User quota settings for services.
   quota:
