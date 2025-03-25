@@ -27,7 +27,11 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "ook.serviceAccountName" . }}
+      {{- if or .Values.cloudsql.enabled }}
+      serviceAccountName: "ook"
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -82,6 +86,11 @@ spec:
                 secretKeyRef:
                   name: {{ template "ook.fullname" . }}
                   key: "ALGOLIA_API_KEY"
+            - name: "OOK_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "ook.fullname" . }}
+                  key: "OOK_DATABASE_PASSWORD"
             - name: "OOK_GITHUB_APP_ID"
               valueFrom:
                 secretKeyRef:
@@ -110,6 +119,10 @@ spec:
               subPath: "ssl.keystore.key" # private key for the consuming client
             - name: "tmp"
               mountPath: "/tmp/kafka_certs"
+      {{- if .Values.cloudsql.enabled }}
+      initContainers:
+        {{- include "ook.cloudsqlSidecar" . | nindent 8 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
