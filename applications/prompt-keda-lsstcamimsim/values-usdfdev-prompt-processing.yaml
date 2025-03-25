@@ -2,7 +2,7 @@ prompt-keda:
   image:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: 6.1.0
+    tag: 6.2.0
 
   instrument:
     pipelines:
@@ -50,7 +50,7 @@ prompt-keda:
 
   keda:
     minReplicaCount: 10
-    maxReplicaCount: 1000
+    maxReplicaCount: 100
 
   podAnnotations: {
     edu.stanford.slac.sdf.project/usdf-embargo: "true"
