@@ -41,6 +41,17 @@ spec:
           value: {{ .Values.s3.disableBucketValidation | toString | quote }}
         - name: CONFIG_APDB
           value: {{ .Values.apdb.config }}
+        - name: SASQUATCH_URL
+          value: {{ .Values.sasquatch.endpointUrl }}
+        {{- if and .Values.sasquatch.endpointUrl .Values.sasquatch.auth_env }}
+        - name: SASQUATCH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "prompt-keda.fullname" . }}-secret
+              key: sasquatch_token
+        {{- end }}
+        - name: DAF_BUTLER_SASQUATCH_NAMESPACE
+          value: {{ .Values.sasquatch.namespace }}
         - name: S3_ENDPOINT_URL
           value: {{ .Values.s3.endpointUrl }}
         {{- if .Values.s3.auth_env }}
