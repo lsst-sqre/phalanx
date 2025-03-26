@@ -71,8 +71,10 @@ spec:
           configMap:
             name: love-conf
             items:
-              - key: default.json
-                path: default.json
+        {{- range .Values.loveConfigs }}
+              - key: {{ .name }}.json
+                path: {{ .name }}.json
+        {{- end }}
       {{- with $.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml $ | nindent 8 }}

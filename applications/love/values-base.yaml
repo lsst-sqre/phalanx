@@ -372,24 +372,64 @@ love-nginx:
           proxy_set_header Host $host/love;
       }
     }
-  loveConfig: |
-    {
-      "alarms": {
-        "minSeveritySound": "mute",
-        "minSeverityNotification": "mute"
-      },
-      "camFeeds": {
-        "simcam": "/love/simcam"
-      },
-      "efd": {
-        "defaultEfdInstance": "base_efd",
-        "urlStatus": "https://base-lsp.lsst.codes/influxdb/health"
-      },
-      "sal": {
-          "urlStatus": "https://base-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
-          "expectedBrokerList": [6, 7, 8]
+  loveConfigs:
+  - name: default
+    config: |
+      {
+        "alarms": {
+          "minSeveritySound": "serious",
+          "minSeverityNotification": "warning"
+        },
+        "camFeeds": {
+          "simcam": "/love/simcam"
+        },
+        "efd": {
+          "defaultEfdInstance": "base_efd",
+          "urlStatus": "https://base-lsp.lsst.codes/influxdb/health"
+        },
+        "sal": {
+            "urlStatus": "https://base-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
+            "expectedBrokerList": [6, 7, 8]
+        }
       }
-    }
+  - name: all-alarms
+    config: |
+      {
+        "alarms": {
+          "minSeveritySound": "warning",
+          "minSeverityNotification": "warning"
+        },
+        "camFeeds": {
+          "simcam": "/love/simcam"
+        },
+        "efd": {
+          "defaultEfdInstance": "base_efd",
+          "urlStatus": "https://base-lsp.lsst.codes/influxdb/health"
+        },
+        "sal": {
+            "urlStatus": "https://base-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
+            "expectedBrokerList": [6, 7, 8]
+        }
+      }
+  - name: no-alarms
+    config: |
+      {
+        "alarms": {
+          "minSeveritySound": "mute",
+          "minSeverityNotification": "mute"
+        },
+        "camFeeds": {
+          "simcam": "/love/simcam"
+        },
+        "efd": {
+          "defaultEfdInstance": "base_efd",
+          "urlStatus": "https://base-lsp.lsst.codes/influxdb/health"
+        },
+        "sal": {
+            "urlStatus": "https://base-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
+            "expectedBrokerList": [6, 7, 8]
+        }
+      }
 
 love-producer:
   image:
