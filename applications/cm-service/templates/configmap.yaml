@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ .Chart.Name }}-env"
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+data:
+  ASGI__PREFIX: {{ .Values.config.pathPrefix | quote }}
+  {{- with .Values.config.db }}
+  DB__URL: "postgresql://{{ .username }}@{{ .hostname }}:{{ .port }}/{{ .name }}"
+  DB__ECHO: {{ .echo | quote }}
+  {{- end }}
+  LOGGING__PROFILE: {{ .Values.config.logProfile | quote }}
+  LOGGING__LEVEL: {{ .Values.config.logLevel | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ .Chart.Name }}-butler-env"
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+data:
+  DAF_BUTLER_REPOSITORIES: {{ toJson .Values.config.butler.repositories | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ .Chart.Name }}-htcondor-env"
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+data:
+  DAEMON__allocate_resources: "1"
+  HTCONDOR__schedd_host: {{ .Values.config.htcondor.scheddHost }}
+  HTCONDOR__collector_host: {{ .Values.config.htcondor.collectorHost }}
+  HTCONDOR__condor_home: /opt/htcondor
+  HTCONDOR__condor_submit_bin: /opt/htcondor/bin/condor_submit
+  HTCONDOR__condor_q_bin: /opt/htcondor/bin/condor_q
+  HTCONDOR__working_directory: /sdf/group/rubin/{{ .Values.config.outputVolume.subPath }}
+  HTCONDOR__fs_remote_dir: /sdf/group/rubin/services/htcondor/shared
