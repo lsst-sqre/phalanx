@@ -141,10 +141,14 @@ rest-proxy:
   kafka:
     topics:
       - test.next-visit
+      - lsst.tap.job-run
+      - lsst.tap.job-delete
+      - lsst.tap.job-status
     topicPrefixes:
       - test
       - lsst.dm
       - lsst.Test
+      - lsst.tap
 
 chronograf:
   ingress:
