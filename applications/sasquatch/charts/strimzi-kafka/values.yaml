@@ -290,6 +290,10 @@ users:
     # -- Enable user obsloctap
     enabled: false
 
+  tap:
+    # -- Enable user tap (deployed by parent Sasquatch chart)
+    enabled: false
+
 
 mirrormaker2:
   # -- Enable replication in the target (passive) cluster
