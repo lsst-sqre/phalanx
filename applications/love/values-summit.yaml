@@ -784,7 +784,7 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
     resources:
       requests:
-        cpu: 100
+        cpu: 100m
         memory: 200Mi
       limits:
         cpu: 1
