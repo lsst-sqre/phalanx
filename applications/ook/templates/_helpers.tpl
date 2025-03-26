@@ -53,3 +53,52 @@ Cloud SQL Auth Proxy sidecar container
     runAsUser: 65532
     runAsGroup: 65532
 {{- end }}
+
+{{/*
+Common environment variables
+*/}}
+{{- define "ook.envVars" -}}
+# Writeable directory for concatenating certs. See "tmp" volume.
+- name: "KAFKA_CERT_TEMP_DIR"
+  value: "/tmp/kafka_certs"
+- name: "KAFKA_SECURITY_PROTOCOL"
+  value: "SSL"
+# From KafkaAccess
+- name: "KAFKA_BOOTSTRAP_SERVERS"
+  valueFrom:
+    secretKeyRef:
+      name: "ook-kafka"
+      key: "bootstrapServers"
+- name: "KAFKA_CLUSTER_CA_PATH"
+  value: "/etc/kafkacluster/ca.crt"
+- name: "KAFKA_CLIENT_CERT_PATH"
+  value: "/etc/kafkauser/user.crt"
+- name: "KAFKA_CLIENT_KEY_PATH"
+  value: "/etc/kafkauser/user.key"
+# From Vault secrets
+- name: "ALGOLIA_APP_ID"
+  valueFrom:
+    secretKeyRef:
+      name: "ook"
+      key: "ALGOLIA_APP_ID"
+- name: "ALGOLIA_API_KEY"
+  valueFrom:
+    secretKeyRef:
+      name: "ook"
+      key: "ALGOLIA_API_KEY"
+- name: "OOK_DATABASE_PASSWORD"
+  valueFrom:
+    secretKeyRef:
+      name: "ook"
+      key: "OOK_DATABASE_PASSWORD"
+- name: "OOK_GITHUB_APP_ID"
+  valueFrom:
+    secretKeyRef:
+      name: "ook"
+      key: "OOK_GITHUB_APP_ID"
+- name: "OOK_GITHUB_APP_PRIVATE_KEY"
+  valueFrom:
+    secretKeyRef:
+      name: "ook"
+      key: "OOK_GITHUB_APP_PRIVATE_KEY"
+{{- end }}
