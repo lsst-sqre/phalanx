@@ -1,3 +1,5 @@
+---
+# Ook endpoints default to anonymous scope
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
@@ -6,10 +8,9 @@ metadata:
     {{- include "ook.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
-  loginRedirect: true
+  loginRedirect: false
   scopes:
-    all:
-      - "exec:admin"
+    anonymous: true
   service: "ook"
 template:
   metadata:
@@ -24,6 +25,78 @@ template:
         http:
           paths:
             - path: {{ .Values.ingress.path | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "ook"
+                  port:
+                    number: {{ .Values.service.port }}
+
+---
+# Swagger API browser has exec:admin scope and a login redirect
+# to ensure that the user is logged in.
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "ook-apibrowser"
+  labels:
+    {{- include "ook.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  loginRedirect: true
+  scopes:
+    anonymous: false
+    all:
+      - "exec:admin"
+  service: "ook"
+template:
+  metadata:
+    name: "ook-apibrowser"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.ingress.path }}/docs"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "ook"
+                  port:
+                    number: {{ .Values.service.port }}
+
+---
+# Ingest API (/ingest) requires exec:admin scope
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "ook-ingest"
+  labels:
+    {{- include "ook.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  loginRedirect: false
+  scopes:
+    all:
+      - "exec:admin"
+  service: "ook"
+template:
+  metadata:
+    name: "ook-ingest"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.ingress.path }}/ingest"
               pathType: "Prefix"
               backend:
                 service:
