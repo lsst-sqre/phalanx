@@ -4,5 +4,7 @@ kind: ConfigMap
 metadata:
   name: love-conf
 data:
-  default.json: |
-{{ .Values.loveConfig | indent 4 }}
+{{- range .Values.loveConfigs }}
+  {{ .name }}.json: |
+{{ .config | indent 4 }}
+{{- end }}
