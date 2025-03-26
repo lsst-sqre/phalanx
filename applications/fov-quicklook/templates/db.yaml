@@ -89,6 +89,9 @@ spec:
         - podSelector:
             matchLabels:
               app: fov-quicklook-coordinator
+        - podSelector:
+            matchLabels:
+              app: fov-quicklook-frontend
       ports:
         - protocol: TCP
           port: 5432
