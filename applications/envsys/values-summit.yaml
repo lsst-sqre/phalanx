@@ -271,10 +271,10 @@ mtdome-ess107:
     RUN_ARG: 107
   resources:
     requests:
-      cpu: 400m
+      cpu: 1
       memory: 90Mi
     limits:
-      cpu: 800m
+      cpu: 2
       memory: 900Mi
 
 mtdome-ess108:
