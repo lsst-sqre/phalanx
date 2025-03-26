@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "ook.fullname" . }}-audit
+  name: "ook-audit"
   labels:
     {{- include "ook.labels" . | nindent 4 }}
     app.kubernetes.io/component: "audit"
@@ -51,7 +51,7 @@ spec:
                 {{- toYaml .Values.resources | nindent 16 }}
               envFrom:
                 - configMapRef:
-                    name: {{ include "ook.fullname" . }}
+                    name: "ook"
               env:
                 # Writeable directory for concatenating certs. See "tmp" volume.
                 - name: "KAFKA_CERT_TEMP_DIR"
@@ -62,7 +62,7 @@ spec:
                 - name: "KAFKA_BOOTSTRAP_SERVERS"
                   valueFrom:
                     secretKeyRef:
-                      name: {{ template "ook.fullname" . }}-kafka
+                      name: "ook-kafka"
                       key: "bootstrapServers"
                 - name: "KAFKA_CLUSTER_CA_PATH"
                   value: "/etc/kafkacluster/ca.crt"
@@ -74,27 +74,27 @@ spec:
                 - name: "ALGOLIA_APP_ID"
                   valueFrom:
                     secretKeyRef:
-                      name: {{ template "ook.fullname" . }}
+                      name: "ook"
                       key: "ALGOLIA_APP_ID"
                 - name: "ALGOLIA_API_KEY"
                   valueFrom:
                     secretKeyRef:
-                      name: {{ template "ook.fullname" . }}
+                      name: "ook"
                       key: "ALGOLIA_API_KEY"
                 - name: "OOK_DATABASE_PASSWORD"
                   valueFrom:
                     secretKeyRef:
-                      name: {{ template "ook.fullname" . }}
+                      name: "ook"
                       key: "OOK_DATABASE_PASSWORD"
                 - name: "OOK_GITHUB_APP_ID"
                   valueFrom:
                     secretKeyRef:
-                      name: {{ template "ook.fullname" . }}
+                      name: "ook"
                       key: "OOK_GITHUB_APP_ID"
                 - name: "OOK_GITHUB_APP_PRIVATE_KEY"
                   valueFrom:
                     secretKeyRef:
-                      name: {{ template "ook.fullname" . }}
+                      name: "ook"
                       key: "OOK_GITHUB_APP_PRIVATE_KEY"
               securityContext:
                 allowPrivilegeEscalation: false
@@ -135,9 +135,9 @@ spec:
             - name: "kafka"
               secret:
                 secretName: ook-kafka
-            - name: "{{ template "ook.fullname" . }}"
+            - name: "ook"
               secret:
-                secretName: {{ template "ook.fullname" . }}
+                secretName: "ook"
             - name: "tmp"
               emptyDir: {}
 {{- end }}

@@ -1,7 +1,7 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: {{ template "ook.fullname" . }}
+  name: "ook"
   labels:
     {{- include "ook.labels" . | nindent 4 }}
 config:
@@ -13,7 +13,7 @@ config:
   service: "ook"
 template:
   metadata:
-    name: {{ template "ook.fullname" . }}
+    name: "ook"
     {{- with .Values.ingress.annotations }}
     annotations:
       {{- toYaml . | nindent 6 }}
@@ -27,6 +27,6 @@ template:
               pathType: "Prefix"
               backend:
                 service:
-                  name: {{ template "ook.fullname" . }}
+                  name: "ook"
                   port:
                     number: {{ .Values.service.port }}
