@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: fov-quicklook-frontend
 spec:
-  replicas: 1
+  replicas: 8
   selector:
     matchLabels:
       app: fov-quicklook-frontend
@@ -27,10 +27,19 @@ spec:
               value: {{ .Values.config.pathPrefix | quote }}
             - name: QUICKLOOK_admin_page
               value: {{ .Values.admin_page | quote }}
+            {{- include "fov-quicklook.env.db" . | nindent 12 }}
+            {{- include "fov-quicklook.env.log-level" . | nindent 12 }}
             {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
             {{- include "fov-quicklook.butler-settings.env" . | nindent 12 }}
           volumeMounts:
             {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.config.pathPrefix }}/api/healthz
+              port: 9500
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
           ports:
             - containerPort: 9500
           resources: {{ toYaml .Values.frontend.resources | nindent 12 }}

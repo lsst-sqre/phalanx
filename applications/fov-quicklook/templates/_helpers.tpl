@@ -13,6 +13,22 @@
       key: s3_repository_secret_key
 {{- end }}
 
+{{- define "fov-quicklook.env.db" -}}
+- name: DB_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: fov-quicklook
+      key: db_password
+- name: QUICKLOOK_db_url
+  value: postgresql://quicklook:$(DB_PASSWORD)@fov-quicklook-db:5432/quicklook
+{{- end }}
+
+{{- define "fov-quicklook.env.log-level" -}}
+- name: QUICKLOOK_log_level
+  value: {{ .Values.log_level | quote }}
+{{- end }}
+
+
 {{- define "quicklook.ingress.spec" -}}
 rules:
   - host: {{ .Values.global.host | quote }}
