@@ -39,7 +39,7 @@ spec:
           volumeMounts:
             - mountPath: /dev/shm/quicklook
               name: shm
-            - mountPath: /tmp/quicklook/merge
+            - mountPath: /tmp/quicklook/merged
               name: merged-dir
             {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}
           securityContext:
