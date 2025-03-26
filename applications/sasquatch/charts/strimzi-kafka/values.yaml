@@ -294,6 +294,9 @@ users:
     # -- Enable user tap (deployed by parent Sasquatch chart)
     enabled: false
 
+  qserv:
+    # -- Enable user qserv (deployed by parent Sasquatch chart)
+    enabled: false
 
 mirrormaker2:
   # -- Enable replication in the target (passive) cluster

@@ -70,6 +70,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
 | users.obsloctap.enabled | bool | `false` | Enable user obsloctap |
 | users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |
+| users.qserv.enabled | bool | `false` | Enable user qserv (deployed by parent Sasquatch chart) |
 | users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | users.tap.enabled | bool | `false` | Enable user tap (deployed by parent Sasquatch chart) |
 | users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |

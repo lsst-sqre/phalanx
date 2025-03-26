@@ -358,3 +358,35 @@ spec:
         host: "*"
         operation: All
 {{- end }}
+{{- if .Values.users.qserv.enabled }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: qserv
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: qserv-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "lsst.tap"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+{{- end }}
