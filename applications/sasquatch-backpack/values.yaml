@@ -110,3 +110,10 @@ redis:
 
   # -- Affinity rules for the Redis pod
   affinity: {}
+
+cluster:
+  name: backpack
+
+strimzi:
+  enabled: true
+  topics: [lsst.backpack.usgs-earthquake-data]

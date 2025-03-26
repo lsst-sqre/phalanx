@@ -13,6 +13,7 @@ Collection of APIs that feed into Sasquatch
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the sasquatch-backpack deployment pod |
+| cluster.name | string | `"backpack"` |  |
 | config.backpackRedisUrl | string | `"redis://sasquatch-backpack-redis.sasquatch-backpack:6379/0"` | Backpack Redis URL |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
@@ -38,4 +39,6 @@ Collection of APIs that feed into Sasquatch
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | resources | object | See `values.yaml` | Resource limits and requests for the sasquatch-backpack deployment pod |
 | schedule | string | `"0 0 * * *"` |  |
+| strimzi.enabled | bool | `true` |  |
+| strimzi.topics[0] | string | `"lsst.backpack.usgs-earthquake-data"` |  |
 | tolerations | list | `[]` | Tolerations for the sasquatch-backpack deployment pod |
