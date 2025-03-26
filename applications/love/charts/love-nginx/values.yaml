@@ -49,18 +49,47 @@ nginxConfig: |
         alias /usr/src/love-manager/media;
     }
   }
-# -- Configuration specificiation for the LOVE service
-loveConfig: |
-  {
-    "alarms": {
-      "minSeveritySound": "serious",
-      "minSeverityNotification": "warning"
-    },
-    "camFeeds": {
-      "generic": "/gencam",
-      "allSky": "/gencam"
+
+# -- Configurations specifications for the LOVE service.
+# These will be used to create the love-conf ConfigMap.
+loveConfigs:
+- name: default
+  config: |
+    {
+      "alarms": {
+        "minSeveritySound": "serious",
+        "minSeverityNotification": "warning"
+      },
+      "camFeeds": {
+        "generic": "/gencam",
+        "allSky": "/gencam"
+      }
     }
-  }
+- name: all-alarms
+  config: |
+    {
+      "alarms": {
+        "minSeveritySound": "warning",
+        "minSeverityNotification": "warning"
+      },
+      "camFeeds": {
+        "generic": "/gencam",
+        "allSky": "/gencam"
+      }
+    }
+- name: no-alarms
+  config: |
+    {
+      "alarms": {
+        "minSeveritySound": "mute",
+        "minSeverityNotification": "mute"
+      },
+      "camFeeds": {
+        "generic": "/gencam",
+        "allSky": "/gencam"
+      }
+    }
+
 # -- The list of pull secrets needed for the images.
 # If this section is used, each object listed can have the following attributes defined:
 # _name_ (The label identifying the pull-secret to use)
