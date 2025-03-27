@@ -31,7 +31,6 @@ spec:
                 name: "gafaelfawr"
                 port:
                   number: 8080
-          {{- if .Values.config.oidcServer.enabled }}
           - path: "/.well-known/jwks.json"
             pathType: ImplementationSpecific
             backend:
@@ -46,6 +45,7 @@ spec:
                 name: "gafaelfawr"
                 port:
                   number: 8080
+          {{- if .Values.config.oidcServer.enabled }}
           {{- end }}
     {{- with .Values.ingress.additionalHosts }}
     {{- range . }}

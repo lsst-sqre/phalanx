@@ -1,0 +1,7 @@
+config:
+  createIssuer: false
+# config:
+#   email: "rsp@rsptest.ac.uk"
+#   route53:
+#     awsAccessKeyId: "AKIAQSJOS2SFL5I4TYND"
+#     hostedZone: "Z0567328105IEHEMIXLCO"
