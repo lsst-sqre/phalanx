@@ -1,0 +1,94 @@
+{{- if .Values.config.updateSchema -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "ook-schema-update"
+  annotations:
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "hook-succeeded"
+    helm.sh/hook-weight: "1"
+  labels:
+    {{- include "ook.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "ook.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "schema-update"
+    spec:
+      {{- if or .Values.cloudsql.enabled }}
+      serviceAccountName: "ook"
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        - name: "ook"
+          command:
+            - "ook"
+            - "update-db-schema"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          envFrom:
+            - configMapRef:
+                name: "ook"
+          env:
+            {{- include "ook.envVars" (dict "Chart" .Chart "Release" .Release "Values" .Values) | nindent 16 }}
+          volumeMounts:
+            - name: "kafka"
+              mountPath: "/etc/kafkacluster/ca.crt"
+              subPath: "ssl.truststore.crt" # CA cert from the Kafka cluster
+            - name: "kafka"
+              mountPath: "/etc/kafkauser/user.crt"
+              subPath: "ssl.keystore.crt" # User cert from the Kafka cluster signed by the clients' CA
+            - name: "kafka"
+              mountPath: "/etc/kafkauser/user.key"
+              subPath: "ssl.keystore.key" # private key for the consuming client
+            - name: "tmp"
+              mountPath: "/tmp/kafka_certs"
+      {{- if .Values.cloudsql.enabled }}
+      initContainers:
+        {{- include "ook.cloudsqlSidecar" . | nindent 8 }}
+      {{- end }}
+      restartPolicy: "Never"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        # This secret comes from the KafkaAccess operator
+        - name: "kafka"
+          secret:
+            secretName: ook-kafka
+        - name: "ook"
+          secret:
+            secretName: "ook"
+        - name: "tmp"
+          emptyDir: {}
+{{- end }}

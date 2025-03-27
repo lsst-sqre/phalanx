@@ -33,6 +33,7 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | config.databaseUrl | string | `""` | Database URL |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.topics.ingest | string | `"lsst.square-events.ook.ingest"` | Kafka topic name for ingest events |
+| config.updateSchema | bool | false to disable schema upgrades | Whether to run the database migration job |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
