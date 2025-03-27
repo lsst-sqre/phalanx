@@ -76,6 +76,10 @@ config:
   # -- Database URL
   databaseUrl: ""
 
+  # -- Whether to run the database migration job
+  # @default -- false to disable schema upgrades
+  updateSchema: false
+
   topics:
     # -- Kafka topic name for ingest events
     ingest: "lsst.square-events.ook.ingest"
