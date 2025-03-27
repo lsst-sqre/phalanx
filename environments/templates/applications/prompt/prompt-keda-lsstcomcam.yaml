@@ -1,0 +1,34 @@
+{{- if (index .Values "applications" "prompt-keda-lsstcomcam") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "prompt-keda-lsstcomcam"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "prompt-keda-lsstcomcam"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "prompt-keda-lsstcomcam"
+    server: "https://kubernetes.default.svc"
+  project: "prompt"
+  source:
+    path: "applications/prompt-keda-lsstcomcam"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

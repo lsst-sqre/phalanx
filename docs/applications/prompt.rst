@@ -14,6 +14,7 @@ Argo CD project: ``prompt``
    prompt-keda-hsc/index
    prompt-keda-latiss/index
    prompt-keda-lsstcamimsim/index
+   prompt-keda-lsstcomcam/index
    prompt-keda-lsstcomcamsim/index
    prompt-kafka/index
    prompt-proto-service-hsc/index
