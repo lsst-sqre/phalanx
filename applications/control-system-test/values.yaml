@@ -2,6 +2,10 @@ integration-testing:
   # -- Enable the integration testing system
   enabled: false
 
+rumba:
+  # -- Enable cronjob to clean up inactivate Kafka consumers.
+  enabled: false
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:

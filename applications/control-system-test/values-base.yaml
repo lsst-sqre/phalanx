@@ -16,6 +16,3 @@ integration-testing:
   enabled: true
   envEfd: base_efd
   s3Bucket: rubinobs-lfa-ls
-
-rumba:
-  enabled: true
