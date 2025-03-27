@@ -113,7 +113,7 @@ config:
   # -- Java heap size, which will set the maximum size of the heap. Otherwise
   # Java would determine it based on how much memory is available and black
   # maths.
-  jvmMaxHeapSize: 31G
+  jvmMaxHeapSize: 8G
 
   # -- Name of the service from Gafaelfawr's perspective, used for metrics
   # reporting
