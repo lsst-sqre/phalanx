@@ -23,6 +23,12 @@
   value: postgresql://quicklook:$(DB_PASSWORD)@fov-quicklook-db:5432/quicklook
 {{- end }}
 
+{{- define "fov-quicklook.env.log-level" -}}
+- name: QUICKLOOK_log_level
+  value: {{ .Values.log_level | quote }}
+{{- end }}
+
+
 {{- define "quicklook.ingress.spec" -}}
 rules:
   - host: {{ .Values.global.host | quote }}
