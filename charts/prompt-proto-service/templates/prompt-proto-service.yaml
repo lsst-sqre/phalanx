@@ -3,6 +3,8 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: {{ include "prompt-proto-service.fullname" . }}
+  annotations:
+    argocd.argoproj.io/hook: PostSync
 spec:
   template:
     metadata:
