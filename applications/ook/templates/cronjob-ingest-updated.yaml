@@ -27,12 +27,15 @@ spec:
             app.kubernetes.io/part-of: "ook"
         spec:
           restartPolicy: "Never"
+          {{- if or .Values.cloudsql.enabled }}
+          serviceAccountName: "ook"
+          {{- else }}
           automountServiceAccountToken: false
+          {{- end }}
           {{- with .Values.imagePullSecrets }}
           imagePullSecrets:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          automountServiceAccountToken: false
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
