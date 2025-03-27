@@ -27,6 +27,7 @@ spec:
               exec python -m quicklook.coordinator.api
           env:
             {{- include "fov-quicklook.env.db" . | nindent 12 }}
+            {{- include "fov-quicklook.env.log-level" . | nindent 12 }}
             {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
             {{- include "fov-quicklook.butler-settings.env" . | nindent 12 }}
           volumeMounts:

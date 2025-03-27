@@ -22,6 +22,17 @@
       ],
       "default": null
     },
+    "log_level": {
+      "type": "string",
+      "enum": [
+        "debug",
+        "info",
+        "warning",
+        "error",
+        "critical"
+      ],
+      "default": "info"
+    },
     "debug": {
       "$ref": "#/definitions/debug"
     },
