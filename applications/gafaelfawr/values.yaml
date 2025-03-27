@@ -69,7 +69,7 @@ config:
   internalDatabase: false
 
   # -- Choose from the text form of Python logging levels
-  logLevel: "INFO"
+  logLevel: "DEBUG"
 
   # -- List of netblocks used for internal Kubernetes IP addresses, used to
   # determine the true client IP for logging
