@@ -18,9 +18,9 @@ config:
   oidc:
     clientId: "rsp-tacc"
     audience: "rsp-tacc"
-    loginUrl: "https://dev.kprice01.tacc.utexas.edu/v3/oauth2/authorize"
-    tokenUrl: "https://dev.kprice01.tacc.utexas.edu/v3/oauth2/tokens/oidc"
-    issuer: "https://dev.kprice01.tacc.utexas.edu/v3/tokens"
+    loginUrl: "https://dev.rc1.tapis.io/v3/oauth2/authorize"
+    tokenUrl: "https://dev.rc1.tapis.io/v3/oauth2/tokens/oidc"
+    issuer: "https://dev.rc1.tapis.io/v3/tokens"
     usernameClaim: "name"
 
   ldap:
