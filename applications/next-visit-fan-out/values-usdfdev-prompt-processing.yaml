@@ -1,4 +1,4 @@
-platform: knative
+platform: keda
 
 knative:
   maxMessages: 2000
@@ -8,7 +8,7 @@ kafka:
   schemaRegistryUrl: http://10.103.126.51:8081
   sasquatchAddress: 10.100.226.209:9094
   consumerGroup: test-group-3
-  nextVisitTopic: test.next-visit
+  nextVisitTopic: test.next-visit-job
   # Dev processes very old images, set to ~20 years
   expiration: 600_000_000.0
 
