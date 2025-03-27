@@ -1,0 +1,21 @@
+path "kv-v2/data/{{ path }}" {
+  capabilities = ["create", "delete", "read", "update"]
+}
+path "kv-v2/data/{{ path }}/+" {
+  capabilities = ["create", "delete", "read", "update"]
+}
+path "kv-v2/metadata/{{ path }}" {
+  capabilities = ["delete", "list", "read", "update"]
+}
+path "kv-v2/metadata/{{ path }}/+" {
+  capabilities = ["delete", "list", "read", "update"]
+}
+path "kv-v2/delete/{{ path }}/+" {
+  capabilities = ["update"]
+}
+path "kv-v2/destroy/{{ path }}/+" {
+  capabilities = ["update"]
+}
+path "kv-v2/undelete/{{ path }}/+" {
+  capabilities = ["update"]
+}
