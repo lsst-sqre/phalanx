@@ -1,7 +1,4 @@
 config:
-  metrics:
-    enabled: true
-
   # Data (Butler) Collections
   butlerDataCollections:
     - config: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp02.yaml"
