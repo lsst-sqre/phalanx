@@ -1,6 +1,6 @@
 config:
   metrics:
-    enabled: false
+    enabled: true
 
   # Data (Butler) Collections
   butlerDataCollections:
