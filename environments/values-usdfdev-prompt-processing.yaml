@@ -14,6 +14,7 @@ applications:
   prompt-keda-hsc: true
   prompt-keda-latiss: true
   prompt-keda-lsstcamimsim: true
+  prompt-keda-lsstcomcam: true
   prompt-keda-lsstcomcamsim: true
   prompt-proto-service-hsc: true
   prompt-proto-service-hsc-gpu: true
