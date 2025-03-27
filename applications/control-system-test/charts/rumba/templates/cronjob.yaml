@@ -37,4 +37,4 @@ spec:
                 - -c
                 - |
                   echo "Running cronjob..."
-                  exec /home/saluser/.startup.sh kt consumers envvar delete
+                  exec /home/saluser/.startup.sh kt consumers envvar delete --regex="-S3$"
