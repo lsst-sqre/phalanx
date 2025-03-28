@@ -9,8 +9,14 @@ cadc-tap:
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
 
-    sentryEnabled: true
-    sentryTracesSampleRate: "0.1"
+    kafka:
+      bootstrapServer: "sasquatch-dev-kafka-bootstrap.lsst.cloud:9094"
+      schemaRegistry:
+        url: "https://data-dev.lsst.cloud/schema-registry/"
+      topics:
+        jobRun: "lsst.tap.job-run"
+      auth:
+        enabled: true
 
   cloudsql:
     enabled: true

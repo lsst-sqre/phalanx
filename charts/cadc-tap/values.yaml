@@ -83,13 +83,13 @@ config:
 
     image:
       # -- TAP image to use
-      repository: "ghcr.io/lsst-sqre/lsst-tap-service"
+      repository: "stvoutsin/lsst-tap-service"
 
       # -- Pull policy for the TAP image
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "2.13.1"
+      tag: "DM-49692"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -126,6 +126,30 @@ config:
 
   # -- Whether Sentry is enabled in this environment
   sentryEnabled: false
+
+  # -- Kafka configuration
+  kafka:
+
+    # -- Bootstrap Server
+    bootstrapServer: "sasquatch-dev-kafka-bootstrap.lsst.cloud:9094"
+
+    # -- Schema Registry Configuration
+    schemaRegistry:
+
+      # -- URL
+      url: ""
+
+    # -- Kafka topics
+    topics:
+
+      # -- Job Run topic
+      jobRun: ""
+
+    # -- Authentication configuration
+    auth:
+
+      # -- Whether auth is enabled
+      enabled: false
 
 mockdb:
   # -- Spin up a container to pretend to be the database.
