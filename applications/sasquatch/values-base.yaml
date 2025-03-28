@@ -285,6 +285,7 @@ rest-proxy:
     topics:
       - lsst.obsenv.action
       - lsst.obsenv.summary
+      - lsst.obsenv.run-branch
     topicPrefixes:
       - lsst.obsenv
 
