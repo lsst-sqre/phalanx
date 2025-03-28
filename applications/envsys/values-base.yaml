@@ -218,6 +218,38 @@ epm-ess303-sim:
       cpu: 190m
       memory: 900Mi
 
+epm-generator-ess305-sim:
+  enabled: true
+  classifier: ess305
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 305 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+epm-generator-ess306-sim:
+  enabled: true
+  classifier: ess306
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 306 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
 m1m3-ess113-sim:
   enabled: true
   classifier: ess113
