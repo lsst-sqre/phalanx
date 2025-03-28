@@ -3,7 +3,7 @@ config:
   butler_uri_1: s3://embargo@rubin-summit-users/butler.yaml
 db:
   host: usdf-summitdb-replica.slac.stanford.edu
-  user: usdf
+  user: exposurelog
 env:
   - name: AWS_SHARED_CREDENTIALS_FILE
     value: "/var/secrets/butler/aws-credentials.ini"
