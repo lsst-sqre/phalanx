@@ -13,6 +13,7 @@ Collection of APIs that feed into Sasquatch
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the sasquatch-backpack deployment pod |
+| cluster.name | string | `"backpack"` |  |
 | config.backpackRedisUrl | string | `"redis://sasquatch-backpack-redis.sasquatch-backpack:6379/0"` | Backpack Redis URL |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
@@ -27,6 +28,17 @@ Collection of APIs that feed into Sasquatch
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the sasquatch-backpack deployment pod |
 | podAnnotations | object | `{}` | Annotations for the sasquatch-backpack deployment pod |
+| redis.affinity | object | `{}` | Affinity rules for the Redis pod |
+| redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
+| redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
+| redis.persistence.enabled | bool | `true` | Whether to persist Redis storage.  Setting this to false will use `emptyDir` which is not recommend in a production environment. |
+| redis.persistence.size | string | `"1Gi"` | Amount of persistent storage to request |
+| redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
+| redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
+| redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
+| redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | resources | object | See `values.yaml` | Resource limits and requests for the sasquatch-backpack deployment pod |
 | schedule | string | `"0 0 * * *"` |  |
+| strimzi.enabled | bool | `true` |  |
+| strimzi.topics[0] | string | `"lsst.backpack.usgs-earthquake-data"` |  |
 | tolerations | list | `[]` | Tolerations for the sasquatch-backpack deployment pod |
