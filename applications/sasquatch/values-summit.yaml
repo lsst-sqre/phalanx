@@ -44,7 +44,6 @@ strimzi-kafka:
         cpu: "2"
         memory: 512Mi
       limits:
-        cpu: "4"
         memory: 1024Mi
   kraft:
     enabled: true
