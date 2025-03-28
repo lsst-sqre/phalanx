@@ -93,11 +93,10 @@ config:
       start_batch_size: 50
       start_batch_wait: "1m"
       business:
-        type: "NotebookRunnerCounting"
+        type: "NotebookRunnerInfinite"
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
           repo_ref: "no-code"
-          max_executions: 1
-          idle_time: "10s"
+          execution_idle_time: 1s
           delete_lab: false
         restart: true
