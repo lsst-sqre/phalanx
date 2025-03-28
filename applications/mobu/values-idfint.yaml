@@ -61,8 +61,28 @@ config:
     #       idle_time: 0
     #       delete_lab: false
     #     restart: true
-    - name: "scale-test-qserv"
-      count: 20
+    # - name: "scale-test-qserv"
+    #   count: 20
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-notebook"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   start_batch_size: 50
+    #   start_batch_wait: "1m"
+    #   business:
+    #     type: "NotebookRunnerCounting"
+    #     options:
+    #       repo_url: "https://github.com/lsst-sqre/scaletest.git"
+    #       repo_ref: "u/fe/qserv"
+    #       max_executions: 1
+    #       idle_time: "10s"
+    #       delete_lab: false
+    #     restart: true
+    - name: "scale-test-simple"
+      count: 3000
       user_spec:
         username_prefix: "bot-mobu-scale-notebook"
       scopes:
@@ -76,7 +96,7 @@ config:
         type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
-          repo_ref: "u/fe/qserv"
+          repo_ref: "no-code"
           max_executions: 1
           idle_time: "10s"
           delete_lab: false
