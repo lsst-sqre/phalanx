@@ -88,6 +88,9 @@ applications:
   # most other applications use `GafaelfawrIngress`
   gafaelfawr: true
 
+  # -- Enable the rubin-rag application
+  rubin-rag: false
+
   # -- Enable the ghostwriter application
   ghostwriter: false
 

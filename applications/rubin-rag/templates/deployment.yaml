@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "rubin-rag"
+  labels:
+    {{- include "rubin-rag.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "rubin-rag.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "rubin-rag.selectorLabels" . | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: rubin-rag
+          env:
+          - name: WEAVIATE_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: rubin-rag
+                key: "AUTHENTICATION_APIKEY_ALLOWED_KEYS"
+          - name: OPENAI_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: rubin-rag
+                key: "OPENAI_API_KEY"
+          - name: GRPC_HOST
+            value: "weaviate-grpc.rubin-rag.svc.cluster.local"
+          - name: HTTP_HOST
+            value: "weaviate-headless.rubin-rag.svc.cluster.local"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          ports:
+            - name: "http"
+              containerPort: 8501
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/rubin-rag"
+              port: 8501
+            timeoutSeconds: 10
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: false
+          volumeMounts:
+            - name: {{ $.Release.Name }}
+              mountPath: "/etc/secrets"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: {{ $.Release.Name }}
+          secret:
+            secretName: rubin-rag
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
