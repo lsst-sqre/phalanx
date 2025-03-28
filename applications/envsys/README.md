@@ -35,6 +35,10 @@ Deployment for the Environmental Awareness Systems CSCs
 | eas.enabled | bool | `false` | Enable the EAS CSC |
 | epm-ess303-sim.enabled | bool | `false` | Enable the ESS:303 simulator CSC |
 | epm-ess303.enabled | bool | `false` | Enable the ESS:303 CSC |
+| epm-generator-ess305-sim.enabled | bool | `false` | Enable the ESS:305 simulator CSC |
+| epm-generator-ess305.enabled | bool | `false` | Enable the ESS:305 CSC |
+| epm-generator-ess306-sim.enabled | bool | `false` | Enable the ESS:303 simulator CSC |
+| epm-generator-ess306.enabled | bool | `false` | Enable the ESS:306 CSC |
 | epm1-sim.enabled | bool | `false` | Enable the EPM:1 simulator CSC |
 | epm1.enabled | bool | `false` | Enable the EPM:1 CSC |
 | epm301.enabled | bool | `false` | Enable the EPM:301 CSC |

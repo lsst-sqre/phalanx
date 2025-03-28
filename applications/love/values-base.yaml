@@ -522,6 +522,12 @@ love-producer:
   - name: epm-ess303
     csc: ESS:303 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: epm-generator-ess305
+    csc: ESS:305 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: epm-generator-ess306
+    csc: ESS:306 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: gcheaderservice1
     csc: GCHeaderService:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
