@@ -21,7 +21,7 @@ config:
     loginUrl: "https://dev.rc1.tapis.io/v3/oauth2/authorize"
     tokenUrl: "https://dev.rc1.tapis.io/v3/oauth2/tokens/oidc"
     issuer: "https://dev.rc1.tapis.io/v3/tokens"
-    usernameClaim: "name"
+    usernameClaim: "tapis/username"
 
   ldap:
     url: ldap://ldap.tacc.utexas.edu
