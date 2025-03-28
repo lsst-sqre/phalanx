@@ -181,12 +181,7 @@ kafkaExporter:
 
   # -- Kubernetes requests and limits for the Kafka exporter
   # @default -- See `values.yaml`
-  resources:
-    limits:
-      memory: "256Mi"
-    requests:
-      cpu: "375m"
-      memory: "100Mi"
+  resources: {}
 
 connect:
   # -- Enable Kafka Connect
