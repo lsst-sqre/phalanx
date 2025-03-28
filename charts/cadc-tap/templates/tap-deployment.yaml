@@ -81,7 +81,7 @@ spec:
                 -Dpath_prefix=/api/{{ .Values.ingress.path }}
                 -Dca.nrc.cadc.util.PropertiesReader.dir=/config/
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
-            {{- if .Values.kafka.auth.enabled }}
+            {{- if .Values.config.kafka.auth.enabled }}
             - name: "KAFKA_PASSWORD"
               valueFrom:
                 secretKeyRef:
