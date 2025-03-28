@@ -1,3 +1,5 @@
+platform: "keda"
+
 knative:
   maxMessages: 2000
   retryRequests: false
