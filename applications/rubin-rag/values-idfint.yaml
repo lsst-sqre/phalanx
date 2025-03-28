@@ -1,3 +1,2 @@
 image:
-  tag: "tickets-SP-2028"
   pullPolicy: Always
