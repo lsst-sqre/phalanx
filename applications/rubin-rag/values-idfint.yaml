@@ -2,6 +2,7 @@ image:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   tag: latest
 >>>>>>> 45da17e1e (Add content to values-idfint)
@@ -11,4 +12,7 @@ image:
 =======
   tag:
 >>>>>>> f623590e0 (Remove branch tag from values-idfint)
+=======
+  tag: "tickets-SP-2028"
+>>>>>>> 8fe0efda5 (Back to pointing at branch in values)
   pullPolicy: Always
