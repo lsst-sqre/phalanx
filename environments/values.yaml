@@ -88,6 +88,9 @@ applications:
   # most other applications use `GafaelfawrIngress`
   gafaelfawr: true
 
+  # -- Enable the rubin-rag application
+  rubin-rag: false
+
   # -- Enable the ghostwriter application
   ghostwriter: false
 
@@ -176,6 +179,9 @@ applications:
 
   # -- Enable the prompt-keda-lsstcamimsim application
   prompt-keda-lsstcamimsim: false
+
+  # -- Enable the prompt-keda-lsstcomcam application
+  prompt-keda-lsstcomcam: false
 
   # -- Enable the prompt-keda-lsstcomcamsim application
   prompt-keda-lsstcomcamsim: false
