@@ -1,4 +1,4 @@
-replicaCount: 4
+replicaCount: 6
 
 resources:
   limits:
@@ -90,13 +90,13 @@ config:
         - "exec:portal"
         - "read:image"
         - "read:tap"
-      start_batch_size: 50
-      start_batch_wait: "1m"
+      start_batch_size: 30
+      start_batch_wait: "30m"
       business:
         type: "NotebookRunnerInfinite"
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
           repo_ref: "no-code"
-          execution_idle_time: 1s
+          execution_idle_time: 1m
           delete_lab: false
         restart: true
