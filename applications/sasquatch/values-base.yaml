@@ -64,7 +64,10 @@ strimzi-kafka:
         cpu: "3"
         memory: 512Mi
       limits:
+<<<<<<< HEAD
         cpu: "8"
+=======
+>>>>>>> be248f052 (Lift kafkaExporter cpu limits.)
         memory: 1Gi
   kraft:
     enabled: true
