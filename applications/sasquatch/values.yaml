@@ -40,7 +40,7 @@ influxdb:
 
   livenessProbe:
     # -- Liveness probe initial delay in seconds
-    initialDelaySeconds: 60
+    initialDelaySeconds: 90
 
   persistence:
     # -- Whether to use persistent volume claims. By default, `storageClass`
