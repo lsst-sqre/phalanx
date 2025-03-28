@@ -1,10 +1,14 @@
 image:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   tag: latest
 >>>>>>> 45da17e1e (Add content to values-idfint)
 =======
   tag: "tickets-SP-2028"
 >>>>>>> 047aa48f5 (Change values file to point at ticket branch)
+=======
+  tag:
+>>>>>>> f623590e0 (Remove branch tag from values-idfint)
   pullPolicy: Always
