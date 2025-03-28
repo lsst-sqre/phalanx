@@ -112,3 +112,4 @@ config:
     - "stvoutsin"
     - "mpackard"
     - "kprice"
+    - "testuser2"
