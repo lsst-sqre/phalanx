@@ -1,0 +1,15 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron-{{ include "prompt-keda.fullname" . }}
+spec:
+  # Ten minutes after change of day_obs
+  schedule: "10 0 * * *"
+  timeZone: Etc/{{ .Values.initializer.cron.day_obs_tz | int | mul -1 | printf "GMT%+d" }}
+  concurrencyPolicy: Replace
+  suspend: {{ .Values.initializer.cron.suspend }}
+  # Ensure suspended jobs don't create a backlog
+  startingDeadlineSeconds: 82800  # 23h
+  jobTemplate:
+{{ include "prompt-keda.service-init" . | indent 4 }}
