@@ -8,9 +8,15 @@ cadc-tap:
       host: "qserv-int.slac.stanford.edu:4090"
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
+      image:
+        tag: "3.0.0"
 
-    sentryEnabled: true
-    sentryTracesSampleRate: "0.1"
+    kafka:
+      bootstrapServer: "sasquatch-dev-kafka-bootstrap.lsst.cloud:9094"
+      schemaRegistry:
+        url: "https://data-dev.lsst.cloud/schema-registry/"
+      auth:
+        enabled: true
 
   cloudsql:
     enabled: true

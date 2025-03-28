@@ -110,6 +110,9 @@ config:
   # -- GCS bucket type (GCS or S3)
   gcsBucketType: "GCS"
 
+  # -- Data Database name
+  database: "dp02"
+
   # -- Java heap size, which will set the maximum size of the heap. Otherwise
   # Java would determine it based on how much memory is available and black
   # maths.
@@ -126,6 +129,36 @@ config:
 
   # -- Whether Sentry is enabled in this environment
   sentryEnabled: false
+
+  # -- Kafka configuration
+  kafka:
+
+    # -- Bootstrap Server
+    bootstrapServer: "sasquatch-dev-kafka-bootstrap.lsst.cloud:9094"
+
+    # -- Schema Registry Configuration
+    schemaRegistry:
+
+      # -- URL
+      url: ""
+
+    # -- Kafka topics
+    topics:
+
+      # -- Job Run topic
+      jobRun: "lsst.tap.job-run"
+
+      # -- Job Status topic
+      jobStatus: "lsst.tap.job-status"
+
+      # -- Job Delete topic
+      jobDelete: "lsst.tap.job-delete"
+
+    # -- Authentication configuration
+    auth:
+
+      # -- Whether auth is enabled
+      enabled: false
 
 mockdb:
   # -- Spin up a container to pretend to be the database.
