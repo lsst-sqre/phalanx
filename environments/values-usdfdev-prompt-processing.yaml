@@ -13,6 +13,7 @@ applications:
   prompt-kafka: true
   prompt-keda-hsc: true
   prompt-keda-latiss: true
+  prompt-keda-lsstcam: true
   prompt-keda-lsstcamimsim: true
   prompt-keda-lsstcomcam: true
   prompt-keda-lsstcomcamsim: true
