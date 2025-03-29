@@ -1,70 +1,53 @@
-apiVersion: apps/v1
-kind: Deployment
+{{- if .Values.config.updateSchema -}}
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: "ook"
+  name: "ook-schema-update"
+  annotations:
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "hook-succeeded"
+    helm.sh/hook-weight: "1"
   labels:
     {{- include "ook.labels" . | nindent 4 }}
-    app.kubernetes.io/component: "server"
-    app.kubernetes.io/part-of: "ook"
 spec:
-  replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      {{- include "ook.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- with .Values.podAnnotations }}
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        {{- with .Values.podAnnotations }}
-          {{- toYaml . | nindent 8 }}
-        {{- end }}
-      labels:
-        {{- include "ook.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: "server"
-        app.kubernetes.io/part-of: "ook"
-    spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      labels:
+        {{- include "ook.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "schema-update"
+    spec:
       {{- if or .Values.cloudsql.enabled }}
       serviceAccountName: "ook"
       {{- else }}
       automountServiceAccountToken: false
       {{- end }}
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
       containers:
-        - name: {{ .Chart.Name }}
+        - name: "ook"
+          command:
+            - "ook"
+            - "update-db-schema"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          {{- with .Values.resources }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          envFrom:
-            - configMapRef:
-                name: "ook"
-          env:
-            {{- include "ook.envVars" (dict "Chart" .Chart "Release" .Release "Values" .Values) | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-                - ALL
+                - "all"
             readOnlyRootFilesystem: true
+          envFrom:
+            - configMapRef:
+                name: "ook"
+          env:
+            {{- include "ook.envVars" (dict "Chart" .Chart "Release" .Release "Values" .Values) | nindent 16 }}
           volumeMounts:
             - name: "kafka"
               mountPath: "/etc/kafkacluster/ca.crt"
@@ -81,6 +64,11 @@ spec:
       initContainers:
         {{- include "ook.cloudsqlSidecar" . | nindent 8 }}
       {{- end }}
+      restartPolicy: "Never"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -103,3 +91,4 @@ spec:
             secretName: "ook"
         - name: "tmp"
           emptyDir: {}
+{{- end }}

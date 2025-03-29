@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "ook.fullname" . }}-test-connection"
+  name: "ook-test-connection"
   labels:
     {{- include "ook.labels" . | nindent 4 }}
   annotations:
@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "ook.fullname" . }}:{{ .Values.service.port }}']
+      args: ['ook:{{ .Values.service.port }}']
   restartPolicy: Never
