@@ -50,5 +50,7 @@ RAG helpers for documentation searches
 | weaviate.envSecrets.AUTHENTICATION_APIKEY_ALLOWED_KEYS | string | `"rubin-rag"` |  |
 | weaviate.limits.cpu | string | `"500m"` |  |
 | weaviate.limits.memory | string | `"300Mi"` |  |
+| weaviate.modules.generative-openai.enabled | bool | `true` |  |
+| weaviate.modules.text2vec-openai.enabled | bool | `true` |  |
 | weaviate.requests.cpu | string | `"300m"` |  |
 | weaviate.requests.memory | string | `"150Mi"` |  |
