@@ -2,7 +2,7 @@ prompt-keda:
   image:
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: latest
+    tag: 6.2.0
 
   instrument:
     pipelines:
@@ -18,7 +18,8 @@ prompt-keda:
       preprocessing: |-
         - survey: SURVEY
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Preprocessing.yaml']
-    calibRepo: s3://rubin-summit-users
+    calibRepo: s3://repo-test-users/or5
+    skymap: "lsst_cells_v1"
 
   s3:
     imageBucket: repo-test
@@ -32,14 +33,14 @@ prompt-keda:
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
-    topic: or5-ppdev-notification2
+    topic: or5-ppdev-notification
     imageTimeout: 60
 
   apdb:
     config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcomcam-dev.py
 
   alerts:
-    topic: "alert-stream-test"
+    topic: alerts-simulated
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
@@ -49,3 +50,12 @@ prompt-keda:
     exportOutputs: false
 
   fullnameOverride: "prompt-keda-lsstcomcam"
+
+  keda:
+    minReplicaCount: 10
+    maxReplicaCount: 100
+
+    podAnnotations: {
+      edu.stanford.slac.sdf.project/usdf-embargo: "true"
+    }
+
