@@ -114,6 +114,22 @@ epm-ess303-sim:
   # -- Enable the ESS:303 simulator CSC
   enabled: false
 
+epm-generator-ess305:
+  # -- Enable the ESS:305 CSC
+  enabled: false
+
+epm-generator-ess305-sim:
+  # -- Enable the ESS:305 simulator CSC
+  enabled: false
+
+epm-generator-ess306:
+  # -- Enable the ESS:306 CSC
+  enabled: false
+
+epm-generator-ess306-sim:
+  # -- Enable the ESS:303 simulator CSC
+  enabled: false
+
 epm1:
   # -- Enable the EPM:1 CSC
   enabled: false
