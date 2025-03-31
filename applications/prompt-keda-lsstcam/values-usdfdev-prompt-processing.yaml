@@ -1,8 +1,4 @@
-prompt-proto-service:
-
-  podAnnotations:
-    # Update this field if using latest or static image tag in dev
-    revision: "1"
+prompt-keda:
 
   image:
     pullPolicy: Always
@@ -37,10 +33,10 @@ prompt-proto-service:
     config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcam-dev.yaml
 
   alerts:
-    topic: "alert-stream-test"
+    username: kafka-admin
+    server: usdf-alert-stream-dev.lsst.cloud:9094
+    topic: alert-stream-test
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     auth_env: false
-
-  fullnameOverride: "prompt-proto-service-lsstcam"

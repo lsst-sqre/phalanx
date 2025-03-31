@@ -1,21 +1,4 @@
-prompt-proto-service:
-
-  # -- Annotations for the prompt-proto-service pod
-  # @default -- See the `values.yaml` file.
-  podAnnotations:
-    autoscaling.knative.dev/min-scale: "3"
-    autoscaling.knative.dev/max-scale: "600"
-    autoscaling.knative.dev/target-utilization-percentage: "60"
-    autoscaling.knative.dev/target-burst-capacity: "-1"
-    queue.sidecar.serving.knative.dev/cpu-resource-request: "25m"
-    queue.sidecar.serving.knative.dev/cpu-resource-limit: "1000m"
-    queue.sidecar.serving.knative.dev/memory-resource-request: "400Mi"
-    queue.sidecar.serving.knative.dev/memory-resource-limit: "800Mi"
-    queue.sidecar.serving.knative.dev/ephemeral-storage-resource-request: "400Mi"
-    queue.sidecar.serving.knative.dev/ephemeral-storage-resource-limit: "450Mi"
-    # Update this field if using latest or static image tag in dev
-    revision: "1"
-
+prompt-keda:
   image:
     # -- Image to use in the PP deployment
     repository: ghcr.io/lsst-dm/prompt-service
@@ -29,9 +12,7 @@ prompt-proto-service:
     # -- The number of requests to process before rebooting a worker.
     # If 0, workers process requests indefinitely.
     restart: 0
-    # -- Maximum time that a worker can process a next_visit request (seconds).
-    timeout: 900
-    # -- When Knative shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds).
+    # -- When Kubernetes shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds).
     grace_period: 45
 
   instrument:
@@ -106,9 +87,9 @@ prompt-proto-service:
 
   alerts:
     # -- Username for sending alerts to the alert stream
-    username: "kafka-admin"
+    username: ""
     # -- Server address for the alert stream
-    server: "usdf-alert-stream-dev.lsst.cloud:9094"
+    server: ""
     # -- Topic name where alerts will be sent
     # @default -- None, must be set
     topic: ""
@@ -132,43 +113,73 @@ prompt-proto-service:
     # Leave unset to attempt anonymous access.
     auth_env: true
 
-  knative:
-    # -- The cpu cores requested for the full pod (see `containerConcurrency`).
-    cpuRequest: 1
-    # -- The maximum cpu cores for the full pod (see `containerConcurrency`).
-    cpuLimit: 1
-    # -- The storage space reserved for each container (mostly local Butler).
-    # This allocation is for the full pod (see `containerConcurrency`)
-    ephemeralStorageRequest: "5Gi"
-    # -- The maximum storage space allowed for each container (mostly local Butler).
-    # This allocation is for the full pod (see `containerConcurrency`)
-    ephemeralStorageLimit: "5Gi"
-    # -- GPUs enabled.
-    gpu: false
-    # -- The number of GPUs to request for the full pod (see `containerConcurrency`).
-    gpuRequest: 0
-    # -- The minimum memory to request for the full pod (see `containerConcurrency`).
-    memoryRequest: "2Gi"
-    # -- The maximum memory limit for the full pod (see `containerConcurrency`).
-    memoryLimit: "8Gi"
-    # -- To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`.
-    # This parameter adds extra time to that minimum (seconds).
-    extraTimeout: 10
-    # -- Maximum time that a container can send nothing to Knative (seconds).
-    # This is only useful if the container runs async workers.
-    # If 0, idle timeout is ignored.
-    idleTimeout: 0
-    # -- Maximum time that a container can send nothing to Knative after initial submission (seconds).
-    # This is only useful if the container runs async workers.
-    # If 0, idle timeout is ignored.
-    responseStartTimeout: 0
+  debug:
+    # -- Whether or not pipeline outputs should be exported to the central repo.
+    # This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination.
+    exportOutputs: true
 
-  # -- The number of Knative requests that can be handled simultaneously by one container
-  containerConcurrency: 1
+  keda:
+    # Minimum number of replicas to start with.
+    minReplicaCount: 3
+    # Maximum number of replicas to scale to.
+    maxReplicaCount: 30
+    # Scaling algorithm
+    scalingStrategy: eager
+    # Polling interval for Keda to poll scalar for scaling determination.
+    pollingInterval: 2
+    # How many completed jobs should be kept available in Kubernetes.
+    successfulJobsHistoryLimit: 5
+    # How many failed jobs should be kept available in Kubernetes.
+    failedJobsHistoryLimit: 5
+
+    redisStreams:
+      # Address of Redis Streams Cluster
+      host: prompt-redis.prompt-redis
+      # Name of Redis Stream
+      streamName: instrument:lsstcam
+      # Redis Consumer Group name
+      consumerGroup: lsstcam_consumer_group
+      # Time to wait for fanned out messages before spawning new pod.
+      msgListenTimeout: 900
+      # Lag count at which scaler triggers
+      activationLagCount: "1"
+      #  Number of lagging entries in the consumer group, alternative to pendingEntriesCount scaler trigger
+      lagCount: "1"
+      # Number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
+      pendingEntriesCount: "1"
+
+
+  # -- Override the base name for resources
+  nameOverride: ""
+
+  # -- Override the full name for resources (includes the release name)
+  fullnameOverride: "prompt-keda-lsstcam"
+
+  # -- Kubernetes resource requests and limits
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      cpu: '1'
+      ephemeral-storage: 5Gi
+      memory: 2Gi
+    limits:
+      cpu: '1'
+      ephemeral-storage: 5Gi
+      memory: 8Gi
+
 
   # -- Kubernetes YAML configs for extra container volume(s).
   # Any volumes required by other config options are automatically handled by the Helm chart.
   additionalVolumeMounts: []
 
-  # -- Affinity rules for the prompt processing pods
+  # -- Pod annotations for the Prompt Processing Pod
+  podAnnotations: {}
+
+  # -- Affinity rules for the Prompt Processing Pod
   affinity: {}
+
+  # -- Node selection rules for the Prompt Processing pod
+  nodeSelector: {}
+
+  # -- Tolerations for the Prompt Processing pod
+  tolerations: []

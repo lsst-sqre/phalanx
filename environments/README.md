@@ -51,6 +51,7 @@
 | applications.prompt-kafka | bool | `false` | Enable the prompt-kafka application |
 | applications.prompt-keda-hsc | bool | `false` | Enable the prompt-keda-hsc application |
 | applications.prompt-keda-latiss | bool | `false` | Enable the prompt-keda-latiss application |
+| applications.prompt-keda-lsstcam | bool | `false` | Enable the prompt-keda-lsstcam application |
 | applications.prompt-keda-lsstcamimsim | bool | `false` | Enable the prompt-keda-lsstcamimsim application |
 | applications.prompt-keda-lsstcomcam | bool | `false` | Enable the prompt-keda-lsstcomcam application |
 | applications.prompt-keda-lsstcomcamsim | bool | `false` | Enable the prompt-keda-lsstcomcamsim application |
