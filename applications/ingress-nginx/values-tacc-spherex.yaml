@@ -1,4 +1,15 @@
 ingress-nginx:
   controller:
+    config:
+      error-log-level: "error"
+      large-client-header-buffers: "4 64k"
+      proxy-buffer-size: "64k"
     service:
-      loadBalancerIP: "129.114.35.137"
+      type: ClusterIP
+      externalTrafficPolicy: null
+    hostNetwork: true
+    dnsPolicy: ClusterFirstWithHostNet
+    kind: Deployment
+    replicas: 1
+    nodeSelector:
+      kubernetes.io/hostname: worker04
