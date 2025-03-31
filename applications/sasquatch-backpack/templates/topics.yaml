@@ -1,6 +1,5 @@
-{{- if .Values.strimzi.enabled }}
-{{- $cluster := .Values.cluster.name }}
-{{- range $topic := .Values.strimzi.topics }}
+{{- $cluster := .Values.kafka.cluster.name }}
+{{- range $topic := .Values.kafka.topics }}
 ---
 apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaTopic
@@ -11,5 +10,4 @@ metadata:
 spec:
   replicas: 3
   partitions: 1
-{{- end }}
 {{- end }}
