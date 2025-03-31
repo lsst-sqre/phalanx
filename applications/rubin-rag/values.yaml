@@ -87,3 +87,8 @@ weaviate:
     AUTHORIZATION_ADMINLIST_USERS: 'admin'
   envSecrets:
     AUTHENTICATION_APIKEY_ALLOWED_KEYS: rubin-rag
+  modules:
+    generative-openai:
+      enabled: true
+    text2vec-openai:
+      enabled: true
