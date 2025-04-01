@@ -650,6 +650,9 @@ love-producer:
       limits:
         cpu: 300m
         memory: 300Mi
+  - name: mtocps
+    csc: OCPS:3 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtoods
     csc: MTOODS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
