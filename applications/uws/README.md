@@ -33,6 +33,7 @@ Deployment for the UWS and DM OCPS CSCs
 | uws-api-server.job.securityContext.fsGroup | int | `202` | Set the filesystem GID for the mounted volumes in the UWS job container |
 | uws-api-server.job.securityContext.runAsGroup | int | `202` | Set the GID for the UWS job container entrypoint |
 | uws-api-server.job.securityContext.runAsUser | int | `1000` | Set the UID for the UWS job container entrypoint |
+| uws-api-server.jobResources | object | `{}` | Potential resource specifications for specific butler (camera) jobs. Each specialization should be labelled by the lower cased butler name followed by a standard resources object. |
 | uws-api-server.logLevel | string | `"WARNING"` | Log level of server. Set to "DEBUG" for highest verbosity |
 | uws-api-server.replicaCount | int | `1` | Set the replica count for the UWS server |
 | uws-api-server.s3ButlerStorage | object | `{}` | Configuration for S3 Butler storage The object must have the following attributes defined: _endpointURL_ (The URL for the S3 Butler storage) _containerPath_ (The directory location in the container for the S3 Butler credentials) |
