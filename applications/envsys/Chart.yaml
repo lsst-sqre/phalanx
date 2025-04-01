@@ -242,6 +242,16 @@ dependencies:
   condition: mtdome-ess108-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: ringss-ess304
+  version: 1.0.0
+  condition: ringss-ess304.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: ringss-ess304-sim
+  version: 1.0.0
+  condition: ringss-ess304-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: tma-ess001
   version: 1.0.0
   condition: tma-ess001.enabled

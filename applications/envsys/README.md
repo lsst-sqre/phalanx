@@ -64,6 +64,8 @@ Deployment for the Environmental Awareness Systems CSCs
 | mtdome-ess107.enabled | bool | `false` | Enable the ESS:107 CSC |
 | mtdome-ess108-sim.enabled | bool | `false` | Enable the ESS:108 simulator CSC |
 | mtdome-ess108.enabled | bool | `false` | Enable the ESS:108 CSC |
+| ringss-ess304-sim.enabled | bool | `false` | Enable the ESS:304 simulator CSC |
+| ringss-ess304.enabled | bool | `false` | Enable the ESS:304 CSC |
 | tma-ess001-sim.enabled | bool | `false` | Enable the ESS:1 simulator CSC |
 | tma-ess001.enabled | bool | `false` | Enable the ESS:1 CSC |
 | tma-ess104-sim.enabled | bool | `false` | Enable the ESS:104 simulator CSC |
