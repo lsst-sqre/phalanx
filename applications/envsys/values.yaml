@@ -186,6 +186,14 @@ mtdome-ess108-sim:
   # -- Enable the ESS:108 simulator CSC
   enabled: false
 
+ringss-ess304:
+  # -- Enable the ESS:304 CSC
+  enabled: false
+
+ringss-ess304-sim:
+  # -- Enable the ESS:304 simulator CSC
+  enabled: false
+
 tma-ess001:
   # -- Enable the ESS:1 CSC
   enabled: false
