@@ -51,6 +51,8 @@ spec:
             {{- .Values.instrument.pipelines.main | nindent 12 }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
+        - name: MESSAGE_EXPIRATION
+          value: {{ .Values.knative.expiration | toString | quote }}
         - name: PRELOAD_PADDING
           value: {{ .Values.instrument.preloadPadding | toString | quote }}
         - name: IMAGE_BUCKET

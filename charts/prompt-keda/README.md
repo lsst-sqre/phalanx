@@ -42,6 +42,7 @@ Event-driven processing of camera images
 | keda.pollingInterval | int | `2` |  |
 | keda.redisStreams.activationLagCount | string | `"1"` |  |
 | keda.redisStreams.consumerGroup | string | `""` |  |
+| keda.redisStreams.expiration | int | `3600` | Maximum message age to process, in seconds. |
 | keda.redisStreams.host | string | `""` |  |
 | keda.redisStreams.lagCount | string | `"1"` |  |
 | keda.redisStreams.msgListenTimeout | int | `900` |  |
