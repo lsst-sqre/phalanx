@@ -27,14 +27,14 @@ config:
     url: ldap://ldap.tacc.utexas.edu
     groupBaseDn: ou=Groups,dc=tacc,dc=utexas,dc=edu
     groupObjectClass: posixGroup
-    groupMemberAttr: memberUid
+    groupMemberAttr: uniqueMember
     groupSearchByDn: false
     userBaseDn: ou=Accounts,dc=tacc,dc=utexas,dc=edu
     userSearchAttr: uid
     addUserGroup: false
     uidAttr: uidNumber
     gidAttr: gidNumber
-    nameAttr: gecos
+    nameAttr: uid
 
   # User quota settings for services.
   quota:
