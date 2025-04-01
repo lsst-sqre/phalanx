@@ -21,12 +21,11 @@ config:
     loginUrl: "https://tacc.develop.tapis.io/v3/oauth2/authorize"
     tokenUrl: "https://tacc.develop.tapis.io/v3/oauth2/tokens/oidc"
     issuer: "https://tacc.develop.tapis.io/v3/tokens"
-
     usernameClaim: "tapis/username"
 
   ldap:
     url: ldap://ldap.tacc.utexas.edu
-    groupBaseDn: ou=Group,dc=tacc,dc=utexas,dc=edu
+    groupBaseDn: ou=Groups,dc=tacc,dc=utexas,dc=edu
     groupObjectClass: posixGroup
     groupMemberAttr: memberUid
     groupSearchByDn: false
