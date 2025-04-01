@@ -3,7 +3,7 @@ redis:
     storageClass: "cinder-csi"
 
 config:
-  logLevel: "INFO"
+  logLevel: "DEBUG"
   slackAlerts: false
 
   #github:
