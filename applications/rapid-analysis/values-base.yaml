@@ -1,0 +1,244 @@
+image:
+  repository: ts-dockerhub.lsst.org/rapid-analysis
+  tag: c0040
+  pullPolicy: Always
+env:
+  DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+  DEPLOY_BRANCH: deploy-bts
+  LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
+  AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+siteTag: bts
+location: BTS
+scripts:
+###
+### AuxTel pods
+###
+- name: summit/auxTel/runBackgroundService.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 0.5
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 10G
+- name: summit/auxTel/runButlerWatcher.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runCalibrateCcdRunner.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runImExaminer.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runIsrRunner.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runMetadataCreator.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runMetadataServer.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runMonitor.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 0.5
+      memory: 1G
+    limits:
+      cpu: 1.0
+      memory: 10G
+- name: summit/auxTel/runMountTorquePlotter.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runNightReporter.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runSpecExaminer.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 0.5
+      memory: 2G
+    limits:
+      cpu: 1.0
+      memory: 4G
+###
+### LSSTCam pods
+###
+- name: LSSTCam/runButlerWatcher.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+- name: LSSTCam/runHeadNode.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+- name: LSSTCam/runMetadataServer.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+- name: LSSTCam/runPlotter.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 6G
+    limits:
+      cpu: 1.0
+      memory: 12G
+###
+### LSSTCam StatefulSets
+###
+lsstcamWorkerSet:
+  name: LSSTCam/runSfmRunner.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 189  # 1 deep for now
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G  # we should check this value
+lsstcamAosWorkerSet:
+  name: LSSTCam/runAosWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 16  # 4 deep for corner chips
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G
+lsstcamGather2aSet:
+  name: LSSTCam/runStep2aWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 5
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
+lsstcamGather2aAosSet:
+  name: LSSTCam/runStep2aAosWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 5
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
+lsstcamGatherRollupSet:
+  name: LSSTCam/runNightlyWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 5
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "12G"
+    limits:
+      cpu: 1.0
+      memory: "24G"
+# TODO: remove google credentials
+credentialFile: google_write_creds
+vaultPrefixPath: secret/k8s_operator/base-lsp.lsst.codes
+pullSecretsPath: pull-secret
+rubinTvSecretsPath: rubintv
+# TODO: remove google credentials
+credentialSecretsPath: rubintv
+butlerSecret:
+  key: butler-secret
+  containerPath: /home/saluser/.lsst
+  dbUser: oods
+imagePullSecrets:
+- name: pull-secret
+nfsMountpoint:
+- name: auxtel-data
+  containerPath: /repo/LATISS
+  readOnly: false
+  server: nfs-auxtel.ls.lsst.org
+  serverPath: /auxtel/repo/LATISS
+- name: auxtel-gen3-data
+  containerPath: /data/lsstdata/BTS/auxtel
+  readOnly: true
+  server: nfs-auxtel.ls.lsst.org
+  serverPath: /auxtel/lsstdata/BTS/auxtel
+- name: project-shared
+  containerPath: /project
+  readOnly: false
+  server: nfs-project.ls.lsst.org
+  serverPath: /project
+resources:
+  requests:
+    cpu: 0.5
+    memory: 1G
+  limits:
+    cpu: 1.0
+    memory: 2.5G
+redis:
+  enabled: true
+  port: 6379
+  env:
+    MASTER: true
+  envSecrets:
+  - name: REDIS_PASSWORD
+    secretName: rubintv-secrets
+    secretKey: redis-password
+  storage:
+    classname: rook-ceph-block
+    request: 10Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 50Gi
+squid:
+  enabled: true
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
