@@ -161,6 +161,8 @@ prompt-proto-service:
     # This is only useful if the container runs async workers.
     # If 0, idle timeout is ignored.
     responseStartTimeout: 0
+    # -- Maximum message age to process, in seconds.
+    expiration: 3600
 
   # -- The number of Knative requests that can be handled simultaneously by one container
   containerConcurrency: 1

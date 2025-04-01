@@ -147,6 +147,8 @@ prompt-keda:
       lagCount: "1"
       # Number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
       pendingEntriesCount: "1"
+      # -- Maximum message age to process, in seconds.
+      expiration: 3600
 
 
   # -- Override the base name for resources
