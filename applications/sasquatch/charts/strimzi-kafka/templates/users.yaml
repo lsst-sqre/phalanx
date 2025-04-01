@@ -357,6 +357,11 @@ spec:
         type: allow
         host: "*"
         operation: All
+      - resource:
+          type: cluster
+        operations:
+          - Describe
+          - DescribeConfigs
 {{- end }}
 {{- if .Values.users.qserv.enabled }}
 ---
@@ -389,4 +394,9 @@ spec:
         type: allow
         host: "*"
         operation: All
+      - resource:
+          type: cluster
+        operations:
+          - Describe
+          - DescribeConfigs
 {{- end }}
