@@ -249,6 +249,8 @@ telegraf-kafka-consumer:
     lsstcam:
       enabled: true
       repair: false
+      metric_batch_size: 250
+      max_undelivered_messages: 5000
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
