@@ -28,8 +28,8 @@ config:
     groupBaseDn: ou=Groups,dc=tacc,dc=utexas,dc=edu
     groupObjectClass: posixGroup
     groupMemberAttr: uniqueMember
-    groupSearchByDn: false
-    userBaseDn: ou=Accounts,dc=tacc,dc=utexas,dc=edu
+    groupSearchByDn: true
+    userBaseDn: ou=People,dc=tacc,dc=utexas,dc=edu
     userSearchAttr: uid
     addUserGroup: false
     uidAttr: uidNumber
