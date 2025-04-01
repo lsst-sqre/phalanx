@@ -33,7 +33,7 @@ config:
     userSearchAttr: uid
     addUserGroup: false
     uidAttr: uidNumber
-    gidAttr: gidNumber
+    gidAttr: cn
     nameAttr: uid
 
   # User quota settings for services.
@@ -47,6 +47,7 @@ config:
   groupMapping:
     "admin:jupyterlab":
       - "G-820288"
+      - "TACC-ACI-CIC"
       - github:
           organization: "lsst-sqre"
           team: "square"
@@ -55,6 +56,7 @@ config:
           team: "tacc-spherex"
     "exec:admin":
       - "G-820288"
+      - "TACC-ACI-CIC"
       - github:
           organization: "lsst-sqre"
           team: "tacc-spherex"
@@ -64,6 +66,7 @@ config:
     "exec:internal-tools":
       - "G-827698"
       - "G-820288"
+      - "TACC-ACI-CIC"
       - github:
           organization: "lsst-sqre"
           team: "square"
@@ -73,6 +76,7 @@ config:
     "exec:notebook":
       - "G-827698"
       - "G-820288"
+      - "TACC-ACI-CIC"
       - github:
           organization: "lsst-sqre"
           team: "square"
@@ -82,6 +86,7 @@ config:
     "read:image":
       - "G-827698"
       - "G-820288"
+      - "TACC-ACI-CIC"
       - github:
           organization: "lsst-sqre"
           team: "square"
@@ -91,6 +96,7 @@ config:
     "exec:portal":
       - "G-827698"
       - "G-820288"
+      - "TACC-ACI-CIC"
       - github:
           organization: "lsst-sqre"
           team: "square"
@@ -100,6 +106,7 @@ config:
     "read:tap":
       - "G-827698"
       - "G-820288"
+      - "TACC-ACI-CIC"
       - github:
           organization: "lsst-sqre"
           team: "square"
@@ -109,6 +116,7 @@ config:
     "write:files":
       - "G-827698"
       - "G-820288"
+      - "TACC-ACI-CIC"
       - github:
           organization: "lsst-sqre"
           team: "square"
