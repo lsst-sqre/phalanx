@@ -86,7 +86,7 @@ config:
       repository: "stvoutsin/lsst-tap-service"
 
       # -- Pull policy for the TAP image
-      pullPolicy: "IfNotPresent"
+      pullPolicy: "Always"
 
       # -- Tag of TAP image to use
       tag: "DM-49692"
