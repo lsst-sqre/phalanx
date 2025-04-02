@@ -140,6 +140,8 @@ rest-proxy:
     enabled: true
     hostname: data-int.lsst.cloud
   kafka:
+    topics:
+      - lsst.backpack.usgs-earthquake-data
     topicPrefixes:
       - lsst.example
       - lsst.backpack
