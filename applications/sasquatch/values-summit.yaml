@@ -176,13 +176,14 @@ influxdb-enterprise:
                   values:
                     - yagan20
     # -- InfluxDB Enterprise data pod resources, 16 cores single node license
+    # -- InfluxDB Enterprise data pod resources, 2x8 cores cluster license
     resources:
       requests:
         memory: 256Gi
-        cpu: 16
+        cpu: 8
       limits:
         memory: 256Gi
-        cpu: 16
+        cpu: 8
 
 # This set of connectors is used to write to the InfluxDB OSS instance,
 # they will go away once the InfluxDB Enterprise instance is fully operational
