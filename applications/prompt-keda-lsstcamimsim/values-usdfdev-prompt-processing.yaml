@@ -43,3 +43,6 @@ prompt-keda:
 
   keda:
     maxReplicaCount: 100 # TODO.  Increase after testing.
+    redisStreams:
+      # Dev processes very old images, set to ~20 years
+      expiration: 600_000_000.0
