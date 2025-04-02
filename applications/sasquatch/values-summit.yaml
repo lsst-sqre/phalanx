@@ -165,7 +165,7 @@ influxdb-enterprise:
       enabled: true
       accessMode: ReadWriteOnce
       storageClass: localdrive
-      size: 15Ti
+      size: 25Ti
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
