@@ -1,31 +1,13 @@
 config:
   logLevel: "INFO"
   logProfile: "development"
-  databaseEcho: true
+  db:
+    echo: true
   outputVolume:
     storageClassName: "sdf-data-rubin"
     subPath: "shared/campaigns/users/usdf-cm-prod"
-worker:
   htcondor:
-    config:
-      mountPath: "/home/lsstsvc1/stack/conda/envs/lsst-scipipe-9.0.0/etc/condor/config.d"
-      contents: |
-        CONDOR_HOST = sdfiana012.sdf.slac.stanford.edu
-        COLLECTOR_HOST = sdfiana012.sdf.slac.stanford.edu
-        SEC_CLIENT_AUTHENTICATION_METHODS = FS, FS_REMOTE
-        use security:recommended_v9_0
-        SEC_DEFAULT_AUTHENTICATION_METHODS = FS_REMOTE, IDTOKENS, FS
-        SEC_DAEMON_AUTHENTICATION_METHODS = FS_REMOTE, IDTOKENS, FS
-        SEC_READ_AUTHENTICATION_METHODS = FS_REMOTE, IDTOKENS, FS
-        FS_REMOTE_DIR = /sdf/group/rubin/services/htcondor/shared
-        SCHEDD_ADDRESS_FILE = /config/schedd-address
     fsRemoteDir:
       storageClassName: "sdf-group-rubin"
       subPath: "services/htcondor/shared"
       mountPath: "/sdf/group/rubin/services/htcondor/shared"
-    scheddAddress:
-      mountPath: "/config"
-      contents: |
-        <172.24.49.173:5935?addrs=172.24.49.173-5935&alias=sdfiana012.sdf.slac.stanford.edu>
-        $CondorVersion: 23.0.12 2024-06-13 BuildID: 739441 PackageID: 23.0.12-1 $
-        $CondorPlatform: x86_64_AlmaLinux8 $
