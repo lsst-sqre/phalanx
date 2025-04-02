@@ -23,6 +23,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: PLATFORM
+              value: {{ .Values.platform }}
             - name: KAFKA_SCHEMA_REGISTRY_URL
               value: {{ .Values.kafka.schemaRegistryUrl }}
             - name: KAFKA_CLUSTER
@@ -59,6 +61,16 @@ spec:
               value: {{ .Values.instruments }}
             - name: INSTRUMENT_CONFIG_FILE
               value: /etc/config/instrument.yaml
+            - name: REDIS_HOST
+              value: {{ .Values.keda.redisHost }}
+            - name: REDIS_RETRY_DELAY_CAP
+              value: {{ .Values.keda.redisRetryDelayCap | toString | quote }}
+            - name: REDIS_RETRY_INITIAL_DELAY
+              value: {{ .Values.keda.redisRetryInitialDelay | toString | quote }}
+            - name: REDIS_RETRY_COUNT
+              value: {{ .Values.keda.redisRetryCount | toString | quote }}
+            - name: REDIS_HEALTH_CHECK_INTERVAL
+              value: {{ .Values.keda.redisHealthCheckInterval | toString | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

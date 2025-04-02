@@ -1,3 +1,6 @@
+# -- Platform to submit events to.  Either knative or keda.
+platform: "keda"
+
 knative:
   # -- A mapping of instrument to that instrument's Knative service.
   # @default -- See `values.yaml`.
@@ -18,6 +21,14 @@ keda:
   # -- Redis cluster host.
   # @default -- See `values.yaml`.
   redisHost: prompt-redis.prompt-redis
+  # -- Maximum delay time for Redis retries in seconds.
+  redisRetryDelayCap: 5
+  # -- Initial delay for first Redis retry in seconds.
+  redisRetryInitialDelay: 1
+  # -- Redis max retry count
+  redisRetryCount: 3
+  # -- Redis health check interval in seconds.
+  redisHealthCheckInterval: 3
   # -- A mapping of instrument to that instrument's Keda Scaled Job.
   # @default -- See `values.yaml`.
   redisStreams:
