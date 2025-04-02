@@ -9,7 +9,7 @@ applications:
   ingress-nginx: false
   keda: true
   next-visit-fan-out: true
-  next-visit-fan-out-keda: true
+  next-visit-fan-out-keda: false
   prompt-keda-latiss: true
   prompt-proto-service-hsc: false
   prompt-proto-service-latiss: true
