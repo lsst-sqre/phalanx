@@ -86,6 +86,13 @@ spec:
               value: "{{ .Values.kafka.group_id }}"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
+          volumeMounts:
+            - name: "tmp-volume"
+              mountPath: "/tmp"
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            sizeLimit: 500Mi
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
