@@ -174,8 +174,8 @@ influxdb-enterprise:
                 - key: kubernetes.io/hostname
                   operator: In
                   values:
-                    - yagan20
-    # -- InfluxDB Enterprise data pod resources, 16 cores single node license
+                    - yagan15
+                    - yagan16
     # -- InfluxDB Enterprise data pod resources, 2x8 cores cluster license
     resources:
       requests:
