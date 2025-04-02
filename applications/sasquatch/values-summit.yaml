@@ -132,7 +132,7 @@ customInfluxDBIngress:
   hostname: summit-lsp.lsst.codes
 
 influxdb-enterprise:
-  enabled: false
+  enabled: true
   license:
     secret:
       name: sasquatch
