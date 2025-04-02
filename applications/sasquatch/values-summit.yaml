@@ -594,6 +594,7 @@ rest-proxy:
       - lsst.obsenv.action
       - lsst.obsenv.summary
       - lsst.obsenv.run-branch
+      - lsst.backpack.usgs-earthquake-data
     topicPrefixes:
       - lsst.dm
       - lsst.backpack
