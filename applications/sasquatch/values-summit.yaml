@@ -157,7 +157,7 @@ influxdb-enterprise:
         memory: 4Gi
         cpu: 4
   data:
-    replicas: 1
+    replicas: 2
     ingress:
       enabled: true
       hostname: summit-lsp.lsst.codes
