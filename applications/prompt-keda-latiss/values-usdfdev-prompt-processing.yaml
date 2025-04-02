@@ -42,6 +42,11 @@ prompt-keda:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     auth_env: false
 
+  keda:
+    redisStreams:
+      # Dev processes very old images, set to ~20 years
+      expiration: 600_000_000.0
+
   podAnnotations: {
     edu.stanford.slac.sdf.project/usdf-embargo: "true"
   }
