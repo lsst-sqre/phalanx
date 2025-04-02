@@ -12,7 +12,7 @@ import yaml
 from phalanx.factory import Factory
 from phalanx.models.applications import Project
 
-_ALLOW_DISABLED = {"production-tools"}
+_ALLOW_DISABLED = {"production-tools", "next-visit-fan-out-keda"}
 """Temporary whitelist of applications not enabled anywhere."""
 
 _ALLOW_NO_SECRETS = {"next-visit-fan-out"}
