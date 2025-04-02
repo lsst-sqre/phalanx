@@ -57,7 +57,7 @@ prompt-keda:
     imageTimeout: 110
 
   apdb:
-    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_latiss.py
+    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_latiss.yaml
 
   alerts:
     username: kafka-admin
