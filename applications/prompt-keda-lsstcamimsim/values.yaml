@@ -6,7 +6,7 @@ prompt-keda:
     # @default -- `IfNotPresent` in prod, `Always` in dev
     pullPolicy: IfNotPresent
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: latest
+    tag: 6.3.0
 
   worker:
     # -- The number of requests to process before rebooting a worker.
