@@ -27,8 +27,6 @@ strimzi-kafka:
   users:
     replicator:
       enabled: true
-    kafdrop:
-      enabled: true
     telegraf:
       enabled: true
     promptProcessing:

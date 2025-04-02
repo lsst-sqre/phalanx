@@ -55,8 +55,6 @@ strimzi-kafka:
   users:
     tsSalKafka:
       enabled: false
-    kafdrop:
-      enabled: false
     telegraf:
       enabled: false
     promptProcessing:

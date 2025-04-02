@@ -18,8 +18,6 @@ strimzi-kafka:
           loadBalancerIP: "34.72.103.157"
           host: sasquatch-kafka-5.lsst.cloud
   users:
-    kafdrop:
-      enabled: true
     telegraf:
       enabled: true
   kraft:

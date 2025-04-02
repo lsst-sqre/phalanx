@@ -3,6 +3,11 @@
 # -- Number of kafdrop pods to run in the deployment.
 replicaCount: 1
 
+cluster:
+  # -- Name of the Strimzi cluster. Synchronize this with the cluster name in
+  # the parent Sasquatch chart.
+  name: sasquatch
+
 image:
   # -- Kafdrop Docker image repository
   repository: obsidiandynamics/kafdrop
