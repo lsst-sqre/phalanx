@@ -31,7 +31,7 @@ prompt-keda:
     topic: prompt-processing-dev
 
   apdb:
-    config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_latiss-dev.py
+    config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_latiss-dev.yaml
 
   alerts:
     username: kafka-admin
