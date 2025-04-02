@@ -66,7 +66,6 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | users.camera.enabled | bool | `false` | Enable user camera, used at the camera environments |
 | users.consdb.enabled | bool | `false` | Enable user consdb |
-| users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
 | users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
 | users.obsloctap.enabled | bool | `false` | Enable user obsloctap |
 | users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |

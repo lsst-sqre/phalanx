@@ -305,7 +305,7 @@ kapacitor:
       cpu: 4
 
 kafdrop:
-  # -- Whether Kafdrop is enabled
+  # -- Whether to enable the kafdrop subchart
   enabled: true
 
 squareEvents:

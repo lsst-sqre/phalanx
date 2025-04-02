@@ -12,8 +12,6 @@ strimzi-kafka:
         cpu: 4
         memory: 8Gi
   users:
-    kafdrop:
-      enabled: true
     telegraf:
       enabled: true
     kafkaConnectManager:

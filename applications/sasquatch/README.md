@@ -73,7 +73,7 @@ Rubin Observatory's telemetry service
 | influxdb.securityContext.runAsUser | int | `1500` |  |
 | influxdb.setDefaultUser.enabled | bool | `true` | Whether the default InfluxDB user is set |
 | influxdb.setDefaultUser.user.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
-| kafdrop.enabled | bool | `true` | Whether Kafdrop is enabled |
+| kafdrop.enabled | bool | `true` | Whether to enable the kafdrop subchart |
 | kafka-connect-manager | object | `{}` | Overrides for kafka-connect-manager configuration |
 | kafka-connect-manager-enterprise.enabled | bool | `false` | Whether enterprise kafka-connect-manager is enabled |
 | kapacitor.enabled | bool | `true` | Whether Kapacitor is enabled |
@@ -220,6 +220,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.serviceAccount.create | bool | `false` | Whether to create a Kubernetes service account to run as |
 | influxdb-enterprise.serviceAccount.name | string | Name based on the chart fullname | Name of the Kubernetes service account to run as |
 | kafdrop.affinity | object | `{}` | Affinity configuration |
+| kafdrop.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | kafdrop.cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |
 | kafdrop.existingSecret | string | Do not use a secret | Existing Kubernetes secrect use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |
 | kafdrop.host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
@@ -438,7 +439,6 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | strimzi-kafka.users.camera.enabled | bool | `false` | Enable user camera, used at the camera environments |
 | strimzi-kafka.users.consdb.enabled | bool | `false` | Enable user consdb |
-| strimzi-kafka.users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
 | strimzi-kafka.users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
 | strimzi-kafka.users.obsloctap.enabled | bool | `false` | Enable user obsloctap |
 | strimzi-kafka.users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |

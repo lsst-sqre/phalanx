@@ -85,8 +85,6 @@ strimzi-kafka:
       topics:
         - lsst.s3.raw.latiss
         - lsst.s3.raw.lsstcam
-    kafdrop:
-      enabled: true
     telegraf:
       enabled: true
     kafkaConnectManager:
