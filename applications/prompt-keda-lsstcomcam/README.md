@@ -41,6 +41,7 @@ KEDA Prompt Processing instance for LSSTComCam.
 | prompt-keda.keda.pollingInterval | int | `2` |  |
 | prompt-keda.keda.redisStreams.activationLagCount | string | `"1"` |  |
 | prompt-keda.keda.redisStreams.consumerGroup | string | `"lsstcomcam_consumer_group"` |  |
+| prompt-keda.keda.redisStreams.expiration | int | `3600` | Maximum message age to process, in seconds. |
 | prompt-keda.keda.redisStreams.host | string | `"prompt-redis.prompt-redis"` |  |
 | prompt-keda.keda.redisStreams.lagCount | string | `"1"` |  |
 | prompt-keda.keda.redisStreams.msgListenTimeout | int | `900` |  |

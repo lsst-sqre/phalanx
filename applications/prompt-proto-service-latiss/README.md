@@ -39,6 +39,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.knative.cpuRequest | int | `1` | The cpu cores requested for the full pod (see `containerConcurrency`). |
 | prompt-proto-service.knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). This allocation is for the full pod (see `containerConcurrency`) |
 | prompt-proto-service.knative.ephemeralStorageRequest | string | `"5Gi"` | The storage space reserved for each container (mostly local Butler). This allocation is for the full pod (see `containerConcurrency`) |
+| prompt-proto-service.knative.expiration | int | `3600` | Maximum message age to process, in seconds. |
 | prompt-proto-service.knative.extraTimeout | int | `10` | To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`. This parameter adds extra time to that minimum (seconds). |
 | prompt-proto-service.knative.gpu | bool | `false` | GPUs enabled. |
 | prompt-proto-service.knative.gpuRequest | int | `0` | The number of GPUs to request for the full pod (see `containerConcurrency`). |

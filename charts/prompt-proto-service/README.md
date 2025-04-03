@@ -42,6 +42,7 @@ Event-driven processing of camera images
 | knative.cpuRequest | int | `1` | The cpu cores requested for the full pod (see `containerConcurrency`). |
 | knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). This allocation is for the full pod (see `containerConcurrency`) |
 | knative.ephemeralStorageRequest | string | `"5Gi"` | The storage space reserved for each container (mostly local Butler). This allocation is for the full pod (see `containerConcurrency`) |
+| knative.expiration | int | `3600` | Maximum message age to process, in seconds. |
 | knative.extraTimeout | int | `10` | To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`. This parameter adds extra time to that minimum (seconds). |
 | knative.gpu | bool | `false` | GPUs enabled. |
 | knative.gpuRequest | int | `0` | The number of GPUs to request for the full pod (see `containerConcurrency`). |
