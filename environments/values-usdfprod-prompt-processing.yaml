@@ -12,7 +12,7 @@ applications:
   next-visit-fan-out-keda: false
   prompt-keda-latiss: true
   prompt-proto-service-hsc: false
-  prompt-proto-service-latiss: true
+  prompt-proto-service-latiss: false
   prompt-proto-service-lsstcam: false
   prompt-proto-service-lsstcamimsim: false
   prompt-proto-service-lsstcomcam: false
