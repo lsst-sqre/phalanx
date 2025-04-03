@@ -12,7 +12,17 @@ import yaml
 from phalanx.factory import Factory
 from phalanx.models.applications import Project
 
-_ALLOW_DISABLED = {"production-tools", "next-visit-fan-out-keda"}
+_ALLOW_DISABLED = {
+    "production-tools",
+    "next-visit-fan-out-keda",
+    "prompt-proto-service-hsc",
+    "prompt-proto-service-hsc-gpu",
+    "prompt-proto-service-latiss",
+    "prompt-proto-service-lsstcam",
+    "prompt-proto-service-lsstcamimsim",
+    "prompt-proto-service-lsstcomcam",
+    "prompt-proto-service-lsstcomcamsim",
+}
 """Temporary whitelist of applications not enabled anywhere."""
 
 _ALLOW_NO_SECRETS = {"next-visit-fan-out"}
