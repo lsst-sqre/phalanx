@@ -185,7 +185,7 @@ influxdb-enterprise:
 
 # This set of connectors is used to write to the InfluxDB OSS instance,
 # they will go away once the InfluxDB Enterprise instance is fully operational
-telegraf-kafka-consumer-oss:
+telegraf-oss:
   enabled: true
   kafkaConsumers:
     # CSC connectors
@@ -367,7 +367,7 @@ telegraf-kafka-consumer-oss:
       debug: true
 
 # This set of connectors is used to write to the InfluxDB Enterprise instance
-telegraf-kafka-consumer:
+telegraf:
   enabled: true
   influxdb:
     url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"

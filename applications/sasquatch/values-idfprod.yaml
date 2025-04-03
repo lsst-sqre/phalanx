@@ -57,7 +57,7 @@ customInfluxDBIngress:
   enabled: true
   hostname: data.lsst.cloud
 
-telegraf-kafka-consumer:
+telegraf:
   enabled: true
   kafkaConsumers:
     example:

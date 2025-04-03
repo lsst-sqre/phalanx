@@ -117,7 +117,7 @@ influxdb-enterprise:
         memory: 192Gi
         cpu: 8
 
-telegraf-kafka-consumer:
+telegraf:
   enabled: true
   influxdb:
     url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"

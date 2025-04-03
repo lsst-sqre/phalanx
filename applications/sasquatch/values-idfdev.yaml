@@ -115,7 +115,7 @@ influxdb-enterprise:
         memory: 16Gi
         cpu: 4
 
-telegraf-kafka-consumer:
+telegraf:
   enabled: true
   kafkaConsumers:
     test:
