@@ -1,21 +1,21 @@
-# telegraf-kafka-consumer
+# telegraf
 
-Telegraf is an agent written in Go for collecting, processing, aggregating, and writing metrics. This chart deploys multiple instances of the telegraf agent to connect Kafka and InfluxDB in Sasquatch.
+Telegraf is an agent for collecting, processing, aggregating, and writing metrics. This chart deploys Telegraf as a Kafka-InfluxDB connector for Sasquatch, using the kafka_consumer input plugin with the Avro parser and the InfluxDB v1 output plugin.
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity for pod assignment |
-| args | list | `[]` | Arguments passed to the Telegraf agent containers |
-| enabled | bool | `false` | Wether the Telegraf Kafka Consumer is enabled |
-| env | list | See `values.yaml` | Telegraf agent enviroment variables |
+| args | list | `[]` | Arguments passed to the Telegraf agent on startup |
+| enabled | bool | `false` | Wether Telegraf is enabled |
+| env | list | See `values.yaml` | Telegraf agent environment variables |
 | envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
 | image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
 | imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
-| influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to |
+| influxdb.database | string | `""` | Name of the InfluxDB v1 database to write to (required) |
 | influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
 | kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
 | kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
@@ -39,7 +39,7 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 | kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
 | kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
 | nodeSelector | object | `{}` | Node labels for pod assignment |
-| podAnnotations | object | `{}` | Annotations for telegraf-kafka-consumers pods |
-| podLabels | object | `{}` | Labels for telegraf-kafka-consumer pods |
+| podAnnotations | object | `{}` | Annotations for the Telegraf pods |
+| podLabels | object | `{}` | Labels for the Telegraf pods |
 | resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | tolerations | list | `[]` | Tolerations for pod assignment |

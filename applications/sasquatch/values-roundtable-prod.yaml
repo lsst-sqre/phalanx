@@ -72,7 +72,7 @@ strimzi-kafka:
 influxdb:
   enabled: false
 
-telegraf-kafka-consumer:
+telegraf:
   enabled: false
 
 kapacitor:

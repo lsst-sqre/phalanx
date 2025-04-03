@@ -79,7 +79,7 @@ customInfluxDBIngress:
   enabled: true
   hostname: tucson-teststand.lsst.codes
 
-telegraf-kafka-consumer:
+telegraf:
   enabled: true
   kafkaConsumers:
     auxtel:

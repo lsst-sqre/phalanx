@@ -151,7 +151,7 @@ customInfluxDBIngress:
   enabled: true
   hostname: base-lsp.lsst.codes
 
-telegraf-kafka-consumer:
+telegraf:
   enabled: true
   kafkaConsumers:
     auxtel:
