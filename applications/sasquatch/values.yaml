@@ -192,8 +192,9 @@ kafka-connect-manager-enterprise:
   # -- Whether enterprise kafka-connect-manager is enabled
   enabled: false
 
-# -- Overrides for telegraf-kafka-consumer configuration
-telegraf-kafka-consumer: {}
+telegraf:
+  # -- Whether to enable the telegraf subchart
+  enabled: false
 
 rest-proxy:
   # -- Whether to enable the REST proxy

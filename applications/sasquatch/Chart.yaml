@@ -43,12 +43,12 @@ dependencies:
   - name: kafdrop
     condition: kafdrop.enabled
     version: 1.0.0
-  - name: telegraf-kafka-consumer
-    condition: telegraf-kafka-consumer.enabled
+  - name: telegraf
+    condition: telegraf.enabled
     version: 1.0.0
-  - name: telegraf-kafka-consumer
-    alias: telegraf-kafka-consumer-oss
-    condition: telegraf-kafka-consumer-oss.enabled
+  - name: telegraf
+    alias: telegraf-oss
+    condition: telegraf-oss.enabled
     version: 1.0.0
   - name: rest-proxy
     condition: rest-proxy.enabled
