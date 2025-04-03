@@ -17,13 +17,13 @@ applications:
   prompt-keda-lsstcamimsim: true
   prompt-keda-lsstcomcam: true
   prompt-keda-lsstcomcamsim: true
-  prompt-proto-service-hsc: true
-  prompt-proto-service-hsc-gpu: true
-  prompt-proto-service-latiss: true
-  prompt-proto-service-lsstcam: true
-  prompt-proto-service-lsstcamimsim: true
-  prompt-proto-service-lsstcomcam: true
-  prompt-proto-service-lsstcomcamsim: true
+  prompt-proto-service-hsc: false
+  prompt-proto-service-hsc-gpu: false
+  prompt-proto-service-latiss: false
+  prompt-proto-service-lsstcam: false
+  prompt-proto-service-lsstcamimsim: false
+  prompt-proto-service-lsstcomcam: false
+  prompt-proto-service-lsstcomcamsim: false
   prompt-redis: true
   strimzi: true
   vault-secrets-operator: false
