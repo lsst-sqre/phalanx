@@ -41,6 +41,9 @@ applications:
   # environments and is present here only because it makes parsing easier
   argocd: true
 
+  # -- Enable the atlantis application
+  atlantis: false
+
   # -- Enable the auxtel control system application
   auxtel: false
 
