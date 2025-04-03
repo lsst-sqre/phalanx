@@ -1,0 +1,147 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: "atlantis"
+  labels:
+    {{- include "atlantis.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  updateStrategy:
+    type: "RollingUpdate"
+    rollingUpdate:
+      partition: 0
+  selector:
+    matchLabels:
+      {{- include "atlantis.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        # Force the pod to restart when the config map is updated.
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "atlantis.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        fsGroup: 1000 # Atlantis group (1000) read/write access to volumes.
+        runAsNonRoot: true
+        runAsUser: 100
+        runAsGroup: 1000
+      serviceAccount: "atlantis"
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+        env:
+        - name: "ATLANTIS_ATLANTIS_URL"
+          value: {{ .Values.global.baseUrl }}/atlantis
+        - name: "ATLANTIS_CONFIG"
+          value: "/etc/atlantis/server-config.yaml"
+        - name: "ATLANTIS_DATA_DIR"
+          value: "/atlantis"
+        - name: "ATLANTIS_GH_APP_ID"
+          valueFrom:
+            secretKeyRef:
+              name: "atlantis"
+              key: "github-app-id"
+        - name: "ATLANTIS_GH_APP_KEY_FILE"
+          value: "/var/github-secrets/github-app-private-key"
+        - name: "ATLANTIS_GH_APP_SLUG"
+          valueFrom:
+            secretKeyRef:
+              name: "atlantis"
+              key: "github-app-slug"
+        - name: "ATLANTIS_GH_WEBHOOK_SECRET"
+          valueFrom:
+            secretKeyRef:
+              name: "atlantis"
+              key: "github-app-webhook-secret"
+        - name: "ATLANTIS_PORT"
+          value: "8080"
+        - name: "ATLANTIS_REPO_CONFIG"
+          value: "/etc/atlantis/repo-config.yaml"
+          # Needed because we're using a GitHub app rather than a GitHub user
+        - name: "ATLANTIS_WRITE_GIT_CREDS"
+          value: "true"
+
+          # Needed for applying Sentry provider config
+        - name: "SENTRY_AUTH_TOKEN"
+          valueFrom:
+            secretKeyRef:
+              name: "atlantis"
+              key: "sentry-auth-token"
+        ports:
+        - name: "http"
+          containerPort: 8080
+        {{- with .Values.resources }}
+        resources:
+          {{- toYaml . | nindent 12 }}
+        {{- end }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - "ALL"
+          readOnlyRootFilesystem: true
+        livenessProbe:
+          # We only need to check every 60s since Atlantis is not a
+          # high-throughput service.
+          periodSeconds: 60
+          httpGet:
+            path: "/healthz"
+            port: "http"
+            scheme: "HTTP"
+        readinessProbe:
+          periodSeconds: 60
+          httpGet:
+            path: "/healthz"
+            port: "http"
+            scheme: "HTTP"
+        startupProbe:
+          periodSeconds: 4
+          httpGet:
+            path: "/healthz"
+            port: "http"
+            scheme: "HTTP"
+        volumeMounts:
+          - name: "home"
+            mountPath: "/home/atlantis"
+          - name: "tmp"
+            mountPath: "/tmp"
+          - name: "atlantis-data"
+            mountPath: "/atlantis"
+          - name: "config"
+            mountPath: "/etc/atlantis"
+            readOnly: true
+          - name: "github-secrets"
+            mountPath: "/var/github-secrets"
+            readOnly: true
+      volumes:
+        - name: "home"
+          emptyDir:
+            sizeLimit: "50Mi"
+        - name: "tmp"
+          emptyDir:
+            sizeLimit: "500Mi"
+        - name: "config"
+          configMap:
+            name: "atlantis"
+        - name: "github-secrets"
+          secret:
+            secretName: "atlantis"
+            items:
+              - key: "github-app-private-key"
+                path: "github-app-private-key"
+  volumeClaimTemplates:
+  - metadata:
+      name: "atlantis-data"
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: {{ $.Values.persistence.storageClass | quote }}
+      resources:
+        requests:
+          # The biggest things Atlantis stores here are Git repos.
+          # It deletes the repos after the pull requests are merged.
+          storage: {{ $.Values.persistence.size | quote }}
