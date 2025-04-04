@@ -1,0 +1,5 @@
+apiVersion: v2
+name: backpack
+version: 1.0.0
+description: Sasquatch configuration for Backpack
+type: application
