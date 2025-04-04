@@ -91,7 +91,7 @@ config:
         - "read:image"
         - "read:tap"
       start_batch_size: 50
-      start_batch_wait: "5m"
+      start_batch_wait: "1m"
       business:
         type: "NotebookRunnerInfinite"
         options:
