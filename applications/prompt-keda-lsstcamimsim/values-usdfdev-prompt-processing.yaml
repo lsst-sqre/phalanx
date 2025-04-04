@@ -1,6 +1,6 @@
 prompt-keda:
   image:
-    pullPolicy: IfNotPresent
+    pullPolicy: Always  # TODO.  Change to IfNotPresent for load testing.
     # Overrides the image tag whose default is the chart appVersion.
     tag: latest
 
@@ -49,7 +49,7 @@ prompt-keda:
     auth_env: false
 
   keda:
-    maxReplicaCount: 100 # TODO.  Increase after testing.
+    maxReplicaCount: 1700 # TODO.  Increase after testing.
     redisStreams:
       # Dev processes very old images, set to ~20 years
       expiration: 600_000_000.0

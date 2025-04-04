@@ -124,7 +124,7 @@ prompt-keda:
     # Maximum number of replicas to scale to.
     # Expect to need roughly n_detector × request_latency / survey_cadence pods
     # For 120s latency and 30s cadence, this is 756.
-    maxReplicaCount: 800
+    maxReplicaCount: 1700
     # Scaling algorithm
     scalingStrategy: eager
     # Polling interval for Keda to poll scalar for scaling determination.
@@ -168,7 +168,7 @@ prompt-keda:
     limits:
       cpu: '1'
       ephemeral-storage: 8Gi
-      memory: 12Gi
+      memory: 8Gi
 
 
   # -- Kubernetes YAML configs for extra container volume(s).
