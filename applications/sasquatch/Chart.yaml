@@ -62,6 +62,9 @@ dependencies:
   - name: app-metrics
     condition: app-metrics.enabled
     version: 1.0.0
+  - name: tap
+    condition: tap.enabled
+    version: 1.0.0
 
 annotations:
   phalanx.lsst.io/docs: |
