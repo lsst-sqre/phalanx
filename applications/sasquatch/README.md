@@ -95,6 +95,7 @@ Rubin Observatory's telemetry service
 | strimzi-registry-operator.clusterName | string | `"sasquatch"` | Name of the Strimzi Kafka cluster |
 | strimzi-registry-operator.clusterNamespace | string | `"sasquatch"` | Namespace where the Strimzi Kafka cluster is deployed |
 | strimzi-registry-operator.operatorNamespace | string | `"sasquatch"` | Namespace where the strimzi-registry-operator is deployed |
+| tap.enabled | bool | `false` | Whether to enable the tap subchart |
 | telegraf.enabled | bool | `false` | Whether to enable the telegraf subchart |
 | app-metrics.affinity | object | `{}` | Affinity for pod assignment |
 | app-metrics.apps | list | `[]` | A list of applications that will publish metrics events, and the keys that should be ingested into InfluxDB as tags.  The names should be the same as the app names in Phalanx. |
@@ -442,12 +443,11 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
 | strimzi-kafka.users.obsloctap.enabled | bool | `false` | Enable user obsloctap |
 | strimzi-kafka.users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |
-| strimzi-kafka.users.qserv.enabled | bool | `false` | Enable user qserv (deployed by parent Sasquatch chart) |
 | strimzi-kafka.users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
-| strimzi-kafka.users.tap.enabled | bool | `false` | Enable user tap (deployed by parent Sasquatch chart) |
 | strimzi-kafka.users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
 | strimzi-kafka.users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
 | strimzi-kafka.users.tsSalKafka.topics | list | `[]` | Create lsst.s3.* related topics for the ts-salkafka user. |
+| tap.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | telegraf.affinity | object | `{}` | Affinity for pod assignment |
 | telegraf.args | list | `[]` | Arguments passed to the Telegraf agent on startup |
 | telegraf.enabled | bool | `false` | Wether Telegraf is enabled |
