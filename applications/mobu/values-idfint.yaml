@@ -90,8 +90,8 @@ config:
         - "exec:portal"
         - "read:image"
         - "read:tap"
-      start_batch_size: 30
-      start_batch_wait: "30m"
+      start_batch_size: 50
+      start_batch_wait: "5m"
       business:
         type: "NotebookRunnerInfinite"
         options:
@@ -99,4 +99,6 @@ config:
           repo_ref: "no-code"
           execution_idle_time: 1m
           delete_lab: false
+          image:
+            image_class: "latest-daily"
         restart: true
