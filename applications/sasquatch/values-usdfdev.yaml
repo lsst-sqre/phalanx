@@ -20,8 +20,6 @@ strimzi-kafka:
       enabled: true
     consdb:
       enabled: true
-    obsloctap:
-      enabled: true
   kraft:
     enabled: true
   kafkaController:
@@ -211,4 +209,7 @@ backup:
       backupTimestamp: ""
 
 prompt-processing:
+  enabled: true
+
+obsloctap:
   enabled: true

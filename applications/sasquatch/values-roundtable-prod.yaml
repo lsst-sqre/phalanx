@@ -54,8 +54,6 @@ strimzi-kafka:
         memory: 8Gi
         cpu: "2"
   users:
-    tsSalKafka:
-      enabled: false
     telegraf:
       enabled: false
     kafkaConnectManager:

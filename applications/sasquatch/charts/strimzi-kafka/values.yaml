@@ -249,17 +249,6 @@ users:
     # source and target clusters)
     enabled: false
 
-  camera:
-    # -- Enable user camera, used at the camera environments
-    enabled: false
-
-  tsSalKafka:
-    # -- Enable user ts-salkafka, used at the telescope environments
-    enabled: false
-
-    # -- Create lsst.s3.* related topics for the ts-salkafka user.
-    topics: []
-
   telegraf:
     # -- Enable user telegraf (deployed by parent Sasquatch chart)
     enabled: false

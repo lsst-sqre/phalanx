@@ -333,6 +333,14 @@ prompt-processing:
   # -- Whether to enable the prompt-processing subchart
   enabled: false
 
+control-system:
+  # -- Whether to enable the control-system subchart
+  enabled: false
+
+obsloctap:
+  # -- Whether to enable the obsloctap subchart
+  enabled: false
+
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD

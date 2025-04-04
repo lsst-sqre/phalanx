@@ -41,8 +41,6 @@ strimzi-kafka:
         cpu: 500m
         memory: 128Mi
   users:
-    tsSalKafka:
-      enabled: true
     telegraf:
       enabled: true
     kafkaConnectManager:
@@ -242,4 +240,7 @@ backup:
       retentionDays: 7
 
 obsenv:
+  enabled: true
+
+control-system:
   enabled: true

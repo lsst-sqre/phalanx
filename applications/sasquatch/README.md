@@ -36,6 +36,7 @@ Rubin Observatory's telemetry service
 | chronograf.persistence.size | string | `"100Gi"` | Size of data store to request, if enabled |
 | chronograf.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Chronograf |
 | chronograf.updateStrategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
+| control-system.enabled | bool | `false` | Whether to enable the control-system subchart |
 | customInfluxDBIngress.annotations | object | See `values.yaml` | Annotations to add to the ingress |
 | customInfluxDBIngress.enabled | bool | `false` | Whether to enable the custom ingress for InfluxDB OSS |
 | customInfluxDBIngress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
@@ -88,6 +89,7 @@ Rubin Observatory's telemetry service
 | kapacitor.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Kapacitor |
 | kapacitor.strategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
 | obsenv.enabled | bool | `false` | Whether to enable the obsenv subchart |
+| obsloctap.enabled | bool | `false` | Whether to enable the obsloctap subchart |
 | prompt-processing.enabled | bool | `false` | Whether to enable the prompt-processing subchart |
 | rest-proxy.enabled | bool | `false` | Whether to enable the REST proxy |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations |
@@ -134,6 +136,8 @@ Rubin Observatory's telemetry service
 | backup.restoreItems | list | `[{"backupTimestamp":"","enabled":false,"name":"influxdb-oss-full"}]` | List of items to restore using the sasquatch restore script name must match an item in backupItems backupTimestamp must be in the YYYYMMDDTHHMMSSZ format |
 | backup.schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
 | backup.tolerations | list | `[]` | Tolerations for the backups deployment pod |
+| control-system.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
+| control-system.topics | list | `[]` | Create lsst.s3.* related topics for the ts-salkafka user. |
 | influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
 | influxdb-enterprise.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | influxdb-enterprise.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
@@ -362,6 +366,7 @@ Rubin Observatory's telemetry service
 | kafka-connect-manager-enterprise.s3Sink.topicsDir | string | `"topics"` | Top level directory to store the data ingested from Kafka |
 | kafka-connect-manager-enterprise.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka |
 | obsenv.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
+| obsloctap.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | prompt-processing.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | rest-proxy.affinity | object | `{}` | Affinity configuration |
 | rest-proxy.configurationOverrides | object | See `values.yaml` | Kafka REST configuration options |
@@ -444,14 +449,11 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | strimzi-kafka.registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
-| strimzi-kafka.users.camera.enabled | bool | `false` | Enable user camera, used at the camera environments |
 | strimzi-kafka.users.consdb.enabled | bool | `false` | Enable user consdb |
 | strimzi-kafka.users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
 | strimzi-kafka.users.obsloctap.enabled | bool | `false` | Enable user obsloctap |
 | strimzi-kafka.users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | strimzi-kafka.users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
-| strimzi-kafka.users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
-| strimzi-kafka.users.tsSalKafka.topics | list | `[]` | Create lsst.s3.* related topics for the ts-salkafka user. |
 | tap.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | telegraf.affinity | object | `{}` | Affinity for pod assignment |
 | telegraf.args | list | `[]` | Arguments passed to the Telegraf agent on startup |
