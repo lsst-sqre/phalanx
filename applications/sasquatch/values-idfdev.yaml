@@ -30,10 +30,6 @@ strimzi-kafka:
       enabled: true
     kafkaConnectManager:
       enabled: true
-    tap:
-      enabled: true
-    qserv:
-      enabled: true
   kraft:
     enabled: true
   kafkaController:
@@ -139,9 +135,6 @@ rest-proxy:
   kafka:
     topics:
       - test.next-visit
-      - lsst.tap.job-run
-      - lsst.tap.job-delete
-      - lsst.tap.job-status
     topicPrefixes:
       - test
       - lsst.dm
@@ -195,3 +188,6 @@ backup:
     - name: "influxdb-oss-full"
       enabled: true
       backupTimestamp: "20250113T030120Z"
+
+tap:
+  enabled: true
