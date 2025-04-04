@@ -88,6 +88,7 @@ Rubin Observatory's telemetry service
 | kapacitor.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Kapacitor |
 | kapacitor.strategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
 | obsenv.enabled | bool | `false` | Whether to enable the obsenv subchart |
+| prompt-processing.enabled | bool | `false` | Whether to enable the prompt-processing subchart |
 | rest-proxy.enabled | bool | `false` | Whether to enable the REST proxy |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations |
 | strimzi-kafka.connect.enabled | bool | `true` | Whether Kafka Connect is enabled |
@@ -361,6 +362,7 @@ Rubin Observatory's telemetry service
 | kafka-connect-manager-enterprise.s3Sink.topicsDir | string | `"topics"` | Top level directory to store the data ingested from Kafka |
 | kafka-connect-manager-enterprise.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka |
 | obsenv.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
+| prompt-processing.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | rest-proxy.affinity | object | `{}` | Affinity configuration |
 | rest-proxy.configurationOverrides | object | See `values.yaml` | Kafka REST configuration options |
 | rest-proxy.customEnv | object | `{}` | Kafka REST additional env variables |
@@ -446,7 +448,6 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.users.consdb.enabled | bool | `false` | Enable user consdb |
 | strimzi-kafka.users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
 | strimzi-kafka.users.obsloctap.enabled | bool | `false` | Enable user obsloctap |
-| strimzi-kafka.users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |
 | strimzi-kafka.users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | strimzi-kafka.users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
 | strimzi-kafka.users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
