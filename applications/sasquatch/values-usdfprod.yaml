@@ -29,8 +29,6 @@ strimzi-kafka:
       enabled: true
     telegraf:
       enabled: true
-    consdb:
-      enabled: true
   kraft:
     enabled: true
   kafkaController:
@@ -384,4 +382,7 @@ backup:
       enabled: true
 
 prompt-processing:
+  enabled: true
+
+consdb:
   enabled: true

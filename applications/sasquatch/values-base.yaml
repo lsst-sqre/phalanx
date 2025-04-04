@@ -84,8 +84,6 @@ strimzi-kafka:
       enabled: true
     kafkaConnectManager:
       enabled: true
-    consdb:
-      enabled: true
   registry:
     ingress:
       enabled: true
@@ -321,3 +319,6 @@ control-system:
   topics:
     - lsst.s3.raw.latiss
     - lsst.s3.raw.lsstcam
+
+consdb:
+  enabled: true

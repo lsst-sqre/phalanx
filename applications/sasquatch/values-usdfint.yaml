@@ -16,8 +16,6 @@ strimzi-kafka:
       enabled: true
     kafkaConnectManager:
       enabled: true
-    consdb:
-      enabled: true
   kraft:
     enabled: true
   kafkaController:
@@ -188,3 +186,6 @@ backup:
     - name: kapacitor
       enabled: true
       retentionDays: 7
+
+consdb:
+  enabled: true
