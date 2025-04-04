@@ -588,8 +588,6 @@ rest-proxy:
   configurationOverrides:
     "access.control.allow.origin": https://summit-lsp.lsst.codes/love,http://love01.cp.lsst.org
   kafka:
-    topics:
-      - lsst.backpack.usgs-earthquake-data
     topicPrefixes:
       - lsst.dm
       - lsst.backpack
@@ -632,4 +630,7 @@ backup:
       retentionDays: 7
 
 obsenv:
+  enabled: true
+
+backpack:
   enabled: true

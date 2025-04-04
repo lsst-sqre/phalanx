@@ -138,8 +138,6 @@ rest-proxy:
     enabled: true
     hostname: data-int.lsst.cloud
   kafka:
-    topics:
-      - lsst.backpack.usgs-earthquake-data
     topicPrefixes:
       - lsst.example
       - lsst.backpack
@@ -193,3 +191,6 @@ backup:
     - name: "influxdb-oss-full"
       enabled: false
       backupTimestamp: ""
+
+backpack:
+  enabled: true
