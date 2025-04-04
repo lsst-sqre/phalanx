@@ -1,0 +1,52 @@
+prompt-keda:
+
+  image:
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: latest
+
+  instrument:
+    pipelines:
+      # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
+      # if the result (including any comments) is longer than 72 characters.
+      # The config will get corrupted after template substitution.
+      # Block-style mappings can have lines of any length.
+      main: |-
+        - survey: SURVEY
+          pipelines:
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml
+          # Fallback for an upload.py image without templates
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml
+      preprocessing: |-
+        - survey: SURVEY
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml']
+    calibRepo: s3://rubin-pp-dev-users/central_repo_2
+
+  s3:
+    imageBucket: rubin-pp-dev
+    endpointUrl: https://s3dfrgw.slac.stanford.edu
+
+  imageNotifications:
+    kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
+    topic: prompt-processing-dev
+
+  apdb:
+    config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_latiss-dev.yaml
+
+  alerts:
+    username: kafka-admin
+    server: usdf-alert-stream-dev.lsst.cloud:9094
+    topic: alert-stream-test
+
+  sasquatch:
+    endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
+    auth_env: false
+
+  keda:
+    redisStreams:
+      # Dev processes very old images, set to ~20 years
+      expiration: 600_000_000.0
+
+  podAnnotations: {
+    edu.stanford.slac.sdf.project/usdf-embargo: "true"
+  }

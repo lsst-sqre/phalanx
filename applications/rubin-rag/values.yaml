@@ -1,0 +1,86 @@
+# Default values for rubin-rag.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the rubin-rag deployment
+  repository: "ghcr.io/lsst-dm/rubin_rag"
+
+  # -- Pull policy for the rubin-rag image
+  pullPolicy: "Always"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+config:
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/rubin-rag"
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# -- Affinity rules for the rubin-rag deployment pod
+affinity: {}
+
+# -- Node selection rules for the rubin-rag deployment pod
+nodeSelector: {}
+
+# -- Annotations for the rubin-rag deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the rubin-rag deployment pod
+# @default -- See `values.yaml`
+resources: {}
+
+# -- Tolerations for the rubin-rag deployment pod
+tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
+
+weaviate:
+  requests:
+    cpu: '300m'
+    memory: '150Mi'
+  limits:
+    cpu: '500m'
+    memory: '300Mi'
+  authentication:
+    anonymous_access:
+      enabled: true
+  env:
+    AUTHENTICATION_APIKEY_ENABLED: 'true'
+    AUTHENTICATION_APIKEY_USERS: 'admin'
+    AUTHORIZATION_ADMINLIST_ENABLED: 'true'
+    AUTHORIZATION_ADMINLIST_USERS: 'admin'
+  envSecrets:
+    AUTHENTICATION_APIKEY_ALLOWED_KEYS: rubin-rag
+  modules:
+    generative-openai:
+      enabled: true
+    text2vec-openai:
+      enabled: true

@@ -16,7 +16,7 @@ strimzi-kafka:
     enabled: true
     source:
       bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
-      topicsPattern: "registry-schemas, lsst\\.sal\\.(?!MTM1M3|MTMount|MTVMS).*|lsst\\.sal\\.(MTM1M3|MTM1M3TS|MTMount|MTVMS)\\.(logevent|command).*, lsst.dm.*, lsst.backpack.*, lsst.ATCamera.*, lsst.CCCamera.*, lsst.MTCamera.*, lsst.obsenv.*, lsst.cp.*"
+      topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*, lsst.backpack.*, lsst.ATCamera.*, lsst.CCCamera.*, lsst.MTCamera.*, lsst.obsenv.*, lsst.cp.*"
     resources:
       requests:
         cpu: 2
@@ -30,8 +30,6 @@ strimzi-kafka:
     kafdrop:
       enabled: true
     telegraf:
-      enabled: true
-    kafkaConnectManager:
       enabled: true
     promptProcessing:
       enabled: true
@@ -251,6 +249,8 @@ telegraf-kafka-consumer:
     lsstcam:
       enabled: true
       repair: false
+      metric_batch_size: 250
+      max_undelivered_messages: 5000
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -350,7 +350,6 @@ chronograf:
     annotations:
       nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
-
   env:
     GENERIC_NAME: "OIDC"
     GENERIC_AUTH_URL: https://usdf-rsp.slac.stanford.edu/auth/openid/login
@@ -365,6 +364,13 @@ chronograf:
 
 kapacitor:
   influxURL: http://sasquatch-influxdb-enterprise-data.sasquatch:8086
+
+app-metrics:
+  enabled: true
+  apps:
+    - noteburst
+  influxdb:
+    url: http://sasquatch-influxdb-enterprise-data.sasquatch:8086
 
 backup:
   enabled: true

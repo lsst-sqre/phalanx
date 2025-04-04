@@ -8,10 +8,12 @@ controller:
       numReleases: 0
       numWeeklies: 3
       numDailies: 2
-      cycle: null
-      recommendedTag: "recommended_k0003"
+      cycle: 40
+      recommendedTag: "recommended_c0040"
     lab:
       env:
+        AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
         LSST_KAFKA_BROKER_ADDR: "sasquatch-kafka-bootstrap.sasquatch:9092"
         LSST_KAFKA_PASSFILE: "/opt/lsst/software/jupyterlab/secrets/kafka_credentials.txt"
@@ -21,17 +23,20 @@ controller:
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
         RSP_SITE_TYPE: "telescope"
+        S3_ENDPOINT_URL: "https://s3-butler.cp.lsst.org"
       initContainers:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "8.4.1"
+            tag: "8.8.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
       pullSecret: "pull-secret"
       secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "aws-credentials.ini"
         - secretName: "nublado-lab-secret"
           secretKey: "kafka_credentials.txt"
         - secretName: "nublado-lab-secret"
@@ -46,67 +51,32 @@ controller:
           source:
             type: "nfs"
             serverPath: "/project"
-            server: "nfs1.cp.lsst.org"
+            server: "nfs-project.cp.lsst.org"
         - name: "scratch"
           source:
             type: "nfs"
             serverPath: "/scratch"
-            server: "nfs1.cp.lsst.org"
+            server: "nfs-scratch.cp.lsst.org"
         - name: "latiss"
           source:
             type: "nfs"
             serverPath: "/auxtel/repo/LATISS"
             server: "nfs-auxtel.cp.lsst.org"
-        - name: "lsstcomcam"
-          source:
-            type: "nfs"
-            serverPath: "/comcam/repo/LSSTComCam"
-            server: "nfs3.cp.lsst.org"
-        - name: "lsstcam"
-          source:
-            type: "nfs"
-            serverPath: "/lsstcam/repo/LSSTCam"
-            server: "nfs3.cp.lsst.org"
         - name: "obs-env"
           source:
             type: "nfs"
             serverPath: "/obs-env"
-            server: "nfs-obsenv.cp.lsst.org"
-        - name: "lsstdata-other"
-          source:
-            type: "nfs"
-            serverPath: "/lsstdata"
-            server: "nfs1.cp.lsst.org"
-        - name: "lsstdata-comcam"
-          source:
-            type: "nfs"
-            serverPath: "/comcam/lsstdata"
-            server: "nfs3.cp.lsst.org"
+            server: "nfs-obs-env.cp.lsst.org"
         - name: "lsstdata-auxtel"
           source:
             type: "nfs"
             serverPath: "/auxtel/lsstdata"
             server: "nfs-auxtel.cp.lsst.org"
-        - name: "lsstdata-lsstcam"
-          source:
-            type: "nfs"
-            serverPath: "/lsstcam/lsstdata"
-            server: "nfs3.cp.lsst.org"
-        - name: "lsstdata-base-comcam"
-          source:
-            type: "nfs"
-            serverPath: "/comcam/lsstdata/base/comcam"
-            server: "nfs3.cp.lsst.org"
         - name: "lsstdata-base-auxtel"
           source:
             type: "nfs"
             serverPath: "/auxtel/lsstdata/base/auxtel"
             server: "nfs-auxtel.cp.lsst.org"
-        - name: "lsstdata-base-lsstcam"
-          source:
-            type: "nfs"
-            serverPath: "/lsstcam/lsstdata/base/maintel"
-            server: "nfs3.cp.lsst.org"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -116,26 +86,12 @@ controller:
           volumeName: "scratch"
         - containerPath: "/repo/LATISS"
           volumeName: "latiss"
-        - containerPath: "/repo/LSSTComCam"
-          volumeName: "lsstcomcam"
-        - containerPath: "/repo/LSSTCam"
-          volumeName: "lsstcam"
         - containerPath: "/net/obs-env"
           volumeName: "obs-env"
-        - containerPath: "/readonly/lsstdata/other"
-          volumeName: "lsstdata-other"
-        - containerPath: "/readonly/lsstdata/comcam"
-          volumeName: "lsstdata-comcam"
         - containerPath: "/readonly/lsstdata/auxtel"
           volumeName: "lsstdata-auxtel"
-        - containerPath: "/readonly/lsstdata/lsstcam"
-          volumeName: "lsstdata-lsstcam"
-        - containerPath: "/data/lsstdata/base/comcam"
-          volumeName: "lsstdata-base-comcam"
         - containerPath: "/data/lsstdata/base/auxtel"
           volumeName: "lsstdata-base-auxtel"
-        - containerPath: "/data/lsstdata/base/maintel"
-          volumeName: "lsstdata-base-lsstcam"
 
 jupyterhub:
   hub:

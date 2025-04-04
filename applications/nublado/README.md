@@ -17,7 +17,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
 | cloudsql.image.resources | object | See `values.yaml` | Resource requests and limits for Cloud SQL pod |
-| cloudsql.image.tag | string | `"1.37.4"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.6"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.nodeSelector | object | `{}` | Node selection rules for the Cloud SQL Auth Proxy pod |
 | cloudsql.podAnnotations | object | `{}` | Annotations for the Cloud SQL Auth Proxy pod |
@@ -48,6 +48,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.images.pin | list | `[]` | List of additional image tags to prepull. Listing the image tagged as recommended here is recommended when using a Docker image source to ensure its name can be expanded properly in the menu. |
 | controller.config.images.recommendedTag | string | `"recommended"` | Tag marking the recommended image (shown first in the menu) |
 | controller.config.images.source | object | None, must be specified | Source for prepulled images. For Docker, set `type` to `docker`, `registry` to the hostname and `repository` to the name of the repository. For Google Artifact Repository, set `type` to `google`, `location` to the region, `projectId` to the Google project, `repository` to the name of the repository, and `image` to the name of the image. |
+| controller.config.lab.activityInterval | string | `"1h"` | How frequently the lab should report activity to JupyterHub in Safir `parse_timedelta` format |
 | controller.config.lab.affinity | object | `{}` | Affinity rules for user lab pods |
 | controller.config.lab.application | string | `"nublado-users"` | Argo CD application in which to collect user lab objects |
 | controller.config.lab.deleteTimeout | string | `"1m"` | Timeout for deleting a user's lab resources from Kubernetes in Safir `parse_timedelta` format |
@@ -97,8 +98,9 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | hub.minimumTokenLifetime | string | `jupyterhub.cull.maxAge` if lab culling is enabled, else none | Minimum remaining token lifetime when spawning a lab. The token cannot be renewed, so it should ideally live as long as the lab does. If the token has less remaining lifetime, the user will be redirected to reauthenticate before spawning a lab. |
 | hub.resources | object | See `values.yaml` | Resource limits and requests for the Hub |
 | hub.timeout.startup | int | `90` | Timeout for JupyterLab to start in seconds. Currently this sometimes takes over 60 seconds for reasons we don't understand. |
+| hub.useSubdomains | bool | `false` | Whether to put each user's lab in a separate domain. This is strongly recommended for security, but requires wildcard DNS and cert-manager support and requires subdomain support be enabled in Gafaelfawr. |
 | jupyterhub.cull.enabled | bool | `true` | Enable the lab culler. |
-| jupyterhub.cull.every | int | 300 (5 minutes) | How frequently to check for idle labs in seconds |
+| jupyterhub.cull.every | int | 3600 (1 hour) | How frequently to check for idle labs in seconds |
 | jupyterhub.cull.maxAge | int | 2160000 (25 days) | Maximum age of a lab regardless of activity |
 | jupyterhub.cull.removeNamedServers | bool | `true` | Whether to remove named servers when culling their lab |
 | jupyterhub.cull.timeout | int | 432000 (5 days) | Default idle timeout before the lab is automatically deleted in seconds |
@@ -115,8 +117,8 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/nublado-jupyterhub"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"8.4.1"` | Tag of image to use for JupyterHub |
-| jupyterhub.hub.loadRoles.server.scopes | list | `["self"]` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
+| jupyterhub.hub.image.tag | string | `"8.8.0"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.loadRoles.server.scopes | list | See `values.yaml` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |
 | jupyterhub.ingress.enabled | bool | `false` | Whether to enable the default ingress. Should always be disabled since we install our own `GafaelfawrIngress` to avoid repeating the global hostname and manually configuring authentication |

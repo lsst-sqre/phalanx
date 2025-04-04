@@ -14,6 +14,7 @@ controller:
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
+        AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
         LSST_SITE: "tucson"
         LSST_DDS_INTERFACE: "net1"
@@ -29,7 +30,7 @@ controller:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "8.4.1"
+            tag: "8.8.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"

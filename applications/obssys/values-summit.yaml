@@ -1,5 +1,7 @@
-x-butler-secret:
-  &butler-secret
+x-butler-lfa-combo: &butler-lfa-combo
+  s3Credentials:
+  - lfa-credentials.ini
+  - butler-credentials.ini
   butlerSecret:
     containerPath: &bs-cp /home/saluser/.lsst
     dbUser: oods
@@ -19,16 +21,10 @@ atqueue:
     RUN_ARG: 2 --state enabled
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://ccs.lsst.org
-  envSecrets:
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
-  <<: *butler-secret
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+  <<: *butler-lfa-combo
   nfsMountpoint:
   - name: auxtel-gen3-data
     containerPath: /repo/LATISS
@@ -45,30 +41,15 @@ atqueue:
     readOnly: true
     server: nfs-auxtel.cp.lsst.org
     serverPath: /auxtel/lsstdata
-  - name: comcam-gen3-data
-    containerPath: /repo/LSSTComCam
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/repo/LSSTComCam
-  - name: comcam-gen3-data-temp
-    containerPath: /data/lsstdata/base/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata/base/comcam
-  - name: comcam-data
-    containerPath: /readonly/lsstdata/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata
   - name: project-shared
     containerPath: /project
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-project.cp.lsst.org
     serverPath: /project
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
-    server: nfs-obsenv.cp.lsst.org
+    server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
   affinity:
     podAntiAffinity:
@@ -92,25 +73,22 @@ atscheduler:
     pullPolicy: Always
   env:
     INDEX: 2
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
   nfsMountpoint:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-scratch.cp.lsst.org
     serverPath: /scratch/scheduler
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
-    server: nfs-obsenv.cp.lsst.org
+    server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
   affinity:
     podAntiAffinity:
@@ -157,16 +135,10 @@ mtqueue:
     RUN_ARG: 1 --state enabled
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://ccs.lsst.org
-  envSecrets:
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
-  <<: *butler-secret
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+  <<: *butler-lfa-combo
   nfsMountpoint:
   - name: auxtel-gen3-data
     containerPath: /repo/LATISS
@@ -183,30 +155,15 @@ mtqueue:
     readOnly: true
     server: nfs-auxtel.cp.lsst.org
     serverPath: /auxtel/lsstdata
-  - name: comcam-gen3-data
-    containerPath: /repo/LSSTComCam
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/repo/LSSTComCam
-  - name: comcam-gen3-data-temp
-    containerPath: /data/lsstdata/base/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata/base/comcam
-  - name: comcam-data
-    containerPath: /readonly/lsstdata/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata
   - name: project-shared
     containerPath: /project
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-project.cp.lsst.org
     serverPath: /project
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
-    server: nfs-obsenv.cp.lsst.org
+    server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
   affinity:
     podAntiAffinity:
@@ -230,25 +187,22 @@ mtscheduler:
     pullPolicy: Always
   env:
     INDEX: 1
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
   nfsMountpoint:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-scratch.cp.lsst.org
     serverPath: /scratch/scheduler
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
-    server: nfs-obsenv.cp.lsst.org
+    server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
   affinity:
     podAntiAffinity:
@@ -274,16 +228,10 @@ ocsqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 3 --state enabled
     IMAGE_SERVER_URL: http://ccs.lsst.org
-  envSecrets:
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
-  <<: *butler-secret
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+  <<: *butler-lfa-combo
   nfsMountpoint:
   - name: auxtel-gen3-data
     containerPath: /repo/LATISS
@@ -300,30 +248,15 @@ ocsqueue:
     readOnly: true
     server: nfs-auxtel.cp.lsst.org
     serverPath: /auxtel/lsstdata
-  - name: comcam-gen3-data
-    containerPath: /repo/LSSTComCam
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/repo/LSSTComCam
-  - name: comcam-gen3-data-temp
-    containerPath: /data/lsstdata/base/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata/base/comcam
-  - name: comcam-data
-    containerPath: /readonly/lsstdata/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata
   - name: project-shared
     containerPath: /project
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-project.cp.lsst.org
     serverPath: /project
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
-    server: nfs-obsenv.cp.lsst.org
+    server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
   affinity:
     podAntiAffinity:
@@ -347,25 +280,22 @@ ocsscheduler:
     pullPolicy: Always
   env:
     INDEX: 3
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
   nfsMountpoint:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-scratch.cp.lsst.org
     serverPath: /scratch/scheduler
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
-    server: nfs-obsenv.cp.lsst.org
+    server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
   affinity:
     podAntiAffinity:

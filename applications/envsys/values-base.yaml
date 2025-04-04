@@ -202,14 +202,46 @@ eas-sim:
       cpu: 15m
       memory: 125Mi
 
-epm1-sim:
+epm-ess303-sim:
   enabled: true
-  classifier: epm1
+  classifier: ess303
   image:
-    repository: ts-dockerhub.lsst.org/epm
+    repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 1 --simulate
+    RUN_ARG: 303 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+epm-generator-ess305-sim:
+  enabled: true
+  classifier: ess305
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 305 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+epm-generator-ess306-sim:
+  enabled: true
+  classifier: ess306
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 306 --simulate
   resources:
     requests:
       cpu: 19m
@@ -290,6 +322,22 @@ mtdome-ess108-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 108 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+ringss-ess304-sim:
+  enabled: true
+  classifier: ess304
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 304 --simulate
   resources:
     requests:
       cpu: 19m

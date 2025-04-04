@@ -6,7 +6,7 @@ import json
 import secrets
 from base64 import b64encode
 from datetime import UTC, datetime
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 from typing import Any, Literal, Self
 
@@ -62,6 +62,8 @@ class ConditionalMixin(BaseModel):
 class SecretCopyRules(BaseModel):
     """Rules for copying a secret value from another secret."""
 
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
     application: str = Field(
         ...,
         title="Application",
@@ -74,14 +76,12 @@ class SecretCopyRules(BaseModel):
         description="Secret key from which the secret should be copied",
     )
 
-    model_config = ConfigDict(populate_by_name=True, extra="forbid")
-
 
 class ConditionalSecretCopyRules(SecretCopyRules, ConditionalMixin):
     """Possibly conditional rules for copying a secret value from another."""
 
 
-class SecretGenerateType(str, Enum):
+class SecretGenerateType(StrEnum):
     """Type of secret for generated secrets."""
 
     password = "password"
@@ -95,14 +95,14 @@ class SecretGenerateType(str, Enum):
 class SimpleSecretGenerateRules(BaseModel):
     """Rules for generating a secret value with no source information."""
 
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
     type: Literal[
         SecretGenerateType.password,
         SecretGenerateType.gafaelfawr_token,
         SecretGenerateType.fernet_key,
         SecretGenerateType.rsa_private_key,
     ] = Field(..., title="Secret type", description="Type of secret")
-
-    model_config = ConfigDict(populate_by_name=True, extra="forbid")
 
     def generate(self) -> SecretStr:
         """Generate a new secret following these rules."""
@@ -195,6 +195,8 @@ class SecretOnepasswordConfig(BaseModel):
 class SecretConfig(BaseModel):
     """Specification for an application secret."""
 
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
     description: str | None = Field(
         None, title="Description", description="Description of the secret"
     )
@@ -221,8 +223,6 @@ class SecretConfig(BaseModel):
     value: SecretStr | None = Field(
         None, title="Value", description="Fixed value of secret"
     )
-
-    model_config = ConfigDict(populate_by_name=True, extra="forbid")
 
 
 class ConditionalSecretConfig(SecretConfig, ConditionalMixin):
@@ -281,6 +281,8 @@ class Secret(SecretConfig):
 class RegistryPullSecret(BaseModel):
     """Pull secret for a specific Docker Repository."""
 
+    model_config = ConfigDict(extra="forbid")
+
     username: str = Field(
         ..., title="Username", description="HTTP Basic Auth username"
     )
@@ -289,11 +291,11 @@ class RegistryPullSecret(BaseModel):
         ..., title="Password", description="HTTP Basic Auth password"
     )
 
-    model_config = ConfigDict(extra="forbid")
-
 
 class PullSecret(BaseModel):
     """Specification for a Docker pull secret."""
+
+    model_config = ConfigDict(extra="forbid")
 
     description: YAMLFoldedString = Field(
         YAMLFoldedString(PULL_SECRET_DESCRIPTION),
@@ -308,8 +310,6 @@ class PullSecret(BaseModel):
         title="Pull secret by registry",
         description="Pull secrets for each registry that needs one",
     )
-
-    model_config = ConfigDict(extra="forbid")
 
     def to_dockerconfigjson(self) -> str:
         """Convert to the serialized format used by Docker."""
@@ -350,6 +350,8 @@ class ResolvedSecrets(BaseModel):
 class StaticSecret(BaseModel):
     """Value of a static secret provided in a YAML file."""
 
+    model_config = ConfigDict(extra="forbid")
+
     description: YAMLFoldedString | None = Field(
         None,
         title="Description of secret",
@@ -371,8 +373,6 @@ class StaticSecret(BaseModel):
         description="Value of the secret, or `None` if it's not known",
     )
 
-    model_config = ConfigDict(extra="forbid")
-
 
 class StaticSecrets(BaseModel):
     """Model for the YAML file containing static secrets.
@@ -381,6 +381,8 @@ class StaticSecrets(BaseModel):
     in which case the description fields of the `StaticSecret` members are
     ignored.
     """
+
+    model_config = ConfigDict(extra="forbid", populate_by_name=True)
 
     applications: dict[str, dict[str, StaticSecret]] = Field(
         {},
@@ -403,8 +405,6 @@ class StaticSecrets(BaseModel):
         description="Vault write token for this environment",
         alias="vault-write-token",
     )
-
-    model_config = ConfigDict(populate_by_name=True, extra="forbid")
 
     @classmethod
     def from_path(cls, path: Path) -> Self:

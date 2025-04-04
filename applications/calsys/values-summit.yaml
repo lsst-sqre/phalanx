@@ -44,21 +44,18 @@ electrometer101:
     pullPolicy: Always
   env:
     RUN_ARG: 101
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
   resources:
     limits:
-      cpu: 100m
+      cpu: 1
       memory: 330Mi
     requests:
-      cpu: 10m
+      cpu: 100m
       memory: 110Mi
 
 electrometer102:
@@ -68,21 +65,39 @@ electrometer102:
     pullPolicy: Always
   env:
     RUN_ARG: 102
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
+  resources:
+    limits:
+      cpu: 1
+      memory: 350Mi
+    requests:
+      cpu: 100m
+      memory: 115Mi
+
+electrometer103:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/electrometer
+    pullPolicy: Always
+  env:
+    RUN_ARG: 103
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
+  - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
   resources:
     limits:
-      cpu: 100m
+      cpu: 1
       memory: 350Mi
     requests:
-      cpu: 10m
+      cpu: 100m
       memory: 115Mi
 
 electrometer201:
@@ -92,21 +107,18 @@ electrometer201:
     pullPolicy: Always
   env:
     RUN_ARG: 201
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
   resources:
     limits:
-      cpu: 100m
+      cpu: 1
       memory: 330Mi
     requests:
-      cpu: 10m
+      cpu: 100m
       memory: 110Mi
 
 ledprojector:
@@ -190,14 +202,11 @@ simulation-gencam:
     pullPolicy: Always
   env:
     RUN_ARG: 1
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
   service:
     enabled: true

@@ -1,12 +1,14 @@
+platform: keda
+
 knative:
-  maxMessages: 150
+  maxMessages: 2000
   retryRequests: false
 
 kafka:
   schemaRegistryUrl: http://10.103.126.51:8081
   sasquatchAddress: 10.100.226.209:9094
   consumerGroup: test-group-3
-  nextVisitTopic: test.next-visit
+  nextVisitTopic: test.next-visit-job
   # Dev processes very old images, set to ~20 years
   expiration: 600_000_000.0
 
@@ -14,6 +16,6 @@ image:
   repository: ghcr.io/lsst-dm/next_visit_fan_out
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 2.5.0
+  tag: 2.7.0
 
-instruments: "LATISS LSSTComCam LSSTComCamSim HSC"
+instruments: "LATISS LSSTCam LSSTCam-imSim LSSTComCam LSSTComCamSim HSC"

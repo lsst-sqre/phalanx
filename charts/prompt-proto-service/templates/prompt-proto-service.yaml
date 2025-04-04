@@ -51,6 +51,8 @@ spec:
             {{- .Values.instrument.pipelines.main | nindent 12 }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
+        - name: MESSAGE_EXPIRATION
+          value: {{ .Values.knative.expiration | toString | quote }}
         - name: PRELOAD_PADDING
           value: {{ .Values.instrument.preloadPadding | toString | quote }}
         - name: IMAGE_BUCKET
@@ -99,6 +101,14 @@ spec:
         {{- if .Values.s3.cred_file_auth }}
         - name: AWS_SHARED_CREDENTIALS_FILE
           value: /app/s3/credentials
+        {{- end }}
+        {{- if .Values.s3.aws_profile }}
+        - name: AWS_PROFILE
+          value: {{.Values.s3.aws_profile }}
+        {{- end }}
+        {{- if .Values.s3.checksum }}
+        - name: AWS_REQUEST_CHECKSUM_CALCULATION
+          value: {{.Values.s3.checksum}}
         {{- end }}
         - name: LSST_DB_AUTH
           value: /app/lsst-credentials/db-auth.yaml
@@ -173,7 +183,9 @@ spec:
       - name: s3-credentials-file
         secret:
           secretName: {{ template "prompt-proto-service.fullname" . }}-secret
-          key: s3-credentials-file
+          items:
+          - key: s3_credentials_file
+            path: credentials
       {{- end }}
       {{- if .Values.registry.centralRepoFile }}
       - name: central-repo-file

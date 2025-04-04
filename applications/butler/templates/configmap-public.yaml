@@ -1,0 +1,124 @@
+{{- define "butler.dp02_config" }}
+    datastore:
+      cls: lsst.daf.butler.datastores.chainedDatastore.ChainedDatastore
+      datastore_constraints:
+        # One entry per datastore in datastores section
+        # Use empty `-` if no constraint override required
+        - constraints:
+            reject:
+              - all
+        - constraints:
+            reject:
+              - all
+        - constraints:
+            reject:
+              - all
+        - constraints:
+            accept:
+              - all
+      datastores:
+        - datastore:
+            name: FileDatastore@s3://butler-us-central1-panda-dev/dc2
+            cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+            root: {{ .fileDatastoreRoot }}
+        - datastore:
+            # Datasets of type 'raw' are stored in a separate bucket for
+            # historical reasons.
+            name: FileDatastore@s3://curation-us-central1-desc-dc2-run22i
+            cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+            root: {{ .rawDatastoreRoot }}
+            records:
+              table: raw_datastore_records
+        - datastore:
+            # Also for historical reasons, some files that originated in DP01
+            # are kept in a separate bucket.
+            name: FileDatastore@s3://butler-us-central1-dp01-desc-dr6
+            cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+            root: {{ .dp01DatastoreRoot }}
+            records:
+              table: dp01_datastore_records
+        - datastore:
+            name: FileDatastore@s3://butler-us-central1-dp02-user
+            cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+            root: {{ .userDatastoreRoot }}
+            records:
+              table: user_datastore_records
+    registry:
+      db: {{ .postgresUri }}
+      managers:
+        collections: lsst.daf.butler.registry.collections.synthIntKey.SynthIntKeyCollectionManager
+        datasets: lsst.daf.butler.registry.datasets.byDimensions.ByDimensionsDatasetRecordStorageManagerUUID
+        attributes: lsst.daf.butler.registry.attributes.DefaultButlerAttributeManager
+        datastores: lsst.daf.butler.registry.bridge.monolithic.MonolithicDatastoreRegistryBridgeManager
+        dimensions: lsst.daf.butler.registry.dimensions.static.StaticDimensionRecordStorageManager
+        opaque: lsst.daf.butler.registry.opaque.ByNameOpaqueTableStorageManager
+      namespace: dc2_20210215
+{{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: butler-public
+data:
+# WARNING! The files in this configmap are served publicly on the internet via unauthenticated HTTP.
+# DO NOT PUT ANY SENSITIVE INFORMATION IN THESE FILES.
+{{- if .Values.config.dp02PostgresUri }}
+   # Datastore configuration for the old setup where all files were stored in
+   # Google Cloud Storage buckets, accessed as S3.
+   {{- $dp02GcsRoots := (dict
+       "postgresUri" .Values.config.dp02PostgresUri
+       "fileDatastoreRoot" "s3://butler-us-central1-panda-dev/dc2/"
+       "rawDatastoreRoot" "s3://curation-us-central1-desc-dc2-run22i/"
+       "dp01DatastoreRoot" "s3://butler-us-central1-dp01-desc-dr6/"
+       "userDatastoreRoot" "s3://butler-us-central1-dp02-user/"
+    ) -}}
+  # End-user-facing DirectButler configuration for DP02.
+  dp02.yaml: |
+    {{ if .Values.config.dp02UseSlacDatastore }}
+    # Because this has to work with an ancient version of the Butler library from
+    # 2022, S3 profiles are not supported.  So we use a gs:// URI to access Google
+    # Cloud Storage, and s3:// to access Weka S3 at USDF.
+    {{ include "butler.dp02_config" (dict
+       "postgresUri" .Values.config.dp02PostgresUri
+       "fileDatastoreRoot" "s3://rubin-dp02-products/"
+       "rawDatastoreRoot" "s3://rubin-dp02-raw/"
+       "dp01DatastoreRoot" "s3://rubin-dp02-dp01/"
+       "userDatastoreRoot" "gs://butler-us-central1-dp02-user/"
+    )}}
+    {{ else }}
+    {{ include "butler.dp02_config" $dp02GcsRoots }}
+    {{ end }}
+  # Internal Butler server configuration for DP02.
+  dp02-server.yaml: |
+    {{ if .Values.config.dp02UseSlacDatastore }}
+    {{ include "butler.dp02_config" (dict
+       "postgresUri" .Values.config.dp02PostgresUri
+       "fileDatastoreRoot" "s3://slac@rubin-dp02-products/"
+       "rawDatastoreRoot" "s3://slac@rubin-dp02-raw/"
+       "dp01DatastoreRoot" "s3://slac@rubin-dp02-dp01/"
+       "userDatastoreRoot" "s3://butler-us-central1-dp02-user/"
+    )}}
+    {{ else }}
+    {{ include "butler.dp02_config" $dp02GcsRoots }}
+    {{ end }}
+  # Repository index for END USERS defining aliases for Butler configurations.
+  # This is NOT the configuration used internally for Butler server itself.
+  # It is also NOT the configuration that should be used by Phalanx services
+  # connecting to the Butler server.
+  #
+  # We provide both DirectButler and RemoteButler versions of dp02 because some
+  # users rely on functionality not yet available via RemoteButler.  The default in production is
+  # DirectButler because RemoteButler is not available in the current recommended RSP image.
+  # On dev and int it is RemoteButler -- the Community Science team is testing the new system.
+  idf-repositories.yaml: |
+    {{- $dp02Direct := print .Values.global.baseUrl .Values.config.pathPrefix "/configs/dp02.yaml" -}}
+    {{- $dp02Remote := print .Values.global.baseUrl .Values.config.pathPrefix "/repo/dp02/butler.yaml" -}}
+    {{- if .Values.config.dp02ClientServerIsDefault }}
+    dp02: {{ $dp02Remote }}
+    {{- else }}
+    dp02: {{ $dp02Direct }}
+    {{- end }}
+    dp02-direct: {{ $dp02Direct }}
+    dp02-remote: {{ $dp02Remote }}
+    dp1: "{{.Values.global.baseUrl}}{{.Values.config.pathPrefix}}/repo/dp1/butler.yaml"
+{{- end }}

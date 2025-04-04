@@ -5,6 +5,20 @@ config:
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre
+  githubCiApp:
+    acceptedGithubOrgs:
+      - lsst-sqre
+      - lsst
+    users:
+      - username: bot-mobu-ci-user-1
+      - username: bot-mobu-ci-user-2
+      - username: bot-mobu-ci-user-3
+      - username: bot-mobu-ci-user-4
+    scopes:
+      - "exec:notebook"
+      - "exec:portal"
+      - "read:image"
+      - "read:tap"
   autostart:
     - name: "firefighter"
       count: 5
@@ -16,7 +30,7 @@ config:
         - "read:image"
         - "read:tap"
       business:
-        type: "NotebookRunner"
+        type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_ref: "prod"
@@ -32,7 +46,7 @@ config:
         - "read:image"
         - "read:tap"
       business:
-        type: "NotebookRunner"
+        type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_ref: "prod"
@@ -49,12 +63,11 @@ config:
         - "read:image"
         - "read:tap"
       business:
-        type: "NotebookRunner"
+        type: "NotebookRunnerCounting"
         options:
-          repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
-          repo_ref: "prod"
+          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
+          repo_ref: "main"
           max_executions: 1
-          working_directory: "notebooks/tutorial-notebooks"
         restart: true
     - name: "tap"
       count: 1

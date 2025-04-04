@@ -181,13 +181,7 @@ kafkaExporter:
 
   # -- Kubernetes requests and limits for the Kafka exporter
   # @default -- See `values.yaml`
-  resources:
-    limits:
-      cpu: "1"
-      memory: "256Mi"
-    requests:
-      cpu: "375m"
-      memory: "100Mi"
+  resources: {}
 
 connect:
   # -- Enable Kafka Connect
@@ -286,6 +280,17 @@ users:
     # -- Enable user consdb
     enabled: false
 
+  obsloctap:
+    # -- Enable user obsloctap
+    enabled: false
+
+  tap:
+    # -- Enable user tap (deployed by parent Sasquatch chart)
+    enabled: false
+
+  qserv:
+    # -- Enable user qserv (deployed by parent Sasquatch chart)
+    enabled: false
 
 mirrormaker2:
   # -- Enable replication in the target (passive) cluster

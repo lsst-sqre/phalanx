@@ -1,0 +1,31 @@
+{{- if .Values.config.githubCiApp }}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "mobu-github-ci"
+  labels:
+    {{- include "mobu.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    anonymous: true
+template:
+  metadata:
+    name: "mobu-github-ci"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.config.pathPrefix }}/github/ci"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "mobu"
+                  port:
+                    number: 8080
+{{- end }}

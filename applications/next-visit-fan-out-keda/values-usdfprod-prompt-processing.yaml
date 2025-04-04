@@ -1,0 +1,16 @@
+knative:
+  maxMessages: 2000
+
+kafka:
+  schemaRegistryUrl: http://10.104.61.102:8081
+  sasquatchAddress: 10.96.121.181:9094
+  consumerGroup: next-visit-fan-out-keda-1
+  nextVisitTopic: lsst.sal.ScriptQueue.logevent_nextVisit
+
+image:
+  repository: ghcr.io/lsst-dm/next_visit_fan_out
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: tickets-DM-48978
+
+instruments: "LATISS"

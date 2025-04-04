@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import json
 from contextlib import suppress
-from datetime import timedelta
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import jinja2
 from hvac.exceptions import Forbidden
-from safir.datetime import current_datetime, format_datetime_for_logging
+from safir.datetime import format_datetime_for_logging
 
 from ..constants import VAULT_WRITE_TOKEN_WARNING_LIFETIME
 from ..exceptions import VaultPathConflictError
@@ -140,7 +140,12 @@ class VaultService:
         config = self._config.load_environment_config(environment)
         vault_client = self._vault.get_vault_client(config)
         template = self._templates.get_template("vault-read-policy.hcl.jinja")
-        policy = template.render({"path": config.vault_path})
+        policy = template.render(
+            {
+                "path": config.vault_path,
+                "mount_point": config.vault_mount_point,
+            }
+        )
         vault_client.create_policy(config.vault_read_policy, policy)
         approle = vault_client.get_approle(config.vault_read_approle)
         if approle:
@@ -181,7 +186,12 @@ class VaultService:
         for token in tokens:
             vault_client.revoke_token(token.accessor)
         template = self._templates.get_template("vault-write-policy.hcl.jinja")
-        policy = template.render({"path": config.vault_path})
+        policy = template.render(
+            {
+                "path": config.vault_path,
+                "mount_point": config.vault_mount_point,
+            }
+        )
         vault_client.create_policy(config.vault_write_policy, policy)
         return vault_client.create_token(
             config.vault_write_token, [config.vault_write_policy], lifetime
@@ -241,7 +251,12 @@ class VaultService:
         expected_policies = {config.vault_read_policy}
         errors = self._audit_policies(approle.policies, expected_policies)
         template = self._templates.get_template("vault-read-policy.hcl.jinja")
-        expected = template.render({"path": config.vault_path})
+        expected = template.render(
+            {
+                "path": config.vault_path,
+                "mount_point": config.vault_mount_point,
+            }
+        )
         policy = vault_client.get_policy(config.vault_read_policy)
         if policy != expected:
             name = config.vault_read_policy
@@ -280,10 +295,15 @@ class VaultService:
             report = "Multiple write tokens found\n"
 
         template = self._templates.get_template("vault-write-policy.hcl.jinja")
-        expected = template.render({"path": config.vault_path})
+        expected = template.render(
+            {
+                "path": config.vault_path,
+                "mount_point": config.vault_mount_point,
+            }
+        )
         policy = vault_client.get_policy(config.vault_write_policy)
 
-        now = current_datetime()
+        now = datetime.now(tz=UTC)
         policies = {config.vault_write_policy}
         for token in tokens:
             errors = []

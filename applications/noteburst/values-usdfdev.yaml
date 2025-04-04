@@ -1,10 +1,9 @@
-image:
-  tag: "0.13.0"
-
 replicaCount: 3
 
 config:
   logLevel: "DEBUG"
+  metrics:
+    enabled: true
   worker:
     workerCount: 1
     identities:

@@ -1,5 +1,6 @@
 config:
   logLevel: DEBUG
+  logMonkeysToFile: false
   profile: development
   metrics:
     enabled: true
@@ -7,6 +8,7 @@ config:
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre
+      - lsst
   githubCiApp:
     acceptedGithubOrgs:
       - lsst-sqre
@@ -28,7 +30,7 @@ config:
       scopes:
         - "exec:notebook"
       business:
-        type: "NotebookRunner"
+        type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst-sqre/dfuchs-test-mobu.git"
           repo_ref: "main"
@@ -43,7 +45,7 @@ config:
         - "read:image"
         - "read:tap"
       business:
-        type: "NotebookRunner"
+        type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_ref: "prod"
@@ -58,12 +60,11 @@ config:
         - "read:image"
         - "read:tap"
       business:
-        type: "NotebookRunner"
+        type: "NotebookRunnerCounting"
         options:
-          repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
-          repo_ref: "prod"
+          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
+          repo_ref: "main"
           max_executions: 1
-          working_directory: "notebooks/tutorial-notebooks"
         restart: true
     - name: "tap"
       count: 1
@@ -74,4 +75,14 @@ config:
         type: "TAPQuerySetRunner"
         options:
           query_set: "dp0.2"
+        restart: true
+    - name: "sia"
+      count: 1
+      users:
+        - username: "bot-mobu-sia"
+      scopes: ["read:image"]
+      business:
+        type: "SIAQuerySetRunner"
+        options:
+          query_set: "dp02"
         restart: true

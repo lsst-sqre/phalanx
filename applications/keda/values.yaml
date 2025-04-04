@@ -1,0 +1,93 @@
+# Default values for keda.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Defines Kubernetes namespaces to watch to scale their workloads. Default watches all namespaces
+watchNamespace: ""
+
+logging:
+  operator:
+    # -- Logging level for KEDA Operator.
+    # allowed values: `debug`, `info`, `error`, or an integer value greater than 0, specified as string
+    level: info
+    # -- Logging format for KEDA Operator.
+    # allowed values: `json` or `console`
+    format: console
+    # -- Logging time encoding for KEDA Operator.
+    # allowed values are `epoch`, `millis`, `nano`, `iso8601`, `rfc3339` or `rfc3339nano`
+    timeEncoding: rfc3339
+    # -- If enabled, the stack traces will be also printed
+    stackTracesEnabled: false
+  metricServer:
+    # -- Logging level for Metrics Server.
+    # allowed values: `0` for info, `4` for debug, or an integer value greater than 0, specified as string
+    level: 0
+    # -- Logging stderrthreshold for Metrics Server
+    # allowed values: 'DEBUG','INFO','WARN','ERROR','ALERT','EMERG'
+    stderrthreshold: ERROR
+
+# We provides the default values that we describe in our docs:
+# https://keda.sh/docs/latest/operate/cluster/
+# If you want to specify the resources (or totally remove the defaults), change or comment the following
+# lines, adjust them as necessary, or simply add the curly braces after 'operator' and/or 'metricServer'
+# and remove/comment the default values
+resources:
+  # -- Manage [resource request & limits] of KEDA operator pod
+  operator:
+    limits:
+      cpu: 1
+      memory: 1000Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  # -- Manage [resource request & limits] of KEDA metrics apiserver pod
+  metricServer:
+    limits:
+      cpu: 1
+      memory: 1000Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  # -- Manage [resource request & limits] of KEDA admission webhooks pod
+  webhooks:
+    limits:
+      cpu: 1
+      memory: 1000Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+# -- Node selector for pod scheduling ([docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/))
+nodeSelector: {}
+# -- Tolerations for pod scheduling ([docs](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/))
+tolerations: []
+
+topologySpreadConstraints:
+  # -- [Pod Topology Constraints] of KEDA operator pod
+  operator: []
+  # -- [Pod Topology Constraints] of KEDA metrics apiserver pod
+  metricsServer: []
+  # -- [Pod Topology Constraints] of KEDA admission webhooks pod
+  webhooks: []
+
+# -- [Affinity] for pod scheduling for KEDA operator, Metrics API Server and KEDA admission webhooks.
+affinity: {}
+
+# -- priorityClassName for all KEDA components
+priorityClassName: ""
+
+prometheus:
+  metricServer:
+    # -- Enable metric server Prometheus metrics expose
+    enabled: true
+    # -- HTTP port used for exposing metrics server prometheus metrics
+    port: 8000
+
+  operator:
+    # -- Enable KEDA Operator prometheus metrics expose
+    enabled: true
+    # -- Port used for exposing KEDA Operator prometheus metrics
+    port: 8000
+
+# -- Enable service links in pods. Although enabled, mirroring k8s default, it is highly recommended to disable,
+# due to its legacy status [Legacy container links](https://docs.docker.com/engine/network/links/)
+enableServiceLinks: false

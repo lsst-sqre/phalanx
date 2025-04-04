@@ -36,7 +36,7 @@ controller:
   resources:
     limits:
       cpu: "1"
-      memory: "400Mi"
+      memory: "1Gi"
     requests:
       cpu: "0.05"
       memory: "200Mi"
@@ -152,6 +152,10 @@ controller:
       aliasTags: []
 
     lab:
+      # -- How frequently the lab should report activity to JupyterHub in
+      # Safir `parse_timedelta` format
+      activityInterval: 1h
+
       # -- Affinity rules for user lab pods
       affinity: {}
 
@@ -175,6 +179,8 @@ controller:
         NO_ACTIVITY_TIMEOUT: "432000"  # 5 days
         RSP_SITE_TYPE: "science"
         TAP_ROUTE: "/api/tap"
+        TUTORIAL_NOTEBOOKS_URL: "https://github.com/lsst/tutorial-notebooks@main"
+        TUTORIAL_NOTEBOOKS_DIR: "/opt/lsst/software/notebooks-at-build-time/tutorial-notebooks"
 
       # -- Extra annotations to add to user lab pods
       extraAnnotations: {}
@@ -423,6 +429,11 @@ hub:
     # takes over 60 seconds for reasons we don't understand.
     startup: 90
 
+  # -- Whether to put each user's lab in a separate domain. This is strongly
+  # recommended for security, but requires wildcard DNS and cert-manager
+  # support and requires subdomain support be enabled in Gafaelfawr.
+  useSubdomains: false
+
 # Configuration for the Zero to JupyterHub subchart.
 jupyterhub:
   cull:
@@ -435,8 +446,8 @@ jupyterhub:
     timeout: 432000
 
     # -- How frequently to check for idle labs in seconds
-    # @default -- 300 (5 minutes)
-    every: 300
+    # @default -- 3600 (1 hour)
+    every: 3600
 
     # -- Whether to log out the user (from JupyterHub) when culling their lab
     users: false
@@ -457,7 +468,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.4.1"
+      tag: "8.8.0"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
@@ -533,7 +544,11 @@ jupyterhub:
       server:
         # -- Default scopes for the user's lab, overridden to allow the lab to
         # delete itself (which we use for our added menu items)
-        scopes: ["self"]
+        # @default -- See `values.yaml`
+        scopes:
+          - "access:servers!user"
+          - "delete:servers!user"
+          - "users:activity!user"
 
   ingress:
     # -- Whether to enable the default ingress. Should always be disabled
@@ -568,8 +583,8 @@ jupyterhub:
       # @default -- See `values.yaml`
       resources:
         limits:
-          cpu: "150m"
-          memory: "200Mi"
+          cpu: "1"
+          memory: "400Mi"
         requests:
           cpu: "5m"
           memory: "30Mi"
@@ -610,7 +625,7 @@ cloudsql:
     pullPolicy: "IfNotPresent"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.4"
+    tag: "1.37.6"
 
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled

@@ -1,5 +1,5 @@
 ingester:
-  schemaRegistryURL: https://alert-schemas-int.lsst.cloud
+  schemaRegistryURL: https://usdf-alert-schemas-dev.slac.stanford.edu
 
   serviceAccountName: alert-database-writer
 

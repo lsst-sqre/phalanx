@@ -39,6 +39,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.knative.cpuRequest | int | `1` | The cpu cores requested for the full pod (see `containerConcurrency`). |
 | prompt-proto-service.knative.ephemeralStorageLimit | string | `"8Gi"` | The maximum storage space allowed for each container (mostly local Butler). This allocation is for the full pod (see `containerConcurrency`) |
 | prompt-proto-service.knative.ephemeralStorageRequest | string | `"8Gi"` | The storage space reserved for each container (mostly local Butler). This allocation is for the full pod (see `containerConcurrency`) |
+| prompt-proto-service.knative.expiration | int | `3600` | Maximum message age to process, in seconds. |
 | prompt-proto-service.knative.gpu | bool | `false` | GPUs enabled. |
 | prompt-proto-service.knative.gpuRequest | int | `0` | The number of GPUs to request for the full pod (see `containerConcurrency`). |
 | prompt-proto-service.knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to Knative (seconds). This is only useful if the container runs async workers. If 0, idle timeout is ignored. |
@@ -49,6 +50,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.podAnnotations | object | See the `values.yaml` file. | Annotations for the prompt-proto-service pod |
 | prompt-proto-service.registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |
 | prompt-proto-service.s3.auth_env | bool | `true` | If set, get S3 credentials from this application's Vault secret. |
+| prompt-proto-service.s3.checksum | string | `"WHEN_REQUIRED"` | If set, configure S3 checksum options. |
 | prompt-proto-service.s3.disableBucketValidation | int | `0` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |
 | prompt-proto-service.s3.endpointUrl | string | None, must be set | S3 endpoint containing `imageBucket` |
 | prompt-proto-service.s3.imageBucket | string | None, must be set | Bucket containing the incoming raw images |

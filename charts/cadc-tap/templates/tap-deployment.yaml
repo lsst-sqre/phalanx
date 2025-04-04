@@ -98,16 +98,35 @@ spec:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/etc/creds/google_creds.json"
             {{- if eq .Values.config.gcsBucketType "S3" }}
-            - name: AWS_SECRET_ACCESS_KEY
+            - name: "AWS_SECRET_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:
-                  name: cadc-tap
+                  name: "cadc-tap"
                   key: "AWS_SECRET_ACCESS_KEY"
-            - name: AWS_ACCESS_KEY_ID
+            - name: "AWS_ACCESS_KEY_ID"
               valueFrom:
                 secretKeyRef:
-                  name: cadc-tap
+                  name: "cadc-tap"
                   key: "AWS_ACCESS_KEY_ID"
+            {{- end }}
+            {{- if .Values.config.sentryEnabled }}
+            - name: "SENTRY_TRACES_SAMPLE_RATE"
+              value: "{{ .Values.config.sentryTracesSampleRate }}"
+            - name: "SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.host }}
+            - name: "SENTRY_RELEASE"
+              {{- if eq .Values.config.backend "pg" }}
+              value: "{{ .Values.config.pg.image.tag }}"
+              {{- else if eq .Values.config.backend "qserv" }}
+              value: "{{ .Values.config.qserv.image.tag }}"
+              {{- else }}
+              value: "{{ .Chart.AppVersion }}"
+              {{- end }}
+            - name: "SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: "cadc-tap"
+                  key: "sentry-dsn"
             {{- end }}
             - name: DATALINK_PAYLOAD_URL
               value: "{{ .Values.config.datalinkPayloadUrl }}"

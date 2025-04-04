@@ -38,6 +38,10 @@ influxdb:
     # -- InfluxDB image tag
     tag: "1.11.8"
 
+  livenessProbe:
+    # -- Liveness probe initial delay in seconds
+    initialDelaySeconds: 90
+
   persistence:
     # -- Whether to use persistent volume claims. By default, `storageClass`
     # is undefined, choosing the default provisioner (standard on GKE).
@@ -240,6 +244,7 @@ chronograf:
   env:
     HOST_PAGE_DISABLED: true
     BASE_PATH: /chronograf
+    INACTIVITY_DURATION: 1h
 
   # -- Name of secret to use. The keys `generic_client_id`,
   # `generic_client_secret`, and `token_secret` should be set.

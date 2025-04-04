@@ -37,6 +37,6 @@ applications:
   uws: true
 
 controlSystem:
-  imageTag: "k0003"
+  imageTag: "c0040"
   siteTag: "summit"
   s3EndpointUrl: "https://s3.cp.lsst.org"

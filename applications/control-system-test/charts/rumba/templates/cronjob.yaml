@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: rumba
+  namespace: {{ .Values.namespace }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: {{ .Values.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.failedJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+            - name: pull-secret
+          restartPolicy: OnFailure
+          containers:
+            - name: rumba
+              image: "ts-dockerhub.lsst.org/rumba:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+              envFrom:
+                - configMapRef:
+                    name: csc-env-config
+              env:
+                - name: LSST_KAFKA_SECURITY_MECHANISM
+                  value: SCRAM-SHA-512
+                - name: LSST_KAFKA_SECURITY_PROTOCOL
+                  value: SASL_PLAINTEXT
+                - name: LSST_KAFKA_SECURITY_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: control-system-test
+                      key: ts-salkafka-password
+              command:
+                - /bin/bash
+                - -c
+                - |
+                  echo "Running cronjob..."
+                  exec /home/saluser/.startup.sh kt consumers envvar delete --regex="-S3$"

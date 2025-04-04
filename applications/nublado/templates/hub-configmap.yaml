@@ -17,8 +17,28 @@ data:
         + str(os.environ["HUB_SERVICE_PORT"])
     )
 
+    # JupyterHub uses a single database connection for all database activity
+    # and JupyterLab by default sends activity updates every five minutes
+    # (each of which turns into a lot of database activity). By the time we
+    # reach 1,000 active users, this is completely saturating JupyterHub and
+    # it stops being able to do work.
+    #
+    # We have reconfigured JupyterLab via the console to only send updates
+    # once an hour to prevent this problem. To protect against labs sending
+    # updates more frequently for some reason, also suppress updates more
+    # frequently than that. However, the lab randomizes the reporting interval
+    # by 10%, so set this limit to once per half-hour so that each update is
+    # recorded.
+    c.JupyterHub.activity_resolution = 1800
+    c.JupyterHub.last_activity_interval = 1800
+
     # Turn off concurrent spawn limit.
     c.JupyterHub.concurrent_spawn_limit = 0
+    {{- if .Values.hub.useSubdomains }}
+
+    # Use separate hostnames for each user lab.
+    c.JupyterHub.subdomain_host = "https://nb.{{ .Values.global.host }}"
+    {{- end }}
 
     # Add custom templates.
     c.JupyterHub.template_paths = [ "/usr/local/etc/jupyterhub/templates" ]
@@ -26,11 +46,18 @@ data:
     # Enable stored auth state.
     c.Authenticator.enable_auth_state = True
 
+    # Redirect to the Gafaelfawr logout handler after logout.
+    c.GafaelfawrAuthenticator.after_logout_redirect = "{{ .Values.global.baseUrl }}/logout"
+
     # Turn off restart after n consecutive failures.
     c.Spawner.consecutive_failure_limit = 0
 
     # Use JupyterLab by default.
     c.Spawner.default_url = "/lab"
+
+    # Only poll labs every five minutes because that's how frequently the
+    # controller checks their status in Kubernetes.
+    c.Spawner.poll_interval = 300
 
     # How long to wait for Kubernetes to start the lab. This must match the
     # corresponding setting in the Nublado controller.

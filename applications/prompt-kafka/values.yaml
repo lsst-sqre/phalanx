@@ -1,0 +1,35 @@
+# Default values for Prompt Kafka.
+
+# Override strimzi-kafka subchart configuration.
+strimzi-kafka:
+  kafka:
+    listeners:
+      noauth:
+        # -- Whether internal no authentication listener is enabled
+        enabled: true
+
+      tls:
+        # -- Whether internal TLS listener is enabled
+        enabled: true
+
+      plain:
+        # -- Whether internal plaintext listener is enabled
+        enabled: true
+
+      external:
+        # -- Whether external listener is enabled
+        enabled: false
+
+strimzi-registry-operator:
+  # -- Name of the Strimzi Kafka cluster
+  clusterName: prompt-kafka
+
+  # -- Namespace where the Strimzi Kafka cluster is deployed
+  clusterNamespace: prompt-kafka
+
+  # -- Namespace where the strimzi-registry-operator is deployed
+  operatorNamespace: prompt-kafka
+
+kafdrop:
+  # -- Whether Kafdrop is enabled
+  enabled: false

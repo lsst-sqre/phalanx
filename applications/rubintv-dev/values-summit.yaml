@@ -17,6 +17,12 @@ rubintv:
       value: "/rubintv-dev/ddv/"
     - name: DDV_CLIENT_WS_ADDRESS
       value: "rubintv-dev/ws/ddv"
+    - name: RA_REDIS_HOST
+      value: "redis-service.rapid-analysis.svc.cluster.local"
+    envSecrets:
+    - name: RA_REDIS_PASSWORD
+      secretName: rubintv-dev-secrets
+      secretKey: redis-password
     image:
       repository: ghcr.io/lsst-ts/rubintv
       tag: deploy
@@ -45,7 +51,7 @@ rubintv:
     - name: project-rubintv-ddv-config
       containerPath: /var/ddv-config
       readOnly: false
-      server: nfs1.cp.lsst.org
+      server: nfs-project.cp.lsst.org
       serverPath: /project/rubintv/ddv-config
     resources:
       requests:

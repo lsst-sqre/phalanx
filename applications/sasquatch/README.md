@@ -63,6 +63,7 @@ Rubin Observatory's telemetry service
 | influxdb.ingress.path | string | `"/influxdb(/\|$)(.*)"` | Path for the ingress |
 | influxdb.ingress.tls | bool | `false` | Whether to obtain TLS certificates for the ingress hostname |
 | influxdb.initScripts.enabled | bool | `false` | Whether to enable the InfluxDB custom initialization script |
+| influxdb.livenessProbe.initialDelaySeconds | int | `90` | Liveness probe initial delay in seconds |
 | influxdb.persistence.enabled | bool | `true` | Whether to use persistent volume claims. By default, `storageClass` is undefined, choosing the default provisioner (standard on GKE). |
 | influxdb.persistence.size | string | 1TiB for teststand deployments | Persistent volume size |
 | influxdb.resources | object | See `values.yaml` | Kubernetes resource requests and limits |
@@ -104,9 +105,9 @@ Rubin Observatory's telemetry service
 | app-metrics.envFromSecret | string | `""` | Name of the secret with values to be added to the environment |
 | app-metrics.globalAppConfig | object | See `values.yaml` | app-metrics configuration in any environment in which the subchart is enabled. This should stay globally specified here, and it shouldn't be overridden.  See [here](https://sasquatch.lsst.io/user-guide/app-metrics.html#configuration) for the structure of this value. |
 | app-metrics.globalInfluxTags | list | `["application"]` | Keys in an every event sent by any app that should be recorded in InfluxDB as "tags" (vs. "fields"). These will be concatenated with the `influxTags` from `globalAppConfig` |
-| app-metrics.image.pullPolicy | string | `"Always"` | Image pull policy |
-| app-metrics.image.repo | string | `"ghcr.io/lsst-sqre/telegraf"` | Telegraf image repository |
-| app-metrics.image.tag | string | `"nightly-alpine-2025-01-09"` | Telegraf image tag |
+| app-metrics.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| app-metrics.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
+| app-metrics.image.tag | string | `"1.34.0-alpine"` | Telegraf image tag |
 | app-metrics.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | app-metrics.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
 | app-metrics.nodeSelector | object | `{}` | Node labels for pod assignment |
@@ -360,7 +361,7 @@ Rubin Observatory's telemetry service
 | rest-proxy.heapOptions | string | `"-Xms512M -Xmx512M"` | Kafka REST proxy JVM Heap Option |
 | rest-proxy.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | rest-proxy.image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository |
-| rest-proxy.image.tag | string | `"7.8.0"` | Kafka REST proxy image tag |
+| rest-proxy.image.tag | string | `"7.9.0"` | Kafka REST proxy image tag |
 | rest-proxy.ingress.annotations | object | See `values.yaml` | Additional annotations to add to the ingress |
 | rest-proxy.ingress.enabled | bool | `false` | Whether to enable the ingress |
 | rest-proxy.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
@@ -439,8 +440,11 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.users.consdb.enabled | bool | `false` | Enable user consdb |
 | strimzi-kafka.users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
 | strimzi-kafka.users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
+| strimzi-kafka.users.obsloctap.enabled | bool | `false` | Enable user obsloctap |
 | strimzi-kafka.users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |
+| strimzi-kafka.users.qserv.enabled | bool | `false` | Enable user qserv (deployed by parent Sasquatch chart) |
 | strimzi-kafka.users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
+| strimzi-kafka.users.tap.enabled | bool | `false` | Enable user tap (deployed by parent Sasquatch chart) |
 | strimzi-kafka.users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
 | strimzi-kafka.users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
 | strimzi-kafka.users.tsSalKafka.topics | list | `[]` | Create lsst.s3.* related topics for the ts-salkafka user. |

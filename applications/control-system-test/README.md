@@ -18,6 +18,7 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | integration-testing.enabled | bool | `false` | Enable the integration testing system |
+| rumba.enabled | bool | `false` | Enable cronjob to clean up inactivate Kafka consumers. |
 | integration-testing.envEfd | string | `nil` | The Name of the EFD instance. |
 | integration-testing.image.tag | string | `nil` | The image tag for the Integration Test runner container |
 | integration-testing.jobLabelName | string | `"control-system-test"` | Label for jobs to get them to appear in application |
@@ -27,3 +28,9 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | integration-testing.s3Bucket | string | `nil` | The S3 bucket name to use |
 | integration-testing.serviceAccount | string | `"integration-tests"` | This sets the service account name |
 | integration-testing.workflowName | string | `"integration-test-workflow"` | Name for the top-level workflow |
+| rumba.failedJobsHistoryLimit | int | `1` | The number of failed pods to keep |
+| rumba.image.pullPolicy | string | `"Always"` |  |
+| rumba.image.tag | string | `"latest"` | The image tag for the rumba cronjob container |
+| rumba.namespace | string | `"control-system-test"` | This is the namespace in which the rumba cronjob will be placed |
+| rumba.schedule | string | "*/10 * * * *" (every ten minutes) | The Schedule for executing the job to clean up inactive consumers |
+| rumba.successfulJobsHistoryLimit | int | `2` | The number of succesful pods to keep |

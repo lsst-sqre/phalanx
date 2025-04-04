@@ -106,6 +106,30 @@ eas-sim:
   # -- Enable the EAS simulator CSC
   enabled: false
 
+epm-ess303:
+  # -- Enable the ESS:303 CSC
+  enabled: false
+
+epm-ess303-sim:
+  # -- Enable the ESS:303 simulator CSC
+  enabled: false
+
+epm-generator-ess305:
+  # -- Enable the ESS:305 CSC
+  enabled: false
+
+epm-generator-ess305-sim:
+  # -- Enable the ESS:305 simulator CSC
+  enabled: false
+
+epm-generator-ess306:
+  # -- Enable the ESS:306 CSC
+  enabled: false
+
+epm-generator-ess306-sim:
+  # -- Enable the ESS:303 simulator CSC
+  enabled: false
+
 epm1:
   # -- Enable the EPM:1 CSC
   enabled: false
@@ -160,6 +184,14 @@ mtdome-ess108:
 
 mtdome-ess108-sim:
   # -- Enable the ESS:108 simulator CSC
+  enabled: false
+
+ringss-ess304:
+  # -- Enable the ESS:304 CSC
+  enabled: false
+
+ringss-ess304-sim:
+  # -- Enable the ESS:304 simulator CSC
   enabled: false
 
 tma-ess001:

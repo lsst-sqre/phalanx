@@ -16,73 +16,93 @@ resources:
     cpu: "20m"
     memory: "110Mi"
 
-# -- Annotations for the giftless frontend pod
-podAnnotations: {}
+# -- Affinity rules for the giftless frontend pod
+affinity: {}
 
 # -- Node selector rules for the giftless frontend pod
 nodeSelector: {}
 
+# -- Annotations for the giftless frontend pod
+podAnnotations: {}
+
 # -- Tolerations for the giftless frontend pod
 tolerations: []
-
-# -- Affinity rules for the giftless frontend pod
-affinity: {}
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 image:
   # -- Giftless image to use
-  repository: ghcr.io/datopian/giftless
+  repository: "ghcr.io/datopian/giftless"
+
   # -- Pull policy for the giftless image
   pullPolicy: "IfNotPresent"
+
   # -- Tag of giftless image to use
   # @default -- The appVersion of the chart
   tag: ""
 
 ingress:
-  # -- FQDNs of giftless ingresses
-  # @default -- Must be overridden in environment-specific values file
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
   hostname:
     # -- FQDN for the read-only giftless ingress
     # @default -- Must be overridden in environment-specific values file
     readonly: ""
+
     # -- FQDN for the read-write giftless ingress
     # @default -- Must be overridden in environment-specific values file
     readwrite: ""
-  # -- Additional annotations to add to the ingress
-  annotations: {}
 
 server:
   # -- Turn on debugging mode
   debug: false
-  # -- Values for readonly server
+
   readonly:
     # -- Number of replicas for readonly server
     replicas: 1
+
     # -- Number of processes for readonly server
-    processes: 2
+    processes: 4
+
     # -- Number of threads per readonly process
     threads: 2
-  # -- Values for readwrite server
+
+    # -- Socket listen queue depth
+    queue: 1024
+
+    # -- Kill stuck worker after this many seconds
+    timeout: 86400
+
   readwrite:
     # -- Number of replicas for readwrite server
     replicas: 1
+
     # -- Number of processes for readwrite server
-    processes: 2
+    processes: 4
+
     # -- Number of threads per readwrite process
     threads: 2
 
-# -- Configuration for giftless server
+    # -- Socket listen queue depth
+    queue: 1024
+
+    # -- Kill stuck worker after this many seconds
+    timeout: 86400
+
 config:
   # -- Project name for GCS LFS Object Storage bucket
   # @default -- Must be overridden in environment-specific values file
   storageProjectName: ""
+
   # -- Bucket name for GCS LFS Object Storage bucket
   # @default -- Must be overridden in environment-specific values file
   bucketName: ""
+
   # -- Read-only service account name for GCS LFS Object Storage bucket
   # @default -- Must be overridden in environment-specific values file
   serviceAccountReadonly: ""
+
   # -- Read-write service account name for GCS LFS Object Storage bucket
   # @default -- Must be overridden in environment-specific values file
   serviceAccountReadwrite: ""

@@ -29,14 +29,16 @@ template:
             # configuration file is loaded.
             {{- range $repositoryLabel, $unused := .Values.config.repositories }}
             - path: "{{ $.Values.config.pathPrefix }}/repo/{{ $repositoryLabel }}/butler.yaml"
-              pathType: "Exact"
+              # These should be 'pathType: Exact', but newer versions of ingress-nginx don't allow periods
+              # in the path.  See https://github.com/kubernetes/ingress-nginx/issues/11176
+              pathType: "ImplementationSpecific"
               backend:
                 service:
                   name: "butler"
                   port:
                     number: 8080
             - path: "{{ $.Values.config.pathPrefix }}/repo/{{ $repositoryLabel }}/butler.json"
-              pathType: "Exact"
+              pathType: "ImplementationSpecific"
               backend:
                 service:
                   name: "butler"

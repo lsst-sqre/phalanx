@@ -157,6 +157,36 @@ dependencies:
   condition: epm301.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: epm-ess303
+  version: 1.0.0
+  condition: epm-ess303.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: epm-ess303-sim
+  version: 1.0.0
+  condition: epm-ess303-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: epm-generator-ess305
+  version: 1.0.0
+  condition: epm-generator-ess305.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: epm-generator-ess305-sim
+  version: 1.0.0
+  condition: epm-generator-ess305-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: epm-generator-ess306
+  version: 1.0.0
+  condition: epm-generator-ess306.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: epm-generator-ess306-sim
+  version: 1.0.0
+  condition: epm-generator-ess306-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: hvac
   version: 1.0.0
   condition: hvac.enabled
@@ -210,6 +240,16 @@ dependencies:
   alias: mtdome-ess108-sim
   version: 1.0.0
   condition: mtdome-ess108-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: ringss-ess304
+  version: 1.0.0
+  condition: ringss-ess304.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: ringss-ess304-sim
+  version: 1.0.0
+  condition: ringss-ess304-sim.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: tma-ess001

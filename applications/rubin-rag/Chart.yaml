@@ -1,0 +1,12 @@
+apiVersion: v2
+appVersion: 0.1.1
+description: RAG helpers for documentation searches
+name: rubin-rag
+sources:
+- https://github.com/lsst-dm/rubin_rag
+type: application
+version: 1.0.0
+dependencies:
+- name: weaviate
+  version: 17.2.1
+  repository: https://weaviate.github.io/weaviate-helm

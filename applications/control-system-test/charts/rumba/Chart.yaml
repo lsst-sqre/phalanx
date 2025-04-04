@@ -1,0 +1,4 @@
+apiVersion: v2
+name: rumba
+description: Helm chart for cronjob to clean-up inactive Kafka consumers.
+version: 1.0.0

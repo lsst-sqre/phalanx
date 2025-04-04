@@ -35,6 +35,7 @@ argo-cd:
         g, rra@lsst.cloud, role:admin
         g, svoutsin@lsst.cloud, role:admin
 
+        g, ameisner@lsst.cloud, role:developer
         g, ctslater@lsst.cloud, role:developer
         g, dirving@lsst.cloud, role:developer
         g, drbsmart@lsst.cloud, role:developer
@@ -47,6 +48,8 @@ argo-cd:
         g, loi@lsst.cloud, role:developer
         g, roby@lsst.cloud, role:developer
         g, salnikov@lsst.cloud, role:developer
+        g, yablonski@lsst.cloud, role:developer
+        g, leanne@lsst.cloud, role:developer
       scopes: "[email]"
 
   server:

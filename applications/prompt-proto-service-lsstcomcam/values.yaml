@@ -82,6 +82,8 @@ prompt-proto-service:
     auth_env: true
     # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
     disableBucketValidation: 0
+    # -- If set, configure S3 checksum options.
+    checksum: WHEN_REQUIRED
 
   imageNotifications:
     # -- Hostname and port of the Kafka provider
@@ -115,7 +117,7 @@ prompt-proto-service:
 
   # -- Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level).
   # @default -- log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING.
-  logLevel: "timer.lsst.activator=DEBUG"
+  logLevel: "timer.lsst.activator=DEBUG timer.lsst.daf.butler=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE lsst.daf.butler=VERBOSE"
 
   sasquatch:
     # -- Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload.
@@ -155,6 +157,8 @@ prompt-proto-service:
     # This is only useful if the container runs async workers.
     # If 0, idle timeout is ignored.
     responseStartTimeout: 900
+    # -- Maximum message age to process, in seconds.
+    expiration: 3600
 
   # -- The number of Knative requests that can be handled simultaneously by one container
   containerConcurrency: 1

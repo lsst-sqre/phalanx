@@ -1,4 +1,6 @@
 config:
+  metrics:
+    enabled: true
   worker:
     workerCount: 1
     identities:

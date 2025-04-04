@@ -7,11 +7,11 @@ controller:
         registry: "docker-registry.slac.stanford.edu"
         repository: "lsstsqre/sciplat-lab"
       pin:
-        - "w_2024_42"
+        - "w_2025_09"
     lab:
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
-        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
+        AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
         DAX_APDB_INDEX_URI: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
         HUB_ROUTE: "/nb/hub"
@@ -26,7 +26,7 @@ controller:
         LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
       homedirSchema: "initialThenUsername"
       nodeSelector:
-        "edu.stanford.slac.sdf.project/rubin": "true"
+        node-role.kubernetes.io/crowdstrike: ""
       nss:
         # Add rubin_users group (there is not yet a simpler way to do this).
         baseGroup: |

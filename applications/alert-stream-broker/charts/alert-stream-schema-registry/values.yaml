@@ -32,7 +32,7 @@ schemaSync:
     repository: lsstdm/lsst_alert_packet
     # -- Version of the container to use. If container isn't updating in Argo, switch to digest.
     # tag: tickets-DM-42606
-    digest: sha256:2712546d92a16afa073262db45711b025b07381075eb9935b6daa852100eea84
+    digest: sha256:f7d31cbb66621000921ae8894c316f9172026e1d2decabde06b09954bd3c4acb
     pullPolicy: Always
 
   # -- Subject name to use when inserting data into the Schema Registry

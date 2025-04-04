@@ -162,6 +162,8 @@ knative:
   # This is only useful if the container runs async workers.
   # If 0, startup timeout is ignored.
   responseStartTimeout: 0
+  # -- Maximum message age to process, in seconds.
+  expiration: 3600
 
 # -- Override the base name for resources
 nameOverride: ""

@@ -2,6 +2,17 @@ controller:
   googleServiceAccount: "nublado-controller@science-platform-int-dc5d.iam.gserviceaccount.com"
   slackAlerts: true
   config:
+    dropdownMenu:
+      release:
+        cutoffVersion: "27.0.0"
+      weekly:
+        number: 78
+      daily:
+        number: 25
+      releaseCandidate:
+        cutoffVersion: "28.0.0"
+      experimental:
+        age: "3w"
     fileserver:
       enabled: true
       nodeSelector:
@@ -22,12 +33,11 @@ controller:
         image: "sciplat-lab"
     lab:
       env:
-        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         DAF_BUTLER_REPOSITORY_INDEX: "https://data-int.lsst.cloud/api/butler/configs/idf-repositories.yaml"
-        S3_ENDPOINT_URL: "https://storage.googleapis.com"
+        S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         IDDS_CONFIG: "/opt/lsst/software/jupyterlab/panda/idds.cfg.client.template"
         PANDA_AUTH: "oidc"
         PANDA_VERIFY_HOST: "off"
@@ -44,7 +54,7 @@ controller:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "8.4.1"
+            tag: "8.8.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -103,8 +113,16 @@ controller:
     metrics:
       enabled: true
 
+hub:
+  useSubdomains: true
+
 jupyterhub:
   hub:
+    config:
+      JupyterHub:
+        # This has to exist for Zero to JupyterHub to configure the proxy
+        # correctly.
+        subdomain_host: "nb.data-int.lsst.cloud"
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true

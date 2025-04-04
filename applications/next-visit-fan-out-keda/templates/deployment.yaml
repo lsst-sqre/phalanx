@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "next-visit-fan-out-keda.fullname" . }}
+  labels:
+    {{- include "next-visit-fan-out-keda.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "next-visit-fan-out-keda.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "next-visit-fan-out-keda.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: PLATFORM
+              value: {{ .Values.platform }}
+            - name: KAFKA_SCHEMA_REGISTRY_URL
+              value: {{ .Values.kafka.schemaRegistryUrl }}
+            - name: KAFKA_CLUSTER
+              value: {{ .Values.kafka.sasquatchAddress }}
+            - name: CONSUMER_GROUP
+              value: {{ .Values.kafka.consumerGroup }}
+            - name: NEXT_VISIT_TOPIC
+              value: {{ .Values.kafka.nextVisitTopic }}
+            - name: OFFSET
+              value: {{ .Values.kafka.offset }}
+            - name: MESSAGE_EXPIRATION
+              value: '{{ .Values.kafka.expiration }}'
+            - name: SASL_MECHANISM
+              value: {{ .Values.kafka.saslMechamism }}
+            - name: SECURITY_PROTOCOL
+              value: {{ .Values.kafka.securityProtocol }}
+            - name: MAX_FAN_OUT_MESSAGES
+              value: {{ .Values.knative.maxMessages | toString | quote }}
+            - name: RETRY_KNATIVE_REQUESTS
+              value: {{ ternary "true" "false" .Values.knative.retryRequests | quote }}
+            - name: SASL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: kafka_pp_sasl_username
+                  name: {{ template "next-visit-fan-out-keda.fullname" . }}-secret
+            - name: SASL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: kafka_pp_sasl_password
+                  name: {{ template "next-visit-fan-out-keda.fullname" . }}-secret
+            - name: DEBUG_LOGS
+              value: {{ ternary "true" "false" .Values.debug | quote }}
+            - name: SUPPORTED_INSTRUMENTS
+              value: {{ .Values.instruments }}
+            - name: INSTRUMENT_CONFIG_FILE
+              value: /etc/config/instrument.yaml
+            - name: REDIS_HOST
+              value: {{ .Values.keda.redisHost }}
+            - name: REDIS_RETRY_DELAY_CAP
+              value: {{ .Values.keda.redisRetryDelayCap | toString | quote }}
+            - name: REDIS_RETRY_INITIAL_DELAY
+              value: {{ .Values.keda.redisRetryInitialDelay | toString | quote }}
+            - name: REDIS_RETRY_COUNT
+              value: {{ .Values.keda.redisRetryCount | toString | quote }}
+            - name: REDIS_HEALTH_CHECK_INTERVAL
+              value: {{ .Values.keda.redisHealthCheckInterval | toString | quote }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: instrument-config
+            mountPath: /etc/config
+            readOnly: true
+
+      volumes:
+        - name: kafka-sasl-prompt-prompt-processing
+          secret:
+            secretName: {{ template "next-visit-fan-out-keda.fullname" . }}-secret
+        - name: instrument-config
+          configMap:
+            name: instrument-map
+            items:
+            - key: "instruments"
+              path: instrument.yaml

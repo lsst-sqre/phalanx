@@ -34,7 +34,7 @@ prompt-proto-service:
     topic: prompt-processing-dev
 
   apdb:
-    config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcomcam-dev.py
+    config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcomcam-dev.yaml
 
   alerts:
     topic: "alert-stream-test"
@@ -42,5 +42,9 @@ prompt-proto-service:
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     auth_env: false
+
+  knative:
+    # Dev processes very old images, set to ~20 years
+    expiration: 600_000_000.0
 
   fullnameOverride: "prompt-proto-service-lsstcomcam"

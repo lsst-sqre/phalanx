@@ -11,6 +11,12 @@ rubintv:
       value: &s3E "https://s3.rubintv.ls.lsst.org"
     - name: RAPID_ANALYSIS_LOCATION
       value: "BTS"
+    - name: RA_REDIS_HOST
+      value: "redis-service.rapid-analysis.svc.cluster.local"
+    envSecrets:
+    - name: RA_REDIS_PASSWORD
+      secretName: rubintv-dev-secrets
+      secretKey: redis-password
     image:
       tag: deploy
       pullPolicy: Always

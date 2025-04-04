@@ -7,10 +7,16 @@ applications:
   cert-manager: false
   gafaelfawr: false
   ingress-nginx: false
+  keda: true
   next-visit-fan-out: true
+  next-visit-fan-out-keda: false
+  prompt-keda-latiss: true
   prompt-proto-service-hsc: false
-  prompt-proto-service-latiss: true
+  prompt-proto-service-latiss: false
   prompt-proto-service-lsstcam: false
+  prompt-proto-service-lsstcamimsim: false
   prompt-proto-service-lsstcomcam: false
   prompt-proto-service-lsstcomcamsim: false
+  prompt-redis: true
+  strimzi: true
   vault-secrets-operator: false

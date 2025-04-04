@@ -33,6 +33,12 @@ Deployment for the Environmental Awareness Systems CSCs
 | earthquake-ess302.enabled | bool | `false` | Enable ESS:302 CSC |
 | eas-sim.enabled | bool | `false` | Enable the EAS simulator CSC |
 | eas.enabled | bool | `false` | Enable the EAS CSC |
+| epm-ess303-sim.enabled | bool | `false` | Enable the ESS:303 simulator CSC |
+| epm-ess303.enabled | bool | `false` | Enable the ESS:303 CSC |
+| epm-generator-ess305-sim.enabled | bool | `false` | Enable the ESS:305 simulator CSC |
+| epm-generator-ess305.enabled | bool | `false` | Enable the ESS:305 CSC |
+| epm-generator-ess306-sim.enabled | bool | `false` | Enable the ESS:303 simulator CSC |
+| epm-generator-ess306.enabled | bool | `false` | Enable the ESS:306 CSC |
 | epm1-sim.enabled | bool | `false` | Enable the EPM:1 simulator CSC |
 | epm1.enabled | bool | `false` | Enable the EPM:1 CSC |
 | epm301.enabled | bool | `false` | Enable the EPM:301 CSC |
@@ -58,6 +64,8 @@ Deployment for the Environmental Awareness Systems CSCs
 | mtdome-ess107.enabled | bool | `false` | Enable the ESS:107 CSC |
 | mtdome-ess108-sim.enabled | bool | `false` | Enable the ESS:108 simulator CSC |
 | mtdome-ess108.enabled | bool | `false` | Enable the ESS:108 CSC |
+| ringss-ess304-sim.enabled | bool | `false` | Enable the ESS:304 simulator CSC |
+| ringss-ess304.enabled | bool | `false` | Enable the ESS:304 CSC |
 | tma-ess001-sim.enabled | bool | `false` | Enable the ESS:1 simulator CSC |
 | tma-ess001.enabled | bool | `false` | Enable the ESS:1 CSC |
 | tma-ess104-sim.enabled | bool | `false` | Enable the ESS:104 simulator CSC |

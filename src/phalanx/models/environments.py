@@ -15,9 +15,9 @@ from pydantic import (
     GetJsonSchemaHandler,
     field_validator,
 )
+from pydantic.alias_generators import to_camel
 from pydantic.json_schema import JsonSchemaValue
 from pydantic_core import CoreSchema
-from safir.pydantic import CamelCaseModel
 
 from .applications import Application, ApplicationInstance
 from .secrets import Secret
@@ -40,7 +40,7 @@ __all__ = [
 ]
 
 
-class GCPMetadata(CamelCaseModel):
+class GCPMetadata(BaseModel):
     """Google Cloud Platform hosting metadata.
 
     Holds information about where in Google Cloud Platform this Phalanx
@@ -49,6 +49,10 @@ class GCPMetadata(CamelCaseModel):
     options to pass to :command:`gcloud` to do things such as get Kubernetes
     credentials.
     """
+
+    model_config = ConfigDict(
+        alias_generator=to_camel, extra="forbid", populate_by_name=True
+    )
 
     project_id: str = Field(
         ...,
@@ -69,8 +73,12 @@ class GCPMetadata(CamelCaseModel):
     )
 
 
-class OnepasswordConfig(CamelCaseModel):
+class OnepasswordConfig(BaseModel):
     """Configuration for 1Password static secrets source."""
+
+    model_config = ConfigDict(
+        alias_generator=to_camel, extra="forbid", populate_by_name=True
+    )
 
     connect_url: AnyHttpUrl = Field(
         ...,
@@ -87,8 +95,12 @@ class OnepasswordConfig(CamelCaseModel):
     )
 
 
-class ControlSystemConfig(CamelCaseModel):
+class ControlSystemConfig(BaseModel):
     """Configuration for the Control System."""
+
+    model_config = ConfigDict(
+        alias_generator=to_camel, extra="forbid", populate_by_name=True
+    )
 
     app_namespace: str | None = Field(
         None,
@@ -152,12 +164,14 @@ class ControlSystemConfig(CamelCaseModel):
     )
 
 
-class EnvironmentBaseConfig(CamelCaseModel):
+class EnvironmentBaseConfig(BaseModel):
     """Environment configuration options.
 
     Configuration common to `~phalanx.models.environments.EnvironmentConfig`
     and `~phalanx.models.environments.Environment`.
     """
+
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
     name: str = Field(..., title="Name", description="Name of the environment")
 
@@ -262,6 +276,12 @@ class EnvironmentBaseConfig(CamelCaseModel):
         return path
 
     @property
+    def vault_mount_point(self) -> str:
+        """Vault mount point."""
+        mount_point, _ = self.vault_path_prefix.split("/", 1)
+        return mount_point
+
+    @property
     def vault_read_approle(self) -> str:
         """Name of the Vault read AppRole for this environment."""
         # AppRole names cannot contain /, so we'll use only the final
@@ -307,6 +327,10 @@ class EnvironmentConfig(EnvironmentBaseConfig):
     `EnvironmentBaseConfig` instead.
     """
 
+    model_config = ConfigDict(
+        alias_generator=to_camel, extra="forbid", populate_by_name=True
+    )
+
     applications: dict[str, bool] = Field(
         ...,
         title="Enabled applications",
@@ -337,8 +361,6 @@ class EnvironmentConfig(EnvironmentBaseConfig):
         ),
     )
 
-    model_config = ConfigDict(extra="forbid")
-
     @classmethod
     def __get_pydantic_json_schema__(
         cls, core_schema: CoreSchema, handler: GetJsonSchemaHandler
@@ -359,8 +381,6 @@ class Environment(EnvironmentBaseConfig):
 
     applications: dict[str, ApplicationInstance]
     """Applications enabled for that environment, by name."""
-
-    model_config = ConfigDict(populate_by_name=True)
 
     def all_applications(self) -> list[ApplicationInstance]:
         """Return all enabled applications in sorted order."""

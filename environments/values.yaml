@@ -60,6 +60,9 @@ applications:
   # -- Enable the cm-service application
   cm-service: false
 
+  # -- Enable the consdbtap application
+  consdbtap: false
+
   # -- Enable the control-system-test application
   control-system-test: false
 
@@ -85,6 +88,9 @@ applications:
   # most other applications use `GafaelfawrIngress`
   gafaelfawr: true
 
+  # -- Enable the rubin-rag application
+  rubin-rag: false
+
   # -- Enable the ghostwriter application
   ghostwriter: false
 
@@ -103,6 +109,9 @@ applications:
   # -- Enable the jira-data-proxy application
   jira-data-proxy: false
 
+  # -- Enable the keda application
+  keda: false
+
   # -- Enable the livetap application
   livetap: false
 
@@ -120,6 +129,9 @@ applications:
 
   # -- Enable the next-visit-fan-out application
   next-visit-fan-out: false
+
+  # -- Enable the next-visit-fan-out-keda application
+  next-visit-fan-out-keda: false
 
   # -- Enable the noteburst application (required by times-square)
   noteburst: false
@@ -155,6 +167,30 @@ applications:
 
   # -- Enable the ppdb-replication application
   ppdb-replication: false
+
+  # -- Enable the prompt-kafka application
+  prompt-kafka: false
+
+  # -- Enable the prompt-keda-hsc application
+  prompt-keda-hsc: false
+
+  # -- Enable the prompt-keda-latiss application
+  prompt-keda-latiss: false
+
+  # -- Enable the prompt-keda-lsstcam application
+  prompt-keda-lsstcam: false
+
+  # -- Enable the prompt-keda-lsstcamimsim application
+  prompt-keda-lsstcamimsim: false
+
+  # -- Enable the prompt-keda-lsstcomcam application
+  prompt-keda-lsstcomcam: false
+
+  # -- Enable the prompt-keda-lsstcomcamsim application
+  prompt-keda-lsstcomcamsim: false
+
+  # -- Enable the prompt-redis application
+  prompt-redis: false
 
   # -- Enable the rubintv application
   rubintv: false
@@ -200,6 +236,9 @@ applications:
 
   # -- Enable the prompt-proto-service-lsstcam application
   prompt-proto-service-lsstcam: false
+
+  # -- Enable the prompt-proto-service-lsstcamimsim application
+  prompt-proto-service-lsstcamimsim: false
 
   # -- Enable the prompt-proto-service-lsstcomcam application
   prompt-proto-service-lsstcomcam: false

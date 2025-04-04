@@ -24,3 +24,4 @@ Selector labels
 app.kubernetes.io/name: "sasquatch-backpack"
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+

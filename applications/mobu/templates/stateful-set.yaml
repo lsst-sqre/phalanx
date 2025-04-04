@@ -1,0 +1,170 @@
+# See the docs for why this is a StatefulSet and not a Deployment:
+# https://mobu.lsst.io/user-guide/multiple-replicas.html
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: "mobu"
+  labels:
+    {{- include "mobu.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "mobu.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        # Force the pod to restart when the config map is updated.
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "mobu.selectorLabels" . | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      {{- if .Values.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          env:
+            {{- if .Values.config.slackAlerts }}
+            - name: "MOBU_ALERT_HOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu"
+                  key: "ALERT_HOOK"
+            {{- end }}
+            - name: "MOBU_ENVIRONMENT_URL"
+              value: {{ .Values.global.baseUrl }}
+            - name: "MOBU_REPLICA_COUNT"
+              value: {{ .Values.replicaCount | quote }}
+            - name: "MOBU_REPLICA_INDEX"
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['apps.kubernetes.io/pod-index']
+            - name: "MOBU_GAFAELFAWR_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu-gafaelfawr-token"
+                  key: "token"
+            - name: "MOBU_SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.environmentName }}
+            - name: "MOBU_SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu"
+                  key: "sentry-dsn"
+            - name: "SENTRY_RELEASE"
+              value: {{ .Values.image.tag | default .Chart.AppVersion }}
+            {{- if .Values.config.githubRefreshApp }}
+            - name: "MOBU_GITHUB_REFRESH_APP_WEBHOOK_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu"
+                  key: "github-refresh-app-webhook-secret"
+            {{- end}}
+            {{- if .Values.config.githubCiApp }}
+            - name: "MOBU_GITHUB_CI_APP_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu"
+                  key: "github-ci-app-id"
+            - name: "MOBU_GITHUB_CI_APP_PRIVATE_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu"
+                  key: "github-ci-app-private-key"
+            - name: "MOBU_GITHUB_CI_APP_WEBHOOK_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu"
+                  key: "github-ci-app-webhook-secret"
+            {{- end}}
+            {{- if .Values.config.metrics.enabled }}
+            - name: "KAFKA_BOOTSTRAP_SERVERS"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu-kafka"
+                  key: "bootstrapServers"
+            - name: "KAFKA_SECURITY_PROTOCOL"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu-kafka"
+                  key: "securityProtocol"
+            - name: "KAFKA_CLIENT_CERT_PATH"
+              value: "/etc/mobu-kafka/user.crt"
+            - name: "KAFKA_CLIENT_KEY_PATH"
+              value: "/etc/mobu-kafka/user.key"
+            - name: "KAFKA_CLUSTER_CA_PATH"
+              value: "/etc/mobu-kafka/ca.crt"
+            {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+            timeoutSeconds: 10
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "config"
+              mountPath: "/etc/mobu"
+              readOnly: true
+            - name: "tmp"
+              mountPath: "/tmp"
+            {{- if .Values.config.metrics.enabled }}
+            - name: "kafka"
+              mountPath: "/etc/mobu-kafka/ca.crt"
+              readOnly: true
+              subPath: "ssl.truststore.crt"
+            - name: "kafka"
+              mountPath: "/etc/mobu-kafka/user.crt"
+              readOnly: true
+              subPath: "ssl.keystore.crt"
+            - name: "kafka"
+              mountPath: "/etc/mobu-kafka/user.key"
+              readOnly: true
+              subPath: "ssl.keystore.key"
+            {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: "config"
+          configMap:
+            name: "mobu"
+        - name: "tmp"
+          emptyDir: {}
+        {{- if .Values.config.metrics.enabled }}
+        - name: "kafka"
+          secret:
+            secretName: "mobu-kafka"
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

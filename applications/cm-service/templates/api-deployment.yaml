@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-server
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.frontend.replicaCount }}
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      {{- include "application.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "frontend"
+  template:
+    metadata:
+      annotations:
+        {{- with .Values.frontend.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "application.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "frontend"
+    spec:
+      {{- with .Values.frontend.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Chart.Name }}-env
+          env:
+            - name: BUTLER__MOCK
+              value: "1"
+            - name: DB__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cm-service
+                  key: internalDatabasePassword
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/healthz"
+              port: "http"
+          resources:
+            {{- toYaml .Values.frontend.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          # TODO: we hopefully do not actually need this mounted on the API
+          volumeMounts:
+            {{- with .Values.config.outputVolume }}
+            - mountPath: {{ .mountPath }}
+              name: "output-volume"
+              subPath: {{ .subPath }}
+            {{- end }}
+      volumes:
+        - name: output-volume
+          persistentVolumeClaim:
+            claimName: {{ .Chart.Name }}-output
+      {{- with .Values.frontend.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.frontend.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

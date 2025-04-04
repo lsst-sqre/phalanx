@@ -7,5 +7,13 @@ config:
   enableSentry: true
   sentryTracesSampleRate: 1.0
   sentryReplaysOnErrorSampleRate: 1.0
+  enableAppsMenu: true
+  appLinks:
+    - label: "Times Square"
+      href: "/times-square/"
+      internal: true
+    - label: "Argo CD"
+      href: "/argo-cd/"
+      internal: false
 ingress:
   timesSquareScope: "exec:notebook"

@@ -66,10 +66,6 @@ atheaderservice:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
   resources:
     limits:
       cpu: 800m
@@ -111,14 +107,13 @@ atoods:
     repository: ts-dockerhub.lsst.org/atoods
     pullPolicy: Always
   env:
-    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
-    AWS_ACCESS_KEY_ID: oods-latiss
-    AWS_ENDPOINT_URL: https://s3-butler.ls.lsst.org
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: AWS_SECRET_ACCESS_KEY
-    key: oods-latiss-secret-key
+  s3Credentials:
+  - lfa-credentials.ini
+  - oods-latiss-credentials.ini
   butlerSecret:
     containerPath: &bs-cp /home/saluser/.lsst
     dbUser: oods
@@ -159,7 +154,8 @@ atoods:
                   class:
                       import : lsst.ctrl.oods.messageAttendant
                       name : MessageAttendant
-                  repoDirectory : s3://rubinobs-butler-latiss
+                  repoDirectory : s3://butler@rubinobs-butler-latiss
+                  s3profile: butler
                   collections:
                       - LATISS/raw/all
                   cleanCollections:
@@ -170,7 +166,7 @@ atoods:
                       - collection: LATISS/quickLook
                         filesOlderThan:
                             <<: *interval
-                            days: 5
+                            days: 2
                   scanInterval:
                       <<: *interval
                       hours: 1
@@ -222,10 +218,3 @@ atspectrograph-sim:
 
 hexapod-sim:
   enabled: true
-  resources:
-    limits:
-      cpu: 100m
-      memory: 500Mi
-    requests:
-      cpu: 20m
-      memory: 200Mi

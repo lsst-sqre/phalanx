@@ -1,0 +1,213 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: controller
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  replicas: {{ .Values.kafka.replicas }}
+  roles:
+    - controller
+  storage:
+    type: jbod
+    volumes:
+    - id: 0
+      type: persistent-claim
+      size: {{ .Values.kafkaController.storage.size }}
+      class: {{ .Values.kafkaController.storage.storageClassName }}
+      deleteClaim: false
+  {{- with .Values.kafkaController.resources }}
+  resources:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: kafka
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+  annotations:
+    strimzi.io/next-node-ids: "[0-99]"
+spec:
+  replicas: {{ .Values.kafka.replicas }}
+  roles:
+    - broker
+  storage:
+    type: jbod
+    volumes:
+    - id: 0
+      type: persistent-claim
+      size: {{ .Values.kafka.storage.size }}
+      {{- if .Values.kafka.storage.storageClassName }}
+      class: {{ .Values.kafka.storage.storageClassName }}
+      {{- end}}
+      deleteClaim: false
+  {{- with .Values.kafka.resources }}
+  resources:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: {{ .Values.cluster.name }}
+  annotations:
+    {{- if .Values.kraft.enabled }}
+    strimzi.io/kraft: enabled
+    {{- end }}
+    strimzi.io/node-pools: enabled
+spec:
+  kafka:
+    template:
+      persistentVolumeClaim:
+        metadata:
+          annotations:
+            argocd.argoproj.io/compare-options: IgnoreExtraneous
+            argocd.argoproj.io/sync-options: Prune=false
+      pod:
+        {{- with .Values.kafka.affinity }}
+        affinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.kafka.tolerations }}
+        tolerations:
+          {{- toYaml . | nindent 10 }}
+        {{- end}}
+    version: {{ .Values.kafka.version | quote }}
+    replicas: {{ .Values.kafka.replicas }}
+    listeners:
+      {{- if .Values.kafka.listeners.noauth.enabled }}
+      # internal listener without tls encryption and without authentication
+      # used by ceph bucket notifications as authentication does not work with
+      - name: noauth
+        port: 9095
+        type: internal
+        tls: false
+      {{- end }}
+      {{- if .Values.kafka.listeners.plain.enabled }}
+      # internal listener without tls encryption and with scram-sha-512 authentication
+      # used by clients inside the Kubernetes cluster
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+        authentication:
+          type: scram-sha-512
+      {{- end }}
+      {{- if .Values.kafka.listeners.tls.enabled }}
+      # internal listener with tls encryption and mutual tls authentication
+      # used by the schema registry and kafka connect clients
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+        authentication:
+          type: tls
+      {{- end }}
+      {{- if .Values.kafka.listeners.external.enabled }}
+      # external listener of type loadbalancer with tls encryption and scram-sha-512
+      # authentication used by clients outside the Kubernetes cluster
+      - name: external
+        port: 9094
+        type: loadbalancer
+        tls: {{ .Values.kafka.externalListener.tls.enabled }}
+        authentication:
+          type: scram-sha-512
+        configuration:
+          bootstrap:
+            {{- if .Values.kafka.externalListener.bootstrap.loadBalancerIP }}
+            loadBalancerIP: {{ .Values.kafka.externalListener.bootstrap.loadBalancerIP }}
+            {{- end }}
+            {{- if .Values.kafka.externalListener.bootstrap.annotations }}
+            annotations: {{ .Values.kafka.externalListener.bootstrap.annotations }}
+            {{- end }}
+          {{- if .Values.kafka.externalListener.brokers }}
+          brokers:
+            {{- range $broker := .Values.kafka.externalListener.brokers }}
+            - broker: {{ $broker.broker }}
+              loadBalancerIP: {{ $broker.loadBalancerIP }}
+              advertisedHost: {{ $broker.host }}
+              advertisedPort: 9094
+              annotations:
+                {{- range $key, $value  := $broker.annotations }}
+                {{ $key }}: {{ $value }}
+                {{- end}}
+            {{- end }}
+          {{- end }}
+          {{- if and (.Values.kafka.externalListener.tls.enabled) (.Values.kafka.externalListener.bootstrap.host) }}
+          brokerCertChainAndKey:
+            secretName: {{ .Values.cluster.name }}-external-tls
+            certificate: tls.crt
+            key: tls.key
+          {{- end }}
+      {{- end }}
+
+    authorization:
+      type: simple
+{{- if .Values.superusers }}
+      superUsers:
+{{- range .Values.superusers }}
+        - {{ . }}
+{{- end }}
+{{- end }}
+    config:
+      offsets.topic.replication.factor:  {{ .Values.kafka.replicas }}
+      transaction.state.log.replication.factor:  {{ .Values.kafka.replicas }}
+      transaction.state.log.min.isr: {{ .Values.kafka.minInsyncReplicas }}
+      default.replication.factor: {{ .Values.kafka.replicas }}
+      min.insync.replicas: {{ .Values.kafka.minInsyncReplicas }}
+      {{- range $key, $value := .Values.kafka.config }}
+      {{ $key }}: {{ $value }}
+      {{- end }}
+    {{- if .Values.kafka.metricsConfig.enabled }}
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-metrics
+          key: kafka-metrics-config.yml
+    {{- end }}
+    storage:
+      type: jbod
+      volumes:
+        # Note that storage is configured per replica. If there are 3 replicas,
+        # and 2 volumes in this array, each replica will get 2
+        # PersistentVolumeClaims for the configured size, for a total of 6
+        # volumes.
+      - id: 0
+        type: persistent-claim
+        size: {{ .Values.kafka.storage.size }}
+        {{- if .Values.kafka.storage.storageClassName }}
+        class: {{ .Values.kafka.storage.storageClassName }}
+        {{- end}}
+        deleteClaim: false
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+    template:
+      topicOperatorContainer:
+        env:
+        - name: STRIMZI_MAX_QUEUE_SIZE
+          value: "8192"
+  {{- if .Values.kafkaExporter.enabled }}
+  kafkaExporter:
+    topicRegex: {{ .Values.kafkaExporter.topicRegex }}
+    groupRegex: {{ .Values.kafkaExporter.groupRegex }}
+    logging: {{ .Values.kafkaExporter.logging }}
+    enableSaramaLogging: {{ .Values.kafkaExporter.enableSaramaLogging }}
+    {{- with .Values.kafkaExporter.resources }}
+    resources:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.cluster.monitorLabel }}
+    template:
+      pod:
+        metadata:
+          labels:
+            {{- toYaml . | nindent 12 }}
+    {{- end }}
+  {{- end }}
+  {{ if .Values.cruiseControl.enabled }}
+  cruiseControl: {}
+  {{- end }}

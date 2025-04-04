@@ -1,0 +1,178 @@
+prompt-proto-service:
+
+  # -- Annotations for the prompt-proto-service pod
+  # @default -- See the `values.yaml` file.
+  podAnnotations:
+    autoscaling.knative.dev/min-scale: "3"
+    # Expect to need roughly n_detector × request_latency / survey_cadence pods
+    # For 120s latency and 30s cadence, this is 756.
+    autoscaling.knative.dev/max-scale: "800"
+    autoscaling.knative.dev/target-utilization-percentage: "60"
+    autoscaling.knative.dev/target-burst-capacity: "-1"
+    queue.sidecar.serving.knative.dev/cpu-resource-request: "25m"
+    queue.sidecar.serving.knative.dev/cpu-resource-limit: "1000m"
+    queue.sidecar.serving.knative.dev/memory-resource-request: "400Mi"
+    queue.sidecar.serving.knative.dev/memory-resource-limit: "800Mi"
+    queue.sidecar.serving.knative.dev/ephemeral-storage-resource-request: "400Mi"
+    queue.sidecar.serving.knative.dev/ephemeral-storage-resource-limit: "450Mi"
+    # Update this field if using latest or static image tag in dev
+    revision: "1"
+
+  image:
+    # -- Image to use in the PP deployment
+    repository: ghcr.io/lsst-dm/prompt-service
+    # -- Pull policy for the PP image
+    # @default -- `IfNotPresent` in prod, `Always` in dev
+    pullPolicy: IfNotPresent
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: latest
+
+  worker:
+    # -- The number of requests to process before rebooting a worker.
+    # If 0, workers process requests indefinitely.
+    restart: 0
+    # -- Maximum time that a worker can process a next_visit request (seconds).
+    timeout: 900
+    # -- When Knative shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds).
+    grace_period: 45
+
+  instrument:
+    # -- The "short" name of the instrument
+    name: LSSTCam-imSim
+    pipelines:
+      # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
+      # if the result (including any comments) is longer than 72 characters.
+      # The config will get corrupted after template substitution.
+      # Block-style mappings can have lines of any length.
+
+      # -- YAML-formatted config describing which pipeline(s) should be run for which visits' raws.
+      # Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
+      # @default -- None, must be set
+      main: ""
+      # -- YAML-formatted config describing which pipeline(s) should be run before which visits' raw arrival.
+      # @default -- None, must be set
+      preprocessing: ""
+    # -- Skymap to use with the instrument
+    skymap: "DC2_cells_v1"
+    # -- Number of arcseconds to pad the spatial region in preloading.
+    preloadPadding: 50
+    # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
+    # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
+    # @default -- None, must be set
+    calibRepo: ""
+
+  cache:
+    # -- The default number of datasets of each type to keep.
+    # The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache.
+    baseSize: 3
+    # -- A factor by which to multiply `baseSize` for refcat datasets.
+    refcatsPerImage: 6
+    # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
+    patchesPerImage: 12
+
+  s3:
+    # -- Bucket containing the incoming raw images
+    # @default -- None, must be set
+    imageBucket: ""
+    # -- S3 endpoint containing `imageBucket`
+    # @default -- None, must be set
+    endpointUrl: ""
+    # -- If set, get S3 credentials from this application's Vault secret.
+    auth_env: true
+    # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
+    disableBucketValidation: 0
+    # -- If set, configure S3 checksum options.
+    checksum: WHEN_REQUIRED
+
+  # -- The URI to a microservice that maps image metadata to a file location.
+  # If empty, Prompt Processing does not use a microservice.
+  raw_microservice: ""
+
+  imageNotifications:
+    # -- Hostname and port of the Kafka provider
+    # @default -- None, must be set
+    kafkaClusterAddress: ""
+    # -- Topic where raw image arrival notifications appear
+    # @default -- None, must be set
+    topic: ""
+    # -- Kafka consumer offset reset setting for image arrival notifications
+    consumerOffsetReset: "latest"
+    # -- Timeout to wait after expected script completion for raw image arrival (seconds).
+    imageTimeout: 20
+
+  apdb:
+    # -- URL to a serialized APDB configuration, or the "label:" prefix
+    # followed by the indexed name of such a config.
+    # @default -- None, must be set
+    config: ""
+
+  alerts:
+    # -- Username for sending alerts to the alert stream
+    username: "kafka-admin"
+    # -- Server address for the alert stream
+    server: "usdf-alert-stream-dev.lsst.cloud:9094"
+    # -- Topic name where alerts will be sent
+    # @default -- None, must be set
+    topic: ""
+
+  registry:
+    # -- If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted.
+    centralRepoFile: false
+
+  # -- Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level).
+  # @default -- log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING.
+  logLevel: "timer.lsst.activator=DEBUG timer.lsst.daf.butler=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE lsst.daf.butler=VERBOSE"
+
+  sasquatch:
+    # -- Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload.
+    # This is a preliminary implementation of Sasquatch support, and this parameter may be deprecated
+    # if we instead support `SasquatchDatastore` in the future.
+    endpointUrl: ""
+    # -- Namespace in the Sasquatch system with which to associate metrics.
+    namespace: lsst.prompt
+    # -- If set, this application's Vault secret must contain a `sasquatch_token` key containing the authentication token for `sasquatch.endpointUrl`.
+    # Leave unset to attempt anonymous access.
+    auth_env: true
+
+  knative:
+    # -- The cpu cores requested for the full pod (see `containerConcurrency`).
+    cpuRequest: 1
+    # -- The maximum cpu cores for the full pod (see `containerConcurrency`).
+    cpuLimit: 1
+    # -- The storage space reserved for each container (mostly local Butler).
+    # This allocation is for the full pod (see `containerConcurrency`)
+    ephemeralStorageRequest: "8Gi"
+    # -- The maximum storage space allowed for each container (mostly local Butler).
+    # This allocation is for the full pod (see `containerConcurrency`)
+    ephemeralStorageLimit: "8Gi"
+    # -- GPUs enabled.
+    gpu: false
+    # -- The number of GPUs to request for the full pod (see `containerConcurrency`).
+    gpuRequest: 0
+    # -- The minimum memory to request for the full pod (see `containerConcurrency`).
+    memoryRequest: "2Gi"
+    # -- The maximum memory limit for the full pod (see `containerConcurrency`).
+    memoryLimit: "12Gi"
+    # -- To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`.
+    # This parameter adds extra time to that minimum (seconds).
+    extraTimeout: 10
+    # -- Maximum time that a container can send nothing to Knative (seconds).
+    # This is only useful if the container runs async workers.
+    # If 0, idle timeout is ignored.
+    idleTimeout: 0
+    # -- Maximum time that a container can send nothing to Knative after initial submission (seconds).
+    # This is only useful if the container runs async workers.
+    # If 0, idle timeout is ignored.
+    responseStartTimeout: 0
+    # -- Maximum message age to process, in seconds.
+    expiration: 3600
+
+  # -- The number of Knative requests that can be handled simultaneously by one container
+  containerConcurrency: 1
+
+  # -- Kubernetes YAML configs for extra container volume(s).
+  # Any volumes required by other config options are automatically handled by the Helm chart.
+  additionalVolumeMounts: []
+
+  # -- Affinity rules for the prompt processing pods
+  affinity: {}

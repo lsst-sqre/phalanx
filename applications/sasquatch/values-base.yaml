@@ -49,11 +49,11 @@ strimzi-kafka:
           host: sasquatch-base-kafka-2.lsst.codes
     resources:
       requests:
-        memory: 48Gi
-        cpu: 4
+        memory: 128Gi
+        cpu: 32
       limits:
-        memory: 48Gi
-        cpu: 4
+        memory: 128Gi
+        cpu: 32
     metricsConfig:
       enabled: true
   kafkaExporter:
@@ -61,11 +61,11 @@ strimzi-kafka:
     enableSaramaLogging: true
     resources:
       requests:
-        cpu: 500m
-        memory: 128Mi
+        cpu: "3"
+        memory: 512Mi
       limits:
-        cpu: 1500m
-        memory: 384Mi
+        cpu: "8"
+        memory: 1Gi
   kraft:
     enabled: true
   kafkaController:
@@ -140,10 +140,10 @@ influxdb:
     storageClass: rook-ceph-block
   resources:
     requests:
-      memory: 16Gi
+      memory: 64Gi
       cpu: 8
     limits:
-      memory: 16Gi
+      memory: 64Gi
       cpu: 8
 
 customInfluxDBIngress:
@@ -185,6 +185,7 @@ telegraf-kafka-consumer:
       debug: true
     m1m3:
       enabled: true
+      metric_batch_size: 2500
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTM1M3" ]
@@ -284,6 +285,7 @@ rest-proxy:
     topics:
       - lsst.obsenv.action
       - lsst.obsenv.summary
+      - lsst.obsenv.run-branch
     topicPrefixes:
       - lsst.obsenv
 

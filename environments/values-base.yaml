@@ -25,6 +25,7 @@ applications:
   obsenv-management: true
   obssys: true
   portal: true
+  rapid-analysis: true
   rubintv: true
   sasquatch: true
   simonyitel: true
@@ -35,6 +36,6 @@ applications:
   uws: true
 
 controlSystem:
-  imageTag: "k0004"
+  imageTag: "c0041"
   siteTag: "base"
   s3EndpointUrl: "https://s3.ls.lsst.org"

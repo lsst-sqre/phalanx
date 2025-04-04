@@ -15,28 +15,9 @@ image:
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-# -- Override the base name for resources
-nameOverride: ""
-
-# -- Override the full name for resources (includes the release name)
-fullnameOverride: ""
-
 ingress:
   # -- Additional annotations for the ingresses
   annotations: {}
-
-autoscaling:
-  # -- Enable autoscaling of datalinker deployment
-  enabled: false
-
-  # -- Minimum number of datalinker deployment pods
-  minReplicas: 1
-
-  # -- Maximum number of datalinker deployment pods
-  maxReplicas: 100
-
-  # -- Target CPU utilization of datalinker deployment pods
-  targetCPUUtilizationPercentage: 80
 
 config:
   # -- Logging level
@@ -66,8 +47,14 @@ config:
   # `slack-webhook` secret must also be set.
   slackAlerts: false
 
+# -- Affinity rules for the datalinker deployment pod
+affinity: {}
+
 # -- Annotations for the datalinker deployment pod
 podAnnotations: {}
+
+# -- Node selection rules for the datalinker deployment pod
+nodeSelector: {}
 
 # -- Resource limits and requests for the datalinker deployment pod
 # @default -- See `values.yaml`
@@ -79,14 +66,8 @@ resources:
     cpu: "50m"
     memory: "200Mi"
 
-# -- Node selection rules for the datalinker deployment pod
-nodeSelector: {}
-
 # -- Tolerations for the datalinker deployment pod
 tolerations: []
-
-# -- Affinity rules for the datalinker deployment pod
-affinity: {}
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

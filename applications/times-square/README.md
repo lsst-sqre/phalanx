@@ -19,7 +19,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
 | cloudsql.image.resources | object | See `values.yaml` | Resource requests and limits for Cloud SQL pod |
-| cloudsql.image.tag | string | `"1.37.4"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.6"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `times-square` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.databaseUrl | string | None, must be set | URL for the PostgreSQL database |
@@ -28,6 +28,9 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.githubAppId | string | `""` | GitHub application ID |
 | config.githubCheckRunTimeout | string | `"900"` | Timeout for GitHub check runs in seconds |
 | config.githubOrgs | string | `"lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"` | GitHub organizations that can sync repos to Times Square (comma-separated). |
+| config.htmlKeyMigration.dryRun | bool | `true` | Whether to run the HTML key migration job as a dry-run only |
+| config.htmlKeyMigration.enabled | bool | `false` |  |
+| config.htmlKeyMigration.page | string | `""` | The name of the page to migrate, if set |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.name | string | `"times-square"` | Name of the service. |
 | config.profile | string | `"production"` | Run profile: "production" or "development" |

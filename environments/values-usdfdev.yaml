@@ -14,8 +14,10 @@ applications:
 
   butler: true
   consdb: true
+  consdbtap: true
   datalinker: true
   exposurelog: true
+  rubin-rag: true
   jira-data-proxy: true
   livetap: true
   mobu: true
@@ -37,6 +39,7 @@ applications:
   ssotap: true
   squareone: true
   strimzi: true
+  strimzi-access-operator: true
   tap: true
   tasso: true
   times-square: true

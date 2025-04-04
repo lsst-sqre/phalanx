@@ -5,14 +5,13 @@ from __future__ import annotations
 import os
 import re
 from base64 import b64decode, b64encode
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import bcrypt
 import click
 import yaml
 from cryptography.fernet import Fernet
-from safir.datetime import current_datetime
 
 from phalanx.factory import Factory
 from phalanx.models.gafaelfawr import Token
@@ -456,7 +455,7 @@ def test_sync_regenerate(
 
     # Check whether mtime secrets are generated properly.
     mtime = datetime.fromisoformat(argocd["admin.passwordMtime"])
-    now = current_datetime()
+    now = datetime.now(tz=UTC)
     assert now - timedelta(seconds=5) <= mtime <= now
 
 
@@ -485,3 +484,45 @@ def test_sync_exclude(factory: Factory, mock_vault: MockVaultClient) -> None:
         o for o in all_output if "argocd" not in o and "portal" not in o
     )
     assert result.output == expected
+
+
+def test_sync_modify_delete(
+    factory: Factory, mock_vault: MockVaultClient
+) -> None:
+    """Test a sync that modifies and deletes a secret key at the same time."""
+    input_path = phalanx_test_path()
+    secrets_path = input_path / "secrets" / "idfdev.yaml"
+    config_storage = factory.create_config_storage()
+    environment = config_storage.load_environment("idfdev")
+    mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
+    _, base_vault_path = environment.vault_path_prefix.split("/", 1)
+    before = _get_app_secret(mock_vault, f"{base_vault_path}/gafaelfawr")
+
+    result = run_cli(
+        "secrets",
+        "sync",
+        "--secrets",
+        str(secrets_path),
+        "--exclude",
+        "argocd",
+        "--exclude",
+        "nublado",
+        "--exclude",
+        "portal",
+        "--exclude",
+        "postgres",
+        "--exclude",
+        "unknown",
+        "--delete",
+        "idfdev",
+        env={"VAULT_TOKEN": "sometoken"},
+    )
+    assert result.exit_code == 0
+    expected = read_output_data("idfdev", "sync-gafaelfawr-output")
+    assert result.output == expected
+    after = _get_app_secret(mock_vault, f"{base_vault_path}/gafaelfawr")
+    assert before["database-password"] != after["database-password"]
+    assert after.get("session-secret")
+    assert after.get("signing-key")
+    assert after.get("slack-webhook")
+    assert "cilogon" not in after

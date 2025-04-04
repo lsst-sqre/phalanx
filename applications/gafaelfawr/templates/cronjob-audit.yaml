@@ -24,8 +24,11 @@ spec:
             gafaelfawr-redis-client: "true"
             gafaelfawr-redis-ephemeral-client: "true"
         spec:
-          restartPolicy: "Never"
+          {{- if .Values.cloudsql.enabled }}
+          serviceAccountName: "gafaelfawr"
+          {{- else }}
           automountServiceAccountToken: false
+          {{- end }}
           containers:
             - name: "gafaelfawr"
               command:
@@ -89,6 +92,11 @@ spec:
                 - name: "tmp"
                   mountPath: "/tmp"
                 {{- end }}
+          {{- if .Values.cloudsql.enabled }}
+          initContainers:
+            {{- include "gafaelfawr.cloudsqlSidecar" . | nindent 12 }}
+          {{- end }}
+          restartPolicy: "Never"
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -112,12 +120,12 @@ spec:
             - name: "tmp"
               emptyDir: {}
             {{- end }}
-          {{- with .Values.maintenance.nodeSelector }}
-          nodeSelector:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
           {{- with .Values.maintenance.affinity }}
           affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.maintenance.nodeSelector }}
+          nodeSelector:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.maintenance.tolerations }}

@@ -4,6 +4,7 @@ redis:
     storageClass: "standard-rwo"
 
 config:
+  allowSubdomains: true
   logLevel: "DEBUG"
   slackAlerts: true
 

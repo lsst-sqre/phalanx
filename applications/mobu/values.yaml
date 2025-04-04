@@ -1,10 +1,9 @@
 # Default values for mobu.
 
-# -- Override the base name for resources
-nameOverride: ""
-
-# -- Override the full name for resources (includes the release name)
-fullnameOverride: ""
+# -- Number of mobu instances to start. Starting more than one should only be
+# used temporarily in specific circumstances. See [the Mobu
+# documentation](https://mobu.lsst.io/user-guide/multiple-replicas.html)
+replicaCount: 1
 
 image:
   # -- mobu image to use
@@ -33,6 +32,10 @@ config:
   # Each flock listed will be automatically started when mobu is started.
   autostart: []
 
+  # -- Timeout for Gafaelfawr token creation requests during flock startup
+  # @default -- Use the default timeout for the Safir connection pool
+  gafaelfawrTimeout: null
+
   # -- Configuration for the GitHub refresh app integration.
   # See [the Mobu documentation](https://mobu.lsst.io/operations/github_refresh_app.html#add-phalanx-configuration)
   # @default -- disabled.
@@ -43,6 +46,18 @@ config:
   # @default -- disabled.
   githubCiApp: null
 
+  # -- Log level. Set to 'DEBUG' to include the output from all flocks in the
+  # main mobu log.
+  logLevel: INFO
+
+  # -- Prefix for mobu's API routes.
+  pathPrefix: "/mobu"
+
+  # -- One of 'production' or 'development'. 'production' configures structured
+  # JSON logging, and 'development' configures unstructured human readable
+  # logging.
+  profile: production
+
   # -- The environment to report to Sentry
   sentryEnvironment: null
 
@@ -50,20 +65,8 @@ config:
   # send all transactions with errors.
   sentryTracesSampleConfig: 0.0
 
-  # -- Log level. Set to 'DEBUG' to include the output from all flocks in the
-  # main mobu log.
-  logLevel: INFO
-
-  # -- One of 'production' or 'development'. 'production' configures structured
-  # JSON logging, and 'development' configures unstructured human readable
-  # logging.
-  profile: production
-
   # -- Whether to send alerts and status to Slack.
   slackAlerts: true
-
-  # -- Prefix for mobu's API routes.
-  pathPrefix: "/mobu"
 
   metrics:
     # -- Whether to enable sending metrics
@@ -92,26 +95,30 @@ config:
 resources:
   limits:
     cpu: "1"
-    memory: "3.5Gi"
+    # This is specified in Mi instead of Gi because ArgoCD will always show
+    # OutOfSync because of a bug in value normalization for certain
+    # combinations of attributes in certain resources:
+    # https://github.com/argoproj/argo-cd/issues/16400
+    memory: "3584Mi"
   requests:
     cpu: "50m"
     memory: "1Gi"
 
-# -- Number of seconds for k8s to send SIGKILL after sending SIGTERM
-# @default -- See `values.yaml`
-terminationGracePeriodSeconds: null
-
-# -- Annotations for the mobu frontend pod
-podAnnotations: {}
+# -- Affinity rules for the mobu frontend pod
+affinity: {}
 
 # -- Node selector rules for the mobu frontend pod
 nodeSelector: {}
 
+# -- Annotations for the mobu frontend pod
+podAnnotations: {}
+
+# -- Number of seconds for Kubernetes to send SIGKILL after sending SIGTERM
+# @default -- Use the Kubernetes default
+terminationGracePeriodSeconds: null
+
 # -- Tolerations for the mobu frontend pod
 tolerations: []
-
-# -- Affinity rules for the mobu frontend pod
-affinity: {}
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

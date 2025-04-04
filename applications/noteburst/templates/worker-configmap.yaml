@@ -18,3 +18,6 @@ data:
   NOTEBURST_WORKER_TOKEN_SCOPES: {{ .Values.config.worker.tokenScopes | quote }}
   NOTEBURST_WORKER_KEEPALIVE: {{ .Values.config.worker.keepAlive | quote }}
   NOTEBURST_WORKER_MAX_CONCURRENT_JOBS: {{ .Values.config.worker.maxConcurrentJobs | quote }}
+  METRICS_ENABLED: {{ .Values.config.metrics.enabled | quote }}
+  METRICS_APPLICATION: {{ .Values.config.metrics.application | quote }}
+  SCHEMA_MANAGER_REGISTRY_URL: {{ .Values.config.metrics.schemaManager.registryUrl }}

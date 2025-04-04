@@ -1,0 +1,191 @@
+# Default values for the prompt-keda scaled job.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  # -- Image to use in the Prompt Processing deployment
+  repository: ghcr.io/lsst-dm/prompt-service
+  # -- Pull policy for the Prompt Processing image
+  # @default -- `IfNotPresent` in prod, `Always` in dev.  Set to `IfNotPresent` for scale testing in dev.
+  pullPolicy: IfNotPresent
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: latest
+
+worker:
+  # -- The number of requests to process before rebooting a worker.
+  # If 0, workers process requests indefinitely.
+  restart: 0
+  # -- When Kubernetes shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds).
+  grace_period: 45
+
+instrument:
+  # -- The "short" name of the instrument
+  # @default -- None, must be set
+  name: ""
+  pipelines:
+    # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
+    # if the result (including any comments) is longer than 72 characters.
+    # The config will get corrupted after template substitution.
+    # Block-style mappings can have lines of any length.
+
+    # -- YAML-formatted config describing which pipeline(s) should be run for which visits' raws.
+    # Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
+    # @default -- None, must be set
+    main: ""
+    # -- YAML-formatted config describing which pipeline(s) should be run before which visits' raw arrival.
+    # @default -- None, must be set
+    preprocessing: ""
+  # -- Skymap to use with the instrument
+  skymap: ""
+  # -- Number of arcseconds to pad the spatial region in preloading.
+  preloadPadding: 30
+  # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
+  # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
+  # @default -- None, must be set
+  calibRepo: ""
+
+cache:
+  # -- The default number of datasets of each type to keep.
+  # The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache.
+  baseSize: 3
+  # -- A factor by which to multiply `baseSize` for refcat datasets.
+  refcatsPerImage: 4
+  # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
+  patchesPerImage: 4
+
+s3:
+  # -- Bucket containing the incoming raw images
+  # @default -- None, must be set
+  imageBucket: ""
+  # -- S3 endpoint containing `imageBucket`
+  # @default -- None, must be set
+  endpointUrl: ""
+  # -- If set, get S3 credentials from this application's Vault secret.
+  auth_env: true
+  # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
+  disableBucketValidation: 0
+
+# -- The URI to a microservice that maps image metadata to a file location.
+# If empty, Prompt Processing does not use a microservice.
+raw_microservice: ""
+
+imageNotifications:
+  # -- Hostname and port of the Kafka provider
+  # @default -- None, must be set
+  kafkaClusterAddress: ""
+  # -- Topic where raw image arrival notifications appear
+  # @default -- None, must be set
+  topic: ""
+  # -- Kafka consumer offset reset setting for image arrival notifications
+  consumerOffsetReset: "latest"
+  # -- Timeout to wait after expected script completion for raw image arrival (seconds).
+  imageTimeout: 20
+
+apdb:
+  # -- URL to a serialized APDB configuration, or the "label:" prefix followed
+  # by the indexed name of such a config.
+  # @default -- None, must be set
+  config: ""
+
+alerts:
+  # -- Username for sending alerts to the alert stream
+  username: ""
+  # -- Server address for the alert stream
+  server: ""
+  # -- Topic name where alerts will be sent
+  topic: ""
+
+registry:
+  # -- If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted.
+  centralRepoFile: false
+
+# -- Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level).
+# @default -- log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING.
+logLevel: ""
+
+sasquatch:
+  # -- Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload.
+  # This is a preliminary implementation of Sasquatch support, and this parameter may be deprecated
+  # if we instead support `SasquatchDatastore` in the future.
+  endpointUrl: ""
+  # -- Namespace in the Sasquatch system with which to associate metrics.
+  namespace: lsst.prompt
+  # -- If set, this application's Vault secret must contain a `sasquatch_token` key containing the authentication token for `sasquatch.endpointUrl`.
+  # Leave unset to attempt anonymous access.
+  auth_env: true
+
+keda:
+  # Minimum number of replicas to start with.
+  minReplicaCount: 3
+  # Maximum number of replicas to scale to.
+  maxReplicaCount: 10
+  # Scaling algorithm
+  scalingStrategy: eager
+  # Polling interval for Keda to poll scalar for scaling determination.
+  pollingInterval: 2
+  # How many completed jobs should be kept available in Kubernetes.
+  successfulJobsHistoryLimit: 25
+  # How many failed jobs should be kept available in Kubernetes.
+  failedJobsHistoryLimit: 25
+
+  redisStreams:
+    # Address of Redis Streams Cluster
+    host: ""
+    # Name of Redis Stream
+    streamName: ""
+    # Redis Consumer Group name
+    consumerGroup: ""
+    # Time to wait for fanned out messages before spawning new pod.
+    msgListenTimeout: 900
+    # Lag count at which scaler triggers
+    activationLagCount: "1"
+    #  Number of lagging entries in the consumer group, alternative to pendingEntriesCount scaler trigger
+    lagCount: "1"
+    # Number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
+    pendingEntriesCount: "1"
+    # -- Maximum message age to process, in seconds.
+    expiration: 3600
+
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: "prompt-keda"
+
+debug:
+  # -- Whether or not pipeline outputs should be exported to the central repo.
+  # This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination.
+  exportOutputs: true
+
+
+# -- Kubernetes resource requests and limits
+# @default -- See `values.yaml`
+resources:
+  requests:
+    cpu: 1
+    ephemeral-storage: 5Gi
+    memory: 2Gi
+  limits:
+    cpu: 1
+    ephemeral-storage: 5Gi
+    memory: 8Gi
+
+# -- Kubernetes YAML configs for extra container volume(s).
+# Any volumes required by other config options are automatically handled by the Helm chart.
+additionalVolumeMounts: []
+
+# -- Pod annotations for the Prompt Processing Pod
+podAnnotations: {
+  prometheus.io/port: "8000",
+  prometheus.io/scrape: "true"
+}
+
+# -- Affinity rules for the Prompt Processing Pod
+affinity: {}
+
+# -- Node selection rules for the Prompt Porcessing pod
+nodeSelector: {}
+
+# -- Tolerations for the Prompt Processing pod
+tolerations: []

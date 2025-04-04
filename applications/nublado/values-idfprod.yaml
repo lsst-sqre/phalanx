@@ -11,19 +11,18 @@ controller:
         image: "sciplat-lab"
     lab:
       env:
-        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         DAF_BUTLER_REPOSITORY_INDEX: "https://data.lsst.cloud/api/butler/configs/idf-repositories.yaml"
-        S3_ENDPOINT_URL: "https://storage.googleapis.com"
+        S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
         TMPDIR: "/tmp"
       initContainers:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "8.4.1"
+            tag: "8.8.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"

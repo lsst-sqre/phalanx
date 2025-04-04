@@ -41,11 +41,6 @@ spec:
         operations:
           - Describe
           - DescribeConfigs
-  quotas:
-    producerByteRate: 1073741824
-    consumerByteRate: 1073741824
-    requestPercentage: 90
-    controllerMutationRate: 1000
 {{- end }}
 {{- if .Values.users.camera.enabled }}
 ---
@@ -97,11 +92,6 @@ spec:
         operations:
           - Describe
           - DescribeConfigs
-  quotas:
-    producerByteRate: 20971520
-    consumerByteRate: 20971520
-    requestPercentage: 90
-    controllerMutationRate: 1000
 {{- end }}
 {{- if .Values.users.replicator.enabled }}
 ---
@@ -134,11 +124,6 @@ spec:
         type: allow
         host: "*"
         operation: All
-  quotas:
-    producerByteRate: 1073741824
-    consumerByteRate: 1073741824
-    requestPercentage: 90
-    controllerMutationRate: 1000
 {{- end }}
 {{- if .Values.users.kafkaConnectManager.enabled }}
 ---
@@ -166,11 +151,6 @@ spec:
         type: allow
         host: "*"
         operation: Read
-  quotas:
-    producerByteRate: 1073741824
-    consumerByteRate: 1073741824
-    requestPercentage: 90
-    controllerMutationRate: 1000
 {{- end }}
 {{- if .Values.users.kafdrop.enabled }}
 ---
@@ -274,6 +254,13 @@ spec:
         type: allow
         host: "*"
         operation: Read
+      - resource:
+          type: topic
+          name: "test.next-visit-job"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
 {{- end }}
 {{- if .Values.users.consdb.enabled }}
 ---
@@ -306,4 +293,110 @@ spec:
         type: allow
         host: "*"
         operation: All
+{{- end }}
+{{- if .Values.users.obsloctap.enabled }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: obsloctap
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: obsloctap-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "lsst.sal"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: Read
+{{- end }}
+{{- if .Values.users.tap.enabled }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: tap
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: tap-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "lsst.tap"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
+          type: cluster
+        operations:
+          - Describe
+          - DescribeConfigs
+{{- end }}
+{{- if .Values.users.qserv.enabled }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: qserv
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: qserv-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "lsst.tap"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
+          type: cluster
+        operations:
+          - Describe
+          - DescribeConfigs
 {{- end }}

@@ -100,7 +100,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.4"
+    tag: "1.37.6"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -118,7 +118,7 @@ cloudsql:
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "100m"
+      cpu: "1"
       memory: "20Mi"
     requests:
       cpu: "5m"
@@ -126,7 +126,7 @@ cloudsql:
 
 maintenance:
   # -- Cron schedule string for Wobbly periodic maintenance (in UTC)
-  schedule: "10 * * * *"
+  schedule: "8 * * * *"
 
   # -- How long the job is allowed to run before it will be terminated
   # @default -- 300 (5 minutes)

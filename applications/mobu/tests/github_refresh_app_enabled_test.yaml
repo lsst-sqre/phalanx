@@ -9,7 +9,7 @@ set:
     host: "example.com"
 tests:
   - it: "Should create an anonymous ingress"
-    template: "ingress-github-refresh-app.yaml"
+    template: "ingress-github-refresh.yaml"
     asserts:
       - containsDocument:
           kind: "GafaelfawrIngress"
@@ -18,8 +18,8 @@ tests:
           path: "config.scopes.anonymous"
           value: true
 
-  - it: "Should inject secrets into the Deployment env"
-    template: "deployment.yaml"
+  - it: "Should inject secrets into the StatefulSet env"
+    template: "stateful-set.yaml"
     asserts:
       - contains:
           path: "spec.template.spec.containers[0].env"
@@ -37,6 +37,7 @@ tests:
           value: |
             autostart: []
             availableServices: []
+            gafaelfawrTimeout: null
             githubCiApp: null
             githubRefreshApp:
               acceptedGithubOrgs:

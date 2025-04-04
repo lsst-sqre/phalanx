@@ -17,14 +17,11 @@ ccheaderservice:
   env:
     URL_SPEC: --lfa_mode s3 --s3instance cp
     CAMERA: cc
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
   resources:
     limits:
@@ -43,20 +40,17 @@ ccheaderservice-sim:
     URL_SPEC: --lfa_mode s3 --s3instance cp --playback
     CAMERA: cc
     HEADERSERVICE_PLAYLIST_DIR: /header_service
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
   nfsMountpoint:
   - name: ccs-data
     containerPath: /header_service
     readOnly: true
-    server: nfs1.cp.lsst.org
+    server: nfs-scratch.cp.lsst.org
     serverPath: /scratch/header_service
   resources:
     limits:
@@ -73,18 +67,13 @@ ccoods:
     pullPolicy: Always
   env:
     CTRL_OODS_CONFIG_FILE: /etc/ccoods.yaml
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  s3Credentials:
+  - lfa-credentials.ini
+  - oods-comcam-credentials.ini
   <<: *butler-secret
-  nfsMountpoint:
-  - name: comcam-gen3-butler
-    containerPath: /repo/LSSTComCam
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/repo/LSSTComCam
-  - name: comcam-oods-data
-    containerPath: /data
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam
   resources:
     limits:
       cpu: 100m
@@ -103,53 +92,35 @@ ccoods:
           seconds: 0
 
       ingester:
-          imageStagingDirectory: /data/staging/comcam/oods
+          kafka:
+              brokers:
+                  - sasquatch-kafka-bootstrap.sasquatch:9092
+              topics:
+                - lsst.s3.raw.comcam
+              group_id: CCOODS-S3
+              max_messages: 250
           butlers:
               - butler:
                   instrument: lsst.obs.lsst.LsstComCam
                   class:
-                      import : lsst.ctrl.oods.gen3ButlerIngester
-                      name : Gen3ButlerIngester
-                  stagingDirectory : /data/lsstdata/base/comcam/oods/gen3butler/raw
-                  badFileDirectory: /data/lsstdata/base/comcam/oods/gen3butler/badfiles
-                  repoDirectory : /repo/LSSTComCam
+                      import : lsst.ctrl.oods.messageAttendant
+                      name : MessageAttendant
+                  repoDirectory : s3://butler@rubinobs-butler-comcam
+                  s3profile: butler
                   collections:
                       - LSSTComCam/raw/all
-                      - LSSTComCamSim/raw/all
                   cleanCollections:
-                      - LSSTComCam/raw/all
-                      - LSSTComCamSim/raw/all
-                      - LSSTComCamSim/quickLook
+                      - collection: LSSTComCam/raw/all
+                        filesOlderThan:
+                            <<: *interval
+                            days: 30
+                      - collection: LSSTComCam/quickLook
+                        filesOlderThan:
+                            <<: *interval
+                            days: 7
                   scanInterval:
                       <<: *interval
                       hours: 1
-                  filesOlderThan:
-                      <<: *interval
-                      days: 90
-          batchSize: 20
-          scanInterval:
-              <<: *interval
-              seconds: 2
-
-      cacheCleaner:
-          # ONLY clean out empty directories here, never files
-          clearEmptyDirectories:
-              -  /data/lsstdata/base/comcam/oods/gen3butler/raw
-              -  /data/repo/LSSTComCam/LSSTComCamSim/quickLook
-          # clean out empty directories and old files from these directories
-          clearEmptyDirectoriesAndOldFiles:
-              - /data/lsstdata/base/comcam/oods/gen3butler/badfiles
-              - /data/staging/comcam/oods
-              - /data/staging/comcam/forwarder
-          scanInterval:
-              <<: *interval
-              hours: 1
-          filesOlderThan:
-              <<: *interval
-              days: 31
-          directoriesEmptyForMoreThan:
-              <<: *interval
-              days: 2
 
 gcheaderservice101:
   enabled: true
@@ -159,14 +130,11 @@ gcheaderservice101:
   env:
     CAMERA: gc101
     URL_SPEC: --lfa_mode s3 --s3instance cp
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
   resources:
     limits:
@@ -184,14 +152,11 @@ gcheaderservice102:
   env:
     CAMERA: gc102
     URL_SPEC: --lfa_mode s3 --s3instance cp
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
   resources:
     limits:
@@ -209,14 +174,11 @@ gcheaderservice103:
   env:
     CAMERA: gc103
     URL_SPEC: --lfa_mode s3 --s3instance cp
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
   resources:
     limits:
@@ -275,30 +237,18 @@ mtaos:
   image:
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
-  butlerSecret:
-    containerPath: /home/saluser/.lsst
-    dbUser: oods
-    secretFilename: postgres-credentials.txt
+  env:
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  s3Credentials:
+  - butler-credentials.ini
+  <<: *butler-secret
   nfsMountpoint:
-  - name: comcam-gen3-data
-    containerPath: /repo/LSSTComCam
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/repo/LSSTComCam
-  - name: comcam-gen3-data-temp
-    containerPath: /data/lsstdata/base/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata/base/comcam
-  - name: comcam-data
-    containerPath: /readonly/lsstdata/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata
   - name: project-shared
     containerPath: /project
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-project.cp.lsst.org
     serverPath: /project
   resources:
     limits:
@@ -389,14 +339,11 @@ mtheaderservice:
     URL_SPEC: --lfa_mode s3 --s3instance cp
     TSTAND_HEADERSERVICE: LEVEL3_CLEANROOM
     CAMERA: mt
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
   resources:
     limits:
@@ -482,7 +429,7 @@ mtm2hexapod-sim:
       memory: 125Mi
 
 mtmount:
-  enabled: true
+  enabled: false
   image:
     repository: ts-dockerhub.lsst.org/mtmount
     pullPolicy: Always
@@ -495,7 +442,7 @@ mtmount:
       memory: 300Mi
 
 mtmount-ccw-only:
-  enabled: false
+  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtmount
     pullPolicy: Always
@@ -531,6 +478,12 @@ mtoods:
     pullPolicy: Always
   env:
     CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  s3Credentials:
+  - lfa-credentials.ini
+  - oods-lsstcam-credentials.ini
   <<: *butler-secret
   resources:
     limits:
@@ -539,17 +492,6 @@ mtoods:
     requests:
       cpu: 10m
       memory: 345Mi
-  nfsMountpoint:
-  - name: lsstcam-gen3-butler
-    containerPath: /repo/LSSTCam
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /lsstcam/repo/LSSTCam
-  - name: lsstcam-oods-data
-    containerPath: /data
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /lsstcam
   configfile:
     path: /etc
     filename: mtoods.yaml
@@ -561,47 +503,35 @@ mtoods:
           seconds: 0
 
       ingester:
-          imageStagingDirectory: /data/staging/maintel/oods
+          kafka:
+              brokers:
+                  - sasquatch-kafka-bootstrap.sasquatch:9092
+              topics:
+                - lsst.s3.raw.lsstcam
+              group_id: MTOODS-S3
+              max_messages: 250
           butlers:
               - butler:
                   instrument: lsst.obs.lsst.LsstCam
                   class:
-                      import : lsst.ctrl.oods.gen3ButlerIngester
-                      name : Gen3ButlerIngester
-                  stagingDirectory : /data/lsstdata/base/maintel/oods/gen3butler/raw
-                  badFileDirectory: /data/lsstdata/base/maintel/oods/gen3butler/badfiles
-                  repoDirectory : /repo/LSSTCam
+                      import : lsst.ctrl.oods.messageAttendant
+                      name : MessageAttendant
+                  repoDirectory : s3://butler@rubinobs-butler-lsstcam
+                  s3profile: butler
                   collections:
                       - LSSTCam/raw/all
+                  cleanCollections:
+                      - collection: LSSTCam/raw/all
+                        filesOlderThan:
+                            <<: *interval
+                            days: 30
+                      - collection: LSSTCam/quickLook
+                        filesOlderThan:
+                            <<: *interval
+                            days: 7
                   scanInterval:
                       <<: *interval
                       hours: 1
-                  filesOlderThan:
-                      <<: *interval
-                      days: 2
-          batchSize: 20
-          scanInterval:
-              <<: *interval
-              seconds: 2
-
-      cacheCleaner:
-          # ONLY clean out empty directories here, never files
-          clearEmptyDirectories:
-              - /data/lsstdata/base/maintel/oods/gen3butler/raw
-              - /data/staging/maintel/camera
-          # clean out empty directories and old files from these directories
-          clearEmptyDirectoriesAndOldFiles:
-              - /data/lsstdata/base/maintel/oods/gen3butler/badfiles
-              - /data/staging/maintel/oods
-          scanInterval:
-              <<: *interval
-              hours: 1
-          filesOlderThan:
-              <<: *interval
-              days: 31
-          directoriesEmptyForMoreThan:
-              <<: *interval
-              days: 2
 
 mtptg:
   image:

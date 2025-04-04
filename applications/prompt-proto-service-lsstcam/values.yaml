@@ -3,7 +3,7 @@ prompt-proto-service:
   # -- Annotations for the prompt-proto-service pod
   # @default -- See the `values.yaml` file.
   podAnnotations:
-    autoscaling.knative.dev/min-scale: "10"
+    autoscaling.knative.dev/min-scale: "3"
     autoscaling.knative.dev/max-scale: "600"
     autoscaling.knative.dev/target-utilization-percentage: "60"
     autoscaling.knative.dev/target-burst-capacity: "-1"
@@ -36,7 +36,7 @@ prompt-proto-service:
 
   instrument:
     # -- The "short" name of the instrument
-    name: ""
+    name: LSSTCam
     pipelines:
       # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
       # if the result (including any comments) is longer than 72 characters.
@@ -51,7 +51,7 @@ prompt-proto-service:
       # @default -- None, must be set
       preprocessing: ""
     # -- Skymap to use with the instrument
-    skymap: ""
+    skymap: lsst_cells_v1
     # -- Number of arcseconds to pad the spatial region in preloading.
     preloadPadding: 50
     # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
@@ -64,9 +64,9 @@ prompt-proto-service:
     # The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache.
     baseSize: 3
     # -- A factor by which to multiply `baseSize` for refcat datasets.
-    refcatsPerImage: 4
+    refcatsPerImage: 6
     # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
-    patchesPerImage: 4
+    patchesPerImage: 16
 
   s3:
     # -- Bucket containing the incoming raw images
@@ -79,6 +79,8 @@ prompt-proto-service:
     auth_env: true
     # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
     disableBucketValidation: 0
+    # -- If set, configure S3 checksum options.
+    checksum: WHEN_REQUIRED
 
   # -- The URI to a microservice that maps image metadata to a file location.
   # If empty, Prompt Processing does not use a microservice.
@@ -117,7 +119,7 @@ prompt-proto-service:
 
   # -- Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level).
   # @default -- log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING.
-  logLevel: ""
+  logLevel: "timer.lsst.activator=DEBUG timer.lsst.daf.butler=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE lsst.daf.butler=VERBOSE"
 
   sasquatch:
     # -- Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload.
@@ -160,6 +162,8 @@ prompt-proto-service:
     # This is only useful if the container runs async workers.
     # If 0, idle timeout is ignored.
     responseStartTimeout: 0
+    # -- Maximum message age to process, in seconds.
+    expiration: 3600
 
   # -- The number of Knative requests that can be handled simultaneously by one container
   containerConcurrency: 1

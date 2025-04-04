@@ -26,10 +26,6 @@ electrometer101-sim:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
   resources:
     limits:
       cpu: 100m
@@ -51,9 +47,26 @@ electrometer102-sim:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
+  resources:
+    limits:
+      cpu: 100m
+      memory: 350Mi
+    requests:
+      cpu: 10m
+      memory: 115Mi
+
+electrometer103-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/electrometer
+    pullPolicy: Always
+  env:
+    RUN_ARG: 103 --simulate 1
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
+  - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
   resources:
     limits:
@@ -75,10 +88,6 @@ electrometer201-sim:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
   resources:
     limits:
@@ -102,10 +111,6 @@ gcheaderservice1:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
   resources:
     limits:
@@ -204,10 +209,6 @@ simulation-gencam:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
   service:
     enabled: true
     port: 5013
@@ -229,8 +230,8 @@ tunablelaser-sim:
     RUN_ARG: --simulate
   resources:
     limits:
-      cpu: 120m
-      memory: 300Mi
+      cpu: "2"
+      memory: 1000Mi
     requests:
-      cpu: 12m
-      memory: 100Mi
+      cpu: 50m
+      memory: 200Mi

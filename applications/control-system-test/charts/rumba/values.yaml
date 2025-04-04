@@ -1,0 +1,13 @@
+# -- The Schedule for executing the job to clean up inactive consumers
+# @default -- "*/10 * * * *" (every ten minutes)
+schedule: "*/10 * * * *"
+# -- The number of succesful pods to keep
+successfulJobsHistoryLimit: 2
+# -- The number of failed pods to keep
+failedJobsHistoryLimit: 1
+# -- This is the namespace in which the rumba cronjob will be placed
+namespace: control-system-test
+image:
+  # -- The image tag for the rumba cronjob container
+  tag: latest
+  pullPolicy: Always

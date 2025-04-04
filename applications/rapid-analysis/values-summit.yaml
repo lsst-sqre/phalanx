@@ -1,197 +1,221 @@
 image:
   repository: ts-dockerhub.lsst.org/rapid-analysis
-  tag: c0039
+  tag: c0040
   pullPolicy: Always
 location: SUMMIT
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+  LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
+  AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
 scripts:
 ###
 ### AuxTel pods
 ###
-- name: summit/auxTel/runBackgroundService.py
+# - name: summit/auxTel/runBackgroundService.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - allsky-data
+#   - project-shared
+#   resources:
+#     requests:
+#       cpu: 0.5
+#       memory: 4G
+#     limits:
+#       cpu: 1.0
+#       memory: 10G
+- name: LATISS/runButlerWatcher.py
   mounts:
   - auxtel-data
   - auxtel-gen3-data
-  - allsky-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+- name: LATISS/runHeadNode.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: LATISS/runMetadataServer.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+# - name: LATISS/runOneOffCalexp.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+- name: LATISS/runOneOffExpRecord.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: LATISS/runOneOffPostIsr.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
   resources:
     requests:
-      cpu: 0.5
-      memory: 4G
+      cpu: 1.0
+      memory: 6G
     limits:
       cpu: 1.0
-      memory: 10G
-- name: summit/auxTel/runButlerWatcher.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-- name: summit/auxTel/runCalibrateCcdRunner.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-- name: summit/auxTel/runImExaminer.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-- name: summit/auxTel/runIsrRunner.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-- name: summit/auxTel/runMetadataCreator.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-- name: summit/auxTel/runMetadataServer.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-- name: summit/auxTel/runMonitor.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-  resources:
-    requests:
-      cpu: 0.5
-      memory: 1G
-    limits:
-      cpu: 1.0
-      memory: 10G
-- name: summit/auxTel/runMountTorquePlotter.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-- name: summit/auxTel/runNightReporter.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-- name: summit/auxTel/runSpecExaminer.py
-  mounts:
-  - auxtel-data
-  - auxtel-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-  resources:
-    requests:
-      cpu: 0.5
-      memory: 2G
-    limits:
-      cpu: 1.0
-      memory: 4G
+      memory: 12G
+# - name: summit/auxTel/runCalibrateCcdRunner.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runImExaminer.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runIsrRunner.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runMetadataCreator.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runMetadataServer.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runMonitor.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+#   resources:
+#     requests:
+#       cpu: 0.5
+#       memory: 1G
+#     limits:
+#       cpu: 1.0
+#       memory: 10G
+# - name: summit/auxTel/runMountTorquePlotter.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runNightReporter.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+# - name: summit/auxTel/runSpecExaminer.py
+#   mounts:
+#   - auxtel-data
+#   - auxtel-gen3-data
+#   - project-shared
+#   resources:
+#     requests:
+#       cpu: 0.5
+#       memory: 2G
+#     limits:
+#       cpu: 1.0
+#       memory: 4G
 ###
 ### ComCamSim pods
 ###
-- name: summit/LSSTComCamSim/runButlerWatcher.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-- name: summit/LSSTComCamSim/runHeadNode.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-- name: summit/LSSTComCamSim/runMetadataServer.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-- name: summit/LSSTComCamSim/runPlotter.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-  resources:
-    requests:
-      cpu: 0.5
-      memory: 4G
-    limits:
-      cpu: 1.0
-      memory: 6G
-- name: summit/LSSTComCamSim/runAosDonutPipeline.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-  resources:
-    requests:
-      cpu: 32
-      memory: 96G
-    limits:
-      cpu: 32
-      memory: 96G
-- name: summit/LSSTComCamSim/runFocusSweepAnalysis.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-  resources:
-    requests:
-      cpu: 0.5
-      memory: 1G
-    limits:
-      cpu: 1
-      memory: 2G
-- name: summit/LSSTComCamSim/runMetadataServerAos.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-  resources:
-    requests:
-      cpu: 0.25
-      memory: 500M
-    limits:
-      cpu: .5
-      memory: 1G
-- name: summit/LSSTComCamSim/runPsfPlotting.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-  resources:
-    requests:
-      cpu: .5
-      memory: 4G
-    limits:
-      cpu: 1
-      memory: 6G
+# - name: LSSTComCamSim/runButlerWatcher.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+# - name: LSSTComCamSim/runHeadNode.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+# - name: LSSTComCamSim/runMetadataServer.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+# - name: LSSTComCamSim/runPlotter.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   resources:
+#     requests:
+#       cpu: 0.5
+#       memory: 4G
+#     limits:
+#       cpu: 1.0
+#       memory: 6G
+###
+### ComCam pods
+###
+# - name: LSSTComCam/runAosDonutPipeline.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   resources:
+#     requests:
+#       cpu: 32
+#       memory: 96G
+#     limits:
+#       cpu: 32
+#       memory: 96G
+# - name: LSSTComCam/runFocusSweepAnalysis.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   resources:
+#     requests:
+#       cpu: 0.5
+#       memory: 1G
+#     limits:
+#       cpu: 1
+#       memory: 2G
+# - name: LSSTComCam/runMetadataServerAos.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   resources:
+#     requests:
+#       cpu: 0.25
+#       memory: 500M
+#     limits:
+#       cpu: .5
+#       memory: 1G
+# - name: LSSTComCam/runOneOffExpRecord.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+# - name: LSSTComCam/runOneOffPostIsr.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+# - name: LSSTComCam/runOneOffCalexp.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+# - name: LSSTComCam/runPsfPlotting.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+  # resources:
+  #   requests:
+  #     cpu: .5
+  #     memory: 4G
+  #   limits:
+  #     cpu: 1
+  #     memory: 6G
 ###
 ### Misc pods
 ###
@@ -199,8 +223,6 @@ scripts:
   mounts:
   - allsky-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: 1.0
@@ -211,187 +233,263 @@ scripts:
 - name: summit/misc/runStarTracker.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runStarTrackerCatchup.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
 - name: summit/misc/runStarTrackerFast.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runStarTrackerMetadata.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runStarTrackerNightReport.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runStarTrackerWide.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runTmaTelemetry.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
+- name: summit/misc/runSoarSeeingUploader.py
+  mounts:
+  - project-shared
+  resources:
+    requests:
+      cpu: .5
+      memory: 2G
+    limits:
+      cpu: .5
+      memory: 2G
+- name: summit/misc/runSoarSeeingScraper.py
+  mounts:
+  - project-shared
+  resources:
+    requests:
+      cpu: .5
+      memory: 4G
+    limits:
+      cpu: .5
+      memory: 4G
 ###
 ### ComCam pods
 ###
-- name: summit/LSSTComCam/runButlerWatcher.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-- name: summit/LSSTComCam/runHeadNode.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-- name: summit/LSSTComCam/runMetadataServer.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-- name: summit/LSSTComCam/runPlotter.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+# - name: LSSTComCam/runButlerWatcher.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+# - name: LSSTComCam/runHeadNode.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+# - name: LSSTComCam/runMetadataServer.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+# - name: LSSTComCam/runPlotter.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
 ###
 ### LSSTCam pods
 ###
-- name: summit/LSSTCam/runButlerWatcher.py
+- name: LSSTCam/runButlerWatcher.py
   mounts:
   - lsstcam-data
   - project-shared
-- name: summit/LSSTCam/runHeadNode.py
+- name: LSSTCam/runHeadNode.py
   mounts:
   - lsstcam-data
   - project-shared
-- name: summit/LSSTCam/runMetadataServer.py
+- name: LSSTCam/runMetadataServer.py
   mounts:
   - lsstcam-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-- name: summit/LSSTCam/runPlotter.py
+- name: LSSTCam/runOneOffExpRecord.py
   mounts:
   - lsstcam-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+- name: LSSTCam/runOneOffPostIsr.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+- name: LSSTCam/runOneOffCalexp.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+- name: LSSTCam/runPlotter.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 8G
+    limits:
+      cpu: 1
+      memory: 12G
+##
+## LATISS StatefulSets
+##
+latissWorkerSet:
+  name: LATISS/runSfmRunner.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+  replicas: 5
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G
 ###
 ### ComCamSim StatefulSets
 ###
-comcamsimWorkerSet:
-  name: summit/LSSTComCamSim/runSfmRunner.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  replicas: 9
-  resources:
-    requests:
-      cpu: 1.0
-      memory: 4G
-    limits:
-      cpu: 1.0
-      memory: 8G
-comcamsimGather2aSet:
-  name: summit/LSSTComCamSim/runStep2aWorker.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  replicas: 1
-  resources:
-    requests:
-      cpu: 1.0
-      memory: 4G
-    limits:
-      cpu: 1.0
-      memory: 8G
-comcamsimGatherRollupSet:
-  name: summit/LSSTComCamSim/runNightlyWorker.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  replicas: 1
-  resources:
-    requests:
-      cpu: 1.0
-      memory: 12G
-    limits:
-      cpu: 1.0
-      memory: 24G
+# comcamsimWorkerSet:
+#   name: LSSTComCamSim/runSfmRunner.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   replicas: 9
+#   resources:
+#     requests:
+#       cpu: 1.0
+#       memory: 4G
+#     limits:
+#       cpu: 1.0
+#       memory: 8G
+# comcamsimGather2aSet:
+#   name: LSSTComCamSim/runStep2aWorker.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   replicas: 1
+#   resources:
+#     requests:
+#       cpu: 1.0
+#       memory: 4G
+#     limits:
+#       cpu: 1.0
+#       memory: 8G
+# comcamsimGatherRollupSet:
+#   name: LSSTComCamSim/runNightlyWorker.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   replicas: 1
+#   resources:
+#     requests:
+#       cpu: 1.0
+#       memory: 12G
+#     limits:
+#       cpu: 1.0
+#       memory: 24G
 ###
 ### ComCam StatefulSets
 ###
-comcamWorkerSet:
-  name: summit/LSSTComCam/runSfmRunner.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  replicas: 9
-  resources:
-    requests:
-      cpu: 1.0
-      memory: 4G
-    limits:
-      cpu: 1.0
-      memory: 8G
-comcamGather2aSet:
-  name: summit/LSSTComCam/runStep2aWorker.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  replicas: 1
-  resources:
-    requests:
-      cpu: 1.0
-      memory: "4G"
-    limits:
-      cpu: 1.0
-      memory: "8G"
-comcamGatherRollupSet:
-  name: summit/LSSTComCam/runNightlyWorker.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  replicas: 1
-  resources:
-    requests:
-      cpu: 1.0
-      memory: "12G"
-    limits:
-      cpu: 1.0
-      memory: "24G"
+# comcamWorkerSet:
+#   name: LSSTComCam/runSfmRunner.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   replicas: 1
+#   resources:
+#     requests:
+#       cpu: 1.0
+#       memory: 4G
+#     limits:
+#       cpu: 1.0
+#       memory: 8G
+# comcamAosWorkerSet:
+#   name: LSSTComCam/runAosWorker.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   replicas: 1
+#   resources:
+#     requests:
+#       cpu: 1.0
+#       memory: 4G
+#     limits:
+#       cpu: 1.0
+#       memory: 8G
+# comcamGather2aSet:
+#   name: LSSTComCam/runStep2aWorker.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   replicas: 1
+#   resources:
+#     requests:
+#       cpu: 1.0
+#       memory: "4G"
+#     limits:
+#       cpu: 1.0
+#       memory: "8G"
+# comcamGather2aAosSet:
+#   name: LSSTComCam/runStep2aAosWorker.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   replicas: 1
+#   resources:
+#     requests:
+#       cpu: 1.0
+#       memory: "4G"
+#     limits:
+#       cpu: 1.0
+#       memory: "8G"
+# comcamGatherRollupSet:
+#   name: LSSTComCam/runNightlyWorker.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   replicas: 1
+#   resources:
+#     requests:
+#       cpu: 1.0
+#       memory: "12G"
+#     limits:
+#       cpu: 1.0
+#       memory: "24G"
 ###
 ### LSSTCam StatefulSets
 ###
 lsstcamWorkerSet:
-  name: summit/LSSTCam/runSfmRunner.py
+  name: LSSTCam/runSfmRunner.py
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 1
+  replicas: 378
   resources:
     requests:
       cpu: 1.0
@@ -423,22 +521,22 @@ nfsMountpoint:
 - name: comcam-data
   containerPath: /repo/LSSTComCam
   readOnly: false
-  server: nfs3.cp.lsst.org
+  server: nfs-comcam.cp.lsst.org
   serverPath: /comcam/repo/LSSTComCam
 - name: comcam-gen3-data
   containerPath: /data/lsstdata/base/comcam
   readOnly: true
-  server: nfs3.cp.lsst.org
+  server: nfs-comcam.cp.lsst.org
   serverPath: /comcam/lsstdata/base/comcam
 - name: lsstcam-data
   containerPath: /repo/LSSTCam
   readOnly: false
-  server: nfs3.cp.lsst.org
+  server: nfs-lsstcam.cp.lsst.org
   serverPath: /lsstcam/repo/LSSTCam
 - name: lsstcam-gen3-data
   containerPath: /data/lsstdata/base/maintel
   readOnly: true
-  server: nfs3.cp.lsst.org
+  server: nfs-lsstcam.cp.lsst.org
   serverPath: /lsstcam/lsstdata/base/maintel
 - name: allsky-data
   containerPath: /data/allsky
@@ -448,7 +546,7 @@ nfsMountpoint:
 - name: project-shared
   containerPath: /project
   readOnly: false
-  server: nfs1.cp.lsst.org
+  server: nfs-project.cp.lsst.org
   serverPath: /project
 resources:
   requests:
@@ -476,3 +574,7 @@ redis:
     limits:
       cpu: 1
       memory: 50Gi
+squid:
+  enabled: true
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/ra-lhn"

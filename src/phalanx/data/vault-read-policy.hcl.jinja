@@ -1,6 +1,7 @@
-path "kv-v2/data/{{ path }}/+" {
+
+path "{{ mount_point }}/data/{{ path }}/+" {
   capabilities = ["read"]
 }
-path "kv-v2/metadata/{{ path }}/+" {
+path "{{ mount_point }}/metadata/{{ path }}/+" {
   capabilities = ["list", "read"]
 }

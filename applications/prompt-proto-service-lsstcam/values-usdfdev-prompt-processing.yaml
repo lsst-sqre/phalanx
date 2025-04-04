@@ -5,24 +5,46 @@ prompt-proto-service:
     revision: "1"
 
   image:
-    repository: ghcr.io/lsst-dm/prompt-service
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: latest
 
   instrument:
-    calibRepo: s3://rubin-summit-users/
+    pipelines:
+      # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
+      # if the result (including any comments) is longer than 72 characters.
+      # The config will get corrupted after template substitution.
+      # Block-style mappings can have lines of any length.
+      main: |-
+        - survey: SURVEY
+          pipelines:
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
+      preprocessing: |-
+        - survey: SURVEY
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing.yaml']
+    calibRepo: s3://rubin-pp-dev-users/central_repo_2
 
   s3:
-    imageBucket: rubin:rubin-pp
+    imageBucket: rubin-pp-dev
     endpointUrl: https://s3dfrgw.slac.stanford.edu
-    disableBucketValidation: 1
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
-    topic: rubin-prompt-processing
+    topic: prompt-processing-dev
+
+  apdb:
+    config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcam-dev.yaml
 
   alerts:
     topic: "alert-stream-test"
+
+  sasquatch:
+    endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
+    auth_env: false
+
+  knative:
+    # Dev processes very old images, set to ~20 years
+    expiration: 600_000_000.0
 
   fullnameOverride: "prompt-proto-service-lsstcam"

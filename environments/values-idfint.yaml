@@ -3,6 +3,7 @@ fqdn: "data-int.lsst.cloud"
 appOfAppsName: "science-platform"
 butlerServerRepositories:
   dp02: "https://data-int.lsst.cloud/api/butler/repo/dp02/butler.yaml"
+  dp1: "https://data-int.lsst.cloud/api/butler/repo/dp1/butler.yaml"
 gcp:
   projectId: "science-platform-int-dc5d"
   region: "us-central1"
@@ -22,10 +23,10 @@ applications:
   noteburst: true
   nublado: true
   portal: true
+  rubin-rag: true
   sasquatch: true
   sia: true
   ssotap: true
-  production-tools: true
   sasquatch-backpack: true
   semaphore: true
   sqlproxy-cross-project: true

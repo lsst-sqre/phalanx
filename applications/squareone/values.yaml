@@ -99,7 +99,7 @@ config:
     You can access catalog data using the Table Access Protocol (TAP)
     service with popular tools such as
     [TOPCAT](http://www.star.bris.ac.uk/~mbt/topcat) (GUI) and
-    (pyvo)[https://pyvo.readthedocs.io/en/latest/index.html]
+    [pyvo](https://pyvo.readthedocs.io/en/latest/index.html)
     (Python package). The TAP endpoint is:
 
     ```
@@ -164,7 +164,7 @@ config:
           </Card>
         </a>
 
-        <a href="https://dm.lsst.org/sdm_schemas/browser/dp03.html">
+        <a href="https://sdm-schemas.lsst.io/dp03.html">
           <Card>
             ### DP0.3 Catalog Schema
 
@@ -197,7 +197,7 @@ config:
         </a>
 
 
-        <a href="https://dm.lsst.org/sdm_schemas/browser/dp02.html">
+        <a href="https://sdm-schemas.lsst.io/dp02.html">
           <Card>
             ### DP0.2 Catalog Schema
 
@@ -355,6 +355,15 @@ config:
   # -- Sentry debug mode
   # @default -- See `values.yaml`
   sentryDebug: false
+
+  # -- Enable the App menu
+  enableAppsMenu: false
+
+  # -- App menu items
+  appLinks:
+    - label: "Argo CD"
+      href: "/argo-cd/"
+      internal: false
 
 # Global parameters are set by parameters injected by the Argo CD Application
 # and should not be set in the individual environment values files.

@@ -1,0 +1,52 @@
+cadc-tap:
+  ingress:
+    # -- Ingress path that should be routed to this service
+    path: "consdbtap"
+
+  config:
+    # -- What type of backend?
+    backend: "pg"
+
+    # -- Name of the service from Gafaelfawr's perspective
+    serviceName: "consdbtap"
+
+    # -- Whether Sentry is enabled in this environment
+    sentryEnabled: false
+
+    pg:
+      # -- Postgres hostname:port to connect to
+      host: "usdf-summitdb.slac.stanford.edu:5432"
+
+      # -- Postgres database to connect to
+      database: "exposurelog"
+
+      # -- Postgres username to use to connect
+      username: "usdf"
+
+    # -- Vault secret name: the final key in the vault path
+    vaultSecretName: "consdbtap"
+
+  serviceAccount:
+    # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
+    name: "consdbtap"
+  tapSchema:
+    resources:
+      limits:
+        memory: "2Gi"
+      requests:
+        memory: "600Mi"
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

@@ -1,0 +1,432 @@
+# -- Platform to submit events to.  Either knative or keda.
+platform: "keda"
+
+knative:
+  # -- A mapping of instrument to that instrument's Knative service.
+  # @default -- See `values.yaml`.
+  urls:
+    HSC: http://prompt-proto-service-hsc.prompt-proto-service-hsc/next-visit
+    LATISS: http://prompt-proto-service-latiss.prompt-proto-service-latiss/next-visit
+    LSSTComCam: http://prompt-proto-service-lsstcomcam.prompt-proto-service-lsstcomcam/next-visit
+    LSSTComCamSim: http://prompt-proto-service-lsstcomcamsim.prompt-proto-service-lsstcomcamsim/next-visit
+    LSSTCam: http://prompt-proto-service-lsstcam.prompt-proto-service-lsstcam/next-visit
+    LSSTCam-imSim: http://prompt-proto-service-lsstcamimsim.prompt-proto-service-lsstcamimsim/next-visit
+  # -- The maximum number of messages that can be forwarded to all Knative instances combined.
+  # @default -- None, must be set.
+  maxMessages: ""
+  # -- Whether or not to retry requests that returned a suitable response.
+  retryRequests: true
+
+keda:
+  # -- Redis cluster host.
+  # @default -- See `values.yaml`.
+  redisHost: prompt-redis.prompt-redis
+  # -- Maximum delay time for Redis retries in seconds.
+  redisRetryDelayCap: 5
+  # -- Initial delay for first Redis retry in seconds.
+  redisRetryInitialDelay: 1
+  # -- Redis max retry count
+  redisRetryCount: 3
+  # -- Redis health check interval in seconds.
+  redisHealthCheckInterval: 3
+  # -- A mapping of instrument to that instrument's Keda Scaled Job.
+  # @default -- See `values.yaml`.
+  redisStreams:
+    HSC: instrument:hsc
+    LATISS: instrument:latiss
+    LSSTComCam: instrument:lsstcomcam
+    LSSTComCamSim: instrument:lsstcomcamsim
+    LSSTCam: instrument:lsstcam
+    LSSTCam-imSim: instrument:lsstcamimsim
+
+kafka:
+  offset: latest
+  saslMechamism: SCRAM-SHA-512
+  securityProtocol: SASL_PLAINTEXT
+  # -- Maximum message age to consider, in seconds.
+  expiration: 3600.0
+
+replicaCount: 1
+
+image:
+  repository: us-central1-docker.pkg.dev/prompt-proto/prompt/nextvisit-fanout
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations:
+  prometheus.io/scrape: 'true'
+  prometheus.io/port: '8000'
+
+
+# -- Resource limits and requests for the next-visit-fan-out deployment pod
+resources: {}
+
+# -- Node selection rules for the next-visit-fan-out deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the next-visit-fan-out deployment pod
+tolerations: []
+
+# -- Affinity rules for the next-visit-fan-out deployment pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
+
+# -- If set, enable debug logging.
+debug: false
+
+# -- The instruments that are initialized when the fan-out service starts up as a space-delimited string.
+# This list is a subset of the keys of `detectorConfig` because the latter handles some special cases.
+# @default -- None, must be set.
+instruments: ""
+
+# -- A mapping, for each instrument, of detector number to whether that detector is "active" (i.e., producing images).
+# @default -- See `values.yaml`.
+detectorConfig:
+  LATISS:
+    0: True
+  LSSTComCam: &ComCam
+    0: True
+    1: True
+    2: True
+    3: True
+    4: True
+    5: True
+    6: True
+    7: True
+    8: True
+  LSSTComCamSim:
+    <<: *ComCam
+  LSSTCam: &LSSTCam
+    0: True
+    1: True
+    2: True
+    3: True
+    4: True
+    5: True
+    6: True
+    7: True
+    8: True
+    9: True
+    10: True
+    11: True
+    12: True
+    13: True
+    14: True
+    15: True
+    16: True
+    17: True
+    18: True
+    19: True
+    20: True
+    21: True
+    22: True
+    23: True
+    24: True
+    25: True
+    26: True
+    27: True
+    28: True
+    29: True
+    30: True
+    31: True
+    32: True
+    33: True
+    34: True
+    35: True
+    36: True
+    37: True
+    38: True
+    39: True
+    40: True
+    41: True
+    42: True
+    43: True
+    44: True
+    45: True
+    46: True
+    47: True
+    48: True
+    49: True
+    50: True
+    51: True
+    52: True
+    53: True
+    54: True
+    55: True
+    56: True
+    57: True
+    58: True
+    59: True
+    60: True
+    61: True
+    62: True
+    63: True
+    64: True
+    65: True
+    66: True
+    67: True
+    68: True
+    69: True
+    70: True
+    71: True
+    72: True
+    73: True
+    74: True
+    75: True
+    76: True
+    77: True
+    78: True
+    79: True
+    80: True
+    81: True
+    82: True
+    83: True
+    84: True
+    85: True
+    86: True
+    87: True
+    88: True
+    89: True
+    90: True
+    91: True
+    92: True
+    93: True
+    94: True
+    95: True
+    96: True
+    97: True
+    98: True
+    99: True
+    100: True
+    101: True
+    102: True
+    103: True
+    104: True
+    105: True
+    106: True
+    107: True
+    108: True
+    109: True
+    110: True
+    111: True
+    112: True
+    113: True
+    114: True
+    115: True
+    116: True
+    117: True
+    118: True
+    119: True
+    120: True
+    121: True
+    122: True
+    123: True
+    124: True
+    125: True
+    126: True
+    127: True
+    128: True
+    129: True
+    130: True
+    131: True
+    132: True
+    133: True
+    134: True
+    135: True
+    136: True
+    137: True
+    138: True
+    139: True
+    140: True
+    141: True
+    142: True
+    143: True
+    144: True
+    145: True
+    146: True
+    147: True
+    148: True
+    149: True
+    150: True
+    151: True
+    152: True
+    153: True
+    154: True
+    155: True
+    156: True
+    157: True
+    158: True
+    159: True
+    160: True
+    161: True
+    162: True
+    163: True
+    164: True
+    165: True
+    166: True
+    167: True
+    168: True
+    169: True
+    170: True
+    171: True
+    172: True
+    173: True
+    174: True
+    175: True
+    176: True
+    177: True
+    178: True
+    179: True
+    180: True
+    181: True
+    182: True
+    183: True
+    184: True
+    185: True
+    186: True
+    187: True
+    188: True
+  LSSTCam-imSim:
+    <<: *LSSTCam
+  LSSTCam-imSim-TEST-496960:
+    95: True
+  LSSTCam-imSim-TEST-496989:
+    95: True
+    105: True
+  HSC:
+    0: True
+    1: True
+    2: True
+    3: True
+    4: True
+    5: True
+    6: True
+    7: True
+    8: True
+    9: False
+    10: True
+    11: True
+    12: True
+    13: True
+    14: True
+    15: True
+    16: True
+    17: True
+    18: True
+    19: True
+    20: True
+    21: True
+    22: True
+    23: True
+    24: True
+    25: True
+    26: True
+    27: True
+    28: True
+    29: True
+    30: True
+    31: True
+    32: True
+    33: True
+    34: True
+    35: True
+    36: True
+    37: True
+    38: True
+    39: True
+    40: True
+    41: True
+    42: True
+    43: True
+    44: True
+    45: True
+    46: True
+    47: True
+    48: True
+    49: True
+    50: True
+    51: True
+    52: True
+    53: True
+    54: True
+    55: True
+    56: True
+    57: True
+    58: True
+    59: True
+    60: True
+    61: True
+    62: True
+    63: True
+    64: True
+    65: True
+    66: True
+    67: True
+    68: True
+    69: True
+    70: True
+    71: True
+    72: True
+    73: True
+    74: True
+    75: True
+    76: True
+    77: True
+    78: True
+    79: True
+    80: True
+    81: True
+    82: True
+    83: True
+    84: True
+    85: True
+    86: True
+    87: True
+    88: True
+    89: True
+    90: True
+    91: True
+    92: True
+    93: True
+    94: True
+    95: True
+    96: True
+    97: True
+    98: True
+    99: True
+    100: True
+    101: True
+    102: True
+    103: True
+  HSC-TEST-59134:
+    0: True
+    4: True
+    5: True
+  HSC-TEST-59142:
+    0: True
+    5: True
+    11: True
+  HSC-TEST-59150:
+    50: True
+    58: True
+  HSC-TEST-59160:
+    43: True
+    51: True

@@ -169,7 +169,9 @@ app-metrics:
   apps:
     - gafaelfawr
     - mobu
+    - noteburst
     - nublado
+    - sia
     - wobbly
 
 backup:

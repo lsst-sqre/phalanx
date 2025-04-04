@@ -24,10 +24,10 @@ auxtel-ess202:
     RUN_ARG: 202
   resources:
     requests:
-      cpu: 19m
+      cpu: 1
       memory: 90Mi
     limits:
-      cpu: 190m
+      cpu: 3
       memory: 900Mi
 
 auxtel-ess203:
@@ -146,12 +146,12 @@ dream:
     repository: ts-dockerhub.lsst.org/dream
     pullPolicy: Always
   resources:
-    limits:
-      cpu: 100m
-      memory: 300Mi
     requests:
-      cpu: 10m
+      cpu: 70m
       memory: 96Mi
+    limits:
+      cpu: 700m
+      memory: 300Mi
 
 earthquake-ess302:
   enabled: true
@@ -163,11 +163,11 @@ earthquake-ess302:
     RUN_ARG: 302
   resources:
     requests:
-      cpu: 4m
-      memory: 103Mi
+      cpu: 10m
+      memory: 500Mi
     limits:
-      cpu: 40m
-      memory: 310Mi
+      cpu: 100m
+      memory: 1500Mi
 
 eas:
   enabled: true
@@ -175,21 +175,21 @@ eas:
     repository: ts-dockerhub.lsst.org/eas
     pullPolicy: Always
   resources:
-    limits:
-      cpu: 150m
-      memory: 375Mi
     requests:
-      cpu: 15m
+      cpu: 150m
       memory: 125Mi
+    limits:
+      cpu: 750m
+      memory: 375Mi
 
-epm301:
+epm-ess303:
   enabled: true
-  classifier: epm301
+  classifier: ess303
   image:
-    repository: ts-dockerhub.lsst.org/epm
+    repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 301
+    RUN_ARG: 303
   resources:
     requests:
       cpu: 19m
@@ -207,10 +207,10 @@ hvac:
     RUN_ARG: --state enabled
   resources:
     requests:
-      cpu: 15m
+      cpu: 40m
       memory: 120Mi
     limits:
-      cpu: 150m
+      cpu: 400m
       memory: 30000Mi
 
 m1m3-ess113:
@@ -271,10 +271,10 @@ mtdome-ess107:
     RUN_ARG: 107
   resources:
     requests:
-      cpu: 19m
+      cpu: 1
       memory: 90Mi
     limits:
-      cpu: 190m
+      cpu: 2
       memory: 900Mi
 
 mtdome-ess108:
@@ -319,10 +319,10 @@ tma-ess104:
     RUN_ARG: 104
   resources:
     requests:
-      cpu: 19m
+      cpu: 1
       memory: 90Mi
     limits:
-      cpu: 190m
+      cpu: 3
       memory: 900Mi
 
 tma-ess105:

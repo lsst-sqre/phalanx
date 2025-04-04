@@ -1,21 +1,22 @@
-path "kv-v2/data/{{ path }}" {
+
+path "{{ mount_point }}/data/{{ path }}" {
   capabilities = ["create", "delete", "read", "update"]
 }
-path "kv-v2/data/{{ path }}/+" {
+path "{{ mount_point }}/data/{{ path }}/+" {
   capabilities = ["create", "delete", "read", "update"]
 }
-path "kv-v2/metadata/{{ path }}" {
+path "{{ mount_point }}/metadata/{{ path }}" {
   capabilities = ["delete", "list", "read", "update"]
 }
-path "kv-v2/metadata/{{ path }}/+" {
+path "{{ mount_point }}/metadata/{{ path }}/+" {
   capabilities = ["delete", "list", "read", "update"]
 }
-path "kv-v2/delete/{{ path }}/+" {
+path "{{ mount_point }}/delete/{{ path }}/+" {
   capabilities = ["update"]
 }
-path "kv-v2/destroy/{{ path }}/+" {
+path "{{ mount_point }}/destroy/{{ path }}/+" {
   capabilities = ["update"]
 }
-path "kv-v2/undelete/{{ path }}/+" {
+path "{{ mount_point }}/undelete/{{ path }}/+" {
   capabilities = ["update"]
 }
