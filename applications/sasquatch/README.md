@@ -86,6 +86,7 @@ Rubin Observatory's telemetry service
 | kapacitor.persistence.size | string | `"100Gi"` | Size of storage to request if enabled |
 | kapacitor.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Kapacitor |
 | kapacitor.strategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
+| obsenv.enabled | bool | `false` | Whether to enable the obsenv subchart |
 | rest-proxy.enabled | bool | `false` | Whether to enable the REST proxy |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations |
 | strimzi-kafka.connect.enabled | bool | `true` | Whether Kafka Connect is enabled |
@@ -357,6 +358,7 @@ Rubin Observatory's telemetry service
 | kafka-connect-manager-enterprise.s3Sink.timezone | string | `"UTC"` | The timezone to use when partitioning with TimeBasedPartitioner |
 | kafka-connect-manager-enterprise.s3Sink.topicsDir | string | `"topics"` | Top level directory to store the data ingested from Kafka |
 | kafka-connect-manager-enterprise.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka |
+| obsenv.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | rest-proxy.affinity | object | `{}` | Affinity configuration |
 | rest-proxy.configurationOverrides | object | See `values.yaml` | Kafka REST configuration options |
 | rest-proxy.customEnv | object | `{}` | Kafka REST additional env variables |

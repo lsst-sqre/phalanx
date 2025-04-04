@@ -321,6 +321,10 @@ tap:
   # -- Whether to enable the tap subchart
   enabled: false
 
+obsenv:
+  # -- Whether to enable the obsenv subchart
+  enabled: false
+
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD

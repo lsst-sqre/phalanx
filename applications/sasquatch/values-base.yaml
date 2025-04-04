@@ -283,10 +283,6 @@ rest-proxy:
   configurationOverrides:
     "access.control.allow.origin": https://base-lsp.lsst.codes/love
   kafka:
-    topics:
-      - lsst.obsenv.action
-      - lsst.obsenv.summary
-      - lsst.obsenv.run-branch
     topicPrefixes:
       - lsst.obsenv
 
@@ -324,3 +320,6 @@ backup:
     - name: kapacitor
       enabled: true
       retentionDays: 7
+
+obsenv:
+  enabled: true
