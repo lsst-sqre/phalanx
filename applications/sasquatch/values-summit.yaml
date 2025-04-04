@@ -589,9 +589,6 @@ rest-proxy:
     "access.control.allow.origin": https://summit-lsp.lsst.codes/love,http://love01.cp.lsst.org
   kafka:
     topics:
-      - lsst.obsenv.action
-      - lsst.obsenv.summary
-      - lsst.obsenv.run-branch
       - lsst.backpack.usgs-earthquake-data
     topicPrefixes:
       - lsst.dm
@@ -633,3 +630,6 @@ backup:
     - name: kapacitor
       enabled: true
       retentionDays: 7
+
+obsenv:
+  enabled: true
