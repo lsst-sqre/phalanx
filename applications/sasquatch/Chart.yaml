@@ -65,6 +65,9 @@ dependencies:
   - name: tap
     condition: tap.enabled
     version: 1.0.0
+  - name: obsenv
+    condition: obsenv.enabled
+    version: 1.0.0
 
 annotations:
   phalanx.lsst.io/docs: |
