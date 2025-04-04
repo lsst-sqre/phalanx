@@ -50,6 +50,23 @@ config:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_ref: "prod"
         restart: true
+    - name: "daily"
+      count: 1
+      users:
+        - username: "bot-mobu-daily"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      business:
+        type: "NotebookRunnerCounting"
+        options:
+          image:
+            image_class: latest-daily
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_ref: "prod"
+        restart: true
     - name: "tutorial"
       count: 1
       users:
