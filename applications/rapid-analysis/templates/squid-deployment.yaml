@@ -20,6 +20,12 @@ spec:
       labels:
         {{- include "rapid-analysis.squid.selectorLabels" . | nindent 8 }}
     spec:
+      {{- if .Values.squid.embargo }}
+      hostAliases:
+      - ip: "172.24.7.249"
+        hostnames:
+        - "sdfembs3.sdf.slac.stanford.edu"
+      {{- end }}
       initContainers:
       - name: perm-fixer
         image: busybox

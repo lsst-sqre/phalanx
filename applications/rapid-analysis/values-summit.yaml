@@ -576,5 +576,6 @@ redis:
       memory: 50Gi
 squid:
   enabled: true
+  embargo: true
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/ra-lhn"

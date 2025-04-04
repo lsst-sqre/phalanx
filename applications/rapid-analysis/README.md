@@ -46,6 +46,7 @@ A Helm chart for deploying the Rapid Analysis services.
 | securityContext | object | `{}` | This section allows for specification of security context information. If the section is used, at least one of the following attributes must be specified. _uid_ (User id to run application as), _gid_ (Group id of the user that runs the application), _fid_ (File system context user id), |
 | siteTag | string | `""` | A special tag for letting the scripts know where they are running. |
 | squid.affinity | object | `{}` | Affinity rules for the squid pods |
+| squid.embargo | bool | `false` | This specifies wether the squid service needs to reach embargo or not. |
 | squid.enabled | bool | `false` | This specifies whether to use squid or not. |
 | squid.env | object | `{}` | This section holds a set of key, value pairs for environmental variables (ENV_VAR: value). |
 | squid.envSecrets | list | `[]` | This section holds specifications for secret injection. |
