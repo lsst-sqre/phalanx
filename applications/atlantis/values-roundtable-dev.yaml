@@ -1,0 +1,6 @@
+image:
+  tag: tickets-dm-49764-custom-atlantis
+
+config:
+  repoAllowList: "github.com/lsst-sqre/prodromos"
+  googleServiceAccount: "dfuchs-test-atlantis-prodromos@roundtable-dev-abe2.iam.gserviceaccount.com"

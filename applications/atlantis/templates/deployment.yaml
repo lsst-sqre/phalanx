@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: atlantis
+  labels:
+    {{- include "atlantis.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "atlantis.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "atlantis.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccount: "atlantis"
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+        env:
+        - name: ATLANTIS_LOG_LEVEL
+          value: {{ .Values.logLevel | quote }}
+        - name: ATLANTIS_WEB_BASIC_AUTH
+          value: "true"
+        - name: ATLANTIS_WEB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: atlantis
+              key: web-username
+        - name: ATLANTIS_WEB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: atlantis
+              key: web-password
+        - name: ATLANTIS_ATLANTIS_URL
+          value: {{ .Values.global.baseUrl }}/atlantis
+        - name: ATLANTIS_REPO_ALLOWLIST
+          value: {{ .Values.config.repoAllowList | quote }}
+        - name: ATLANTIS_GH_APP_ID
+          valueFrom:
+            secretKeyRef:
+              name: atlantis
+              key: github-app-id
+        - name: ATLANTIS_GH_APP_SLUG
+          valueFrom:
+            secretKeyRef:
+              name: atlantis
+              key: github-app-slug
+        - name: ATLANTIS_GH_APP_KEY_FILE
+          value: /var/github-secrets/github-app-private-key
+        - name: ATLANTIS_GH_WEBHOOK_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: atlantis
+              key: github-app-webhook-secret
+        - name: SENTRY_AUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: atlantis
+              key: sentry-auth-token
+
+        # This is needed because we're using a GitHub app rather than a GitHub user.
+        - name: ATLANTIS_WRITE_GIT_CREDS
+          value: "true" # Kubernetes sets an ATLANTIS_PORT variable so we need to override.
+
+        - name: ATLANTIS_PORT
+          value: "8080" # Kubernetes sets an ATLANTIS_PORT variable so we need to override.
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 100m
+          limits:
+            memory: 2Gi
+            cpu: "1"
+        livenessProbe:
+          # We only need to check every 60s since Atlantis is not a
+          # high-throughput service.
+          periodSeconds: 60
+          httpGet:
+            path: /healthz
+            port: 8080
+            # If using https, change this to HTTPS
+            scheme: HTTP
+        readinessProbe:
+          periodSeconds: 60
+          httpGet:
+            path: /healthz
+            port: 8080
+            # If using https, change this to HTTPS
+            scheme: HTTP
+        volumeMounts:
+          - mountPath: "/var/github-secrets"
+            name: "github-secrets"
+            readOnly: true
+      volumes:
+        - name: github-secrets
+          secret:
+            secretName: atlantis
+            items:
+              - key: github-app-private-key
+                path: github-app-private-key
+
