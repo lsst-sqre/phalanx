@@ -1,0 +1,5 @@
+apiVersion: v2
+name: prompt-processing
+version: 1.0.0
+description: Sasquatch configuration for Prompt Processing
+type: application

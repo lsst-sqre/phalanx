@@ -18,8 +18,6 @@ strimzi-kafka:
       enabled: true
     kafkaConnectManager:
       enabled: true
-    promptProcessing:
-      enabled: true
     consdb:
       enabled: true
     obsloctap:
@@ -159,9 +157,6 @@ rest-proxy:
     enabled: true
     hostname: usdf-rsp-dev.slac.stanford.edu
   kafka:
-    topics:
-      - test.next-visit
-      - test.next-visit-job
     topicPrefixes:
       - test
       - lsst.dm
@@ -214,3 +209,6 @@ backup:
     - name: "influxdb-oss-full"
       enabled: false
       backupTimestamp: ""
+
+prompt-processing:
+  enabled: true

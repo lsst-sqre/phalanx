@@ -264,10 +264,6 @@ users:
     # -- Enable user telegraf (deployed by parent Sasquatch chart)
     enabled: false
 
-  promptProcessing:
-    # -- Enable user prompt-processing
-    enabled: false
-
   kafkaConnectManager:
     # -- Enable user kafka-connect-manager
     enabled: false
@@ -279,7 +275,6 @@ users:
   obsloctap:
     # -- Enable user obsloctap
     enabled: false
-
 
 mirrormaker2:
   # -- Enable replication in the target (passive) cluster

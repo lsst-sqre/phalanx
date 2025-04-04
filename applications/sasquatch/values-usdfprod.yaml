@@ -29,8 +29,6 @@ strimzi-kafka:
       enabled: true
     telegraf:
       enabled: true
-    promptProcessing:
-      enabled: true
     consdb:
       enabled: true
   kraft:
@@ -384,3 +382,6 @@ backup:
       retentionDays: 7
     - name: influxdb-enterprise-incremental
       enabled: true
+
+prompt-processing:
+  enabled: true
