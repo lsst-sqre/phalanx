@@ -325,6 +325,10 @@ obsenv:
   # -- Whether to enable the obsenv subchart
   enabled: false
 
+backpack:
+  # -- Whether to enable the backpack subchart
+  enabled: false
+
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
