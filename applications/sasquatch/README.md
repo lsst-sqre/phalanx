@@ -36,6 +36,7 @@ Rubin Observatory's telemetry service
 | chronograf.persistence.size | string | `"100Gi"` | Size of data store to request, if enabled |
 | chronograf.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Chronograf |
 | chronograf.updateStrategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
+| consdb.enabled | bool | `false` | Whether to enable the consdb subchart |
 | control-system.enabled | bool | `false` | Whether to enable the control-system subchart |
 | customInfluxDBIngress.annotations | object | See `values.yaml` | Annotations to add to the ingress |
 | customInfluxDBIngress.enabled | bool | `false` | Whether to enable the custom ingress for InfluxDB OSS |
@@ -136,6 +137,7 @@ Rubin Observatory's telemetry service
 | backup.restoreItems | list | `[{"backupTimestamp":"","enabled":false,"name":"influxdb-oss-full"}]` | List of items to restore using the sasquatch restore script name must match an item in backupItems backupTimestamp must be in the YYYYMMDDTHHMMSSZ format |
 | backup.schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
 | backup.tolerations | list | `[]` | Tolerations for the backups deployment pod |
+| consdb.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | control-system.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | control-system.topics | list | `[]` | Create lsst.s3.* related topics for the ts-salkafka user. |
 | influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |

@@ -341,6 +341,10 @@ obsloctap:
   # -- Whether to enable the obsloctap subchart
   enabled: false
 
+consdb:
+  # -- Whether to enable the consdb subchart
+  enabled: false
+
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
