@@ -57,14 +57,6 @@ strimzi-kafka:
         memory: 8Gi
         cpu: "2"
   users:
-    tsSalKafka:
-      enabled: true
-      topics:
-        - lsst.s3.raw.latiss
-        - lsst.s3.raw.comcam
-        - lsst.s3.raw.lsstcam
-    camera:
-      enabled: true
     replicator:
       enabled: true
     telegraf:
@@ -634,3 +626,10 @@ obsenv:
 
 backpack:
   enabled: true
+
+control-system:
+  enabled: true
+  topics:
+    - lsst.s3.raw.latiss
+    - lsst.s3.raw.comcam
+    - lsst.s3.raw.lsstcam

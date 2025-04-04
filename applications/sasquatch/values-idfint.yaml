@@ -30,10 +30,6 @@ strimzi-kafka:
         cpu: 4
         memory: 8Gi
   users:
-    tsSalKafka:
-      enabled: true
-    camera:
-      enabled: true
     replicator:
       enabled: true
     telegraf:
@@ -96,36 +92,6 @@ telegraf:
       timestamp_field: "timestamp"
       topicRegexps: |
         [ "lsst.backpack" ]
-    atcamera:
-      enabled: true
-      replicaCount: 1
-      database: "lsst.ATCamera"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      tags: |
-        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source" ]
-      topicRegexps: |
-        [ "lsst.ATCamera" ]
-    cccamera:
-      enabled: true
-      replicaCount: 1
-      database: "lsst.CCCamera"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      tags: |
-        [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source" ]
-      topicRegexps: |
-        [ "lsst.CCCamera" ]
-    mtcamera:
-      enabled: true
-      replicaCount: 1
-      database: "lsst.MTCamera"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      tags: |
-        [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
-      topicRegexps: |
-        [ "lsst.MTCamera" ]
 
 kafdrop:
   ingress:
@@ -141,9 +107,6 @@ rest-proxy:
     topicPrefixes:
       - lsst.example
       - lsst.backpack
-      - lsst.ATCamera
-      - lsst.CCCamera
-      - lsst.MTCamera
 
 chronograf:
   ingress:

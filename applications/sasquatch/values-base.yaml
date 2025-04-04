@@ -80,11 +80,6 @@ strimzi-kafka:
   users:
     replicator:
       enabled: true
-    tsSalKafka:
-      enabled: true
-      topics:
-        - lsst.s3.raw.latiss
-        - lsst.s3.raw.lsstcam
     telegraf:
       enabled: true
     kafkaConnectManager:
@@ -320,3 +315,9 @@ backup:
 
 obsenv:
   enabled: true
+
+control-system:
+  enabled: true
+  topics:
+    - lsst.s3.raw.latiss
+    - lsst.s3.raw.lsstcam

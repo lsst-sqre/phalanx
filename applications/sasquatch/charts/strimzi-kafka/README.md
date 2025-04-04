@@ -64,11 +64,8 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
-| users.camera.enabled | bool | `false` | Enable user camera, used at the camera environments |
 | users.consdb.enabled | bool | `false` | Enable user consdb |
 | users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
 | users.obsloctap.enabled | bool | `false` | Enable user obsloctap |
 | users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
-| users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
-| users.tsSalKafka.topics | list | `[]` | Create lsst.s3.* related topics for the ts-salkafka user. |
