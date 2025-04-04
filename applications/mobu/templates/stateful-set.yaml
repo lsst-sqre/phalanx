@@ -107,11 +107,11 @@ spec:
             - name: "http"
               containerPort: 8080
               protocol: "TCP"
-          readinessProbe:
-            httpGet:
-              path: "/"
-              port: "http"
-            timeoutSeconds: 10
+          # readinessProbe:
+          #   httpGet:
+          #     path: "/"
+          #     port: "http"
+          #   timeoutSeconds: 10
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
