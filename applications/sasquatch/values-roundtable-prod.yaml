@@ -58,8 +58,6 @@ strimzi-kafka:
       enabled: false
     telegraf:
       enabled: false
-    promptProcessing:
-      enabled: false
     kafkaConnectManager:
       enabled: false
 

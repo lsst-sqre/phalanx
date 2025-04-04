@@ -329,6 +329,10 @@ backpack:
   # -- Whether to enable the backpack subchart
   enabled: false
 
+prompt-processing:
+  # -- Whether to enable the prompt-processing subchart
+  enabled: false
+
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD

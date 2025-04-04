@@ -133,8 +133,6 @@ rest-proxy:
     enabled: true
     hostname: data-dev.lsst.cloud
   kafka:
-    topics:
-      - test.next-visit
     topicPrefixes:
       - test
       - lsst.dm
