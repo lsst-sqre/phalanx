@@ -71,36 +71,36 @@ controller:
         - name: "home"
           source:
             type: "nfsPvc"
-            serverPath: "/test08-share1/home"
+            serverPath: "/home-share"
             server: "10.234.16.4"
             storageClassName: "standard"
             accessModes:
               - "ReadWriteMany"
             resources:
               requests:
-                storage: 3000Gi
+                storage: 2048Gi
         - name: "project"
           source:
             type: "nfsPvc"
-            serverPath: "/test08-share1/project"
+            serverPath: "/project-share"
             server: "10.234.16.4"
             storageClassName: "standard"
             accessModes:
               - "ReadWriteMany"
             resources:
               requests:
-                storage: 3000Gi
+                storage: 2048Gi
         - name: "scratch"
           source:
             type: "nfsPvc"
-            serverPath: "/test08-share1/scratch"
+            serverPath: "/scratch-share"
             server: "10.234.16.4"
             storageClassName: "standard"
             accessModes:
               - "ReadWriteMany"
             resources:
               requests:
-                storage: 3000Gi
+                storage: 2048Gi
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
