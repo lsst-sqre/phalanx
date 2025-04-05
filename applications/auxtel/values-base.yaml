@@ -47,10 +47,10 @@ atdometrajectory:
   resources:
     limits:
       cpu: 350m
-      memory: 300Mi
+      memory: 768Mi
     requests:
       cpu: 35m
-      memory: 100Mi
+      memory: 256Mi
 
 atheaderservice:
   image:
