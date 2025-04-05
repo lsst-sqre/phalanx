@@ -1,0 +1,5 @@
+apiVersion: v2
+name: control-system
+version: 1.0.0
+description: Sasquatch configuration for the Observatory Control System
+type: application

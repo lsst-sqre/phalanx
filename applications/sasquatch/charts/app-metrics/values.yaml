@@ -59,10 +59,10 @@ image:
   # -- Image pull policy
   pullPolicy: "IfNotPresent"
 
-# -- Annotations for telegraf-kafka-consumers pods
+# -- Annotations for the Telegraf pods
 podAnnotations: {}
 
-# -- Labels for telegraf-kafka-consumer pods
+# -- Labels for the Telegraf pods
 podLabels: {}
 
 # -- Secret names to use for Docker pulls

@@ -11,6 +11,7 @@ A subchart to deploy the Kafdrop UI for Sasquatch.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity configuration |
+| cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |
 | existingSecret | string | Do not use a secret | Existing Kubernetes secrect use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |
 | host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |

@@ -18,8 +18,6 @@ strimzi-kafka:
           loadBalancerIP: "34.72.103.157"
           host: sasquatch-kafka-5.lsst.cloud
   users:
-    kafdrop:
-      enabled: true
     telegraf:
       enabled: true
   kraft:
@@ -59,7 +57,7 @@ customInfluxDBIngress:
   enabled: true
   hostname: data.lsst.cloud
 
-telegraf-kafka-consumer:
+telegraf:
   enabled: true
   kafkaConsumers:
     example:

@@ -192,8 +192,9 @@ kafka-connect-manager-enterprise:
   # -- Whether enterprise kafka-connect-manager is enabled
   enabled: false
 
-# -- Overrides for telegraf-kafka-consumer configuration
-telegraf-kafka-consumer: {}
+telegraf:
+  # -- Whether to enable the telegraf subchart
+  enabled: false
 
 rest-proxy:
   # -- Whether to enable the REST proxy
@@ -305,7 +306,7 @@ kapacitor:
       cpu: 4
 
 kafdrop:
-  # -- Whether Kafdrop is enabled
+  # -- Whether to enable the kafdrop subchart
   enabled: true
 
 squareEvents:
@@ -314,6 +315,34 @@ squareEvents:
 
 backup:
   # -- Whether to enable Sasquatch backups
+  enabled: false
+
+tap:
+  # -- Whether to enable the tap subchart
+  enabled: false
+
+obsenv:
+  # -- Whether to enable the obsenv subchart
+  enabled: false
+
+backpack:
+  # -- Whether to enable the backpack subchart
+  enabled: false
+
+prompt-processing:
+  # -- Whether to enable the prompt-processing subchart
+  enabled: false
+
+control-system:
+  # -- Whether to enable the control-system subchart
+  enabled: false
+
+obsloctap:
+  # -- Whether to enable the obsloctap subchart
+  enabled: false
+
+consdb:
+  # -- Whether to enable the consdb subchart
   enabled: false
 
 global:
