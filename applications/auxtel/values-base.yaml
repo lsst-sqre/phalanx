@@ -69,10 +69,10 @@ atheaderservice:
   resources:
     limits:
       cpu: 800m
-      memory: 700Mi
+      memory: 1500Mi
     requests:
       cpu: 80m
-      memory: 250Mi
+      memory: 450Mi
 
 athexapod-sim:
   enabled: true
