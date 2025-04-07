@@ -2,53 +2,11 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# -- Number of web deployment pods to start
-replicaCount: 1
+# -- Which cloud platform is Trident running on?
+cloudProvider: "GCP"
+# -- Log format can be "json" or "text"
+tridentLogFormat: json
 
-image:
-  # -- Image to use in the trident deployment
-  repository: "ghcr.io/lsst-sqre/trident"
-
-  # -- Pull policy for the trident image
-  pullPolicy: "IfNotPresent"
-
-  # -- Tag of image to use
-  # @default -- The appVersion of the chart
-  tag: null
-
-config:
-  # -- Logging level
-  logLevel: "INFO"
-
-  # -- Logging profile (`production` for JSON, `development` for
-  # human-friendly)
-  logProfile: "production"
-
-  # -- URL path prefix
-  pathPrefix: "/trident"
-
-  # -- Whether to send Slack alerts for unexpected failures
-  slackAlerts: false
-
-ingress:
-  # -- Additional annotations for the ingress rule
-  annotations: {}
-
-# -- Affinity rules for the trident deployment pod
-affinity: {}
-
-# -- Node selection rules for the trident deployment pod
-nodeSelector: {}
-
-# -- Annotations for the trident deployment pod
-podAnnotations: {}
-
-# -- Resource limits and requests for the trident deployment pod
-# @default -- See `values.yaml`
-resources: {}
-
-# -- Tolerations for the trident deployment pod
-tolerations: []
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
