@@ -203,7 +203,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "2.11.0"
+    tag: "2.12.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
