@@ -7,8 +7,6 @@ metadata:
 data:
   cadc-registry.properties: |
     ivo://ivoa.net/sso#OpenID = {{ .Values.global.baseUrl }}
-    ca.nrc.cadc.reg.client.RegistryClient.baseURL = {{ .Values.global.baseUrl }}/api/{{ .Values.ingress.path }}/reg
-
     # Ignore this, it's only here to satisfy the availability check.
     ivo://ivoa.net/std/CDP#proxy-1.0 = ivo://cadc.nrc.ca/cred
     ivo://ivoa.net/sso#tls-with-password = {{ .Values.global.baseUrl }}
