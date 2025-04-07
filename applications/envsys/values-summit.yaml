@@ -198,6 +198,38 @@ epm-ess303:
       cpu: 190m
       memory: 900Mi
 
+epm-generator-ess305:
+  enabled: true
+  classifier: ess305
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 305
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+epm-generator-ess306:
+  enabled: true
+  classifier: ess306
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 306
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
 hvac:
   enabled: true
   image:
@@ -285,6 +317,22 @@ mtdome-ess108:
     pullPolicy: Always
   env:
     RUN_ARG: 108
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+ringss-ess304:
+  enabled: true
+  classifier: ess304
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 304
   resources:
     requests:
       cpu: 19m

@@ -635,6 +635,12 @@ love-producer:
   - name: epm-ess303
     csc: ESS:303 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: epm-generator-ess305
+    csc: ESS:305 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: epm-generator-ess306
+    csc: ESS:306 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: fiberspectrograph101
     csc: FiberSpectrograph:101 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -817,6 +823,9 @@ love-producer:
       limits:
         cpu: 1
         memory: 600Mi
+  - name: mtocps
+    csc: OCPS:3 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtoods
     csc: MTOODS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -857,6 +866,9 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: raocps
     csc: OCPS:101 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: ringssess304
+    csc: ESS:304 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess001
     csc: ESS:1 --log-level 10
