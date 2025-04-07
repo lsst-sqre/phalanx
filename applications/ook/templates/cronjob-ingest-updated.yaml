@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "ook.fullname" . }}-ingest-updated
+  name: "ook-ingest-updated"
   labels:
     {{- include "ook.labels" . | nindent 4 }}
     app.kubernetes.io/component: "ingest-updated"
@@ -27,12 +27,15 @@ spec:
             app.kubernetes.io/part-of: "ook"
         spec:
           restartPolicy: "Never"
+          {{- if or .Values.cloudsql.enabled }}
+          serviceAccountName: "ook"
+          {{- else }}
           automountServiceAccountToken: false
+          {{- end }}
           {{- with .Values.imagePullSecrets }}
           imagePullSecrets:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          serviceAccountName: {{ include "ook.serviceAccountName" . }}
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -50,46 +53,9 @@ spec:
                 {{- toYaml .Values.resources | nindent 16 }}
               envFrom:
                 - configMapRef:
-                    name: {{ include "ook.fullname" . }}
+                    name: "ook"
               env:
-                # Writeable directory for concatenating certs. See "tmp" volume.
-                - name: "KAFKA_CERT_TEMP_DIR"
-                  value: "/tmp/kafka_certs"
-                - name: "KAFKA_SECURITY_PROTOCOL"
-                  value: "SSL"
-                # From KafkaAccess
-                - name: "KAFKA_BOOTSTRAP_SERVERS"
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ template "ook.fullname" . }}-kafka
-                      key: "bootstrapServers"
-                - name: "KAFKA_CLUSTER_CA_PATH"
-                  value: "/etc/kafkacluster/ca.crt"
-                - name: "KAFKA_CLIENT_CERT_PATH"
-                  value: "/etc/kafkauser/user.crt"
-                - name: "KAFKA_CLIENT_KEY_PATH"
-                  value: "/etc/kafkauser/user.key"
-                # From Vault secrets
-                - name: "ALGOLIA_APP_ID"
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ template "ook.fullname" . }}
-                      key: "ALGOLIA_APP_ID"
-                - name: "ALGOLIA_API_KEY"
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ template "ook.fullname" . }}
-                      key: "ALGOLIA_API_KEY"
-                - name: "OOK_GITHUB_APP_ID"
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ template "ook.fullname" . }}
-                      key: "OOK_GITHUB_APP_ID"
-                - name: "OOK_GITHUB_APP_PRIVATE_KEY"
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ template "ook.fullname" . }}
-                      key: "OOK_GITHUB_APP_PRIVATE_KEY"
+                {{- include "ook.envVars" (dict "Chart" .Chart "Release" .Release "Values" .Values) | nindent 16 }}
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
@@ -108,6 +74,10 @@ spec:
                   subPath: "ssl.keystore.key" # private key for the consuming client
                 - name: "tmp"
                   mountPath: "/tmp/kafka_certs"
+          {{- if .Values.cloudsql.enabled }}
+          initContainers:
+            {{- include "ook.cloudsqlSidecar" . | nindent 12 }}
+          {{- end }}
           {{with .Values.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 12 }}
@@ -125,9 +95,9 @@ spec:
             - name: "kafka"
               secret:
                 secretName: ook-kafka
-            - name: "{{ template "ook.fullname" . }}"
+            - name: "ook"
               secret:
-                secretName: {{ template "ook.fullname" . }}
+                secretName: "ook"
             - name: "tmp"
               emptyDir: {}
 {{- end }}

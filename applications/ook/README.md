@@ -22,9 +22,18 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | audit.schedule | string | `"15 2 * * *"` | Cron schedule string for ook audit job (UTC) |
 | audit.tolerations | list | `[]` | Tolerations for Ook audit pods |
 | audit.ttlSecondsAfterFinished | int | `86400` | Time (second) to keep a finished job before cleaning up |
+| cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases on Google Cloud |
+| cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
+| cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
+| cloudsql.image.resources | object | See `values.yaml` | Resource requests and limits for Cloud SQL pod |
+| cloudsql.image.tag | string | `"1.37.6"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.instanceConnectionName | string | `""` | Instance connection name for a Cloud SQL PostgreSQL instance |
+| cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `ook` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.algolia.documents_index | string | `"documents_dev"` | Name of the Algolia index for documents |
+| config.databaseUrl | string | `""` | Database URL |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.topics.ingest | string | `"lsst.square-events.ook.ingest"` | Kafka topic name for ingest events |
+| config.updateSchema | bool | false to disable schema upgrades | Whether to run the database migration job |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
@@ -50,7 +59,4 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | resources | object | See `values.yaml` | Resource requests and limits for Ook pod |
 | service.port | int | `80` | Port of the service to create and map to the ingress |
 | service.type | string | `"ClusterIP"` | Type of service to create |
-| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
-| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
-| serviceAccount.name | string | `""` |  |
 | tolerations | list | `[]` |  |
