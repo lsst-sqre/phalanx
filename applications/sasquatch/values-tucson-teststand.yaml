@@ -43,8 +43,6 @@ strimzi-kafka:
   users:
     telegraf:
       enabled: true
-    kafkaConnectManager:
-      enabled: true
   registry:
     ingress:
       enabled: true

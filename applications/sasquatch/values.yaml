@@ -189,10 +189,6 @@ kafka-connect-manager:
   # -- Whether to enable the Kafka Connect Manager
   enabled: false
 
-kafka-connect-manager-enterprise:
-  # -- Whether enterprise kafka-connect-manager is enabled
-  enabled: false
-
 telegraf:
   # -- Whether to enable the telegraf subchart
   enabled: false
