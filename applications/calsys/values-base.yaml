@@ -227,7 +227,7 @@ tunablelaser-sim:
     repository: ts-dockerhub.lsst.org/tunablelaser
     pullPolicy: Always
   env:
-    RUN_ARG: --simulate
+    RUN_ARG: --simulate 1
   resources:
     limits:
       cpu: "2"

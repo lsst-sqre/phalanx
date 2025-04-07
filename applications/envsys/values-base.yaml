@@ -147,6 +147,12 @@ dream-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
   resources:
     limits:
       cpu: 100m
