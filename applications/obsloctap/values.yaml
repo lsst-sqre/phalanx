@@ -22,8 +22,13 @@ consumekafka:
     # @default -- The appVersion of the chart
     tag: "tickets-DM-44729"
 
+rubinsim:
+  # for rubin sim
+  dataDir: "/sdf/data/rubin/shared/rubin_sim_data"
+  bucketVal: "1"
+
 # -- Environment variables (e.g. butler configuration/auth parms) for panel
-environment: {}
+environment:
 
 ingress:
   # -- Additional annotations to add to the ingress
