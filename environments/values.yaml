@@ -72,6 +72,9 @@ applications:
   # -- Enable the envsys control system application
   envsys: false
 
+  # -- Enable the eups-distributor application
+  eups-distributor: false
+
   # -- Enable the exposurelog application
   exposurelog: false
 
