@@ -1,0 +1,59 @@
+# Default values for nvr-control.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  # -- Image to use in the nvr-control deployment
+  repository: ghcr.io/home-assistant/home-assistant
+
+  # -- Pull policy for the nvr-control image
+  pullPolicy: IfNotPresent
+
+  # -- Tag of image to use
+  tag: "2025.4"
+
+config:
+  configVolume:
+    # -- Storage class for configuration persistent volume
+    storageClass: null
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# -- Affinity rules for the nvr-control deployment pod
+affinity: {}
+
+# -- Node selection rules for the nvr-control deployment pod
+nodeSelector: {}
+
+# -- Annotations for the nvr-control deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the nvr-control deployment pod
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: 1
+    memory: 512Mi
+  requests:
+    cpu: 50m
+    memory: 256Mi
+
+# -- Tolerations for the nvr-control deployment pod
+tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

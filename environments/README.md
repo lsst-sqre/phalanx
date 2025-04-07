@@ -38,6 +38,7 @@
 | applications.next-visit-fan-out-keda | bool | `false` | Enable the next-visit-fan-out-keda application |
 | applications.noteburst | bool | `false` | Enable the noteburst application (required by times-square) |
 | applications.nublado | bool | `false` | Enable the nublado application (v3 of the Notebook Aspect) |
+| applications.nvr-control | bool | `false` | Enable the nvr-control application |
 | applications.obsenv-management | bool | `false` | Enable the obsenv-management application |
 | applications.obsloctap | bool | `false` | Enable the obsloctap application |
 | applications.obssys | bool | `false` | Enable the obssys control system application |
