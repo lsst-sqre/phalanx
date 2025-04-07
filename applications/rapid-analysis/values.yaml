@@ -131,6 +131,8 @@ redis:
 squid:
   # -- This specifies whether to use squid or not.
   enabled: false
+  # -- This specifies wether the squid service needs to reach embargo or not.
+  embargo: false
   # -- The port to expose the squid service on.
   port: 3128
   image:
