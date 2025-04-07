@@ -29,6 +29,15 @@ controller:
       homedirSchema: "initialThenUsername"
       nodeSelector:
         node-role.kubernetes.io/rsp-notebook: "true"
+      initContainers:
+        - name: "inithome"
+          image:
+            repository: "ghcr.io/slaclab/usdf-nublado-inithome"
+            tag: "latest"
+          privileged: true
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "sdf-home"
       nss:
         # Add rubin_users group (there is not yet a simpler way to do this).
         baseGroup: |
