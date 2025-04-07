@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nvr-control-config
+  labels:
+    {{- include "nvr-control.labels" . | nindent 4 }}
+spec:
+  {{- with .Values.config.configVolume.storageClass }}
+  storageClassName: {{ . }}
+  {{- end }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

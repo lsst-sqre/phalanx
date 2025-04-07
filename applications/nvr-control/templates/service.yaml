@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nvr-control
+  labels:
+    {{- include "nvr-control.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8123
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "nvr-control.selectorLabels" . | nindent 4 }}

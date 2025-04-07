@@ -91,6 +91,9 @@ applications:
   # -- Enable the qserv-kafka application
   qserv-kafka: false
 
+  # -- Enable the nvr-control application
+  nvr-control: false
+
   # -- Enable the rubin-rag application
   rubin-rag: false
 
