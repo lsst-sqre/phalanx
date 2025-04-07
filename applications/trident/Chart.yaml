@@ -8,8 +8,8 @@ type: application
 version: 1.0.0
 
 dependencies:
-  - name: netapp-trident
+  - name: trident-operator
     version: 100.2502.1
-    repository: https://netapp.github.io/trident-helm-chart/trident-operator
+    repository: https://netapp.github.io/trident-helm-chart/
     condition: trident.enabled
 

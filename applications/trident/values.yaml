@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-netapp-trident:
+trident-operator:
   # -- Which cloud platform is Trident running on?
   cloudProvider: "GCP"
   # -- Log format can be "json" or "text"
