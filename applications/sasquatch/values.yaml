@@ -185,8 +185,9 @@ influxdb-enterprise:
   # -- Whether to use influxdb-enterprise
   enabled: false
 
-# -- Overrides for kafka-connect-manager configuration
-kafka-connect-manager: {}
+kafka-connect-manager:
+  # -- Whether to enable the Kafka Connect Manager
+  enabled: false
 
 kafka-connect-manager-enterprise:
   # -- Whether enterprise kafka-connect-manager is enabled
@@ -201,7 +202,7 @@ rest-proxy:
   enabled: false
 
 chronograf:
-  # -- Whether Chronograf is enabled
+  # -- Whether to enable Chronograf
   enabled: true
 
   image:
@@ -262,7 +263,7 @@ chronograf:
       cpu: 4
 
 kapacitor:
-  # -- Whether Kapacitor is enabled
+  # -- Whether to enable Kapacitor
   enabled: true
 
   image:
@@ -314,7 +315,7 @@ squareEvents:
   enabled: false
 
 backup:
-  # -- Whether to enable Sasquatch backups
+  # -- Whether to enable the backups subchart
   enabled: false
 
 tap:

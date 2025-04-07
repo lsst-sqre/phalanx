@@ -77,6 +77,7 @@ Rubin Observatory's telemetry service
 | influxdb.setDefaultUser.enabled | bool | `true` | Whether the default InfluxDB user is set |
 | influxdb.setDefaultUser.user.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
 | kafdrop.enabled | bool | `true` | Whether to enable the kafdrop subchart |
+| kafka-connect-manager-enterprise.enabled | bool | `false` | Whether enterprise kafka-connect-manager is enabled |
 | kafka-connect-manager.enabled | bool | `false` | Whether to enable the Kafka Connect Manager |
 | kapacitor.enabled | bool | `true` | Whether to enable Kapacitor |
 | kapacitor.envVars | object | See `values.yaml` | Additional environment variables to set |
@@ -450,6 +451,9 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | strimzi-kafka.registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
+| strimzi-kafka.users.consdb.enabled | bool | `false` | Enable user consdb |
+| strimzi-kafka.users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
+| strimzi-kafka.users.obsloctap.enabled | bool | `false` | Enable user obsloctap |
 | strimzi-kafka.users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | strimzi-kafka.users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
 | tap.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
