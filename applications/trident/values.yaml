@@ -2,11 +2,11 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# -- Which cloud platform is Trident running on?
-cloudProvider: "GCP"
-# -- Log format can be "json" or "text"
-tridentLogFormat: json
-
+netapp-trident:
+  # -- Which cloud platform is Trident running on?
+  cloudProvider: "GCP"
+  # -- Log format can be "json" or "text"
+  tridentLogFormat: json
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

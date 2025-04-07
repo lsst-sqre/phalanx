@@ -10,6 +10,6 @@ version: 1.0.0
 dependencies:
   - name: netapp-trident
     version: 100.2502.1
-    repository: https://netapp.github.io/trident-helm-chart
+    repository: https://netapp.github.io/trident-helm-chart/trident-operator
     condition: trident.enabled
 
