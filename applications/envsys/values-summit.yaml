@@ -145,6 +145,13 @@ dream:
   image:
     repository: ts-dockerhub.lsst.org/dream
     pullPolicy: Always
+  env:
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
   resources:
     requests:
       cpu: 70m
