@@ -12,6 +12,7 @@ vaultPathPrefix: "secret/phalanx/roundtable-dev"
 
 applications:
   atlantis: true
+  eups-distributor: true
   giftless: true
   jira-data-proxy: true
   mobu: true
