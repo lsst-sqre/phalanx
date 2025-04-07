@@ -86,6 +86,10 @@ spec:
               value: "{{ .Values.kafka.group_id }}"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
+            - name: "RUBIN_SIM_DATA_DIR"
+              value: "{{ .Values.rubinsim.dataDir }}"
+            - name: "LSST_DISABLE_BUCKET_VALIDATION"
+              value: "{{ .Values.rubinsim.bucketVal }}"
           volumeMounts:
             - name: "tmp-volume"
               mountPath: "/tmp"
