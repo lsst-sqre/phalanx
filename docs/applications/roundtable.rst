@@ -13,6 +13,7 @@ Argo CD project: ``roundtable``
    :caption: Roundtable
 
    checkerboard/index
+   eups-distributor/index
    giftless/index
    onepassword-connect/index
    ook/index
