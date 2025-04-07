@@ -1,0 +1,58 @@
+# Default values for eups-distributor.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the eups-distributor deployment
+  repository: "ghcr.io/lsst-dm/distrib-docker"
+
+  # -- Pull policy for the eups-distributor image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# -- Affinity rules for the eups-distributor deployment pod
+affinity: {}
+
+# -- Node selection rules for the eups-distributor deployment pod
+nodeSelector: {}
+
+# -- Annotations for the eups-distributor deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the eups-distributor deployment pod
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "2"
+    memory: "3Gi"
+  requests:
+    cpu: "500m"
+    memory: "1Gi"
+
+# -- Tolerations for the eups-distributor deployment pod
+tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
