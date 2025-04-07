@@ -1,0 +1,14 @@
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstuk/tap-schema-roe-sso"
+      tag: "2.3.0"
+  config:
+    gcsBucket: "async"
+    gcsBucketUrl: "https://somerville.ed.ac.uk:6780"
+    gcsBucketType: "S3"
+    pg:
+      host: "192.41.122.118:5432"
+      database: "dp03_catalogs_10yr"
+      username: "dp03_user"
+    vaultSecretName: "ssotap"

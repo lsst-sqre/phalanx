@@ -1,0 +1,8 @@
+config:
+  # WARNING: this is a "playground" deployment
+  # using exposurelog's built-in test butler registries.
+  site_id: test
+  # Use the test butler registries.
+  # Note: exposurelog's Dockerfile copies the test repos to the top of the container
+  butler_uri_1: LSSTCam
+  butler_uri_2: LATISS

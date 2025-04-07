@@ -1,0 +1,45 @@
+redis:
+  persistence:
+    enabled: false
+
+config:
+  internalDatabase: true
+
+  oidcServer:
+    enabled: true
+
+  updateSchema: false
+
+  github:
+    clientId: "c4a5727c5788cc2d346e"
+
+  groupMapping:
+    "exec:admin":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+    "exec:internal-tools":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+    "exec:notebook":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+    "exec:portal":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+    "read:image":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+    "read:tap":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+
+  initialAdmins:
+    - "gpfrancis"
+    - "aibsen"
+    - "davedavemckay"

@@ -1,0 +1,11 @@
+image:
+  pullPolicy: Always
+config:
+  github_app_id: "1452049"
+  enable_github_app: "True"
+  phalanx_env: "rsptest"
+  log_level: "DEBUG"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/rsptest/pull-secret
