@@ -16,8 +16,6 @@ strimzi-kafka:
       enabled: true
     telegraf:
       enabled: true
-    kafkaConnectManager:
-      enabled: true
   kraft:
     enabled: true
   kafkaController:
@@ -36,6 +34,7 @@ customInfluxDBIngress:
   hostname: usdf-rsp-dev.slac.stanford.edu
 
 kafka-connect-manager:
+  enabled: true
   influxdbSink:
     # Based on the kafka producers configuration for the BTS
     # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-base-teststand.yaml

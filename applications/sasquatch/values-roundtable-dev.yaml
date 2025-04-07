@@ -55,8 +55,6 @@ strimzi-kafka:
   users:
     telegraf:
       enabled: false
-    kafkaConnectManager:
-      enabled: false
 
   connect:
     enabled: false
