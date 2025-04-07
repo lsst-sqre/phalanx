@@ -1,0 +1,8 @@
+apiVersion: v2
+name: telegraf
+version: 1.0.0
+description: >
+  Telegraf is an agent for collecting, processing, aggregating, and writing metrics.
+  This chart deploys Telegraf as a Kafka-InfluxDB connector for Sasquatch, using
+  the kafka_consumer input plugin with the Avro parser and the InfluxDB v1 output plugin.
+appVersion: 1.32.1

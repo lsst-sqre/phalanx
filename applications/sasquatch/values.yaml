@@ -185,22 +185,20 @@ influxdb-enterprise:
   # -- Whether to use influxdb-enterprise
   enabled: false
 
-# -- Overrides for kafka-connect-manager configuration
-kafka-connect-manager: {}
-
-kafka-connect-manager-enterprise:
-  # -- Whether enterprise kafka-connect-manager is enabled
+kafka-connect-manager:
+  # -- Whether to enable the Kafka Connect Manager
   enabled: false
 
-# -- Overrides for telegraf-kafka-consumer configuration
-telegraf-kafka-consumer: {}
+telegraf:
+  # -- Whether to enable the telegraf subchart
+  enabled: false
 
 rest-proxy:
   # -- Whether to enable the REST proxy
   enabled: false
 
 chronograf:
-  # -- Whether Chronograf is enabled
+  # -- Whether to enable Chronograf
   enabled: true
 
   image:
@@ -261,7 +259,7 @@ chronograf:
       cpu: 4
 
 kapacitor:
-  # -- Whether Kapacitor is enabled
+  # -- Whether to enable Kapacitor
   enabled: true
 
   image:
@@ -305,7 +303,7 @@ kapacitor:
       cpu: 4
 
 kafdrop:
-  # -- Whether Kafdrop is enabled
+  # -- Whether to enable the kafdrop subchart
   enabled: true
 
 squareEvents:
@@ -313,7 +311,35 @@ squareEvents:
   enabled: false
 
 backup:
-  # -- Whether to enable Sasquatch backups
+  # -- Whether to enable the backups subchart
+  enabled: false
+
+tap:
+  # -- Whether to enable the tap subchart
+  enabled: false
+
+obsenv:
+  # -- Whether to enable the obsenv subchart
+  enabled: false
+
+backpack:
+  # -- Whether to enable the backpack subchart
+  enabled: false
+
+prompt-processing:
+  # -- Whether to enable the prompt-processing subchart
+  enabled: false
+
+control-system:
+  # -- Whether to enable the control-system subchart
+  enabled: false
+
+obsloctap:
+  # -- Whether to enable the obsloctap subchart
+  enabled: false
+
+consdb:
+  # -- Whether to enable the consdb subchart
   enabled: false
 
 global:

@@ -4,6 +4,11 @@
 # -- Whether to enable Kafka Connect Manager
 enabled: true
 
+cluster:
+  # -- Name used for the Kafka cluster, and used by Strimzi for many
+  # annotations
+  name: sasquatch
+
 image:
   # -- Docker image to use for Kafka Connect Manager
   repository: ghcr.io/lsst-sqre/kafkaconnect

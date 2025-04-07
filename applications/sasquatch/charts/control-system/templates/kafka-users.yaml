@@ -1,0 +1,91 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: ts-salkafka
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: ts-salkafka-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "lsst.sal"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
+          type: topic
+          name: "lsst.s3"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
+          type: cluster
+        operations:
+          - Describe
+          - DescribeConfigs
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: camera
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: camera-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "lsst.ATCamera"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
+          type: topic
+          name: "lsst.CCCamera"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
+          type: topic
+          name: "lsst.MTCamera"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
+          type: cluster
+        operations:
+          - Describe
+          - DescribeConfigs
