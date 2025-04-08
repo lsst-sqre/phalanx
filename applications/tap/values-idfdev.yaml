@@ -1,7 +1,7 @@
 cadc-tap:
   tapSchema:
     image:
-      repository: "lsstsqre/tap-schema-idfdev-tap"
+      repository: "stvoutsin/tap-schema-idfdev-tap"
 
   config:
     qserv:
