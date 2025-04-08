@@ -428,7 +428,7 @@ mtm2hexapod-sim:
       memory: 125Mi
 
 mtmount:
-  enabled: true
+  enabled: false
   image:
     repository: ts-dockerhub.lsst.org/mtmount
     pullPolicy: Always
@@ -456,7 +456,7 @@ mtmount-ccw-only:
       memory: 300Mi
 
 mtmount-sim:
-  enabled: false
+  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtmount
     pullPolicy: Always
