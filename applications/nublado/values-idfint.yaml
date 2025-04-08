@@ -54,7 +54,7 @@ controller:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "tickets-DM-49774"
+            tag: "8.8.2"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
