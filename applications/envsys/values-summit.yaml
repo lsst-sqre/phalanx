@@ -340,6 +340,10 @@ ringss-ess304:
     pullPolicy: Always
   env:
     RUN_ARG: 304
+    RINGSS_USER: ringssRO
+  envSecrets:
+  - name: RINGSS_PASSWORD
+    key: soar-ringss-db-password
   resources:
     requests:
       cpu: 19m
