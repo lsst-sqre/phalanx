@@ -36,17 +36,6 @@ nameOverride: ""
 # -- Override the full name for resources (includes the release name)
 fullnameOverride: ""
 
-serviceAccount:
-  # -- Specifies whether a service account should be created
-  create: true
-
-  # -- Annotations to add to the service account
-  annotations: {}
-
-  # The name of the service account to use.
-  # @default -- Generated using the fullname template
-  name: ""
-
 # -- Annotations for API and worker pods
 podAnnotations: {}
 
@@ -83,6 +72,13 @@ affinity: {}
 config:
   # -- Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
   logLevel: "INFO"
+
+  # -- Database URL
+  databaseUrl: ""
+
+  # -- Whether to run the database migration job
+  # @default -- false to disable schema upgrades
+  updateSchema: false
 
   topics:
     # -- Kafka topic name for ingest events
@@ -148,3 +144,35 @@ ingestUpdated:
 
   # -- Affinity rules for Ook audit pods
   affinity: {}
+
+cloudsql:
+  # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
+  # on Google Cloud
+  enabled: false
+
+  image:
+    # -- Cloud SQL Auth Proxy image to use
+    repository: "gcr.io/cloudsql-docker/gce-proxy"
+
+    # -- Cloud SQL Auth Proxy tag to use
+    tag: "1.37.6"
+
+    # -- Pull policy for Cloud SQL Auth Proxy images
+    pullPolicy: "IfNotPresent"
+
+    # -- Resource requests and limits for Cloud SQL pod
+    # @default -- See `values.yaml`
+    resources:
+      limits:
+        cpu: "100m"
+        memory: "20Mi"
+      requests:
+        cpu: "5m"
+        memory: "7Mi"
+
+  # -- Instance connection name for a Cloud SQL PostgreSQL instance
+  instanceConnectionName: ""
+
+  # -- The Google service account that has an IAM binding to the `ook`
+  # Kubernetes service accounts and has the `cloudsql.client` role
+  serviceAccount: ""

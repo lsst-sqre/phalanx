@@ -1,4 +1,5 @@
 config:
+  databaseUrl: "postgresql://ook@localhost/ook"
   algolia:
     documentIndex: "document_dev"
 audit:
@@ -9,3 +10,8 @@ ingestUpdated:
   enabled: true
   window: "2d"
   schedule: "30 3 * * *"
+
+cloudsql:
+  enabled: true
+  instanceConnectionName: "roundtable-prod-f6fd:us-central1:roundtable-prod-f119ac3d"
+  serviceAccount: "ook-sa@roundtable-prod-f6fd.iam.gserviceaccount.com"

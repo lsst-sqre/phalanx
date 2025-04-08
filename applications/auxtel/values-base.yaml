@@ -79,6 +79,8 @@ athexapod-sim:
   image:
     repository: ts-dockerhub.lsst.org/athexapod
     pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
   resources:
     limits:
       cpu: 90m

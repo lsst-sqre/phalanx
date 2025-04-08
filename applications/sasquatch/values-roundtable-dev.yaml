@@ -53,15 +53,7 @@ strimzi-kafka:
         memory: 8Gi
         cpu: "2"
   users:
-    tsSalKafka:
-      enabled: false
-    kafdrop:
-      enabled: false
     telegraf:
-      enabled: false
-    promptProcessing:
-      enabled: false
-    kafkaConnectManager:
       enabled: false
 
   connect:
@@ -73,7 +65,7 @@ strimzi-kafka:
 influxdb:
   enabled: false
 
-telegraf-kafka-consumer:
+telegraf:
   enabled: false
 
 kapacitor:

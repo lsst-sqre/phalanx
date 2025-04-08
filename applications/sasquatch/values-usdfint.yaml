@@ -12,13 +12,7 @@ strimzi-kafka:
         cpu: 4
         memory: 8Gi
   users:
-    kafdrop:
-      enabled: true
     telegraf:
-      enabled: true
-    kafkaConnectManager:
-      enabled: true
-    consdb:
       enabled: true
   kraft:
     enabled: true
@@ -38,105 +32,7 @@ customInfluxDBIngress:
   hostname: usdf-rsp-int.slac.stanford.edu
 
 kafka-connect-manager:
-  influxdbSink:
-    # Based on the kafka producers configuration for the BTS
-    # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-base-teststand.yaml
-    connectors:
-      auxtel:
-        enabled: false
-        topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
-      maintel:
-        enabled: false
-        topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
-      mtmount:
-        enabled: false
-        topicsRegex: ".*MTMount"
-      comcam:
-        enabled: false
-        topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
-      eas:
-        enabled: false
-        topicsRegex: ".*DIMM|.*DSM|.*WeatherForecast|.*WeatherStation"
-      latiss:
-        enabled: false
-        topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
-      m1m3:
-        enabled: false
-        topicsRegex: ".*MTM1M3"
-      m2:
-        enabled: false
-        topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
-      obssys:
-        enabled: false
-        topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
-      ocps:
-        enabled: false
-        topicsRegex: ".*OCPS"
-      test:
-        enabled: false
-        topicsRegex: "lsst.sal.Test"
-      pmd:
-        enabled: false
-        topicsRegex: ".*PMD"
-      calsys:
-        enabled: false
-        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
-      mtaircompressor:
-        enabled: false
-        topicsRegex: ".*MTAirCompressor"
-      authorize:
-        enabled: false
-        topicsRegex: ".*Authorize"
-      lasertracker:
-        enabled: false
-        topicsRegex: ".*LaserTracker"
-      genericcamera:
-        enabled: false
-        topicsRegex: ".*GCHeaderService|.*GenericCamera"
-      gis:
-        enabled: false
-        topicsRegex: ".*GIS"
-      lsstdm:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.dm"
-        topicsRegex: "lsst.dm.*"
-        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
-      lsstdebug:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.debug"
-        topicsRegex: "lsst.debug.*"
-        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
-      lsstexample:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.example"
-        topicsRegex: "lsst.example.*"
-        tags: band,instrument
-      lsstrubintv:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.rubintv"
-        topicsRegex: "lsst.rubintv.*"
-        tags: image_type,observation_reason,science_program,filter,disperser
-      lsstcamera:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.camera"
-        topicsRegex: "lsst.camera.*"
-      lsstverify:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.verify"
-        topicsRegex: "lsst.verify.*"
-        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run,pipeline
-      lsstlf:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.lf"
-        topicsRegex: "lsst.lf.*"
-        tags: benchmark_env,module,benchmark_type
+  enabled: false
 
 kafdrop:
   ingress:
@@ -190,3 +86,6 @@ backup:
     - name: kapacitor
       enabled: true
       retentionDays: 7
+
+consdb:
+  enabled: true

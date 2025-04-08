@@ -57,23 +57,9 @@ strimzi-kafka:
         memory: 8Gi
         cpu: "2"
   users:
-    tsSalKafka:
-      enabled: true
-      topics:
-        - lsst.s3.raw.latiss
-        - lsst.s3.raw.comcam
-        - lsst.s3.raw.lsstcam
-    camera:
-      enabled: true
     replicator:
       enabled: true
-    kafdrop:
-      enabled: true
     telegraf:
-      enabled: true
-    kafkaConnectManager:
-      enabled: true
-    consdb:
       enabled: true
   registry:
     ingress:
@@ -187,7 +173,7 @@ influxdb-enterprise:
 
 # This set of connectors is used to write to the InfluxDB OSS instance,
 # they will go away once the InfluxDB Enterprise instance is fully operational
-telegraf-kafka-consumer-oss:
+telegraf-oss:
   enabled: true
   kafkaConsumers:
     # CSC connectors
@@ -369,7 +355,7 @@ telegraf-kafka-consumer-oss:
       debug: true
 
 # This set of connectors is used to write to the InfluxDB Enterprise instance
-telegraf-kafka-consumer:
+telegraf:
   enabled: true
   influxdb:
     url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
@@ -590,10 +576,6 @@ rest-proxy:
   configurationOverrides:
     "access.control.allow.origin": https://summit-lsp.lsst.codes/love,http://love01.cp.lsst.org
   kafka:
-    topics:
-      - lsst.obsenv.action
-      - lsst.obsenv.summary
-      - lsst.obsenv.run-branch
     topicPrefixes:
       - lsst.dm
       - lsst.backpack
@@ -634,3 +616,19 @@ backup:
     - name: kapacitor
       enabled: true
       retentionDays: 7
+
+obsenv:
+  enabled: true
+
+backpack:
+  enabled: true
+
+control-system:
+  enabled: true
+  topics:
+    - lsst.s3.raw.latiss
+    - lsst.s3.raw.comcam
+    - lsst.s3.raw.lsstcam
+
+consdb:
+  enabled: true

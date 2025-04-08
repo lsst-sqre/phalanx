@@ -21,8 +21,8 @@ Kafka topics, users, and a telegraf connector for metrics events.
 | imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
 | nodeSelector | object | `{}` | Node labels for pod assignment |
-| podAnnotations | object | `{}` | Annotations for telegraf-kafka-consumers pods |
-| podLabels | object | `{}` | Labels for telegraf-kafka-consumer pods |
+| podAnnotations | object | `{}` | Annotations for the Telegraf pods |
+| podLabels | object | `{}` | Labels for the Telegraf pods |
 | replicaCount | int | `3` | Number of Telegraf replicas. Multiple replicas increase availability. |
 | resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | tolerations | list | `[]` | Tolerations for pod assignment |

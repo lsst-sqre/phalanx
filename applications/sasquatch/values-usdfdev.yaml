@@ -14,17 +14,7 @@ strimzi-kafka:
   users:
     replicator:
       enabled: true
-    kafdrop:
-      enabled: true
     telegraf:
-      enabled: true
-    kafkaConnectManager:
-      enabled: true
-    promptProcessing:
-      enabled: true
-    consdb:
-      enabled: true
-    obsloctap:
       enabled: true
   kraft:
     enabled: true
@@ -44,6 +34,7 @@ customInfluxDBIngress:
   hostname: usdf-rsp-dev.slac.stanford.edu
 
 kafka-connect-manager:
+  enabled: true
   influxdbSink:
     # Based on the kafka producers configuration for the BTS
     # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-base-teststand.yaml
@@ -161,9 +152,6 @@ rest-proxy:
     enabled: true
     hostname: usdf-rsp-dev.slac.stanford.edu
   kafka:
-    topics:
-      - test.next-visit
-      - test.next-visit-job
     topicPrefixes:
       - test
       - lsst.dm
@@ -216,3 +204,12 @@ backup:
     - name: "influxdb-oss-full"
       enabled: false
       backupTimestamp: ""
+
+prompt-processing:
+  enabled: true
+
+obsloctap:
+  enabled: true
+
+consdb:
+  enabled: true

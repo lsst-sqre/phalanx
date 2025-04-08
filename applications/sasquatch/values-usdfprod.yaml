@@ -27,13 +27,7 @@ strimzi-kafka:
   users:
     replicator:
       enabled: true
-    kafdrop:
-      enabled: true
     telegraf:
-      enabled: true
-    promptProcessing:
-      enabled: true
-    consdb:
       enabled: true
   kraft:
     enabled: true
@@ -119,7 +113,7 @@ influxdb-enterprise:
         memory: 192Gi
         cpu: 8
 
-telegraf-kafka-consumer:
+telegraf:
   enabled: true
   influxdb:
     url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
@@ -386,3 +380,9 @@ backup:
       retentionDays: 7
     - name: influxdb-enterprise-incremental
       enabled: true
+
+prompt-processing:
+  enabled: true
+
+consdb:
+  enabled: true

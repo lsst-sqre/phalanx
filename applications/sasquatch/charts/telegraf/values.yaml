@@ -1,6 +1,6 @@
-## Default values.yaml for the Telegraf Kafka Consumer subchart.
+## Default values.yaml for the Telegraf subchart.
 
-# -- Wether the Telegraf Kafka Consumer is enabled
+# -- Wether Telegraf is enabled
 enabled: false
 
 image:
@@ -13,19 +13,19 @@ image:
   # -- Image pull policy
   pullPolicy: "IfNotPresent"
 
-# -- Annotations for telegraf-kafka-consumers pods
+# -- Annotations for the Telegraf pods
 podAnnotations: {}
 
-# -- Labels for telegraf-kafka-consumer pods
+# -- Labels for the Telegraf pods
 podLabels: {}
 
 # -- Secret names to use for Docker pulls
 imagePullSecrets: []
 
-# -- Arguments passed to the Telegraf agent containers
+# -- Arguments passed to the Telegraf agent on startup
 args: []
 
-# -- Telegraf agent enviroment variables
+# -- Telegraf agent environment variables
 # @default -- See `values.yaml`
 env:
   - name: TELEGRAF_PASSWORD
@@ -184,8 +184,8 @@ kafkaConsumers:
 influxdb:
   # -- URL of the InfluxDB v1 instance to write to
   url: "http://sasquatch-influxdb.sasquatch:8086"
-  # -- Name of the InfluxDB v1 database to write to
-  database: "telegraf-kafka-consumer-v1"
+  # -- Name of the InfluxDB v1 database to write to (required)
+  database: ""
 
 # -- Kubernetes resources requests and limits
 # @default -- See `values.yaml`

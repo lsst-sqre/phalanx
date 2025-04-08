@@ -1,0 +1,30 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: "lsst.obsenv.action"
+  labels:
+    strimzi.io/cluster: {{ $.Values.cluster.name }}
+spec:
+  partitions: 1
+  replicas: 3
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: "lsst.obsenv.summary"
+  labels:
+    strimzi.io/cluster: {{ $.Values.cluster.name }}
+spec:
+  partitions: 1
+  replicas: 3
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: "lsst.obsenv.run-branch"
+  labels:
+    strimzi.io/cluster: {{ $.Values.cluster.name }}
+spec:
+  partitions: 1
+  replicas: 3
