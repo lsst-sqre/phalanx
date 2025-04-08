@@ -101,6 +101,36 @@ controller:
             resources:
               requests:
                 storage: 2048Gi
+        - name: "nfs3home"
+          source:
+            serverPath: "/home-share"
+            server: "10.234.16.4"
+            type: "nfs"
+        - name: "nfs3project"
+          source:
+            serverPath: "/project-share"
+            server: "10.234.16.4"
+            type: "nfs"
+        - name: "nfs3scratch"
+          source:
+            serverPath: "/scratch-share"
+            server: "10.234.16.4"
+            type: "nfs"
+        - name: "filestorehome"
+          source:
+            serverPath: "/share1/home"
+            server: "10.87.86.26"
+            type: "nfs"
+        - name: "filestoreproject"
+          source:
+            serverPath: "/share1/project"
+            server: "10.87.86.26"
+            type: "nfs"
+        - name: "filestorescratch"
+          source:
+            serverPath: "/share1/scratch"
+            server: "10.87.86.26"
+            type: "nfs"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -108,6 +138,18 @@ controller:
           volumeName: "project"
         - containerPath: "/scratch"
           volumeName: "scratch"
+        - containerPath: "/nfsv3/home"
+          volumeName: "nfs3home"
+        - containerPath: "/nfsv3/project"
+          volumeName: "nfs3project"
+        - containerPath: "/nfsv3/scratch"
+          volumeName: "nfs3scratch"
+        - containerPath: "/filestore/home"
+          volumeName: "filestorehome"
+        - containerPath: "/filestore/project"
+          volumeName: "filestoreproject"
+        - containerPath: "/filestore/scratch"
+          volumeName: "filestorescratch"
     metrics:
       enabled: true
 hub:
