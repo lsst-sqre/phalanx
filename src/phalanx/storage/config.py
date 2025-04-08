@@ -642,6 +642,7 @@ class ConfigStorage:
                     self._check_love_revisions(
                         item_config, app_list, key, environment
                     )
+                    continue
                 if key in ["uws-api-server"]:
                     continue
                 if "image" not in item_config:
