@@ -1,19 +1,13 @@
----
-apiVersion: serving.knative.dev/v1
-kind: Service
-metadata:
-  name: {{ include "prompt-proto-service.fullname" . }}
-  annotations:
-    argocd.argoproj.io/hook: PostSync
+{{/* Shared spec for init-output Job and CronJob. */}}
+{{- define "prompt-proto-service.service-init" -}}
 spec:
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+      {{- with .Values.initializer.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
-      containerConcurrency: {{ .Values.containerConcurrency }}
       initContainers:
       - name: init-db-auth
         # Make a copy of the read-only secret that's owned by lsst
@@ -27,22 +21,10 @@ spec:
         - mountPath: /app/dbauth
           name: db-auth-credentials-file
       containers:
-      - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+      - image: "{{ .Values.initializer.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         name: user-container
         env:
-        - name: PLATFORM
-          value: knative
-        - name: WORKER_COUNT
-          value: {{ .Values.containerConcurrency | toString | quote }}
-        - name: WORKER_RESTART_FREQ
-          value: {{ .Values.worker.restart | toString | quote }}
-        - name: WORKER_TIMEOUT
-          value: {{ .Values.worker.timeout | toString | quote }}
-        - name: WORKER_GRACE_PERIOD
-          value: {{ .Values.worker.grace_period | toString | quote }}
-        {{- /* Knative not configured for timeouts longer than 1200 seconds, and shouldn't need to be. */ -}}
-        {{- $knative_timeout := min 1200 (add (mul 2 (coalesce .Values.worker.timeout 600)) .Values.knative.extraTimeout) }}
         - name: RUBIN_INSTRUMENT
           value: {{ .Values.instrument.name }}
         - name: PREPROCESSING_PIPELINES_CONFIG
@@ -53,28 +35,12 @@ spec:
             {{- .Values.instrument.pipelines.main | nindent 12 }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
-        - name: MESSAGE_EXPIRATION
-          value: {{ .Values.knative.expiration | toString | quote }}
-        - name: PRELOAD_PADDING
-          value: {{ .Values.instrument.preloadPadding | toString | quote }}
-        - name: IMAGE_BUCKET
-          value: {{ .Values.s3.imageBucket }}
-        - name: BUCKET_TOPIC
-          value: {{ .Values.imageNotifications.topic }}
-        - name: BUCKET_NOTIFICATION_KAFKA_OFFSET_RESET
-          value: {{ .Values.imageNotifications.consumerOffsetReset }}
-        - name: IMAGE_TIMEOUT
-          value: {{ .Values.imageNotifications.imageTimeout | toString | quote }}
         - name: CALIB_REPO
           value: {{ .Values.instrument.calibRepo }}
         - name: LSST_DISABLE_BUCKET_VALIDATION
           value: {{ .Values.s3.disableBucketValidation | toString | quote }}
         - name: CONFIG_APDB
           value: {{ .Values.apdb.config }}
-        - name: KAFKA_CLUSTER
-          value: {{ .Values.imageNotifications.kafkaClusterAddress }}
-        - name: RAW_MICROSERVICE
-          value: {{ .Values.raw_microservice }}
         - name: SASQUATCH_URL
           value: {{ .Values.sasquatch.endpointUrl }}
         {{- if and .Values.sasquatch.endpointUrl .Values.sasquatch.auth_env }}
@@ -104,16 +70,17 @@ spec:
         - name: AWS_SHARED_CREDENTIALS_FILE
           value: /app/s3/credentials
         {{- end }}
-        {{- if .Values.s3.aws_profile }}
+        {{- with .Values.s3.aws_profile }}
         - name: AWS_PROFILE
-          value: {{.Values.s3.aws_profile }}
+          value: {{ . }}
         {{- end }}
-        {{- if .Values.s3.checksum }}
+        {{- with .Values.s3.checksum }}
         - name: AWS_REQUEST_CHECKSUM_CALCULATION
-          value: {{.Values.s3.checksum}}
+          value: {{ . }}
         {{- end }}
         - name: LSST_DB_AUTH
           value: /app/lsst-credentials/db-auth.yaml
+        {{- /* Job does not produce alerts, but PackageAlertsTask may ping the server. */}}
         - name: AP_KAFKA_PRODUCER_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -125,21 +92,9 @@ spec:
           value: {{ .Values.alerts.server}}
         - name: AP_KAFKA_TOPIC
           value: {{ .Values.alerts.topic}}
-        - name: LOCAL_REPOS
-          value: "/tmp-butler"
         - name: SERVICE_LOG_LEVELS
           value: {{ .Values.logLevel }}
-        - name: LOCAL_REPO_CACHE_SIZE
-          value: {{ .Values.cache.baseSize | toString | quote }}
-        - name: REFCATS_PER_IMAGE
-          value: {{ .Values.cache.refcatsPerImage | toString | quote }}
-        - name: PATCHES_PER_IMAGE
-          value: {{ .Values.cache.patchesPerImage | toString | quote }}
-        - name: DEBUG_EXPORT_OUTPUTS
-          value: {{ if .Values.debug.exportOutputs }}'1'{{ else }}'0'{{ end }}
         volumeMounts:
-        - mountPath: /tmp-butler
-          name: ephemeral
         - mountPath: /app/lsst-credentials
           name: db-auth-credentials-file
           readOnly: true
@@ -156,20 +111,12 @@ spec:
         {{- end }}
         resources:
           requests:
-            cpu: {{ .Values.knative.cpuRequest | toString | quote}}
-            ephemeral-storage: {{ .Values.knative.ephemeralStorageRequest }}
-            memory: {{ .Values.knative.memoryRequest }}
+            cpu: {{ .Values.initializer.resources.cpuRequest | toString | quote}}
+            memory: {{ .Values.initializer.resources.memoryRequest }}
           limits:
-            cpu: {{ .Values.knative.cpuLimit | toString | quote}}
-            ephemeral-storage: {{ .Values.knative.ephemeralStorageLimit }}
-            memory: {{ .Values.knative.memoryLimit }}
-            {{- if .Values.knative.gpu }}
-            nvidia.com/gpu: {{ .Values.knative.gpuRequest | toString | quote }}
-            {{- end }}
+            cpu: {{ .Values.initializer.resources.cpuLimit | toString | quote}}
+            memory: {{ .Values.initializer.resources.memoryLimit }}
       volumes:
-      - name: ephemeral
-        emptyDir:
-          sizeLimit: {{ .Values.knative.ephemeralStorageLimit }}
       - name: db-auth-mount
         # Temporary mount for db-auth.yaml; cannot be read directly because it's owned by root
         secret:
@@ -186,8 +133,8 @@ spec:
         secret:
           secretName: {{ template "prompt-proto-service.fullname" . }}-secret
           items:
-          - key: s3_credentials_file
-            path: credentials
+           - key: s3_credentials_file
+             path: credentials
       {{- end }}
       {{- if .Values.registry.centralRepoFile }}
       - name: central-repo-file
@@ -206,6 +153,15 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       enableServiceLinks: true
-      timeoutSeconds: {{ $knative_timeout }}
-      idleTimeoutSeconds: {{ with .Values.knative.idleTimeout }}{{ . }}{{ else }}{{ $knative_timeout }}{{ end }}
-      responseStartTimeoutSeconds: {{ with .Values.knative.responseStartTimeout }}{{ . }}{{ else }}{{ $knative_timeout }}{{ end }}
+      restartPolicy: Never
+      activeDeadlineSeconds: {{ .Values.initializer.timeout }}
+  backoffLimit: {{ .Values.initializer.retries }}
+  ttlSecondsAfterFinished: {{ .Values.initializer.cleanup_delay }}
+  podFailurePolicy:
+    rules:
+    # Successful init is essential for other components, don't fail on external shutdowns
+    - action: Ignore
+      onPodConditions:
+      - type: DisruptionTarget
+        status: "True"
+{{- end }}

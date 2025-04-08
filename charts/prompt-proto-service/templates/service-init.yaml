@@ -1,0 +1,9 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: init-{{ include "prompt-proto-service.fullname" . }}
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+{{ include "prompt-proto-service.service-init" . }}
