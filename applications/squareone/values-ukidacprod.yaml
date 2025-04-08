@@ -39,8 +39,8 @@ config:
         <a href="https://dp0-3.lsst.io/">
           <Card>
             ### Data Preview 0.3 (DP0.3)
-            DP0.3 provides a catalog of solar system objects from a simulated 
-            LSST ten-year wide-fast-deep survey by the Solar System Science 
+            DP0.3 provides a catalog of solar system objects from a simulated
+            LSST ten-year wide-fast-deep survey by the Solar System Science
             Collaboration.
           </Card>
         </a>
@@ -79,7 +79,7 @@ config:
         <a href="https://dm.lsst.org/sdm_schemas/browser/dp02.html">
           <Card>
             ### DP0.2 Catalog Schema
-            Schema reference for the DP0.2 catalog dataset available through 
+            Schema reference for the DP0.2 catalog dataset available through
             the Table Access Protocol (TAP) service.
           </Card>
         </a>
@@ -89,15 +89,15 @@ config:
       <CardGroup>
        <a href="https://rsp.lsst.ac.uk/portal/app/">
          <Card>
-           Table of counterpart associations between Gaia DR3 and CatWISE2020. 
-           Uses probabilistic cross-match algorithms as described by Wilson & Naylor (MNRAS, 2017, 2018a,b) and Wilson (RNAAS, 2022). 
+           Table of counterpart associations between Gaia DR3 and CatWISE2020.
+           Uses probabilistic cross-match algorithms as described by Wilson & Naylor (MNRAS, 2017, 2018a,b) and Wilson (RNAAS, 2022).
            Sources are returned either as a pairing, in which the Gaia and WISE objects are the same astrophysical source detected twice, or as non-matches, with that particular object in one of the catalogues having a corresponding flux upper limits in the opposing catalogue, and entries include various pieces of metadata such as the probability of the match/non-match, likelihood of match on purely position or brightness grounds, and information on the level to which objects suffer contamination due to hidden and unresolved background sources.
          </Card>
        </a>
       </CardGroup>
 
       ### VISTA-HSC
-      
+
       <CardGroup>
         <a href="https://rsp.lsst.ac.uk/portal/app/">
           <Card>

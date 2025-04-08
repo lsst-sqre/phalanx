@@ -11,4 +11,3 @@ cadc-tap:
       host: "192.41.122.118:5432"
       database: "dp03_catalogs_10yr"
       username: "dp03_user"
-    vaultSecretName: "ssotap"

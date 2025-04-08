@@ -3,7 +3,6 @@ fqdn: "rsp.lsst.ac.uk"
 appOfAppsName: "science-platform"
 vaultUrl: "https://vault.lsst.ac.uk"
 vaultPathPrefix: "kv-v2/k8s_operator/ukidacprod"
-
 applications:
   mobu: true
   nublado: true

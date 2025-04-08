@@ -7,7 +7,7 @@ config:
 
   oidcServer:
     enabled: true
-    
+
   updateSchema: false
 
   github:
