@@ -2,6 +2,7 @@ cadc-tap:
   tapSchema:
     image:
       repository: "stvoutsin/tap-schema-idfdev-tap"
+      tag: "latest"
 
   config:
     qserv:
