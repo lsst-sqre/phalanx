@@ -62,7 +62,7 @@ love-manager:
     frontend:
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 2
+        revision: 0
         pullPolicy: Always
       env:
         SERVER_URL: summit-lsp.lsst.codes
@@ -102,7 +102,7 @@ love-manager:
     - name: general
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 2
+        revision: 0
         pullPolicy: Always
       env:
         LOVE_SITE: summit
@@ -166,7 +166,7 @@ love-manager:
     - name: queue
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 2
+        revision: 0
         pullPolicy: Always
       env:
         LOVE_SITE: summit
@@ -230,7 +230,7 @@ love-manager:
     - name: m1m3
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 2
+        revision: 0
         pullPolicy: Always
       env:
         LOVE_SITE: summit
@@ -334,7 +334,7 @@ love-nginx:
     frontend:
       image:
         repository: ts-dockerhub.lsst.org/love-frontend-k8s
-        revision: 2
+        revision: 0
         pullPolicy: Always
     manager:
       image:
@@ -485,7 +485,7 @@ love-nginx:
 love-producer:
   image:
     repository: ts-dockerhub.lsst.org/love-producer
-    revision: 1
+    revision: 0
     pullPolicy: Always
   resources:
     requests:
@@ -634,6 +634,12 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: epm-ess303
     csc: ESS:303 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: epm-generator-ess305
+    csc: ESS:305 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: epm-generator-ess306
+    csc: ESS:306 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: fiberspectrograph101
     csc: FiberSpectrograph:101 --log-level 10
@@ -817,6 +823,9 @@ love-producer:
       limits:
         cpu: 1
         memory: 600Mi
+  - name: mtocps
+    csc: OCPS:3 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtoods
     csc: MTOODS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -857,6 +866,9 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: raocps
     csc: OCPS:101 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: ringssess304
+    csc: ESS:304 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess001
     csc: ESS:1 --log-level 10

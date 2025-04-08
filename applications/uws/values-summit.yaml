@@ -74,6 +74,22 @@ ccocps:
       cpu: 1m
       memory: 100Mi
 
+mtocps:
+  enabled: true
+  classifier: ocps3
+  image:
+    repository: ts-dockerhub.lsst.org/dmocps
+    pullPolicy: Always
+  env:
+    RUN_ARG: 3
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi
+
 raocps:
   enabled: true
   classifier: ocps101

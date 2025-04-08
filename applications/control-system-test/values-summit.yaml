@@ -11,3 +11,6 @@ test42:
     requests:
       cpu: 15m
       memory: 95Mi
+
+rumba:
+  enabled: true

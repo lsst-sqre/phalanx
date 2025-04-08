@@ -8,8 +8,8 @@ controller:
       numReleases: 0
       numWeeklies: 3
       numDailies: 2
-      cycle: 40
-      recommendedTag: "recommended_c0040"
+      cycle: 41
+      recommendedTag: "recommended_c0041"
     lab:
       env:
         AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED

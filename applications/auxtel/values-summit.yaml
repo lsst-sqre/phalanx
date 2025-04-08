@@ -52,7 +52,6 @@ atheaderservice:
   image:
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
-    revision: 0
   env:
     URL_SPEC: --lfa_mode s3 --s3instance cp
     CAMERA: at
