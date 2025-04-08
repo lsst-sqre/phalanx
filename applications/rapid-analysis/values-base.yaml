@@ -90,11 +90,11 @@ lsstcamWorkerSet:
   replicas: 205  # 1 deep for now
   resources:
     requests:
-      cpu: 1.0
+      cpu: .01
       memory: 4G
     limits:
       cpu: 1.0
-      memory: 8G  # we should check this value
+      memory: 6G  # we should check this value
 lsstcamAosWorkerSet:
   name: LSSTCam/runAosWorker.py
   mounts:
