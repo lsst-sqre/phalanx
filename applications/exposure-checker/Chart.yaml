@@ -1,0 +1,7 @@
+apiVersion: v2
+name: exposure-checker
+description: An interface for visually identifying artifacts in Rubin images.
+version: 1.0.0
+sources:
+  - https://github.com/lsst-sitcom/rubin_exp_checker
+appVersion: "0.1.0"
