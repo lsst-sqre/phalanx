@@ -24,6 +24,10 @@ dependencies:
   - name: influxdb-enterprise
     condition: influxdb-enterprise.enabled
     version: 1.0.0
+  - name: influxdb-enterprise
+    alias: influxdb-enterprise-standby
+    condition: influxdb-enterprise-standby.enabled
+    version: 1.0.0
   - name: kafka-connect-manager
     alias: kafka-connect-manager
     condition: kafka-connect-manager.enabled
