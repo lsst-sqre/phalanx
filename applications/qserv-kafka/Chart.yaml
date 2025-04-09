@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Qserv Kafka bridge
+name: qserv-kafka
+sources:
+- https://github.com/lsst-sqre/qserv-kafka
+type: application
+version: 1.0.0
