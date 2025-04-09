@@ -639,10 +639,10 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/m1m3/ws/subscription
     resources:
       requests:
-        cpu: 10m
+        cpu: 100m
         memory: 200Mi
       limits:
-        cpu: 100m
+        cpu: 1
         memory: 600Mi
   - name: mtm1m3-telemetry-02
     csc: MTM1M3:0 --log-level 10 --periodic-data tel_appliedForces
