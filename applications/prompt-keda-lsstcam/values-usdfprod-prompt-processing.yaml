@@ -1,0 +1,81 @@
+prompt-keda:
+  image:
+    pullPolicy: IfNotPresent
+    tag: 6.4.0
+
+  worker:
+    # TODO: need to adjust this once we know how leaky the LSSTCam pipeline is
+    # restart: 7
+    # Expect much less memory usage/leakage for Single-Frame only
+    restart: 30
+
+  instrument:
+    pipelines:
+      # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
+      # if the result (including any comments) is longer than 72 characters.
+      # The config will get corrupted after template substitution.
+      # Block-style mappings can have lines of any length.
+      main: |-
+        # Ignore unknown events
+        - {pipelines: []}
+      preprocessing: |-
+        # No preprocessing by default
+        - {pipelines: []}
+    # TODO: need to adjust this based on observed slew accuracy
+    preloadPadding: 50
+    calibRepo: s3://rubin-summit-users
+
+  s3:
+    imageBucket: rubin-summit
+    endpointUrl: https://sdfembs3.sdf.slac.stanford.edu
+
+  raw_microservice: http://172.24.5.158:8080/presence
+
+  imageNotifications:
+    kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
+    topic: rubin-summit-notification
+    # TODO: need to adjust this based on observed nextVisit lead time (depends on scheduler) and PP prep time
+    # The shorter this is, the less capacity is wasted on canceled visits
+    imageTimeout: 120
+
+  apdb:
+    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcam.yaml
+
+  alerts:
+    username: kafka-admin
+    server: usdf-alert-stream-dev.lsst.cloud:9094
+    topic: lsst-alerts
+
+  # TODO: may need to override for debugging
+  logLevel: timer.lsst.activator=DEBUG timer.lsst.daf.butler=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE lsst.daf.butler=VERBOSE
+
+  sasquatch:
+    # TODO: production Sasquatch not yet ready
+    endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
+    namespace: lsst.prompt.prod
+    auth_env: false
+
+  keda:
+    minReplicaCount: 3
+    # TODO: this is scaled for SingleFrame, with 25% margin
+    maxReplicaCount: 1100
+    # TODO: may need to override for debugging
+    # failedJobsHistoryLimit: 100
+
+    # TODO: may need to reduce if we don't have enough capacity
+    # redisStreams:
+    #   expiration: 600
+
+  initializer:
+    # 6 retries is not enough time to fix, e.g., DB permissions problems
+    retries: 15
+    # Keep around for first few days so we can check in the morning PDT
+    cleanup_delay: 21600  # 6 hours
+
+    podAnnotations: {
+      edu.stanford.slac.sdf.project/usdf-embargo: "true"
+    }
+
+  podAnnotations: {
+    edu.stanford.slac.sdf.project/usdf-embargo: "true"
+  }
