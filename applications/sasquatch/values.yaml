@@ -182,7 +182,11 @@ customInfluxDBIngress:
   path: "/influxdb(/|$)(.*)"
 
 influxdb-enterprise:
-  # -- Whether to use influxdb-enterprise
+  # -- Whether to enable influxdb-enterprise
+  enabled: false
+
+influxdb-enterprise-standby:
+  # -- Whether to enable influxdb-enterprise-standby
   enabled: false
 
 kafka-connect-manager:
