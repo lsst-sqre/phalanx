@@ -53,8 +53,8 @@ controller:
       initContainers:
         - name: "inithome"
           image:
-            repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "8.8.0"
+            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
+            tag: "8.8.2"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
