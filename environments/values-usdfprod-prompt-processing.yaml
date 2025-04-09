@@ -11,6 +11,7 @@ applications:
   next-visit-fan-out: true
   next-visit-fan-out-keda: false
   prompt-keda-latiss: true
+  prompt-keda-lsstcam: true
   prompt-proto-service-hsc: false
   prompt-proto-service-latiss: false
   prompt-proto-service-lsstcam: false
