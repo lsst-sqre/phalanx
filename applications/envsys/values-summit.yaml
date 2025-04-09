@@ -199,10 +199,10 @@ epm-ess303:
     RUN_ARG: 303
   resources:
     requests:
-      cpu: 19m
+      cpu: 200m
       memory: 90Mi
     limits:
-      cpu: 190m
+      cpu: 2
       memory: 900Mi
 
 epm-generator-ess305:
