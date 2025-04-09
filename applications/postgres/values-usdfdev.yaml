@@ -10,5 +10,8 @@ gafaelfawr_db:
 timessquare_db:
   user: "timessquare"
   db: "timessquare"
+exp_checker_db:
+  user: "expchecker"
+  db: "expchecker"
 
 postgresStorageClass: 'wekafs--sdf-k8s01'

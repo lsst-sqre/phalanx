@@ -17,6 +17,7 @@ applications:
   consdbtap: true
   datalinker: true
   exposurelog: true
+  exposure-checker: true
   rubin-rag: true
   jira-data-proxy: true
   livetap: true
