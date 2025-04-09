@@ -4,7 +4,9 @@ obsenv-api:
     tag: tickets-DM-49976
     pullPolicy: Always
   config:
+    efdName: base_efd
     logLevel: "DEBUG"
+    sasquatchRestProxy: https://base-lsp.lsst.codes
   nfsMount:
     server: nfs-obsenv.ls.lsst.org
 
