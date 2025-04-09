@@ -16,12 +16,40 @@ prompt-keda:
       # The config will get corrupted after template substitution.
       # Block-style mappings can have lines of any length.
       main: |-
+        - survey: BLOCK-365  # FBS SV Field Survey
+          pipelines:
+          # TODO: enable ApPipe only when we're ready (resources, alerts, etc.)
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         - survey: BLOCK-T427  # Daytime checkout
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
+        # Manual observations during SV blocks?
+        - survey: BLOCK-T407
+          pipelines: []
+        - survey: BLOCK-T364
+          pipelines: []
+        - survey: BLOCK-T365
+          pipelines: []
+        - survey: BLOCK-T366
+          pipelines: []
+        - survey: BLOCK-T367
+          pipelines: []
+        - survey: BLOCK-T368
+          pipelines: []
+        - survey: BLOCK-T369
+          pipelines: []
+        - survey: BLOCK-T373
+          pipelines: []
+        # Miscellaneous scripts, not always images
+        - {survey: "", pipelines: []}
         # Ignore unknown events
         - {pipelines: []}
       preprocessing: |-
-        # No preprocessing by default
+        # TODO: run if and only if ApPipe is a possibility
+        # - survey: BLOCK-T407
+        #   pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing.yaml']
+        - {survey: "", pipelines: []}
+        # Don't preprocess anything unknown
         - {pipelines: []}
     # TODO: need to adjust this based on observed slew accuracy
     preloadPadding: 50
