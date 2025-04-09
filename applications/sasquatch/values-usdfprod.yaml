@@ -143,6 +143,7 @@ influxdb-enterprise-standby:
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
+      path: "/influxdb-enterprise-standby-meta(/|$)(.*)"
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
