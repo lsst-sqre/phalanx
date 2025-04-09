@@ -68,6 +68,18 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
+- name: LSSTCam/runOneOffExpRecord.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+- name: LSSTCam/runOneOffPostIsr.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+- name: LSSTCam/runOneOffCalexp.py
+  mounts:
+  - lsstcam-data
+  - project-shared
 - name: LSSTCam/runPlotter.py
   mounts:
   - lsstcam-data
