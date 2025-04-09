@@ -1,0 +1,72 @@
+controller:
+  config:
+    images:
+      source:
+        type: "docker"
+        registry: "registry.hub.docker.com"
+        repository: "lsstsqre/spherex-lab"
+    lab:
+      env:
+        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
+        CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
+      initContainers:
+        - name: "inithome"
+          image:
+            repository: "ghcr.io/lsst-sqre/nublado-inithome"
+            tag: "6.1.0"
+          privileged: true
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+      sizes:
+        - size: small
+          cpu: 1.0
+          memory: 2Gi
+        - size: medium
+          cpu: 2.0
+          memory: 4Gi
+        - size: large
+          cpu: 4.0
+          memory: 8Gi
+      volumes:
+        - name: "home"
+          source:
+            serverPath: "/data/home"
+            server: "129.114.35.159"
+            type: "nfs"
+        - name: "project"
+          source:
+            serverPath: "/data/project"
+            server: "129.114.35.159"
+            type: "nfs"
+        - name: "scratch"
+          source:
+            serverPath: "/data/scratch"
+            server: "129.114.35.159"
+            type: "nfs"
+        - name: "spherexdata"
+          source:
+            serverPath: "/corral/main/projects/JPL-SPHEREx/yjyang/SPHEREx_RefCat"
+            server: "129.114.52.151"
+            type: "nfs"
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
+        - containerPath: "/project"
+          volumeName: "project"
+        - containerPath: "/scratch"
+          volumeName: "scratch"
+        - containerPath: "/project/SPHEREx/SPHEREx_RefCat"
+          volumeName: "spherexdata"
+jupyterhub:
+  hub:
+    baseUrl: "/nb"
+    db:
+      url: "postgresql://jhubsessions@129.114.35.51/jhubsessions01"
+      upgrade: true
+  cull:
+    timeout: 432000  # 5 days
+    maxAge: 691200  # 8 days
+
+hub:
+  internalDatabase: false

@@ -1,0 +1,137 @@
+redis:
+  persistence:
+    storageClass: "cinder-csi"
+
+config:
+  logLevel: "DEBUG"
+  slackAlerts: false
+
+  #github:
+  #  clientId: "Ov23liKfYDkoJPekZaON"
+
+  databaseUrl: "postgresql://gafaelfawr@129.114.35.51/gafaelfawr01"
+  updateSchema: true
+
+  oidcServer:
+    enabled: true
+
+  oidc:
+    clientId: "tacc-rsp-develop"
+    audience: "tacc-rsp-develop"
+    loginUrl: "https://tacc.develop.tapis.io/v3/oauth2/authorize"
+    tokenUrl: "https://tacc.develop.tapis.io/v3/oauth2/tokens/oidc"
+    issuer: "https://tacc.develop.tapis.io/v3/tokens"
+    usernameClaim: "tapis/username"
+
+  ldap:
+    url: ldap://ldap.tacc.utexas.edu
+    groupBaseDn: ou=Groups,dc=tacc,dc=utexas,dc=edu
+    groupObjectClass: posixGroup
+    groupMemberAttr: uniqueMember
+    groupSearchByDn: true
+    userBaseDn: ou=People,dc=tacc,dc=utexas,dc=edu
+    userSearchAttr: uid
+    addUserGroup: false
+    uidAttr: uidNumber
+    gidAttr: gidNumber
+    nameAttr: uid
+
+  # User quota settings for services.
+  quota:
+    default:
+      notebook:
+        cpu: 2.0
+        memory: 8
+
+  # Allow access by GitHub team.
+  groupMapping:
+    "admin:jupyterlab":
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- githu:
+      #    organization: "lsst-sqre"
+      #    team: "square"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+    "exec:admin":
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+    "exec:internal-tools":
+      - "G-827698"
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "square"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+    "exec:notebook":
+      - "G-827698"
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "square"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+    "read:image":
+      - "G-827698"
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "square"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+    "exec:portal":
+      - "G-827698"
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "square"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+    "read:tap":
+      - "G-827698"
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "square"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+    "write:files":
+      - "G-827698"
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "square"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+
+  initialAdmins:
+    - "afausti"
+    - "athornton"
+    - "fajpunk"
+    - "frossie"
+    - "jonathansick"
+    - "rra"
+    - "stvoutsin"
+    - "mpackard"
+    - "kprice"
+    - "testuser2"

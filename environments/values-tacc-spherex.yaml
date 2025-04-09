@@ -1,0 +1,9 @@
+fqdn: "tacc-spherex.lsst.cloud"
+name: "tacc-spherex"
+appOfAppsName: "science-platform"
+vaultUrl: "http://129.114.35.218:8200"
+vaultPathPrefix: "secret/phalanx/tacc"
+applications:
+  squareone: true
+  nublado: true
+  portal: true
