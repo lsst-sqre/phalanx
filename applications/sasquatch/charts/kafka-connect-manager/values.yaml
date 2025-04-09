@@ -2,7 +2,7 @@
 # See also https://kafka-connect-manager.lsst.io
 
 # -- Whether to enable Kafka Connect Manager
-enabled: true
+enabled: false
 
 cluster:
   # -- Name used for the Kafka cluster, and used by Strimzi for many
