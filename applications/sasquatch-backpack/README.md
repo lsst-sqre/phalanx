@@ -25,9 +25,6 @@ Collection of APIs that feed into Sasquatch
 | image.repository | string | `"ghcr.io/lsst-sqre/sasquatch-backpack"` | Image to use in the sasquatch-backpack deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
-| kafka.cluster.name | string | `"sasquatch"` |  |
-| kafka.enabled | bool | `true` |  |
-| kafka.topics[0] | string | `"lsst.backpack.usgs-earthquake-data"` |  |
 | nodeSelector | object | `{}` | Node selection rules for the sasquatch-backpack deployment pod |
 | podAnnotations | object | `{}` | Annotations for the sasquatch-backpack deployment pod |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |

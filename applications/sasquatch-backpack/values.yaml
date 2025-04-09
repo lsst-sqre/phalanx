@@ -110,10 +110,3 @@ redis:
 
   # -- Affinity rules for the Redis pod
   affinity: {}
-
-kafka:
-  cluster:
-    name: sasquatch
-  enabled: true
-  topics:
-    - lsst.backpack.usgs-earthquake-data
