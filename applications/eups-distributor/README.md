@@ -19,7 +19,7 @@ Distributes EUPS binaries
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the eups-distributor deployment pod |
-| podAnnotations | object | `{}` | Annotations for the eups-distributor deployment pod |
+| podAnnotations | object | `{"gke-gcsfuse/volumes":"true"}` | Annotations for the eups-distributor deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the eups-distributor deployment pod |
 | tolerations | list | `[]` | Tolerations for the eups-distributor deployment pod |
