@@ -25,7 +25,7 @@ spec:
           csi:
             driver: gcsfuse.csi.storage.gke.io
             volumeAttributes:
-              bucketName: eups-gc-storage-dev
+              bucketName: eups
               mountOptions: "implicit-dirs"
       {{- with .Values.affinity }}
       affinity:
@@ -40,15 +40,13 @@ spec:
             - name: "eups"
               mountPath: "/eups"
               readOnly: true
-            - name: "cache"
-              mountPath: "/var/cache/nginx"
           ports:
             - name: "http"
               containerPort: 8080
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/"
+              path: "/health"
               port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -57,7 +55,7 @@ spec:
             capabilities:
               drop:
                 - "all"
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
