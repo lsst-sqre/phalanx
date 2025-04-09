@@ -32,6 +32,7 @@ To learn more about operating a Phalanx environment, see the :doc:`/admin/index`
    usdfint/index
    usdfprod/index
    usdf-rapid-analysis/index
+   usdf-rapid-analysis-dev/index
    usdfdev-alert-stream-broker/index
    usdfdev-prompt-processing/index
    usdfprod-prompt-processing/index
