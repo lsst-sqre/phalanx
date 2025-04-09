@@ -8,5 +8,5 @@ applications:
   cert-manager: false
   gafaelfawr: false
   ingress-nginx: false
-  rapid-analysis: true
+  rapid-analysis: false
   vault-secrets-operator: false
