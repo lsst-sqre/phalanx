@@ -28,7 +28,8 @@ affinity: {}
 nodeSelector: {}
 
 # -- Annotations for the eups-distributor deployment pod
-podAnnotations: {}
+podAnnotations:
+  gke-gcsfuse/volumes: "true"
 
 # -- Resource limits and requests for the eups-distributor deployment pod
 # @default -- See `values.yaml`
