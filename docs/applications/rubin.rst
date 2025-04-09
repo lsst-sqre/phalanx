@@ -13,6 +13,7 @@ Argo CD project: ``rubin``
    cm-service/index
    consdb/index
    exposurelog/index
+   exposure-checker/index
    fastapi-bootcamp/index
    rubin-rag/index
    narrativelog/index

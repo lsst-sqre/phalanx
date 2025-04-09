@@ -1,0 +1,75 @@
+image:
+  # -- rubin_exp_checker image to use
+  repository: ghcr.io/lsst-sitcom/rubin_exp_checker
+
+  # -- Tag of rubin_exp_checker image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+# -- Environment variables
+environment: {}
+
+ingress:
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+config:
+
+  # -- Butler path or alias to use
+  butler_repo:
+
+  # -- Default collection in the butler
+  butler_collection:
+
+  # -- Profile to use for object store bucket.
+  s3_profile_name:
+
+  # -- Object store URL
+  s3_endpoint_url:
+
+  db:
+    # -- Database configuration
+    hostname:
+
+    # -- Username for DB connection
+    username: "expchecker"
+
+    # -- Name of database
+    db_name: "expchecker"
+
+  # -- Additional volumes to attach
+  volumes: []
+
+  # -- Mount points for additional volumes
+  volume_mounts: []
+
+  # -- PersistentVolumeClaims to create.
+  persistentVolumeClaims: []
+
+  # -- Whether to use the new secrets management scheme
+  separateSecrets: true
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
+
+# -- Resource limits and requests for the nodejs pod
+# @default -- see `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "512Mi"
+  requests:
+    cpu: "50m"
+    memory: "256Mi"
