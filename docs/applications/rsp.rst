@@ -19,6 +19,7 @@ Argo CD project: ``rsp``
    noteburst/index
    nublado/index
    portal/index
+   qserv-kafka/index
    semaphore/index
    sia/index
    squareone/index
