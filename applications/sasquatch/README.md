@@ -255,7 +255,7 @@ Rubin Observatory's telemetry service
 | kafdrop.service.port | int | `9000` | Service port |
 | kafdrop.tolerations | list | `[]` | Tolerations configuration |
 | kafka-connect-manager.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations |
-| kafka-connect-manager.enabled | bool | `true` | Whether to enable Kafka Connect Manager |
+| kafka-connect-manager.enabled | bool | `false` | Whether to enable Kafka Connect Manager |
 | kafka-connect-manager.env.kafkaBrokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker URL |
 | kafka-connect-manager.env.kafkaConnectUrl | string | `"http://sasquatch-connect-api.sasquatch:8083"` | Kafka connnect URL |
 | kafka-connect-manager.env.kafkaUsername | string | `"kafka-connect-manager"` | Username for SASL authentication |
