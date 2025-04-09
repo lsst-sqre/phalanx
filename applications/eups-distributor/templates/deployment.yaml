@@ -18,6 +18,15 @@ spec:
       labels:
         {{- include "eups-distributor.selectorLabels" . | nindent 8 }}
     spec:
+      volumes:
+        - name: "cache"
+          emptyDir: {}
+        - name: "eups"
+          csi:
+            driver: gcsfuse.csi.storage.gke.io
+            volumeAttributes:
+              bucketName: eups-gc-storage-dev
+              mountOptions: "implicit-dirs"
       {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
@@ -27,6 +36,12 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: "eups"
+              mountPath: "/eups"
+              readOnly: true
+            - name: "cache"
+              mountPath: "/var/cache/nginx"
           ports:
             - name: "http"
               containerPort: 8080
