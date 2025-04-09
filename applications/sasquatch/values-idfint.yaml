@@ -155,3 +155,6 @@ backup:
 
 backpack:
   enabled: true
+
+tap:
+  enabled: true
