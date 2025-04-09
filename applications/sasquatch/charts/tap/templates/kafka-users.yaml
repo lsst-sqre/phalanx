@@ -37,12 +37,7 @@ metadata:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:
   authentication:
-    type: scram-sha-512
-    password:
-      valueFrom:
-        secretKeyRef:
-          name: sasquatch
-          key: qserv-password
+    type: tls
   authorization:
     type: simple
     acls:
