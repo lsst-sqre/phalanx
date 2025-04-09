@@ -2,7 +2,7 @@ prompt-keda:
   image:
     pullPolicy: Always  # TODO.  Change to IfNotPresent for load testing.
     # Overrides the image tag whose default is the chart appVersion.
-    tag: DM-49868-20250408B-dm49520-10.0.0
+    tag: DM-49868-20250409-dm49520-10.0.0
 
   instrument:
     pipelines:
