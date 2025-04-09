@@ -34,10 +34,10 @@ podAnnotations: {}
 resources:
   limits:
     cpu: "2"
-    memory: "3Gi"
+    memory: "2Gi"
   requests:
     cpu: "500m"
-    memory: "1Gi"
+    memory: "250Mi"
 
 # -- Tolerations for the eups-distributor deployment pod
 tolerations: []
