@@ -14,11 +14,24 @@ To update the pull secret for an environment, follow these steps:
 
 #. If you are storing static secrets anywhere other than Vault, synchronize secets for your environment.
 
-   .. prompt:: bash
+   .. tab-set::
 
-      phalanx secrets sync <environment>
+      .. tab-item:: General
 
-   Replace ``<environment>`` with the short identifier of your environment.
+         .. prompt:: bash
+
+            phalanx secrets sync <environment>
+
+         Replace ``<environment>`` with the short identifier of your environment.
+
+      .. tab-item:: SQuaRE-managed environments (1Password)
+
+         .. prompt:: bash
+
+            op run --env-file="op/<environment>.env" -- phalanx secrets sync <environment>
+
+         Replace ``<environment>`` with the short identifier of your environment.
+         See :doc:`op-run-phalanx-cli` for details on using the 1Password CLI to run the phalanx CLI with secrets from 1Password.
 
    This should update the ``pull-secret`` secret in Vault.
 

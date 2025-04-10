@@ -34,6 +34,7 @@ Administrators operate infrastructure, manage secrets, and are involved in the d
    update-pull-secret
    migrating-secrets
    set-quotas
+   op-run-phalanx-cli
 
 .. toctree::
    :caption: Troubleshooting

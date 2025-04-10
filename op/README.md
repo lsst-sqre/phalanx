@@ -13,3 +13,5 @@ op run --env-file="op/idfprod.env" -- phalanx secrets audit idfprod
 
 Match the environment name in the `.env` file with the environment you are working with.
 The `--` separates the command to be run from the options for `op run`.
+
+See also: https://phalanx.lsst.io/admin/op-run-phalanx-cli.html

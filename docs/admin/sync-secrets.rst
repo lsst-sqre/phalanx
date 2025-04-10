@@ -20,15 +20,27 @@ Syncing secrets
 
 To populate Vault with all of the necessary secrets for an environment named ``<environment>``, run:
 
-.. prompt:: bash
+.. tab-set::
 
-   phalanx secrets sync <environment>
+   .. tab-item:: General
 
-Add the ``--secrets`` command-line option or set ``OP_CONNECT_TOKEN`` if needed for your choice of a :ref:`static secrets source <admin-static-secrets>`.
-For SQuaRE-managed deployments, the 1Password token for ``OP_CONNECT_TOKEN`` comes from the ``Phalanx 1Password tokens`` item in the SQuaRE 1Password vault.
+      .. prompt:: bash
 
-If you did not store the Vault write token for your environment with the static secrets, the ``VAULT_TOKEN`` environment variable must be set to the Vault write token for this environment.
-For SQuaRE-managed environments, you can get the write token from the ``Phalanx Vault write tokens`` item in the SQuaRE 1Password vault.
+         phalanx secrets sync <environment>
+
+      Add the ``--secrets`` command-line option or set ``OP_CONNECT_TOKEN`` if needed for your choice of a :ref:`static secrets source <admin-static-secrets>`.
+      For SQuaRE-managed deployments, the 1Password token for ``OP_CONNECT_TOKEN`` comes from the ``Phalanx 1Password tokens`` item in the SQuaRE 1Password vault.
+
+      If you did not store the Vault write token for your environment with the static secrets, the ``VAULT_TOKEN`` environment variable must be set to the Vault write token for this environment.
+      For SQuaRE-managed environments, you can get the write token from the ``Phalanx Vault write tokens`` item in the SQuaRE 1Password vault.
+
+   .. tab-item:: SQuaRE-managed environments (1Password)
+
+      .. prompt:: bash
+
+         op run --env-file="op/<environment>.env" -- phalanx secrets sync <environment>
+
+      See :doc:`op-run-phalanx-cli` for details on :command:`op run`.
 
 Only secrets for the named environment will be affected.
 No changes will be made outside of the configured secrets path for that environment.
