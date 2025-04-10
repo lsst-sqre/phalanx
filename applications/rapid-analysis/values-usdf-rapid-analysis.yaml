@@ -20,6 +20,8 @@ env:
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   AWS_RESPONSE_CHECKSUM_VALIDATION: WHEN_REQUIRED
   HOME: /home/saluser
+podAnnotations:
+  edu.stanford.slac.sdf.project/usdf-embargo: "true"
 scripts:
 ###
 ### LSSTCam pods
