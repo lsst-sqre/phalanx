@@ -11,6 +11,7 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/roundtable-dev"
 
 applications:
+  atlantis: true
   giftless: true
   jira-data-proxy: true
   mobu: true
