@@ -176,7 +176,10 @@ spec:
             loadBalancerIP: {{ .Values.kafka.externalListener.bootstrap.loadBalancerIP }}
             {{- end }}
             {{- if .Values.kafka.externalListener.bootstrap.annotations }}
-            annotations: {{ .Values.kafka.externalListener.bootstrap.annotations }}
+            annotations:
+              {{- range $key, $value  := .Values.kafka.externalListener.bootstrap.annotations }}
+              {{ $key }}: {{ $value }}
+              {{- end}}
             {{- end }}
           {{- if .Values.kafka.externalListener.brokers }}
           brokers:
