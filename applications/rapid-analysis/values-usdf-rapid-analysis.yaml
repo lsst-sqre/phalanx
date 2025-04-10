@@ -17,6 +17,8 @@ env:
   S3_ENDPOINT_URL: https://s3dfrgw.slac.stanford.edu
   SASQUATCH_EXTRAS: dataset_tag=LSSTCam/rapid_analysis
   LSST_RESOURCES_S3_PROFILE_embargo: https://sdfembs3.sdf.slac.stanford.edu
+  AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  AWS_RESPONSE_CHECKSUM_VALIDATION: WHEN_REQUIRED
   HOME: /home/saluser
 scripts:
 ###
