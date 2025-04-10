@@ -7,6 +7,12 @@ environment:
   EFD: "usdf-efd"
   database_schema: "obsloctap_dev"
 
+config:
+  separateSecrets: false
+  persistentVolumeClaims:
+    - name: sdf-data-rubin
+      storageClassName: sdf-data-rubin
+
 image:
   pullPolicy: Always
 
