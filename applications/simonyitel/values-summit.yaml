@@ -337,7 +337,6 @@ mtheaderservice:
     pullPolicy: Always
   env:
     URL_SPEC: --lfa_mode s3 --s3instance cp
-    TSTAND_HEADERSERVICE: LEVEL3_CLEANROOM
     CAMERA: mt
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
