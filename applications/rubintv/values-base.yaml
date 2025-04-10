@@ -15,7 +15,7 @@ rubintv:
       value: "redis-service.rapid-analysis.svc.cluster.local"
     envSecrets:
     - name: RA_REDIS_PASSWORD
-      secretName: rubintv-dev-secrets
+      secretName: rubintv-secrets
       secretKey: redis-password
     image:
       tag: deploy
