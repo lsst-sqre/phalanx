@@ -50,6 +50,10 @@ mtheaderservice:
   # -- Enable the MTHeaderService CSC
   enabled: false
 
+mtheaderservice-sim:
+  # -- Enable the MTHeaderService simulator CSC
+  enabled: false
+
 mtm1m3:
   # -- Enable the MTM1M3 hardware simulator CSC
   enabled: false
