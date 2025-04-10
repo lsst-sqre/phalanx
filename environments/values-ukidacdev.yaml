@@ -1,0 +1,13 @@
+name: "ukidacdev"
+fqdn: "rsp-test.lsst.ac.uk"
+appOfAppsName: "science-platform"
+vaultUrl: "https://vault.lsst.ac.uk"
+vaultPathPrefix: "kv-v2/k8s_operator/ukidacdev"
+applications:
+  mobu: true
+  nublado: true
+  portal: true
+  postgres: true
+  squareone: true
+  tap: true
+  ssotap: true
