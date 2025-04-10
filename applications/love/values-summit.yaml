@@ -72,6 +72,10 @@ love-manager:
         AUTH_LDAP_3_SERVER_URI: ldap://ipa3.cp.lsst.org
         DB_HOST: postgresdb01.cp.lsst.org
         LOVE_SITE: summit
+      envSecrets:
+        REMOTE_BASE_USER_PASS: remote-base-user-pass
+        REMOTE_TUCSON_USER_PASS: remote-tucson-user-pass
+        REMOTE_SLAC_USER_PASS: remote-slac-user-pass
       autoscaling:
         enabled: true
         minReplicas: 10
