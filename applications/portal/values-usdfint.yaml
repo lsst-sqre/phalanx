@@ -1,0 +1,4 @@
+redis:
+  persistence:
+    enabled: true
+    storageClass: "wekafs--sdf-k8s01"
