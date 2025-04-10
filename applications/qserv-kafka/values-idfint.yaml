@@ -4,4 +4,4 @@ image:
 config:
   logLevel: "DEBUG"
   qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-int.slac.stanford.edu:4090/"
-  qservRestUrl: "https://134.79.23.197:4098/"
+  qservRestUrl: "https://qserv-int-https.slac.stanford.edu:4098/"
