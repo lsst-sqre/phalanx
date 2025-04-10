@@ -102,7 +102,7 @@ lsstcamWorkerSet:
   replicas: 205  # 1 deep for now
   resources:
     requests:
-      cpu: .01
+      cpu: .5
       memory: 4G
     limits:
       cpu: 1.0
