@@ -29,6 +29,7 @@ Deployment for the Simonyi Survey Telescope CSCs
 | mtcamhexapod.enabled | bool | `false` | Enable the MTHexapod:1 CSC |
 | mtdome-sim.enabled | bool | `false` | Enable the MTDome simulator CSC |
 | mtdome.enabled | bool | `false` | Enable the MTDome CSC |
+| mtheaderservice-sim.enabled | bool | `false` | Enable the MTHeaderService simulator CSC |
 | mtheaderservice.enabled | bool | `false` | Enable the MTHeaderService CSC |
 | mtm1m3-sim.enabled | bool | `false` | Enable the MTM1M3 simulator CSC |
 | mtm1m3.enabled | bool | `false` | Enable the MTM1M3 hardware simulator CSC |

@@ -145,6 +145,30 @@ mtheaderservice:
       cpu: 200m
       memory: 500Mi
 
+mtheaderservice-sim:
+  enabled: false
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    pullPolicy: Always
+  env:
+    URL_SPEC: --lfa_mode s3 --s3instance ls
+    RUN_ARG: --playback
+    TSTAND_HEADERSERVICE: BASE
+    CAMERA: mt
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2000Mi
+    requests:
+      cpu: 200m
+      memory: 500Mi
+
 mtm1m3-sim:
   enabled: true
   image:
