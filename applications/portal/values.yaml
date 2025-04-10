@@ -117,6 +117,9 @@ redis:
   resources:
     limits:
       cpu: "1"
+      memory: "40Mi"
+    requests:
+      cpu: "50m"
       memory: "20Mi"
 
   # -- Pod annotations for the Redis pod
