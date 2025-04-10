@@ -5,6 +5,22 @@ strimzi-kafka:
       replica.lag.time.max.ms: 120000
       log.retention.minutes: 10080
       offsets.retention.minutes: 10080
+    externalListener:
+      tls:
+        enabled: true
+      bootstrap:
+        annotations:
+          metallb.universe.tf/address-pool: sdf-rubin-ingest
+      brokers:
+        - broker: 6
+          annotations:
+            metallb.universe.tf/address-pool: sdf-rubin-ingest
+        - broker: 7
+          annotations:
+            metallb.universe.tf/address-pool: sdf-rubin-ingest
+        - broker: 8
+          annotations:
+            metallb.universe.tf/address-pool: sdf-rubin-ingest
 
   connect:
     enabled: true
