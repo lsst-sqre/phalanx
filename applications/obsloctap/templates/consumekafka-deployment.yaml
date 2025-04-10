@@ -93,10 +93,19 @@ spec:
           volumeMounts:
             - name: "tmp-volume"
               mountPath: "/tmp"
+            - name: sdf-data-rubin
+              mountPath: /sdf/data/rubin
+              readOnly: true
+
       volumes:
-        - name: tmp-volume
-          emptyDir:
-            sizeLimit: 500Mi
+          - name: tmp-volume
+            emptyDir:
+              sizeLimit: 500Mi
+          - name: sdf-data-rubin
+            persistentVolumeClaim:
+              claimName: sdf-data-rubin
+
+
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
