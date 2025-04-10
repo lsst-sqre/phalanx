@@ -100,6 +100,11 @@ dependencies:
   condition: mtheaderservice.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: mtheaderservice-sim
+  version: 1.0.0
+  condition: mtheaderservice-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: mtm1m3
   version: 1.0.0
   condition: mtm1m3.enabled
