@@ -13,6 +13,11 @@ config:
         storageClass: "standard-rwo"
   ssotap: "ssotap"
 
+redis:
+  persistence:
+    enabled: true
+    storageClass: "standard-rwo"
+
 resources:
   limits:
     cpu: "6"
