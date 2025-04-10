@@ -92,8 +92,6 @@ manager:
       USER_USER_PASS: user-user-pass
       # -- The LOVE manager frontend cmd_user user password secret key name
       CMD_USER_PASS: cmd-user-pass
-      # -- The LOVE manager frontend authlist_user password secret key name
-      AUTHLIST_USER_PASS: authlist-user-pass
       # -- The LOVE manager frontend LDAP binding password secret key name
       AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
       # -- The database password secret key name.
@@ -207,8 +205,6 @@ manager:
         USER_USER_PASS: user-user-pass
         # -- The LOVE manager producers cmd_user user password secret key name
         CMD_USER_PASS: cmd-user-pass
-        # -- The LOVE manager producers authlist_user password secret key name
-        AUTHLIST_USER_PASS: authlist-user-pass
         # -- The LOVE manager producers LDAP binding password secret key name
         AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
         # -- The database password secret key name.

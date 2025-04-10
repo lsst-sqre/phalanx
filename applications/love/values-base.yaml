@@ -96,7 +96,6 @@ love-manager:
         ADMIN_USER_PASS: admin-user-pass
         USER_USER_PASS: user-user-pass
         CMD_USER_PASS: cmd-user-pass
-        AUTHLIST_USER_PASS: authlist-user-pass
         AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
         DB_PASS: db-pass
         REDIS_PASS: redis-pass
@@ -159,7 +158,6 @@ love-manager:
         ADMIN_USER_PASS: admin-user-pass
         USER_USER_PASS: user-user-pass
         CMD_USER_PASS: cmd-user-pass
-        AUTHLIST_USER_PASS: authlist-user-pass
         AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
         DB_PASS: db-pass
         REDIS_PASS: redis-pass
@@ -222,7 +220,6 @@ love-manager:
         ADMIN_USER_PASS: admin-user-pass
         USER_USER_PASS: user-user-pass
         CMD_USER_PASS: cmd-user-pass
-        AUTHLIST_USER_PASS: authlist-user-pass
         AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
         DB_PASS: db-pass
         REDIS_PASS: redis-pass
