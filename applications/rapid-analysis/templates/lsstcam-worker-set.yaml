@@ -144,12 +144,9 @@ spec:
             - "-c"
             - |
               cp -RL /secrets-raw/* /secrets
-              cat /secrets-rubintv/aws-credentials.ini > new-aws-credentials.ini
-              printf "\n" >> new-aws-credentials.ini
-              cat /secrets-rubintv/aws_credentials.ini >> new-aws-credentials.ini
-              printf "\n" >> new-aws-credentials.ini
-              mv new-aws-credentials.ini /secrets/aws-credentials.ini
-              chown 73006:73006 /secrets/*
+              printf "\n" >> /secrets/aws-credentials.ini
+              cat /secrets-rubintv/aws_credentials.ini >> /secrets/aws-credentials.ini
+              chown 17951:4085 /secrets/*
               chmod 0600 /secrets/*
           volumeMounts:
             - name: raw-butler-secret
