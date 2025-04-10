@@ -155,7 +155,7 @@ mtheaderservice-sim:
     TSTAND_HEADERSERVICE: BASE
     CAMERA: mt
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-    RUN_ARG: ----hs_simulation_mode 1
+    RUN_ARG: --hs_simulation_mode 1
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
