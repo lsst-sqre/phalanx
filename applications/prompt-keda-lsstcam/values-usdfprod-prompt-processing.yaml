@@ -16,6 +16,8 @@ prompt-keda:
       # The config will get corrupted after template substitution.
       # Block-style mappings can have lines of any length.
       main: |-
+        - survey: BLOCK-T427  # Daytime checkout
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
         # Ignore unknown events
         - {pipelines: []}
       preprocessing: |-
