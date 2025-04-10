@@ -1,7 +1,7 @@
 image:
   repository: lsstts/rapid-analysis
   tag: c0041_usdf
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 location: USDF
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /sdf/group/rubin/shared/data-repos.yaml
