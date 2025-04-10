@@ -92,6 +92,12 @@ manager:
       USER_USER_PASS: user-user-pass
       # -- The LOVE manager frontend cmd_user user password secret key name
       CMD_USER_PASS: cmd-user-pass
+      # -- The LOVE manager frontend base_control_room user password secret key name
+      REMOTE_BASE_USER_PASS: null
+      # -- The LOVE manager frontend tucson_control_room user password secret key name
+      REMOTE_TUCSON_USER_PASS: null
+      # -- The LOVE manager frontend slac_control_room user password secret key name
+      REMOTE_SLAC_USER_PASS: null
       # -- The LOVE manager frontend LDAP binding password secret key name
       AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
       # -- The database password secret key name.
