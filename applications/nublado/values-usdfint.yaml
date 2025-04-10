@@ -25,8 +25,6 @@ controller:
         LSST_DISABLE_BUCKET_VALIDATION: "1"
         LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
       homedirSchema: "initialThenUsername"
-      nodeSelector:
-        node-role.kubernetes.io/crowdstrike: ""
       nss:
         # Add rubin_users group (there is not yet a simpler way to do this).
         baseGroup: |
