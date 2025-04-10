@@ -88,6 +88,9 @@ applications:
   # most other applications use `GafaelfawrIngress`
   gafaelfawr: true
 
+  # -- Enable the qserv-kafka application
+  qserv-kafka: false
+
   # -- Enable the rubin-rag application
   rubin-rag: false
 

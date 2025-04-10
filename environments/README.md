@@ -63,6 +63,7 @@
 | applications.prompt-proto-service-lsstcomcam | bool | `false` | Enable the prompt-proto-service-lsstcomcam application |
 | applications.prompt-proto-service-lsstcomcamsim | bool | `false` | Enable the prompt-proto-service-lsstcomcamsim application |
 | applications.prompt-redis | bool | `false` | Enable the prompt-redis application |
+| applications.qserv-kafka | bool | `false` | Enable the qserv-kafka application |
 | applications.rubin-rag | bool | `false` | Enable the rubin-rag application |
 | applications.rubintv | bool | `false` | Enable the rubintv application |
 | applications.rubintv-dev | bool | `false` | Enable the rubintv-dev application |

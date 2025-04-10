@@ -1,0 +1,16 @@
+apiVersion: access.strimzi.io/v1alpha1
+kind: KafkaAccess
+metadata:
+  name: "qserv-kafka-access"
+  labels:
+    {{- include "qserv-kafka.labels" . | nindent 4 }}
+spec:
+  kafka:
+    name: "sasquatch"
+    namespace: "sasquatch"
+    listener: "tls"
+  user:
+    kind: "KafkaUser"
+    apiGroup: "kafka.strimzi.io"
+    name: "qserv"
+    namespace: "sasquatch"

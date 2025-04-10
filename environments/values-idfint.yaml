@@ -23,6 +23,7 @@ applications:
   noteburst: true
   nublado: true
   portal: true
+  qserv-kafka: true
   rubin-rag: true
   sasquatch: true
   sia: true
