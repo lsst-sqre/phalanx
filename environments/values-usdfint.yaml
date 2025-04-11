@@ -17,6 +17,7 @@ applications:
   datalinker: true
   livetap: true
   mobu: true
+  noteburst: true
   nublado: true
   plot-navigator: true
   portal: true
@@ -30,3 +31,4 @@ applications:
   strimzi: true
   strimzi-access-operator: true
   tap: true
+  times-square: true
