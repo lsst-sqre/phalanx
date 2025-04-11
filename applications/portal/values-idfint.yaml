@@ -21,6 +21,9 @@ redis:
     limits:
       memory: "512Mi"
 
+image:
+  tag: "portal-test-2025.3-pre10-t8"
+
 resources:
   limits:
     memory: "30Gi"
