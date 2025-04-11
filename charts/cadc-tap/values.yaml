@@ -71,7 +71,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "1.20.0"
+      tag: "tickets-DM-50058"
 
   qserv:
     # -- QServ hostname:port to connect to
