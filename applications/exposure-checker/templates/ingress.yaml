@@ -1,0 +1,36 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    {{- include "exposure-checker.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  loginRedirect: true
+  scopes:
+    all:
+      - "exec:portal"
+  service: {{ .Chart.Name }}
+  delegate:
+    internal:
+      scopes: []
+      service: {{ .Chart.Name }}
+template:
+  metadata:
+    name: {{ .Chart.Name }}
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+    - host: {{ required "global.host must be set" .Values.global.host | quote }}
+      http:
+        paths:
+        - path: "/exposure-checker"
+          pathType: "Prefix"
+          backend:
+            service:
+              name: {{ .Chart.Name }}
+              port:
+                number: 80
