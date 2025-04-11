@@ -1,5 +1,7 @@
 strimzi-kafka:
   users:
+    butlerWriter:
+      enabled: true
     kafdrop:
       enabled: false
   kraft:
