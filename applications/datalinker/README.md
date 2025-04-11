@@ -12,12 +12,10 @@ IVOA DataLink-based service and data discovery
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the datalinker deployment pod |
 | config.hipsPathPrefix | string | `"/api/hips"` | URL path prefix for the HiPS API (must match the configuration of the hips service) |
+| config.linksLifetime | string | `"1h"` | Lifetime of the `{links}` reply. Should be set to match the lifetime of links returned by the Butler server |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.pathPrefix | string | `"/api/datalink"` | URL path prefix for DataLink and related APIs |
-| config.pgUser | string | `"rubin"` | User to use from the PGPASSFILE if datalinker is using a direct Butler connection (`useButlerServer` is false) |
-| config.s3EndpointUrl | string | `"https://storage.googleapis.com"` | S3 endpoint URL (must be set if using S3) |
 | config.slackAlerts | bool | `false` | Whether to send certain serious alerts to Slack. If `true`, the `slack-webhook` secret must also be set. |
-| config.storageBackend | string | `"GCS"` | Storage backend to use (either `GCS` or `S3`) |
 | config.tapMetadataUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"` | URL containing TAP schema metadata used to construct queries |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.butlerServerRepositories | string | Set by Argo CD | Butler repositories accessible via Butler server |

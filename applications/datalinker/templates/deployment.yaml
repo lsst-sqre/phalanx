@@ -25,17 +25,11 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - all
-            readOnlyRootFilesystem: true
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: "DATALINKER_CUTOUT_SYNC_URL"
               value: "{{ .Values.global.baseUrl }}/api/cutout/sync"
+            - name: "DATALINKER_LINKS_LIFETIME"
+              value: {{ .Values.config.linksLifetime | quote }}
             - name: "DATALINKER_HIPS_BASE_URL"
               value: "{{ .Values.global.baseUrl }}/api/hips"
             - name: "DATALINKER_LOG_LEVEL"
@@ -44,10 +38,6 @@ spec:
               value: {{ .Values.config.pathPrefix | quote }}
             - name: "DATALINKER_HIPS_PATH_PREFIX"
               value: {{ .Values.config.hipsPathPrefix | quote }}
-            - name: "DATALINKER_STORAGE_BACKEND"
-              value: {{ .Values.config.storageBackend | quote }}
-            - name: "DATALINKER_S3_ENDPOINT_URL"
-              value: {{ .Values.config.s3EndpointUrl | quote }}
             {{- if .Values.config.slackAlerts }}
             - name: "DATALINKER_SLACK_WEBHOOK"
               valueFrom:
@@ -68,6 +58,8 @@ spec:
                   key: "token"
             - name: "DAF_BUTLER_REPOSITORIES"
               value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: "http"
               containerPort: 8080
@@ -80,8 +72,12 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+            readOnlyRootFilesystem: true
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"

@@ -20,32 +20,26 @@ ingress:
   annotations: {}
 
 config:
+  # -- URL path prefix for the HiPS API (must match the configuration of the
+  # hips service)
+  hipsPathPrefix: "/api/hips"
+
+  # -- Lifetime of the `{links}` reply. Should be set to match the lifetime of
+  # links returned by the Butler server
+  linksLifetime: "1h"
+
   # -- Logging level
   logLevel: "INFO"
 
   # -- URL path prefix for DataLink and related APIs
   pathPrefix: "/api/datalink"
 
-  # -- URL path prefix for the HiPS API (must match the configuration of the
-  # hips service)
-  hipsPathPrefix: "/api/hips"
-
-  # -- URL containing TAP schema metadata used to construct queries
-  tapMetadataUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"
-
-  # -- Storage backend to use (either `GCS` or `S3`)
-  storageBackend: "GCS"
-
-  # -- S3 endpoint URL (must be set if using S3)
-  s3EndpointUrl: "https://storage.googleapis.com"
-
-  # -- User to use from the PGPASSFILE if datalinker is using a direct Butler
-  # connection (`useButlerServer` is false)
-  pgUser: "rubin"
-
   # -- Whether to send certain serious alerts to Slack. If `true`, the
   # `slack-webhook` secret must also be set.
   slackAlerts: false
+
+  # -- URL containing TAP schema metadata used to construct queries
+  tapMetadataUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"
 
 # -- Affinity rules for the datalinker deployment pod
 affinity: {}
