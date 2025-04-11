@@ -69,6 +69,8 @@ spec:
               value: lsstObsCoreTapTable
             - name: PROPS_OP_searchActionsCmdMask_10
               value: lsstTruthSummaryRadiusTable
+            - name: PROPS_OP_searchActionsCmdMask_11
+              value: showDatalinkTable
             - name: PROPS_OP_hips_defHipsSources_label
               value: "'Rubin Featured'"
             - name: PROPS_OP_hips_adhocMocSource_label
@@ -90,20 +92,22 @@ spec:
             - name: PROPS_OP_hips_adhocMocSource_sources_7
               value: ivo://CDS/P/2MASS/color
             - name: PROPS_inventory.serverURLAry
-              value: "[\"https://raw.githubusercontent.com/lsst-sqre/portal-config/refs/heads/tickets/DM-43947/dce-searchPage-idf.xml\"]"
+              value: "[\"https://raw.githubusercontent.com/lsst-sqre/portal-config/refs/heads/main/dce-searchPage-idf.xml\"]"
+            - name: PROPS_uws.history.svcs
+              value: {{ .Values.global.baseUrl }}/api/tap/async|DP02_DC|TAP
             - name: "PROPS_OP_coverage_hipsSourceURL"
               value: >-
                 {{- if .Values.config.hipsUrl }}
-                       "{{ .Values.config.hipsUrl }}"
+                       {{ .Values.config.hipsUrl }}
                 {{- else }}
-                       "{{ .Values.global.baseUrl }}/api/hips/images/color_gri"
+                       {{ .Values.global.baseUrl }}/api/hips/images/color_gri
                 {{- end }}
             - name: "PROPS_OP_coverage_hipsSource360URL"
               value: >-
                 {{- if .Values.config.hipsUrl }}
-                       "{{ .Values.config.hipsUrl }}"
+                       {{ .Values.config.hipsUrl }}
                 {{- else }}
-                       "{{ .Values.global.baseUrl }}/api/hips/images/color_gri"
+                       {{ .Values.global.baseUrl }}/api/hips/images/color_gri
                 {{- end }}
             - name: "PROPS_FIREFLY_OPTIONS"
               value: >-
@@ -112,7 +116,19 @@ spec:
                       "additional": {
                           "services": [
                             {
-                               "label": "LSST SIAV2 DP0.2 DC2",
+                               "label": "DP1 Images SIAv2",
+                               "serviceId": "DP1 Images SIAv2",
+                               "value": "{{ .Values.global.baseUrl }}/api/sia/dp1/query",
+                               {{- if .Values.config.hipsUrl }}
+                               "hipsUrl": "{{ .Values.config.hipsUrl }}",
+                               {{- else }}
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                               {{- end }}
+                               "centerWP": "62;-37;EQ_J2000",
+                               "fovDeg": 10
+                            },
+                            {
+                               "label": "DP0 Images SIAv2",
                                "serviceId": "RubinSiaDp02Dc2",
                                "value": "{{ .Values.global.baseUrl }}/api/sia/dp02/query",
                                {{- if .Values.config.hipsUrl }}
@@ -130,8 +146,8 @@ spec:
                       "additional": {
                           "services": [
                             {
-                               "label": "LSST DP0.2 DC2",
-                               "serviceId": "RubinDp02Dc2",
+                               "label": "Rubin TAP",
+                               "serviceId": "RubinPrimaryTAPID",
                                "value": "{{ .Values.global.baseUrl }}/api/tap",
                                {{- if .Values.config.hipsUrl }}
                                "hipsUrl": "{{ .Values.config.hipsUrl }}",
