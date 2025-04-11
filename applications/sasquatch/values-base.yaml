@@ -21,10 +21,10 @@ strimzi-kafka:
   kafka:
     config:
       auto.create.topics.enable: false
-      log.cleaner.min.compaction.lag.ms: 259200000
+      log.cleaner.min.compaction.lag.ms: 172800000
       log.message.timestamp.type: LogAppendTime
-      log.retention.hours: 72
-      log.retention.ms: 259200000
+      log.retention.hours: 48
+      log.retention.ms: 172800000
     storage:
       storageClassName: rook-ceph-block
       size: 1Ti
