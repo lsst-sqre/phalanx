@@ -90,20 +90,20 @@ spec:
             - name: PROPS_OP_hips_adhocMocSource_sources_7
               value: ivo://CDS/P/2MASS/color
             - name: PROPS_inventory.serverURLAry
-              value: "[\"https://raw.githubusercontent.com/lsst-sqre/portal-config/refs/heads/tickets/DM-43947/dce-searchPage-idf.xml\"]"
+              value: "[\"https://raw.githubusercontent.com/lsst-sqre/portal-config/refs/heads/main/dce-searchPage-idf.xml\"]"
             - name: "PROPS_OP_coverage_hipsSourceURL"
               value: >-
                 {{- if .Values.config.hipsUrl }}
-                       "{{ .Values.config.hipsUrl }}"
+                       {{ .Values.config.hipsUrl }}
                 {{- else }}
-                       "{{ .Values.global.baseUrl }}/api/hips/images/color_gri"
+                       {{ .Values.global.baseUrl }}/api/hips/images/color_gri
                 {{- end }}
             - name: "PROPS_OP_coverage_hipsSource360URL"
               value: >-
                 {{- if .Values.config.hipsUrl }}
-                       "{{ .Values.config.hipsUrl }}"
+                       {{ .Values.config.hipsUrl }}
                 {{- else }}
-                       "{{ .Values.global.baseUrl }}/api/hips/images/color_gri"
+                       {{ .Values.global.baseUrl }}/api/hips/images/color_gri
                 {{- end }}
             - name: "PROPS_FIREFLY_OPTIONS"
               value: >-
