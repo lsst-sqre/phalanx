@@ -37,7 +37,7 @@ prompt-keda:
     topic: or5-ppdev-notification
 
   apdb:
-    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_dm48279.yaml
+    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcamimsim-dev.yaml
 
   alerts:
     username: kafka-admin
