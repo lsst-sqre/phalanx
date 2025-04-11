@@ -3,8 +3,8 @@ image:
 
 config:
   dp02ClientServerIsDefault: true
-  # butler-registry-dp02-dev Google Cloud SQL instance in science-platform-dev
-  dp02PostgresUri: postgresql://butler@dp02.rsp-sql-dev.internal:5432/dp02
+  # alloydb-butler-dp02-experimental in science-platform-dev
+  dp02PostgresUri: postgresql://postgres@10.161.1.2:5432/dp02
   dp02UseSlacDatastore: true
   dp1PostgresUri: postgresql://butler@dp1.rsp-sql-dev.internal:5432/dp1
   s3EndpointUrl: "https://storage.googleapis.com"
