@@ -77,7 +77,6 @@ spec:
         # Increase request timeout
         producer.request.timeout.ms: 240000
         consumer.request.timeout.ms: 240000
-        admin.timeout.ms: 600000
     heartbeatConnector:
       config:
         heartbeats.topic.replication.factor: 3
