@@ -1,4 +1,4 @@
-replicaCount: 6
+replicaCount: 4
 
 resources:
   limits:
@@ -82,7 +82,7 @@ config:
     #       delete_lab: false
     #     restart: true
     - name: "scale-test-simple"
-      count: 3000
+      count: 20
       user_spec:
         username_prefix: "bot-mobu-scale-notebook"
       scopes:
@@ -96,9 +96,10 @@ config:
         type: "NotebookRunnerInfinite"
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
-          repo_ref: "no-code"
-          execution_idle_time: 1m
+          repo_ref: "main"
+          execution_idle_time: 1
+          idle_time: 10
+          notebooks_to_run:
+            - TAP_pg.ipynb
           delete_lab: false
-          image:
-            image_class: "latest-daily"
         restart: true
