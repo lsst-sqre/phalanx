@@ -5,7 +5,7 @@ knative:
 
 kafka:
   schemaRegistryUrl: http://10.104.61.102:8081
-  sasquatchAddress: 10.96.121.181:9094
+  sasquatchAddress: 10.106.4.52:9094
   consumerGroup: next-visit-fan-out-1
   nextVisitTopic: lsst.sal.ScriptQueue.logevent_nextVisit
 
