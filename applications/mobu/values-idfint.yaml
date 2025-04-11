@@ -82,7 +82,7 @@ config:
     #       delete_lab: false
     #     restart: true
     - name: "scale-test-simple"
-      count: 20
+      count: 100
       user_spec:
         username_prefix: "bot-mobu-scale-notebook"
       scopes:
