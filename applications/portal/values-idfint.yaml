@@ -21,6 +21,9 @@ redis:
     limits:
       memory: "512Mi"
 
+image:
+  tag: "protal-2025.3.0-pre1"
+
 resources:
   limits:
     memory: "30Gi"
