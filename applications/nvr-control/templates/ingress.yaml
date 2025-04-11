@@ -1,0 +1,32 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: nvr-control
+  labels:
+    {{- include "nvr-control.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl }}
+  loginRedirect: true
+  scopes:
+    all:
+      - exec:internal-tools
+  service: nvr-control
+template:
+  metadata:
+    name: nvr-control
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host }}
+        http:
+          paths:
+            - path: /nvr
+              pathType: Prefix
+              backend:
+                service:
+                  name: nvr-control
+                  port:
+                    name: http

@@ -1,0 +1,34 @@
+{{- if (index .Values "applications" "nvr-control") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "nvr-control"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "nvr-control"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "nvr-control"
+    server: "https://kubernetes.default.svc"
+  project: "rubin"
+  source:
+    path: "applications/nvr-control"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}
