@@ -16,3 +16,5 @@ strimzi-kafka:
       partitions: 1
       replicas: 3
       retention: 14400000
+kafdrop:
+  enabled: false
