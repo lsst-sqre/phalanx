@@ -154,6 +154,7 @@ mtheaderservice-sim:
     URL_SPEC: --lfa_mode s3 --s3instance ls
     RUN_ARG: --playback
     TSTAND_HEADERSERVICE: BASE
+    HEADERSERVICE_PLAYLIST_DIR: /project/headerservice
     CAMERA: mt
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
@@ -161,6 +162,12 @@ mtheaderservice-sim:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  nfsMountpoint:
+  - name: project-shared
+    containerPath: /project
+    readOnly: false
+    server: nfs-project.ls.lsst.org
+    serverPath: /project
   resources:
     limits:
       cpu: 2000m
