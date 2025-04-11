@@ -55,5 +55,6 @@ prompt-keda:
       expiration: 600_000_000.0
 
   podAnnotations: {
-    edu.stanford.slac.sdf.project/usdf-embargo: "true"
+    edu.stanford.slac.sdf.project/usdf-embargo: "true",
+    node-role.kubernetes.io/prompt-processing=: "true"
   }
