@@ -91,6 +91,23 @@ scripts:
     limits:
       cpu: 1.0
       memory: 12G
+##
+## LATISS StatefulSets
+##
+latissWorkerSet:
+  name: LATISS/runSfmRunner.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+  replicas: 1
+  resources:
+    requests:
+      cpu: 0.5
+      memory: 3G
+    limits:
+      cpu: 1.0
+      memory: 6G
 ###
 ### LSSTCam StatefulSets
 ###
