@@ -14,10 +14,12 @@ config:
 template:
   metadata:
     name: nvr-control
-    {{- with .Values.ingress.annotations }}
     annotations:
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        proxy_set_header X-Rubin-NVR-Proxied-User operator;
+      {{- with .Values.ingress.annotations }}
       {{- toYaml . | nindent 6 }}
-    {{- end }}
+      {{- end }}
   spec:
     rules:
       - host: {{ required "global.host must be set" .Values.global.host }}
