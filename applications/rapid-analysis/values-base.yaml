@@ -155,10 +155,10 @@ lsstcamGather2aAosSet:
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 5
+  replicas: 3
   resources:
     requests:
-      cpu: 1.0
+      cpu: 0.5
       memory: "4G"
     limits:
       cpu: 1.0
