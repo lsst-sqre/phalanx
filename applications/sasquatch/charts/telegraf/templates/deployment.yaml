@@ -40,7 +40,7 @@ spec:
         imagePullPolicy: {{ default "IfNotPresent" $.Values.image.pullPolicy | quote }}
         {{- if $.Values.resources }}
         resources:
-          {{- toYaml $.Values.resources | nindent 10 }}
+          {{- toYaml (default $.Values.resources $value.resources) | nindent 10 }}
         {{- end }}
         {{- if $.Values.args }}
         args:
