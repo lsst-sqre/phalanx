@@ -275,10 +275,10 @@ mtcamhexapod:
   resources:
     limits:
       cpu: 500m
-      memory: 400Mi
+      memory: 900Mi
     requests:
       cpu: 50m
-      memory: 125Mi
+      memory: 300Mi
 
 mtcamhexapod-sim:
   enabled: false
