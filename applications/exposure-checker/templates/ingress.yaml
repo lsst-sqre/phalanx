@@ -3,7 +3,7 @@ kind: GafaelfawrIngress
 metadata:
   name: {{ .Chart.Name }}
   labels:
-    {{- include "exposure-checker.labels" . | nindent 4 }}
+    {{- include "application.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   loginRedirect: true
