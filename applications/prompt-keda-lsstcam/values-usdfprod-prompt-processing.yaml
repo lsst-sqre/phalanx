@@ -118,3 +118,12 @@ prompt-keda:
   podAnnotations: {
     edu.stanford.slac.sdf.project/usdf-embargo: "true"
   }
+
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 10
+        preference:
+          matchExpressions:
+          - key: node-role.kubernetes.io/prompt-processing
+            operator: Exists
