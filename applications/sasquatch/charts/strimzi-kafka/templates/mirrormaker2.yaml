@@ -50,7 +50,6 @@ spec:
       config:
         replication.factor: 3
         offset-syncs.topic.replication.factor: 3
-        sync.topic.configs.enabled: "false"
         # Dot not replicate topic ACLs configuration.
         sync.topic.acls.enabled: "false"
         # The frequency to check for new topics.
