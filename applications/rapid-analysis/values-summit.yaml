@@ -233,7 +233,7 @@ scripts:
       cpu: 1.0
       memory: 6G
     limits:
-      cpu: 1
+      cpu: 2.0
       memory: 8G
 - name: summit/misc/runStarTracker.py
   mounts:
