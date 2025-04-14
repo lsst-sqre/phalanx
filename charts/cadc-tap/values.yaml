@@ -110,6 +110,9 @@ config:
   # -- GCS bucket type (GCS or S3)
   gcsBucketType: "GCS"
 
+  # -- Data Database name
+  database: "dp02"
+
   # -- Java heap size, which will set the maximum size of the heap. Otherwise
   # Java would determine it based on how much memory is available and black
   # maths.

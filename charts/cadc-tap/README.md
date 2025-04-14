@@ -23,10 +23,19 @@ IVOA TAP service
 | cloudsql.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `cadc-tap` Kubernetes service accounts and has the `cloudsql.client` role, access |
 | config.backend | string | None, must be set to `pg` or `qserv` | What type of backend are we connecting to? |
 | config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/w.2025.16/datalink-snippets.zip"` | Datalink payload URL |
+| config.database | string | `"dp02"` | Data Database name |
 | config.gcsBucket | string | `"async-results.lsst.codes"` | Name of GCS bucket in which to store results |
 | config.gcsBucketType | string | `"GCS"` | GCS bucket type (GCS or S3) |
 | config.gcsBucketUrl | string | `"https://tap-files.lsst.codes"` | Base URL for results stored in GCS bucket |
 | config.jvmMaxHeapSize | string | `"31G"` | Java heap size, which will set the maximum size of the heap. Otherwise Java would determine it based on how much memory is available and black maths. |
+| config.kafka | object | `{"auth":{"enabled":false},"bootstrapServer":"sasquatch-dev-kafka-bootstrap.lsst.cloud:9094","schemaRegistry":{"url":""},"topics":{"jobRun":""}}` | Kafka configuration |
+| config.kafka.auth | object | `{"enabled":false}` | Authentication configuration |
+| config.kafka.auth.enabled | bool | `false` | Whether auth is enabled |
+| config.kafka.bootstrapServer | string | `"sasquatch-dev-kafka-bootstrap.lsst.cloud:9094"` | Bootstrap Server |
+| config.kafka.schemaRegistry | object | `{"url":""}` | Schema Registry Configuration |
+| config.kafka.schemaRegistry.url | string | `""` | URL |
+| config.kafka.topics | object | `{"jobRun":""}` | Kafka topics |
+| config.kafka.topics.jobRun | string | `""` | Job Run topic |
 | config.pg.database | string | None, must be set if backend is `pg` | Database to connect to |
 | config.pg.host | string | None, must be set if backend is `pg` | Host to connect to |
 | config.pg.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
@@ -34,9 +43,15 @@ IVOA TAP service
 | config.pg.image.tag | string | `"1.21.1"` | Tag of TAP image to use |
 | config.pg.username | string | None, must be set if backend is `pg` | Username to connect with |
 | config.qserv.host | string | `"mock-db:3306"` (the mock QServ) | QServ hostname:port to connect to |
+<<<<<<< HEAD
 | config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.qserv.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
 | config.qserv.image.tag | string | `"2.13.1"` | Tag of TAP image to use |
+=======
+| config.qserv.image.pullPolicy | string | `"Always"` | Pull policy for the TAP image |
+| config.qserv.image.repository | string | `"stvoutsin/lsst-tap-service"` | TAP image to use |
+| config.qserv.image.tag | string | `"DM-49692"` | Tag of TAP image to use |
+>>>>>>> cc11c6663 (Add database config parameter to tap chart)
 | config.qserv.jdbcParams | string | `""` | Extra JDBC connection parameters |
 | config.qserv.passwordEnabled | bool | false | Whether the Qserv database is password protected |
 | config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
