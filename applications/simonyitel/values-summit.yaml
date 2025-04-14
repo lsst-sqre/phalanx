@@ -251,6 +251,11 @@ mtaos:
     readOnly: false
     server: nfs-project.cp.lsst.org
     serverPath: /project
+  - name: scratch
+    containerPath: /scratch
+    readOnly: false
+    server: nfs-scratch.cp.lsst.org
+    serverPath: /scratch
   resources:
     limits:
       cpu: 1000m
