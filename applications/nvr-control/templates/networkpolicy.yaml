@@ -17,7 +17,7 @@ spec:
         - namespaceSelector: {}
           podSelector:
             matchLabels:
-              gafaelfawr.lsst.io/ingress: true
+              gafaelfawr.lsst.io/ingress: "true"
       ports:
         - protocol: TCP
           port: 8123
