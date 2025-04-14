@@ -129,7 +129,7 @@ mtdometrajectory:
       memory: 115Mi
 
 mtheaderservice:
-  enabled: true
+  enabled: false
   image:
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
@@ -152,7 +152,7 @@ mtheaderservice:
       memory: 500Mi
 
 mtheaderservice-sim:
-  enabled: false
+  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
