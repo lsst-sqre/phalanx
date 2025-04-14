@@ -67,6 +67,11 @@ mtaos:
   - butler-credentials.ini
   <<: *butler-secret
   nfsMountpoint:
+  - name: project-shared
+    containerPath: /project
+    readOnly: false
+    server: nfs-project.ls.lsst.org
+    serverPath: /project
   - name: scratch
     containerPath: /scratch
     readOnly: false
