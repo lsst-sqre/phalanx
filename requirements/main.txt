@@ -385,9 +385,9 @@ fastavro==1.10.0 \
     # via
     #   dataclasses-avroschema
     #   python-schema-registry-client
-faststream==0.5.37 \
-    --hash=sha256:2333f6efcc9cbb608cb64c2051805f7b0af06f5e25081aaa62a74755a0de2810 \
-    --hash=sha256:aadfe96080c894efc3e0afc55c739e21af858ca5425acac9c6db90894394b9b7
+faststream==0.5.39 \
+    --hash=sha256:5928e9e85d3e2a06a0780e068b0ddc1081a13c802789e0684df3971dbcc816e2 \
+    --hash=sha256:fe13ed5d643043682c19867e918e0edb552755e284cc1c9e3595cf760c335a0c
     # via safir
 gidgethub==5.3.0 \
     --hash=sha256:4dd92f2252d12756b13f9dd15cde322bfb0d625b6fb5d680da1567ec74b462c0 \
@@ -405,9 +405,9 @@ h11==0.14.0 \
     --hash=sha256:8f19fbbe99e72420ff35c00b27a34cb9937e902a8b810e2c88300c6f0a3b699d \
     --hash=sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761
     # via httpcore
-httpcore==1.0.7 \
-    --hash=sha256:8551cb62a169ec7162ac7be8d4817d561f60e08eaa485234898414bb5a8a0b4c \
-    --hash=sha256:a3fff8f43dc260d5bd363d9f9cf1830fa3a458b332856f34282de498ed420edd
+httpcore==1.0.8 \
+    --hash=sha256:5254cf149bcb5f75e9d1b2b9f729ea4a4b883d1ad7379fc632b727cec23674be \
+    --hash=sha256:86e94505ed24ea06514883fd44d2bc02d90e77e7979c8eb71b90f41d364a1bad
     # via httpx
 httpx==0.28.1 \
     --hash=sha256:75e98c5f16b0f35b567856f597f06ff2270a374470a5c2392242528e3e3e42fc \
@@ -517,9 +517,9 @@ pycparser==2.22 ; platform_python_implementation != 'PyPy' \
     --hash=sha256:491c8be9c040f5390f5bf44a5b07752bd07f56edf992381b05c701439eec10f6 \
     --hash=sha256:c3702b6d3dd8c7abc1afa565d7e63d53a1d0bd86cdc24edd75470f4de499cfcc
     # via cffi
-pydantic==2.11.2 \
-    --hash=sha256:2138628e050bd7a1e70b91d4bf4a91167f4ad76fdb83209b107c8d84b854917e \
-    --hash=sha256:7f17d25846bcdf89b670a86cdfe7b29a9f1c9ca23dee154221c9aa81845cfca7
+pydantic==2.11.3 \
+    --hash=sha256:7471657138c16adad9322fe3070c0116dd6c3ad8d649300e3cbdfe91f4db4ec3 \
+    --hash=sha256:a082753436a07f9ba1289c6ffa01cd93db3548776088aa917cc43b63f68fa60f
     # via
     #   phalanx (pyproject.toml)
     #   fast-depends
@@ -844,9 +844,9 @@ safir-logging==10.0.0 \
     --hash=sha256:7aa9fd0f194404bddbb1945c3cbf175b32b2331736886512998b91eea9626ecb \
     --hash=sha256:8c4aa0e551a34077f8c680d1f7279a651a2de54299a758aefa0cbeaedecad156
     # via safir
-sentry-sdk==2.25.1 \
-    --hash=sha256:60b016d0772789454dc55a284a6a44212044d4a16d9f8448725effee97aaf7f6 \
-    --hash=sha256:f9041b7054a7cf12d41eadabe6458ce7c6d6eea7a97cfe1b760b6692e9562cf0
+sentry-sdk==2.26.0 \
+    --hash=sha256:82496fc359296dac57ec923300b18cc1f14a1279c1e7108d46d35dbb4cf8f5f8 \
+    --hash=sha256:88643459716dd0c6e412e5141fcc94ce3b5725e4b6b312210b91332b3b46a0e2
     # via safir
 six==1.17.0 \
     --hash=sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274 \
@@ -862,9 +862,9 @@ sniffio==1.3.1 \
     --hash=sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2 \
     --hash=sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc
     # via anyio
-starlette==0.46.1 \
-    --hash=sha256:3c88d58ee4bd1bb807c0d1acb381838afc7752f9ddaec81bbe4383611d833230 \
-    --hash=sha256:77c74ed9d2720138b25875133f3a2dae6d854af2ec37dceb56aef370c1d8a227
+starlette==0.46.2 \
+    --hash=sha256:595633ce89f8ffa71a015caed34a5b2dc1c0cdb3f0f1fbd1e69339cf2abeec35 \
+    --hash=sha256:7f7361f34eed179294600af672f565727419830b54b7b084efe44bb82d2fccd5
     # via
     #   fastapi
     #   safir
@@ -874,9 +874,9 @@ structlog==25.2.0 \
     # via
     #   safir
     #   safir-logging
-typing-extensions==4.13.1 \
-    --hash=sha256:4b6cf02909eb5495cfbc3f6e8fd49217e6cc7944e145cdda8caa3734777f9e69 \
-    --hash=sha256:98795af00fb9640edec5b8e31fc647597b4691f099ad75f469a2616be1a76dff
+typing-extensions==4.13.2 \
+    --hash=sha256:a439e7c04b49fec3e5d3e2beaa21755cadbbdc391694e28ccdd36ca4a1408f8c \
+    --hash=sha256:e6c81219bd689f51865d9e372991c540bda33a0379d5573cddb9a3a23f7caaef
     # via
     #   aiokafka
     #   anyio
@@ -895,9 +895,9 @@ uritemplate==4.1.1 \
     --hash=sha256:4346edfc5c3b79f694bccd6d6099a322bbeb628dbf2cd86eea55a456ce5124f0 \
     --hash=sha256:830c08b8d99bdd312ea4ead05994a38e8936266f84b9a7878232db50b044e02e
     # via gidgethub
-urllib3==2.3.0 \
-    --hash=sha256:1cee9ad369867bfdbbb48b7dd50374c0967a0bb7710050facf0dd6911440e3df \
-    --hash=sha256:f8c5449b3cf0861679ce7e0503c7b44b5ec981bec0d1d3795a07f1ba96f0204d
+urllib3==2.4.0 \
+    --hash=sha256:414bc6535b787febd7567804cc015fee39daab8ad86268f1310a9250697de466 \
+    --hash=sha256:4e16665048960a0900c702d4a66415956a584919c03361cac9f1df5c5dd7e813
     # via
     #   requests
     #   sentry-sdk
