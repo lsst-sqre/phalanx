@@ -174,10 +174,10 @@ mtqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 2500m
+      cpu: 5
       memory: 10Gi
     requests:
-      cpu: 500m
+      cpu: 1
       memory: 430Mi
 
 mtscheduler:
@@ -267,10 +267,10 @@ ocsqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 2500m
+      cpu: 5
       memory: 10Gi
     requests:
-      cpu: 500m
+      cpu: 1
       memory: 430Mi
 
 ocsscheduler:
