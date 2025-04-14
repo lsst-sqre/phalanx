@@ -3,21 +3,21 @@ kind: Deployment
 metadata:
   name: {{ .Chart.Name }}
   labels:
-    {{- include "exposure-checker.labels" . | nindent 4 }}
+    {{- include "application.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "exposure-checker.selectorLabels" . | nindent 6 }}
+      {{- include "application.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "exposure-checker.selectorLabels" . | nindent 8 }}
+        {{- include "application.selectorLabels" . | nindent 8 }}
     spec:
       volumes:
         - name: "butler-secrets-raw"
           secret:
-            secretName: {{ include "exposure-checker.fullname" . }}
+            secretName: {{ include "application.fullname" . }}
         - name: "butler-secrets"
           emptyDir:
             sizeLimit: 50Mi
@@ -33,24 +33,10 @@ spec:
           - name: {{ $key | quote }}
             value: {{ $value | quote }}
 {{- end }}
-          - name: S3_KEY
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "exposure-checker.fullname" . }}
-                key: S3_KEY
-          - name: S3_SECRET
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "exposure-checker.fullname" . }}
-                key: S3_SECRET
           - name: BUTLER_REPO
             value: {{ .Values.config.butler_repo }}
           - name: BUTLER_COLLECTION
             value: {{ .Values.config.butler_collection }}
-          - name: S3_PROFILE_NAME
-            value: {{ .Values.config.s3_profile_name }}
-          - name: S3_ENDPOINT_URL
-            value: {{ .Values.config.s3_endpoint_url }}
           - name: DB_HOST
             value: {{ .Values.config.db.hostname }}
           - name: DB_USERNAME
@@ -58,15 +44,20 @@ spec:
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ include "exposure-checker.fullname" . }}
+                name: {{ include "application.fullname" . }}
                 key: databasePassword
           - name: DB_DBNAME
             value: {{ .Values.config.db.db_name }}
+          - name: LSST_DB_AUTH_CREDENTIALS
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "application.fullname" . }}
+                key: lsst_db_auth_credentials
         resources:
           {{- toYaml .Values.resources | nindent 10 }}
         {{- if .Values.config.envFromSecretPath }}
         envFrom:
-          - secretRef: {{ include "exposure-checker.fullname" . }}
+          - secretRef: {{ include "application.fullname" . }}
         {{- end }}
         {{- if .Values.config.volume_mounts }}
         volumeMounts:
@@ -74,30 +65,6 @@ spec:
           {{- . | toYaml | nindent 10 }}
           {{- end }}
         {{- end }}
-      initContainers:
-        # To deal with the Postgres file permission issues,
-        # copy the secrets from butler-secrets-raw to butler-secrets.
-        - name: fix-secret-permissions
-          image: "alpine:latest"
-          imagePullPolicy: IfNotPresent
-          command:
-            - "/bin/ash"
-            - "-c"
-            - |
-              cp -RL /secrets-raw/* /opt/lsst/butler/secrets/
-              chown 1000:4085 /opt/lsst/butler/secrets/*
-              chmod 0400 /opt/lsst/butler/secrets/*
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - "all"
-          volumeMounts:
-            - name: "butler-secrets"
-              mountPath: "/opt/lsst/butler/secrets"
-            - name: "butler-secrets-raw"
-              mountPath: "/secrets-raw"
-              readOnly: true
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

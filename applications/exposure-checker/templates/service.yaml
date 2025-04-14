@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: {{ .Chart.Name }}
   labels:
-    {{- include "exposure-checker.labels" . | nindent 4 }}
+    {{- include "application.labels" . | nindent 4 }}
 spec:
   selector:
-    {{- include "exposure-checker.selectorLabels" . | nindent 4 }}
+    {{- include "application.selectorLabels" . | nindent 4 }}
   ports:
   - port: 80
     protocol: TCP
