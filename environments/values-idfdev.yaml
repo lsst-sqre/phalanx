@@ -25,6 +25,7 @@ applications:
   noteburst: true
   nublado: true
   portal: true
+  qserv-kafka: true
   sasquatch: true
   semaphore: true
   sia: true
