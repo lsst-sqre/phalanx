@@ -70,7 +70,8 @@ spec:
                 -Dgcs_bucket={{ .Values.config.gcsBucket }}
                 -Dgcs_bucket_url={{ .Values.config.gcsBucketUrl }}
                 -Dgcs_bucket_type={{ .Values.config.gcsBucketType }}
-                {{- if .Values.config.kafka.auth.enabled }}
+                -Ddatabase={{ .Values.config.database }}
+                 {{- if .Values.config.kafka.auth.enabled }}
                 -Dkafka.username=tap
                 -Dkafka.password=$KAFKA_PASSWORD
                 -Dkafka.bootstrap.server={{ .Values.config.kafka.bootstrapServer }}
