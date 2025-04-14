@@ -1,5 +1,7 @@
 strimzi-kafka:
   users:
+    butlerWriter:
+      enabled: true
     kafdrop:
       enabled: false
   kraft:
@@ -16,3 +18,5 @@ strimzi-kafka:
       partitions: 1
       replicas: 3
       retention: 14400000
+kafdrop:
+  enabled: false

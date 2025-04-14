@@ -10,6 +10,7 @@ applications:
   keda: true
   next-visit-fan-out: true
   next-visit-fan-out-keda: false
+  prompt-kafka: true
   prompt-keda-latiss: false
   prompt-keda-lsstcam: true
   prompt-proto-service-hsc: false
