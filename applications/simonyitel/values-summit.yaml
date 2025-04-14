@@ -238,6 +238,7 @@ mtaos:
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
   env:
+    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
