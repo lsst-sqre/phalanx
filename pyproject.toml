@@ -3,22 +3,21 @@
 name = "phalanx"
 version = "1.0.0"
 description = "Python support code for the Rubin Phalanx platform."
-license = {file = "LICENSE"}
+license = "MIT"
+license-files = ["LICENSE"]
 readme= "README.md"
-keywords = [
-    "rubin",
-    "lsst",
-]
+keywords = ["rubin", "lsst"]
 # https://pypi.org/classifiers/
 classifiers = [
     "Development Status :: 5 - Production/Stable",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Intended Audience :: Developers",
     "Operating System :: POSIX",
+    "Private :: Do Not Upload",
+    "Typing :: Typed",
 ]
 requires-python = ">=3.12"
 dependencies = [
@@ -40,12 +39,10 @@ phalanx = "phalanx.cli:main"
 [project.urls]
 Homepage = "https://phalanx.lsst.io"
 Source = "https://github.com/lsst-sqre/phalanx"
+"Issue Tracker" = "https://github.com/lsst-sqre/phalanx/issues"
 
 [build-system]
-requires = [
-    "setuptools>=61",
-    "setuptools_scm[toml]>=6.2"
-]
+requires = ["setuptools>=61", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [tool.black]
