@@ -1,22 +1,17 @@
 config:
   site_id: summit
-  nfs_path_1: /comcam/repo/LSSTComCam  # Mounted as /volume_1
-  nfs_server_1: nfs-comcam.cp.lsst.org
-  butler_uri_1: /volume_1
-  nfs_path_2: /auxtel/repo/LATISS  # Mounted as /volume_2
-  nfs_server_2: nfs-auxtel.cp.lsst.org
-  butler_uri_2: /volume_2
+  butler_uri_1: s3://rubinobs-butler-latiss/butler.yaml
+  butler_uri_2: s3://rubinobs-butler-lsstcam/butler.yaml
 db:
   host: postgresdb01.cp.lsst.org
-
-# We use the same database user and password defined on the db object
-# in the values.yaml file. This is due to telescope deployments
-# are not using butler access which requires a different user and password.
 env:
+  - name: AWS_SHARED_CREDENTIALS_FILE
+    value: "/var/secrets/butler/aws-credentials.ini"
+  - name: DAF_BUTLER_REPOSITORY_INDEX
+    value: "/project/data-repos.yaml"
+  - name: S3_ENDPOINT_URL
+    value: "https://s3-butler.cp.lsst.org"
+  - name: PGPASSFILE
+    value: "/var/secrets/butler/postgres-credentials.txt"
   - name: PGUSER
-    value: exposurelog
-
-secretEnv:
-  - name: PGPASSWORD
-    secretName: exposurelog
-    secretKey: exposurelog_password
+    value: "oods"
