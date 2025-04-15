@@ -174,7 +174,7 @@ mtqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 5
+      cpu: 6
       memory: 10Gi
     requests:
       cpu: 1
