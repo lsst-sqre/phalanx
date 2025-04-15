@@ -52,10 +52,10 @@ love-commander:
   resources:
     requests:
       cpu: 50m
-      memory: 230Mi
+      memory: 512Mi
     limits:
       cpu: 500m
-      memory: 800Mi
+      memory: 2048Mi
 
 love-manager:
   manager:
