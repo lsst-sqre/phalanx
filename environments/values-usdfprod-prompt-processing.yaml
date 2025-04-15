@@ -9,7 +9,6 @@ applications:
   ingress-nginx: false
   keda: true
   next-visit-fan-out: true
-  next-visit-fan-out-keda: false
   prompt-kafka: true
   prompt-keda-latiss: false
   prompt-keda-lsstcam: true

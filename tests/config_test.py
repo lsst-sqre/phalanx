@@ -14,7 +14,6 @@ from phalanx.models.applications import Project
 
 _ALLOW_DISABLED = {
     "production-tools",
-    "next-visit-fan-out-keda",
     "prompt-proto-service-hsc",
     "prompt-proto-service-hsc-gpu",
     "prompt-proto-service-latiss",
