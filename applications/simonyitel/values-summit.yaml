@@ -560,10 +560,10 @@ mtrotator:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 400m
+      cpu: 1
       memory: 600Mi
     requests:
-      cpu: 40m
+      cpu: 200m
       memory: 150Mi
 
 mtrotator-sim:
