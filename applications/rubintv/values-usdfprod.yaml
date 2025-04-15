@@ -9,7 +9,7 @@ rubintv:
     debug: true
     env:
     - name: S3_ENDPOINT_URL
-      value: &s3E "https://s3dfrgw.slac.stanford.edu"
+      value: &s3E "https://sdfembs3.sdf.slac.stanford.edu"
     - name: RAPID_ANALYSIS_LOCATION
       value: "USDF"
     - name: DDV_DEPLOY_BRANCH
@@ -34,7 +34,7 @@ rubintv:
     script: rubintv_worker.py -a rubintv -p 8080 -l usdf
     env:
     - name: S3_ENDPOINT_URL
-      value: "https://sdfembs3.sdf.slac.stanford.edu"
+      value: *s3E
     - name: DAF_BUTLER_REPOSITORY_INDEX
       value: "s3://rubin-summit-users/data-repos.yaml"
     - name: DEPLOY_BRANCH
