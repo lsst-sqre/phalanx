@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.1.1
+appVersion: 0.1.2
 description: RAG helpers for documentation searches
 name: rubin-rag
 sources:
