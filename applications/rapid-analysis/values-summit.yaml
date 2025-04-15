@@ -355,6 +355,17 @@ scripts:
     limits:
       cpu: 1
       memory: 12G
+- name: LSSTCam/runPsfPlotting.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 2
+      memory: 10G
 ##
 ## LATISS StatefulSets
 ##
