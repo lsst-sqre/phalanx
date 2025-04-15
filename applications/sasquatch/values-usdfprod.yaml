@@ -32,8 +32,7 @@ strimzi-kafka:
     enabled: true
     source:
       bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
-      topicsPattern: "registry-schemas, lsst.sal.MTMount.*, lsst.sal.MTCamera.*, lsst.sal.MTHeaderService.*, lsst.sal.MTOODS.*, lsst.sal.DIMM.*, lsst.sal.DREAM.*, lsst.sal.EAS.*, lsst.sal.ESS.*, lsst.sal.DSM.*, lsst.sal.EPM.*, lsst.sal.HVAC.*, lsst.sal.WeatherForecast.*, lsst.sal.AT.*, lsst.sal.GIS.*, lsst.sal.MTM2.*, lsst.sal.MTVMS.*, lsst.sal.ScriptQueue.*"
-      #", lsst.dm.*, lsst.backpack.*, lsst.ATCamera.*, lsst.CCCamera.*, lsst.MTCamera.*, lsst.obsenv.*, lsst.cp.*"
+      topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*, lsst.backpack.*, lsst.ATCamera.*, lsst.CCCamera.*, lsst.MTCamera.*, lsst.obsenv.*, lsst.cp.*"
     resources:
       requests:
         cpu: 2
