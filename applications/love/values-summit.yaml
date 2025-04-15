@@ -62,7 +62,7 @@ love-manager:
     frontend:
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 0
+        revision: 1
         pullPolicy: Always
       env:
         SERVER_URL: summit-lsp.lsst.codes
@@ -106,7 +106,7 @@ love-manager:
     - name: general
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 0
+        revision: 1
         pullPolicy: Always
       env:
         LOVE_SITE: summit
@@ -169,7 +169,7 @@ love-manager:
     - name: queue
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 0
+        revision: 1
         pullPolicy: Always
       env:
         LOVE_SITE: summit
@@ -232,7 +232,7 @@ love-manager:
     - name: m1m3
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 0
+        revision: 1
         pullPolicy: Always
       env:
         LOVE_SITE: summit
