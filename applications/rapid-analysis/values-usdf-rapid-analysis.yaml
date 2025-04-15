@@ -48,6 +48,21 @@ scripts:
   - sdf-group-rubin
   - sdf-data-rubin
   - sdf-scratch
+- name: LSSTCam/runOneOffExpRecord.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+- name: LSSTCam/runOneOffPostIsr.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+- name: LSSTCam/runOneOffCalexp.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
 - name: LSSTCam/runPlotter.py
   mounts:
   - sdf-group-rubin
