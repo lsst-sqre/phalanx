@@ -1,4 +1,21 @@
 strimzi-kafka:
+  kafka:
+    externalListener:
+      tls:
+        enabled: true
+      bootstrap:
+        annotations:
+          metallb.universe.tf/address-pool: sdf-rubin-ingest
+      brokers:
+        - broker: 0
+          annotations:
+            metallb.universe.tf/address-pool: sdf-rubin-ingest
+        - broker: 1
+          annotations:
+            metallb.universe.tf/address-pool: sdf-rubin-ingest
+        - broker: 2
+          annotations:
+            metallb.universe.tf/address-pool: sdf-rubin-ingest
   mirrormaker2:
     enabled: false
     source:
