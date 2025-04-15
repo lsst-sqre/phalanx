@@ -231,14 +231,16 @@ superusers:
 
 # -- Topic configuration.  Enable for supporting certain instruments.
 topics:
+  butlerWriter:
+    enabled: false
   hsc:
-    # -- Enable hsc topic
+    # -- Enable butler-writer topic
     enabled: false
     # -- Number of partitions on topic
     partitions: 1
     # -- Number of replicas
-    replicas: 1
-    retention: 3600000
+    replicas: 3
+    retention: 14400000
   latiss:
     # -- Enable latiss topic
     enabled: false
@@ -283,3 +285,33 @@ users:
   kafdrop:
     # -- Enable user Kafdrop (deployed by parent Prompt Kafka chart).
     enabled: true
+  replicator:
+    # -- Enable user replicator (used by Mirror Maker 2 and required at both
+    # source and target clusters)
+    enabled: false
+
+mirrormaker2:
+  # -- Enable replication in the target (passive) cluster
+  enabled: false
+
+  # -- Number of Mirror Maker replicas to run
+  replicas: 3
+
+  source:
+    # -- Source (active) cluster to replicate from
+    # @default -- None, must be set if enabled
+    bootstrapServer: ""
+
+    # -- Topic replication from the source cluster defined as a
+    # comma-separated list or regular expression pattern
+    topicsPattern: "registry-schemas, lsst.sal.*"
+
+  replication:
+    policy:
+      # -- Convention used to rename topics when the DefaultReplicationPolicy
+      # replication policy is used. Default is "" when the
+      # IdentityReplicationPolicy replication policy is used.
+      separator: ""
+
+      # -- Replication policy.
+      class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"

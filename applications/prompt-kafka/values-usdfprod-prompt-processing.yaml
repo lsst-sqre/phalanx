@@ -1,5 +1,7 @@
 strimzi-kafka:
   users:
+    replicator:
+      enabled: true
     butlerWriter:
       enabled: true
     kafdrop:
@@ -18,5 +20,17 @@ strimzi-kafka:
       partitions: 1
       replicas: 3
       retention: 14400000
+  mirrormaker2:
+    enabled: true
+    source:
+      bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
+      topicsPattern: "registry-schemas, lsst.sal.ScriptQueue.logevent_nextVisit"
+    resources:
+      requests:
+        cpu: 2
+        memory: 4Gi
+      limits:
+        cpu: 4
+        memory: 8Gi
 kafdrop:
   enabled: false

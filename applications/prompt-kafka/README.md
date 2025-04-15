@@ -82,16 +82,22 @@ Kafka environment for Prompt Processing
 | strimzi-kafka.kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
 | strimzi-kafka.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
 | strimzi-kafka.kraft.enabled | bool | `false` | Enable KRaft mode for Kafka |
+| strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster |
+| strimzi-kafka.mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
+| strimzi-kafka.mirrormaker2.replication.policy.class | string | `"org.apache.kafka.connect.mirror.IdentityReplicationPolicy"` | Replication policy. |
+| strimzi-kafka.mirrormaker2.replication.policy.separator | string | `""` | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
+| strimzi-kafka.mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
+| strimzi-kafka.mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
 | strimzi-kafka.registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | strimzi-kafka.registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | strimzi-kafka.registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
 | strimzi-kafka.registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | strimzi-kafka.registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
-| strimzi-kafka.topics | object | `{"hsc":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"latiss":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"lsstcam":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"lsstcomcam":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"lsstcomcamsim":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000}}` | Topic configuration.  Enable for supporting certain instruments. |
-| strimzi-kafka.topics.hsc.enabled | bool | `false` | Enable hsc topic |
+| strimzi-kafka.topics | object | `{"butlerWriter":{"enabled":false},"hsc":{"enabled":false,"partitions":1,"replicas":3,"retention":14400000},"latiss":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"lsstcam":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"lsstcomcam":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"lsstcomcamsim":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000}}` | Topic configuration.  Enable for supporting certain instruments. |
+| strimzi-kafka.topics.hsc.enabled | bool | `false` | Enable butler-writer topic |
 | strimzi-kafka.topics.hsc.partitions | int | `1` | Number of partitions on topic |
-| strimzi-kafka.topics.hsc.replicas | int | `1` | Number of replicas |
+| strimzi-kafka.topics.hsc.replicas | int | `3` | Number of replicas |
 | strimzi-kafka.topics.latiss.enabled | bool | `false` | Enable latiss topic |
 | strimzi-kafka.topics.latiss.partitions | int | `1` | Number of partitions on topic |
 | strimzi-kafka.topics.latiss.replicas | int | `1` | Number of replicas |
@@ -110,3 +116,4 @@ Kafka environment for Prompt Processing
 | strimzi-kafka.topics.lsstcomcamsim.retention | int | `3600000` | Retention time of events in milliseconds |
 | strimzi-kafka.users.butlerWriter.enabled | bool | `true` | Enable user butler-writer (deployed by parent Prompt Kafka chart). |
 | strimzi-kafka.users.kafdrop.enabled | bool | `true` | Enable user Kafdrop (deployed by parent Prompt Kafka chart). |
+| strimzi-kafka.users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
