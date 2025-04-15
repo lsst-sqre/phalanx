@@ -57,16 +57,26 @@ spec:
               value: "LSSTCam"
             - name: "LOG_CONFIG"
               value: "{{ .Values.consumekafka.logConfig }}"
-            - name: "AWS_ACCESS_KEY_ID"
+            - name: "LFA_AWS_ACCESS_KEY_ID"
               valueFrom:
                 secretKeyRef:
                   name: obsloctap
                   key: "lfa-key"
-            - name: "AWS_SECRET_ACCESS_KEY"
+            - name: "AWS_ACCESS_KEY_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "default-key"
+            - name: "LFA_AWS_SECRET_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:
                   name: obsloctap
                   key: "lfa-password"
+            - name: "AWS_SECRET_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "default-password"
             - name: "BUCKET_PREFIX"
               value: "{{ .Values.lfa.bucket_prefix }}"
             - name: "S3_ENDPOINT_URL"
