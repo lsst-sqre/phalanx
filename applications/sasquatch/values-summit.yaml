@@ -428,6 +428,13 @@ telegraf:
         [ "lsst.sal.MTM1M3" ]
       debug: true
       offset: newest
+      resources:
+        limits:
+          cpu: "5"
+          memory: "8Gi"
+        requests:
+          cpu: "5"
+          memory: "8Gi"
     m2:
       enabled: true
       database: "efd"
