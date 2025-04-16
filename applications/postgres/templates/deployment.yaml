@@ -121,6 +121,17 @@ spec:
                   name: "postgres"
                   key: "cmservice_password"
             {{- end }}
+            {{- with .Values.exposure_checker_db }}
+            - name: "VRO_DB_EXPOSURECHECKER_USER"
+              value: {{ .user | quote }}
+            - name: "VRO_DB_EXPOSURECHECKER_DB"
+              value: {{ .db | quote }}
+            - name: "VRO_DB_EXPOSURECHECKER_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "exposure_checker_password"
+            {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           ports:

@@ -18,6 +18,7 @@
 | applications.control-system-test | bool | `false` | Enable the control-system-test application |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
 | applications.envsys | bool | `false` | Enable the envsys control system application |
+| applications.exposure-checker | bool | `false` | Enable the exposure-checker application |
 | applications.exposurelog | bool | `false` | Enable the exposurelog application |
 | applications.fastapi-bootcamp | bool | `false` | Enable the fastapi-bootcamp application |
 | applications.filestore-backup | bool | `false` | Enable the filestore-backup application |

@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "application.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "application.selectorLabels" . | nindent 8 }}
+    spec:
+      volumes:
+        - name: "butler-secrets-raw"
+          secret:
+            secretName: {{ include "application.fullname" . }}
+        - name: "butler-secrets"
+          emptyDir:
+            sizeLimit: 50Mi
+        {{- with .Values.config.volumes }}
+        {{- . | toYaml | nindent 8 }}
+        {{- end }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion}}
+        imagePullPolicy: Always
+        env:
+{{- range $key, $value := .Values.environment }}
+          - name: {{ $key | quote }}
+            value: {{ $value | quote }}
+{{- end }}
+          - name: BUTLER_REPO
+            value: {{ .Values.config.butler_repo }}
+          - name: BUTLER_COLLECTION
+            value: {{ .Values.config.butler_collection }}
+          - name: DB_HOST
+            value: {{ .Values.config.db.hostname }}
+          - name: DB_USERNAME
+            value: {{ .Values.config.db.username }}
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "application.fullname" . }}
+                key: databasePassword
+          - name: DB_DBNAME
+            value: {{ .Values.config.db.db_name }}
+          - name: LSST_DB_AUTH_CREDENTIALS
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "application.fullname" . }}
+                key: lsst_db_auth_credentials
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+        {{- if .Values.config.envFromSecretPath }}
+        envFrom:
+          - secretRef: {{ include "application.fullname" . }}
+        {{- end }}
+        {{- if .Values.config.volume_mounts }}
+        volumeMounts:
+          {{- with .Values.config.volume_mounts }}
+          {{- . | toYaml | nindent 10 }}
+          {{- end }}
+        {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 4085
