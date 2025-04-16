@@ -13,7 +13,7 @@ replicaCount: 1
 
 image:
   # -- exposurelog image to use
-  repository: lsstsqre/exposurelog
+  repository: ghcr.io/lsst-ts/exposurelog
   # -- Pull policy for the exposurelog image
   pullPolicy: Always
   # -- Tag of exposure image to use

@@ -38,7 +38,7 @@ Log messages related to an exposure
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"Always"` | Pull policy for the exposurelog image |
-| image.repository | string | `"lsstsqre/exposurelog"` | exposurelog image to use |
+| image.repository | string | `"ghcr.io/lsst-ts/exposurelog"` | exposurelog image to use |
 | image.tag | string | The appVersion of the chart | Tag of exposure image to use |
 | ingress.auth.enabled | bool | `false` | Whether to require Gafaelfawr authentication for access |
 | nameOverride | string | `""` | Override the base name for resources |
