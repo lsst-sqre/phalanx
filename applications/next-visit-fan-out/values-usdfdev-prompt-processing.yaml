@@ -6,7 +6,7 @@ knative:
 
 kafka:
   schemaRegistryUrl: http://10.103.126.51:8081
-  sasquatchAddress: 10.100.226.209:9094
+  sasquatchAddress: 172.24.10.24:9094
   consumerGroup: test-group-3
   nextVisitTopic: test.next-visit-job
   # Dev processes very old images, set to ~20 years
@@ -16,6 +16,6 @@ image:
   repository: ghcr.io/lsst-dm/next_visit_fan_out
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 2.7.0
+  tag: 2.7.1
 
 instruments: "LATISS LSSTCam LSSTCam-imSim LSSTComCam LSSTComCamSim HSC"
