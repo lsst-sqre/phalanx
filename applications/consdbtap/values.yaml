@@ -15,7 +15,7 @@ cadc-tap:
 
     pg:
       # -- Postgres hostname:port to connect to
-      host: "usdf-summitdb.slac.stanford.edu:5432"
+      host: "usdf-summitdb-replica.slac.stanford.edu"
 
       # -- Postgres database to connect to
       database: "exposurelog"
