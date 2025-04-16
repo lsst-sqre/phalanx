@@ -9,11 +9,11 @@ argo-cd:
         value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server"
   configs:
     cm:
-      url: "https://usdf-rapid-analysis.slac.stanford.edu/argo-cd"
+      url: "https://usdf-rapid-analysis-dev.slac.stanford.edu/argo-cd"
       oidc.config: |
         name: SLAC
         issuer: https://dex.slac.stanford.edu
-        clientID: vcluster--usdf-rapid-analysis
+        clientID: vcluster--usdf-rapid-analysis-dev
         clientSecret: $dex.clientSecret
         # Optional set of OIDC scopes to request. If omitted, defaults to:
         # ["openid", "profile", "email", "groups"]
@@ -34,4 +34,4 @@ argo-cd:
 
   server:
     ingress:
-      hostname: "usdf-rapid-analysis.slac.stanford.edu"
+      hostname: "usdf-rapid-analysis-dev.slac.stanford.edu"
