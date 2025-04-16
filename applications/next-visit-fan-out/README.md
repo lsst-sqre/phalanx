@@ -20,7 +20,7 @@ Poll next visit events from Kafka, duplicate them, and send them to all applicat
 | kafka.expiration | float | `3600` | Maximum message age to consider, in seconds. |
 | kafka.offset | string | `"latest"` |  |
 | kafka.saslMechamism | string | `"SCRAM-SHA-512"` |  |
-| kafka.securityProtocol | string | `"SASL_PLAINTEXT"` |  |
+| kafka.securityProtocol | string | `"SASL_SSL"` |  |
 | keda.redisHealthCheckInterval | int | `3` | Redis health check interval in seconds. |
 | keda.redisHost | string | See `values.yaml`. | Redis cluster host. |
 | keda.redisRetryCount | int | `3` | Redis max retry count |
