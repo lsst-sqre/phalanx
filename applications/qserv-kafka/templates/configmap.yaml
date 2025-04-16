@@ -13,3 +13,4 @@ data:
   QSERV_KAFKA_QSERV_DATABASE_URL: {{ .Values.config.qservDatabaseUrl | quote }}
   QSERV_KAFKA_QSERV_POLL_INTERVAL: {{ .Values.config.qservPollInterval | quote }}
   QSERV_KAFKA_QSERV_REST_URL: {{ .Values.config.qservRestUrl | quote }}
+  QSERV_KAFKA_REWRITE_BASE_URL: {{ .Values.global.baseUrl | quote }}
