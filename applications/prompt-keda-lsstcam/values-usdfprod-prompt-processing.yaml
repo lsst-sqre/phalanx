@@ -23,16 +23,18 @@ prompt-keda:
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         - survey: BLOCK-T427  # Daytime checkout
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
-        # First night observations
-        - survey: BLOCK-T434  # First Photon
-          pipelines:
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml
         - survey: BLOCK-351  # Bright star test
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
         - survey: BLOCK-T449  # Calibs at 30-second cadence
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
         - survey: BLOCK-T375  # Darks
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
+        - survey: BLOCK-T451  # Initial alignment
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
+        # Hexapod tests
+        - survey: BLOCK-T413
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
+        - survey: BLOCK-T414
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
         # Manual observations during SV blocks?
         - survey: BLOCK-T407
