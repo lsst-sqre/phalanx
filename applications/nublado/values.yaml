@@ -725,7 +725,7 @@ cronjob:
   # -- Affinity rules for the tutorials cronjob.
   affinity: {}
   # -- Schedule for the tutorials cronjob.
-  schedule: "23 * * * *"
+  schedule: "43 * * * *"
 
 
 # The following will be set by parameters injected by Argo CD and should not

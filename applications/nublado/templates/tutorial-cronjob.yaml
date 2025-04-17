@@ -27,7 +27,8 @@ spec:
             {{- with .Values.cronjob.resources }}
             resources:
 {{ toYaml . | indent 14 }}
-          {{- end }}
+            {{- end }}
+            command: [ "/entrypoint.sh" ]
             env:
             - name: "GIT_SRC"
               value: {{ .Values.cronjob.gitSource | quote }}
@@ -38,15 +39,15 @@ spec:
             volumeMounts:
             - mountPath: {{ .Values.cronjob.targetVolume.mountPath }}
               name: target
-          securityContext:
-            allowPrivilegeEscalation: false
-            runAsNonRoot: true
-            runAsUser: 1000
-            runAsGroup: 1000
-            capabilities:
-              drop:
-              - all
-              readOnlyRootFilesystem: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+              capabilities:
+                drop:
+                - all
+                readOnlyRootFilesystem: true
         volumes:
           - name: target
             nfs:

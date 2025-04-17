@@ -100,7 +100,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cronjob.image.repository | string | `"ghcr.io/lsst-sqre/repo-cloner"` | Repository cloner image to use |
 | cronjob.image.tag | string | The appVersion of the chart | Tag of Nublado controller image to use |
 | cronjob.resources | object | See `values.yaml` | Resource limits and requests for the tutorials cronjob |
-| cronjob.schedule | string | `"23 * * * *"` | Schedule for the tutorials cronjob. |
+| cronjob.schedule | string | `"43 * * * *"` | Schedule for the tutorials cronjob. |
 | cronjob.targetVolume | object | `{"nfs":{"path":"/project-share","server":"10.234.16.4"}}` | Repository volume definition |
 | cronjob.targetVolumePath | string | `"/project"` | Where repository volume should be mounted |
 | cronjob.tolerations | list | `[]` | Tolerations for the tutorials cronjob. |
