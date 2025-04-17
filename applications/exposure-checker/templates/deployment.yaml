@@ -15,12 +15,9 @@ spec:
         {{- include "application.selectorLabels" . | nindent 8 }}
     spec:
       volumes:
-        - name: "butler-secrets-raw"
+        - name: "butler-secrets"
           secret:
             secretName: {{ include "application.fullname" . }}
-        - name: "butler-secrets"
-          emptyDir:
-            sizeLimit: 50Mi
         {{- with .Values.config.volumes }}
         {{- . | toYaml | nindent 8 }}
         {{- end }}
@@ -59,8 +56,10 @@ spec:
         envFrom:
           - secretRef: {{ include "application.fullname" . }}
         {{- end }}
-        {{- if .Values.config.volume_mounts }}
         volumeMounts:
+          - name: "butler-secrets"
+            mountPath: "/opt/lsst/butler/secrets"
+        {{- if .Values.config.volume_mounts }}
           {{- with .Values.config.volume_mounts }}
           {{- . | toYaml | nindent 10 }}
           {{- end }}
