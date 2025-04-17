@@ -28,7 +28,7 @@ controller:
         "edu.stanford.slac.sdf.project/usdf-embargo": "true"
       homedirSchema: "initialThenUsername"
       nodeSelector:
-        node-role.kubernetes.io/rsp-notebook: ""
+        node-role.kubernetes.io/rsp-notebook: "true"
       nss:
         # Add rubin_users group (there is not yet a simpler way to do this).
         baseGroup: |
