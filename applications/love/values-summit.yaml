@@ -436,8 +436,8 @@ love-nginx:
           "urlStatus": "https://summit-lsp.lsst.codes/influxdb/health"
         },
         "sal": {
-            "urlStatus": "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
-            "expectedBrokerList": [6, 7, 8]
+          "urlStatus": "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [6, 7, 8]
         }
       }
   - name: all-alarms
@@ -457,8 +457,8 @@ love-nginx:
           "urlStatus": "https://summit-lsp.lsst.codes/influxdb/health"
         },
         "sal": {
-            "urlStatus": "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
-            "expectedBrokerList": [6, 7, 8]
+          "urlStatus": "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [6, 7, 8]
         }
       }
   - name: no-alarms
@@ -478,8 +478,8 @@ love-nginx:
           "urlStatus": "https://summit-lsp.lsst.codes/influxdb/health"
         },
         "sal": {
-            "urlStatus": "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
-            "expectedBrokerList": [6, 7, 8]
+          "urlStatus": "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [6, 7, 8]
         }
       }
 
