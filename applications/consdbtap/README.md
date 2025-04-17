@@ -13,7 +13,7 @@ IVOA TAP service for the Consolidated Database (ConsDB)
 |-----|------|---------|-------------|
 | cadc-tap.config.backend | string | `"pg"` | What type of backend? |
 | cadc-tap.config.pg.database | string | `"exposurelog"` | Postgres database to connect to |
-| cadc-tap.config.pg.host | string | `"usdf-summitdb.slac.stanford.edu:5432"` | Postgres hostname:port to connect to |
+| cadc-tap.config.pg.host | string | `"usdf-summitdb-replica.slac.stanford.edu"` | Postgres hostname:port to connect to |
 | cadc-tap.config.pg.username | string | `"usdf"` | Postgres username to use to connect |
 | cadc-tap.config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
 | cadc-tap.config.serviceName | string | `"consdbtap"` | Name of the service from Gafaelfawr's perspective |
