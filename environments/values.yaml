@@ -139,9 +139,6 @@ applications:
   # -- Enable the next-visit-fan-out application
   next-visit-fan-out: false
 
-  # -- Enable the next-visit-fan-out-keda application
-  next-visit-fan-out-keda: false
-
   # -- Enable the noteburst application (required by times-square)
   noteburst: false
 
