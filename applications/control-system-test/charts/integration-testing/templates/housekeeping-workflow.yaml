@@ -41,6 +41,8 @@ spec:
             value: "-A Test_Report_AuxTel_Housekeeping.list"
           - name: jobname
             value: auxtel-housekeeping
+          - name: reportname
+            value: athousekeeping.xml
       - name: maintel-housekeeping
         depends: call-cleanup-reports
         templateRef:
@@ -52,8 +54,5 @@ spec:
             value: "-A Test_Report_MainTel_Housekeeping.list"
           - name: jobname
             value: maintel-housekeeping
-      - name: call-save-reports
-        depends: bigcam-calibrations && enable-atcs
-        templateRef:
-          name: save-reports-workflow
-          template: save-reports
+          - name: reportname
+            value: mthousekeeping.xml
