@@ -46,7 +46,7 @@ spec:
   - sourceCluster: "source"
     targetCluster: "target"
     sourceConnector:
-      tasksMax: 10
+      tasksMax: 32
       config:
         replication.factor: 3
         offset-syncs.topic.replication.factor: 3
@@ -86,7 +86,7 @@ spec:
         # Frequency of checks for new consumer groups.
         refresh.groups.interval.seconds: 300
         # Enables synchronization of consumer group offsets to the target cluster.
-        sync.group.offsets.enabled: true
+        sync.group.offsets.enabled: false
         # The frequency to sync group offsets.
         sync.group.offsets.interval.seconds: 60
         # The frequency of checks for offset tracking.
