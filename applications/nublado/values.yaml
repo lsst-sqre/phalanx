@@ -675,6 +675,60 @@ secrets:
   # user's lab.
   templateSecrets: true
 
+# If we're installing tutorials at a given site, this cronjob controls
+# their refresh.
+cronjob:
+  # -- Enable tutorials refresh?
+  enabled: false
+
+  # -- Source for repository to clone
+  gitSource: "https://github.com/lsst/tutorial-notebooks"
+
+  # -- Target where repository should land
+  gitTarget: "/project/cst_repos/tutorial-notebooks"
+
+  # -- Branch of repository to clone
+  gitBranch: "main"
+
+  # -- Where repository volume should be mounted
+  targetVolumePath: "/project"
+
+  # -- Repository volume definition
+  # @default -- See `values.yaml`
+  targetVolume:
+    nfs:
+      path: /project-share
+      server: 10.234.16.4  #  NetApp servers always seem to be here.
+
+  image:
+    # -- Repository cloner image to use
+    repository: "ghcr.io/lsst-sqre/repo-cloner"
+
+    # -- Pull policy for the controller image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of Nublado controller image to use
+    # @default -- The appVersion of the chart
+    tag: null
+
+  # -- Resource limits and requests for the tutorials cronjob
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "50m"
+      memory: "50Mi"
+
+  # -- Tolerations for the tutorials cronjob.
+  tolerations: []
+  # -- Affinity rules for the tutorials cronjob.
+  affinity: {}
+  # -- Schedule for the tutorials cronjob.
+  schedule: "43 * * * *"
+
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:

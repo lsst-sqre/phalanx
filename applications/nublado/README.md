@@ -91,6 +91,19 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.resources | object | See `values.yaml` | Resource limits and requests for the Nublado controller |
 | controller.slackAlerts | bool | `false` | Whether to enable Slack alerts. If set to true, `slack_webhook` must be set in the corresponding Nublado Vault secret. |
 | controller.tolerations | list | `[]` | Tolerations for the Nublado controller |
+| cronjob.affinity | object | `{}` | Affinity rules for the tutorials cronjob. |
+| cronjob.enabled | bool | `false` | Enable tutorials refresh? |
+| cronjob.gitBranch | string | `"main"` | Branch of repository to clone |
+| cronjob.gitSource | string | `"https://github.com/lsst/tutorial-notebooks"` | Source for repository to clone |
+| cronjob.gitTarget | string | `"/project/cst_repos/tutorial-notebooks"` | Target where repository should land |
+| cronjob.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the controller image |
+| cronjob.image.repository | string | `"ghcr.io/lsst-sqre/repo-cloner"` | Repository cloner image to use |
+| cronjob.image.tag | string | The appVersion of the chart | Tag of Nublado controller image to use |
+| cronjob.resources | object | See `values.yaml` | Resource limits and requests for the tutorials cronjob |
+| cronjob.schedule | string | `"43 * * * *"` | Schedule for the tutorials cronjob. |
+| cronjob.targetVolume | object | See `values.yaml` | Repository volume definition |
+| cronjob.targetVolumePath | string | `"/project"` | Where repository volume should be mounted |
+| cronjob.tolerations | list | `[]` | Tolerations for the tutorials cronjob. |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
