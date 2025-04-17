@@ -1,0 +1,16 @@
+apiVersion: v2
+appVersion: "tickets-DM-49938"
+description: Documentation links for VO.
+name: hoverdrive
+sources:
+  - https://github.com/lsst-sqre/hoverdrive
+type: application
+version: 1.0.0
+maintainers:
+  - name: jonathansick
+    url: https://github.com/jonathansick
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-086"
+      title: "Deep linking to data documentation with IVOA DataLink"
+      url: "https://sqr-086.lsst.io/"

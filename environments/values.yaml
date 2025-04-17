@@ -91,6 +91,9 @@ applications:
   # most other applications use `GafaelfawrIngress`
   gafaelfawr: true
 
+  # -- Enable the hoverdrive application
+  hoverdrive: false
+
   # -- Enable the qserv-kafka application
   qserv-kafka: false
 
