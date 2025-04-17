@@ -7,7 +7,7 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations |
-| enabled | bool | `true` | Whether to enable Kafka Connect Manager |
+| enabled | bool | `false` | Whether to enable Kafka Connect Manager |
 | env.kafkaBrokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker URL |
 | env.kafkaConnectUrl | string | `"http://sasquatch-connect-api.sasquatch:8083"` | Kafka connnect URL |
 | env.kafkaUsername | string | `"kafka-connect-manager"` | Username for SASL authentication |
