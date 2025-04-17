@@ -4,7 +4,7 @@ image:
 environment:
   AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"
   S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
-  S3_PROFILE_NAME: "rubin-rubintv-data-summit"
+  S3_PROFILE_NAME: ""
   LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
   LSST_DISABLE_BUCKET_VALIDATION: "1"
 
