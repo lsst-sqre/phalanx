@@ -28,6 +28,16 @@ spec:
             resources:
 {{ toYaml . | indent 14 }}
           {{- end }}
+            env:
+            - name: "GIT_SRC"
+              value: {{ .Values.cronjob.gitSource | quote }}
+            - name: "GIT_TARGET"
+              value: {{ .Values.cronjob.gitTarget | quote }}
+            - name: "GIT_BRANCH"
+              value: {{ .Values.cronjob.gitBranch | quote }}
+            volumeMounts:
+            - mountPath: {{ .Values.cronjob.targetVolume.mountPath }}
+              name: target
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
@@ -37,16 +47,6 @@ spec:
               drop:
               - all
               readOnlyRootFilesystem: true
-          env:
-          - name: "GIT_SRC"
-            value: {{ .Values.cronjob.gitSource | quote }}
-          - name: "GIT_TARGET"
-            value: {{ .Values.cronjob.gitTarget | quote }}
-          - name: "GIT_BRANCH"
-            value: {{ .Values.cronjob.gitBranch | quote }}
-          volumeMounts:
-          - mountPath: {{ .Values.cronjob.targetVolume.mountPath }}
-            name: target
         volumes:
           - name: target
             nfs:
