@@ -13,6 +13,22 @@ spec:
   selector:
     matchLabels:
       {{- include "noteburst.selectorLabels" . | nindent 6 }}
+  {{- if gt (int .Values.config.worker.workerCount) 1 }}
+  # If we have more than one worker, use a rolling update strategy to
+  # ensure only one worker starts up at a time.
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  {{- else }}
+  # With one worker, start one worker before stopping the old one.
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  {{- end }}
   template:
     metadata:
       annotations:
