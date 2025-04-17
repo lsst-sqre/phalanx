@@ -31,13 +31,13 @@ spec:
             command: [ "/entrypoint.sh" ]
             securityContext:
               allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
               runAsNonRoot: true
               runAsUser: 1000
               runAsGroup: 1000
               capabilities:
                 drop:
                 - all
-              readOnlyRootFilesystem: true
             env:
             - name: "GIT_SRC"
               value: {{ .Values.cronjob.gitSource | quote }}
