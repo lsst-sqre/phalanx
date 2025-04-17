@@ -178,7 +178,7 @@ telegraf:
     m1m3:
       enabled: true
       repair: false
-      metric_batch_size: 2500
+      metric_batch_size: 2000
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
