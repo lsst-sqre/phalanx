@@ -14,6 +14,7 @@ Argo CD project: ``rsp``
    datalinker/index
    filestore-backup/index
    hips/index
+   hoverdrive/index
    jira-data-proxy/index
    livetap/index
    noteburst/index

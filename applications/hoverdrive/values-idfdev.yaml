@@ -1,0 +1,7 @@
+image:
+  pullPolicy: "Always"
+
+config:
+  logLevel: "DEBUG"
+  # Use the Dev Ook for Hoverdrive development to test the two together
+  ookApiUrl: "https://roundtable-dev.lsst.cloud/ook"

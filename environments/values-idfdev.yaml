@@ -20,6 +20,7 @@ applications:
   flink: true
   ghostwriter: true
   hips: true
+  hoverdrive: true
   jira-data-proxy: true
   mobu: true
   noteburst: true
