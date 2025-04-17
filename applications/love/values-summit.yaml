@@ -423,27 +423,6 @@ love-nginx:
     config: |
       {
         "alarms": {
-          "minSeveritySound": "serious",
-          "minSeverityNotification": "warning"
-        },
-        "camFeeds": {
-          "starTrackerA": "/love/startrackera",
-          "starTrackerB": "/love/startrackerb",
-          "starTrackerC": "/love/startrackerc"
-        },
-        "efd": {
-          "defaultEfdInstance": "summit_efd",
-          "urlStatus": "https://summit-lsp.lsst.codes/influxdb/health"
-        },
-        "sal": {
-            "urlStatus": "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
-            "expectedBrokerList": [6, 7, 8]
-        }
-      }
-  - name: all-alarms
-    config: |
-      {
-        "alarms": {
           "minSeveritySound": "warning",
           "minSeverityNotification": "warning"
         },
@@ -457,16 +436,16 @@ love-nginx:
           "urlStatus": "https://summit-lsp.lsst.codes/influxdb/health"
         },
         "sal": {
-            "urlStatus": "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
-            "expectedBrokerList": [6, 7, 8]
+          "urlStatus": "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [6, 7, 8]
         }
       }
-  - name: no-alarms
+  - name: serious-alarms
     config: |
       {
         "alarms": {
-          "minSeveritySound": "mute",
-          "minSeverityNotification": "mute"
+          "minSeveritySound": "serious",
+          "minSeverityNotification": "warning"
         },
         "camFeeds": {
           "starTrackerA": "/love/startrackera",
@@ -478,8 +457,29 @@ love-nginx:
           "urlStatus": "https://summit-lsp.lsst.codes/influxdb/health"
         },
         "sal": {
-            "urlStatus": "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
-            "expectedBrokerList": [6, 7, 8]
+          "urlStatus": "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [6, 7, 8]
+        }
+      }
+  - name: no-alarms
+    config: |
+      {
+        "alarms": {
+          "minSeveritySound": "mute",
+          "minSeverityNotification": "warning"
+        },
+        "camFeeds": {
+          "starTrackerA": "/love/startrackera",
+          "starTrackerB": "/love/startrackerb",
+          "starTrackerC": "/love/startrackerc"
+        },
+        "efd": {
+          "defaultEfdInstance": "summit_efd",
+          "urlStatus": "https://summit-lsp.lsst.codes/influxdb/health"
+        },
+        "sal": {
+          "urlStatus": "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [6, 7, 8]
         }
       }
 
