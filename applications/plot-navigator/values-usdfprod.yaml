@@ -1,6 +1,6 @@
 environment:
   BASE_URL: "/plot-navigator"
-  REPO_URLS: '{"embargo": "http://internal-butler/api/butler/repo/embargo", "/repo/main": "http://internal-butler/api/butler/repo/main", "/repo/dc2": "http://internal-butler/api/butler/repo/dc2"}'
+  REPO_URLS: '{"embargo": "unused", "/repo/main": "unused", "/repo/dc2": "unused", "/repo/dp1": "unused"}'
   BUCKET_NAME: "rubin-plot-navigator"
   BUCKET_URL: "https://s3dfrgw.slac.stanford.edu/"
 
@@ -40,7 +40,9 @@ productionTools:
     LSST_DISABLE_BUCKET_VALIDATION: "1"
     REDIS_HOST: "plot-navigator-redis"
     REDIS_PORT: "6379"
-    BUTLER_REPO_NAMES: "embargo,/repo/embargo,/repo/main,/repo/dc2"
+    BUTLER_REPO_NAMES: "embargo,/repo/embargo,/repo/main,/repo/dc2,/repo/dp1"
+    AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
+    AWS_RESPONSE_CHECKSUM_VALIDATION: "WHEN_REQUIRED"
   persistentVolumeClaims:
     - name: sdf-group-rubin
       storageClassName: sdf-group-rubin
