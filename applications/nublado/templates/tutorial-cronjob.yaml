@@ -48,7 +48,7 @@ spec:
                 drop:
                 - all
                 readOnlyRootFilesystem: true
-        volumes:
+          volumes:
           - name: target
             nfs:
               server: {{ .Values.cronjob.targetVolume.server }}
