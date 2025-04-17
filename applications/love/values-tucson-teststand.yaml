@@ -331,7 +331,7 @@ love-nginx:
     config: |
       {
         "alarms": {
-          "minSeveritySound": "serious",
+          "minSeveritySound": "warning",
           "minSeverityNotification": "warning"
         },
         "camFeeds": {
@@ -346,11 +346,11 @@ love-nginx:
           "expectedBrokerList": [0, 1, 2]
         }
       }
-  - name: all-alarms
+  - name: serious-alarms
     config: |
       {
         "alarms": {
-          "minSeveritySound": "warning",
+          "minSeveritySound": "serious",
           "minSeverityNotification": "warning"
         },
         "camFeeds": {
@@ -370,7 +370,7 @@ love-nginx:
       {
         "alarms": {
           "minSeveritySound": "mute",
-          "minSeverityNotification": "mute"
+          "minSeverityNotification": "warning"
         },
         "camFeeds": {
           "simcam": "/love/simcam"
