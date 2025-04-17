@@ -25,10 +25,6 @@ prompt-keda:
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
         - survey: BLOCK-351  # Bright star test
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
-        - survey: BLOCK-T449  # Calibs at 30-second cadence
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
-        - survey: BLOCK-T375  # Darks
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
         - survey: BLOCK-T451  # Initial alignment
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
         # Hexapod tests
