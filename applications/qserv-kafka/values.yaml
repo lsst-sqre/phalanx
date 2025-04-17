@@ -2,17 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-image:
-  # -- Image to use in the qserv-kafka deployment
-  repository: "ghcr.io/lsst-sqre/qserv-kafka"
-
-  # -- Pull policy for the qserv-kafka image
-  pullPolicy: "IfNotPresent"
-
-  # -- Tag of image to use
-  # @default -- The appVersion of the chart
-  tag: null
-
 config:
   # -- Kafka consumer group ID
   consumerGroupId: "qserv"
@@ -42,6 +31,17 @@ config:
   # @default -- None, must be set
   qservRestUrl: null
 
+image:
+  # -- Image to use in the qserv-kafka deployment
+  repository: "ghcr.io/lsst-sqre/qserv-kafka"
+
+  # -- Pull policy for the qserv-kafka image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
@@ -61,6 +61,44 @@ resources: {}
 
 # -- Tolerations for the qserv-kafka deployment pod
 tolerations: []
+
+redis:
+  config:
+    # -- Name of secret containing Redis password
+    secretName: "qserv-kafka"
+
+    # -- Key inside secret from which to get the Redis password (do not
+    # change)
+    secretKey: "redis-password"
+
+  persistence:
+    # -- Whether to persist Redis storage. Setting this to false will use
+    # `emptyDir` and lose track of all queries on restart. Only use this for a
+    # test deployment.
+    enabled: true
+
+    # -- Access mode of storage to request
+    accessMode: "ReadWriteOnce"
+
+    # -- Amount of persistent storage to request
+    size: "100Mi"
+
+    # -- Class of storage to request
+    storageClass: null
+
+    # -- Use an existing PVC, not dynamic provisioning. If this is set, the
+    # size, storageClass, and accessMode settings are ignored.
+    volumeClaimName: null
+
+  # -- Resource limits and requests for the Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "0.5"
+      memory: "10Mi"
+    requests:
+      cpu: "10m"
+      memory: "5Mi"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
