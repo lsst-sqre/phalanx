@@ -57,8 +57,10 @@ prompt-keda:
         - {survey: "BLOCK-T454", pipelines: []}
         # Miscellaneous scripts, not always images
         - {survey: "", pipelines: []}
-        # Ignore unknown events
-        - {pipelines: []}
+        # Process unknown events by default
+        # Helm REALLY doesn't like inline style for this entry
+        - pipelines:
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml
       preprocessing: |-
         # TODO: run if and only if ApPipe is a possibility
         # - survey: BLOCK-365
