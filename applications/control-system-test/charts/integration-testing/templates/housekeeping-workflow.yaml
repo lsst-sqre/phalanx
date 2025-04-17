@@ -1,0 +1,58 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: housekeeping-workflow
+  labels:
+    workflows.argoproj.io/type: "integration-test"
+    argocd.argoproj.io/instance: integration-testing
+spec:
+  serviceAccountName: {{ .Values.serviceAccount }}
+  artifactRepositoryRef:
+    configMap: integration-test-controller-configmap
+    key: artifactRepository
+  volumes:
+  - name: testreports
+    persistentVolumeClaim:
+      claimName: {{ .Values.persistentVolume.claimName }}
+  podMetadata:
+    labels:
+      argocd.argoproj.io/instance: integration-testing
+  arguments:
+    parameters:
+    - name: date-key
+      value: "20250501"
+  entrypoint: run-tests
+  templates:
+  - name: run-tests
+    dag:
+      tasks:
+      - name: call-cleanup-reports
+        templateRef:
+          name: cleanup-reports-workflow
+          template: cleanup-reports
+      - name: auxtel-housekeeping
+        depends: call-cleanup-reports
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Housekeeping.list"
+          - name: jobname
+            value: auxtel-housekeeping
+          - name: reportname
+            value: athousekeeping.xml
+      - name: maintel-housekeeping
+        depends: call-cleanup-reports
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_MainTel_Housekeeping.list"
+          - name: jobname
+            value: maintel-housekeeping
+          - name: reportname
+            value: mthousekeeping.xml
