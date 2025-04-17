@@ -1,6 +1,15 @@
 # Argo CD configuration
 # https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
 
+# -- ArgoCD Slack notification configuration
+slack:
+  # -- Whether to enable ArgoCD Slack notifications
+  enabled: false
+
+  # -- The Slack channel to notify to. Must be set if enabled is true
+  channel: ""
+
+
 argo-cd:
   global:
     logging:
@@ -84,6 +93,12 @@ argo-cd:
         memory: "80Mi"
 
   notifications:
+    cm:
+      # -- We create the notifications configmap manually
+      create: false
+    secret:
+      # -- We create the notifications secret manually from a VaultSecret
+      create: false
     metrics:
       # -- Enable notifications metrics service
       enabled: true
@@ -155,6 +170,10 @@ argo-cd:
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
