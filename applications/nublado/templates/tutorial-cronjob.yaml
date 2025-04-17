@@ -1,0 +1,56 @@
+{{ if .Values.cronjob.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tutorials
+spec:
+  schedule: {{ .Values.cronjob.schedule | quote }}
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          {{- with .Values.cronjob.tolerations }}
+          tolerations:
+{{- toYaml . | indent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.affinity }}
+          affinity:
+{{- toYaml . | indent 12 }}
+          {{- end }}
+          containers:
+          - name: tutorial
+            image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
+            {{- with .Values.cronjob.resources }}
+            resources:
+{{ toYaml . | indent 14 }}
+            {{- end }}
+            command: [ "/entrypoint.sh" ]
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+              capabilities:
+                drop:
+                - all
+            env:
+            - name: "GIT_SRC"
+              value: {{ .Values.cronjob.gitSource | quote }}
+            - name: "GIT_TARGET"
+              value: {{ .Values.cronjob.gitTarget | quote }}
+            - name: "GIT_BRANCH"
+              value: {{ .Values.cronjob.gitBranch | quote }}
+            volumeMounts:
+            - mountPath: {{ .Values.cronjob.targetVolume.mountPath }}
+              name: target
+          volumes:
+          - name: target
+            nfs:
+              server: {{ .Values.cronjob.targetVolume.server }}
+              path: {{ .Values.cronjob.targetVolume.path }}
+{{- end }}
