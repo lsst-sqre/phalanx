@@ -43,6 +43,7 @@ controller:
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         TMPDIR: "/tmp"
+        TUTORIALS_CACHE_DIR: "/project/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
