@@ -342,8 +342,8 @@ love-nginx:
           "urlStatus": "https://tucson-teststand.lsst.codes/influxdb/health"
         },
         "sal": {
-            "urlStatus": "https://tucson-teststand.lsst.codes/sasquatch-rest-proxy/brokers",
-            "expectedBrokerList": [0, 1, 2]
+          "urlStatus": "https://tucson-teststand.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [0, 1, 2]
         }
       }
   - name: all-alarms
@@ -361,8 +361,8 @@ love-nginx:
           "urlStatus": "https://tucson-teststand.lsst.codes/influxdb/health"
         },
         "sal": {
-            "urlStatus": "https://tucson-teststand.lsst.codes/sasquatch-rest-proxy/brokers",
-            "expectedBrokerList": [0, 1, 2]
+          "urlStatus": "https://tucson-teststand.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [0, 1, 2]
         }
       }
   - name: no-alarms
@@ -380,8 +380,8 @@ love-nginx:
           "urlStatus": "https://tucson-teststand.lsst.codes/influxdb/health"
         },
         "sal": {
-            "urlStatus": "https://tucson-teststand.lsst.codes/sasquatch-rest-proxy/brokers",
-            "expectedBrokerList": [0, 1, 2]
+          "urlStatus": "https://tucson-teststand.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [0, 1, 2]
         }
       }
 
