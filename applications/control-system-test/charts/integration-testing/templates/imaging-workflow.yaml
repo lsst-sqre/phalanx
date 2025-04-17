@@ -183,7 +183,7 @@ spec:
         arguments:
           parameters:
           - name: integrationtest
-            value: "-A Test_Report_AuxTel_Acq_and_Take_Seq_POINTING.list"
+            value: "-A Test_Report_AuxTel_Acq_Take_Seq_POINTING.list"
           - name: jobname
             value: auxtel-acq-take-seq-pointing
           - name: reportname
