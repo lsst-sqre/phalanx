@@ -23,15 +23,6 @@ prompt-keda:
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         - survey: BLOCK-T427  # Daytime checkout
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
-        # Stray light tests, out of focus
-        - survey: BLOCK-T425
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
-        - survey: BLOCK-T426
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
-        - survey: BLOCK-T428  # Bright star in field
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
-        - survey: BLOCK-T429  # Moonlight
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
         # Manual observations during SV blocks?
         - survey: BLOCK-T407
           pipelines: []
@@ -49,6 +40,12 @@ prompt-keda:
           pipelines: []
         - survey: BLOCK-T373
           pipelines: []
+        - survey: BLOCK-T460
+          pipelines: []
+        - survey: BLOCK-T461
+          pipelines: []
+        # Produces nextVisits but not images
+        - {survey: "BLOCK-T454", pipelines: []}
         # Miscellaneous scripts, not always images
         - {survey: "", pipelines: []}
         # Ignore unknown events
