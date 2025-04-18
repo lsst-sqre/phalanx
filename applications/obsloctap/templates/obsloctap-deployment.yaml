@@ -76,6 +76,8 @@ spec:
                 secretKeyRef:
                   name: obsloctap
                   key: "password"
+            - name: "database_schema"
+              value: "{{ .Values.config.database_schema }}"
             - name: "KAFKA_BOOTSTRAP"
               value: "{{ .Values.kafka.bootstrap }}"
             - name: "KAFKA_USERNAME"
