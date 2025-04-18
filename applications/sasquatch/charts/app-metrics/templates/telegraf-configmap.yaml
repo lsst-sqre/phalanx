@@ -38,7 +38,7 @@ data:
 
     {{- range $index, $app := .Values.apps }}
     {{- $globalInfluxTags := $.Values.globalInfluxTags | default list }}
-    {{- $appInfluxTags := (index $.Values.globalAppConfig $app "influxTags") | default list }}
+    {{- $appInfluxTags := $.Values.globalAppConfig | dig $app "influxTags" list }}
     {{- $influxTags := concat $globalInfluxTags $appInfluxTags }}
     [[inputs.kafka_consumer]]
       brokers = [
