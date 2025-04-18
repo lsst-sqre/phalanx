@@ -19,6 +19,7 @@ applications:
   filestore-backup: true
   ghostwriter: true
   hips: true
+  hoverdrive: true
   mobu: true
   noteburst: true
   nublado: true
