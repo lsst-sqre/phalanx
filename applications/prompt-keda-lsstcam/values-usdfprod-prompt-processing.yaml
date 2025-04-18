@@ -49,6 +49,10 @@ prompt-keda:
           pipelines: []
         - survey: BLOCK-T373
           pipelines: []
+        - survey: BLOCK-T460
+          pipelines: []
+        - survey: BLOCK-T461
+          pipelines: []
         # Produces nextVisits but not images
         - {survey: "BLOCK-T454", pipelines: []}
         # Miscellaneous scripts, not always images
