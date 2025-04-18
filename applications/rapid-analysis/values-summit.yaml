@@ -366,6 +366,17 @@ scripts:
     limits:
       cpu: 2
       memory: 10G
+- name: LSSTCam/runRadialPlotting.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 12G
+    limits:
+      cpu: 1.2
+      memory: 16G
 ##
 ## LATISS StatefulSets
 ##
