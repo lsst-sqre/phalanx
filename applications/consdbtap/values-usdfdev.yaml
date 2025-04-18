@@ -2,4 +2,7 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-usdf-dev-cdb"
-      tag: "main"
+      tag: "w.2025.16"
+
+  config:
+    datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/w.2025.16/datalink-snippets.zip"
