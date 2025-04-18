@@ -12,7 +12,7 @@ environment:
 
 config:
   butler_repo: "s3://embargo@rubin-summit-users/butler.yaml"
-  butler_collection: "u/kadrlica/binCalexp4"
+  butler_collection: "u/kadrlica/LSSTCam/binCalexp4/20250428"
 
   db:
     hostname: "postgres.postgres"
