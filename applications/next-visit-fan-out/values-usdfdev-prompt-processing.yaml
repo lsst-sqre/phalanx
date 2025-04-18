@@ -14,8 +14,8 @@ kafka:
 
 image:
   repository: ghcr.io/lsst-dm/next_visit_fan_out
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 2.8.0
+  tag: main
 
 instruments: "LATISS LSSTCam LSSTCam-imSim LSSTComCam LSSTComCamSim HSC"
