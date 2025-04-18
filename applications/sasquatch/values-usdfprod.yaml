@@ -129,6 +129,55 @@ influxdb-enterprise:
         memory: 192Gi
         cpu: 8
 
+influxdb-enterprise-standby:
+  enabled: true
+  license:
+    secret:
+      name: sasquatch
+      key: influxdb-enterprise-standby-license
+  meta:
+    service:
+      type: LoadBalancer
+      annotations:
+        metallb.universe.tf/address-pool: sdf-services
+    ingress:
+      enabled: true
+      hostname: usdf-rsp.slac.stanford.edu
+      path: "/influxdb-enterprise-standby-meta(/|$)(.*)"
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 16Gi
+    sharedSecret:
+      secret:
+        name: sasquatch
+        key: influxdb-enterprise-standby-shared-secret
+    resources:
+      requests:
+        memory: 2Gi
+        cpu: 2
+      limits:
+        memory: 4Gi
+        cpu: 4
+  data:
+    replicas: 1
+    ingress:
+      enabled: true
+      hostname: usdf-rsp.slac.stanford.edu
+      path: "/influxdb-enterprise-standby-data(/|$)(.*)"
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      storageClass: wekafs--sdf-k8s01
+      size: 100Ti
+    resources:
+      requests:
+        memory: 192Gi
+        cpu: 16
+      limits:
+        memory: 192Gi
+        cpu: 16
+
 telegraf:
   enabled: true
   influxdb:
