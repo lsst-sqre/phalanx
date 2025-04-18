@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "tickets-DM-49938"
+appVersion: "0.1.0"
 description: Documentation links for VO.
 name: hoverdrive
 sources:
