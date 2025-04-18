@@ -10,6 +10,7 @@ obsloctap:
     # @default -- The appVersion of the chart
     tag: "tickets-DM-44729"
 
+  logLevel: verbose
 consumekafka:
   image:
     # -- obsloctap image to use
@@ -21,6 +22,7 @@ consumekafka:
     # -- Tag of image to use
     # @default -- The appVersion of the chart
     tag: "tickets-DM-44729"
+  logLevel: verbose
 
 rubinsim:
   # for rubin sim
