@@ -8,6 +8,7 @@ environment:
   database_schema: "obsloctap_dev"
 
 config:
+  database_schema: obsloctap_dev
   separateSecrets: false
   persistentVolumeClaims:
     - name: sdf-data-rubin

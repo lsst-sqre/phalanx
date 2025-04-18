@@ -53,6 +53,8 @@ spec:
                 secretKeyRef:
                   name: obsloctap
                   key: "password"
+            - name: "database_schema"
+              value: "{{ .Values.config.database_schema }}"
             - name: "INSTRUMENT"
               value: "LSSTCam"
             - name: "LOG_CONFIG"
