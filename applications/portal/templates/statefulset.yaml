@@ -89,6 +89,8 @@ spec:
               value: temp://lsst/dp02_dc2/hips/images/band_y
             - name: PROPS_OP_hips_adhocMocSource_sources_7
               value: ivo://CDS/P/2MASS/color
+            - name: PROPS_inventory.serverURLAry
+              value: "[\"https://raw.githubusercontent.com/lsst-sqre/portal-config/refs/heads/tickets/DM-43947/dce-searchPage-idf.xml\"]"
             - name: "PROPS_OP_coverage_hipsSourceURL"
               value: >-
                 {{- if .Values.config.hipsUrl }}
@@ -106,6 +108,24 @@ spec:
             - name: "PROPS_FIREFLY_OPTIONS"
               value: >-
                 {
+                   "SIAv2" : {
+                      "additional": {
+                          "services": [
+                            {
+                               "label": "LSST SIAV2 DP0.2 DC2",
+                               "serviceId": "RubinSiaDp02Dc2",
+                               "value": "{{ .Values.global.baseUrl }}/api/sia/dp02/query",
+                               {{- if .Values.config.hipsUrl }}
+                               "hipsUrl": "{{ .Values.config.hipsUrl }}",
+                               {{- else }}
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                               {{- end }}
+                               "centerWP": "62;-37;EQ_J2000",
+                               "fovDeg": 10
+                            }
+                          ]
+                      }
+                   },
                    "tap" : {
                       "additional": {
                           "services": [
