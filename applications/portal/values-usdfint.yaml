@@ -1,3 +1,6 @@
+config:
+  ssotap: "ssotap"
+
 redis:
   persistence:
     enabled: true

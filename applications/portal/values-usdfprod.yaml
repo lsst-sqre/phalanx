@@ -1,5 +1,6 @@
 config:
   livetap: "live"
+  ssotap: "ssotap"
 
 redis:
   persistence:
