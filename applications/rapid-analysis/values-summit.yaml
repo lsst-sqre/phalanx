@@ -377,6 +377,17 @@ scripts:
     limits:
       cpu: 1.2
       memory: 16G
+- name: LSSTCam/runFWHMPlotting.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 4G
+    limits:
+      cpu: 1
+      memory: 6G
 ##
 ## LATISS StatefulSets
 ##
