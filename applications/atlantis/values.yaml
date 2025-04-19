@@ -1,0 +1,105 @@
+# Default values for atlantis.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+config:
+  # -- The GitHub repos that atlantis will accept webooks from:
+  # [docs](https://www.runatlantis.io/docs/server-configuration.html#repo-allowlist)
+  repoAllowList: []
+
+  # -- A GCP service account that has the appropriate powers and allows the
+  # Kubernetes service account to impersonate it.
+  # googleServiceAccount:
+
+
+  # -- Content for the [server-side repo
+  # config](https://www.runatlantis.io/docs/server-side-repo-config.html) file
+  # @default -- See `values.yaml`
+  repoConfig:
+    repos:
+    - id: "/.*/"
+      apply_requirements: ["approved", "mergeable", "undiverged"]
+      import_requirements: ["approved", "mergeable", "undiverged"]
+
+  # -- Content for the [server
+  # config](https://www.runatlantis.io/docs/server-configuration.html) file.
+  # Note the format of the keys (kebab-case)
+  # @default -- See `values.yaml`
+  serverConfig:
+    allow-draft-prs: true
+    # -- Whether to automatically merge PRs after plans have been applied (see
+    # [docs](https://www.runatlantis.io/docs/automerging.html))
+    automerge: false
+    hide-prev-plan-comments: true
+    hide-unchanged-plan-comments: true
+    # -- One of: debug, info, warn, or error.
+    log-level: "info"
+    # -- The GitHub repos that atlantis will accept webooks from:
+    # [docs](https://www.runatlantis.io/docs/server-configuration.html#repo-allowlist)
+    repo-allowlist: []
+    # -- We're delegating auth for the web UI to gafaelfawr
+    web-basic-auth: false
+    autoplan-modules: true
+
+image:
+  # -- atlantis image to use
+  repository: "ghcr.io/lsst-sqre/atlantis-custom"
+
+  # -- Pull policy for the atlantis image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of atlantis image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+ingress:
+  # -- Additional annotations to add to the atlantis ingresses
+  annotations: {}
+
+# -- Affinity rules for the atlantis deployment pod
+affinity: {}
+
+# -- Node selection rules for the atlantis deployment pod
+nodeSelector: {}
+
+# -- Annotations for the atlantis deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the atlantis deployment pod
+# @default -- See `values.yaml`
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "100m"
+  limits:
+    memory: "2Gi"
+    cpu: "1"
+
+# -- Persistent storage configuration. Atlantis stores Terraform plans and git
+# repo clones while pull requests are open. This data is deleted when the pull
+# requests are merged or closed.
+# @default -- See `values.yaml`
+persistence:
+  # -- Amount of persistent storage to request
+  size: "5Gi"
+
+  # -- Class of storage to request
+  storageClass: null
+
+# -- Tolerations for the atlantis deployment pod
+tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
