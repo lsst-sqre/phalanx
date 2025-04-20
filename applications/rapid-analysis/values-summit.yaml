@@ -531,7 +531,7 @@ lsstcamWorkerSet:
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 378
+  replicas: 410
   resources:
     requests:
       cpu: 1.0
