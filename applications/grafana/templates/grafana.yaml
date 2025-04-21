@@ -1,0 +1,64 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+  labels:
+    dashboards: "grafana"
+spec:
+  persistentVolumeClaim:
+    spec:
+      accessModes:
+        - "ReadWriteOnce"
+      storageClassName: {{ $.Values.persistence.storageClass | quote }}
+      resources:
+        requests:
+          storage: {{ $.Values.persistence.size | quote }}
+  deployment:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: "grafana"
+              readinessProbe:
+                failureThreshold: 3
+          # But why?
+          # https://github.com/grafana/grafana-operator/issues/1439#issuecomment-2677822604
+          securityContext:
+            fsGroup: 1001
+            runAsGroup: 1001
+            runAsNonRoot: true
+            runAsUser: 1001
+          volumes:
+            - name: "grafana-data"
+              persistentVolumeClaim:
+                claimName: grafana-pvc
+      strategy:
+        type: Recreate
+
+  config:
+    security:
+      admin_user: ""
+      #admin_password: secret
+    server:
+      domain: {{ $.Values.global.host | quote }}
+      root_url: "{{ $.Values.global.baseUrl }}{{ $.Values.pathPrefix }}"
+      serve_from_subpath: "true"
+    auth:
+      # We'll assume that Gafaelfawr has already auth'd any requests that come in
+      disable_login_form: "false"
+    "auth.proxy":
+      enabled: "true"
+      # HTTP Header name that will contain the username or email
+      header_name: "X-Auth-Request-User"
+      # HTTP Header property, `username` or `email`
+      header_property: "username"
+      # Set to `true` to enable auto sign up of users who do not exist in Grafana DB.
+      auto_sign_up: "true"
+      # Define cache time to live in minutes
+      # If combined with Grafana LDAP integration it is also the sync interval
+      # Set to 0 to always fetch and sync the latest user data
+      # sync_ttl = 15
+      # Optionally define more headers to sync other user attributes
+      # Example `headers = Name:X-WEBAUTH-NAME Role:X-WEBAUTH-ROLE Email:X-WEBAUTH-EMAIL Groups:X-WEBAUTH-GROUPS`
+      # headers: "Email: X-Auth-Request-Email"
+      enable_login_token: "false"
