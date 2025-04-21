@@ -97,8 +97,7 @@ prompt-keda:
         - {survey: "", pipelines: []}
         # Don't preprocess anything unknown
         - {pipelines: []}
-    # TODO: need to adjust this based on observed slew accuracy
-    preloadPadding: 50
+    preloadPadding: 50.1
     calibRepo: s3://rubin-summit-users
 
   s3:
