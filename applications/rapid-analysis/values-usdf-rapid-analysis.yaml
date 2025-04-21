@@ -75,6 +75,13 @@ scripts:
     limits:
       cpu: 1
       memory: 12G
+- name: LSSTCam/runButlerCanary.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  env:
+    DAF_BUTLER_CACHE_EXPIRATION_MODE: disabled
 ###
 ### LSSTCam StatefulSets
 ###
