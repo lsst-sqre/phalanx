@@ -1,0 +1,12 @@
+# Used to provide non-static config via env vars to a Grafana instance, like
+# server.domain and server.root_url, which are global helm values and thus
+# can't be templated into other helm values.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-injected
+  labels:
+    {{- include "grafana.labels" . | nindent 4 }}
+data:
+  GF_SERVER_DOMAIN: "{{ .Values.global.host }}"
+  GF_SERVER_ROOT_URL: "{{ .Values.global.baseUrl }}/{{ $.Values.grafana.pathPrefix }}"

@@ -1,0 +1,8 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+  labels:
+    dashboards: "grafana"
+spec:
+  {{- tpl (.Values.grafana.spec | toYaml | nindent 2) . }}
