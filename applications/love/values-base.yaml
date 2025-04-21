@@ -374,25 +374,6 @@ love-nginx:
     config: |
       {
         "alarms": {
-          "minSeveritySound": "serious",
-          "minSeverityNotification": "warning"
-        },
-        "camFeeds": {
-          "simcam": "/love/simcam"
-        },
-        "efd": {
-          "defaultEfdInstance": "base_efd",
-          "urlStatus": "https://base-lsp.lsst.codes/influxdb/health"
-        },
-        "sal": {
-            "urlStatus": "https://base-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
-            "expectedBrokerList": [6, 7, 8]
-        }
-      }
-  - name: all-alarms
-    config: |
-      {
-        "alarms": {
           "minSeveritySound": "warning",
           "minSeverityNotification": "warning"
         },
@@ -404,16 +385,16 @@ love-nginx:
           "urlStatus": "https://base-lsp.lsst.codes/influxdb/health"
         },
         "sal": {
-            "urlStatus": "https://base-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
-            "expectedBrokerList": [6, 7, 8]
+          "urlStatus": "https://base-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [6, 7, 8]
         }
       }
-  - name: no-alarms
+  - name: serious-alarms
     config: |
       {
         "alarms": {
-          "minSeveritySound": "mute",
-          "minSeverityNotification": "mute"
+          "minSeveritySound": "serious",
+          "minSeverityNotification": "warning"
         },
         "camFeeds": {
           "simcam": "/love/simcam"
@@ -423,8 +404,27 @@ love-nginx:
           "urlStatus": "https://base-lsp.lsst.codes/influxdb/health"
         },
         "sal": {
-            "urlStatus": "https://base-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
-            "expectedBrokerList": [6, 7, 8]
+          "urlStatus": "https://base-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [6, 7, 8]
+        }
+      }
+  - name: no-alarms
+    config: |
+      {
+        "alarms": {
+          "minSeveritySound": "mute",
+          "minSeverityNotification": "warning"
+        },
+        "camFeeds": {
+          "simcam": "/love/simcam"
+        },
+        "efd": {
+          "defaultEfdInstance": "base_efd",
+          "urlStatus": "https://base-lsp.lsst.codes/influxdb/health"
+        },
+        "sal": {
+          "urlStatus": "https://base-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [6, 7, 8]
         }
       }
 
