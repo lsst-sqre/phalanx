@@ -1,5 +1,5 @@
 image:
-  tag: "tickets-DM-50253"
+  tag: "tickets-DM-50391"
   pullPolicy: "Always"
 config:
   logLevel: "DEBUG"

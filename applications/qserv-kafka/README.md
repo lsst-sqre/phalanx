@@ -19,6 +19,7 @@ Qserv Kafka bridge
 | config.qservDatabaseUrl | string | None, must be set | URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`) |
 | config.qservPollInterval | string | `"1s"` | Interval at which Qserv is polled for query status in Safir `parse_timedelta` format |
 | config.qservRestUrl | string | None, must be set | URL to the Qserv REST API |
+| config.shutdownTimeout | int | 60 (1 minute) | How long to wait for result processing to finish during shutdown before forcibly terminating the pod, in seconds |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
