@@ -144,8 +144,6 @@ prompt-keda:
   initializer:
     # 6 retries is not enough time to fix, e.g., DB permissions problems
     retries: 15
-    # Keep around for first few days so we can check in the morning PDT
-    cleanup_delay: 21600  # 6 hours
 
     podAnnotations: {
       edu.stanford.slac.sdf.project/usdf-embargo: "true"
