@@ -97,6 +97,9 @@ applications:
   # most other applications use `GafaelfawrIngress`
   gafaelfawr: true
 
+  # -- Enable the grafana application
+  grafana: false
+
   # -- Enable the hoverdrive application
   hoverdrive: false
 

@@ -1,0 +1,4 @@
+grafana:
+  persistentVolumeClaim:
+    spec:
+      storageClassName: "wekafs--sdf-k8s01"
