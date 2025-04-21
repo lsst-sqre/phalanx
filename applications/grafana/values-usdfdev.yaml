@@ -1,0 +1,11 @@
+grafana:
+  spec:
+    persistentVolumeClaim:
+      spec:
+        storageClassName: "wekafs--sdf-k8s01"
+        resources:
+          requests:
+            storage: "11Gi"
+  config:
+    database:
+      host: "postgres.postgres"

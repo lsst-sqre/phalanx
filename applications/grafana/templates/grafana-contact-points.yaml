@@ -1,0 +1,22 @@
+{{- if .Values.grafana.slackAlerts.enabled }}
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaContactPoint
+metadata:
+  name: general-slack
+spec:
+  name: "Slack - General Alerts"
+  type: "slack"
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  settings:
+    username: 'Grafana'
+    text: '{{`{{ template "slack.text" . }}`}}'
+    title: '{{`{{ template "slack.title" . }}`}}'
+  valuesFrom:
+    - targetPath: url
+      valueFrom:
+        secretKeyRef:
+          name: grafana
+          key: slack-alert-webhook
+{{- end }}

@@ -1,0 +1,12 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaNotificationTemplate
+metadata:
+  name: slack-general
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  name: Slack General
+  editable: false
+  template: |
+    {{- .Files.Get "data/notification-templates/slack-general.tmpl" | nindent 4 }}
