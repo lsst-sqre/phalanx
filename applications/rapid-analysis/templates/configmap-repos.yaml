@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "config-repos"
+  labels:
+    {{- include "rapid-analysis.labels" . | nindent 4 }}
+data:
+  data-repos.yaml: |
+    embargo: "s3://embargo@rubin-summit-users/butler.yaml"
