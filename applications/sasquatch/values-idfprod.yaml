@@ -116,7 +116,3 @@ backup:
     - name: "influxdb-oss-full"
       enabled: true
       retentionDays: 3
-  restoreItems:
-    - name: "influxdb-oss-full"
-      enabled: false
-      backupTimestamp: ""
