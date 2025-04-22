@@ -441,7 +441,7 @@ mtmount:
       memory: 300Mi
 
 mtmount-ccw-only:
-  enabled: false
+  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtmount
     pullPolicy: Always
@@ -456,7 +456,7 @@ mtmount-ccw-only:
       memory: 300Mi
 
 mtmount-sim:
-  enabled: true
+  enabled: false
   image:
     repository: ts-dockerhub.lsst.org/mtmount
     pullPolicy: Always
