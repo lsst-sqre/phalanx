@@ -696,9 +696,9 @@ cronjob:
   # -- Repository volume definition
   # @default -- See `values.yaml`
   targetVolume:
-    nfs:
-      path: /project-share
-      server: 10.234.16.4  #  NetApp servers always seem to be here.
+    mountPath: "/project"   # Conventional
+    server: "10.234.16.4"   # NetApp always gets this IP, apparently
+    path: "/project-share"  # Assigned by Terraform
 
   image:
     # -- Repository cloner image to use
