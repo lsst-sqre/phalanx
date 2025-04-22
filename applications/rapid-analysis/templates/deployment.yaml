@@ -94,6 +94,9 @@ spec:
             - name: user-secrets
               mountPath: {{ default "/home/saluser/.lsst" $.Values.butlerSecret.containerPath }}
               readOnly: true
+            - name: config
+              mountPath: "/config"
+              readOnly: true
           {{- if $.Values.nfsMountpoint }}
           {{- range $values := $.Values.nfsMountpoint }}
           {{- if (has $values.name $script.mounts) }}
@@ -138,6 +141,15 @@ spec:
         - name: rapid-analysis-secrets
           secret:
             secretName: rapid-analysis-secrets
+        - name: rubintv-aws-creds
+          secret:
+            secretName: rubintv-secrets
+        - name: config
+          configMap:
+            name: config-repos
+            items:
+            - key: "data-repos.yaml"
+              path: "data-repos.yaml"
       {{- if $.Values.nfsMountpoint }}
       {{- range $values := $.Values.nfsMountpoint }}
       {{- if (has $values.name $script.mounts) }}
