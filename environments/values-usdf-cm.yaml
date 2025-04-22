@@ -8,5 +8,8 @@ applications:
   # This environment uses an ingress managed in a separate Kubernetes cluster,
   # despite that configuration not being officially supported by Phalanx.
   cert-manager: false
-  gafaelfawr: false
+  gafaelfawr: true
   ingress-nginx: false
+
+  cm-service: false
+  postgres: true
