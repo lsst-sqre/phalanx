@@ -258,11 +258,11 @@ mtaos:
     serverPath: /scratch
   resources:
     limits:
-      cpu: 1000m
-      memory: 1500Mi
+      cpu: 5000m
+      memory: 5500Mi
     requests:
-      cpu: 30m
-      memory: 430Mi
+      cpu: 1000m
+      memory: 2000Mi
 
 mtcamhexapod:
   enabled: true
