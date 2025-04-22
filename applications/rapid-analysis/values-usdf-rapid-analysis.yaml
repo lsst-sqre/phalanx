@@ -87,7 +87,7 @@ scripts:
 ###
 lsstcamWorkerSet:
   name: LSSTCam/runSfmRunner.py
-  replicas: 9
+  replicas: 410
   mounts:
   - sdf-group-rubin
   - sdf-data-rubin
