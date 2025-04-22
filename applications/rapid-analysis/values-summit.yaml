@@ -340,6 +340,13 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 4G
+    limits:
+      cpu: 1
+      memory: 5G
 - name: LSSTCam/runMetadataServerAos.py
   mounts:
   - lsstcam-data
