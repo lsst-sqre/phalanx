@@ -106,6 +106,9 @@ prompt-keda:
 
   raw_microservice: http://172.24.5.158:8080/presence
 
+  # TODO: replace with permanent service once it's up
+  mpSky_service: http://sdfiana014.sdf.slac.stanford.edu:3666/ephemerides/
+
   imageNotifications:
     kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
     topic: rubin-summit-notification
