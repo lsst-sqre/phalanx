@@ -62,6 +62,7 @@ KEDA Prompt Processing instance for HSC
 | prompt-keda.keda.scalingStrategy | string | `"eager"` |  |
 | prompt-keda.keda.successfulJobsHistoryLimit | int | `5` |  |
 | prompt-keda.logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
+| prompt-keda.mpSky_service | string | `""` | The URI to the MPSky ephemerides service. Empty value is allowed, but its handling is undefined. |
 | prompt-keda.nameOverride | string | `""` | Override the base name for resources |
 | prompt-keda.nodeSelector | object | `{}` | Node selection rules for the Prompt Processing pod |
 | prompt-keda.podAnnotations | object | `{}` | Pod annotations for the Prompt Processing Pod |
