@@ -5,6 +5,12 @@
 ---
 internalDB: true
 config:
+  aws:
+    profiles:
+      embargo:
+        endpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
+      embargo_old:
+        endpointUrl: "https://s3dfrgw.slac.stanford.edu"
   logLevel: "DEBUG"
   logProfile: "development"
   db:
@@ -23,7 +29,9 @@ config:
     mountPath: "/sdf/group/rubin/repo/main"
     repositories:
       "/repo/main": "/sdf/group/rubin/repo/main/butler.yaml"
-      # "/repo/main+sasquatch_dev": "/sdf/group/rubin/repo/main/butler+sasquatch_dev.yaml"
+      "/repo/main+sasquatch_dev": "/sdf/group/rubin/repo/main/butler+sasquatch_dev.yaml"
+      "/repo/embargo": "s3://embargo@rubin-summit-users/butler.yaml"
+      "/repo/embargo+sasquatch_dev": "s3://embargo@rubin-summit-users/butler+sasquatch_dev.yaml"
   htcondor:
     scheddHost: sdfiana012.sdf.slac.stanford.edu
     collectorHost: sdfiana012.sdf.slac.stanford.edu
@@ -33,14 +41,14 @@ config:
       mountPath: "/sdf/group/rubin/services/htcondor/shared"
   panda:
     url: "https://usdf-panda-server.slac.stanford.edu:8443/server/panda"
-    monitor_url: "https://usdf-panda-bigmon.slac.stanford.edu:8443/"
-    behind_lb: "1"
-    verify_host: "1"
-    use_native_httplib: "1"
+    monitorUrl: "https://usdf-panda-bigmon.slac.stanford.edu:8443/"
+    behindLb: "1"
+    verifyHost: "1"
+    useNativeHttplib: "1"
 
 image:
-  tag: "0.3.0"
-  pullPolicy: IfNotPresent
+  tag: "tickets-DM-50179"
+  pullPolicy: Always
 
 daemon:
   security:
@@ -48,5 +56,5 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.3.0"
-    pullPolicy: IfNotPresent
+    tag: "tickets-DM-50179"
+    pullPolicy: Always
