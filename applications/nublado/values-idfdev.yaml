@@ -40,6 +40,7 @@ controller:
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         TMPDIR: "/tmp"
+        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/project/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
@@ -105,3 +106,12 @@ cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
   serviceAccount: "nublado@science-platform-dev-7696.iam.gserviceaccount.com"
+cronjob:
+  enabled: true
+  image:
+    tag: tickets-DM-49131
+    pullPolicy: Always
+  targetVolume:
+    mountPath: "/project"
+    server: "10.234.16.4"
+    path: "/project-share"
