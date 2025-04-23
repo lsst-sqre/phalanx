@@ -22,6 +22,12 @@ config:
     # -- Port number of the database host
     port: 5432
 
+    # -- Name of a secret with db authn details
+    secret_name: "cm-service"
+
+    # -- Key within db authn secret with db password
+    secret_key: "internalDatabasePassword"
+
   # -- Logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`, or `CRITICAL`)
   logLevel: "INFO"
 
@@ -42,6 +48,15 @@ config:
   pathPrefix: "/cm-service"
 
   butler:
+
+    dbAuth:
+
+      # -- The name of a secret with Butler a dbAuth payload
+      secretName: ""
+
+      # -- The keyname within the secret data dictionary with the dbAuth payload
+      secretKey: ""
+
     # -- If specified, name of storage class requested in butler remote area PVC
     storageClassName: null
 
@@ -71,6 +86,35 @@ config:
 
       # -- If specified, sub-path within bound PV to be mounted as condor fs-remote
       subPath: null
+
+  panda:
+
+    # -- URL of a panda host, used for base, tls, and cache URLs
+    url: null
+
+    # -- URL of a panda monitor host
+    monitor_url: null
+
+    # -- PanDA host TLS verification
+    verify_host: "1"
+
+    # -- PanDA host behind load balancer
+    behind_lb: "0"
+
+    # -- PanDA Use Native HTTPLib instead of Curl
+    use_native_httplib: "1"
+
+    # -- PanDA Virtual Organization Name for oidc
+    virtual_organization: Rubin
+
+    # -- Name of Secret with PanDA secrets
+    secretName: "cm-service"
+
+    # -- Secret key for PanDA id-token value
+    idTokenSecretKey: "panda-id-token"
+
+    # -- Secret key for PanDA refresh-token value
+    refreshTokenSecretKey: "panda-refresh-token"
 
 image:
   # -- Image to use for frontend containers
@@ -127,6 +171,13 @@ frontend:
 daemon:
   # -- Number of daemon pods to start
   replicaCount: 1
+
+  security:
+    # -- Effective UID for daemon user
+    uid: 0
+
+    # -- Effective GID for daemon user
+    gid: 0
 
   image:
     # -- Image to use for daemon containers

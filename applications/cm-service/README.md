@@ -10,6 +10,8 @@ Campaign Management for Rubin Data Release Production
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| config.butler.dbAuth.secretKey | string | `""` | The keyname within the secret data dictionary with the dbAuth payload |
+| config.butler.dbAuth.secretName | string | `""` | The name of a secret with Butler a dbAuth payload |
 | config.butler.repositories | object | `{}` | A mapping of butler repository names to their URIs that will be known to the service. |
 | config.butler.storage | string | `"1Gi"` | Minimum storage requested in the butler remote area PVC |
 | config.butler.storageClassName | string | `nil` | If specified, name of storage class requested in butler remote area PVC |
@@ -18,6 +20,8 @@ Campaign Management for Rubin Data Release Production
 | config.db.hostname | string | `""` | Name of the database host |
 | config.db.name | string | `"cmservice"` | Name of the database to use for the application |
 | config.db.port | int | `5432` | Port number of the database host |
+| config.db.secret_key | string | `"internalDatabasePassword"` | Key within db authn secret with db password |
+| config.db.secret_name | string | `"cm-service"` | Name of a secret with db authn details |
 | config.db.username | string | `"cmservice"` | Name of the database user to use for the application |
 | config.htcondor.collectorHost | string | `nil` | Name of an htcondor collector host |
 | config.htcondor.fsRemoteDir.storage | string | `"1Gi"` | Minimum storage requested in the condor fs-remote PVC |
@@ -29,6 +33,15 @@ Campaign Management for Rubin Data Release Production
 | config.outputVolume.storage | string | `"1Gi"` | Minimum storage requested in service output area PVC |
 | config.outputVolume.storageClassName | string | `nil` | If specified, name of storage class requested in service output area PVC |
 | config.outputVolume.subPath | string | `nil` | If specified, sub-path within bound PV to be mounted at service output area |
+| config.panda.behind_lb | string | `"0"` | PanDA host behind load balancer |
+| config.panda.idTokenSecretKey | string | `"panda-id-token"` | Secret key for PanDA id-token value |
+| config.panda.monitor_url | string | `nil` | URL of a panda monitor host |
+| config.panda.refreshTokenSecretKey | string | `"panda-refresh-token"` | Secret key for PanDA refresh-token value |
+| config.panda.secretName | string | `"cm-service"` | Name of Secret with PanDA secrets |
+| config.panda.url | string | `nil` | URL of a panda host, used for base, tls, and cache URLs |
+| config.panda.use_native_httplib | string | `"1"` | PanDA Use Native HTTPLib instead of Curl |
+| config.panda.verify_host | string | `"1"` | PanDA host TLS verification |
+| config.panda.virtual_organization | string | `"Rubin"` | PanDA Virtual Organization Name for oidc |
 | config.pathPrefix | string | `"/cm-service"` | URL path prefix |
 | daemon.affinity | object | `{}` | Affinity rules for the daemon pods |
 | daemon.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the daemon image |
@@ -38,6 +51,8 @@ Campaign Management for Rubin Data Release Production
 | daemon.podAnnotations | object | `{}` | Annotations for the daemon pods |
 | daemon.replicaCount | int | `1` | Number of daemon pods to start |
 | daemon.resources | object | See `values.yaml` | Resource limits and requests for the daemon pods |
+| daemon.security.gid | int | `0` | Effective GID for daemon user |
+| daemon.security.uid | int | `0` | Effective UID for daemon user |
 | daemon.tolerations | list | `[]` | Tolerations for the daemon pods |
 | frontend.affinity | object | `{}` | Affinity rules for the frontend pods |
 | frontend.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the frontend image |
