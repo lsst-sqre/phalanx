@@ -270,7 +270,6 @@ controller:
           list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
           irc:x:39:39:ircd:/run/ircd:/usr/sbin/nologin
           _apt:x:42:65534::/nonexistent:/usr/sbin/nologin
-          lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
           nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
 
         # -- Base `/etc/group` file for lab containers
@@ -314,7 +313,6 @@ controller:
           games:x:60:
           users:x:100:
           _ssh:x:101:
-          lsst_lcl:x:1000:
           nogroup:x:65534:
 
       # -- Pull secret to use for labs. Set to the string `pull-secret` to use
