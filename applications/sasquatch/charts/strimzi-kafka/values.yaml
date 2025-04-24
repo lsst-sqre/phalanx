@@ -179,6 +179,9 @@ kafkaExporter:
   # -- Enable Sarama logging for pod
   enableSaramaLogging: false
 
+  # -- Whether to show all offsets or just offsets from connected groups
+  showAllOffsets: true
+
   # -- Kubernetes requests and limits for the Kafka exporter
   # @default -- See `values.yaml`
   resources: {}
