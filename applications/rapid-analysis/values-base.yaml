@@ -152,8 +152,8 @@ lsstcamAosWorkerSet:
     limits:
       cpu: 1.0
       memory: 8G
-lsstcamGather2aSet:
-  name: LSSTCam/runStep2aWorker.py
+lsstcamGather1bSet:
+  name: LSSTCam/runStep1bWorker.py
   mounts:
   - lsstcam-data
   - project-shared
@@ -165,8 +165,8 @@ lsstcamGather2aSet:
     limits:
       cpu: 1.0
       memory: "8G"
-lsstcamGather2aAosSet:
-  name: LSSTCam/runStep2aAosWorker.py
+lsstcamGather1bAosSet:
+  name: LSSTCam/runStep1bAosWorker.py
   mounts:
   - lsstcam-data
   - project-shared
