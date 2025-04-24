@@ -430,7 +430,7 @@ latissWorkerSet:
 #       cpu: 1.0
 #       memory: 8G
 # comcamsimGather2aSet:
-#   name: LSSTComCamSim/runStep2aWorker.py
+#   name: LSSTComCamSim/runStep1bWorker.py
 #   mounts:
 #   - comcam-data
 #   - comcam-gen3-data
@@ -489,7 +489,7 @@ latissWorkerSet:
 #       cpu: 1.0
 #       memory: 8G
 # comcamGather2aSet:
-#   name: LSSTComCam/runStep2aWorker.py
+#   name: LSSTComCam/runStep1bWorker.py
 #   mounts:
 #   - comcam-data
 #   - comcam-gen3-data
@@ -503,7 +503,7 @@ latissWorkerSet:
 #       cpu: 1.0
 #       memory: "8G"
 # comcamGather2aAosSet:
-#   name: LSSTComCam/runStep2aAosWorker.py
+#   name: LSSTComCam/runStep1bAosWorker.py
 #   mounts:
 #   - comcam-data
 #   - comcam-gen3-data
@@ -546,6 +546,45 @@ lsstcamWorkerSet:
     limits:
       cpu: 1.0
       memory: 8G  # we should check this value
+lsstcamAosWorkerSet:
+  name: LSSTCam/runAosWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 32  # 4 deep for corner chips
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G
+lsstcamGather2aSet:
+  name: LSSTCam/runStep1bWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 5
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
+lsstcamGather2aAosSet:
+  name: LSSTCam/runStep1bAosWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 5
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
 pullSecretsPath: pull-secret
 butlerSecret:
   containerPath: /home/saluser/.lsst
