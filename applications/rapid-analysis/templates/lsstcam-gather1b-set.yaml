@@ -54,6 +54,15 @@ spec:
                   fieldPath: metadata.labels['statefulset.kubernetes.io/pod-name']
             - name: RAPID_ANALYSIS_LOCATION
               value: {{ $.Values.location | upper | quote }}
+<<<<<<< HEAD
+=======
+          {{- if $script.env }}
+          {{- range $env_var, $env_value := $script.env }}
+            - name: {{ $env_var }}
+              value: {{ $env_value | quote }}
+          {{- end }}
+          {{- end }}
+>>>>>>> 2e5c9b84b (Update to use new script names and rename in templates)
           {{- if or $.Values.env $.Values.envSecrets }}
           {{- range $env_var, $env_value := $.Values.env }}
             - name: {{ $env_var }}
