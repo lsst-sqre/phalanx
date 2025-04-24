@@ -1,11 +1,11 @@
-{{ $_ := set $.Values "script" $.Values.lsstcamGather2aSet }}
-{{ $script := $.Values.lsstcamGather2aSet }}
+{{ $_ := set $.Values "script" $.Values.lsstcamGather1bSet }}
+{{ $script := $.Values.lsstcamGather1bSet }}
 {{- if $script.name }}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "rapid-analysis.deploymentName" $ }}-gather2aset
+  name: {{ include "rapid-analysis.deploymentName" $ }}-gather1bset
   namespace: {{ $.Values.namespace }}
   labels:
     {{- include "rapid-analysis.labels" $ | nindent 4 }}
