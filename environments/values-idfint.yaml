@@ -31,7 +31,6 @@ applications:
   ssotap: true
   sasquatch-backpack: true
   semaphore: true
-  sqlproxy-cross-project: true
   squareone: true
   strimzi: true
   strimzi-access-operator: true

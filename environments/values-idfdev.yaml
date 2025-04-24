@@ -32,7 +32,6 @@ applications:
   sia: true
   ssotap: true
   squareone: true
-  sqlproxy-cross-project: true
   strimzi: true
   strimzi-access-operator: true
   tap: true

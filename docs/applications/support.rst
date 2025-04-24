@@ -12,6 +12,5 @@ Argo CD project: ``support``
 
    ghostwriter/index
    postgres/index
-   sqlproxy-cross-project/index
    strimzi/index
    strimzi-access-operator/index
