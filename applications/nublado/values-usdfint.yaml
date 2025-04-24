@@ -34,7 +34,7 @@ controller:
           image:
             repository: "ghcr.io/slaclab/usdf-nublado-inithome"
             tag: "latest"
-          privileged: true
+          privileged: false
           volumeMounts:
             - containerPath: "/home"
               volumeName: "sdf-home"
