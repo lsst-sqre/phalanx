@@ -139,10 +139,10 @@ gcheaderservice101:
   resources:
     limits:
       cpu: 2000m
-      memory: 700Mi
+      memory: 2100Mi
     requests:
       cpu: 200m
-      memory: 232Mi
+      memory: 700Mi
 
 gcheaderservice102:
   enabled: true
@@ -161,10 +161,10 @@ gcheaderservice102:
   resources:
     limits:
       cpu: 2000m
-      memory: 700Mi
+      memory: 2100Mi
     requests:
       cpu: 200m
-      memory: 236Mi
+      memory: 700Mi
 
 gcheaderservice103:
   enabled: true
@@ -183,10 +183,10 @@ gcheaderservice103:
   resources:
     limits:
       cpu: 2000m
-      memory: 700Mi
+      memory: 2100Mi
     requests:
       cpu: 200m
-      memory: 225Mi
+      memory: 700Mi
 
 lasertracker1:
   enabled: true
