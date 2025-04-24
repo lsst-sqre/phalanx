@@ -31,10 +31,11 @@ config:
   # @default -- None, must be set
   qservRestUrl: null
 
-  # -- How long to wait for result processing to finish during shutdown before
-  # forcibly terminating the pod, in seconds
-  # @default -- 60 (1 minute)
-  shutdownTimeout: 60
+  # -- How long to wait for result processing (retrieval and upload) before
+  # timing out, in seconds. This doubles as the timeout forcibly terminating
+  # the pod.
+  # @default -- 3600 (1 hour)
+  resultTimeout: 3600
 
 image:
   # -- Image to use in the qserv-kafka deployment
