@@ -424,7 +424,7 @@ latissWorkerSet:
 #       cpu: 1.0
 #       memory: 8G
 # comcamsimGather2aSet:
-#   name: LSSTComCamSim/runStep2aWorker.py
+#   name: LSSTComCamSim/runStep1bWorker.py
 #   mounts:
 #   - comcam-data
 #   - comcam-gen3-data
@@ -483,7 +483,7 @@ latissWorkerSet:
 #       cpu: 1.0
 #       memory: 8G
 # comcamGather2aSet:
-#   name: LSSTComCam/runStep2aWorker.py
+#   name: LSSTComCam/runStep1bWorker.py
 #   mounts:
 #   - comcam-data
 #   - comcam-gen3-data
@@ -497,7 +497,7 @@ latissWorkerSet:
 #       cpu: 1.0
 #       memory: "8G"
 # comcamGather2aAosSet:
-#   name: LSSTComCam/runStep2aAosWorker.py
+#   name: LSSTComCam/runStep1bAosWorker.py
 #   mounts:
 #   - comcam-data
 #   - comcam-gen3-data
@@ -554,7 +554,7 @@ lsstcamAosWorkerSet:
       cpu: 1.0
       memory: 8G
 lsstcamGather2aSet:
-  name: LSSTCam/runStep2aWorker.py
+  name: LSSTCam/runStep1bWorker.py
   mounts:
   - lsstcam-data
   - project-shared
@@ -567,7 +567,7 @@ lsstcamGather2aSet:
       cpu: 1.0
       memory: "8G"
 lsstcamGather2aAosSet:
-  name: LSSTCam/runStep2aAosWorker.py
+  name: LSSTCam/runStep1bAosWorker.py
   mounts:
   - lsstcam-data
   - project-shared
