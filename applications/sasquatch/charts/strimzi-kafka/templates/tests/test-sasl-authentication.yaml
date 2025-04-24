@@ -22,7 +22,8 @@ spec:
           patternType: literal
         type: allow
         host: "*"
-        operation: All
+        operations:
+          - All
 ---
 apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaTopic

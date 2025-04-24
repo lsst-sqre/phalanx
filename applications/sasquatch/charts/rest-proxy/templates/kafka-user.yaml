@@ -19,7 +19,8 @@ spec:
           type: group
           name: "*"
           patternType: literal
-        operation: All
+        operations:
+          - All
       {{- range $prefix := .Values.kafka.topicPrefixes }}
       - resource:
           type: topic
@@ -27,5 +28,6 @@ spec:
           patternType: prefix
         type: allow
         host: "*"
-        operation: All
+        operations:
+          - All
       {{- end }}

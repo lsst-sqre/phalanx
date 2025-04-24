@@ -21,4 +21,5 @@ spec:
           patternType: literal
         type: allow
         host: "*"
-        operation: Read
+        operations:
+          - Read
