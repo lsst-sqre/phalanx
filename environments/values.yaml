@@ -258,9 +258,6 @@ applications:
   # -- Enable the semaphore application
   semaphore: false
 
-  # -- Enable the sqlproxy-cross-project application
-  sqlproxy-cross-project: false
-
   # -- Enable the squarebot application
   squarebot: false
 
