@@ -122,7 +122,7 @@ prompt-keda:
   alerts:
     username: kafka-admin
     server: usdf-alert-stream-dev.lsst.cloud:9094
-    topic: lsst-alerts
+    topic: lsst-alerts-v7.4
 
   # TODO: may need to override for debugging
   logLevel: timer.lsst.activator=DEBUG timer.lsst.daf.butler=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE lsst.daf.butler=VERBOSE
