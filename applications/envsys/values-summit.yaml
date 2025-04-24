@@ -155,10 +155,10 @@ dream:
   resources:
     requests:
       cpu: 70m
-      memory: 96Mi
+      memory: 300Mi
     limits:
       cpu: 700m
-      memory: 300Mi
+      memory: 900Mi
 
 earthquake-ess302:
   enabled: true
