@@ -20,7 +20,8 @@ spec:
           type: group
           name: "*"
           patternType: literal
-        operation: All
+        operations:
+          - All
       - resource:
           type: topic
           name: "lsst.sal"

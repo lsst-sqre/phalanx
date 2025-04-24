@@ -20,14 +20,16 @@ spec:
           type: group
           name: "*"
           patternType: literal
-        operation: All
+        operations:
+          - All
       - resource:
           type: topic
           name: "lsst.tap"
           patternType: prefix
         type: allow
         host: "*"
-        operation: All
+        operations:
+          - All
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -45,11 +47,13 @@ spec:
           type: group
           name: "*"
           patternType: literal
-        operation: All
+        operations:
+          - All
       - resource:
           type: topic
           name: "lsst.tap"
           patternType: prefix
         type: allow
         host: "*"
-        operation: All
+        operations:
+          - All
