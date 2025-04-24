@@ -38,7 +38,7 @@ scripts:
   - auxtel-data
   - auxtel-gen3-data
   - project-shared
-# - name: LATISS/runOneOffCalexp.py
+# - name: LATISS/runOneOffVisitImage.py
 #   mounts:
 #   - auxtel-data
 #   - auxtel-gen3-data
@@ -198,7 +198,7 @@ scripts:
 #   - comcam-data
 #   - comcam-gen3-data
 #   - project-shared
-# - name: LSSTComCam/runOneOffCalexp.py
+# - name: LSSTComCam/runOneOffVisitImage.py
 #   mounts:
 #   - comcam-data
 #   - comcam-gen3-data
@@ -330,7 +330,7 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
-- name: LSSTCam/runOneOffCalexp.py
+- name: LSSTCam/runOneOffVisitImage.py
   mounts:
   - lsstcam-data
   - project-shared
