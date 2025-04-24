@@ -35,6 +35,8 @@ controller:
             repository: "ghcr.io/slaclab/usdf-nublado-inithome"
             tag: "latest"
           privileged: false
+          pullSecret:
+            - name: "pull-secret"
           volumeMounts:
             - containerPath: "/home"
               volumeName: "sdf-home"
