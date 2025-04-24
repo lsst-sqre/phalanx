@@ -20,21 +20,24 @@ spec:
           type: group
           name: "*"
           patternType: literal
-        operation: All
+        operations:
+          - All
       - resource:
           type: topic
           name: "lsst.sal"
           patternType: prefix
         type: allow
         host: "*"
-        operation: All
+        operations:
+          - All
       - resource:
           type: topic
           name: "lsst.s3"
           patternType: prefix
         type: allow
         host: "*"
-        operation: All
+        operations:
+          - All
       - resource:
           type: cluster
         operations:
@@ -69,21 +72,24 @@ spec:
           patternType: prefix
         type: allow
         host: "*"
-        operation: All
+        operations:
+          - All
       - resource:
           type: topic
           name: "lsst.CCCamera"
           patternType: prefix
         type: allow
         host: "*"
-        operation: All
+        operation:
+          - All
       - resource:
           type: topic
           name: "lsst.MTCamera"
           patternType: prefix
         type: allow
         host: "*"
-        operation: All
+        operations:
+          - All
       - resource:
           type: cluster
         operations:

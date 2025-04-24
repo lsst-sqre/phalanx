@@ -43,26 +43,30 @@ spec:
           type: topic
           name: {{ .Values.registry.schemaTopic }}
           patternType: literal
-        operation: Read
+        operations:
+          - Read
         type: allow
       - resource:
           type: topic
           name: {{ .Values.registry.schemaTopic }}
           patternType: literal
-        operation: Write
+        operations:
+          - Write
         type: allow
       - resource:
           type: topic
           name: {{ .Values.registry.schemaTopic }}
           patternType: literal
-        operation: DescribeConfigs
+        operations:
+          - DescribeConfigs
         type: allow
       # Allow all operations on the schema-registry* group
       - resource:
           type: group
           name: schema-registry
           patternType: prefix
-        operation: All
+        operations:
+          - All
         type: allow
       # Allow Describe on the __consumer_offsets topic
       # (The official docs also mention DescribeConfigs?)
@@ -70,5 +74,6 @@ spec:
           type: topic
           name: "__consumer_offsets"
           patternType: literal
-        operation: Describe
+        operations:
+          - Describe
         type: allow

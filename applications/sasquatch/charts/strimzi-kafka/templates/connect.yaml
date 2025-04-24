@@ -58,19 +58,22 @@ spec:
       - resource:
           type: group
           name: {{ .Values.cluster.name }}-connect
-        operation: Read
+        operations:
+          - Read
       - resource:
           type: group
           name: "*"
           patternType: literal
-        operation: All
+        operations:
+          - All
       - resource:
           type: topic
           name: "*"
           patternType: literal
         type: allow
         host: "*"
-        operation: All
+        operations:
+          - All
   quotas:
     producerByteRate: 1073741824
     consumerByteRate: 1073741824
