@@ -699,7 +699,7 @@ cronjob:
     # -- Where volume will be mounted in the container
     mountPath: "/project"   # Conventional
     # -- IP address of NetApp server (different per environment)
-    server: "127.0.0.1"  # This must be changed
+    server: null            # This must be changed
     # -- Path on NetApp server
     path: "/project-share"  # Assigned by Terraform
 

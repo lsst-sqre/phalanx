@@ -104,7 +104,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cronjob.targetVolume | object | See `values.yaml` | Repository volume definition |
 | cronjob.targetVolume.mountPath | string | `"/project"` | Where volume will be mounted in the container |
 | cronjob.targetVolume.path | string | `"/project-share"` | Path on NetApp server |
-| cronjob.targetVolume.server | string | `"127.0.0.1"` | IP address of NetApp server (different per environment) |
+| cronjob.targetVolume.server | string | `nil` | IP address of NetApp server (different per environment) |
 | cronjob.targetVolumePath | string | `"/project"` | Where repository volume should be mounted |
 | cronjob.tolerations | list | `[]` | Tolerations for the tutorials cronjob. |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
