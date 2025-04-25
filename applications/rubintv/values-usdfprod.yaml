@@ -19,7 +19,7 @@ rubintv:
     - name: DDV_CLIENT_WS_ADDRESS
       value: "rubintv/ws/ddv"
     image:
-      tag: v2.6.5
+      tag: v2.6.6
       pullPolicy: Always
 
   workers:
