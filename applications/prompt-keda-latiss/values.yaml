@@ -66,6 +66,10 @@ prompt-keda:
   # If empty, Prompt Processing does not use a microservice.
   raw_microservice: ""
 
+  # -- The URI to the MPSky ephemerides service.
+  # Empty value is allowed, but its handling is undefined.
+  mpSky_service: ""
+
   imageNotifications:
     # -- Hostname and port of the Kafka provider
     # @default -- None, must be set

@@ -59,6 +59,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.knative.memoryRequest | string | `"2Gi"` | The minimum memory to request for the full pod (see `containerConcurrency`). |
 | prompt-proto-service.knative.responseStartTimeout | int | `0` | Maximum time that a container can send nothing to Knative after initial submission (seconds). This is only useful if the container runs async workers. If 0, idle timeout is ignored. |
 | prompt-proto-service.logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
+| prompt-proto-service.mpSky_service | string | `""` | The URI to the MPSky ephemerides service. Empty value is allowed, but its handling is undefined. |
 | prompt-proto-service.podAnnotations | object | See the `values.yaml` file. | Annotations for the prompt-proto-service pod |
 | prompt-proto-service.raw_microservice | string | `""` | The URI to a microservice that maps image metadata to a file location. If empty, Prompt Processing does not use a microservice. |
 | prompt-proto-service.registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |

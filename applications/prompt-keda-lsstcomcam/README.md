@@ -59,9 +59,11 @@ KEDA Prompt Processing instance for LSSTComCam.
 | prompt-keda.keda.scalingStrategy | string | `"eager"` |  |
 | prompt-keda.keda.successfulJobsHistoryLimit | int | `5` |  |
 | prompt-keda.logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
+| prompt-keda.mpSky_service | string | `""` | The URI to the MPSky ephemerides service. Empty value is allowed, but its handling is undefined. |
 | prompt-keda.nameOverride | string | `""` | Override the base name for resources |
 | prompt-keda.nodeSelector | object | `{}` | Node selection rules for the Prompt Processing pod |
 | prompt-keda.podAnnotations | object | `{}` | Pod annotations for the Prompt Processing Pod |
+| prompt-keda.raw_microservice | string | `""` | The URI to a microservice that maps image metadata to a file location. If empty, Prompt Processing does not use a microservice. |
 | prompt-keda.registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |
 | prompt-keda.resources | object | See `values.yaml` | Kubernetes resource requests and limits |
 | prompt-keda.s3.auth_env | bool | `true` | If set, get S3 credentials from this application's Vault secret. |
