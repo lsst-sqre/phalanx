@@ -10,7 +10,16 @@ cadc-tap:
       passwordEnabled: true
 
     sentryEnabled: true
-    sentryTracesSampleRate: "0.1"
+
+    kafka:
+      bootstrapServer: "sasquatch-int-kafka-bootstrap.lsst.cloud:9094"
+      schemaRegistry:
+        url: "https://data-int.lsst.cloud/schema-registry/"
+      topics:
+        jobRun: "lsst.tap.job-run"
+      auth:
+        enabled: true
+
 
   cloudsql:
     enabled: true
