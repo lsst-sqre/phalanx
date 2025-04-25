@@ -1,7 +1,7 @@
 prompt-keda:
   image:
     pullPolicy: IfNotPresent
-    tag: 6.6.0
+    tag: 6.6.1
 
   worker:
     # TODO: need to adjust this once we know how leaky the LSSTCam pipeline is
