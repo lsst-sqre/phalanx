@@ -108,9 +108,6 @@ cloudsql:
   serviceAccount: "nublado@science-platform-dev-7696.iam.gserviceaccount.com"
 cronjob:
   enabled: true
-  image:
-    tag: tickets-DM-49131
-    pullPolicy: Always
   targetVolume:
     mountPath: "/project"
     server: "10.234.16.4"
