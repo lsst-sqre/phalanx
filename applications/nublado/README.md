@@ -96,9 +96,9 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cronjob.gitBranch | string | `"main"` | Branch of repository to clone |
 | cronjob.gitSource | string | `"https://github.com/lsst/tutorial-notebooks"` | Source for repository to clone |
 | cronjob.gitTarget | string | `"/project/cst_repos/tutorial-notebooks"` | Target where repository should land |
-| cronjob.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the controller image |
+| cronjob.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the repo cloner image |
 | cronjob.image.repository | string | `"ghcr.io/lsst-sqre/repo-cloner"` | Repository cloner image to use |
-| cronjob.image.tag | string | The appVersion of the chart | Tag of Nublado controller image to use |
+| cronjob.image.tag | string | `"0.1.0"` | Tag of repo cloner image to use |
 | cronjob.resources | object | See `values.yaml` | Resource limits and requests for the tutorials cronjob |
 | cronjob.schedule | string | `"43 * * * *"` | Schedule for the tutorials cronjob. |
 | cronjob.targetVolume | object | See `values.yaml` | Repository volume definition |

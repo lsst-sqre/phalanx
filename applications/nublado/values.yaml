@@ -707,12 +707,11 @@ cronjob:
     # -- Repository cloner image to use
     repository: "ghcr.io/lsst-sqre/repo-cloner"
 
-    # -- Pull policy for the controller image
+    # -- Pull policy for the repo cloner image
     pullPolicy: "IfNotPresent"
 
-    # -- Tag of Nublado controller image to use
-    # @default -- The appVersion of the chart
-    tag: null
+    # -- Tag of repo cloner image to use
+    tag: "0.1.0"
 
   # -- Resource limits and requests for the tutorials cronjob
   # @default -- See `values.yaml`
