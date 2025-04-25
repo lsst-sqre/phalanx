@@ -30,7 +30,7 @@ config:
       - "exec:portal"
       - "read:image"
       - "read:tap"
-  autostart:
+  autostart: []
     # - name: "tap-scale"
     #   count: 90
     #   user_spec:
@@ -81,25 +81,25 @@ config:
     #       idle_time: "10s"
     #       delete_lab: false
     #     restart: true
-    - name: "scale-test-simple"
-      count: 100
-      user_spec:
-        username_prefix: "bot-mobu-scale-notebook"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      start_batch_size: 50
-      start_batch_wait: "1m"
-      business:
-        type: "NotebookRunnerList"
-        options:
-          repo_url: "https://github.com/lsst-sqre/scaletest.git"
-          repo_ref: "main"
-          execution_idle_time: 1
-          idle_time: 10
-          notebooks_to_run:
-            - TAP_pg.ipynb
-          delete_lab: false
-        restart: true
+    # - name: "scale-test-simple"
+    #   count: 100
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-notebook"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   start_batch_size: 50
+    #   start_batch_wait: "1m"
+    #   business:
+    #     type: "NotebookRunnerList"
+    #     options:
+    #       repo_url: "https://github.com/lsst-sqre/scaletest.git"
+    #       repo_ref: "main"
+    #       execution_idle_time: 1
+    #       idle_time: 10
+    #       notebooks_to_run:
+    #         - TAP_pg.ipynb
+    #       delete_lab: false
+    #     restart: true
