@@ -423,7 +423,7 @@ latissWorkerSet:
 #     limits:
 #       cpu: 1.0
 #       memory: 8G
-# comcamsimGather2aSet:
+# comcamsimGather1bSet:
 #   name: LSSTComCamSim/runStep1bWorker.py
 #   mounts:
 #   - comcam-data
@@ -482,7 +482,7 @@ latissWorkerSet:
 #     limits:
 #       cpu: 1.0
 #       memory: 8G
-# comcamGather2aSet:
+# comcamGather1bSet:
 #   name: LSSTComCam/runStep1bWorker.py
 #   mounts:
 #   - comcam-data
@@ -496,7 +496,7 @@ latissWorkerSet:
 #     limits:
 #       cpu: 1.0
 #       memory: "8G"
-# comcamGather2aAosSet:
+# comcamGather1bAosSet:
 #   name: LSSTComCam/runStep1bAosWorker.py
 #   mounts:
 #   - comcam-data
@@ -553,7 +553,7 @@ lsstcamAosWorkerSet:
     limits:
       cpu: 1.0
       memory: 8G
-lsstcamGather2aSet:
+lsstcamGather1bSet:
   name: LSSTCam/runStep1bWorker.py
   mounts:
   - lsstcam-data
@@ -566,7 +566,7 @@ lsstcamGather2aSet:
     limits:
       cpu: 1.0
       memory: "8G"
-lsstcamGather2aAosSet:
+lsstcamGather1bAosSet:
   name: LSSTCam/runStep1bAosWorker.py
   mounts:
   - lsstcam-data
