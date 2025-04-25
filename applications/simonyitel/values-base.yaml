@@ -311,6 +311,10 @@ mtoods:
                         filesOlderThan:
                             <<: *interval
                             days: 5
+                      - collection: LSSTCam/raw/guider
+                        filesOlderThan:
+                            <<: *interval
+                            days: 5
                       - collection: LSSTCam/quickLook
                         filesOlderThan:
                             <<: *interval
