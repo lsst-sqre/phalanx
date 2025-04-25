@@ -50,6 +50,7 @@ controller:
         PANDA_CONFIG_ROOT: "~"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
         TMPDIR: "/tmp"
+        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/project/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
@@ -126,7 +127,12 @@ jupyterhub:
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
-
+cronjob:
+  enabled: true
+  targetVolume:
+    mountPath: "/project"
+    server: "10.22.240.130"
+    path: "/share1/project"
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
