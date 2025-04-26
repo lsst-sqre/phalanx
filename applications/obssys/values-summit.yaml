@@ -175,10 +175,10 @@ mtqueue:
   resources:
     limits:
       cpu: 6
-      memory: 10Gi
+      memory: 15Gi
     requests:
       cpu: 1
-      memory: 430Mi
+      memory: 2Gi
 
 mtscheduler:
   classifier: scheduler1
