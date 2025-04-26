@@ -596,6 +596,19 @@ lsstcamGather1bAosSet:
     limits:
       cpu: 1.0
       memory: "8G"
+lsstcamGatherRollupSet:
+  name: LSSTCam/runNightlyWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "12G"
+    limits:
+      cpu: 1.0
+      memory: "24G"
 pullSecretsPath: pull-secret
 butlerSecret:
   containerPath: /home/saluser/.lsst
