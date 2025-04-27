@@ -200,7 +200,7 @@ spec:
         - name: raw-butler-secret
           secret:
             secretName: butler-secret
-            defaultMode: 0600
+            defaultMode: 0644
       {{- end }}
       {{- if or $.Values.nodeSelector $script.nodeSelector }}
       {{- $nodeSelector := $script.nodeSelector | default $.Values.nodeSelector }}
