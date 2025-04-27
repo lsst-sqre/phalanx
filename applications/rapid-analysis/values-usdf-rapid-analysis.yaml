@@ -1,7 +1,7 @@
 image:
-  repository: lsstts/rapid-analysis
-  tag: c0041_usdf
-  pullPolicy: IfNotPresent
+  repository: ghcr.io/lsst-sitcom/rubintv_production
+  tag: tickets-DM-50534
+  pullPolicy: Always
 location: USDF
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /sdf/group/rubin/shared/data-repos.yaml
@@ -29,6 +29,9 @@ affinity:
       - matchExpressions:
         - key: node-role.kubernetes.io/rapid-analysis
           operator: Exists
+securityContext:
+  uid: 17951
+  gid: 4085
 scripts:
 ###
 ### LSSTCam pods
