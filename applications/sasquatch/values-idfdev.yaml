@@ -111,13 +111,19 @@ influxdb-enterprise:
 
 telegraf:
   enabled: true
+  influxdb:
+    url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
   kafkaConsumers:
-    test:
+    example:
       enabled: true
-      database: "telegraf-kafka-consumer-v1"
       replicaCount: 1
+      database: "lsst.example"
+      tags: |
+        [ "band", "instrument" ]
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
       topicRegexps: |
-        [ "lsst.Test.*" ]
+        [ "lsst.example" ]
 
 kafdrop:
   cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=true --topic.createEnabled=true"
@@ -132,9 +138,7 @@ rest-proxy:
     hostname: data-dev.lsst.cloud
   kafka:
     topicPrefixes:
-      - test
-      - lsst.dm
-      - lsst.Test
+      - lsst.example
       - lsst.tap
 
 chronograf:

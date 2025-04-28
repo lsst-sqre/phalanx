@@ -15,11 +15,11 @@ Telegraf is an agent for collecting, processing, aggregating, and writing metric
 | image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
 | image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
 | imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
-| influxdb.database | string | `""` | Name of the InfluxDB v1 database to write to (required) |
 | influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
 | kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
 | kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
 | kafkaConsumers.test.consumer_fetch_default | string | "20MB" | Maximum amount of data the server should return for a fetch request. |
+| kafkaConsumers.test.database | string | `""` | Name of the InfluxDB v1 database to write to (required) |
 | kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
 | kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
