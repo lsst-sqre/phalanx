@@ -60,6 +60,9 @@ kafkaConsumers:
     # increase the consumer throughput.
     replicaCount: 1
 
+    # -- Name of the InfluxDB v1 database to write to (required)
+    database: ""
+
     # -- Sends metrics to the output in batches of at most metric_batch_size
     # metrics.
     # @default -- 1000
@@ -184,8 +187,6 @@ kafkaConsumers:
 influxdb:
   # -- URL of the InfluxDB v1 instance to write to
   url: "http://sasquatch-influxdb.sasquatch:8086"
-  # -- Name of the InfluxDB v1 database to write to (required)
-  database: ""
 
 # -- Kubernetes resources requests and limits
 # @default -- See `values.yaml`
