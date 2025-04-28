@@ -23,7 +23,7 @@ prompt-keda:
       main: |-
         - survey: BLOCK-365  # FBS SV Field Survey
           pipelines:
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe.yaml
+          # TODO: enable ApPipe only when we're ready (resources, alerts, etc.)
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         - survey: BLOCK-T427  # Daytime checkout
