@@ -3,6 +3,11 @@ prompt-keda:
     pullPolicy: IfNotPresent
     tag: 6.7.0
 
+  alerts:
+    username: kafka-admin
+    server: usdf-alert-stream-dev.lsst.cloud:9094
+    topic: lsst-alerts-v7.4
+
   worker:
     # TODO: need to adjust this once we know how leaky the LSSTCam pipeline is
     # restart: 7
@@ -118,11 +123,6 @@ prompt-keda:
 
   apdb:
     config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcam.yaml
-
-  alerts:
-    username: kafka-admin
-    server: usdf-alert-stream-dev.lsst.cloud:9094
-    topic: lsst-alerts
 
   # TODO: may need to override for debugging
   logLevel: timer.lsst.activator=DEBUG timer.lsst.daf.butler=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE lsst.daf.butler=VERBOSE
