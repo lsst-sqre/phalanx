@@ -351,6 +351,10 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
+- name: LSSTCam/runMetadataServerRaPerformance.py
+  mounts:
+  - lsstcam-data
+  - project-shared
 - name: LSSTCam/runPlotter.py
   mounts:
   - lsstcam-data
@@ -384,6 +388,17 @@ scripts:
     limits:
       cpu: 2
       memory: 10G
+- name: LSSTCam/runPerformanceMonitor.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
 - name: LSSTCam/runRadialPlotting.py
   mounts:
   - lsstcam-data
