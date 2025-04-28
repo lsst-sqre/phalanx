@@ -230,7 +230,7 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1.0
+      cpu: 2.0
       memory: 6G
     limits:
       cpu: 2.0
