@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sasquatch-restore
+  labels:
+    {{- include "backup.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "backup.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- if .Values.podAnnotations }}
+      annotations:
+        {{ toYaml .Values.podAnnotations | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "backup.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: sasquatch-backup
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      volumes:
+      - name: backup
+        persistentVolumeClaim:
+          claimName: sasquatch-backup
+      containers:
+      - name: sasquatch-backup
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+        volumeMounts:
+        - name: backup
+          mountPath: /backup
+        command:
+        - /bin/sh
+        - -c
+        - "sleep infinity"  # Keeps the pod alive for exec access
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
