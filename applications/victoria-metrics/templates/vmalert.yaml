@@ -1,0 +1,11 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAlert
+metadata:
+  name: vmalert-select-all
+spec:
+  extraArgs:
+    external.url: "{{ .Values.global.baseUrl }}/{{ .Values.vmSingle.pathPrefix }}/vmalert"
+    {{- if .Values.vmAgent.extraArgs }}
+    {{- .Values.vmAlert.extraArgs | toYaml | nindent 4 }}
+    {{- end }}
+  {{- .Values.vmAlert.spec | toYaml | nindent 2 }}
