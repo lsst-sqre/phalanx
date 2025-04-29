@@ -25,6 +25,8 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.nubladoControllerPathPrefix | string | `"/nublado"` | URL path prefix for the Nublado JupyterLab Controller service |
+| config.sentry.enabled | bool | `false` | Whether to enable sentry at all |
+| config.sentry.tracesSampleRate | int | `0` | A number between 0 and 1, controlling the percentage chance a given transaction will be sent to Sentry. 0 represents 0% while 1 represents 100%. This has no effect on error reporting, only tracing. |
 | config.worker.identities | list | `[]` | Science Platform user identities that workers can acquire. Each item is an object with username and uuid keys |
 | config.worker.imageReference | string | `""` | Nublado image reference, applicable when imageSelector is "reference" |
 | config.worker.imageSelector | string | `"recommended"` | Nublado image stream to select: "recommended", "weekly" or "reference" |
@@ -36,6 +38,7 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | config.worker.workerCount | int | `1` | Number of workers to run |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |

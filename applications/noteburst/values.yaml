@@ -17,6 +17,10 @@ global:
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
 
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD Application
+  environmentName: ""
+
 # -- Number of API pods to run
 replicaCount: 1
 
@@ -98,9 +102,7 @@ autoscaling:
 nodeSelector: {}
 
 tolerations: []
-
 affinity: {}
-
 config:
   # -- Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
   logLevel: "INFO"
@@ -110,6 +112,15 @@ config:
 
   # -- URL path prefix for the Nublado JupyterLab Controller service
   nubladoControllerPathPrefix: "/nublado"
+
+  sentry:
+    # -- Whether to enable sentry at all
+    enabled: false
+
+    # -- A number between 0 and 1, controlling the percentage chance a given
+    # transaction will be sent to Sentry. 0 represents 0% while 1 represents
+    # 100%. This has no effect on error reporting, only tracing.
+    tracesSampleRate: 0
 
   metrics:
     # -- Whether to enable sending metrics

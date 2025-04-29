@@ -4,6 +4,9 @@ config:
   logLevel: "DEBUG"
   metrics:
     enabled: true
+  sentry:
+    enabled: true
+    tracesSampleRate: 1
   worker:
     workerCount: 1
     identities:

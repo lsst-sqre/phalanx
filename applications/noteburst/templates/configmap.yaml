@@ -11,6 +11,7 @@ data:
   NOTEBURST_REDIS_URL: "redis://{{ include "noteburst.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
   NOTEBURST_JUPYTERHUB_PATH_PREFIX: {{ .Values.config.hubPathPrefix | quote }}
   NOTEBURST_NUBLADO_CONTROLLER_PATH_PREFIX: {{ .Values.config.nubladoControllerPathPrefix | quote }}
+  NOTEBURST_SENTRY_TRACES_SAMPLE_RATE: {{ .Values.config.sentry.tracesSampleRate | quote }}
   METRICS_ENABLED: {{ .Values.config.metrics.enabled | quote }}
   METRICS_APPLICATION: {{ .Values.config.metrics.application | quote }}
   SCHEMA_MANAGER_REGISTRY_URL: {{ .Values.config.metrics.schemaManager.registryUrl }}
