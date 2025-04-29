@@ -1,0 +1,11 @@
+apiVersion: v2
+description: Operational metrics database
+name: victoria-metrics
+type: application
+version: 1.0.0
+appVersion: v0.56.0
+
+dependencies:
+  - name: victoria-metrics-operator
+    version: 0.45.0
+    repository: https://victoriametrics.github.io/helm-charts/
