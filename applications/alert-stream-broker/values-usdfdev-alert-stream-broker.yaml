@@ -151,7 +151,7 @@ alert-database:
     kafka:
       cluster: alert-broker
       port: 9092
-      topic: alerts-simulated
+      topic: lsst-alerts-v7.4
 
   server:
     serviceAccountName: alert-database-reader
