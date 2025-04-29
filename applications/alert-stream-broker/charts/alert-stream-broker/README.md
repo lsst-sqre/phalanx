@@ -10,7 +10,8 @@ Kafka broker cluster for distributing alerts
 | clusterName | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
 | clusterPort | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal TLS listener. |
 | fullnameOverride | string | `""` | Override for the full name used for Kubernetes resources; by default one will be created based on the chart name and helm release name. |
-| kafka.config | object | `{"log.retention.bytes":"42949672960","log.retention.hours":168,"offsets.retention.minutes":10080}` | Configuration overrides for the Kafka server. |
+| kafka.config | object | `{"auto.create.topics.enable":"false","log.retention.bytes":"42949672960","log.retention.hours":168,"offsets.retention.minutes":10080}` | Configuration overrides for the Kafka server. |
+| kafka.config."auto.create.topics.enable" | string | `"false"` | Turns of automatic topic creation to prevent accidental topic use. |
 | kafka.config."log.retention.bytes" | string | `"42949672960"` | Maximum retained number of bytes for a broker's data. This is a string to avoid YAML type conversion issues for large numbers. |
 | kafka.config."log.retention.hours" | int | `168` | Number of hours for a brokers data to be retained. |
 | kafka.config."offsets.retention.minutes" | int | `10080` | Number of minutes for a consumer group's offsets to be retained. |
