@@ -26,7 +26,7 @@ Rubin Observatory's telemetry service
 | chronograf.env | object | See `values.yaml` | Additional environment variables for Chronograf |
 | chronograf.envFromSecret | string | `"sasquatch"` | Name of secret to use. The keys `generic_client_id`, `generic_client_secret`, and `token_secret` should be set. |
 | chronograf.image.repository | string | `"quay.io/influxdb/chronograf"` | Docker image to use for Chronograf |
-| chronograf.image.tag | string | `"1.10.7"` | Docker tag to use for Chronograf |
+| chronograf.image.tag | string | `"1.10.6"` | Docker tag to use for Chronograf |
 | chronograf.ingress.className | string | `"nginx"` | Ingress class to use |
 | chronograf.ingress.enabled | bool | `false` | Whether to enable the Chronograf ingress |
 | chronograf.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
@@ -42,9 +42,6 @@ Rubin Observatory's telemetry service
 | customInfluxDBIngress.enabled | bool | `false` | Whether to enable the custom ingress for InfluxDB OSS |
 | customInfluxDBIngress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
 | customInfluxDBIngress.path | string | `"/influxdb(/\|$)(.*)"` | Path for the ingress |
-| data-transfer-monitoring.enabled | bool | `false` | Whether to enable the data-transfer-monitoring subchart |
-| grafana.enabled | bool | `false` | Whether to enable the grafana subchart |
-| influxdb-enterprise-active.enabled | bool | `false` | Whether to enable influxdb-enterprise-active |
 | influxdb-enterprise-standby.enabled | bool | `false` | Whether to enable influxdb-enterprise-standby |
 | influxdb-enterprise.enabled | bool | `false` | Whether to enable influxdb-enterprise |
 | influxdb.config.continuous_queries.enabled | bool | `false` | Whether continuous queries are enabled |
@@ -70,7 +67,7 @@ Rubin Observatory's telemetry service
 | influxdb.ingress.path | string | `"/influxdb(/\|$)(.*)"` | Path for the ingress |
 | influxdb.ingress.tls | bool | `false` | Whether to obtain TLS certificates for the ingress hostname |
 | influxdb.initScripts.enabled | bool | `false` | Whether to enable the InfluxDB custom initialization script |
-| influxdb.livenessProbe.initialDelaySeconds | int | `180` | Liveness probe initial delay in seconds |
+| influxdb.livenessProbe.initialDelaySeconds | int | `90` | Liveness probe initial delay in seconds |
 | influxdb.persistence.enabled | bool | `true` | Whether to use persistent volume claims. By default, `storageClass` is undefined, choosing the default provisioner (standard on GKE). |
 | influxdb.persistence.size | string | 1TiB for teststand deployments | Persistent volume size |
 | influxdb.resources | object | See `values.yaml` | Kubernetes resource requests and limits |
@@ -85,22 +82,22 @@ Rubin Observatory's telemetry service
 | kapacitor.enabled | bool | `true` | Whether to enable Kapacitor |
 | kapacitor.envVars | object | See `values.yaml` | Additional environment variables to set |
 | kapacitor.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
-| kapacitor.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Kapacitor |
-| kapacitor.image.repository | string | `"docker.io/library/kapacitor"` | Docker image to use for Kapacitor |
-| kapacitor.image.tag | string | `"1.8.0"` | Tag to use for Kapacitor |
+| kapacitor.image.repository | string | `"kapacitor"` | Docker image to use for Kapacitor |
+| kapacitor.image.tag | string | `"1.7.6"` | Tag to use for Kapacitor |
 | kapacitor.influxURL | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB connection URL |
 | kapacitor.persistence.enabled | bool | `true` | Whether to enable Kapacitor data persistence |
 | kapacitor.persistence.size | string | `"100Gi"` | Size of storage to request if enabled |
 | kapacitor.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Kapacitor |
-| kapacitor.squadcast | object | False. If set to true, you need to create the URL as a secret | Enable Squadcast alerts |
 | kapacitor.strategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
 | obsenv.enabled | bool | `false` | Whether to enable the obsenv subchart |
 | obsloctap.enabled | bool | `false` | Whether to enable the obsloctap subchart |
 | prompt-processing.enabled | bool | `false` | Whether to enable the prompt-processing subchart |
 | rest-proxy.enabled | bool | `false` | Whether to enable the REST proxy |
-| scimma.enabled | bool | `false` | Whether to enable the scimma subchart |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations |
-| strimzi-kafka | object | `{}` |  |
+| strimzi-kafka.connect.enabled | bool | `true` | Whether Kafka Connect is enabled |
+| strimzi-kafka.kafka.listeners.external.enabled | bool | `true` | Whether external listener is enabled |
+| strimzi-kafka.kafka.listeners.plain.enabled | bool | `true` | Whether internal plaintext listener is enabled |
+| strimzi-kafka.kafka.listeners.tls.enabled | bool | `true` | Whether internal TLS listener is enabled |
 | strimzi-registry-operator.clusterName | string | `"sasquatch"` | Name of the Strimzi Kafka cluster |
 | strimzi-registry-operator.clusterNamespace | string | `"sasquatch"` | Namespace where the Strimzi Kafka cluster is deployed |
 | strimzi-registry-operator.operatorNamespace | string | `"sasquatch"` | Namespace where the strimzi-registry-operator is deployed |
@@ -137,16 +134,12 @@ Rubin Observatory's telemetry service
 | backup.persistence.storageClass | string | "" (empty string) to use the cluster default storage class | Storage class to use for the backups |
 | backup.podAnnotations | object | `{}` | Annotations for the backups deployment pod |
 | backup.resources | object | `{}` | Resource limits and requests for the backups deployment pod |
-| backup.restore | object | `{"enabled":false}` | Whether to enable the restore deployment |
 | backup.schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
 | backup.tolerations | list | `[]` | Tolerations for the backups deployment pod |
 | consdb.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | control-system.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | control-system.topics | list | `[]` | Create lsst.s3.* related topics for the ts-salkafka user. |
-| data-transfer-monitoring.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
-| grafana.influxdb.databases | list | `[]` | Databases in InfluxDB exposed to Grafana. |
-| grafana.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL for the InfluxDB instance used by Grafana. |
-| influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `influxdb-user` and `influxdb-password`. |
+| influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
 | influxdb-enterprise.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | influxdb-enterprise.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
 | influxdb-enterprise.data.affinity | object | See `values.yaml` | Affinity rules for data pods |
@@ -182,7 +175,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.data.podSecurityContext | object | `{}` | Pod security context for data pods |
 | influxdb-enterprise.data.preruncmds | list | `[]` | Commands to run in data pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | influxdb-enterprise.data.replicas | int | `1` | Number of data replicas to run |
-| influxdb-enterprise.data.resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise.data.resources | object | `{}` | Kubernetes resources and limits for the meta container |
 | influxdb-enterprise.data.securityContext | object | `{}` | Security context for meta pods |
 | influxdb-enterprise.data.service.annotations | object | `{}` | Extra annotations for the data service |
 | influxdb-enterprise.data.service.externalIPs | list | Do not allocate external IPs | External IPs for the data service |
@@ -220,7 +213,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.meta.podSecurityContext | object | `{}` | Pod security context for meta pods |
 | influxdb-enterprise.meta.preruncmds | list | `[]` | Commands to run in meta pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | influxdb-enterprise.meta.replicas | int | `3` | Number of meta pods to run |
-| influxdb-enterprise.meta.resources | object | `{"limits":{"cpu":1,"memory":"1Gi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise.meta.resources | object | `{}` | Kubernetes resources and limits for the meta container |
 | influxdb-enterprise.meta.securityContext | object | `{}` | Security context for meta pods |
 | influxdb-enterprise.meta.service.annotations | object | `{}` | Extra annotations for the meta service |
 | influxdb-enterprise.meta.service.externalIPs | list | Do not allocate external IPs | External IPs for the meta service |
@@ -236,7 +229,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | influxdb-enterprise.serviceAccount.create | bool | `false` | Whether to create a Kubernetes service account to run as |
 | influxdb-enterprise.serviceAccount.name | string | Name based on the chart fullname | Name of the Kubernetes service account to run as |
-| influxdb-enterprise-active.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `influxdb-user` and `influxdb-password`. |
+| influxdb-enterprise-active.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
 | influxdb-enterprise-active.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | influxdb-enterprise-active.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
 | influxdb-enterprise-active.data.affinity | object | See `values.yaml` | Affinity rules for data pods |
@@ -272,7 +265,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.data.podSecurityContext | object | `{}` | Pod security context for data pods |
 | influxdb-enterprise-active.data.preruncmds | list | `[]` | Commands to run in data pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | influxdb-enterprise-active.data.replicas | int | `1` | Number of data replicas to run |
-| influxdb-enterprise-active.data.resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise-active.data.resources | object | `{}` | Kubernetes resources and limits for the meta container |
 | influxdb-enterprise-active.data.securityContext | object | `{}` | Security context for meta pods |
 | influxdb-enterprise-active.data.service.annotations | object | `{}` | Extra annotations for the data service |
 | influxdb-enterprise-active.data.service.externalIPs | list | Do not allocate external IPs | External IPs for the data service |
@@ -310,7 +303,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.meta.podSecurityContext | object | `{}` | Pod security context for meta pods |
 | influxdb-enterprise-active.meta.preruncmds | list | `[]` | Commands to run in meta pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | influxdb-enterprise-active.meta.replicas | int | `3` | Number of meta pods to run |
-| influxdb-enterprise-active.meta.resources | object | `{"limits":{"cpu":1,"memory":"1Gi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise-active.meta.resources | object | `{}` | Kubernetes resources and limits for the meta container |
 | influxdb-enterprise-active.meta.securityContext | object | `{}` | Security context for meta pods |
 | influxdb-enterprise-active.meta.service.annotations | object | `{}` | Extra annotations for the meta service |
 | influxdb-enterprise-active.meta.service.externalIPs | list | Do not allocate external IPs | External IPs for the meta service |
@@ -326,7 +319,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | influxdb-enterprise-active.serviceAccount.create | bool | `false` | Whether to create a Kubernetes service account to run as |
 | influxdb-enterprise-active.serviceAccount.name | string | Name based on the chart fullname | Name of the Kubernetes service account to run as |
-| influxdb-enterprise-standby.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `influxdb-user` and `influxdb-password`. |
+| influxdb-enterprise-standby.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
 | influxdb-enterprise-standby.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | influxdb-enterprise-standby.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
 | influxdb-enterprise-standby.data.affinity | object | See `values.yaml` | Affinity rules for data pods |
@@ -362,7 +355,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.data.podSecurityContext | object | `{}` | Pod security context for data pods |
 | influxdb-enterprise-standby.data.preruncmds | list | `[]` | Commands to run in data pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | influxdb-enterprise-standby.data.replicas | int | `1` | Number of data replicas to run |
-| influxdb-enterprise-standby.data.resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise-standby.data.resources | object | `{}` | Kubernetes resources and limits for the meta container |
 | influxdb-enterprise-standby.data.securityContext | object | `{}` | Security context for meta pods |
 | influxdb-enterprise-standby.data.service.annotations | object | `{}` | Extra annotations for the data service |
 | influxdb-enterprise-standby.data.service.externalIPs | list | Do not allocate external IPs | External IPs for the data service |
@@ -400,7 +393,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.meta.podSecurityContext | object | `{}` | Pod security context for meta pods |
 | influxdb-enterprise-standby.meta.preruncmds | list | `[]` | Commands to run in meta pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | influxdb-enterprise-standby.meta.replicas | int | `3` | Number of meta pods to run |
-| influxdb-enterprise-standby.meta.resources | object | `{"limits":{"cpu":1,"memory":"1Gi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise-standby.meta.resources | object | `{}` | Kubernetes resources and limits for the meta container |
 | influxdb-enterprise-standby.meta.securityContext | object | `{}` | Security context for meta pods |
 | influxdb-enterprise-standby.meta.service.annotations | object | `{}` | Extra annotations for the meta service |
 | influxdb-enterprise-standby.meta.service.externalIPs | list | Do not allocate external IPs | External IPs for the meta service |
@@ -498,17 +491,6 @@ Rubin Observatory's telemetry service
 | kafka-connect-manager.s3Sink.timezone | string | `"UTC"` | The timezone to use when partitioning with TimeBasedPartitioner |
 | kafka-connect-manager.s3Sink.topicsDir | string | `"topics"` | Top level directory to store the data ingested from Kafka |
 | kafka-connect-manager.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka |
-| kapacitor.affinity | object | None, must be set if you want to control pod affinity | Affinity for pod assignment |
-| kapacitor.namespaceOverride | string | `""` | Override the deployment namespace |
-| kapacitor.override_config.toml | string | None, must be specified if you want to override default. | If specified, replace pod config with this TOML |
-| kapacitor.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode for persistent volume. Usually should be left alone. |
-| kapacitor.persistence.existingClaim | string | `""` | If dynamic provisioning is disabled, use this PVC name for storage |
-| kapacitor.persistence.storageClass | string | `nil` | If undefined or null, default provisioner (gp2 on AWS, standard on GKE, AWS & OpenStack); "-" disables dynamic provisioning |
-| kapacitor.rbac | object | Enabled, cluster-scoped. See kapacitor `values.yaml` | Role based access control |
-| kapacitor.service.type | string | `"ClusterIP"` | K8s Service type; expose (if desired) with LoadBalancer or NodePort |
-| kapacitor.serviceAccount | object | Enabled. See kapacitor `values.yaml` | Service account |
-| kapacitor.sidecar | object | See kapacitor `values.yaml` | Sidecars to collect the configmaps with specified label and mount their data into specified folders |
-| kapacitor.tolerations | list | None, must be set if you want tolerations | Tolerations for pod assignment |
 | obsenv.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | obsloctap.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | prompt-processing.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
@@ -518,7 +500,7 @@ Rubin Observatory's telemetry service
 | rest-proxy.heapOptions | string | `"-Xms512M -Xmx512M"` | Kafka REST proxy JVM Heap Option |
 | rest-proxy.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | rest-proxy.image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository |
-| rest-proxy.image.tag | string | `"8.0.0"` | Kafka REST proxy image tag |
+| rest-proxy.image.tag | string | `"7.9.0"` | Kafka REST proxy image tag |
 | rest-proxy.ingress.annotations | object | See `values.yaml` | Additional annotations to add to the ingress |
 | rest-proxy.ingress.enabled | bool | `false` | Whether to enable the ingress |
 | rest-proxy.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
@@ -534,25 +516,8 @@ Rubin Observatory's telemetry service
 | rest-proxy.schemaregistry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema registry URL |
 | rest-proxy.service.port | int | `8082` | Kafka REST proxy service port |
 | rest-proxy.tolerations | list | `[]` | Tolerations configuration |
-| scimma.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | square-events.cluster.name | string | `"sasquatch"` |  |
-| strimzi-kafka.broker.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for broker pod assignment |
-| strimzi-kafka.broker.enabled | bool | `false` | Enable node pool for the kafka brokers |
-| strimzi-kafka.broker.name | string | `"kafka"` | Node pool name |
-| strimzi-kafka.broker.nodeIds | string | `"[0,1,2]"` | IDs to assign to the brokers |
-| strimzi-kafka.broker.resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Kubernetes resources for the brokers |
-| strimzi-kafka.broker.storage.size | string | `"1.5Ti"` | Storage size for the brokers |
-| strimzi-kafka.broker.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
-| strimzi-kafka.broker.tolerations | list | `[]` | Tolerations for broker pod assignment |
-| strimzi-kafka.brokerMigration.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka broker pod assignment |
-| strimzi-kafka.brokerMigration.enabled | bool | `false` | Whether to enable another node pool to migrate the kafka brokers to |
-| strimzi-kafka.brokerMigration.name | string | `"broker-migration"` | Name of the node pool |
-| strimzi-kafka.brokerMigration.nodeIDs | string | `"[6,7,8]"` | IDs to assign to the brokers |
-| strimzi-kafka.brokerMigration.rebalance.avoidBrokers | list | `[0,1,2]` | Brokers to avoid during rebalancing These are the brokers you are migrating from and you want to remove after the migration is complete. |
-| strimzi-kafka.brokerMigration.rebalance.enabled | bool | `false` | Whether to rebalance the kafka cluster |
-| strimzi-kafka.brokerMigration.size | string | `"1.5Ti"` | Storage size for the brokers |
-| strimzi-kafka.brokerMigration.storageClassName | string | None, use the default storage class | Storage class name for the brokers |
-| strimzi-kafka.brokerMigration.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment |
+| strimzi-kafka.brokerStorage | object | `{"enabled":false,"migration":{"brokers":[0,1,2],"enabled":false,"rebalance":false},"size":"1.5Ti","storageClassName":"localdrive"}` | Configuration for deploying Kafka brokers with local storage |
 | strimzi-kafka.cluster.monitorLabel | object | `{}` | Site wide label required for gathering Prometheus metrics if they are enabled |
 | strimzi-kafka.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations |
 | strimzi-kafka.connect.config."key.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Set the converter for the message ke |
@@ -564,17 +529,8 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.connect.enabled | bool | `false` | Enable Kafka Connect |
 | strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
-| strimzi-kafka.connect.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafka Connect |
-| strimzi-kafka.controller.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for controller pod assignment |
-| strimzi-kafka.controller.enabled | bool | `false` | Enable node pool for the kafka controllers |
-| strimzi-kafka.controller.nodeIds | string | `"[3,4,5]"` | IDs to assign to the controllers |
-| strimzi-kafka.controller.resources | object | `{"limits":{"cpu":"1","memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for the controllers |
-| strimzi-kafka.controller.storage.size | string | `"20Gi"` | Storage size for the controllers |
-| strimzi-kafka.controller.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
-| strimzi-kafka.controller.tolerations | list | `[]` | Tolerations for controller pod assignment |
-| strimzi-kafka.cruiseControl.enabled | bool | `false` | Enable cruise control (required for broker migration and rebalancing) |
-| strimzi-kafka.cruiseControl.maxReplicasPerBroker | int | `20000` | Maximum number of replicas per broker |
-| strimzi-kafka.cruiseControl.metricsConfig.enabled | bool | `false` | Enable metrics generation |
+| strimzi-kafka.cruiseControl | object | `{"enabled":false}` | Configuration for the Kafka Cruise Control |
+| strimzi-kafka.kafka.affinity | object | See `values.yaml` | Affinity for Kafka pod assignment |
 | strimzi-kafka.kafka.config."log.retention.minutes" | int | 4320 minutes (3 days) | Number of days for a topic's data to be retained |
 | strimzi-kafka.kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |
 | strimzi-kafka.kafka.config."offsets.retention.minutes" | int | 4320 minutes (3 days) | Number of minutes for a consumer group's offsets to be retained |
@@ -591,19 +547,26 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
 | strimzi-kafka.kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
 | strimzi-kafka.kafka.replicas | int | `3` | Number of Kafka broker replicas to run |
+| strimzi-kafka.kafka.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka brokers |
+| strimzi-kafka.kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers |
+| strimzi-kafka.kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
+| strimzi-kafka.kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment |
 | strimzi-kafka.kafka.version | string | `"3.8.0"` | Version of Kafka to deploy |
+| strimzi-kafka.kafkaController.enabled | bool | `false` | Enable Kafka Controller |
+| strimzi-kafka.kafkaController.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka Controller |
+| strimzi-kafka.kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers |
+| strimzi-kafka.kafkaController.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
 | strimzi-kafka.kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
 | strimzi-kafka.kafkaExporter.enabled | bool | `false` | Enable Kafka exporter |
 | strimzi-kafka.kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
 | strimzi-kafka.kafkaExporter.logging | string | `"info"` | Logging level |
 | strimzi-kafka.kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
-| strimzi-kafka.kafkaExporter.showAllOffsets | bool | `true` | Whether to show all offsets or just offsets from connected groups |
 | strimzi-kafka.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
+| strimzi-kafka.kraft.enabled | bool | `false` | Enable KRaft mode for Kafka |
 | strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster |
 | strimzi-kafka.mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
 | strimzi-kafka.mirrormaker2.replication.policy.class | string | `"org.apache.kafka.connect.mirror.IdentityReplicationPolicy"` | Replication policy. |
 | strimzi-kafka.mirrormaker2.replication.policy.separator | string | `""` | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
-| strimzi-kafka.mirrormaker2.resources | object | `{"limits":{"cpu":1,"memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for MirrorMaker2 |
 | strimzi-kafka.mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
 | strimzi-kafka.mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
 | strimzi-kafka.registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
@@ -624,7 +587,7 @@ Rubin Observatory's telemetry service
 | telegraf.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
 | telegraf.image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
 | telegraf.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
-| telegraf.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
+| telegraf.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
 | telegraf.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
 | telegraf.kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
 | telegraf.kafkaConsumers.test.consumer_fetch_default | string | "20MB" | Maximum amount of data the server should return for a fetch request. |
@@ -650,7 +613,6 @@ Rubin Observatory's telemetry service
 | telegraf.nodeSelector | object | `{}` | Node labels for pod assignment |
 | telegraf.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | telegraf.podLabels | object | `{}` | Labels for the Telegraf pods |
-| telegraf.registry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema Registry URL |
 | telegraf.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | telegraf.tolerations | list | `[]` | Tolerations for pod assignment |
 | telegraf-oss.affinity | object | `{}` | Affinity for pod assignment |
@@ -662,7 +624,7 @@ Rubin Observatory's telemetry service
 | telegraf-oss.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
 | telegraf-oss.image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
 | telegraf-oss.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
-| telegraf-oss.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
+| telegraf-oss.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
 | telegraf-oss.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
 | telegraf-oss.kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
 | telegraf-oss.kafkaConsumers.test.consumer_fetch_default | string | "20MB" | Maximum amount of data the server should return for a fetch request. |
@@ -688,6 +650,5 @@ Rubin Observatory's telemetry service
 | telegraf-oss.nodeSelector | object | `{}` | Node labels for pod assignment |
 | telegraf-oss.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | telegraf-oss.podLabels | object | `{}` | Labels for the Telegraf pods |
-| telegraf-oss.registry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema Registry URL |
 | telegraf-oss.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | telegraf-oss.tolerations | list | `[]` | Tolerations for pod assignment |
