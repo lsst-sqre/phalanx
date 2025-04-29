@@ -178,6 +178,77 @@ influxdb-enterprise-standby:
         memory: 192Gi
         cpu: 16
 
+influxdb-enterprise-active:
+  enabled: true
+  license:
+    secret:
+      name: sasquatch
+      key: influxdb-enterprise-active-license
+  meta:
+    service:
+      type: LoadBalancer
+      annotations:
+        metallb.universe.tf/address-pool: sdf-services
+    ingress:
+      enabled: true
+      hostname: usdf-rsp.slac.stanford.edu
+      path: "/influxdb-enterprise-active-meta(/|$)(.*)"
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 16Gi
+    sharedSecret:
+      secret:
+        name: sasquatch
+        key: influxdb-enterprise-active-shared-secret
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: 4
+      limits:
+        memory: 8Gi
+        cpu: 4
+  data:
+    replicas: 2
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - sdfk8so005
+                    - sdfk8so006
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: influxdb.influxdata.com/component
+                    operator: In
+                    values:
+                      - data
+              topologyKey: kubernetes.io/hostname
+    ingress:
+      enabled: true
+      hostname: usdf-rsp.slac.stanford.edu
+      path: "/influxdb-enterprise-active-data(/|$)(.*)"
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      storageClass: zfs--rubin-efd
+      size: 100Ti
+    resources:
+      requests:
+        memory: 192Gi
+        cpu: 8
+      limits:
+        memory: 192Gi
+        cpu: 8
+
+
 telegraf:
   enabled: true
   influxdb:
