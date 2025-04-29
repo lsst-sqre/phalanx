@@ -1,0 +1,18 @@
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "alertmanager-templates"
+  labels:
+    {{- include "victoria-metrics.labels" . | nindent 4 }}
+data:
+  {{- /*
+  Heaven help you if you want to render a template with a value that is
+  another Go template. You could escape every single `{{` and `}}`, but blech.
+  Ooh, how about using raw strings, with {{` and `}}? Sweet... but does your
+  template value have a string with a backtick in it? Too bad, you can't escape
+  it in a raw string because that would destroy "the beauty of raw strings":
+
+  https://github.com/golang/go/issues/18221#issuecomment-265318727
+  */}}
+  slack-general.tmpl: |
+    {{- .Files.Get "data/alertmanager-templates/slack-general.tmpl" | nindent 4 }}

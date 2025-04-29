@@ -1,0 +1,9 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAlertmanager
+metadata:
+  name: alertmanager
+  labels:
+    {{- include "victoria-metrics.labels" . | nindent 4 }}
+spec:
+  externalURL: "{{ .Values.global.baseUrl }}/{{ .Values.vmAlertmanager.pathPrefix }}"
+  {{- .Values.vmAlertmanager.spec | toYaml | nindent 2 }}
