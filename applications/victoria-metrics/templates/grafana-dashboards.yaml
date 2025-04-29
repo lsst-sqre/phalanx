@@ -1,0 +1,52 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: vm
+  labels:
+    {{- include "victoria-metrics.labels" . | nindent 4 }}
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  url: "https://grafana.com/api/dashboards/10229/revisions/38/download"
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: vmagent
+  labels:
+    {{- include "victoria-metrics.labels" . | nindent 4 }}
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  url: "https://grafana.com/api/dashboards/12683/revisions/21/download"
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: vmalert
+  labels:
+    {{- include "victoria-metrics.labels" . | nindent 4 }}
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  url: "https://grafana.com/api/dashboards/14950/revisions/13/download"
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: victoria-metrics-operator
+  labels:
+    {{- include "victoria-metrics.labels" . | nindent 4 }}
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  url: "https://grafana.com/api/dashboards/17869/revisions/3/download"

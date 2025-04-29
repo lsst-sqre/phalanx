@@ -1,0 +1,234 @@
+# Default values for victoria-metrics.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
+
+# -- victoria-metrics-operator config
+# @default -- see `values.yaml` and https://artifacthub.io/packages/helm/victoriametrics/victoria-metrics-operator?modal=values
+victoria-metrics-operator:
+  # -- Extra settings for the operator deployment. Full list [here](https://docs.victoriametrics.com/operator/vars)
+  env:
+    # Create resources with stricter security contexts:
+    # https://docs.victoriametrics.com/operator/security/#podsecuritycontext
+    - name: "VM_ENABLESTRICTSECURITY"
+      value: "true"
+  admissionWebhooks:
+    # Self signed certs are OK here. Have cert-manager manage them so that:
+    # * They get renewed as needed
+    # * The argocd diff doesn't get clogged up with the operator regenerating
+    #   them on every sync
+    certManager:
+      # -- true if cert-manager should manage the validating adminssion webhook cert.
+      # Self signed certs are OK here. If possible, it's nice to have
+      # cert-manager manage them so that:
+      # * They get renewed as needed
+      # * The ArgoCD diff doesn't get clogged up with the operator regenerating
+      #   them on every sync
+      enabled: true
+  serviceMonitor:
+    enabled: true
+
+# -- Configuration for the VictoriaMetrics instance
+# @default -- See `values.yaml`
+vm:
+  # -- Path prefix for VictoriaMetrics web ui
+  pathPrefix: "vm"
+  # -- Config for the Gafaelfawr ingress to the VictoriaMetrics instance
+  ingress:
+    # -- Additional annotations to add to the ingress
+    annotations: {}
+
+  # -- Spec for the `VMSingle` CRD.
+  # @default -- See `values.yaml` and https://docs.victoriametrics.com/operator/resources/vmsingle
+  spec:
+    # -- if true, controller adds ownership to pvc and after VMSingle object
+    # deletion - pvc will be garbage collected by controller manager
+    removePvcAfterDelete: false
+
+    extraArgs:
+      vmalert.proxyURL: http://vmalert-vmalert-select-all:8080
+
+    resources:
+      limits:
+        cpu: "1"
+        memory: "1Gi"
+      requests:
+        cpu: "1"
+        memory: "1Gi"
+
+    # -- The amount of time to retain data. Takes a number followed by a time
+    # unit character - h(ours), d(ays), w(eeks), y(ears). If the time unit is
+    # not specified, a month (31 days) is assumed.
+    retentionPeriod: "30d"
+
+    # -- The definition of how storage will be used by the VMSingle
+    #
+    # Schema is a Kubernetes PersistentVolumeClaim spec.
+    # https://docs.victoriametrics.com/operator/api#vmsinglespec-storage
+    storage:
+      accessModes:
+        - "ReadWriteOnce"
+      storageClassName: null
+      resources:
+        requests:
+          storage: "10Gi"
+    # ServiceSpec that will be added to vmsingle service spec
+    serviceSpec:
+      metadata:
+        name: "vm"
+      spec: {}
+
+
+
+# -- Configuration for the VictoriaMetrics agent
+# @default -- See `values.yaml` and https://docs.victoriametrics.com/operator/resources/vmagent
+vmAgent:
+  # -- Path prefix for VictoriaMetrics agent web ui
+  pathPrefix: vmagent
+
+  spec:
+    remoteWrite:
+      - url: "http://vm:8429/api/v1/write"
+    # -- scrape from all *Scrape CRDs
+    # https://docs.victoriametrics.com/operator/api/#vmagentspec-selectallbydefault
+    selectAllByDefault: true
+
+    # -- Enable persistence for metrics ingest buffer
+    # https://docs.victoriametrics.com/operator/resources/vmagent#statefulmode
+    statefulMode: true
+
+    # -- Persistent metrics ingest buffer storage config
+    # https://docs.victoriametrics.com/operator/api/#vmagentspec-statefulstorage
+    statefulStorage:
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - "ReadWriteOnce"
+          storageClassName: null
+          resources:
+            requests:
+              storage: "5Gi"
+    # -- ServiceSpec that will be added to vmagent service spec
+    serviceSpec:
+      metadata:
+        name: "vmagent"
+      spec: {}
+
+# -- Configuration for an Alertmanager instance. This is a Prometheus
+# alertmanager, but it can be configured by separarate VMAlertmanagerConfig
+# objects.
+# @default -- See `values.yaml` and https://docs.victoriametrics.com/operator/resources/vmalertmanager/
+vmAlertmanager:
+  pathPrefix: "alertmanager"
+  ingress:
+    annotations: {}
+
+  config:
+    slackGeneral:
+      spec:
+        route:
+          receiver: slack-general
+        receivers:
+          - name: "slack-general"
+            slack_configs:
+            - api_url:
+                name: "victoria-metrics"
+                key: "slack-alert-webhook"
+              # Adapted from https://hodovi.cc/blog/creating-awesome-alertmanager-templates-for-slack/
+              color: '{{ template "slack.color" . }}'
+              title: '{{ template "slack.title" . }}'
+              text: '{{ template "slack.text" . }}'
+              send_resolved: true
+              actions:
+                - type: button
+                  text: 'Runbook :green_book:'
+                  url: '{{ (index .Alerts 0).Annotations.runbook_url }}'
+                - type: button
+                  text: 'Query :mag:'
+                  url: '{{ (index .Alerts 0).GeneratorURL }}'
+                - type: button
+                  text: 'Dashboard :chart_with_upwards_trend:'
+                  url: '{{ (index .Alerts 0).Annotations.dashboard_url }}'
+                - type: button
+                  text: 'Silence :no_bell:'
+                  url: '{{ template "__alert_silence_link" . }}'
+
+  spec:
+    disableNamespaceMatcher: true
+    selectAllByDefault: true
+    # -- UseVMConfigReloader replaces prometheus-like config-reloader with vm
+    # one. It uses secrets watch instead of file watch which greatly increases
+    # speed of config updates
+    useVMConfigReloader: true
+
+    # -- Templates is a list of ConfigMap key references for ConfigMaps in the
+    # same namespace as the VMAlertmanager object, which shall be mounted into
+    # the VMAlertmanager Pods. The Templates are mounted into
+    # /etc/vm/templates//.
+    templates:
+      - name: "alertmanager-templates"
+        key: "slack-general.tmpl"
+
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+
+    storage:
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - "ReadWriteOnce"
+          storageClassName: null
+          resources:
+            requests:
+              storage: "2Gi"
+
+    # ServiceSpec that will be added to vmalertmanager service spec
+    serviceSpec:
+      metadata:
+        name: "alertmanager"
+      spec: {}
+
+vmAlert:
+  pathPrefix: "vmalert"
+  ingress:
+    annotations: {}
+
+  # -- This will get rendered inside the spec, but we need to specify it
+  # outside the spec value in this values file because we need to merge it with
+  # a templated externalURL value in the VMAlert template.
+  extraArgs: {}
+  spec:
+    selectAllByDefault: true
+    datasource:
+      url: http://vm:8429
+    notifiers:
+      - url: http://alertmanager:9093
+    remoteWrite:
+      url: http://vmagent:8429
+    remoteRead:
+      url: http://vm:8429
+
+    # ServiceSpec that will be added to vmalert service spec
+    serviceSpec:
+      metadata:
+        name: "vmalert"
+      spec: {}

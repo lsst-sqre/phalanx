@@ -45,3 +45,4 @@ applications:
   tap: true
   tasso: true
   times-square: true
+  victoria-metrics: true

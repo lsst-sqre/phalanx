@@ -1,0 +1,15 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAlert
+metadata:
+  name: vmalert-select-all
+  labels:
+    {{- include "victoria-metrics.labels" . | nindent 4 }}
+spec:
+  extraArgs:
+    # Yes, this should be the vm URL, NOT the vmagent URL because we're
+    # configuring vm to proxy requests to /vmalert to the agent.
+    external.url: "{{ .Values.global.baseUrl }}/{{ .Values.vm.pathPrefix }}"
+    {{- if .Values.vmAlert.extraArgs }}
+    {{- .Values.vmAlert.extraArgs | toYaml | nindent 4 }}
+    {{- end }}
+  {{- .Values.vmAlert.spec | toYaml | nindent 2 }}
