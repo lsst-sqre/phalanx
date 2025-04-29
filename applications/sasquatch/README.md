@@ -229,6 +229,96 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | influxdb-enterprise.serviceAccount.create | bool | `false` | Whether to create a Kubernetes service account to run as |
 | influxdb-enterprise.serviceAccount.name | string | Name based on the chart fullname | Name of the Kubernetes service account to run as |
+| influxdb-enterprise-active.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
+| influxdb-enterprise-active.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
+| influxdb-enterprise-active.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
+| influxdb-enterprise-active.data.affinity | object | See `values.yaml` | Affinity rules for data pods |
+| influxdb-enterprise-active.data.config.antiEntropy.enabled | bool | `false` | Enable the anti-entropy service, which copies and repairs shards |
+| influxdb-enterprise-active.data.config.cluster.log-queries-after | string | `"15s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
+| influxdb-enterprise-active.data.config.cluster.max-concurrent-queries | int | `1000` | Maximum number of running queries allowed on the instance (0 is unlimited) |
+| influxdb-enterprise-active.data.config.cluster.query-timeout | string | `"300s"` | Maximum duration a query is allowed to run before it is killed |
+| influxdb-enterprise-active.data.config.continuousQueries.enabled | bool | `false` | Whether continuous queries are enabled |
+| influxdb-enterprise-active.data.config.data.cache-max-memory-size | int | `0` | Maximum size a shared cache can reach before it starts rejecting writes |
+| influxdb-enterprise-active.data.config.data.trace-logging-enabled | bool | `true` | Whether to enable verbose logging of additional debug information within the TSM engine and WAL |
+| influxdb-enterprise-active.data.config.data.wal-fsync-delay | string | `"100ms"` | Duration a write will wait before fsyncing. This is useful for slower disks or when WAL write contention is present. |
+| influxdb-enterprise-active.data.config.hintedHandoff.max-size | int | `107374182400` | Maximum size of the hinted-handoff queue in bytes |
+| influxdb-enterprise-active.data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
+| influxdb-enterprise-active.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
+| influxdb-enterprise-active.data.config.logging.level | string | `"debug"` | Logging level |
+| influxdb-enterprise-active.data.env | object | `{}` | Additional environment variables to set in the meta container |
+| influxdb-enterprise-active.data.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for data images |
+| influxdb-enterprise-active.data.image.repository | string | `"influxdb"` | Docker repository for data images |
+| influxdb-enterprise-active.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
+| influxdb-enterprise-active.data.ingress.className | string | `"nginx"` | Ingress class name of the data service |
+| influxdb-enterprise-active.data.ingress.enabled | bool | `false` | Whether to enable an ingress for the data service |
+| influxdb-enterprise-active.data.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the data ingress |
+| influxdb-enterprise-active.data.ingress.path | string | `"/influxdb-enterprise-data(/\|$)(.*)"` | Path of the data service |
+| influxdb-enterprise-active.data.nodeSelector | object | `{}` | Node selection rules for data pods |
+| influxdb-enterprise-active.data.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode for the persistent volume claim |
+| influxdb-enterprise-active.data.persistence.annotations | object | `{}` | Annotations to add to the persistent volume claim |
+| influxdb-enterprise-active.data.persistence.enabled | bool | `false` | Whether to persist data to a persistent volume |
+| influxdb-enterprise-active.data.persistence.existingClaim | string | Use a volume claim template | Manually managed PersistentVolumeClaim to use. If defined, this PVC must be created manually before the meta service will start |
+| influxdb-enterprise-active.data.persistence.size | string | `"8Gi"` | Size of persistent volume to request |
+| influxdb-enterprise-active.data.persistence.storageClass | string | `""` | Storage class of the persistent volume (set to `-` to disable dynamic provisioning, leave unset to use the default provisioner |
+| influxdb-enterprise-active.data.podAnnotations | object | `{}` | Annotations for data pods |
+| influxdb-enterprise-active.data.podDisruptionBudget.minAvailable | int | `1` | Minimum available pods to maintain |
+| influxdb-enterprise-active.data.podSecurityContext | object | `{}` | Pod security context for data pods |
+| influxdb-enterprise-active.data.preruncmds | list | `[]` | Commands to run in data pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
+| influxdb-enterprise-active.data.replicas | int | `1` | Number of data replicas to run |
+| influxdb-enterprise-active.data.resources | object | `{}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise-active.data.securityContext | object | `{}` | Security context for meta pods |
+| influxdb-enterprise-active.data.service.annotations | object | `{}` | Extra annotations for the data service |
+| influxdb-enterprise-active.data.service.externalIPs | list | Do not allocate external IPs | External IPs for the data service |
+| influxdb-enterprise-active.data.service.externalTrafficPolicy | string | Do not set an external traffic policy | External traffic policy for the data service |
+| influxdb-enterprise-active.data.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the data service |
+| influxdb-enterprise-active.data.service.nodePort | int | Do not allocate a node port | Node port for the data service |
+| influxdb-enterprise-active.data.service.type | string | `"ClusterIP"` | Service type for the data service |
+| influxdb-enterprise-active.data.tolerations | list | `[]` | Tolerations for data pods |
+| influxdb-enterprise-active.envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
+| influxdb-enterprise-active.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| influxdb-enterprise-active.image.addsuffix | bool | `false` | Set to true to add a suffix for the type of image to the Docker tag (for example, `-meta`, making an image name of `influxdb:1.8.0-meta`) |
+| influxdb-enterprise-active.image.tag | string | `appVersion` from `Chart.yaml` | Tagged version of the Docker image that you want to run |
+| influxdb-enterprise-active.imagePullSecrets | list | `[]` | List of pull secrets needed for images. If set, each object in the list should have one attribute, _name_, identifying the pull secret to use |
+| influxdb-enterprise-active.license.key | string | `""` | License key. You can put your license key here for testing this chart out, but we STRONGLY recommend using a license file stored in a secret when you ship to production. |
+| influxdb-enterprise-active.license.secret.key | string | `"json"` | Key within that secret that contains the license |
+| influxdb-enterprise-active.license.secret.name | string | `"influxdb-enterprise-license"` | Name of the secret containing the license |
+| influxdb-enterprise-active.meta.affinity | object | See `values.yaml` | Affinity rules for meta pods |
+| influxdb-enterprise-active.meta.env | object | `{}` | Additional environment variables to set in the meta container |
+| influxdb-enterprise-active.meta.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for meta images |
+| influxdb-enterprise-active.meta.image.repository | string | `"influxdb"` | Docker repository for meta images |
+| influxdb-enterprise-active.meta.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the meta ingress |
+| influxdb-enterprise-active.meta.ingress.className | string | `"nginx"` | Ingress class name of the meta service |
+| influxdb-enterprise-active.meta.ingress.enabled | bool | `false` | Whether to enable an ingress for the meta service |
+| influxdb-enterprise-active.meta.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the meta ingress |
+| influxdb-enterprise-active.meta.ingress.path | string | `"/influxdb-enterprise-meta(/\|$)(.*)"` | Path of the meta service |
+| influxdb-enterprise-active.meta.nodeSelector | object | `{}` | Node selection rules for meta pods |
+| influxdb-enterprise-active.meta.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode for the persistent volume claim |
+| influxdb-enterprise-active.meta.persistence.annotations | object | `{}` | Annotations to add to the persistent volume claim |
+| influxdb-enterprise-active.meta.persistence.enabled | bool | `false` | Whether to persist data to a persistent volume |
+| influxdb-enterprise-active.meta.persistence.existingClaim | string | Use a volume claim template | Manually managed PersistentVolumeClaim to use. If defined, this PVC must be created manually before the meta service will start |
+| influxdb-enterprise-active.meta.persistence.size | string | `"8Gi"` | Size of persistent volume to request |
+| influxdb-enterprise-active.meta.persistence.storageClass | string | `""` | Storage class of the persistent volume (set to `-` to disable dynamic provisioning, leave unset to use the default provisioner |
+| influxdb-enterprise-active.meta.podAnnotations | object | `{}` | Annotations for meta pods |
+| influxdb-enterprise-active.meta.podDisruptionBudget.minAvailable | int | `2` | Minimum available pods to maintain |
+| influxdb-enterprise-active.meta.podSecurityContext | object | `{}` | Pod security context for meta pods |
+| influxdb-enterprise-active.meta.preruncmds | list | `[]` | Commands to run in meta pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
+| influxdb-enterprise-active.meta.replicas | int | `3` | Number of meta pods to run |
+| influxdb-enterprise-active.meta.resources | object | `{}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise-active.meta.securityContext | object | `{}` | Security context for meta pods |
+| influxdb-enterprise-active.meta.service.annotations | object | `{}` | Extra annotations for the meta service |
+| influxdb-enterprise-active.meta.service.externalIPs | list | Do not allocate external IPs | External IPs for the meta service |
+| influxdb-enterprise-active.meta.service.externalTrafficPolicy | string | Do not set an external traffic policy | External traffic policy for the meta service |
+| influxdb-enterprise-active.meta.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the meta service |
+| influxdb-enterprise-active.meta.service.nodePort | int | Do not allocate a node port | Node port for the meta service |
+| influxdb-enterprise-active.meta.service.type | string | `"ClusterIP"` | Service type for the meta service |
+| influxdb-enterprise-active.meta.sharedSecret.secret | object | `{"key":"secret","name":"influxdb-enterprise-shared-secret"}` | Shared secret used by the internal API for JWT authentication between InfluxDB nodes. Must have a key named `secret` that should be a long, random string See [documentation for shared-internal-secret](https://docs.influxdata.com/enterprise_influxdb/v1/administration/configure/config-data-nodes/#meta-internal-shared-secret). |
+| influxdb-enterprise-active.meta.sharedSecret.secret.key | string | `"secret"` | Key within that secret that contains the shared secret |
+| influxdb-enterprise-active.meta.sharedSecret.secret.name | string | `"influxdb-enterprise-shared-secret"` | Name of the secret containing the shared secret |
+| influxdb-enterprise-active.meta.tolerations | list | `[]` | Tolerations for meta pods |
+| influxdb-enterprise-active.nameOverride | string | `""` | Override the base name for resources |
+| influxdb-enterprise-active.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| influxdb-enterprise-active.serviceAccount.create | bool | `false` | Whether to create a Kubernetes service account to run as |
+| influxdb-enterprise-active.serviceAccount.name | string | Name based on the chart fullname | Name of the Kubernetes service account to run as |
 | influxdb-enterprise-standby.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
 | influxdb-enterprise-standby.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | influxdb-enterprise-standby.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
