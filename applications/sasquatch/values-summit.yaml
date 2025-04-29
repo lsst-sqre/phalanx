@@ -639,3 +639,6 @@ control-system:
 
 consdb:
   enabled: true
+
+prompt-processing:
+  enabled: true
