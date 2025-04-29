@@ -1,0 +1,103 @@
+{{- if .Values.ingestLsstTexmf.enabled -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: "ook-ingest-lsst-texmf"
+  labels:
+    {{- include "ook.labels" . | nindent 4 }}
+    app.kubernetes.io/component: "ingest-lsst-texmf"
+    app.kubernetes.io/part-of: "ook"
+spec:
+  schedule: {{ .Values.ingestLsstTexmf.schedule | quote }}
+  concurrencyPolicy: "Forbid"
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      ttlSecondsAfterFinished: {{ .Values.ingestLsstTexmf.ttlSecondsAfterFinished }}
+      template:
+        metadata:
+          {{- with .Values.ingestLsstTexmf.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          labels:
+            {{- include "ook.selectorLabels" . | nindent 12 }}
+            app.kubernetes.io/component: "ingest-lsst-texmf"
+            app.kubernetes.io/part-of: "ook"
+        spec:
+          restartPolicy: "Never"
+          {{- if or .Values.cloudsql.enabled }}
+          serviceAccountName: "ook"
+          {{- else }}
+          automountServiceAccountToken: false
+          {{- end }}
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+          containers:
+            - name: {{ .Chart.Name }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command:
+                - "ook"
+                - "ingest-lsst-texmf"
+                - "--git-ref"
+                - "{{ .Values.ingestLsstTexmf.gitRef }}"
+              resources:
+                {{- toYaml .Values.resources | nindent 16 }}
+              envFrom:
+                - configMapRef:
+                    name: "ook"
+              env:
+                {{- include "ook.envVars" (dict "Chart" .Chart "Release" .Release "Values" .Values) | nindent 16 }}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - "all"
+                readOnlyRootFilesystem: true
+              volumeMounts:
+                - name: "kafka"
+                  mountPath: "/etc/kafkacluster/ca.crt"
+                  subPath: "ssl.truststore.crt" # CA cert from the Kafka cluster
+                - name: "kafka"
+                  mountPath: "/etc/kafkauser/user.crt"
+                  subPath: "ssl.keystore.crt" # User cert from the Kafka cluster signed by the clients' CA
+                - name: "kafka"
+                  mountPath: "/etc/kafkauser/user.key"
+                  subPath: "ssl.keystore.key" # private key for the consuming client
+                - name: "tmp"
+                  mountPath: "/tmp/kafka_certs"
+          {{- if .Values.cloudsql.enabled }}
+          initContainers:
+            {{- include "ook.cloudsqlSidecar" . | nindent 12 }}
+          {{- end }}
+          {{with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumes:
+            # This secret comes from the KafkaAccess operator
+            - name: "kafka"
+              secret:
+                secretName: ook-kafka
+            - name: "ook"
+              secret:
+                secretName: "ook"
+            - name: "tmp"
+              emptyDir: {}
+{{- end }}

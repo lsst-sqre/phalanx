@@ -41,6 +41,15 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | image.repository | string | `"ghcr.io/lsst-sqre/ook"` | Squarebot image repository |
 | image.tag | string | The appVersion of the chart | Tag of the image |
 | imagePullSecrets | list | `[]` | Secret names to use for all Docker pulls |
+| ingestLsstTexmf.affinity | object | `{}` | Affinity rules for job pods |
+| ingestLsstTexmf.enabled | bool | `false` | Enable the ingest-lsst-texmf job |
+| ingestLsstTexmf.gitRef | string | `"main"` | Git ref to use for the ingest-lsst-texmf job |
+| ingestLsstTexmf.nodeSelector | object | `{}` | Node selection rules for job pods |
+| ingestLsstTexmf.podAnnotations | object | `{}` | Annotations for job pods |
+| ingestLsstTexmf.resources | object | `{}` | Resource limits and requests for job pods |
+| ingestLsstTexmf.schedule | string | `"0 10 * * *"` | Cron schedule string for inget-lsst-texmf job (UTC) |
+| ingestLsstTexmf.tolerations | list | `[]` | Tolerations for job pods |
+| ingestLsstTexmf.ttlSecondsAfterFinished | int | `86400` | Time (second) to keep a finished job before cleaning up |
 | ingestUpdated.affinity | object | `{}` | Affinity rules for Ook audit pods |
 | ingestUpdated.enabled | bool | `false` | Enable the ingest-updated job |
 | ingestUpdated.nodeSelector | object | `{}` | Node selection rules for Ook audit pods |
