@@ -578,12 +578,14 @@ lsstcamAosWorkerSet:
   - lsstcam-data
   - project-shared
   replicas: 32  # 4 deep for corner chips
+  env:
+    LIMITS_CPU: 2
   resources:
     requests:
       cpu: 1.0
       memory: 4G
     limits:
-      cpu: 1.0
+      cpu: 2.0
       memory: 8G
 lsstcamGather1bSet:
   name: LSSTCam/runStep1bWorker.py
