@@ -1,0 +1,6 @@
+apiVersion: v2
+description: 'Tool for github terraform workflows: https://runatlantis.io'
+name: atlantis
+type: application
+version: 1.0.0
+appVersion: 1.0.0

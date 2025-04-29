@@ -8,6 +8,7 @@
 | applications.alert-stream-broker | bool | `false` | Enable the alert-stream-broker application |
 | applications.argo-workflows | bool | `false` | Enable the argo-workflows application |
 | applications.argocd | bool | `true` | Enable the Argo CD application. This must be enabled for all environments and is present here only because it makes parsing easier |
+| applications.atlantis | bool | `false` | Enable the atlantis application |
 | applications.auxtel | bool | `false` | Enable the auxtel control system application |
 | applications.butler | bool | `false` | Enable the butler application |
 | applications.calsys | bool | `false` | Enable the calsys control system application |
