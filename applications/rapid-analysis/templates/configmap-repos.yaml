@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: "{{ .Chart.Name }}-repos"
+  name: "config-repos"
   labels:
-    {{- include "application.labels" . | nindent 4 }}
+    {{- include "rapid-analysis.labels" . | nindent 4 }}
 data:
   data-repos.yaml: |
     embargo: "s3://embargo@rubin-summit-users/butler.yaml"

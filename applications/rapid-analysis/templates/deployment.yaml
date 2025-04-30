@@ -144,7 +144,7 @@ spec:
             secretName: rubintv-secrets
         - name: config
           configMap:
-            name: {{ .Chart.Name }}-repos
+            name: config-repos
             items:
             - key: "data-repos.yaml"
               path: "data-repos.yaml"
