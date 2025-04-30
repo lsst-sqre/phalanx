@@ -479,6 +479,9 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.mirrormaker2.replication.policy.separator | string | `""` | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
 | strimzi-kafka.mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
 | strimzi-kafka.mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
+| strimzi-kafka.registry.gafaelfawrIngress.annotations | object | `{}` | Annotations that will be added to the Gafaelfawr Ingress resource |
+| strimzi-kafka.registry.gafaelfawrIngress.enabled | bool | `false` | Whether to enable an Gafaelfawr Ingress for the Schema Registry |
+| strimzi-kafka.registry.gafaelfawrIngress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
 | strimzi-kafka.registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | strimzi-kafka.registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | strimzi-kafka.registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |

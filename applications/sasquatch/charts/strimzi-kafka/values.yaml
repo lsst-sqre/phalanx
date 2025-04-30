@@ -213,6 +213,18 @@ connect:
     value.converter.schema.registry.url: http://sasquatch-schema-registry.sasquatch:8081
 
 registry:
+
+  gafaelfawrIngress:
+    # -- Whether to enable an Gafaelfawr Ingress for the Schema Registry
+    enabled: false
+
+    # -- Hostname for the Schema Registry
+    # @default -- None, must be set if ingress is enabled
+    hostname: ""
+
+    # -- Annotations that will be added to the Gafaelfawr Ingress resource
+    annotations: {}
+
   ingress:
     # -- Whether to enable an ingress for the Schema Registry
     enabled: false

@@ -1,0 +1,30 @@
+{{- if .Values.registry.gafaelfawrIngress.enabled }}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: sasquatch-schema-registry
+  labels:
+    name: sasquatch-schema-registry
+  annotations:
+    {{- with .Values.registry.gafaelfawrIngress.annotations }}
+    {{ toYaml . | indent 4 }}
+    {{- end }}
+  config:
+    scopes:
+      all:
+        - "read:all"
+    service: sasquatch-schema-registry
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: {{ .Values.registry.gafaelfawrIngress.hostname | quote }}
+      http:
+        paths:
+          - path: {{ .Values.registry.gafaelfawrIngress.path }}
+            pathType: Prefix
+            backend:
+              service:
+                name: sasquatch-schema-registry
+                port:
+                  number: 8081
+{{- end }}
