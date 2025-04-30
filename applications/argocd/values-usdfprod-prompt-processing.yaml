@@ -6,7 +6,7 @@ argo-cd:
       - name: "HTTPS_PROXY"
         value: "http://squid.slac.stanford.edu:3128"
       - name: "NO_PROXY"
-        value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server"
+        value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server,.stanford.edu,.slac.stanford.edu"
 
   configs:
     cm:
