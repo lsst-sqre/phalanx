@@ -23,3 +23,12 @@ detectorConfig:
     120: False
     121: False
     122: False
+    # Heavily-vignetted detectors
+    0: False
+    20: False
+    27: False
+    65: False
+    123: False
+    161: False
+    168: False
+    188: False
