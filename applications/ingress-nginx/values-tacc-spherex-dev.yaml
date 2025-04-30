@@ -5,8 +5,7 @@ ingress-nginx:
       large-client-header-buffers: "4 64k"
       proxy-buffer-size: "64k"
     service:
-      type: ClusterIP
-      externalTrafficPolicy: null
+      loadBalancerIP: "129.114.35.216"
     hostNetwork: true
     dnsPolicy: ClusterFirstWithHostNet
     kind: Deployment
