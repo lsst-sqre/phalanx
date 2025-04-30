@@ -1,7 +1,7 @@
 prompt-keda:
   image:
     pullPolicy: IfNotPresent
-    tag: 6.17.0
+    tag: 6.8.0
 
   alerts:
     username: kafka-admin
@@ -10,7 +10,9 @@ prompt-keda:
 
   worker:
     # TODO: need to adjust this once we know how leaky the LSSTCam pipeline is
-    restart: 7
+    # restart: 7
+    # Expect much less memory usage/leakage for Single-Frame only
+    restart: 30
 
   instrument:
     pipelines:
@@ -21,7 +23,7 @@ prompt-keda:
       main: |-
         - survey: BLOCK-365  # FBS SV Field Survey
           pipelines:
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
+          # TODO: enable ApPipe only when we're ready (resources, alerts, etc.)
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         - survey: BLOCK-T427  # Daytime checkout
@@ -35,52 +37,21 @@ prompt-keda:
       preprocessing: |-
         # Run to enable solar system processing in SingleFrame
         - survey: BLOCK-365
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing.yaml']
         - {survey: "", pipelines: []}
         # Don't preprocess anything unknown
         - {pipelines: []}
     preloadPadding: 50.1
-    centralRepo: s3://rubin-summit-users
-    readRepo: s3://rubin-summit-users/butler-nochain-readonly.yaml
-    exportTypes: |-
-      - ".*_(config|metadata|log)"
-      - "packages"
-      - "regionTimeInfo"
-      - "template_detector"
-      - "preliminary_visit_image"
-      - "preliminary_visit_image_background"
-      - "difference_image"
-      - "single_visit_star_footprints"
-      - "dia_source_unfiltered"
-      - "dia_source_detector"
-      - "difference_kernel"
-      - "dia_source_apdb"
-      - "dia_forced_source_apdb"
-      - "dia_object_apdb"
-      - "ss_source_direct_detector"
-      - "ss_object_direct_unassociated"
-      - "ss_object_unassociated_detector"
-      - "ss_source_detector"
-      - "marginal_new_dia_source"
-      - "new_dia_source"
-      - "preloaded_dia_forced_source"
-      - "preloaded_dia_object"
-      - "preloaded_dia_source"
-      - "preloaded_ss_object"
-      - "difference_image_metrics"
-      - "diffimPlots_.*"
+    calibRepo: s3://rubin-summit-users
 
   s3:
     imageBucket: rubin-summit
     endpointUrl: https://sdfembs3.sdf.slac.stanford.edu
-    aws_profile: embargo
 
   raw_microservice: http://172.24.5.158:8080/presence
 
   # TODO: replace with permanent service once it's up
   mpSky_service: http://sdfiana014.sdf.slac.stanford.edu:3666/ephemerides/
-
-  iers_cache: s3://rubin-summit-users/iers-cache.zip
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
@@ -92,10 +63,8 @@ prompt-keda:
   apdb:
     config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcam.yaml
 
-  logLevel: >-
-    timer.lsst.activator=DEBUG timer.lsst.daf.butler=VERBOSE
-    lsst.associateApdb=VERBOSE lsst.loadDiaCatalogs=VERBOSE lsst.computeReliability=VERBOSE
-    lsst.daf.butler=VERBOSE
+  # TODO: may need to override for debugging
+  logLevel: timer.lsst.activator=DEBUG timer.lsst.daf.butler=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE lsst.daf.butler=VERBOSE
 
   sasquatch:
     # TODO: production Sasquatch not yet ready
@@ -103,18 +72,21 @@ prompt-keda:
     namespace: lsst.prompt.prod
     auth_env: false
 
-  debug:
-    monitorDaxApdb: true
-
   keda:
     minReplicaCount: 3
-    maxReplicaCount: 1700
+    # TODO: this is scaled for SingleFrame, with 25% margin
+    maxReplicaCount: 1100
+    # TODO: may need to override for debugging
+    # failedJobsHistoryLimit: 100
 
     # TODO: may need to reduce if we don't have enough capacity
     # redisStreams:
     #   expiration: 600
 
   initializer:
+    # 6 retries is not enough time to fix, e.g., DB permissions problems
+    retries: 15
+
     podAnnotations: {
       edu.stanford.slac.sdf.project/usdf-embargo: "true"
     }
