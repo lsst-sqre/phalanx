@@ -20,6 +20,7 @@ env:
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   AWS_RESPONSE_CHECKSUM_VALIDATION: WHEN_REQUIRED
   HOME: /home/saluser
+  RA_PULL_DIRECTORIES: "donut_viz"
 podAnnotations:
   edu.stanford.slac.sdf.project/usdf-embargo: "true"
 affinity:
