@@ -1,9 +1,10 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name:  {{ template "influxdb-enterprise.fullname" . }}-data-pdb
+  name: {{ template "influxdb-enterprise.fullname" . }}-data-pdb
 spec:
   minAvailable: {{ .Values.data.podDisruptionBudget.minAvailable }}
   selector:
     matchLabels:
+      app.kubernetes.io/name: {{ template "influxdb-enterprise.fullname" . }}
       influxdb.influxdata.com/component: data

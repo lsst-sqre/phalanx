@@ -6,4 +6,5 @@ spec:
   minAvailable: {{ .Values.meta.podDisruptionBudget.minAvailable }}
   selector:
     matchLabels:
+      app.kubernetes.io/name: {{ template "influxdb-enterprise.fullname" . }}
       influxdb.influxdata.com/component: meta
