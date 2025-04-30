@@ -4,7 +4,7 @@ image:
   pullPolicy: Always
 location: USDF
 env:
-  DAF_BUTLER_REPOSITORY_INDEX: /sdf/group/rubin/shared/data-repos.yaml
+  DAF_BUTLER_REPOSITORY_INDEX: /config/data-repos.yaml
   http_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
   https_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
   squid_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
@@ -38,38 +38,24 @@ scripts:
 ###
 - name: LSSTCam/runButlerWatcher.py
   mounts:
-  - sdf-group-rubin
-  - sdf-data-rubin
   - sdf-scratch
 - name: LSSTCam/runHeadNode.py
   mounts:
-  - sdf-group-rubin
-  - sdf-data-rubin
   - sdf-scratch
 - name: LSSTCam/runMetadataServer.py
   mounts:
-  - sdf-group-rubin
-  - sdf-data-rubin
   - sdf-scratch
 - name: LSSTCam/runOneOffExpRecord.py
   mounts:
-  - sdf-group-rubin
-  - sdf-data-rubin
   - sdf-scratch
 - name: LSSTCam/runOneOffPostIsr.py
   mounts:
-  - sdf-group-rubin
-  - sdf-data-rubin
   - sdf-scratch
 - name: LSSTCam/runOneOffCalexp.py
   mounts:
-  - sdf-group-rubin
-  - sdf-data-rubin
   - sdf-scratch
 - name: LSSTCam/runPlotter.py
   mounts:
-  - sdf-group-rubin
-  - sdf-data-rubin
   - sdf-scratch
   resources:
     requests:
@@ -80,8 +66,6 @@ scripts:
       memory: 12G
 - name: LSSTCam/runButlerCanary.py
   mounts:
-  - sdf-group-rubin
-  - sdf-data-rubin
   - sdf-scratch
   env:
     DAF_BUTLER_CACHE_EXPIRATION_MODE: disabled
@@ -92,8 +76,6 @@ lsstcamWorkerSet:
   name: LSSTCam/runSfmRunner.py
   replicas: 410
   mounts:
-  - sdf-group-rubin
-  - sdf-data-rubin
   - sdf-scratch
   resources:
     requests:
