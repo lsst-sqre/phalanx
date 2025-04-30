@@ -9,6 +9,7 @@ env:
   DEPLOY_BRANCH: deploy-bts
   LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  BUTLER_ROLLOUT_PAUSE: 1.0
 securityContext:
   uid: 73006
   gid: 73006
