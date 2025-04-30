@@ -42,6 +42,7 @@ Rubin Observatory's telemetry service
 | customInfluxDBIngress.enabled | bool | `false` | Whether to enable the custom ingress for InfluxDB OSS |
 | customInfluxDBIngress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
 | customInfluxDBIngress.path | string | `"/influxdb(/\|$)(.*)"` | Path for the ingress |
+| influxdb-enterprise-active.enabled | bool | `false` | Whether to enable influxdb-enterprise-active |
 | influxdb-enterprise-standby.enabled | bool | `false` | Whether to enable influxdb-enterprise-standby |
 | influxdb-enterprise.enabled | bool | `false` | Whether to enable influxdb-enterprise |
 | influxdb.config.continuous_queries.enabled | bool | `false` | Whether continuous queries are enabled |
