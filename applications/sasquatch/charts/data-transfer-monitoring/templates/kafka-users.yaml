@@ -1,0 +1,33 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: data-transfer-monitoring
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: data-transfer-monitoring-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operations:
+          - All
+      - resource:
+          type: topic
+          name: "lsst.sal.MTCamera.logevent_endReadout"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - Read
+          - Describe
