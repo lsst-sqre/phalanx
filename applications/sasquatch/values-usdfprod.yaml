@@ -161,6 +161,26 @@ influxdb-enterprise-standby:
         cpu: 4
   data:
     replicas: 1
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - sdfk8sn005
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: influxdb.influxdata.com/component
+                    operator: In
+                    values:
+                      - data
+              topologyKey: kubernetes.io/hostname
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
