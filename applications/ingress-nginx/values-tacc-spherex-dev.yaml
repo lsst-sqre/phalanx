@@ -6,9 +6,5 @@ ingress-nginx:
       proxy-buffer-size: "64k"
     service:
       loadBalancerIP: "129.114.35.216"
-    hostNetwork: true
-    dnsPolicy: ClusterFirstWithHostNet
-    kind: Deployment
-    replicas: 1
     nodeSelector:
       kubernetes.io/hostname: master02
