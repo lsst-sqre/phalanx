@@ -192,10 +192,10 @@ influxdb-enterprise-standby:
       size: 100Ti
     resources:
       requests:
-        memory: 192Gi
+        memory: 96Gi
         cpu: 16
       limits:
-        memory: 192Gi
+        memory: 96Gi
         cpu: 16
 
 influxdb-enterprise-active:
