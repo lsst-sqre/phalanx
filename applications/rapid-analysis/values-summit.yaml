@@ -12,6 +12,7 @@ env:
 securityContext:
   uid: 73006
   gid: 73006
+  BUTLER_ROLLOUT_PAUSE: 1.0
 scripts:
 ###
 ### AuxTel pods
