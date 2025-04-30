@@ -38,6 +38,10 @@ backupItems:
     enabled: false
     retentionDays: 3
 
+# -- Whether to enable the restore deployment
+restore:
+  enabled: false
+
 # -- Affinity rules for the backups deployment pod
 affinity: {}
 
