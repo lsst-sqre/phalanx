@@ -85,13 +85,21 @@ spec:
             - name: collectd
               containerPort: 25826
               protocol: UDP
+          startupProbe:
+            failureThreshold: 6
+            periodSeconds: 30
+            httpGet:
+              path: /ping
+              port: http
           livenessProbe:
             failureThreshold: 6
+            periodSeconds: 10
             httpGet:
               path: /ping
               port: http
           readinessProbe:
-            initialDelaySeconds: 60
+            failureThreshold: 6
+            periodSeconds: 10
             httpGet:
               path: /ping
               port: http
