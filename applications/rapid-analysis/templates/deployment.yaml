@@ -89,6 +89,9 @@ spec:
             - name: rubintv-creds
               mountPath: "/etc/rubintv/creds"
               readOnly: true
+            - name: config
+              mountPath: "/config"
+              readOnly: true
           {{- if $.Values.nfsMountpoint }}
           {{- range $values := $.Values.nfsMountpoint }}
           {{- if (has $values.name $script.mounts) }}
@@ -159,6 +162,12 @@ spec:
         - name: rubintv-aws-creds
           secret:
             secretName: rubintv-secrets
+        - name: config
+          configMap:
+            name: {{ .Chart.Name }}-repos
+            items:
+            - key: "data-repos.yaml"
+              path: "data-repos.yaml"
       {{- if $.Values.nfsMountpoint }}
       {{- range $values := $.Values.nfsMountpoint }}
       {{- if (has $values.name $script.mounts) }}
