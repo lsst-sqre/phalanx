@@ -6,6 +6,7 @@ config:
   databaseUrl: "postgresql://ook@localhost/ook"
   algolia:
     documentIndex: "ook_documents_test"
+  updateSchema: false
 
 audit:
   enabled: false
@@ -14,6 +15,9 @@ audit:
 
 ingestUpdated:
   enabled: false
+
+ingestLsstTexmf:
+  enabled: true
 
 cloudsql:
   enabled: true

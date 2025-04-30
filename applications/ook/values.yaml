@@ -145,6 +145,34 @@ ingestUpdated:
   # -- Affinity rules for Ook audit pods
   affinity: {}
 
+ingestLsstTexmf:
+  # -- Enable the ingest-lsst-texmf job
+  enabled: false
+
+  # -- Git ref to use for the ingest-lsst-texmf job
+  gitRef: "main"
+
+  # -- Cron schedule string for inget-lsst-texmf job (UTC)
+  schedule: "0 10 * * *"
+
+  # -- Time (second) to keep a finished job before cleaning up
+  ttlSecondsAfterFinished: 86400
+
+  # -- Resource limits and requests for job pods
+  resources: {}
+
+  # -- Annotations for job pods
+  podAnnotations: {}
+
+  # -- Node selection rules for job pods
+  nodeSelector: {}
+
+  # -- Tolerations for job pods
+  tolerations: []
+
+  # -- Affinity rules for job pods
+  affinity: {}
+
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
   # on Google Cloud
