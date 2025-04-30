@@ -45,11 +45,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /healthcheck
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /healthcheck
               port: http
           resources:
             {{- toYaml .Values.resources.noteburst | nindent 12 }}
@@ -67,6 +67,18 @@ spec:
                 secretKeyRef:
                   name: {{ template "noteburst.fullname" . }}
                   key: "NOTEBURST_SLACK_WEBHOOK_URL"
+
+            {{- if .Values.config.sentry.enabled }}
+            - name: "SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "noteburst.fullname" . }}
+                  key: "sentry-dsn"
+            - name: "SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.environmentName | quote }}
+            - name: "SENTRY_RELEASE"
+              value: {{ .Values.image.tag | default .Chart.AppVersion }}
+            {{- end }}
             {{- if .Values.config.metrics.enabled }}
             - name: "KAFKA_BOOTSTRAP_SERVERS"
               valueFrom:

@@ -75,6 +75,17 @@ spec:
                   key: "NOTEBURST_SLACK_WEBHOOK_URL"
             - name: "NOTEBURST_WORKER_IDENTITIES_PATH"
               value: "/etc/noteburst/identities.yaml"
+            {{- if .Values.config.sentry.enabled }}
+            - name: "SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "noteburst.fullname" . }}
+                  key: "sentry-dsn"
+            - name: "SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.environmentName | quote }}
+            - name: "SENTRY_RELEASE"
+              value: {{ .Values.image.tag | default .Chart.AppVersion }}
+            {{- end }}
             {{- if .Values.config.metrics.enabled }}
             - name: "KAFKA_BOOTSTRAP_SERVERS"
               valueFrom:
