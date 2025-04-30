@@ -451,3 +451,6 @@ prompt-processing:
 
 consdb:
   enabled: true
+
+data-transfer-monitoring:
+  enabled: true
