@@ -189,6 +189,10 @@ influxdb-enterprise-standby:
   # -- Whether to enable influxdb-enterprise-standby
   enabled: false
 
+influxdb-enterprise-active:
+  # -- Whether to enable influxdb-enterprise-active
+  enabled: false
+
 kafka-connect-manager:
   # -- Whether to enable the Kafka Connect Manager
   enabled: false
