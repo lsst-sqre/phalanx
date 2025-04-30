@@ -33,6 +33,13 @@ strimzi-kafka:
       enabled: true
     telegraf:
       enabled: true
+  registry:
+    gafaelfawrIngress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+      hostname: usdf-rsp-dev.slac.stanford.edu
+      path: /schema-registry(/|$)(.*)
   kraft:
     enabled: true
   kafkaController:
