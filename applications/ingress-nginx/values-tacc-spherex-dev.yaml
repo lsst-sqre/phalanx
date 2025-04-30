@@ -6,5 +6,13 @@ ingress-nginx:
       proxy-buffer-size: "64k"
     service:
       loadBalancerIP: "129.114.35.216"
+      annotations:
+        kubernetes.io/ingress.class: "openstack"
+        loadbalancer.openstack.org/enable-health-monitor: "false"
+        loadbalancer.openstack.org/floating-network-id: "b6d15d16-02d6-4cb6-a42d-219634b5e09e"
+        loadbalancer.openstack.org/subnet-id: "2df56654-ce90-4759-aa4c-6a0fd3b57dff"
+        loadbalancer.openstack.org/security-groups: "public"
+        loadbalancer.openstack.org/load-balancer-address: "129.114.35.216"
+        loadbalancer.openstack.org/keep-floatingip: "true"
     nodeSelector:
       kubernetes.io/hostname: master02
