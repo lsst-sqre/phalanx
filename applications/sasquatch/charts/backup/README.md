@@ -16,5 +16,6 @@ Backup Sasquatch data
 | persistence.storageClass | string | "" (empty string) to use the cluster default storage class | Storage class to use for the backups |
 | podAnnotations | object | `{}` | Annotations for the backups deployment pod |
 | resources | object | `{}` | Resource limits and requests for the backups deployment pod |
+| restore | object | `{"enabled":false}` | Whether to enable the restore deployment |
 | schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
 | tolerations | list | `[]` | Tolerations for the backups deployment pod |
