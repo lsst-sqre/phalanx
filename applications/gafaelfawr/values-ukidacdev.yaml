@@ -5,10 +5,14 @@ redis:
 config:
   internalDatabase: true
 
-  github:
-    clientId: "10172b4db1b67ee31620"
+  oidcServer:
+    enabled: true
 
-  # Allow access by GitHub team.
+  updateSchema: false
+
+  github:
+    clientId: "c4a5727c5788cc2d346e"
+
   groupMapping:
     "exec:admin":
       - github:
@@ -36,4 +40,6 @@ config:
           team: "dev"
 
   initialAdmins:
-    - "stvoutsin"
+    - "gpfrancis"
+    - "aibsen"
+    - "davedavemckay"
