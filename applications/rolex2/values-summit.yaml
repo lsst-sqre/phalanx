@@ -1,5 +1,5 @@
 image:
-  tag: rust_0.1.5
+  tag: rust_0.2.0
   pullPolicy: Always
   # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled
   nexus3: nexus3-docker
