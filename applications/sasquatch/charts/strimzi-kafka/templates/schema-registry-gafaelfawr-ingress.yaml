@@ -12,6 +12,11 @@ metadata:
 config:
   authCacheDuration: 5m
   baseUrl: {{ .Values.registry.gafaelfawrIngress.hostname | quote }}
+  delegate:
+    internal:
+      scopes:
+        - []
+    service: sasquatch-schema-registry
   loginRedirect: false
   scopes:
     all:
