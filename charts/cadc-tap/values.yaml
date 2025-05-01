@@ -83,13 +83,13 @@ config:
 
     image:
       # -- TAP image to use
-      repository: "stvoutsin/lsst-tap-service"
+      repository: "ghcr.io/lsst-sqre/lsst-tap-service"
 
       # -- Pull policy for the TAP image
       pullPolicy: "Always"
 
       # -- Tag of TAP image to use
-      tag: "DM-49692"
+      tag: "tickets-DM-49692"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
