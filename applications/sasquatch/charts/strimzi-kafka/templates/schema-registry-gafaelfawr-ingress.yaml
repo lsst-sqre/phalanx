@@ -9,22 +9,24 @@ metadata:
     {{- with .Values.registry.gafaelfawrIngress.annotations }}
     {{ toYaml . | indent 4 }}
     {{- end }}
-  config:
-    scopes:
-      all:
-        - "read:all"
+config:
+  scopes:
+    all:
+      - "read:all"
     service: sasquatch-schema-registry
-spec:
-  ingressClassName: "nginx"
-  rules:
-    - host: {{ .Values.registry.gafaelfawrIngress.hostname | quote }}
-      http:
-        paths:
-          - path: {{ .Values.registry.gafaelfawrIngress.path }}
-            pathType: Prefix
-            backend:
-              service:
-                name: sasquatch-schema-registry
-                port:
-                  number: 8081
-{{- end }}
+template:
+  metadata:
+    name: sasquatch-schema-registry
+  spec:
+    rules:
+      - host: {{ .Values.registry.gafaelfawrIngress.hostname | quote }}
+        http:
+          paths:
+            - path: {{ .Values.registry.gafaelfawrIngress.path }}
+              pathType: Prefix
+              backend:
+                service:
+                  name: sasquatch-schema-registry
+                  port:
+                    number: 8081
+  {{- end }}
