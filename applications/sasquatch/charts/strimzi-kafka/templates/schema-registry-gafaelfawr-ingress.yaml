@@ -10,9 +10,12 @@ metadata:
     {{ toYaml . | indent 4 }}
     {{- end }}
 config:
+  authCacheDuration: 5m
+  baseUrl: {{ .Values.registry.gafaelfawrIngress.hostname | quote }}
+  loginRedirect: false
   scopes:
     all:
-      - "read:all"
+      - read:all
     service: sasquatch-schema-registry
 template:
   metadata:
