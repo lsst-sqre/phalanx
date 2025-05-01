@@ -1,0 +1,101 @@
+# Default values for victoria-metrics-k8s.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
+
+# -- Config for victoria-metrics-k8s-stack chart.
+# @default -- https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-k8s-stack/values.yaml
+victoria-metrics-k8s-stack:
+  # Enabled
+  kube-state-metrics:
+    enabled: true
+
+  kubelet:
+    enabled: true
+    vmScrape:
+      spec:
+        relabelConfigs:
+        # All of the node labels and annotations come in as metadata from
+        # VNodeScrape. We only want an explicit subset of them.
+        # This removes the __meta_kubernetes_node_label_ prefix from the ones
+        # we want. The last stage of relabeling will remove all labels that
+        # start with __.
+        - action: labelmap
+          regex: __meta_kubernetes_node_label_(kubenetes_io_hostname|topology_kubernetes_io_region|topology_kubernetes_io_zone|node_pool|environment|cluster_name|kubernetes_io_instance_type)
+        - sourceLabels: [__metrics_path__]
+          targetLabel: metrics_path
+        - targetLabel: job
+          replacement: kubelet
+    vmScrapes:
+      cadvisor:
+        enabled: true
+      probes:
+        enabled: false
+      resources:
+        enabled: false
+
+  # Disabled
+  vmsingle:
+    enabled: false
+
+  victoria-metrics-operator:
+    enabled: false
+
+  defaultRules:
+    create: false
+
+  vmCluster:
+    enabled: false
+
+  alertmanager:
+    enabled: false
+
+  vmalert:
+    enabled: false
+
+  vmauth:
+    enabled: false
+
+  vmagent:
+    enabled: false
+
+  grafana:
+    enabled: false
+
+  prometheus-node-exporter:
+    enabled: false
+
+  kubeApiServer:
+    enabled: false
+
+  kubeControllerManager:
+    enabled: false
+
+  kubeDns:
+    enabled: false
+
+  coreDns:
+    enabled: false
+
+  kubeEtcd:
+    enabled: false
+
+  kubeScheduler:
+    enabled: false
+
+  kubeProxy:
+    enabled: false

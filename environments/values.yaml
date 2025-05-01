@@ -295,6 +295,9 @@ applications:
   # -- Enable the victoria-metrics application
   victoria-metrics: false
 
+  # -- Enable the victoria-metrics-k8s application
+  victoria-metrics-k8s: false
+
   # -- Enable the vo-cutouts application
   vo-cutouts: false
 
