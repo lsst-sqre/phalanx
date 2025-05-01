@@ -1,9 +1,8 @@
-name: "roe"
+name: "ukidacprod"
 fqdn: "rsp.lsst.ac.uk"
 appOfAppsName: "science-platform"
 vaultUrl: "https://vault.lsst.ac.uk"
-vaultPathPrefix: "secret/k8s_operator/roe"
-
+vaultPathPrefix: "kv-v2/k8s_operator/ukidacprod"
 applications:
   mobu: true
   nublado: true
@@ -11,3 +10,4 @@ applications:
   postgres: true
   squareone: true
   tap: true
+  ssotap: true

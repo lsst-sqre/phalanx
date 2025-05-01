@@ -1,0 +1,15 @@
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstuk/tap-schema-ukidacprod-sso"
+      tag: "29.0.1"
+
+  config:
+    gcsBucket: "async"
+    gcsBucketUrl: "https://somerville.ed.ac.uk:6780"
+    gcsBucketType: "S3"
+
+    pg:
+      host: "192.41.122.118:5432"
+      database: "dp03_catalogs_10yr"
+      username: "dp03_user"

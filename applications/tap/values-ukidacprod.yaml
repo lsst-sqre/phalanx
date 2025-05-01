@@ -1,0 +1,14 @@
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstuk/tap-schema-ukidacprod"
+      tag: "29.0.1"
+
+  config:
+    gcsBucket: "async"
+    gcsBucketUrl: "https://somerville.ed.ac.uk:6780"
+    gcsBucketType: "S3"
+    jvmMaxHeapSize: "31G"
+
+    qserv:
+      host: "192.41.122.85:30040"
