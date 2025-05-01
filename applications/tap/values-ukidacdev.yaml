@@ -12,5 +12,3 @@ cadc-tap:
 
     qserv:
       host: "192.41.122.85:30040"
-      image:
-        tag: "2.13.1"

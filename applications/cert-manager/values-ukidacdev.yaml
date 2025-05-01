@@ -1,4 +1,2 @@
 config:
-  route53:
-    awsAccessKeyId: "AKIAU52KVHTMUM5LRCMD"
-    hostedZone: "Z06436303FKUL106EU52"
+  createIssuer: false
