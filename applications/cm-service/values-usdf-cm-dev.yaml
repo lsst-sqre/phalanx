@@ -6,11 +6,12 @@
 internalDB: true
 config:
   aws:
+    defaultS3EndpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
     profiles:
       embargo:
         endpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
-      embargo_old:
-        endpointUrl: "https://s3dfrgw.slac.stanford.edu"
+      # embargo_old:
+      #   endpointUrl: "https://s3dfrgw.slac.stanford.edu"
   logLevel: "DEBUG"
   logProfile: "development"
   db:
@@ -47,7 +48,7 @@ config:
     useNativeHttplib: "1"
 
 image:
-  tag: "tickets-DM-50179"
+  tag: "tickets-DM-50644-htcondor_status"
   pullPolicy: Always
 
 daemon:
@@ -56,5 +57,5 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "tickets-DM-50179"
+    tag: "tickets-DM-50644-htcondor_status"
     pullPolicy: Always
