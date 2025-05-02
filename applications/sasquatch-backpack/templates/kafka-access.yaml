@@ -1,0 +1,21 @@
+# Chart derived from https://sasquatch.lsst.io/user-guide/directconnection.html
+apiVersion: access.strimzi.io/v1alpha1
+kind: KafkaAccess
+metadata:
+  name: backpack-kafka
+spec:
+  kafka:
+    # The name and namespace of the Strimzi ``Kafka`` resource, probably
+    # "sasquatch"
+    name: sasquatch
+    namespace: sasquatch
+    # This should always be "tls"
+    listener: tls
+  user:
+    kind: KafkaUser
+    apiGroup: kafka.strimzi.io
+    # This is the name of the ``KafkaUser`` that you created
+    name: backpack
+    # This is the namespace of the ``KafkaUser``, NOT your app's namespace,
+    # probably "sasquatch"
+    namespace: sasquatch
