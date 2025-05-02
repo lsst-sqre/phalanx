@@ -1,7 +1,7 @@
 {{- $cluster := .Values.cluster.name }}
 {{- range $topic := .Values.topics }}
 ---
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: {{ $topic }}
