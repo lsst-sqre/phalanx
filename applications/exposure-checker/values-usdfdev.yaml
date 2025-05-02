@@ -1,16 +1,18 @@
 image:
-  tag: tickets-DM-48431
+  tag: v1.0
 
 environment:
   AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"
   S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
-  S3_PROFILE_NAME: "rubin-rubintv-data-summit"
+  S3_PROFILE_NAME: ""
   LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
   LSST_DISABLE_BUCKET_VALIDATION: "1"
+  AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
+  AWS_RESPONSE_CHECKSUM_VALIDATION: "WHEN_REQUIRED"
 
 config:
   butler_repo: "s3://embargo@rubin-summit-users/butler.yaml"
-  butler_collection: "u/kadrlica/binCalexp4"
+  butler_collection: "u/kadrlica/LSSTCam/binCalexp4/20250428"
 
   db:
     hostname: "postgres.postgres"
