@@ -33,6 +33,6 @@ detectorConfig:
     168: False
     188: False
     # Low-quality flats, expect lots of false detections
-    78: False
-    79: False
-    80: False
+    # 78: False
+    # 79: False
+    # 80: False
