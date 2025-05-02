@@ -72,6 +72,11 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.config.panda.secretName }}
                   key: {{ .Values.config.panda.refreshTokenSecretKey }}
+            - name: NOTIFICATIONS__SLACK_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.config.slack.secretName }}
+                  key: {{ .Values.config.slack.webhookUrlSecretKey }}
 # {{- with .Values.config.aws }}
 #             - name: AWS_ACCESS_KEY_ID
 #               valueFrom:
