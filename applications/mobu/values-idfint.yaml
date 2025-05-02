@@ -84,7 +84,8 @@ config:
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
           repo_ref: "u/fe/ssotap"
-          idle_time: "3s"
+          execution_idle_time: "3s"
+          idle_time: "1s"
           delete_lab: false
         restart: true
     # - name: "tap-scale"
