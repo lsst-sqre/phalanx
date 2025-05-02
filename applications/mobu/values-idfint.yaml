@@ -102,7 +102,7 @@ config:
         type: "NotebookRunnerInfinite"
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
-          repo_ref: "u/fe/ssotap"
+          repo_ref: "u/stv/ssotap"
           execution_idle_time: "3s"
           idle_time: "1s"
           delete_lab: false
