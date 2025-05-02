@@ -7,4 +7,4 @@ nublado3_db:
 gafaelfawr_db:
   user: "gafaelfawr"
   db: "gafaelfawr"
-postgresStorageClass: "standard"
+postgresStorageClass: "ceph-hdd"

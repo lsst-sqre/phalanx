@@ -3,7 +3,7 @@ argo-cd:
     cm:
       url: "https://rsp.lsst.ac.uk/argo-cd"
     secret:
-      createSecret: true
+      createSecret: false
 
   server:
     ingress:
