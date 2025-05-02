@@ -136,6 +136,14 @@ config:
     # -- Secret key for PanDA refresh-token value
     refreshTokenSecretKey: "panda-refresh-token"
 
+  slack:
+
+    # -- Name of Secret with Slack secrets
+    secretName: "cm-service"
+
+    # -- Secret key for Slack webhook URL
+    webhookUrlSecretKey: "slack-webhook-url"
+
 image:
   # -- Image to use for frontend containers
   repository: "ghcr.io/lsst-dm/cm-service"

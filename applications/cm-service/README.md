@@ -49,6 +49,8 @@ Campaign Management for Rubin Data Release Production
 | config.panda.verifyHost | string | `"1"` | PanDA host TLS verification |
 | config.panda.virtualOrganization | string | `"Rubin"` | PanDA Virtual Organization Name for oidc |
 | config.pathPrefix | string | `"/cm-service"` | URL path prefix |
+| config.slack.secretName | string | `"cm-service"` | Name of Secret with Slack secrets |
+| config.slack.webhookUrlSecretKey | string | `"slack-webhook-url"` | Secret key for Slack webhook URL |
 | daemon.affinity | object | `{}` | Affinity rules for the daemon pods |
 | daemon.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the daemon image |
 | daemon.image.repository | string | `"ghcr.io/lsst-dm/cm-daemon"` | Image to use for daemon containers |
