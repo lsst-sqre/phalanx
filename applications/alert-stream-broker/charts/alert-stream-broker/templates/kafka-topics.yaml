@@ -125,7 +125,7 @@ spec:
   config:
     cleanup.policy: "delete"
     retention.ms: {{ .Values.maxMillisecondsRetained }} # 7 days
-    retention.bytes: {{ .Values.maxBytesRetained }}
+    retention.bytes: {{ .Values.lsstcamMaxBytesRetained }}
     compression.type: {{ .Values.topicCompression }}
     # The default timestamp is the creation time of the alert.
     # To get the ingestion rate, we need this to be the log
