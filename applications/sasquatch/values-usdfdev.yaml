@@ -224,6 +224,9 @@ backup:
 
 prompt-processing:
   enabled: true
+  topics:
+    - test.next-visit
+    - test.next-visit-job
 
 obsloctap:
   enabled: true

@@ -1,21 +1,13 @@
-
+{{- $cluster := .Values.cluster.name }}
+{{- range $topic := .Values.topics }}
 ---
-apiVersion: kafka.strimzi.io/v1beta2
+apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaTopic
 metadata:
-  name: "test.next-visit"
+  name: {{ $topic }}
   labels:
-    strimzi.io/cluster: {{ $.Values.cluster.name }}
+      strimzi.io/cluster: {{ $cluster }}
 spec:
-  partitions: 1
   replicas: 3
----
-apiVersion: kafka.strimzi.io/v1beta2
-kind: KafkaTopic
-metadata:
-  name: "test.next-visit-job"
-  labels:
-    strimzi.io/cluster: {{ $.Values.cluster.name }}
-spec:
   partitions: 1
-  replicas: 3
+{{- end }}
