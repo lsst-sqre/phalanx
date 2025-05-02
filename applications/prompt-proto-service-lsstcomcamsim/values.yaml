@@ -1,4 +1,23 @@
-prompt-keda:
+prompt-proto-service:
+
+  # -- Annotations for the prompt-proto-service pod
+  # @default -- See the `values.yaml` file.
+  podAnnotations:
+    autoscaling.knative.dev/min-scale: "3"
+    # Expect to need roughly n_detector × request_latency / survey_cadence pods
+    # For a 30 s ComCam survey with 500 s latency, this is 150
+    autoscaling.knative.dev/max-scale: "150"
+    autoscaling.knative.dev/target-utilization-percentage: "60"
+    autoscaling.knative.dev/target-burst-capacity: "-1"
+    queue.sidecar.serving.knative.dev/cpu-resource-request: "25m"
+    queue.sidecar.serving.knative.dev/cpu-resource-limit: "1000m"
+    queue.sidecar.serving.knative.dev/memory-resource-request: "400Mi"
+    queue.sidecar.serving.knative.dev/memory-resource-limit: "800Mi"
+    queue.sidecar.serving.knative.dev/ephemeral-storage-resource-request: "400Mi"
+    queue.sidecar.serving.knative.dev/ephemeral-storage-resource-limit: "450Mi"
+    # Update this field if using latest or static image tag in dev
+    revision: "1"
+
   image:
     # -- Image to use in the PP deployment
     repository: ghcr.io/lsst-dm/prompt-service
@@ -12,12 +31,14 @@ prompt-keda:
     # -- The number of requests to process before rebooting a worker.
     # If 0, workers process requests indefinitely.
     restart: 0
-    # -- When Kubernetes shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds).
+    # -- Maximum time that a worker can process a next_visit request (seconds).
+    timeout: 900
+    # -- When Knative shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds).
     grace_period: 45
 
   instrument:
     # -- The "short" name of the instrument
-    name: LATISS
+    name: LSSTComCamSim
     pipelines:
       # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
       # if the result (including any comments) is longer than 72 characters.
@@ -32,9 +53,9 @@ prompt-keda:
       # @default -- None, must be set
       preprocessing: ""
     # -- Skymap to use with the instrument
-    skymap: latiss_v1
+    skymap: ops_rehersal_prep_2k_v1
     # -- Number of arcseconds to pad the spatial region in preloading.
-    preloadPadding: 30
+    preloadPadding: 50
     # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
@@ -45,9 +66,9 @@ prompt-keda:
     # The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache.
     baseSize: 3
     # -- A factor by which to multiply `baseSize` for refcat datasets.
-    refcatsPerImage: 4
+    refcatsPerImage: 6
     # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
-    patchesPerImage: 6
+    patchesPerImage: 16
 
   s3:
     # -- Bucket containing the incoming raw images
@@ -58,7 +79,7 @@ prompt-keda:
     # -- If set, get S3 credentials from this application's Vault secret.
     auth_env: true
     # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
-    disableBucketValidation: '0'
+    disableBucketValidation: 0
     # -- If set, configure S3 checksum options.
     checksum: WHEN_REQUIRED
 
@@ -80,7 +101,7 @@ prompt-keda:
     # -- Kafka consumer offset reset setting for image arrival notifications
     consumerOffsetReset: "latest"
     # -- Timeout to wait after expected script completion for raw image arrival (seconds).
-    imageTimeout: 20
+    imageTimeout: 120  # Simulated survey has up to 2-minute slews, but most visits are faster
 
   apdb:
     # -- URL to a serialized APDB configuration, or the "label:" prefix
@@ -90,10 +111,11 @@ prompt-keda:
 
   alerts:
     # -- Username for sending alerts to the alert stream
-    username: ""
+    username: "kafka-admin"
     # -- Server address for the alert stream
-    server: ""
+    server: "usdf-alert-stream-dev.lsst.cloud:9094"
     # -- Topic name where alerts will be sent
+    # @default -- None, must be set
     topic: ""
 
   registry:
@@ -115,37 +137,38 @@ prompt-keda:
     # Leave unset to attempt anonymous access.
     auth_env: true
 
-  keda:
-    # Minimum number of replicas to start with.
-    minReplicaCount: 3
-    # Maximum number of replicas to scale to.
-    maxReplicaCount: 30
-    # Scaling algorithm
-    scalingStrategy: eager
-    # Polling interval for Keda to poll scalar for scaling determination.
-    pollingInterval: 2
-    # How many completed jobs should be kept available in Kubernetes.
-    successfulJobsHistoryLimit: 5
-    # How many failed jobs should be kept available in Kubernetes.
-    failedJobsHistoryLimit: 5
-
-    redisStreams:
-      # Address of Redis Streams Cluster
-      host: prompt-redis.prompt-redis
-      # Name of Redis Stream
-      streamName: instrument:latiss
-      # Redis Consumer Group name
-      consumerGroup: latiss_consumer_group
-      # Time to wait for fanned out messages before spawning new pod.
-      msgListenTimeout: 900
-      # Lag count at which scaler triggers
-      activationLagCount: "1"
-      #  Number of lagging entries in the consumer group, alternative to pendingEntriesCount scaler trigger
-      lagCount: "1"
-      # Number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
-      pendingEntriesCount: "1"
-      # -- Maximum message age to process, in seconds.
-      expiration: 3600
+  knative:
+    # -- The cpu cores requested for the full pod (see `containerConcurrency`).
+    cpuRequest: 1
+    # -- The maximum cpu cores for the full pod (see `containerConcurrency`).
+    cpuLimit: 1
+    # -- The storage space reserved for each container (mostly local Butler).
+    # This allocation is for the full pod (see `containerConcurrency`)
+    ephemeralStorageRequest: "5Gi"
+    # -- The maximum storage space allowed for each container (mostly local Butler).
+    # This allocation is for the full pod (see `containerConcurrency`)
+    ephemeralStorageLimit: "5Gi"
+    # -- GPUs enabled.
+    gpu: false
+    # -- The number of GPUs to request for the full pod (see `containerConcurrency`).
+    gpuRequest: 0
+    # -- The minimum memory to request for the full pod (see `containerConcurrency`).
+    memoryRequest: "2Gi"
+    # -- The maximum memory limit for the full pod (see `containerConcurrency`).
+    memoryLimit: "8Gi"
+    # -- To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`.
+    # This parameter adds extra time to that minimum (seconds).
+    extraTimeout: 10
+    # -- Maximum time that a container can send nothing to Knative (seconds).
+    # This is only useful if the container runs async workers.
+    # If 0, idle timeout is ignored.
+    idleTimeout: 0
+    # -- Maximum time that a container can send nothing to Knative after initial submission (seconds).
+    # This is only useful if the container runs async workers.
+    # If 0, idle timeout is ignored.
+    responseStartTimeout: 0
+    # -- Maximum message age to process, in seconds.
+    expiration: 3600
 
   initializer:
     image:
@@ -181,43 +204,12 @@ prompt-keda:
     # @default -- See the `values.yaml` file.
     podAnnotations: {}
 
-  # -- Override the base name for resources
-  nameOverride: ""
-
-  # -- Override the full name for resources (includes the release name)
-  fullnameOverride: "prompt-keda-latiss"
-
-  debug:
-    # -- Whether or not pipeline outputs should be exported to the central repo.
-    # This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination.
-    exportOutputs: true
-
-
-  # -- Kubernetes resource requests and limits
-  # @default -- See `values.yaml`
-  resources:
-    requests:
-      cpu: '1'
-      ephemeral-storage: 5Gi
-      memory: 2Gi
-    limits:
-      cpu: '1'
-      ephemeral-storage: 5Gi
-      memory: 8Gi
-
+  # -- The number of Knative requests that can be handled simultaneously by one container
+  containerConcurrency: 1
 
   # -- Kubernetes YAML configs for extra container volume(s).
   # Any volumes required by other config options are automatically handled by the Helm chart.
   additionalVolumeMounts: []
 
-  # -- Pod annotations for the Prompt Processing Pod
-  podAnnotations: {}
-
-  # -- Affinity rules for the Prompt Processing Pod
+  # -- Affinity rules for the prompt processing pods
   affinity: {}
-
-  # -- Node selection rules for the Prompt Processing pod
-  nodeSelector: {}
-
-  # -- Tolerations for the Prompt Processing pod
-  tolerations: []
