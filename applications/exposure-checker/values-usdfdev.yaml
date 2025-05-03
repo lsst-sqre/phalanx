@@ -1,5 +1,5 @@
 image:
-  tag: v1.0
+  tag: tickets-DM-50552
 
 environment:
   AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"

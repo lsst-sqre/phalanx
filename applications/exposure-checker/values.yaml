@@ -21,11 +21,17 @@ config:
   # -- Default collection in the butler
   butler_collection:
 
+  # -- Default instrument for butler queries
+  butler_instrument:
+
   # -- Profile to use for object store bucket.
   s3_profile_name:
 
   # -- Object store URL
   s3_endpoint_url:
+
+  # -- Object store bucket name
+  s3_bucket_name:
 
   db:
     # -- Database configuration
