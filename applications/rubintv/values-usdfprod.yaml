@@ -19,14 +19,14 @@ rubintv:
     - name: DDV_CLIENT_WS_ADDRESS
       value: "rubintv/ws/ddv"
     image:
-      tag: v2.6.8
+      tag: v2.6.7
       pullPolicy: Always
 
   workers:
     replicas: 1
     image:
       repository: lsstts/rapid-analysis
-      tag: c0041_usdf
+      tag: c0039_usdf
       pullPolicy: Always
     uid: 17951
     gid: 4085

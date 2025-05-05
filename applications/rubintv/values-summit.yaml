@@ -24,14 +24,14 @@ rubintv:
       secretName: rubintv-secrets
       secretKey: redis-password
     image:
-      tag: v2.6.8
+      tag: v2.6.7
       pullPolicy: Always
 
   workers:
     replicas: 1
     image:
       repository: ts-dockerhub.lsst.org/rapid-analysis
-      tag: c0041
+      tag: c0039
       pullPolicy: Always
     uid: 73006
     gid: 73006
