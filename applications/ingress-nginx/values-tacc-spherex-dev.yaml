@@ -5,6 +5,6 @@ ingress-nginx:
       large-client-header-buffers: "4 64k"
       proxy-buffer-size: "64k"
     service:
-      loadBalancerIP: "129.114.35.216"
-    nodeSelector:
-      kubernetes.io/hostname: master02
+      loadBalancerIP: "129.114.35.231"
+    #nodeSelector:
+    #  kubernetes.io/hostname: master02
