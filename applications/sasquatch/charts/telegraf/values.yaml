@@ -186,7 +186,8 @@ kafkaConsumers:
 
 influxdb:
   # -- URL of the InfluxDB v1 instance to write to
-  url: "http://sasquatch-influxdb.sasquatch:8086"
+  urls:
+    - "http://sasquatch-influxdb.sasquatch:8086"
 
 # -- Kubernetes resources requests and limits
 # @default -- See `values.yaml`
