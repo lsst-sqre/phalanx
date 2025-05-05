@@ -31,21 +31,14 @@ spec:
         operations:
           - Read
           - Describe
+      {{- range $topic := .Values.topics }}
       - resource:
           type: topic
-          name: "test.next-visit"
+          name: {{ $topic }}
           patternType: literal
         type: allow
         host: "*"
         operations:
           - Read
           - Describe
-      - resource:
-          type: topic
-          name: "test.next-visit-job"
-          patternType: literal
-        type: allow
-        host: "*"
-        operations:
-          - Read
-          - Describe
+    {{- end }}
