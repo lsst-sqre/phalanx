@@ -189,10 +189,6 @@ influxdb:
   urls:
     - "http://sasquatch-influxdb.sasquatch:8086"
 
-registry:
-  # -- Schema Registry URL
-  url: "http://sasquatch-schema-registry.sasquatch:8081"
-
 # -- Kubernetes resources requests and limits
 # @default -- See `values.yaml`
 resources:

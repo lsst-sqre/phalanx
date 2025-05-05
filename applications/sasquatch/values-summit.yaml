@@ -360,7 +360,8 @@ telegraf-oss:
 telegraf:
   enabled: true
   influxdb:
-    url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
+    urls:
+      - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
   kafkaConsumers:
     # Application connectors
     obsenv:

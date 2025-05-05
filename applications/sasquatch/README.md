@@ -590,7 +590,7 @@ Rubin Observatory's telemetry service
 | telegraf.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
 | telegraf.image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
 | telegraf.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
-| telegraf.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
+| telegraf.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
 | telegraf.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
 | telegraf.kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
 | telegraf.kafkaConsumers.test.consumer_fetch_default | string | "20MB" | Maximum amount of data the server should return for a fetch request. |
@@ -627,7 +627,7 @@ Rubin Observatory's telemetry service
 | telegraf-oss.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
 | telegraf-oss.image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
 | telegraf-oss.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
-| telegraf-oss.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
+| telegraf-oss.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
 | telegraf-oss.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
 | telegraf-oss.kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
 | telegraf-oss.kafkaConsumers.test.consumer_fetch_default | string | "20MB" | Maximum amount of data the server should return for a fetch request. |

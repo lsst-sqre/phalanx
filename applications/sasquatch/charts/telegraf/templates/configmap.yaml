@@ -1,5 +1,5 @@
 {{- range $key, $value := .Values.kafkaConsumers }}
 
-{{ include "configmap" (dict "key" $key "value" $value "influxdbUrls" $.Values.influxdb.urls "registryUrl" $.Values.registry.url) }}
+{{ include "configmap" (dict "key" $key "value" $value "influxdbUrls" $.Values.influxdb.urls ) }}
 
 {{- end }}
