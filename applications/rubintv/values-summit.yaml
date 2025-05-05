@@ -24,7 +24,7 @@ rubintv:
       secretName: rubintv-secrets
       secretKey: redis-password
     image:
-      tag: v2.6.6
+      tag: v2.6.7
       pullPolicy: Always
 
   workers:
