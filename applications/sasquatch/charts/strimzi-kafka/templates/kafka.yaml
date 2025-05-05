@@ -255,6 +255,7 @@ spec:
     groupRegex: {{ .Values.kafkaExporter.groupRegex }}
     logging: {{ .Values.kafkaExporter.logging }}
     enableSaramaLogging: {{ .Values.kafkaExporter.enableSaramaLogging }}
+    showAllOffsets: {{ .Values.kafkaExporter.showAllOffsets }}
     {{- with .Values.kafkaExporter.resources }}
     resources:
       {{- toYaml . | nindent 6 }}

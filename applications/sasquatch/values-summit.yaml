@@ -38,7 +38,9 @@ strimzi-kafka:
       enabled: true
   kafkaExporter:
     enabled: true
+    logging: debug
     enableSaramaLogging: true
+    showAllOffsets: false
     resources:
       requests:
         cpu: "4"
