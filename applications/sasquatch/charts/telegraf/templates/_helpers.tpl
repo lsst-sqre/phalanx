@@ -20,23 +20,24 @@ data:
       debug = {{ default false .value.debug }}
       omit_hostname = true
 
+    {{- $database := .value.database }}
+    {{- range .influxdbUrls }}
     [[outputs.influxdb]]
       namedrop = ["telegraf_*"]
-      urls = [
-        {{ .influxdbUrl | quote }}
-      ]
-      database = {{ .value.database | quote }}
+      urls = [{{ . | quote }}]
+      database = {{ $database | quote }}
       username = "${INFLUXDB_USER}"
       password = "${INFLUXDB_PASSWORD}"
+    {{ end }}
 
+    {{- range .influxdbUrls }}
     [[outputs.influxdb]]
       namepass = ["telegraf_*"]
-      urls = [
-        {{ .influxdbUrl | quote }}
-      ]
+      urls = [{{ . | quote }}]
       database = "telegraf"
       username = "${INFLUXDB_USER}"
       password = "${INFLUXDB_PASSWORD}"
+    {{ end }}
 
     [[inputs.kafka_consumer]]
       brokers = [
