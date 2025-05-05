@@ -50,6 +50,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
 | kafkaExporter.logging | string | `"info"` | Logging level |
 | kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
+| kafkaExporter.showAllOffsets | bool | `true` | Whether to show all offsets or just offsets from connected groups |
 | kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
 | kraft.enabled | bool | `false` | Enable KRaft mode for Kafka |
 | mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster |

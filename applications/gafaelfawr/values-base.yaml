@@ -3,6 +3,7 @@ redis:
     storageClass: "rook-ceph-block"
 
 config:
+  allowSubdomains: true
   slackAlerts: true
   databaseUrl: "postgresql://gafaelfawr@postgresdb01.ls.lsst.org/gafaelfawr"
 

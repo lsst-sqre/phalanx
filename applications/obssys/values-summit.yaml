@@ -175,7 +175,7 @@ mtqueue:
   resources:
     limits:
       cpu: 12
-      memory: 32Gi
+      memory: 48Gi
     requests:
       cpu: 3
       memory: 4Gi
