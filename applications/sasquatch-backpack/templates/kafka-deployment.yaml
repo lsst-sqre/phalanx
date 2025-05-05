@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ ...
+  name: myapp
+  namespace: myapp
+spec:
+  ...
+  template:
+    ...
+    spec:
+      containers:
+      - env:
+        - name: KAFKA_SECURITY_PROTOCOL
+            secretKeyRef:
+              key: securityProtocol
+              name: myapp-kafka
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          valueFrom:
+            secretKeyRef:
+              key: bootstrapServers
+              name: myapp-kafka
+        - name: KAFKA_CLUSTER_CA_PATH
+          value: /etc/kafkacluster/ca.crt
+        - name: KAFKA_CLIENT_CERT_PATH
+          value: /etc/kafkauser/user.crt
+        - name: KAFKA_CLIENT_KEY_PATH
+          value: /etc/kafkauser/user.key
+
+        ...
+
+        volumeMounts:
+        - mountPath: /etc/kafkacluster/ca.crt
+          name: kafka
+          subPath: ssl.truststore.crt
+        - mountPath: /etc/kafkauser/user.crt
+          name: kafka
+          subPath: ssl.keystore.crt
+        - mountPath: /etc/kafkauser/user.key
+          name: kafka
+          subPath: ssl.keystore.key
+
+      ...
+
+      volumes:
+      - name: kafka
+        secret:
+          defaultMode: 420
+          # The ``metadata.name`` value from the ``KafkaAccess`` resource in
+          # your app's namespace
+          secretName: myapp-kafka
