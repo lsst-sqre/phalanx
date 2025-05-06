@@ -63,12 +63,13 @@ global:
   vaultSecretsPath: null
 
 weaviate:
-  requests:
-    cpu: '300m'
-    memory: '150Mi'
-  limits:
-    cpu: '500m'
-    memory: '300Mi'
+  resources:
+    requests:
+      cpu: '300m'
+      memory: '150Mi'
+    limits:
+      cpu: '500m'
+      memory: '300Mi'
   authentication:
     anonymous_access:
       enabled: true

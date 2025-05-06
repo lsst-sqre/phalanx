@@ -32,9 +32,9 @@ RAG helpers for documentation searches
 | weaviate.env.AUTHORIZATION_ADMINLIST_ENABLED | string | `"true"` |  |
 | weaviate.env.AUTHORIZATION_ADMINLIST_USERS | string | `"admin"` |  |
 | weaviate.envSecrets.AUTHENTICATION_APIKEY_ALLOWED_KEYS | string | `"rubin-rag"` |  |
-| weaviate.limits.cpu | string | `"500m"` |  |
-| weaviate.limits.memory | string | `"300Mi"` |  |
 | weaviate.modules.generative-openai.enabled | bool | `true` |  |
 | weaviate.modules.text2vec-openai.enabled | bool | `true` |  |
-| weaviate.requests.cpu | string | `"300m"` |  |
-| weaviate.requests.memory | string | `"150Mi"` |  |
+| weaviate.resources.limits.cpu | string | `"500m"` |  |
+| weaviate.resources.limits.memory | string | `"300Mi"` |  |
+| weaviate.resources.requests.cpu | string | `"300m"` |  |
+| weaviate.resources.requests.memory | string | `"150Mi"` |  |
