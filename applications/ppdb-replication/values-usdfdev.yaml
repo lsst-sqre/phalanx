@@ -8,10 +8,13 @@ config:
   logProfile: "development"
 
   # -- APDB config file resource
-  apdbConfig: "label:pp-prod:lsstcomcamsim-or4"
+  apdbConfig: "s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcomcamsim-dev.py"
 
   # -- PPDB config file resource
-  ppdbConfig: "/sdf/group/rubin/user/jeremym/ppdb-replication/config/ppdb-replication-test-1.yaml"
+  ppdbConfig: "/sdf/group/rubin/user/jeremym/ppdb-replication/config/ppdb_dm-49202.yaml"
+
+  # -- Staging directory for replicated data
+  stagingDirectory: "/sdf/group/rubin/user/jeremym/ppdb_staging"
 
   # -- APDB index URI
   apdbIndexUri: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
