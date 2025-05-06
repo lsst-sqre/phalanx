@@ -36,3 +36,10 @@ detectorConfig:
     # 78: False
     # 79: False
     # 80: False
+    1: False
+    19: False
+    30: False
+    68: False
+    158: False
+    169: False
+    187: False
