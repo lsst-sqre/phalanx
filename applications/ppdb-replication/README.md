@@ -15,18 +15,20 @@ Replicates data from the APDB to the PPDB
 | config.additionalS3ProfileUrl | string | `nil` | Additional S3 profile URL |
 | config.apdbConfig | string | `nil` | APDB config file resource |
 | config.apdbIndexUri | string | `nil` | APDB index URI |
-| config.checkInterval | string | `nil` | Time to wait before checking for new chunks, if no chunk appears |
+| config.batchSize | int | `1000` | Size of record batches when writing parquet files |
+| config.checkInterval | int | `30` | Time to wait before checking for new chunks, if no chunk appears |
 | config.disableBucketValidation | int | `1` | Disable bucket validation in LSST S3 tools |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
-| config.maxWaitTime | string | `nil` | Maximum time to wait before replicating a chunk after next chunk appears |
-| config.minWaitTime | string | `nil` | Minimum time to wait before replicating a chunk after next chunk appears |
+| config.maxWaitTime | int | `3600` | Maximum time to wait before replicating a chunk after next chunk appears |
+| config.minWaitTime | int | `60` | Minimum time to wait before replicating a chunk after next chunk appears |
 | config.monLogger | string | `"lsst.dax.ppdb.monitor"` | Name of logger for monitoring |
 | config.monRules | string | `nil` | Comma-separated list of monitoring filter rules |
 | config.pathPrefix | string | `"/ppdb-replication"` | URL path prefix |
 | config.persistentVolumeClaims | list | `[]` | Persistent volume claims |
 | config.ppdbConfig | string | `nil` | PPDB config file resource |
 | config.s3EndpointUrl | string | `nil` | S3 endpoint URL |
+| config.stagingDirectory | string | `nil` | Staging directory for replicated data |
 | config.updateExisting | bool | `false` | Allow updates to already replicated data |
 | config.volumeMounts | list | `[]` | Volume mounts |
 | config.volumes | list | `[]` | Volumes specific to the environment |
