@@ -102,6 +102,8 @@ spec:
               value: "{{ .Values.rubinsim.dataDir }}"
             - name: "LSST_DISABLE_BUCKET_VALIDATION"
               value: "{{ .Values.rubinsim.bucketVal }}"
+            - name: "MPLCONFIGDIR"
+              value: "/tmp/.config/matplotlib"
           volumeMounts:
             - name: "tmp-volume"
               mountPath: "/tmp"
