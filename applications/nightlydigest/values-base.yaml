@@ -1,0 +1,35 @@
+nightlydigest-nginx:
+  image:
+    repository: nginx
+    tag: 1.25.1
+    pullPolicy: Always
+  ingress:
+    httpPath: /nightlydigest
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  initContainers:
+    frontend:
+      image:
+        repository: ts-dockerhub.lsst.org/nightlydigest-frontend
+        pullPolicy: Always
+  staticStore:
+    name: nightlydigest-nginx-static
+    storageClass: rook-ceph-block
+    accessMode: ReadWriteOnce
+    claimSize: 2Gi
+  resources:
+    requests:
+      cpu: 50m
+      memory: 70Mi
+    limits:
+      cpu: 500m
+      memory: 300Mi
+  nginxConfig: |
+    server {
+      listen 80;
+      server_name localhost;
+      location /nightlydigest {
+        root /usr/src;
+        try_files $uri$args $uri$args/ $uri/ /nightlydigest/index.html;
+      }
+    }
