@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.staticStore.name }}-pvc
+spec:
+  accessModes:
+    - {{ .Values.staticStore.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.staticStore.claimSize }}
+  storageClassName: {{ .Values.staticStore.storageClass }}
