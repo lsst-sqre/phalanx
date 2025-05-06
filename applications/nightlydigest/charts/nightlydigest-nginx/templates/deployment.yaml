@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nightlydigest-nginx.name" . }}
+  namespace: {{ $.Values.global.controlSystem.appNamespace }}
+  labels:
+    {{- include "nightlydigest-nginx.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "nightlydigest-nginx.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.replicas | default 1 }}
+  template:
+    metadata:
+      labels:
+        {{- include "nightlydigest-nginx.selectorLabels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+      - name: pull-secret
+      initContainers:
+      - name: nightlydigest-frontend
+        image: "{{ .Values.initContainers.frontend.image.repository }}:{{ .Values.initContainers.frontend.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.initContainers.frontend.image.pullPolicy }}
+        command: ["/bin/sh", "-c", "mkdir -p /usr/src/nightlydigest; cp -Rv /usr/src/app/dist/* /usr/src/nightlydigest/"]
+        volumeMounts:
+          - mountPath: /usr/src
+            name: {{ .Values.staticStore.name }}
+      containers:
+      - name: {{ include "nightlydigest-nginx.name" . }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.ports.container }}
+        volumeMounts:
+          - mountPath: /etc/nginx/conf.d
+            readOnly: true
+            name: nginx-conf
+          - mountPath: /usr/src
+            name: {{ .Values.staticStore.name }}
+        {{- with $.Values.resources }}
+        resources:
+          {{- toYaml $.Values.resources | nindent 10 }}
+        {{- end }}
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+        - name: {{ .Values.staticStore.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.staticStore.name }}-pvc
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}

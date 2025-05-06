@@ -18,6 +18,7 @@ Argo CD project: ``rubin``
    nvr-control/index
    rubin-rag/index
    narrativelog/index
+   nightlydigest/index
    nightreport/index
    obsloctap/index
    plot-navigator/index
