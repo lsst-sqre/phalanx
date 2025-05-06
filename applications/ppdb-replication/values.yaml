@@ -2,9 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# This application will only ever be deployed to the USDF, so there are some
-# values specific to that environment here.
-
 # -- Number of deployment pods to start
 replicaCount: 1
 
@@ -15,9 +12,9 @@ image:
   # -- Pull policy for the ppdb-replication image
   pullPolicy: "Always"
 
-  # -- Tag of dax_ppdb image to use
+  # -- Tag of image to use
   # @default -- The appVersion of the chart
-  tag: "main"
+  tag: "tickets-DM-50567"
 
 ingress:
   # -- Additional annotations for the ingress rule
@@ -75,20 +72,11 @@ config:
   # -- URL path prefix
   pathPrefix: "/ppdb-replication"
 
-  # -- GCS bucket name
-  gcsBucket: null
-
-  # -- GCS bucket prefix
-  gcsPrefix: null
-
   # -- APDB config file resource
   apdbConfig: null
 
   # -- PPDB config file resource
   ppdbConfig: null
-
-  # -- Target BigQuery dataset
-  dataset: null
 
   # -- Staging directory for replicated data
   stagingDirectory: null
@@ -97,7 +85,7 @@ config:
   batchSize: 1000
 
   # -- APDB index URI
-  apdbIndexUri: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
+  apdbIndexUri: null
 
   # -- Comma-separated list of monitoring filter rules
   monRules: null
@@ -114,20 +102,23 @@ config:
   # -- Time to wait before checking for new chunks, if no chunk appears
   checkInterval: 30
 
-  # -- Time to wait between uploader file scans
-  waitInterval: 300
+  # -- S3 endpoint URL
+  s3EndpointUrl: null
 
-  # -- Time to wait between uploader file uploads
-  uploadInterval: 0
+  # -- Additional S3 profile name
+  additionalS3ProfileName: null
+
+  # -- Additional S3 profile URL
+  additionalS3ProfileUrl: null
 
   # -- Disable bucket validation in LSST S3 tools
   disableBucketValidation: 1
 
-  # -- S3 endpoint URL
-  s3EndpointUrl: https://s3dfrgw.slac.stanford.edu
+  # -- Volumes specific to the environment
+  volumes: []
 
-  # -- S3 profile name for additional S3 profile
-  additionalS3ProfileName: "embargo"
+  # -- Volume mounts
+  volumeMounts: []
 
-  # -- S3 profile URL for additional S3 profile
-  additionalS3ProfileUrl: "https://sdfembs3.sdf.slac.stanford.edu"
+  # -- Persistent volume claims
+  persistentVolumeClaims: []

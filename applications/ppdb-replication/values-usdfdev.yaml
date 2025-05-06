@@ -1,32 +1,33 @@
 config:
 
+  # -- Logging level
+  logLevel: "INFO"
+
   # -- Logging profile (`production` for JSON, `development` for
   # human-friendly)
   logProfile: "development"
 
   # -- APDB config file resource
-  apdbConfig: "s3://embargo@rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcam.yaml"
-  # apdbConfig: "s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcomcamsim-dev.py"
-  # apdbConfig: "/sdf/group/rubin/user/salnikov/apdb/dm50040/apdb-cassandra-dm50040.yaml"
+  apdbConfig: "s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcomcamsim-dev.py"
 
   # -- PPDB config file resource
-  ppdbConfig: /sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm51379.yaml
-  # ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm50563.yaml"
-  # ppdbConfig: "/sdf/group/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm50040.yaml"
-
-  # -- Target BigQuery dataset
-  dataset: "ppdb-dev-438721:ppdb_dm50567"
+  ppdbConfig: "/sdf/group/rubin/user/jeremym/ppdb-replication/config/ppdb_dm-49202.yaml"
 
   # -- Staging directory for replicated data
-  stagingDirectory: "/sdf/scratch/rubin/ppdb/staging/lsstcam"
+  stagingDirectory: "/sdf/group/rubin/user/jeremym/ppdb_staging"
 
-  # -- GCS bucket name
-  gcsBucket: "rubin-ppdb-test-bucket-1"
+  # -- APDB index URI
+  apdbIndexUri: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
 
-  # -- GCS prefix
-  gcsPrefix: "data/lsstcam"
+  # -- S3 endpoint URL
+  s3EndpointUrl: https://s3dfrgw.slac.stanford.edu
 
-  # -- Volumes specific to the environment
+  # -- S3 profile name for additional S3 profile
+  additionalS3ProfileName: "embargo"
+
+  # -- S3 profile URL for additional S3 profile
+  additionalS3ProfileUrl: "https://sdfembs3.sdf.slac.stanford.edu"
+
   volumes:
     - name: sdf-group-rubin
       persistentVolumeClaim:
@@ -34,22 +35,13 @@ config:
     - name: sdf-data-rubin
       persistentVolumeClaim:
         claimName: sdf-data-rubin
-    - name: sdf-scratch
-      persistentVolumeClain:
-        claimName: sdf-scratch
-  # -- Volume mounts
   volumeMounts:
     - name: sdf-group-rubin
       mountPath: /sdf/group/rubin
     - name: sdf-data-rubin
       mountPath: /sdf/data/rubin
-    - name: sdf-scratch
-      mountPath: /sdf/scratch
-  # -- Persistent volume claims
   persistentVolumeClaims:
     - name: sdf-group-rubin
       storageClassName: sdf-group-rubin
     - name: sdf-data-rubin
       storageClassName: sdf-data-rubin
-    - name: sdf-scratch
-      storageClassName: sdf-scratch
