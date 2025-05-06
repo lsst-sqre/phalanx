@@ -112,7 +112,9 @@ influxdb-enterprise:
 telegraf:
   enabled: true
   influxdb:
-    url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
+    urls:
+      - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
+      - "http://sasquatch-influxdb.sasquatch:8086"
   kafkaConsumers:
     example:
       enabled: true

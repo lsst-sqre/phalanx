@@ -272,7 +272,9 @@ influxdb-enterprise-active:
 telegraf:
   enabled: true
   influxdb:
-    url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
+    urls:
+      - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
+      - "http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086"
   kafkaConsumers:
     # Sasquatch backpack connector
     backpack:
