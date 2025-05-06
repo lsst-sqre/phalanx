@@ -19,8 +19,9 @@ spec:
       - name: pull-secret
       initContainers:
       - name: nightlydigest-frontend
-        {{- $image := dict "repo" .Values.initContainers.frontend.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" .Values.initContainers.frontend.image.revision }}
-        image: {{ include "helpers.makeImage" $image }}
+        # {{- $image := dict "repo" .Values.initContainers.frontend.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" .Values.initContainers.frontend.image.revision }}
+        # image: {{ include "helpers.makeImage" $image }}
+        image: ts-dockerhub.lsst.org/nightlydigest-frontend:c0041
         imagePullPolicy: {{ .Values.initContainers.frontend.image.pullPolicy }}
         command: ["/bin/sh", "-c", "mkdir -p /usr/src/nightlydigest; cp -Rv /usr/src/app/dist/* /usr/src/nightlydigest/"]
         volumeMounts:
