@@ -353,10 +353,10 @@ mtheaderservice:
   resources:
     limits:
       cpu: 2000m
-      memory: 2000Mi
+      memory: 3000Mi
     requests:
       cpu: 200m
-      memory: 500Mi
+      memory: 1000Mi
 
 mtm1m3-sim:
   enabled: false
