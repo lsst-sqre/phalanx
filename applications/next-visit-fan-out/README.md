@@ -32,7 +32,7 @@ Poll next visit events from Kafka, duplicate them, and send them to all applicat
 | knative.urls | object | See `values.yaml`. | A mapping of instrument to that instrument's Knative service. |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` | Node selection rules for the next-visit-fan-out deployment pod |
-| platform | string | `""` | Platform to submit events to.  Either knative or keda. |
+| platform | string | `"keda"` | Platform to submit events to. Only keda supported at present. |
 | podAnnotations."prometheus.io/port" | string | `"8000"` |  |
 | podAnnotations."prometheus.io/scrape" | string | `"true"` |  |
 | replicaCount | int | `1` |  |
