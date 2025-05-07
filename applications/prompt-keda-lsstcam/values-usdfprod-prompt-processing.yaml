@@ -75,17 +75,12 @@ prompt-keda:
     minReplicaCount: 3
     # TODO: this is scaled for SingleFrame, with 25% margin
     maxReplicaCount: 1100
-    # TODO: may need to override for debugging
-    # failedJobsHistoryLimit: 100
 
     # TODO: may need to reduce if we don't have enough capacity
     # redisStreams:
     #   expiration: 600
 
   initializer:
-    # 6 retries is not enough time to fix, e.g., DB permissions problems
-    retries: 15
-
     podAnnotations: {
       edu.stanford.slac.sdf.project/usdf-embargo: "true"
     }
