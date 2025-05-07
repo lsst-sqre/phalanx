@@ -1,0 +1,38 @@
+suite: App metrics app with no tags
+set:
+  globalAppConfig:
+    appWithTags:
+      influxTags:
+        - "tag1"
+        - "tag2"
+  apps:
+    - "appWithTags"
+    - "appWithoutTags"
+tests:
+  - it: "Should contain a section for apps without tags"
+    template: "telegraf-configmap.yaml"
+    asserts:
+      - matchRegex:
+          path: data["telegraf.conf"]
+          pattern: lsst.square.metrics.events.appWithoutTags
+
+  - it: "Should contain a section for apps with tags"
+    template: "telegraf-configmap.yaml"
+    asserts:
+      - matchRegex:
+          path: data["telegraf.conf"]
+          pattern: lsst.square.metrics.events.appWithTags
+
+  - it: "Should contain tags for apps with tags"
+    template: "telegraf-configmap.yaml"
+    asserts:
+      - matchRegex:
+          path: data["telegraf.conf"]
+          pattern: 'avro_tags = \[ "application", "tag1", "tag2" \]'
+
+  - it: "Should contain default tags for apps with no tags"
+    template: "telegraf-configmap.yaml"
+    asserts:
+      - matchRegex:
+          path: data["telegraf.conf"]
+          pattern: 'avro_tags = \[ "application" \]'
