@@ -81,7 +81,7 @@ podAnnotations: {}
 # @default -- See `values.yaml`
 resources:
   limits:
-    cpu: "500m"
+    cpu: "1200m"
     memory: "250Mi"
   requests:
     cpu: "100m"
