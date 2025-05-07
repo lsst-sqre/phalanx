@@ -63,7 +63,10 @@ prompt-keda:
   apdb:
     config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcam.yaml
 
-  logLevel: timer.lsst.activator=DEBUG timer.lsst.daf.butler=VERBOSE lsst.associateApdb=VERBOSE lsst.computeReliability=VERBOSE
+  logLevel: >-
+    timer.lsst.activator=DEBUG timer.lsst.daf.butler=VERBOSE lsst.associateApdb=VERBOSE
+    lsst.computeReliability=VERBOSE
+    TRACE1.lsst.activator.middleware_interface=DEBUG
 
   sasquatch:
     # TODO: production Sasquatch not yet ready
@@ -81,6 +84,8 @@ prompt-keda:
     # TODO: may need to reduce if we don't have enough capacity
     # redisStreams:
     #   expiration: 600
+
+    msgListenTimeout: 3600
 
   initializer:
     # 6 retries is not enough time to fix, e.g., DB permissions problems
