@@ -26,7 +26,7 @@ rubintv:
     replicas: 1
     image:
       repository: lsstts/rapid-analysis
-      tag: c0039_usdf
+      tag: c0041_usdf
       pullPolicy: Always
     uid: 17951
     gid: 4085
