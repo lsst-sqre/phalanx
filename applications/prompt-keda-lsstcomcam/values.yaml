@@ -12,7 +12,7 @@ prompt-keda:
     # -- The number of requests to process before rebooting a worker.
     # If 0, workers process requests indefinitely.
     restart: 0
-    # -- When Knative shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds).
+    # -- When Kubernetes shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds).
     grace_period: 45
 
   instrument:
