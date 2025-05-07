@@ -29,12 +29,12 @@ config:
   oidcServer:
     enabled: true
 
-  # Allow access by GitHub team.
   groupMapping:
     "admin:jupyterlab":
+      - "k8s-yagan-admins"
       - "sqre"
     "exec:admin":
-      - "k8s-yagan-admin"
+      - "k8s-yagan-admins"
       - "sqre"
     "exec:internal-tools":
       - "rsp-summit"
@@ -47,6 +47,7 @@ config:
     "read:tap":
       - "rsp-summit"
     "write:sasquatch":
+      - "k8s-yagan-admins"
       - "sqre"
 
   initialAdmins:

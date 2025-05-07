@@ -32,9 +32,11 @@ config:
   # Allow access by GitHub team.
   groupMapping:
     "admin:jupyterlab":
+      - "k8s-manke-admins"
       - "sqre"
     "exec:admin":
       - "integration-testers"
+      - "k8s-manke-admins"
       - "sqre"
     "exec:internal-tools":
       - "rsp-bts"
@@ -47,6 +49,7 @@ config:
     "read:tap":
       - "rsp-bts"
     "write:sasquatch":
+      - "k8s-manke-admins"
       - "sqre"
 
   initialAdmins:
