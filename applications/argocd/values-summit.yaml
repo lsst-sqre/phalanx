@@ -2,23 +2,18 @@ argo-cd:
   configs:
     cm:
       url: "https://summit-lsp.lsst.codes/argo-cd"
-      dex.config: |
-        connectors:
-          # Auth using GitHub.
-          # See https://dexidp.io/docs/connectors/github/
-          - type: github
-            id: github
-            name: GitHub
-            config:
-              clientID: 8da9b82e0da60985fb86
-              # Reference to key in argo-secret Kubernetes resource
-              clientSecret: $dex.clientSecret
-              orgs:
-                - name: lsst-sqre
+      oidc.config: |
+        name: Keycloak
+        issuer: https://keycloak.cp.lsst.org/realms/master
+        clientID: argocd
+        clientSecret: $dex.clientSecret
+        requestedScopes: ["openid", "profile", "email", "groups"]
     rbac:
       policy.csv: |
-        g, lsst-sqre:friends, role:admin
-        g, lsst-sqre:square, role:admin
+        g, k8s-yagan-admin, role:admin
+        g, sqre, role:admin
+
+        g, rsp-summit, role:readonly
 
   server:
     ingress:
