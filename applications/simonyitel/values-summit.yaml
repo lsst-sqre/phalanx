@@ -494,10 +494,10 @@ mtoods:
   resources:
     limits:
       cpu: 1000m
-      memory: 700Mi
+      memory: 2100Mi
     requests:
       cpu: 10m
-      memory: 345Mi
+      memory: 700Mi
   configfile:
     path: /etc
     filename: mtoods.yaml
