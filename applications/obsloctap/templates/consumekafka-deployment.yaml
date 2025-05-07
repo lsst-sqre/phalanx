@@ -58,7 +58,7 @@ spec:
             - name: "INSTRUMENT"
               value: "LSSTCam"
             - name: "LOG_CONFIG"
-              value: "{{ .Values.consumekafka.logConfig }}"
+              value: "{{ .Values.consumekafka.logLevel }}"
             - name: "LFA_AWS_ACCESS_KEY_ID"
               valueFrom:
                 secretKeyRef:
