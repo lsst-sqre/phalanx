@@ -147,6 +147,9 @@ influxdb:
       memory: 8Gi
       cpu: 2
 
+  # -- A list of influxdb databases for which to create a Grafana datasource
+  grafanaDatasources: []
+
 customInfluxDBIngress:
   # -- Whether to enable the custom ingress for InfluxDB OSS
   enabled: false
@@ -168,13 +171,25 @@ influxdb-enterprise:
   # -- Whether to enable influxdb-enterprise
   enabled: false
 
+  # -- A list of influxdb-enterprise databases for which to create a Grafana
+  # datasource
+  grafanaDatasources: []
+
 influxdb-enterprise-standby:
   # -- Whether to enable influxdb-enterprise-standby
   enabled: false
 
+  # -- A list of influxdb-enterprise-standby databases for which to create a
+  # Grafana datasource
+  grafanaDatasources: []
+
 influxdb-enterprise-active:
   # -- Whether to enable influxdb-enterprise-active
   enabled: false
+  #
+  # -- A list of influxdb-enterprise-active databases for which to create a
+  # Grafana datasource
+  grafanaDatasources: []
 
 kafka-connect-manager:
   # -- Whether to enable the Kafka Connect Manager

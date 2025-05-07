@@ -47,6 +47,9 @@ influxdb:
   ingress:
     enabled: false
     hostname: data-dev.lsst.cloud
+  grafanaDatasources:
+    - lsst.square.metrics
+    - lsst.example
 
 customInfluxDBIngress:
   enabled: true
