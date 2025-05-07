@@ -20,7 +20,7 @@ image:
 controller:
   config:
     safir:
-      logLevel: "DEBUG"
+      logLevel: "None"
 
 lfa:
   s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu/"

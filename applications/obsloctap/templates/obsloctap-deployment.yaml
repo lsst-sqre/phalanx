@@ -54,6 +54,8 @@ spec:
               {{- toYaml .Values.resources | nindent 12 }}
 
           env:
+            - name: "LOG_CONFIG"
+              value: "{{ .Values.obsloctap.logLevel }}"
             - name: "lfa"
               value: "{{ .Values.lfa.s3EndpointUrl }}"
             - name: "database"
