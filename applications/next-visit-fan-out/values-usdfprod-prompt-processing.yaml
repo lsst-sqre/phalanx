@@ -1,5 +1,3 @@
-platform: keda
-
 knative:
   maxMessages: 2000
 
