@@ -16,13 +16,6 @@ applications:
   prompt-keda-lsstcamimsim: true
   prompt-keda-lsstcomcam: true
   prompt-keda-lsstcomcamsim: true
-  prompt-proto-service-hsc: false
-  prompt-proto-service-hsc-gpu: false
-  prompt-proto-service-latiss: false
-  prompt-proto-service-lsstcam: false
-  prompt-proto-service-lsstcamimsim: false
-  prompt-proto-service-lsstcomcam: false
-  prompt-proto-service-lsstcomcamsim: false
   prompt-redis: true
   strimzi: true
   vault-secrets-operator: false
