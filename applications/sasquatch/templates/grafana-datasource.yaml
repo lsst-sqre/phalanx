@@ -1,0 +1,155 @@
+{{- range .Values.influxdb.grafanaDatasources }}
+{{- $displayTitle := "OSS" }}
+{{- $serviceName := "sasquatch-influxdb"  }}
+{{- $kTitle := "oss" }}
+{{- $kDatabase := . | replace "." "-"  }}
+{{- $kName := printf "influxdb-%s-%s" $kTitle $kDatabase  | trunc 253  }}
+---
+apiVersion: "grafana.integreatly.org/v1beta1"
+kind: "GrafanaDatasource"
+metadata:
+  name: {{ $kName | quote }}
+spec:
+  allowCrossNamespaceImport: true
+  datasource:
+    type: "influxdb"
+    access: "proxy"
+    name: "{{ $displayTitle }} - {{ . }}"
+    url: "http://{{ $serviceName }}.sasquatch:8086"
+    user: "${influxdb-user}"
+    jsonData:
+      dbName: {{ . | quote }}
+    secureJsonData:
+      password: "${influxdb-password}"
+  valuesFrom:
+    - targetPath: "user"
+      valueFrom:
+        secretKeyRef:
+          name: "sasquatch"
+          key: "influxdb-user"
+    - targetPath: "secureJsonData.password"
+      valueFrom:
+        secretKeyRef:
+          name: "sasquatch"
+          key: "influxdb-password"
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+{{- end }}
+
+{{- range index .Values "influxdb-enterprise" "grafanaDatasources" }}
+{{- $displayTitle := "Enterprise" }}
+{{- $kTitle := "ent" }}
+{{- $serviceName := "sasquatch-influxdb-enterprise"  }}
+{{- $kDatabase := . | replace "." "-"  }}
+{{- $kName := printf "influxdb-%s-%s" $kTitle $kDatabase  | trunc 253  }}
+---
+apiVersion: "grafana.integreatly.org/v1beta1"
+kind: "GrafanaDatasource"
+metadata:
+  name: {{ $kName | quote }}
+spec:
+  allowCrossNamespaceImport: true
+  datasource:
+    type: "influxdb"
+    access: "proxy"
+    name: "{{ $displayTitle }} - {{ . }}"
+    url: "http://{{ $serviceName }}.sasquatch:8086"
+    user: "${influxdb-user}"
+    jsonData:
+      dbName: {{ . | quote }}
+    secureJsonData:
+      password: "${influxdb-password}"
+  valuesFrom:
+    - targetPath: "user"
+      valueFrom:
+        secretKeyRef:
+          name: "sasquatch"
+          key: "influxdb-user"
+    - targetPath: "secureJsonData.password"
+      valueFrom:
+        secretKeyRef:
+          name: "sasquatch"
+          key: "influxdb-password"
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+{{- end }}
+
+{{- range index .Values "influxdb-enterprise-active" "grafanaDatasources" }}
+{{- $displayTitle := "Enterprise (active)" }}
+{{- $kTitle := "ent-active" }}
+{{- $serviceName := "sasquatch-influxdb-enterprise-active"  }}
+{{- $kDatabase := . | replace "." "-"  }}
+{{- $kName := printf "influxdb-%s-%s" $kTitle $kDatabase  | trunc 253  }}
+---
+apiVersion: "grafana.integreatly.org/v1beta1"
+kind: "GrafanaDatasource"
+metadata:
+  name: {{ $kName | quote }}
+spec:
+  allowCrossNamespaceImport: true
+  datasource:
+    type: "influxdb"
+    access: "proxy"
+    name: "{{ $displayTitle }} - {{ . }}"
+    url: "http://{{ $serviceName }}.sasquatch:8086"
+    user: "${influxdb-user}"
+    jsonData:
+      dbName: {{ . | quote }}
+    secureJsonData:
+      password: "${influxdb-password}"
+  valuesFrom:
+    - targetPath: "user"
+      valueFrom:
+        secretKeyRef:
+          name: "sasquatch"
+          key: "influxdb-user"
+    - targetPath: "secureJsonData.password"
+      valueFrom:
+        secretKeyRef:
+          name: "sasquatch"
+          key: "influxdb-password"
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+{{- end }}
+
+{{- range index .Values "influxdb-enterprise-standby" "grafanaDatasources" }}
+{{- $displayTitle := "Enterprise (standby)" }}
+{{- $kTitle := "ent-standby" }}
+{{- $serviceName := "sasquatch-influxdb-enterprise-standby"  }}
+{{- $kDatabase := . | replace "." "-"  }}
+{{- $kName := printf "influxdb-%s-%s" $kTitle $kDatabase  | trunc 253  }}
+---
+apiVersion: "grafana.integreatly.org/v1beta1"
+kind: "GrafanaDatasource"
+metadata:
+  name: {{ $kName | quote }}
+spec:
+  allowCrossNamespaceImport: true
+  datasource:
+    type: "influxdb"
+    access: "proxy"
+    name: "{{ $displayTitle }} - {{ . }}"
+    url: "http://{{ $serviceName }}.sasquatch:8086"
+    user: "${influxdb-user}"
+    jsonData:
+      dbName: {{ . | quote }}
+    secureJsonData:
+      password: "${influxdb-password}"
+  valuesFrom:
+    - targetPath: "user"
+      valueFrom:
+        secretKeyRef:
+          name: "sasquatch"
+          key: "influxdb-user"
+    - targetPath: "secureJsonData.password"
+      valueFrom:
+        secretKeyRef:
+          name: "sasquatch"
+          key: "influxdb-password"
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+{{- end }}
