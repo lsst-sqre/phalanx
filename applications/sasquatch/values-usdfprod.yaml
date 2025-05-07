@@ -270,12 +270,11 @@ influxdb-enterprise-active:
         memory: 192Gi
         cpu: 8
 
-
 telegraf:
   enabled: true
   influxdb:
     urls:
-      - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
+      - "http://sasquatch-influxdb-enterprise-standby-data.sasquatch:8086"
       - "http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086"
   kafkaConsumers:
     # Sasquatch backpack connector
