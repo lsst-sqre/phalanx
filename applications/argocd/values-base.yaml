@@ -10,7 +10,7 @@ argo-cd:
         requestedScopes: ["openid", "profile", "email", "groups"]
     rbac:
       policy.csv: |
-        g, k8s-manke, role:admin
+        g, k8s-manke-admins, role:admin
         g, sqre, role:admin
 
         g, rsp-bts, role:readonly
