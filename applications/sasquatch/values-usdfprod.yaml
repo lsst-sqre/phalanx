@@ -515,7 +515,7 @@ chronograf:
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/usdfprod.json
 
 kapacitor:
-  influxURL: http://sasquatch-influxdb-enterprise-data.sasquatch:8086
+  influxURL: http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086
 
 app-metrics:
   enabled: true
