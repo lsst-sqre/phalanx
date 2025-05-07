@@ -96,6 +96,7 @@ influxdb-enterprise:
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
+      path: "/influxdb-enterprise-meta-remove(/|$)(.*)"
     persistence:
       # -- Enable InfluxDB Enterprise meta pod persistence
       enabled: true
@@ -114,6 +115,7 @@ influxdb-enterprise:
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
+      path: "/influxdb-enterprise-data-remove(/|$)(.*)"
     # -- Enable InfluxDB Enterprise data pod persistence
     persistence:
       enabled: true
@@ -212,7 +214,7 @@ influxdb-enterprise-active:
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
-      path: "/influxdb-enterprise-active-meta(/|$)(.*)"
+      path: "/influxdb-enterprise-meta(/|$)(.*)"
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
@@ -254,7 +256,7 @@ influxdb-enterprise-active:
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
-      path: "/influxdb-enterprise-active-data(/|$)(.*)"
+      path: "/influxdb-enterprise-data(/|$)(.*)"
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
