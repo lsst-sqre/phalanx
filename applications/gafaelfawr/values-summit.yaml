@@ -33,9 +33,6 @@ config:
     "admin:jupyterlab":
       - "k8s-yagan-admins"
       - "sqre"
-    "admin:userinfo":
-      - "k8s-yagan-admins"
-      - "sqre"
     "exec:admin":
       - "k8s-yagan-admins"
       - "sqre"

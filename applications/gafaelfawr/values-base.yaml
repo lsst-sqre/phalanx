@@ -34,9 +34,6 @@ config:
     "admin:jupyterlab":
       - "k8s-manke-admins"
       - "sqre"
-    "admin:userinfo":
-      - "k8s-manke-admins"
-      - "sqre"
     "exec:admin":
       - "integration-testers"
       - "k8s-manke-admins"
