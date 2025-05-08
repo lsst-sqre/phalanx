@@ -28,6 +28,8 @@ RAG helpers for documentation searches
 | tolerations | list | `[]` | Tolerations for the rubin-rag deployment pod |
 | weaviate.authentication.anonymous_access.enabled | bool | `true` |  |
 | weaviate.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
+| weaviate.containerSecurityContext.fsGroup | int | `1000` |  |
+| weaviate.containerSecurityContext.fsGroupChangePolicy | string | `"OnRootMismatch"` |  |
 | weaviate.containerSecurityContext.privileged | bool | `false` |  |
 | weaviate.containerSecurityContext.readOnlyRootFilesystem | bool | `true` |  |
 | weaviate.containerSecurityContext.runAsGroup | int | `1000` |  |
@@ -48,8 +50,11 @@ RAG helpers for documentation searches
 | weaviate.resources.requests.cpu | string | `"300m"` |  |
 | weaviate.resources.requests.ephemeral-storage | string | `"512Mi"` |  |
 | weaviate.resources.requests.memory | string | `"150Mi"` |  |
+| weaviate.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | weaviate.securityContext.fsGroup | int | `1000` |  |
 | weaviate.securityContext.fsGroupChangePolicy | string | `"OnRootMismatch"` |  |
+| weaviate.securityContext.privileged | bool | `false` |  |
+| weaviate.securityContext.readOnlyRootFilesystem | bool | `true` |  |
 | weaviate.securityContext.runAsGroup | int | `1000` |  |
 | weaviate.securityContext.runAsNonRoot | bool | `true` |  |
 | weaviate.securityContext.runAsUser | int | `1000` |  |
