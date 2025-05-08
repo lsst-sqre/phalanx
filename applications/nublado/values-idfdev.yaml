@@ -93,6 +93,9 @@ controller:
 hub:
   useSubdomains: true
 jupyterhub:
+  cull:
+    timeout: 43200  # 12 hours
+    maxAge: 86400   # 1 day
   hub:
     config:
       JupyterHub:
