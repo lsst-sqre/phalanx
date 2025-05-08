@@ -10,16 +10,25 @@ Qserv Kafka bridge
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` | Affinity rules for the qserv-kafka deployment pod |
 | config.consumerGroupId | string | `"qserv"` | Kafka consumer group ID |
+| config.jobCancelTopic | string | `"lsst.tap.job-delete"` | Kafka topic for query cancellation requests |
 | config.jobRunTopic | string | `"lsst.tap.job-run"` | Kafka topic for query execution requests |
 | config.jobStatusTopic | string | `"lsst.tap.job-status"` | Kafka topic for query status |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
+| config.qservDatabaseOverflow | int | `50` | Extra database connections that may be opened in excess of the pool size to handle surges in load. |
+| config.qservDatabasePoolSize | int | `10` | Database pool size. This is the number of MySQL connections that will be held open regardless of load. |
 | config.qservDatabaseUrl | string | None, must be set | URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`) |
 | config.qservPollInterval | string | `"1s"` | Interval at which Qserv is polled for query status in Safir `parse_timedelta` format |
+| config.qservRestMaxConnections | int | `20` | Maximum simultaneous connections to open to the REST API. |
+| config.qservRestTimeout | string | `"30s"` | Timeout for REST API calls in Safir `parse_timedelta` format. This includes time spent waiting for a connection if the maximum number of connections has been reached. |
 | config.qservRestUrl | string | None, must be set | URL to the Qserv REST API |
-| config.resultTimeout | int | 3600 (1 hour) | How long to wait for result processing (retrieval and upload) before timing out, in seconds. This doubles as the timeout forcibly terminating the pod. |
+| config.resultTimeout | int | 3600 (1 hour) | How long to wait for result processing (retrieval and upload) before timing out, in seconds. This doubles as the timeout forcibly terminating result worker pods. |
+| frontend.affinity | object | `{}` | Affinity rules for the qserv-kafka frontend pod |
+| frontend.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka frontend pod |
+| frontend.podAnnotations | object | `{}` | Annotations for the qserv-kafka frontend pod |
+| frontend.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka frontend pod |
+| frontend.tolerations | list | `[]` | Tolerations for the qserv-kafka frontend pod |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
@@ -27,8 +36,6 @@ Qserv Kafka bridge
 | image.repository | string | `"ghcr.io/lsst-sqre/qserv-kafka"` | Image to use in the qserv-kafka deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
-| nodeSelector | object | `{}` | Node selection rules for the qserv-kafka deployment pod |
-| podAnnotations | object | `{}` | Annotations for the qserv-kafka deployment pod |
 | redis.config.secretKey | string | `"redis-password"` | Key inside secret from which to get the Redis password (do not change) |
 | redis.config.secretName | string | `"qserv-kafka"` | Name of secret containing Redis password |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
@@ -37,5 +44,13 @@ Qserv Kafka bridge
 | redis.persistence.storageClass | string | `nil` | Class of storage to request |
 | redis.persistence.volumeClaimName | string | `nil` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
-| resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka deployment pod |
-| tolerations | list | `[]` | Tolerations for the qserv-kafka deployment pod |
+| resultWorker.affinity | object | `{}` | Affinity rules for the qserv-kafka worker pods |
+| resultWorker.autoscaling.enabled | bool | `true` | Enable autoscaling of qserv-kafka result workers |
+| resultWorker.autoscaling.maxReplicas | int | `10` | Maximum number of qserv-kafka worker pods. Each replica will open database connections up to the configured pool size and overflow limits, so make sure the combined connections are under the postgres connection limit. |
+| resultWorker.autoscaling.minReplicas | int | `1` | Minimum number of qserv-kafka worker pods |
+| resultWorker.autoscaling.targetCPUUtilizationPercentage | int | `75` | Target CPU utilization of qserv-kafka worker pods. |
+| resultWorker.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka worker pods |
+| resultWorker.podAnnotations | object | `{}` | Annotations for the qserv-kafka worker pods |
+| resultWorker.replicaCount | int | `1` | Number of result worker pods to start if autoscaling is disabled |
+| resultWorker.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka worker pods |
+| resultWorker.tolerations | list | `[]` | Tolerations for the qserv-kafka worker pods |

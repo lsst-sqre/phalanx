@@ -6,6 +6,9 @@ config:
   # -- Kafka consumer group ID
   consumerGroupId: "qserv"
 
+  # -- Kafka topic for query cancellation requests
+  jobCancelTopic: "lsst.tap.job-delete"
+
   # -- Kafka topic for query execution requests
   jobRunTopic: "lsst.tap.job-run"
 
@@ -19,6 +22,14 @@ config:
   # human-friendly)
   logProfile: "production"
 
+  # -- Extra database connections that may be opened in excess of the pool
+  # size to handle surges in load.
+  qservDatabaseOverflow: 50
+
+  # -- Database pool size. This is the number of MySQL connections that will
+  # be held open regardless of load.
+  qservDatabasePoolSize: 10
+
   # -- URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`)
   # @default -- None, must be set
   qservDatabaseUrl: null
@@ -27,13 +38,21 @@ config:
   # `parse_timedelta` format
   qservPollInterval: "1s"
 
+  # -- Maximum simultaneous connections to open to the REST API.
+  qservRestMaxConnections: 20
+
+  # -- Timeout for REST API calls in Safir `parse_timedelta` format. This
+  # includes time spent waiting for a connection if the maximum number of
+  # connections has been reached.
+  qservRestTimeout: "30s"
+
   # -- URL to the Qserv REST API
   # @default -- None, must be set
   qservRestUrl: null
 
   # -- How long to wait for result processing (retrieval and upload) before
   # timing out, in seconds. This doubles as the timeout forcibly terminating
-  # the pod.
+  # result worker pods.
   # @default -- 3600 (1 hour)
   resultTimeout: 3600
 
@@ -52,21 +71,22 @@ ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
 
-# -- Affinity rules for the qserv-kafka deployment pod
-affinity: {}
+frontend:
+  # -- Affinity rules for the qserv-kafka frontend pod
+  affinity: {}
 
-# -- Node selection rules for the qserv-kafka deployment pod
-nodeSelector: {}
+  # -- Node selection rules for the qserv-kafka frontend pod
+  nodeSelector: {}
 
-# -- Annotations for the qserv-kafka deployment pod
-podAnnotations: {}
+  # -- Annotations for the qserv-kafka frontend pod
+  podAnnotations: {}
 
-# -- Resource limits and requests for the qserv-kafka deployment pod
-# @default -- See `values.yaml`
-resources: {}
+  # -- Resource limits and requests for the qserv-kafka frontend pod
+  # @default -- See `values.yaml`
+  resources: {}
 
-# -- Tolerations for the qserv-kafka deployment pod
-tolerations: []
+  # -- Tolerations for the qserv-kafka frontend pod
+  tolerations: []
 
 redis:
   config:
@@ -100,11 +120,47 @@ redis:
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "0.5"
+      cpu: "1"
       memory: "10Mi"
     requests:
       cpu: "10m"
       memory: "5Mi"
+
+resultWorker:
+  # -- Affinity rules for the qserv-kafka worker pods
+  affinity: {}
+
+  autoscaling:
+    # -- Enable autoscaling of qserv-kafka result workers
+    enabled: true
+
+    # -- Minimum number of qserv-kafka worker pods
+    minReplicas: 1
+
+    # -- Maximum number of qserv-kafka worker pods. Each replica will open
+    # database connections up to the configured pool size and overflow limits,
+    # so make sure the combined connections are under the postgres connection
+    # limit.
+    maxReplicas: 10
+
+    # -- Target CPU utilization of qserv-kafka worker pods.
+    targetCPUUtilizationPercentage: 75
+
+  # -- Node selection rules for the qserv-kafka worker pods
+  nodeSelector: {}
+
+  # -- Annotations for the qserv-kafka worker pods
+  podAnnotations: {}
+
+  # -- Number of result worker pods to start if autoscaling is disabled
+  replicaCount: 1
+
+  # -- Resource limits and requests for the qserv-kafka worker pods
+  # @default -- See `values.yaml`
+  resources: {}
+
+  # -- Tolerations for the qserv-kafka worker pods
+  tolerations: []
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
