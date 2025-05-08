@@ -22,40 +22,13 @@ config:
   # human-friendly)
   logProfile: "production"
 
-  # -- Maximum number of arq jobs each worker can process simultaneously
-  maxWorkerJobs: 2
-
-  metrics:
-    # -- Whether to enable sending metrics
-    enabled: false
-
-    # -- Name under which to log metrics. Generally there is no reason to
-    # change this.
-    application: "qservkafka"
-
-    events:
-      # -- Topic prefix for events. It may sometimes be useful to change this
-      # in development environments.
-      topicPrefix: "lsst.square.metrics.events"
-
-    schemaManager:
-      # -- URL of the Confluent-compatible schema registry server
-      # @default -- Sasquatch in the local cluster
-      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
-
-      # -- Suffix to add to all registered subjects. This is sometimes useful
-      # for experimentation during development.
-      suffix: ""
-
   # -- Extra database connections that may be opened in excess of the pool
-  # size to handle surges in load. This is used primarily by the frontend for
-  # jobs that complete immediately.
+  # size to handle surges in load.
   qservDatabaseOverflow: 50
 
   # -- Database pool size. This is the number of MySQL connections that will
-  # be held open regardless of load. This should generally be set to the same
-  # as `maxWorkerJobs`.
-  qservDatabasePoolSize: 2
+  # be held open regardless of load.
+  qservDatabasePoolSize: 10
 
   # -- URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`)
   # @default -- None, must be set
@@ -65,11 +38,8 @@ config:
   # `parse_timedelta` format
   qservPollInterval: "1s"
 
-  # -- Maximum simultaneous connections to open to the REST API
+  # -- Maximum simultaneous connections to open to the REST API.
   qservRestMaxConnections: 20
-
-  # -- Whether to send the expected API version in REST API calls to Qserv
-  qservRestSendApiVersion: true
 
   # -- Timeout for REST API calls in Safir `parse_timedelta` format. This
   # includes time spent waiting for a connection if the maximum number of
@@ -80,32 +50,11 @@ config:
   # @default -- None, must be set
   qservRestUrl: null
 
-  # -- Username for HTTP Basic Authentication for the Qserv REST API. If not
-  # null, the password will be assumed to be the same as the database
-  # password.
-  qservRestUsername: null
-
-  # -- How long to allow for user table upload before timing out in Safir
-  # `parse_timedelta` format.
-  qservUploadTimeout: "5m"
-
-  # -- How many times to retry after a Qserv API network failure
-  qservRetryCount: 3
-
-  # -- How long to wait between retries after a Qserv API network failure in
-  # Safir `parse_timedelta` format
-  qservRetryDelay: "1s"
-
   # -- How long to wait for result processing (retrieval and upload) before
   # timing out, in seconds. This doubles as the timeout forcibly terminating
   # result worker pods.
   # @default -- 3600 (1 hour)
   resultTimeout: 3600
-
-  # -- Name of the TAP service for which this Qserv Kafka instance is managing
-  # queries. This must match the name of the TAP service for the corresponding
-  # query quota in the Gafaelfawr configuration.
-  tapService: "qserv"
 
 image:
   # -- Image to use in the qserv-kafka deployment
@@ -126,10 +75,6 @@ frontend:
   # -- Affinity rules for the qserv-kafka frontend pod
   affinity: {}
 
-  # -- Whether to allow containers to run as root. Set to true to allow use of
-  # debug containers to diagnose issues such as memory leaks.
-  allowRootDebug: false
-
   # -- Node selection rules for the qserv-kafka frontend pod
   nodeSelector: {}
 
@@ -138,13 +83,7 @@ frontend:
 
   # -- Resource limits and requests for the qserv-kafka frontend pod
   # @default -- See `values.yaml`
-  resources:
-    limits:
-      cpu: "1"
-      memory: "300Mi"
-    requests:
-      cpu: "100m"
-      memory: "145Mi"
+  resources: {}
 
   # -- Tolerations for the qserv-kafka frontend pod
   tolerations: []
@@ -182,18 +121,14 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "100Mi"
+      memory: "10Mi"
     requests:
       cpu: "10m"
-      memory: "20Mi"
+      memory: "5Mi"
 
 resultWorker:
   # -- Affinity rules for the qserv-kafka worker pods
   affinity: {}
-
-  # -- Whether to allow containers to run as root. Set to true to allow use of
-  # debug containers to diagnose issues such as memory leaks.
-  allowRootDebug: false
 
   autoscaling:
     # -- Enable autoscaling of qserv-kafka result workers
@@ -222,13 +157,7 @@ resultWorker:
 
   # -- Resource limits and requests for the qserv-kafka worker pods
   # @default -- See `values.yaml`
-  resources:
-    limits:
-      cpu: "1"
-      memory: "300Mi"
-    requests:
-      cpu: "1"
-      memory: "145Mi"
+  resources: {}
 
   # -- Tolerations for the qserv-kafka worker pods
   tolerations: []

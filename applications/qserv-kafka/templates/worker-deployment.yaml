@@ -35,6 +35,16 @@ spec:
             - "arq"
             - "qservkafka.workers.main.WorkerSettings"
           env:
+            - name: "QSERV_KAFKA_QSERV_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "qserv-kafka"
+                  key: "qserv-password"
+            - name: "QSERV_KAFKA_REDIS_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "qserv-kafka"
+                  key: "redis-password"
             - name: "KAFKA_BOOTSTRAP_SERVERS"
               valueFrom:
                 secretKeyRef:
@@ -51,28 +61,6 @@ spec:
                 secretKeyRef:
                   name: "qserv-kafka-access"
                   key: "securityProtocol"
-            - name: "QSERV_KAFKA_GAFAELFAWR_TOKEN"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka-token"
-                  key: "token"
-            - name: "QSERV_KAFKA_QSERV_DATABASE_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka"
-                  key: "qserv-password"
-            - name: "QSERV_KAFKA_REDIS_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka"
-                  key: "redis-password"
-            {{- if .Values.config.qservRestUsername }}
-            - name: "QSERV_KAFKA_QSERV_REST_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka"
-                  key: "qserv-password"
-            {{- end }}
           envFrom:
             - configMapRef:
                 name: "qserv-kafka"
@@ -103,13 +91,13 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      terminationGracePeriodSeconds: {{ add .Values.config.resultTimeout 10 }}
+      terminationGracePeriodSeconds: {{ add .Values.config.resultTimeout 5 }}
       {{- with .Values.resultWorker.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       securityContext:
-        runAsNonRoot: {{ not .Values.resultWorker.allowRootDebug }}
+        runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
       volumes:
