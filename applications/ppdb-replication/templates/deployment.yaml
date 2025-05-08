@@ -51,7 +51,7 @@ spec:
               mountPath: "/tmp/ppdb-replication-secrets-raw"
               readOnly: true
       containers:
-        - name: {{ .Chart.Name }}
+        - name: "{{ .Chart.Name }}-export-chunks"
           envFrom:
             - configMapRef:
                 name: "ppdb-replication"
@@ -60,8 +60,6 @@ spec:
           env:
             - name: AWS_SHARED_CREDENTIALS_FILE
               value: "/app/secrets/aws-credentials.ini"
-            - name: PGPASSFILE
-              value: "/app/secrets/postgres-credentials.txt"
             - name: LSST_DB_AUTH
               value: "/app/secrets/db-auth.yaml"
             - name: S3_ENDPOINT_URL
@@ -79,6 +77,19 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          args:
+            - "--log-level={{ .Values.config.logLevel }}"
+            - "export-chunks"
+            - {{ .Values.config.apdbConfig | quote }}
+            - {{ .Values.config.ppdbConfig | quote }}
+            - "--directory={{ .Values.config.stagingDirectory }}"
+            - "--compression=snappy"
+            - "--batch-size={{ .Values.config.batchSize }}"
+            - "--min-wait-time={{ .Values.config.minWaitTime }}"
+            - "--max-wait-time={{ .Values.config.maxWaitTime }}"
+            - "--check-interval={{ .Values.config.checkInterval }}"
+            - "--exit-on-empty"
+            - "--single"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

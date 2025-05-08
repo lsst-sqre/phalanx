@@ -14,7 +14,7 @@ image:
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
-  tag: "main"
+  tag: "tickets-DM-50567"
 
 ingress:
   # -- Additional annotations for the ingress rule
@@ -78,6 +78,12 @@ config:
   # -- PPDB config file resource
   ppdbConfig: null
 
+  # -- Staging directory for replicated data
+  stagingDirectory: null
+
+  # -- Size of record batches when writing parquet files
+  batchSize: 1000
+
   # -- APDB index URI
   apdbIndexUri: null
 
@@ -88,13 +94,13 @@ config:
   updateExisting: false
 
   # -- Minimum time to wait before replicating a chunk after next chunk appears
-  minWaitTime: null
+  minWaitTime: 60
 
   # -- Maximum time to wait before replicating a chunk after next chunk appears
-  maxWaitTime: null
+  maxWaitTime: 3600
 
   # -- Time to wait before checking for new chunks, if no chunk appears
-  checkInterval: null
+  checkInterval: 30
 
   # -- S3 endpoint URL
   s3EndpointUrl: null
