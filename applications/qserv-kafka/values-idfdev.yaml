@@ -1,3 +1,6 @@
+image:
+  tag: "tickets-DM-50728"
+  pullPolicy: "Always"
 config:
   logLevel: "DEBUG"
   qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-int.slac.stanford.edu:4090/"
