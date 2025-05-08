@@ -157,6 +157,11 @@ kafka-connect-manager:
         connectInfluxDb: "lsst.prompt"
         topicsRegex: "lsst.prompt.*"
         tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,group
+      scimma:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.scimma"
+        topicsRegex: "lsst.scimma.*"
 
 kafdrop:
   ingress:
@@ -179,6 +184,7 @@ rest-proxy:
       - lsst.verify
       - lsst.lf
       - lsst.prompt
+      - lsst.scimma
 
 chronograf:
   ingress:
