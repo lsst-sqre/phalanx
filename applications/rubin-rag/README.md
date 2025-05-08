@@ -48,7 +48,7 @@ RAG helpers for documentation searches
 | weaviate.resources.limits.ephemeral-storage | string | `"1Gi"` |  |
 | weaviate.resources.limits.memory | string | `"300Mi"` |  |
 | weaviate.resources.requests.cpu | string | `"300m"` |  |
-| weaviate.resources.requests.ephemeral-storage | string | `"512M"` |  |
+| weaviate.resources.requests.ephemeral-storage | string | `"512Mi"` |  |
 | weaviate.resources.requests.memory | string | `"150Mi"` |  |
 | weaviate.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | weaviate.securityContext.fsGroup | int | `1000` |  |
