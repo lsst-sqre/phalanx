@@ -55,16 +55,16 @@ spec:
     {{- toYaml . | nindent 6 }}
   {{- end }}
 {{- end }}
-{{- if or .Values.brokerStorage.enabled .Values.brokerStorage.migration.enabled }}
+{{- if .Values.brokerStorage.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaNodePool
 metadata:
-  name: kafka-local-storage
+  name: {{ .Values.brokerStorage.nodePoolName }}
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
   annotations:
-    strimzi.io/next-node-ids: "[6,7,8]"
+    strimzi.io/next-node-ids: {{ .Values.brokerStorage.nodeIds | quote}}
 spec:
   replicas: {{ .Values.kafka.replicas }}
   roles:
@@ -94,19 +94,59 @@ spec:
     {{- toYaml . | nindent 6 }}
   {{- end }}
 {{- end }}
-{{- if and .Values.brokerStorage.migration.enabled .Values.brokerStorage.migration.rebalance }}
+
+{{- if .Values.brokerStorageMigration.enabled }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: {{ .Values.brokerStorageMigration.nodePoolName }}
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+  annotations:
+    strimzi.io/next-node-ids: {{ .Values.brokerStorageMigration.nodeIds | quote}}
+spec:
+  replicas: {{ .Values.kafka.replicas }}
+  roles:
+    - broker
+  storage:
+    type: jbod
+    volumes:
+    - id: 0
+      type: persistent-claim
+      size: {{ .Values.brokerStorageMigration.size }}
+      {{- if .Values.brokerStorageMigration.storageClassName }}
+      class: {{ .Values.brokerStorageMigration.storageClassName }}
+      {{- end}}
+      deleteClaim: false
+  template:
+    pod:
+      {{- with .Values.brokerStorageMigration.affinity }}
+      affinity:
+        {{- toYaml . | nindent 10 }}
+      {{- end }}
+      {{- with .Values.brokerStorageMigration.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 10 }}
+      {{- end}}
+  {{- with .Values.kafka.resources }}
+  resources:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
+{{- end }}
+{{- if and .Values.brokerStorageMigration.enabled .Values.brokerStorageMigration.rebalance.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaRebalance
 metadata:
-  name: broker-migration
+  name: broker-migration-rebalance
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
   annotations:
     strimzi.io/rebalance-auto-approval: "true"
 spec:
   mode: remove-brokers
-  {{- with .Values.brokerStorage.migration.brokers }}
+  {{- with .Values.brokerStorageMigration.rebalance.removeBrokers }}
   brokers:
     {{- toYaml . | nindent 6 }}
   {{- end }}
