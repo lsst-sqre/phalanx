@@ -58,13 +58,6 @@
 | applications.prompt-keda-lsstcamimsim | bool | `false` | Enable the prompt-keda-lsstcamimsim application |
 | applications.prompt-keda-lsstcomcam | bool | `false` | Enable the prompt-keda-lsstcomcam application |
 | applications.prompt-keda-lsstcomcamsim | bool | `false` | Enable the prompt-keda-lsstcomcamsim application |
-| applications.prompt-proto-service-hsc | bool | `false` | Enable the prompt-proto-service-hsc application |
-| applications.prompt-proto-service-hsc-gpu | bool | `false` | Enable the prompt-proto-service-hsc-gpu application |
-| applications.prompt-proto-service-latiss | bool | `false` | Enable the prompt-proto-service-latiss application |
-| applications.prompt-proto-service-lsstcam | bool | `false` | Enable the prompt-proto-service-lsstcam application |
-| applications.prompt-proto-service-lsstcamimsim | bool | `false` | Enable the prompt-proto-service-lsstcamimsim application |
-| applications.prompt-proto-service-lsstcomcam | bool | `false` | Enable the prompt-proto-service-lsstcomcam application |
-| applications.prompt-proto-service-lsstcomcamsim | bool | `false` | Enable the prompt-proto-service-lsstcomcamsim application |
 | applications.prompt-redis | bool | `false` | Enable the prompt-redis application |
 | applications.qserv-kafka | bool | `false` | Enable the qserv-kafka application |
 | applications.rubin-rag | bool | `false` | Enable the rubin-rag application |

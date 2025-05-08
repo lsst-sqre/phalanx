@@ -1,5 +1,5 @@
-# -- Platform to submit events to.  Either knative or keda.
-platform: ""
+# -- Platform to submit events to. Only keda supported at present.
+platform: keda
 
 knative:
   # -- A mapping of instrument to that instrument's Knative service.
