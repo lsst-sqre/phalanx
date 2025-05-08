@@ -1,34 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "qserv-kafka"
+  name: "qserv-kafka-worker"
   labels:
     {{- include "qserv-kafka.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  {{- if not .Values.resultWorker.autoscaling.enabled }}
+  replicas: {{ .Values.resultWorker.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "qserv-kafka.selectorLabels" . | nindent 6 }}
-  strategy:
-    type: "Recreate"
+      app.kubernetes.io/component: "worker"
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        {{- with .Values.podAnnotations }}
+        {{- with .Values.resultWorker.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
         {{- include "qserv-kafka.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "worker"
         qserv-kafka-redis-client: "true"
     spec:
-      {{- with .Values.affinity }}
+      {{- with .Values.resultWorker.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       automountServiceAccountToken: false
       containers:
-        - name: {{ .Chart.Name }}
+        - name: "{{ .Chart.Name }}-worker"
+          command:
+            - "arq"
+            - "qservkafka.workers.main.WorkerSettings"
           env:
             - name: "QSERV_KAFKA_QSERV_DATABASE_PASSWORD"
               valueFrom:
@@ -61,16 +66,8 @@ spec:
                 name: "qserv-kafka"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: "http"
-              containerPort: 8080
-              protocol: "TCP"
-          readinessProbe:
-            httpGet:
-              path: "/"
-              port: "http"
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resultWorker.resources | nindent 12 }}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -90,12 +87,12 @@ spec:
               mountPath: "/etc/qserv-kafka/user.key"
               readOnly: true
               subPath: "ssl.keystore.key"
-      {{- with .Values.nodeSelector }}
+      {{- with .Values.resultWorker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       terminationGracePeriodSeconds: {{ add .Values.config.resultTimeout 5 }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.resultWorker.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
