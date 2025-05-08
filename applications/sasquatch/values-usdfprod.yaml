@@ -86,49 +86,6 @@ strimzi-kafka:
 influxdb:
   enabled: false
 
-influxdb-enterprise:
-  enabled: true
-  meta:
-    service:
-      type: LoadBalancer
-      annotations:
-        metallb.universe.tf/address-pool: sdf-services
-    ingress:
-      enabled: true
-      hostname: usdf-rsp.slac.stanford.edu
-    persistence:
-      # -- Enable InfluxDB Enterprise meta pod persistence
-      enabled: true
-      accessMode: ReadWriteOnce
-      size: 16Gi
-    # -- InfluxDB Enterprise meta pod resources
-    resources:
-      requests:
-        memory: 2Gi
-        cpu: 2
-      limits:
-        memory: 4Gi
-        cpu: 4
-  data:
-    replicas: 2
-    ingress:
-      enabled: true
-      hostname: usdf-rsp.slac.stanford.edu
-    # -- Enable InfluxDB Enterprise data pod persistence
-    persistence:
-      enabled: true
-      accessMode: ReadWriteOnce
-      storageClass: zfs--rubin-efd
-      size: 30Ti
-    # -- InfluxDB Enterprise data pod resources
-    resources:
-      requests:
-        memory: 192Gi
-        cpu: 8
-      limits:
-        memory: 192Gi
-        cpu: 8
-
 influxdb-enterprise-standby:
   enabled: true
   license:
@@ -212,7 +169,7 @@ influxdb-enterprise-active:
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
-      path: "/influxdb-enterprise-active-meta(/|$)(.*)"
+      path: "/influxdb-enterprise-meta(/|$)(.*)"
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
@@ -254,7 +211,7 @@ influxdb-enterprise-active:
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
-      path: "/influxdb-enterprise-active-data(/|$)(.*)"
+      path: "/influxdb-enterprise-data(/|$)(.*)"
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
@@ -268,12 +225,11 @@ influxdb-enterprise-active:
         memory: 192Gi
         cpu: 8
 
-
 telegraf:
   enabled: true
   influxdb:
     urls:
-      - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
+      - "http://sasquatch-influxdb-enterprise-standby-data.sasquatch:8086"
       - "http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086"
   kafkaConsumers:
     # Sasquatch backpack connector
@@ -515,14 +471,14 @@ chronograf:
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/usdfprod.json
 
 kapacitor:
-  influxURL: http://sasquatch-influxdb-enterprise-data.sasquatch:8086
+  influxURL: http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086
 
 app-metrics:
   enabled: true
   apps:
     - noteburst
   influxdb:
-    url: http://sasquatch-influxdb-enterprise-data.sasquatch:8086
+    url: http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086
 
 backup:
   enabled: true
