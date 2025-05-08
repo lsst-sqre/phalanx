@@ -71,10 +71,10 @@ weaviate:
       cpu: '500m'
       memory: '300Mi'
   initContainers:
-  sysctlInitContainer:
-    enabled: false
-  ensureFileOwnershipContainer:
-    enabled: true
+    sysctlInitContainer:
+      enabled: false
+    ensureFileOwnershipContainer:
+      enabled: true
   containerSecurityContext:
     runAsUser: 1000
     runAsGroup: 1000
