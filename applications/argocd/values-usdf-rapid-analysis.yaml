@@ -33,3 +33,4 @@ argo-cd:
   server:
     ingress:
       hostname: "usdf-rapid-analysis.slac.stanford.edu"
+      tls: false
