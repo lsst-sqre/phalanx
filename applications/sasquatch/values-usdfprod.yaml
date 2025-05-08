@@ -86,51 +86,6 @@ strimzi-kafka:
 influxdb:
   enabled: false
 
-influxdb-enterprise:
-  enabled: true
-  meta:
-    service:
-      type: LoadBalancer
-      annotations:
-        metallb.universe.tf/address-pool: sdf-services
-    ingress:
-      enabled: true
-      hostname: usdf-rsp.slac.stanford.edu
-      path: "/influxdb-enterprise-meta-remove(/|$)(.*)"
-    persistence:
-      # -- Enable InfluxDB Enterprise meta pod persistence
-      enabled: true
-      accessMode: ReadWriteOnce
-      size: 16Gi
-    # -- InfluxDB Enterprise meta pod resources
-    resources:
-      requests:
-        memory: 2Gi
-        cpu: 2
-      limits:
-        memory: 4Gi
-        cpu: 4
-  data:
-    replicas: 2
-    ingress:
-      enabled: true
-      hostname: usdf-rsp.slac.stanford.edu
-      path: "/influxdb-enterprise-data-remove(/|$)(.*)"
-    # -- Enable InfluxDB Enterprise data pod persistence
-    persistence:
-      enabled: true
-      accessMode: ReadWriteOnce
-      storageClass: zfs--rubin-efd
-      size: 30Ti
-    # -- InfluxDB Enterprise data pod resources
-    resources:
-      requests:
-        memory: 192Gi
-        cpu: 8
-      limits:
-        memory: 192Gi
-        cpu: 8
-
 influxdb-enterprise-standby:
   enabled: true
   license:
