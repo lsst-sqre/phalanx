@@ -56,9 +56,6 @@ strimzi-kafka:
     nodePoolName: kafka-local-storage
     nodeIds: "[6,7,8]"
     storageClassName: zfs--rubin-efd
-    migration:
-      enabled: false
-      rebalance: false
     size: 1.5Ti
     affinity:
       nodeAffinity:
@@ -82,9 +79,37 @@ strimzi-kafka:
             topologyKey: kubernetes.io/hostname
 
   brokerStorageMigration:
-    enabled: false
+    enabled: true
+    nodePoolName: kafka
+    nodeIds: "[0,1,2]"
+    storageClassName: zfs--rubin-efd
+    size: 5Ti
     rebalance:
-      enabled: false
+      enabled: true
+      removeBrokers:
+        - 6
+        - 7
+        - 8
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - sdfk8so001
+                    - sdfk8so005
+                    - sdfk8so006
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: strimzi.io/cluster
+                  operator: In
+                  values:
+                    - sasquatch
+            topologyKey: kubernetes.io/hostname
 
 influxdb:
   enabled: false
