@@ -87,9 +87,7 @@ strimzi-kafka:
     rebalance:
       enabled: true
       removeBrokers:
-        - 6
         - 7
-        - 8
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
