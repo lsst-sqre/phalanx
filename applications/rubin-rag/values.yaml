@@ -70,6 +70,29 @@ weaviate:
     limits:
       cpu: '500m'
       memory: '300Mi'
+  initContainers:
+  sysctlInitContainer:
+    enabled: false
+  ensureFileOwnershipContainer:
+    enabled: true
+  containerSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: "OnRootMismatch"
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    privileged: false
+    readOnlyRootFilesystem: true
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: "OnRootMismatch"
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    privileged: false
+    readOnlyRootFilesystem: true
   authentication:
     anonymous_access:
       enabled: true

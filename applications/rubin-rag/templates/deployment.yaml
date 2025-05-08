@@ -65,9 +65,7 @@ spec:
             - name: {{ $.Release.Name }}
               mountPath: "/etc/secrets"
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
+        {{- toYaml .Values.securityContext | nindent 8 }}
       volumes:
         - name: {{ $.Release.Name }}
           secret:
