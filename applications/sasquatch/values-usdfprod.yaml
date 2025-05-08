@@ -271,7 +271,7 @@ telegraf:
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
-         [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.EAS", "lsst.sal.ESS", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+        [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.EAS", "lsst.sal.ESS", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
       debug: true
     m1m3:
       enabled: true
@@ -476,6 +476,7 @@ kapacitor:
 app-metrics:
   enabled: true
   apps:
+    - gafaelfawr
     - noteburst
   influxdb:
     url: http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086
