@@ -45,8 +45,10 @@ RAG helpers for documentation searches
 | weaviate.modules.generative-openai.enabled | bool | `true` |  |
 | weaviate.modules.text2vec-openai.enabled | bool | `true` |  |
 | weaviate.resources.limits.cpu | string | `"500m"` |  |
+| weaviate.resources.limits.ephemeral-storage | string | `"1Gi"` |  |
 | weaviate.resources.limits.memory | string | `"300Mi"` |  |
 | weaviate.resources.requests.cpu | string | `"300m"` |  |
+| weaviate.resources.requests.ephemeral-storage | string | `"512M"` |  |
 | weaviate.resources.requests.memory | string | `"150Mi"` |  |
 | weaviate.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | weaviate.securityContext.fsGroup | int | `1000` |  |

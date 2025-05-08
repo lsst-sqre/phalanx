@@ -67,9 +67,11 @@ weaviate:
     requests:
       cpu: '300m'
       memory: '150Mi'
+      ephemeral-storage: "512Mi"
     limits:
       cpu: '500m'
       memory: '300Mi'
+      ephemeral-storage: "1Gi"
   initContainers:
     sysctlInitContainer:
       enabled: false
