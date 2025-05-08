@@ -36,8 +36,10 @@ controller:
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
+        CULL_KERNEL_IDLE_TIMEOUT: "43200"  # 12 hours
         DAF_BUTLER_REPOSITORY_INDEX: "https://data-dev.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
+        NO_ACTIVITY_TIMEOUT: "86400"  # 1 day
         S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         TMPDIR: "/tmp"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/project/cst_repos/tutorial-notebooks"
