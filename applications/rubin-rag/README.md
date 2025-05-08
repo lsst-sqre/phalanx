@@ -35,13 +35,13 @@ RAG helpers for documentation searches
 | weaviate.containerSecurityContext.runAsGroup | int | `1000` |  |
 | weaviate.containerSecurityContext.runAsNonRoot | bool | `true` |  |
 | weaviate.containerSecurityContext.runAsUser | int | `1000` |  |
-| weaviate.ensureFileOwnershipContainer.enabled | bool | `true` |  |
 | weaviate.env.AUTHENTICATION_APIKEY_ENABLED | string | `"true"` |  |
 | weaviate.env.AUTHENTICATION_APIKEY_USERS | string | `"admin"` |  |
 | weaviate.env.AUTHORIZATION_ADMINLIST_ENABLED | string | `"true"` |  |
 | weaviate.env.AUTHORIZATION_ADMINLIST_USERS | string | `"admin"` |  |
 | weaviate.envSecrets.AUTHENTICATION_APIKEY_ALLOWED_KEYS | string | `"rubin-rag"` |  |
-| weaviate.initContainers | string | `nil` |  |
+| weaviate.initContainers.ensureFileOwnershipContainer.enabled | bool | `true` |  |
+| weaviate.initContainers.sysctlInitContainer.enabled | bool | `false` |  |
 | weaviate.modules.generative-openai.enabled | bool | `true` |  |
 | weaviate.modules.text2vec-openai.enabled | bool | `true` |  |
 | weaviate.resources.limits.cpu | string | `"500m"` |  |
@@ -56,4 +56,3 @@ RAG helpers for documentation searches
 | weaviate.securityContext.runAsGroup | int | `1000` |  |
 | weaviate.securityContext.runAsNonRoot | bool | `true` |  |
 | weaviate.securityContext.runAsUser | int | `1000` |  |
-| weaviate.sysctlInitContainer.enabled | bool | `false` |  |
