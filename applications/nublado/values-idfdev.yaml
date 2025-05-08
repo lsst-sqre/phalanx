@@ -34,32 +34,35 @@ controller:
         image: "sciplat-lab"
     lab:
       env:
+        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
+        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
+        CULL_KERNEL_IDLE_TIMEOUT: "43200"  # 12 hours
         DAF_BUTLER_REPOSITORY_INDEX: "https://data-dev.lsst.cloud/api/butler/configs/idf-repositories.yaml"
-        RUBIN_DIR: "/rubin"
-        SCRATCH_PATH: "/deleted-sundays"
+        GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
+        NO_ACTIVITY_TIMEOUT: "86400"  # 1 day
+        S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         TMPDIR: "/tmp"
-        TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
-        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
+        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/project/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.9.2"
+            tag: "8.8.2"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
-        - name: "landingpage"
-          image:
-            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/rsp-landing-page-provisioner"
-            tag: "0.9.3"
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
-            - containerPath: "/rubin"
-              volumeName: "rubin"
       nodeSelector:
         node_pool: "user-lab-pool"
+      secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "aws-credentials.ini"
+        - secretName: "nublado-lab-secret"
+          secretKey: "butler-gcs-idf-creds.json"
+        - secretName: "nublado-lab-secret"
+          secretKey: "butler-hmac-idf-creds.json"
+        - secretName: "nublado-lab-secret"
+          secretKey: "postgres-credentials.txt"
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
@@ -67,36 +70,31 @@ controller:
       volumes:
         - name: "home"
           source:
-            serverPath: "/home-tiered-share"
+            serverPath: "/home-share"
             server: "10.234.16.4"
             type: "nfs"
-        - name: "rubin"
+        - name: "project"
           source:
-            serverPath: "/home-tiered-share/_reloc/rubin"
+            serverPath: "/project-share"
             server: "10.234.16.4"
             type: "nfs"
-        - name: "deleted-sundays"
+        - name: "scratch"
           source:
-            serverPath: "/home-tiered-share/_reloc/deleted-sundays"
+            serverPath: "/scratch-share"
             server: "10.234.16.4"
             type: "nfs"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
-        - containerPath: "/rubin"
-          volumeName: "rubin"
-        - containerPath: "/deleted-sundays"
-          volumeName: "deleted-sundays"
+        - containerPath: "/project"
+          volumeName: "project"
+        - containerPath: "/scratch"
+          volumeName: "scratch"
     metrics:
       enabled: true
 hub:
   useSubdomains: true
-  landingPage: "/lab/tree/notebooks/tutorials/welcome.md"
-
 jupyterhub:
-  cull:
-    timeout: 43200  # 12 hours
-    maxAge: 86400   # 1 day
   hub:
     config:
       JupyterHub:
@@ -106,44 +104,13 @@ jupyterhub:
     db:
       upgrade: true
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
-  proxy:
-    chp:
-      image:
-        tag: "5.0.1"
-
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
   serviceAccount: "nublado@science-platform-dev-7696.iam.gserviceaccount.com"
-purger:
-  enabled: true
-  volumeName: "deleted-sundays"
-  schedule: "19 05 * * 0"  # Sunday morning, 12:19 AM (UTC-5)
-  policy:
-    directories:
-      - path: /purge
-        threshold: 1GiB
-        # This is the case where we just purge everything once a week.
-        # Set the threshold to 1 second: yeah, *everything*
-        intervals:
-          large:
-            accessInterval: 1s
-            modificationInterval: 1s
-            creationInterval: 1s
-          small:
-            accessInterval: 1s
-            modificationInterval: 1s
-            creationInterval: 1s
 cronjob:
-  tutorials:
-    enabled: true
-    gitTarget: "/rubin/cst_repos/tutorial-notebooks"
-    targetVolume:
-      mountPath: "/rubin"
-      volumeName: "rubin"
-  artifacts:
-    enabled: true
-    gitTarget: "/rubin/cst_repos/tutorial-notebooks-data"
-    targetVolume:
-      mountPath: "/rubin"
-      volumeName: "rubin"
+  enabled: true
+  targetVolume:
+    mountPath: "/project"
+    server: "10.234.16.4"
+    path: "/project-share"
