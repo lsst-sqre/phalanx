@@ -285,6 +285,7 @@ mirrormaker2:
 # -- Configuration for the Kafka Cruise Control
 cruiseControl:
   enabled: false
+  maxReplicasPerBroker: 20000
 
 # -- Configuration for deploying Kafka brokers with local storage
 brokerStorage:
