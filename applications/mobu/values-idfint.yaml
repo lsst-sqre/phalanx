@@ -64,6 +64,7 @@ config:
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
           repo_ref: "u/fe/butler"
+          max_executions: 1
           idle_time: 20
           execution_idle_time: 0
           delete_lab: false
