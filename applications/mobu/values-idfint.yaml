@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 3
 
 resources:
   limits:
@@ -51,7 +51,7 @@ config:
     #       delete_lab: false
     #     restart: true
     - name: "scale-test-butler"
-      count: 300
+      count: 1000
       user_spec:
         username_prefix: "bot-mobu-scale-notebook"
       scopes:
