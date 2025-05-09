@@ -31,7 +31,7 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | config.worker.imageReference | string | `""` | Nublado image reference, applicable when imageSelector is "reference" |
 | config.worker.imageSelector | string | `"recommended"` | Nublado image stream to select: "recommended", "weekly" or "reference" |
 | config.worker.jobTimeout | int | `300` | The default notebook execution timeout, in seconds. |
-| config.worker.keepAlive | string | `"normal"` | Worker keep alive mode: "normal", "fast", "disabled" |
+| config.worker.keepAlive | string | `"hourly"` | Worker keep alive mode: "normal", "fast", "hourly", "daily", "disabled" |
 | config.worker.maxConcurrentJobs | int | `1` | Max number of concurrent notebook executions per worker |
 | config.worker.tokenLifetime | string | `"2419200"` | Worker token lifetime, in seconds. |
 | config.worker.tokenScopes | string | `"exec:notebook,read:image,read:tap,read:alertdb"` | Nublado2 worker account's token scopes as a comma-separated list. |
