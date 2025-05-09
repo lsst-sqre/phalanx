@@ -130,3 +130,6 @@ config:
   # end-users.  Otherwise, use secrets specifically set up for the Butler
   # server.
   shareNubladoSecrets: true
+
+  # -- True to enable capture of trace and other diagnostics to Sentry.io.
+  enableSentry: false
