@@ -113,5 +113,5 @@ cronjob:
   enabled: true
   targetVolume:
     mountPath: "/project"
-    server: "10.234.16.4"
-    path: "/project-share"
+    server: "10.234.240.162"
+    path: "/share1"
