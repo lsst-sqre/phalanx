@@ -12,13 +12,13 @@ strimzi-kafka:
         annotations:
           metallb.universe.tf/address-pool: sdf-rubin-ingest
       brokers:
-        - broker: 6
+        - broker: 0
           annotations:
             metallb.universe.tf/address-pool: sdf-rubin-ingest
-        - broker: 7
+        - broker: 1
           annotations:
             metallb.universe.tf/address-pool: sdf-rubin-ingest
-        - broker: 8
+        - broker: 2
           annotations:
             metallb.universe.tf/address-pool: sdf-rubin-ingest
 
@@ -51,45 +51,16 @@ strimzi-kafka:
     enabled: true
   cruiseControl:
     enabled: true
-  brokerStorage:
-    enabled: true
-    nodePoolName: kafka-local-storage
-    nodeIds: "[6,7,8]"
-    storageClassName: zfs--rubin-efd
-    size: 1.5Ti
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                    - sdfk8sn004
-                    - sdfk8sn003
-                    - sdfk8sn007
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: strimzi.io/cluster
-                  operator: In
-                  values:
-                    - sasquatch
-            topologyKey: kubernetes.io/hostname
-
   brokerStorageMigration:
+    enabled: false
+    rebalance:
+      enabled: false
+  brokerStorage:
     enabled: true
     nodePoolName: kafka
     nodeIds: "[0,1,2]"
     storageClassName: zfs--rubin-efd
     size: 5Ti
-    rebalance:
-      enabled: true
-      removeBrokers:
-        - 6
-        - 7
-        - 8
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
