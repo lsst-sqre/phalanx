@@ -170,8 +170,8 @@ config:
     # -- Nublado image reference, applicable when imageSelector is "reference"
     imageReference: ""
 
-    # -- Worker keep alive mode: "normal", "fast", "disabled"
-    keepAlive: "normal"
+    # -- Worker keep alive mode: "normal", "fast", "hourly", "daily", "disabled"
+    keepAlive: "hourly"
 
 redis:
   persistence:
