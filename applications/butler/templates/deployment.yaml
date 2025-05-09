@@ -68,6 +68,18 @@ spec:
             - name: PGUSER
               value: {{ .Values.config.pguser | quote }}
             {{ end }}
+            {{ if .Values.config.enableSentry }}
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: "butler"
+                  key: "sentry-dsn"
+            - name: SENTRY_RELEASE
+              value: {{ .Chart.Name }}@{{ .Chart.AppVersion }}
+            - name: SENTRY_ENVIRONMENT
+              value: {{ .Values.global.host }}
+
+            {{ end }}
           volumeMounts:
             - name: "butler-secrets"
               mountPath: "/opt/lsst/butler/secrets"
