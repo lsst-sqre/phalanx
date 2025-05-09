@@ -65,12 +65,12 @@ global:
 weaviate:
   resources:
     requests:
-      cpu: '300m'
-      memory: '150Mi'
+      cpu: '1'
+      memory: '1Gi'
       ephemeral-storage: "512Mi"
     limits:
-      cpu: '500m'
-      memory: '300Mi'
+      cpu: '2'
+      memory: '4Gi'
       ephemeral-storage: "1Gi"
   initContainers:
     sysctlInitContainer:

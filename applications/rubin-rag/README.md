@@ -44,12 +44,12 @@ RAG helpers for documentation searches
 | weaviate.initContainers.sysctlInitContainer.enabled | bool | `false` |  |
 | weaviate.modules.generative-openai.enabled | bool | `true` |  |
 | weaviate.modules.text2vec-openai.enabled | bool | `true` |  |
-| weaviate.resources.limits.cpu | string | `"500m"` |  |
+| weaviate.resources.limits.cpu | string | `"2"` |  |
 | weaviate.resources.limits.ephemeral-storage | string | `"1Gi"` |  |
-| weaviate.resources.limits.memory | string | `"300Mi"` |  |
-| weaviate.resources.requests.cpu | string | `"300m"` |  |
+| weaviate.resources.limits.memory | string | `"4Gi"` |  |
+| weaviate.resources.requests.cpu | string | `"1"` |  |
 | weaviate.resources.requests.ephemeral-storage | string | `"512Mi"` |  |
-| weaviate.resources.requests.memory | string | `"150Mi"` |  |
+| weaviate.resources.requests.memory | string | `"2Gi"` |  |
 | weaviate.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | weaviate.securityContext.fsGroup | int | `1000` |  |
 | weaviate.securityContext.fsGroupChangePolicy | string | `"OnRootMismatch"` |  |
