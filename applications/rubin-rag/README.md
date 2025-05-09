@@ -49,7 +49,7 @@ RAG helpers for documentation searches
 | weaviate.resources.limits.memory | string | `"4Gi"` |  |
 | weaviate.resources.requests.cpu | string | `"1"` |  |
 | weaviate.resources.requests.ephemeral-storage | string | `"512Mi"` |  |
-| weaviate.resources.requests.memory | string | `"2Gi"` |  |
+| weaviate.resources.requests.memory | string | `"1Gi"` |  |
 | weaviate.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | weaviate.securityContext.fsGroup | int | `1000` |  |
 | weaviate.securityContext.fsGroupChangePolicy | string | `"OnRootMismatch"` |  |
