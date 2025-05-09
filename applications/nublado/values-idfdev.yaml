@@ -73,8 +73,8 @@ controller:
             type: "nfs"
         - name: "project"
           source:
-            serverPath: "/project-share"
-            server: "10.234.16.4"
+            serverPath: "/share1"
+            server: "10.234.240.162"
             type: "nfs"
         - name: "scratch"
           source:
