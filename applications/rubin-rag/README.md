@@ -39,6 +39,7 @@ RAG helpers for documentation searches
 | weaviate.env.AUTHENTICATION_APIKEY_USERS | string | `"admin"` |  |
 | weaviate.env.AUTHORIZATION_ADMINLIST_ENABLED | string | `"true"` |  |
 | weaviate.env.AUTHORIZATION_ADMINLIST_USERS | string | `"admin"` |  |
+| weaviate.env.LOG_LEVEL | string | `"debug"` |  |
 | weaviate.envSecrets.AUTHENTICATION_APIKEY_ALLOWED_KEYS | string | `"rubin-rag"` |  |
 | weaviate.initContainers.ensureFileOwnershipContainer.enabled | bool | `true` |  |
 | weaviate.initContainers.sysctlInitContainer.enabled | bool | `false` |  |
