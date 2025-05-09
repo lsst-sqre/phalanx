@@ -6,7 +6,7 @@ config:
     sharedWorkarea:
       nfs:
         path: "/share1/shared-workarea"
-        server: "10.87.86.26"
+        server: "10.146.71.26"
     privateWorkarea:
       pvc:
         size: "20Gi"
