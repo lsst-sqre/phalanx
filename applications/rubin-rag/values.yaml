@@ -63,12 +63,38 @@ global:
   vaultSecretsPath: null
 
 weaviate:
-  requests:
-    cpu: '300m'
-    memory: '150Mi'
-  limits:
-    cpu: '500m'
-    memory: '300Mi'
+  resources:
+    requests:
+      cpu: '1'
+      memory: '1Gi'
+      ephemeral-storage: "512Mi"
+    limits:
+      cpu: '2'
+      memory: '4Gi'
+      ephemeral-storage: "1Gi"
+  initContainers:
+    sysctlInitContainer:
+      enabled: false
+    ensureFileOwnershipContainer:
+      enabled: true
+  containerSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: "OnRootMismatch"
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    privileged: false
+    readOnlyRootFilesystem: true
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: "OnRootMismatch"
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    privileged: false
+    readOnlyRootFilesystem: true
   authentication:
     anonymous_access:
       enabled: true
@@ -77,6 +103,7 @@ weaviate:
     AUTHENTICATION_APIKEY_USERS: 'admin'
     AUTHORIZATION_ADMINLIST_ENABLED: 'true'
     AUTHORIZATION_ADMINLIST_USERS: 'admin'
+    LOG_LEVEL: 'debug'
   envSecrets:
     AUTHENTICATION_APIKEY_ALLOWED_KEYS: rubin-rag
   modules:
