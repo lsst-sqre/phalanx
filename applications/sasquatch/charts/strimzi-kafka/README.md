@@ -18,7 +18,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | connect.enabled | bool | `false` | Enable Kafka Connect |
 | connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
 | connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
-| cruiseControl | object | `{"enabled":false}` | Configuration for the Kafka Cruise Control |
+| cruiseControl | object | `{"enabled":false,"maxReplicasPerBroker":20000}` | Configuration for the Kafka Cruise Control |
 | kafka.affinity | object | See `values.yaml` | Affinity for Kafka pod assignment |
 | kafka.config."log.retention.minutes" | int | 4320 minutes (3 days) | Number of days for a topic's data to be retained |
 | kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |

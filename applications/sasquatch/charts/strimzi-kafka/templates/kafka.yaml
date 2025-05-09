@@ -309,5 +309,7 @@ spec:
     {{- end }}
   {{- end }}
   {{ if .Values.cruiseControl.enabled }}
-  cruiseControl: {}
+  cruiseControl:
+    config:
+      max.replicas.per.broker: {{ .Values.cruiseControl.maxReplicasPerBroker }}
   {{- end }}
