@@ -83,7 +83,13 @@ frontend:
 
   # -- Resource limits and requests for the qserv-kafka frontend pod
   # @default -- See `values.yaml`
-  resources: {}
+  resources:
+    limits:
+      cpu: "1"
+      memory: "200Mi"
+    requests:
+      cpu: "100m"
+      memory: "100Mi"
 
   # -- Tolerations for the qserv-kafka frontend pod
   tolerations: []
@@ -157,7 +163,13 @@ resultWorker:
 
   # -- Resource limits and requests for the qserv-kafka worker pods
   # @default -- See `values.yaml`
-  resources: {}
+  resources:
+    limits:
+      cpu: "1"
+      memory: "300Mi"
+    requests:
+      cpu: "1"
+      memory: "150Mi"
 
   # -- Tolerations for the qserv-kafka worker pods
   tolerations: []
