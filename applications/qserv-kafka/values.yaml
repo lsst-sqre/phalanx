@@ -22,13 +22,18 @@ config:
   # human-friendly)
   logProfile: "production"
 
+  # -- Maximum number of arq jobs each worker can process simultaneously
+  maxWorkerJobs: 2
+
   # -- Extra database connections that may be opened in excess of the pool
-  # size to handle surges in load.
+  # size to handle surges in load. This is used primarily by the frontend for
+  # jobs that complete immediately.
   qservDatabaseOverflow: 50
 
   # -- Database pool size. This is the number of MySQL connections that will
-  # be held open regardless of load.
-  qservDatabasePoolSize: 10
+  # be held open regardless of load. This should generally be set to the same
+  # as `maxWorkerJobs`.
+  qservDatabasePoolSize: 2
 
   # -- URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`)
   # @default -- None, must be set
