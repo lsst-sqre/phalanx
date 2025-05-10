@@ -16,8 +16,9 @@ Qserv Kafka bridge
 | config.jobStatusTopic | string | `"lsst.tap.job-status"` | Kafka topic for query status |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
-| config.qservDatabaseOverflow | int | `50` | Extra database connections that may be opened in excess of the pool size to handle surges in load. |
-| config.qservDatabasePoolSize | int | `10` | Database pool size. This is the number of MySQL connections that will be held open regardless of load. |
+| config.maxWorkerJobs | int | `2` | Maximum number of arq jobs each worker can process simultaneously |
+| config.qservDatabaseOverflow | int | `50` | Extra database connections that may be opened in excess of the pool size to handle surges in load. This is used primarily by the frontend for jobs that complete immediately. |
+| config.qservDatabasePoolSize | int | `2` | Database pool size. This is the number of MySQL connections that will be held open regardless of load. This should generally be set to the same as `maxWorkerJobs`. |
 | config.qservDatabaseUrl | string | None, must be set | URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`) |
 | config.qservPollInterval | string | `"1s"` | Interval at which Qserv is polled for query status in Safir `parse_timedelta` format |
 | config.qservRestMaxConnections | int | `20` | Maximum simultaneous connections to open to the REST API. |
