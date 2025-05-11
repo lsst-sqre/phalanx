@@ -8,8 +8,6 @@ config:
   authCacheDuration: 5m
   baseUrl: {{ .Values.global.baseUrl | quote }}
   loginRedirect: true
-  onlyServices:
-    - portal
   scopes:
     all:
       - "read:image"
