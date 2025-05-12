@@ -18,6 +18,7 @@ spec:
       labels:
         {{- include "eups-distributor.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: eups-distributor
       volumes:
         - name: "cache"
           emptyDir: {}
@@ -46,7 +47,7 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/health"
+              path: "/stack"
               port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
