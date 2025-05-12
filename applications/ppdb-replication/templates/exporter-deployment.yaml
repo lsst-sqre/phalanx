@@ -90,6 +90,7 @@ spec:
             - "--min-wait-time={{ .Values.config.minWaitTime }}"
             - "--max-wait-time={{ .Values.config.maxWaitTime }}"
             - "--check-interval={{ .Values.config.checkInterval }}"
+            - "--single"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
