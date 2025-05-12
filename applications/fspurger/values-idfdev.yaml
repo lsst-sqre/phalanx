@@ -5,8 +5,8 @@ image:
   pullPolicy: Always
 
 nfs:
-  server: "10.87.86.26"
-
+  server: "10.234.16.4"
+  path: "/scratch-share"
 schedule: "*/10 * * * *"
 
 policy:
