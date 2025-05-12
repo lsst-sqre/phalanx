@@ -7,8 +7,7 @@ metadata:
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
-    all:
-      - "read:image"
+    anonymous: true
   service: "eups-distributor"
 template:
   metadata:
@@ -22,8 +21,8 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: "/eups-distributor"
-              pathType: "Prefix"
+            - path: "/eups-distributor/(.*)"
+              pathType: "ImplementationSpecific"
               backend:
                 service:
                   name: "eups-distributor"

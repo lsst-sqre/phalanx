@@ -17,7 +17,7 @@ Distributes EUPS binaries
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the eups-distributor image |
 | image.repository | string | `"ghcr.io/lsst-dm/distrib-docker"` | Image to use in the eups-distributor deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
-| ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
+| ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$1","nginx.ingress.kubernetes.io/use-regex":"true"}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the eups-distributor deployment pod |
 | podAnnotations | object | `{"gke-gcsfuse/volumes":"true"}` | Annotations for the eups-distributor deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
