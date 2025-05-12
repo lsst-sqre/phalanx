@@ -90,6 +90,11 @@ spec:
             - "--wait-interval=360"
             - "--upload-interval=0"
             - "--delete-chunks"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 8286  # jeremym
+        runAsGroup: 4085  # rubin_users
+        fsGroup: 4085 # rubin_users
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
