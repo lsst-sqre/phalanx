@@ -89,4 +89,4 @@ weaviate:
   storage:
     size: 32Gi
     storageClassName: "wekafs--sdf-k8s01"
-    fullnameOverride: "weaviate-data-alt" 
+    fullnameOverride: "weaviate-data-alt"
