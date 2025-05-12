@@ -63,6 +63,7 @@ global:
   vaultSecretsPath: null
 
 weaviate:
+  fullnameOverride: weaviate-alt
   resources:
     requests:
       cpu: '300m'
