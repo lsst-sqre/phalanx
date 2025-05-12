@@ -72,6 +72,12 @@ config:
   # -- URL path prefix
   pathPrefix: "/ppdb-replication"
 
+  # -- GCS bucket name
+  gcsBucket: null
+
+  # -- GCS bucket prefix
+  gcsPrefix: null
+
   # -- APDB config file resource
   apdbConfig: null
 

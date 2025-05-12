@@ -16,6 +16,12 @@ config:
   # -- Staging directory for replicated data
   stagingDirectory: "/sdf/group/rubin/user/jeremym/ppdb_staging"
 
+  # -- GCS bucket name
+  gcsBucket: "rubin-ppdb-test-bucket-1"
+
+  # -- GCS prefix
+  gcsPrefix: "data/tmp"
+
   # -- APDB index URI
   apdbIndexUri: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
 
