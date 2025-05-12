@@ -63,7 +63,9 @@ global:
   vaultSecretsPath: null
 
 weaviate:
-  fullnameOverride: weaviate-alt
+  volumeClaimTemplates:
+  - metadata:
+      name: weaviate-alt-data
   resources:
     requests:
       cpu: '300m'
