@@ -12,7 +12,7 @@ config:
   apdbConfig: "/sdf/group/rubin/user/salnikov/apdb/dm50040/apdb-cassandra-dm50040.yaml"
 
   # -- PPDB config file resource
-  ppdbConfig: "/sdf/group/rubin/user/jeremym/ppdb-replication/config/ppdb_dm-49202.yaml"
+  ppdbConfig: "/sdf/group/rubin/user/jeremym/dev/DM-50563/config/ppdb_dm50040.yaml"
 
   # -- Staging directory for replicated data
   stagingDirectory: "/sdf/group/rubin/user/jeremym/ppdb_staging"
