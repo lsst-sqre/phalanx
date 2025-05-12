@@ -38,4 +38,6 @@ RAG helpers for documentation searches
 | weaviate.resources.limits.memory | string | `"300Mi"` |  |
 | weaviate.resources.requests.cpu | string | `"300m"` |  |
 | weaviate.resources.requests.memory | string | `"150Mi"` |  |
-| weaviate.volumeClaimTemplates[0].metadata.name | string | `"weaviate-alt-data"` |  |
+| weaviate.storage.fullnameOverride | string | `"weaviate-data-alt"` |  |
+| weaviate.storage.size | string | `"32Gi"` |  |
+| weaviate.storage.storageClassName | string | `"wekafs--sdf-k8s01"` |  |

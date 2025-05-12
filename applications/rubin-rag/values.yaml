@@ -85,7 +85,7 @@ weaviate:
       enabled: true
     text2vec-openai:
       enabled: true
-  
+
   storage:
     size: 32Gi
     storageClassName: "wekafs--sdf-k8s01"
