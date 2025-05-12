@@ -32,7 +32,6 @@ RAG helpers for documentation searches
 | weaviate.env.AUTHORIZATION_ADMINLIST_ENABLED | string | `"true"` |  |
 | weaviate.env.AUTHORIZATION_ADMINLIST_USERS | string | `"admin"` |  |
 | weaviate.envSecrets.AUTHENTICATION_APIKEY_ALLOWED_KEYS | string | `"rubin-rag"` |  |
-| weaviate.fullnameOverride | string | `"weaviate-alt"` |  |
 | weaviate.modules.generative-openai.enabled | bool | `true` |  |
 | weaviate.modules.text2vec-openai.enabled | bool | `true` |  |
 | weaviate.resources.limits.cpu | string | `"500m"` |  |
