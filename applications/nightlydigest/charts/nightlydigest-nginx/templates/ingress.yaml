@@ -10,6 +10,13 @@ config:
   scopes:
     all:
       - "read:image"
+  delegate:
+    useAuthorization: true
+    internal:
+      service: {{ include "nightlydigest-nginx.name" . }}
+      scopes:
+        - "read:image"
+        - "exec:internal-tools"
   service: {{ include "nightlydigest-nginx.name" . }}
 template:
   metadata:
