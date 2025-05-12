@@ -87,8 +87,9 @@ spec:
             - "--directory={{ .Values.config.stagingDirectory }}"
             - "--bucket={{ .Values.config.gcsBucket }}"
             - "--prefix={{ .Values.config.gcsPrefix }}"
-            - "--wait-interval=0"
+            - "--wait-interval=360"
             - "--upload-interval=0"
+            - "--delete-chunks"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
