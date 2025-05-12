@@ -84,7 +84,7 @@ spec:
           args:
             - "--log-level={{ .Values.config.logLevel }}"
             - "upload-chunks"
-            - "--direcotry {{ .Values.config.stagingDirectory }}"
+            - "--directory {{ .Values.config.stagingDirectory }}"
             - "--bucket {{ .Values.config.gcsBucket }}"
             - "--prefix {{ .Values.config.gcsPrefix }}"
             - "--wait-interval 0"
