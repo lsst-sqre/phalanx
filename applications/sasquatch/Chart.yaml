@@ -72,6 +72,9 @@ dependencies:
   - name: obsenv
     condition: obsenv.enabled
     version: 1.0.0
+  - name: scimma
+    condition: scimma.enabled
+    version: 1.0.0
   - name: backpack
     condition: backpack.enabled
     version: 1.0.0
