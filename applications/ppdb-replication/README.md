@@ -18,6 +18,8 @@ Replicates data from the APDB to the PPDB
 | config.batchSize | int | `1000` | Size of record batches when writing parquet files |
 | config.checkInterval | int | `30` | Time to wait before checking for new chunks, if no chunk appears |
 | config.disableBucketValidation | int | `1` | Disable bucket validation in LSST S3 tools |
+| config.gcsBucket | string | `nil` | GCS bucket name |
+| config.gcsPrefix | string | `nil` | GCS bucket prefix |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.maxWaitTime | int | `3600` | Maximum time to wait before replicating a chunk after next chunk appears |
