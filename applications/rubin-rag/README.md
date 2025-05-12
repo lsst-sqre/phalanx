@@ -38,4 +38,4 @@ RAG helpers for documentation searches
 | weaviate.resources.limits.memory | string | `"300Mi"` |  |
 | weaviate.resources.requests.cpu | string | `"300m"` |  |
 | weaviate.resources.requests.memory | string | `"150Mi"` |  |
-| weaviate.volumeClaimTemplates.metadata.name | string | `"weaviate-alt-data"` |  |
+| weaviate.volumeClaimTemplates[0].metadata.name | string | `"weaviate-alt-data"` |  |
