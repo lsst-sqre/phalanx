@@ -259,6 +259,15 @@ telegraf:
       topicRegexps: |
         [ "lsst.obsenv" ]
       debug: true
+    scimma:
+      enabled: true
+      database: "lsst.scimma"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.scimma" ]
+      debug: true
+      offset: oldest
   resources:
     limits:
       cpu: "2"
@@ -282,6 +291,7 @@ rest-proxy:
   kafka:
     topicPrefixes:
       - lsst.obsenv
+      - lsst.scimma
 
 chronograf:
   persistence:
@@ -319,6 +329,9 @@ backup:
       retentionDays: 7
 
 obsenv:
+  enabled: true
+
+scimma:
   enabled: true
 
 control-system:
