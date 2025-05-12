@@ -84,11 +84,11 @@ spec:
           args:
             - "--log-level={{ .Values.config.logLevel }}"
             - "upload-chunks"
-            - "--directory {{ .Values.config.stagingDirectory }}"
-            - "--bucket {{ .Values.config.gcsBucket }}"
-            - "--prefix {{ .Values.config.gcsPrefix }}"
-            - "--wait-interval 0"
-            - "--upload-interval 0"
+            - "--directory={{ .Values.config.stagingDirectory }}"
+            - "--bucket={{ .Values.config.gcsBucket }}"
+            - "--prefix={{ .Values.config.gcsPrefix }}"
+            - "--wait-interval=0"
+            - "--upload-interval=0"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
