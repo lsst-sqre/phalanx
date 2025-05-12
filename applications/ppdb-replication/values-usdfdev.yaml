@@ -8,7 +8,8 @@ config:
   logProfile: "development"
 
   # -- APDB config file resource
-  apdbConfig: "s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcomcamsim-dev.py"
+  # apdbConfig: "s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcomcamsim-dev.py"
+  apdbConfig: "/sdf/group/rubin/user/salnikov/apdb/dm50040/apdb-cassandra-dm50040.yaml"
 
   # -- PPDB config file resource
   ppdbConfig: "/sdf/group/rubin/user/jeremym/ppdb-replication/config/ppdb_dm-49202.yaml"
