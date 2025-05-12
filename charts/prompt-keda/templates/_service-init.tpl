@@ -33,6 +33,8 @@ spec:
         - name: MAIN_PIPELINES_CONFIG
           value: |-
             {{- .Values.instrument.pipelines.main | nindent 12 }}
+        - name: EXPORT_TYPE_REGEXP
+          value: {{- toYaml .Values.instrument.exportTypes | nindent 12 }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
         - name: CALIB_REPO
