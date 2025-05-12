@@ -63,9 +63,6 @@ global:
   vaultSecretsPath: null
 
 weaviate:
-  volumeClaimTemplates:
-  - metadata:
-      name: weaviate-alt-data
   resources:
     requests:
       cpu: '300m'
@@ -88,3 +85,8 @@ weaviate:
       enabled: true
     text2vec-openai:
       enabled: true
+  
+  storage:
+    size: 32Gi
+    storageClassName: "wekafs--sdf-k8s01"
+    fullnameOverride: "weaviate-data-alt" 
