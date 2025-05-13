@@ -1,9 +1,5 @@
 slackAlerts: true
 
-image:
-  tag: "tickets-DM-45624"
-  pullPolicy: Always
-
 nfs:
   server: "10.234.16.4"
   path: "/scratch-share"
