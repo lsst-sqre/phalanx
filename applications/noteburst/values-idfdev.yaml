@@ -10,7 +10,7 @@ config:
     tracesSampleRate: 1
   worker:
     workerCount: 1
-    imageSelector: "weekly"
+    jobTimeout: 600
     identities:
       - username: "bot-noteburst90000"
       - username: "bot-noteburst90001"
