@@ -268,6 +268,70 @@ m1m3-ess113:
       cpu: 190m
       memory: 900Mi
 
+m1m3-ess114:
+  enabled: true
+  classifier: ess114
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 114
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+m1m3-ess115:
+  enabled: true
+  classifier: ess115
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 115
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+m1m3-ess116:
+  enabled: true
+  classifier: ess116
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 116
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+m1m3-ess117:
+  enabled: true
+  classifier: ess117
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 117
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
 m2-ess106:
   enabled: true
   classifier: ess106
