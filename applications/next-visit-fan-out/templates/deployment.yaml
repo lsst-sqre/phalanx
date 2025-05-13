@@ -53,7 +53,7 @@ spec:
             - name: SASL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: kafka_pp_sasl_password
+                  key: kafka_pp_sasl_password_summit
                   name: {{ template "next-visit-fan-out.fullname" . }}-secret
             - name: DEBUG_LOGS
               value: {{ ternary "true" "false" .Values.debug | quote }}
