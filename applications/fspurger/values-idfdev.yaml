@@ -21,12 +21,13 @@ policy:
 
   - path: /scratch
     threshold: 1GiB
+    # Effectively disable for now.
     intervals:
       large:
-        accessInterval: 15d
-        modificationInterval: 90d
-        creationInterval: 180d
+        accessInterval: 0  # 15d
+        modificationInterval: 0  # 90d
+        creationInterval: 0  # 180d
       small:
-        accessInterval: 30d
-        modificationInterval: 180d
-        creationInterval: 360d
+        accessInterval: 0  # 30d
+        modificationInterval: 0  # 180d
+        creationInterval: 0  # 360d
