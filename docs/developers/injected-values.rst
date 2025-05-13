@@ -29,6 +29,9 @@ However, by convention and via :command:`phalanx application create`, Phalanx ap
     The base URL for applications deployed in this Phalanx environment.
     This always uses the ``https://`` schema.
 
+``global.environmentName``
+    The name of this Phalanx environment.
+
 ``global.vaultSecretsPath``
     The base path in Vault for secrets for this environment.
     The Vault path for a secret for a given application can be formed by appending :samp:`/{application}` to this value.
