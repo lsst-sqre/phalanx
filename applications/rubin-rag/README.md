@@ -25,6 +25,9 @@ RAG helpers for documentation searches
 | podAnnotations | object | `{}` | Annotations for the rubin-rag deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the rubin-rag deployment pod |
+| storage.fullnameOverride | string | `"weaviate-data-alt"` |  |
+| storage.size | string | `"32Gi"` |  |
+| storage.storageClassName | string | `"wekafs--sdf-k8s01"` |  |
 | tolerations | list | `[]` | Tolerations for the rubin-rag deployment pod |
 | weaviate.authentication.anonymous_access.enabled | bool | `true` |  |
 | weaviate.env.AUTHENTICATION_APIKEY_ENABLED | string | `"true"` |  |
@@ -38,6 +41,3 @@ RAG helpers for documentation searches
 | weaviate.resources.limits.memory | string | `"300Mi"` |  |
 | weaviate.resources.requests.cpu | string | `"300m"` |  |
 | weaviate.resources.requests.memory | string | `"150Mi"` |  |
-| weaviate.storage.fullnameOverride | string | `"weaviate-data-alt"` |  |
-| weaviate.storage.size | string | `"32Gi"` |  |
-| weaviate.storage.storageClassName | string | `"wekafs--sdf-k8s01"` |  |
