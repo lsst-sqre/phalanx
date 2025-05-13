@@ -18,6 +18,7 @@ controller:
         S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
         TMPDIR: "/tmp"
+        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/project/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
@@ -86,7 +87,12 @@ jupyterhub:
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
-
+cronjob:
+  enabled: true
+  targetVolume:
+    mountPath: "/project"
+    server: "10.13.105.122"
+    path: "/share1/project"
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
