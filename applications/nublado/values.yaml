@@ -694,9 +694,9 @@ cronjob:
   targetVolume:
     # -- Where volume will be mounted in the container
     mountPath: "/project"   # Conventional
-    # -- IP address of NetApp server (different per environment)
+    # -- IP address of NFS server (different per environment)
     server: null            # This must be changed
-    # -- Path on NetApp server
+    # -- Path on NFS server
     path: "/project-share"  # Assigned by Terraform
 
   image:
