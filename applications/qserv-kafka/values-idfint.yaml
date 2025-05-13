@@ -3,4 +3,5 @@ config:
   qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-int.slac.stanford.edu:4090/"
   qservRestUrl: "https://qserv-int-https.slac.stanford.edu:4098/"
 resultWorker:
-  maxReplicas: 50
+  autoscaling:
+    maxReplicas: 50

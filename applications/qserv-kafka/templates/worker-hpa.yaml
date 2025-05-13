@@ -6,12 +6,11 @@ metadata:
   labels:
     {{- include "qserv-kafka.labels" . | nindent 4 }}
 spec:
-  scaleTargetRef:
-    apiVersion: "apps/v1"
-    kind: "Deployment"
-    name: "qserv-kafka-worker"
-  minReplicas: {{ .Values.resultWorker.autoscaling.minReplicas }}
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 900
   maxReplicas: {{ .Values.resultWorker.autoscaling.maxReplicas }}
+  minReplicas: {{ .Values.resultWorker.autoscaling.minReplicas }}
   metrics:
     {{- if .Values.resultWorker.autoscaling.targetCPUUtilizationPercentage }}
     - type: Resource
@@ -21,4 +20,8 @@ spec:
           type: Utilization
           averageUtilization: {{ .Values.resultWorker.autoscaling.targetCPUUtilizationPercentage }}
     {{- end }}
+  scaleTargetRef:
+    apiVersion: "apps/v1"
+    kind: "Deployment"
+    name: "qserv-kafka-worker"
 {{- end }}
