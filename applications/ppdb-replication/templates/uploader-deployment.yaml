@@ -39,6 +39,7 @@ spec:
             - "-c"
             - |
               cp -RL /tmp/ppdb-replication-secrets-raw/* /app/secrets/
+              chown 8286:4085 /app/secrets/*
               chmod 0400 /app/secrets/*
           securityContext:
             runAsNonRoot: false
