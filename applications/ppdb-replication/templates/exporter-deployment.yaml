@@ -91,7 +91,7 @@ spec:
             - "--min-wait-time={{ .Values.config.minWaitTime }}"
             - "--max-wait-time={{ .Values.config.maxWaitTime }}"
             - "--check-interval={{ .Values.config.checkInterval }}"
-            - "--single"
+            # - "--single"
       securityContext:
         runAsNonRoot: true
         runAsUser: 8286  # jeremym
