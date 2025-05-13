@@ -3,7 +3,7 @@ knative:
 
 kafka:
   schemaRegistryUrl: http://10.104.61.102:8081
-  sasquatchAddress: 172.24.10.20:9094
+  sasquatchAddress: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
   consumerGroup: next-visit-fan-out-1
   nextVisitTopic: lsst.sal.ScriptQueue.logevent_nextVisit
 
