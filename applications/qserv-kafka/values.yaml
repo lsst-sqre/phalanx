@@ -171,10 +171,10 @@ resultWorker:
   resources:
     limits:
       cpu: "1"
-      memory: "400Mi"
+      memory: "600Mi"
     requests:
       cpu: "1"
-      memory: "125Mi"
+      memory: "300Mi"
 
   # -- Tolerations for the qserv-kafka worker pods
   tolerations: []
