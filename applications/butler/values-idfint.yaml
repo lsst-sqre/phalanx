@@ -12,3 +12,4 @@ config:
   shareNubladoSecrets: false
   additionalS3EndpointUrls:
     slac: "https://sdfdatas3.slac.stanford.edu"
+  enableSentry: true
