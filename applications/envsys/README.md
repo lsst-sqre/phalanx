@@ -53,6 +53,14 @@ Deployment for the Environmental Awareness Systems CSCs
 | hvac.enabled | bool | `false` | Enable the HVAC CSC |
 | m1m3-ess113-sim.enabled | bool | `false` | Enable the ESS:113 simulator CSC |
 | m1m3-ess113.enabled | bool | `false` | Enable the ESS:113 CSC |
+| m1m3-ess114-sim.enabled | bool | `false` | Enable the ESS:114 simulator CSC |
+| m1m3-ess114.enabled | bool | `false` | Enable the ESS:114 CSC |
+| m1m3-ess115-sim.enabled | bool | `false` | Enable the ESS:115 simulator CSC |
+| m1m3-ess115.enabled | bool | `false` | Enable the ESS:115 CSC |
+| m1m3-ess116-sim.enabled | bool | `false` | Enable the ESS:116 simulator CSC |
+| m1m3-ess116.enabled | bool | `false` | Enable the ESS:116 CSC |
+| m1m3-ess117-sim.enabled | bool | `false` | Enable the ESS:117 simulator CSC |
+| m1m3-ess117.enabled | bool | `false` | Enable the ESS:117 CSC |
 | m2-ess106-sim.enabled | bool | `false` | Enable the ESS:106 simulator CSC |
 | m2-ess106.enabled | bool | `false` | Enable the ESS:106 CSC |
 | m2-ess112-sim.enabled | bool | `false` | Enable the ESS:112 simulator CSC |

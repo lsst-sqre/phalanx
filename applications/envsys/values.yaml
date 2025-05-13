@@ -142,6 +142,38 @@ m1m3-ess113-sim:
   # -- Enable the ESS:113 simulator CSC
   enabled: false
 
+m1m3-ess114:
+  # -- Enable the ESS:114 CSC
+  enabled: false
+
+m1m3-ess114-sim:
+  # -- Enable the ESS:114 simulator CSC
+  enabled: false
+
+m1m3-ess115:
+  # -- Enable the ESS:115 CSC
+  enabled: false
+
+m1m3-ess115-sim:
+  # -- Enable the ESS:115 simulator CSC
+  enabled: false
+
+m1m3-ess116:
+  # -- Enable the ESS:116 CSC
+  enabled: false
+
+m1m3-ess116-sim:
+  # -- Enable the ESS:116 simulator CSC
+  enabled: false
+
+m1m3-ess117:
+  # -- Enable the ESS:117 CSC
+  enabled: false
+
+m1m3-ess117-sim:
+  # -- Enable the ESS:117 simulator CSC
+  enabled: false
+
 m2-ess106:
   # -- Enable the ESS:106 CSC
   enabled: false

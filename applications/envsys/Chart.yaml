@@ -187,6 +187,46 @@ dependencies:
   condition: m1m3-ess113-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: m1m3-ess114
+  version: 1.0.0
+  condition: m1m3-ess114.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: m1m3-ess114-sim
+  version: 1.0.0
+  condition: m1m3-ess114-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: m1m3-ess115
+  version: 1.0.0
+  condition: m1m3-ess115.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: m1m3-ess115-sim
+  version: 1.0.0
+  condition: m1m3-ess115-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: m1m3-ess116
+  version: 1.0.0
+  condition: m1m3-ess116.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: m1m3-ess116-sim
+  version: 1.0.0
+  condition: m1m3-ess116-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: m1m3-ess117
+  version: 1.0.0
+  condition: m1m3-ess117.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: m1m3-ess117-sim
+  version: 1.0.0
+  condition: m1m3-ess117-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: m2-ess106
   version: 1.0.0
   condition: m2-ess106.enabled
