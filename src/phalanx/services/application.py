@@ -278,6 +278,7 @@ class ApplicationService:
             "global.enabledServices": "@" + "@".join(enabled_apps),
             "global.host": environment.fqdn,
             "global.baseUrl": f"https://{environment.fqdn}",
+            "global.environmentName": environment.name,
             "global.vaultSecretsPath": environment.vault_path_prefix,
         }
         if environment.gcp:
