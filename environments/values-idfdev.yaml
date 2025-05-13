@@ -19,6 +19,7 @@ applications:
   filestore-backup: true
   flink: true
   ghostwriter: true
+  fspurger: true
   hips: true
   hoverdrive: true
   jira-data-proxy: true

@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: fspurger
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          {{- with .Values.tolerations }}
+          tolerations:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          containers:
+          - name: fspurger
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+            {{- with .Values.resources }}
+            resources:
+{{ toYaml . | indent 14 }}
+            {{- end }}
+            env:
+            - name: "RSP_SCRATCHPURGER_ALERT_HOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "fspurger-secret"
+                  key: "slack-webhook"
+            command: [ "rsp_execute" ]
+            securityContext:
+              allowPrivilegeEscalation: true
+              runAsNonRoot: false
+              readOnlyRootFilesystem: true
+            volumeMounts:
+            - mountPath: /scratch
+              name: scratch
+            - mountPath: /etc/purger
+              name: config
+          volumes:
+          - name: scratch
+            nfs:
+              path: {{ .Values.nfs.path | quote }}
+              server: {{ .Values.nfs.server | quote }}
+          - name: config
+            configMap:
+              name: "fspurger-configmap"

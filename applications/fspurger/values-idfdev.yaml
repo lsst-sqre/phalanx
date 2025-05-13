@@ -1,0 +1,33 @@
+slackAlerts: true
+
+nfs:
+  server: "10.234.16.4"
+  path: "/scratch-share"
+schedule: "*/10 * * * *"
+
+policy:
+  directories:
+  - path: "/scratch/adam/tmp/fspurger-test"
+    threshold: 10B
+    intervals:
+      large:
+        accessInterval: 60s
+        creationInterval: 11m
+        modificationInterval: 6m
+      small:
+        accessInterval: 120s
+        creationInterval: 21m
+        modificationInterval: 16m
+
+  - path: /scratch
+    threshold: 1GiB
+    # Effectively disable for now.
+    intervals:
+      large:
+        accessInterval: 0  # 15d
+        modificationInterval: 0  # 90d
+        creationInterval: 0  # 180d
+      small:
+        accessInterval: 0  # 30d
+        modificationInterval: 0  # 180d
+        creationInterval: 0  # 360d
