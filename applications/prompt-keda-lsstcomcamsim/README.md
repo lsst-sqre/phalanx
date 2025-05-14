@@ -47,7 +47,7 @@ KEDA Prompt Processing instance for LSSTComCamSim
 | prompt-keda.instrument.pipelines.preprocessing | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run before which visits' raw arrival. |
 | prompt-keda.instrument.preloadPadding | int | `50` | Number of arcseconds to pad the spatial region in preloading. |
 | prompt-keda.instrument.skymap | string | `"ops_rehersal_prep_2k_v1"` | Skymap to use with the instrument |
-| prompt-keda.keda.failedJobsHistoryLimit | int | `25` |  |
+| prompt-keda.keda.failedJobsHistoryLimit | int | `5` |  |
 | prompt-keda.keda.maxReplicaCount | int | `150` |  |
 | prompt-keda.keda.minReplicaCount | int | `3` |  |
 | prompt-keda.keda.pollingInterval | int | `2` |  |
@@ -60,7 +60,7 @@ KEDA Prompt Processing instance for LSSTComCamSim
 | prompt-keda.keda.redisStreams.pendingEntriesCount | string | `"1"` |  |
 | prompt-keda.keda.redisStreams.streamName | string | `"instrument:lsstcomcamsim"` |  |
 | prompt-keda.keda.scalingStrategy | string | `"eager"` |  |
-| prompt-keda.keda.successfulJobsHistoryLimit | int | `25` |  |
+| prompt-keda.keda.successfulJobsHistoryLimit | int | `5` |  |
 | prompt-keda.logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
 | prompt-keda.mpSky_service | string | `""` | The URI to the MPSky ephemerides service. Empty value is allowed, but its handling is undefined. |
 | prompt-keda.nameOverride | string | `""` | Override the base name for resources |
