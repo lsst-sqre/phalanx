@@ -4,8 +4,8 @@
   (printf "--directory=%s" .Values.config.stagingDirectory)
   (printf "--bucket=%s" .Values.config.gcsBucket)
   (printf "--prefix=%s" .Values.config.gcsPrefix)
-  "--wait-interval=60"
-  "--upload-interval=0"
+  (printf "--wait-interval=%d" (int .Values.config.waitInterval))
+  (printf "--upload-interval=%d" (int .Values.config.uploadInterval))
   "--delete-chunks"
 }}
 {{- include "ppdb-replication.deployment" (dict
