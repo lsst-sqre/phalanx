@@ -5,10 +5,10 @@
   .Values.config.ppdbConfig
   (printf "--directory=%s" .Values.config.stagingDirectory)
   "--compression=snappy"
-  (printf "--batch-size=%s" .Values.config.batchSize)
-  (printf "--min-wait-time=%s" .Values.config.minWaitTime)
-  (printf "--max-wait-time=%s" .Values.config.maxWaitTime)
-  (printf "--check-interval=%s" .Values.config.checkInterval)
+  (printf "--batch-size=%d" (int .Values.config.batchSize))
+  (printf "--min-wait-time=%d" (int .Values.config.minWaitTime))
+  (printf "--max-wait-time=%d" (int .Values.config.maxWaitTime))
+  (printf "--check-interval=%d" (int .Values.config.checkInterval))
 }}
 {{- include "ppdb-replication.deployment" (dict
   "Chart" .Chart
@@ -18,4 +18,3 @@
   "containerSuffix" "export-chunks"
   "containerArgs" $args
 ) }}
-

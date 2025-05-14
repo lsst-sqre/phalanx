@@ -32,8 +32,10 @@ Replicates data from the APDB to the PPDB
 | config.s3EndpointUrl | string | `nil` | S3 endpoint URL |
 | config.stagingDirectory | string | `nil` | Staging directory for replicated data |
 | config.updateExisting | bool | `false` | Allow updates to already replicated data |
+| config.uploadInterval | int | `60` | Time to wait between uploader file uploads |
 | config.volumeMounts | list | `[]` | Volume mounts |
 | config.volumes | list | `[]` | Volumes specific to the environment |
+| config.waitInterval | int | `60` | Time to wait between uploader file scans |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
