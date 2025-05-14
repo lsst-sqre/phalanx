@@ -2,6 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# This application will only ever be deployed to the USDF, so there are some
+# values specific to that environment here.
+
 # -- Number of deployment pods to start
 replicaCount: 1
 
@@ -94,7 +97,7 @@ config:
   batchSize: 1000
 
   # -- APDB index URI
-  apdbIndexUri: null
+  apdbIndexUri: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
 
   # -- Comma-separated list of monitoring filter rules
   monRules: null
@@ -117,23 +120,35 @@ config:
   # -- Time to wait between uploader file uploads
   uploadInterval: 0
 
-  # -- S3 endpoint URL
-  s3EndpointUrl: null
-
-  # -- Additional S3 profile name
-  additionalS3ProfileName: null
-
-  # -- Additional S3 profile URL
-  additionalS3ProfileUrl: null
-
   # -- Disable bucket validation in LSST S3 tools
   disableBucketValidation: 1
 
+  # -- S3 endpoint URL
+  s3EndpointUrl: https://s3dfrgw.slac.stanford.edu
+
+  # -- S3 profile name for additional S3 profile
+  additionalS3ProfileName: "embargo"
+
+  # -- S3 profile URL for additional S3 profile
+  additionalS3ProfileUrl: "https://sdfembs3.sdf.slac.stanford.edu"
+
   # -- Volumes specific to the environment
-  volumes: []
-
+  volumes:
+    - name: sdf-group-rubin
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin
+    - name: sdf-data-rubin
+      persistentVolumeClaim:
+        claimName: sdf-data-rubin
   # -- Volume mounts
-  volumeMounts: []
-
+  volumeMounts:
+    - name: sdf-group-rubin
+      mountPath: /sdf/group/rubin
+    - name: sdf-data-rubin
+      mountPath: /sdf/data/rubin
   # -- Persistent volume claims
-  persistentVolumeClaims: []
+  persistentVolumeClaims:
+    - name: sdf-group-rubin
+      storageClassName: sdf-group-rubin
+    - name: sdf-data-rubin
+      storageClassName: sdf-data-rubin

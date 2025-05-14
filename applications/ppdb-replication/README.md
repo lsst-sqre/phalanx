@@ -11,10 +11,10 @@ Replicates data from the APDB to the PPDB
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the ppdb-replication deployment pod |
-| config.additionalS3ProfileName | string | `nil` | Additional S3 profile name |
-| config.additionalS3ProfileUrl | string | `nil` | Additional S3 profile URL |
+| config.additionalS3ProfileName | string | `"embargo"` | S3 profile name for additional S3 profile |
+| config.additionalS3ProfileUrl | string | `"https://sdfembs3.sdf.slac.stanford.edu"` | S3 profile URL for additional S3 profile |
 | config.apdbConfig | string | `nil` | APDB config file resource |
-| config.apdbIndexUri | string | `nil` | APDB index URI |
+| config.apdbIndexUri | string | `"/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"` | APDB index URI |
 | config.batchSize | int | `1000` | Size of record batches when writing parquet files |
 | config.checkInterval | int | `30` | Time to wait before checking for new chunks, if no chunk appears |
 | config.dataset | string | `nil` | Target BigQuery dataset |
@@ -28,14 +28,14 @@ Replicates data from the APDB to the PPDB
 | config.monLogger | string | `"lsst.dax.ppdb.monitor"` | Name of logger for monitoring |
 | config.monRules | string | `nil` | Comma-separated list of monitoring filter rules |
 | config.pathPrefix | string | `"/ppdb-replication"` | URL path prefix |
-| config.persistentVolumeClaims | list | `[]` | Persistent volume claims |
+| config.persistentVolumeClaims | list | `[{"name":"sdf-group-rubin","storageClassName":"sdf-group-rubin"},{"name":"sdf-data-rubin","storageClassName":"sdf-data-rubin"}]` | Persistent volume claims |
 | config.ppdbConfig | string | `nil` | PPDB config file resource |
-| config.s3EndpointUrl | string | `nil` | S3 endpoint URL |
+| config.s3EndpointUrl | string | `"https://s3dfrgw.slac.stanford.edu"` | S3 endpoint URL |
 | config.stagingDirectory | string | `nil` | Staging directory for replicated data |
 | config.updateExisting | bool | `false` | Allow updates to already replicated data |
 | config.uploadInterval | int | `0` | Time to wait between uploader file uploads |
-| config.volumeMounts | list | `[]` | Volume mounts |
-| config.volumes | list | `[]` | Volumes specific to the environment |
+| config.volumeMounts | list | `[{"mountPath":"/sdf/group/rubin","name":"sdf-group-rubin"},{"mountPath":"/sdf/data/rubin","name":"sdf-data-rubin"}]` | Volume mounts |
+| config.volumes | list | `[{"name":"sdf-group-rubin","persistentVolumeClaim":{"claimName":"sdf-group-rubin"}},{"name":"sdf-data-rubin","persistentVolumeClaim":{"claimName":"sdf-data-rubin"}}]` | Volumes specific to the environment |
 | config.waitInterval | int | `60` | Time to wait between uploader file scans |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
