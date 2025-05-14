@@ -108,6 +108,12 @@ config:
   # -- Time to wait before checking for new chunks, if no chunk appears
   checkInterval: 30
 
+  # -- Time to wait between uploader file scans
+  waitInterval: 60
+
+  # -- Time to wait between uploader file uploads
+  uploadInterval: 60
+
   # -- S3 endpoint URL
   s3EndpointUrl: null
 
