@@ -128,9 +128,9 @@ prompt-keda:
     # Polling interval for Keda to poll scalar for scaling determination.
     pollingInterval: 2
     # How many completed jobs should be kept available in Kubernetes.
-    successfulJobsHistoryLimit: 25
+    successfulJobsHistoryLimit: 5
     # How many failed jobs should be kept available in Kubernetes.
-    failedJobsHistoryLimit: 25
+    failedJobsHistoryLimit: 5
 
     redisStreams:
       # Address of Redis Streams Cluster
