@@ -17,6 +17,9 @@ config:
   # -- Target BigQuery dataset
   dataset: "ppdb-dev-438721:ppdb_dm50567"
 
+  # -- Target BigQuery dataset
+  dataset: "ppdb-dev-438721:ppdb_dm50567"
+
   # -- Staging directory for replicated data
   stagingDirectory: "/sdf/scratch/rubin/ppdb/staging/lsstcam"
 
