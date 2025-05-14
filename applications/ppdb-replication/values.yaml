@@ -84,6 +84,9 @@ config:
   # -- PPDB config file resource
   ppdbConfig: null
 
+  # -- Target BigQuery dataset
+  dataset: null
+
   # -- Staging directory for replicated data
   stagingDirectory: null
 
