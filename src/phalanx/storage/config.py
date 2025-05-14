@@ -300,7 +300,7 @@ class ConfigStorage:
         for dependency in chart.get("dependencies", []):
             if "repository" in dependency:
                 repository = dependency["repository"]
-                if not repository.startswith("file:"):
+                if not repository.startswith(("file:", "oci:")):
                     repo_urls.add(repository)
         return repo_urls
 
