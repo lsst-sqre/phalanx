@@ -43,6 +43,18 @@ prompt-keda:
         - {pipelines: []}
     preloadPadding: 50.1
     calibRepo: s3://rubin-summit-users
+    exportTypes: |-
+      - ".*_(config|metadata|log)"
+      - "packages"
+      - "regionTimeInfo"
+      - "template_detector"
+      - "preliminary_visit_image"
+      - "preliminary_visit_image_background"
+      - "difference_image"
+      - "single_visit_star_footprints"
+      - "dia_source_unfiltered"
+      - "dia_source_detector"
+      - "difference_kernel"
 
   s3:
     imageBucket: rubin-summit
