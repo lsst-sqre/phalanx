@@ -15,6 +15,9 @@ config:
   # ppdbConfig: "/sdf/group/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm50040.yaml"
   ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm50567.yaml"
 
+  # -- Target BigQuery dataset
+  dataset: "ppdb-dev-438721:ppdb_dm50567"
+
   # -- Staging directory for replicated data
   stagingDirectory: "/sdf/group/rubin/user/jeremym/ppdb_staging"
 

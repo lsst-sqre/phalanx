@@ -17,6 +17,7 @@ Replicates data from the APDB to the PPDB
 | config.apdbIndexUri | string | `nil` | APDB index URI |
 | config.batchSize | int | `1000` | Size of record batches when writing parquet files |
 | config.checkInterval | int | `30` | Time to wait before checking for new chunks, if no chunk appears |
+| config.dataset | string | `nil` | Target BigQuery dataset |
 | config.disableBucketValidation | int | `1` | Disable bucket validation in LSST S3 tools |
 | config.gcsBucket | string | `nil` | GCS bucket name |
 | config.gcsPrefix | string | `nil` | GCS bucket prefix |

@@ -3,6 +3,7 @@
   "upload-chunks"
   (printf "--directory=%s" .Values.config.stagingDirectory)
   (printf "--bucket=%s" .Values.config.gcsBucket)
+  (printf "--dataset=%s" .Values.config.dataset)
   (printf "--prefix=%s" .Values.config.gcsPrefix)
   (printf "--wait-interval=%d" (int .Values.config.waitInterval))
   (printf "--upload-interval=%d" (int .Values.config.uploadInterval))
