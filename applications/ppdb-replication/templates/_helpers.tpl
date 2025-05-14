@@ -116,8 +116,6 @@ spec:
               value: {{ .Values.config.additionalS3ProfileUrl | quote }}
             - name: LSST_DISABLE_BUCKET_VALIDATION
               value: {{ .Values.config.disableBucketValidation | quote }}
-            - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: "/app/secrets/gcs-credentials.json"
           volumeMounts:
             - name: "ppdb-replication-secrets"
               mountPath: "/app/secrets"
