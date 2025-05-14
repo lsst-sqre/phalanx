@@ -404,6 +404,10 @@ scripts:
     limits:
       cpu: 1
       memory: 8G
+- name: LSSTCam/runClusterManager.py
+  mounts:
+  - lsstcam-data
+  - project-shared
 - name: LSSTCam/runRadialPlotting.py
   mounts:
   - lsstcam-data
