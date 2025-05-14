@@ -1,13 +1,5 @@
 strimzi-kafka:
   kafka:
-    version: "3.9.0"
-    listeners:
-      tls:
-        enabled: true
-      plain:
-        enabled: true
-      external:
-        enabled: true
     externalListener:
       tls:
         enabled: true
@@ -29,25 +21,24 @@ strimzi-kafka:
     source:
       bootstrapServer: sasquatch-base-kafka-bootstrap.lsst.codes:9094
       topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*"
+    resources:
+      requests:
+        cpu: 2
+        memory: 4Gi
+      limits:
+        cpu: 4
+        memory: 8Gi
   users:
     replicator:
       enabled: true
     telegraf:
       enabled: true
-  controller:
+  kraft:
     enabled: true
-  broker:
-    enabled: true
-    storage:
-      size: 500Gi
-  connect:
+  kafkaController:
     enabled: true
 
 influxdb:
-  startupProbe:
-    enabled: true
-    failureThreshold: 12
-    periodSeconds: 300
   ingress:
     enabled: false
     hostname: usdf-rsp-dev.slac.stanford.edu
@@ -57,20 +48,11 @@ influxdb:
   config:
     coordinator:
       query-timeout: 300s
-  resources:
-    requests:
-      memory: 96Gi
-      cpu: 8
-    limits:
-      memory: 96Gi
-      cpu: 8
+
 
 customInfluxDBIngress:
   enabled: true
   hostname: usdf-rsp-dev.slac.stanford.edu
-  annotations:
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
 
 kafka-connect-manager:
   enabled: true
