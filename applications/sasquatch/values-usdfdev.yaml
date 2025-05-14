@@ -45,6 +45,10 @@ influxdb:
   persistence:
     enabled: true
     size: 15Ti
+  config:
+    coordinator:
+      query-timeout: 300s
+
 
 customInfluxDBIngress:
   enabled: true
