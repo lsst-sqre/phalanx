@@ -115,7 +115,7 @@ config:
   waitInterval: 60
 
   # -- Time to wait between uploader file uploads
-  uploadInterval: 60
+  uploadInterval: 0
 
   # -- S3 endpoint URL
   s3EndpointUrl: null
