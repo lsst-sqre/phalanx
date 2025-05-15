@@ -37,12 +37,12 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          env:
-            - name: JIRA_API_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: nightlydigest
-                  key: jira-api-token
+          # env:
+          #   - name: JIRA_API_TOKEN
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: nightlydigest
+          #         key: jira-api-token
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
