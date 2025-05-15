@@ -42,6 +42,7 @@ Rubin Observatory's telemetry service
 | customInfluxDBIngress.enabled | bool | `false` | Whether to enable the custom ingress for InfluxDB OSS |
 | customInfluxDBIngress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
 | customInfluxDBIngress.path | string | `"/influxdb(/\|$)(.*)"` | Path for the ingress |
+| data-transfer-monitoring.enabled | bool | `false` | Whether to enable the data-transfer-monitoring subchart |
 | influxdb-enterprise-active.enabled | bool | `false` | Whether to enable influxdb-enterprise-active |
 | influxdb-enterprise-standby.enabled | bool | `false` | Whether to enable influxdb-enterprise-standby |
 | influxdb-enterprise.enabled | bool | `false` | Whether to enable influxdb-enterprise |
@@ -141,6 +142,7 @@ Rubin Observatory's telemetry service
 | consdb.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | control-system.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | control-system.topics | list | `[]` | Create lsst.s3.* related topics for the ts-salkafka user. |
+| data-transfer-monitoring.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
 | influxdb-enterprise.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | influxdb-enterprise.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |

@@ -87,6 +87,9 @@ dependencies:
   - name: consdb
     condition: consdb.enabled
     version: 1.0.0
+  - name: data-transfer-monitoring
+    condition: data-transfer-monitoring.enabled
+    version: 1.0.0
 
 annotations:
   phalanx.lsst.io/docs: |
