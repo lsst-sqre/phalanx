@@ -1,0 +1,480 @@
+# Default values for victoria-metrics.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
+
+externalGrafanaOperator:
+  installed: true
+  pathPrefix: "grafana"
+
+vmstack:
+  # https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-k8s-stack/values.yaml
+
+  # -- VictoriaMetrics Operator dependency chart configuration. More values can be found [here](https://docs.victoriametrics.com/helm/victoriametrics-operator#parameters). Also checkout [here](https://docs.victoriametrics.com/operator/vars) possible ENV variables to configure operator behaviour
+  # @default -- see `values.yaml` and [here](https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-k8s-stack/values.yaml)
+  victoria-metrics-operator:
+    enabled: true
+    annotations:
+      # Install this operator before anything else in the chart, and destroy it
+      # after destroying everything else in the chart.
+      argocd.argoproj.io/sync-wave: "-1"
+    # -- Extra settings for the operator deployment. Full list [here](https://docs.victoriametrics.com/operator/vars)
+    env:
+      # Create resources with stricter security contexts:
+      # https://docs.victoriametrics.com/operator/security/#podsecuritycontext
+      - name: "VM_ENABLESTRICTSECURITY"
+        value: "true"
+    admissionWebhooks:
+      certManager:
+        # -- true if cert-manager should manage the validating adminssion webhook cert.
+        # Self signed certs are OK here. If possible, it's nice to have
+        # cert-manager manage them so that:
+        # * They get renewed as needed
+        # * The ArgoCD diff doesn't get clogged up with the operator regenerating
+        #   them on every sync
+        enabled: true
+    serviceMonitor:
+      enabled: true
+
+  # -- Configuration for the VictoriaMetrics [VMSingle instance](https://docs.victoriametrics.com/operator/resources/vmsingle/)
+  # @default -- see `values.yaml` and [here](https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-k8s-stack/values.yaml)
+  vmsingle:
+    enabled: true
+
+    # Config for gafaelfawr ingresses
+    gafaelfawr:
+      # -- Path prefix for web ui
+      pathPrefix: "vm"
+
+      # -- Config for the Gafaelfawr ingress to instance
+      annotations: {}
+
+      # -- The name of the k8s Service to send requests to. These names are created dynamically by the operator.
+      serviceName: vmsingle-victoria-metrics-vmstack
+
+    # -- Full spec for VMSingle CRD. Allowed values describe [here](https://docs.victoriametrics.com/operator/api#vmsinglespec)
+    # @default -- See `values.yaml`
+    spec:
+      # -- if true, controller adds ownership to pvc and after VMSingle object
+      # deletion - pvc will be garbage collected by controller manager
+      removePvcAfterDelete: false
+
+      extraArgs:
+        #vmalert.proxyURL: http://vmalert-vmalert-select-all:8080
+        # Allow specifying config from env variables
+        envflag.enable: "true"
+
+      # -- ExtraEnvsFrom defines source of env variables for the application
+      # container could either be secret or configmap
+      # extraEnvsFrom:
+      #   - configMapRef:
+      #       name: "vmsingle-extra-args"
+
+      # resources:
+      #   limits:
+      #     cpu: "1"
+      #     memory: "1Gi"
+      #   requests:
+      #     cpu: "1"
+      #     memory: "1Gi"
+
+      # -- The amount of time to retain data. Takes a number followed by a time
+      # unit character - h(ours), d(ays), w(eeks), y(ears). If the time unit is
+      # not specified, a month (31 days) is assumed.
+      retentionPeriod: "30d"
+
+      # -- The definition of how storage will be used by the VMSingle
+      #
+      # Schema is a Kubernetes PersistentVolumeClaim spec.
+      # https://docs.victoriametrics.com/operator/api#vmsinglespec-storage
+      storage:
+        accessModes:
+          - "ReadWriteOnce"
+        storageClassName: null
+        resources:
+          requests:
+            storage: "10Gi"
+
+  # -- Configuration for vmagent
+  # @default -- see `values.yaml` and [here](https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-k8s-stack/values.yaml)
+  vmagent:
+    enabled: true
+
+    gafaelfawr:
+      # -- Path prefix for web ui
+      pathPrefix: "vmagent"
+
+      # -- Config for the Gafaelfawr ingress to the instance
+      annotations: {}
+
+      # -- The name of the k8s Service to send requests to. These names are created dynamically by the operator.
+      serviceName: vmagent-victoria-metrics-vmstack
+      #
+    # -- Configuration for the VMAgent CRD
+    # @default -- See `values.yaml` and https://docs.victoriametrics.com/operator/resources/vmagent
+    spec:
+      # -- Enable persistence for metrics ingest buffer
+      # https://docs.victoriametrics.com/operator/resources/vmagent#statefulmode
+      statefulMode: true
+
+      # -- Persistent metrics ingest buffer storage config
+      # https://docs.victoriametrics.com/operator/api/#vmagentspec-statefulstorage
+      statefulStorage:
+        volumeClaimTemplate:
+          spec:
+            accessModes:
+              - "ReadWriteOnce"
+            storageClassName: null
+            resources:
+              requests:
+                storage: "5Gi"
+
+  alertmanager:
+    enabled: true
+
+    gafaelfawr:
+      # -- Path prefix for web ui
+      pathPrefix: "alertmanager"
+
+      # -- Config for the Gafaelfawr ingress to the instance
+      annotations: {}
+
+      # -- The name of the k8s Service to send requests to. These names are created dynamically by the operator.
+      serviceName: "vmalertmanager-victoria-metrics-vmstack"
+
+    spec:
+      disableNamespaceMatcher: true
+      selectAllByDefault: true
+      # -- UseVMConfigReloader replaces prometheus-like config-reloader with vm
+      # one. It uses secrets watch instead of file watch which greatly increases
+      # speed of config updates
+      useVMConfigReloader: true
+
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+
+      storage:
+        volumeClaimTemplate:
+          spec:
+            accessModes:
+              - "ReadWriteOnce"
+            storageClassName: null
+            resources:
+              requests:
+                storage: "2Gi"
+      volumes:
+        - name: "slack-token"
+          secret:
+            secretName: "victoria-metrics"
+            items:
+              - key: "slack-alert-webhook"
+                path: "slack-alert-webhook"
+      volumeMounts:
+        - name: "slack-token"
+          mountPath: /etc/alertmanager/slack-config
+
+    # enable storing .Values.alertmanager.config in VMAlertmanagerConfig instead of k8s Secret.
+    # Note: VMAlertmanagerConfig and plain Alertmanager config structures are not equal.
+    # If you're migrating existing config, please make sure that `.Values.alertmanager.config`:
+    # - with `useManagedConfig: false` has structure described [here](https://prometheus.io/docs/alerting/latest/configuration/).
+    # - with `useManagedConfig: true` has structure described [here](https://docs.victoriametrics.com/operator/api/#vmalertmanagerconfig).
+    # -- (object) Alertmanager configuration
+    useManagedConfig: false
+    config:
+      route:
+        receiver: blackhole
+        group_by: ["alertgroup", "job"]
+        group_wait: 30s
+        group_interval: 5m
+        repeat_interval: 12h
+        routes:
+          - matchers:
+              - severity=~"info|warning|critical"
+            receiver: slack-monitoring
+            continue: true
+
+      inhibit_rules:
+        # If the InfoInhibitor alert is firing for a cluster and namespace,
+        # don't send notifications for info alerts
+        - target_matchers:
+            - severity=info
+          source_matchers:
+            - alertname=InfoInhibitor
+          equal:
+            - cluster
+            - namespace
+      receivers:
+        - name: "blackhole"
+        - name: "slack-monitoring"
+          slack_configs:
+            - api_url_file: "/etc/alertmanager/slack-config/slack-alert-webhook"
+              send_resolved: true
+              title: '{{ template "slack.monzo.title" . }}'
+              icon_emoji: '{{ template "slack.monzo.icon_emoji" . }}'
+              color: '{{ template "slack.monzo.color" . }}'
+              text: '{{ template "slack.monzo.text" . }}'
+              actions:
+                - type: button
+                  text: "Runbook :green_book:"
+                  url: "{{ (index .Alerts 0).Annotations.runbook_url }}"
+                - type: button
+                  text: "Query :mag:"
+                  url: "{{ (index .Alerts 0).GeneratorURL }}"
+                - type: button
+                  text: "Dashboard :grafana:"
+                  url: "{{ (index .Alerts 0).Annotations.dashboard }}"
+                - type: button
+                  text: "Silence :no_bell:"
+                  url: '{{ template "__alert_silence_link" . }}'
+                - type: button
+                  text: '{{ template "slack.monzo.link_button_text" . }}'
+                  url: "{{ .CommonAnnotations.link_url }}"
+    # -- Better alert templates for [slack source](https://gist.github.com/milesbxf/e2744fc90e9c41b47aa47925f8ff6512)
+    monzoTemplate:
+      enabled: true
+
+  vmalert:
+    enabled: true
+
+    gafaelfawr:
+      # -- Path prefix for web ui
+      pathPrefix: "vmalert"
+
+      # -- Config for the Gafaelfawr ingress to the instance
+      annotations: {}
+
+      # -- The name of the k8s Service to send requests to. These names are created dynamically by the operator.
+      serviceName: vmalert-victoria-metrics-vmstack
+
+    spec:
+      extraArgs:
+        envflag.enable: "true"
+      extraEnvsFrom:
+        - configMapRef:
+            name: "vmagent-extra-args"
+
+  # -- Create grafana datasources for the VictoriaMetrics instance
+  defaultDatasources:
+    grafanaOperator:
+      # -- Create datasources as CRDs (requires grafana-operator to be installed)
+      enabled: true
+      spec:
+        allowCrossNamespaceImport: true
+
+  defaultDashboards:
+    enabled: true
+    grafanaOperator:
+      enabled: true
+      spec:
+        allowCrossNamespaceImport: true
+    dashboards:
+      node-exporter-full:
+        enabled: false
+
+  kube-state-metrics:
+    enabled: true
+
+  kubelet:
+    enabled: true
+    vmScrape:
+      spec:
+        relabelConfigs:
+          # All of the node labels and annotations come in as metadata from
+          # VNodeScrape. We only want an explicit subset of them. This removes
+          # the __meta_kubernetes_node_label_ prefix from the ones we want. The
+          # last stage of relabeling will remove all labels that start with __.
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(kubenetes_io_hostname|topology_kubernetes_io_region|topology_kubernetes_io_zone|node_pool|environment|cluster_name|kubernetes_io_instance_type)
+          - sourceLabels: [__metrics_path__]
+            targetLabel: metrics_path
+          - targetLabel: job
+            replacement: kubelet
+    vmScrapes:
+      cadvisor:
+        enabled: true
+      probes:
+        enabled: false
+      resources:
+        enabled: false
+
+  # -- Create default rules for monitoring the cluster
+  defaultRules:
+    create: true
+
+    groups:
+      etcd:
+        create: false
+        # -- Common properties for all rules in a group
+        rules: {}
+        # spec:
+        #   annotations:
+        #     dashboard: https://example.com/dashboard/1
+      general:
+        create: true
+        rules: {}
+      k8sContainerCpuLimits:
+        create: true
+        rules: {}
+      k8sContainerCpuRequests:
+        create: true
+        rules: {}
+      k8sContainerCpuUsageSecondsTotal:
+        create: true
+        rules: {}
+      k8sContainerMemoryLimits:
+        create: true
+        rules: {}
+      k8sContainerMemoryRequests:
+        create: true
+        rules: {}
+      k8sContainerMemoryRss:
+        create: true
+        rules: {}
+      k8sContainerMemoryCache:
+        create: true
+        rules: {}
+      k8sContainerMemoryWorkingSetBytes:
+        create: true
+        rules: {}
+      k8sContainerMemorySwap:
+        create: true
+        rules: {}
+      k8sPodOwner:
+        create: true
+        rules: {}
+      k8sContainerResource:
+        create: true
+        rules: {}
+      kubeApiserver:
+        create: false
+        rules: {}
+      kubeApiserverAvailability:
+        create: false
+        rules: {}
+      kubeApiserverBurnrate:
+        create: false
+        rules: {}
+      kubeApiserverHistogram:
+        create: false
+        rules: {}
+      kubeApiserverSlos:
+        create: false
+        rules: {}
+      kubelet:
+        create: true
+        rules: {}
+      kubePrometheusGeneral:
+        create: true
+        rules: {}
+      kubePrometheusNodeRecording:
+        create: false
+        rules: {}
+      kubernetesApps:
+        create: true
+        rules: {}
+        targetNamespace: ".*"
+      kubernetesResources:
+        create: true
+        rules: {}
+      kubernetesStorage:
+        create: true
+        rules: {}
+        targetNamespace: ".*"
+      kubernetesSystem:
+        create: true
+        rules: {}
+      kubernetesSystemKubelet:
+        create: true
+        rules: {}
+      kubernetesSystemApiserver:
+        create: false
+        rules: {}
+      kubernetesSystemControllerManager:
+        create: false
+        rules: {}
+      kubeScheduler:
+        create: false
+        rules: {}
+      kubernetesSystemScheduler:
+        create: false
+        rules: {}
+      kubeStateMetrics:
+        create: true
+        rules: {}
+      nodeNetwork:
+        create: false
+        rules: {}
+      node:
+        create: false
+        rules: {}
+      vmagent:
+        create: true
+        rules: {}
+      vmsingle:
+        create: true
+        rules: {}
+      vmcluster:
+        create: true
+        rules: {}
+      vmHealth:
+        create: true
+        rules: {}
+      vmoperator:
+        create: true
+        rules: {}
+      alertmanager:
+        create: true
+        rules: {}
+
+  vmCluster:
+    enabled: false
+
+  vmauth:
+    enabled: false
+
+  grafana:
+    enabled: false
+    forceDeployDatasource: true
+
+  prometheus-node-exporter:
+    enabled: false
+
+  kubeApiServer:
+    enabled: false
+
+  kubeControllerManager:
+    enabled: false
+
+  kubeDns:
+    enabled: false
+
+  coreDns:
+    enabled: false
+
+  kubeEtcd:
+    enabled: false
+
+  kubeScheduler:
+    enabled: false
+
+  kubeProxy:
+    enabled: false

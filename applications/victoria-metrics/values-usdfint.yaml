@@ -1,0 +1,17 @@
+vmstack:
+  vmsingle:
+    enabled: false
+  vmagent:
+    enabled: false
+  alertmanager:
+    enabled: false
+  defaultDatasources:
+    enabled: false
+  defaultDashboards:
+    enabled: false
+  kube-state-metrics:
+    enabled: false
+  vmalert:
+    enabled: false
+  defaultRules:
+    create: false

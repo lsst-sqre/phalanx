@@ -14,3 +14,6 @@ Argo CD project: ``monitoring``
    grafana/index
    sasquatch-backpack/index
    sasquatch/index
+   telegraf/index
+   telegraf-ds/index
+   victoria-metrics/index

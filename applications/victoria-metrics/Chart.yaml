@@ -1,0 +1,11 @@
+apiVersion: v2
+description: Operational metrics database
+name: victoria-metrics
+type: application
+version: 1.0.0
+
+dependencies:
+  - name: victoria-metrics-k8s-stack
+    version: 0.58.3
+    repository: https://victoriametrics.github.io/helm-charts/
+    alias: vmstack

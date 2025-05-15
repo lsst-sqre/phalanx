@@ -1,0 +1,22 @@
+victoria-metrics-operator:
+  admissionWebhooks:
+    enabled: false
+
+vm:
+  spec:
+    storage:
+      storageClassName: "wekafs--sdf-k8s01"
+
+vmAgent:
+  spec:
+    statefulStorage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "wekafs--sdf-k8s01"
+
+vmAlertmanager:
+  spec:
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "wekafs--sdf-k8s01"

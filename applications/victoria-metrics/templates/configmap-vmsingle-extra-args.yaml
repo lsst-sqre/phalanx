@@ -1,0 +1,8 @@
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "vmsingle-extra-args"
+  labels:
+    {{- include "victoria-metrics.labels" . | nindent 4 }}
+data:
+  http_pathPrefix: "/{{ .Values.vmstack.vmsingle.gafaelfawr.pathPrefix }}"

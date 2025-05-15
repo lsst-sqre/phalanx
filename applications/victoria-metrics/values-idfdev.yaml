@@ -1,0 +1,23 @@
+vmstack:
+  vmsingle:
+    spec:
+      storage:
+        storageClassName: "standard-rwo"
+
+  vmagent:
+    spec:
+      statefulStorage:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: "standard-rwo"
+            resources:
+              requests:
+                storage: "6Gi"
+
+  alertmanager:
+    spec:
+      externalURL: https://data-dev.lsst.cloud/alertmanager
+      storage:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: "standard-rwo"

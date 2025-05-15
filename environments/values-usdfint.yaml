@@ -31,4 +31,5 @@ applications:
   squareone: true
   strimzi: true
   strimzi-access-operator: true
+  victoria-metrics: true
   tap: true

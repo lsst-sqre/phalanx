@@ -1,0 +1,6 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  name: oomkill
+spec:
+  {{- .Files.Get "data/vmrules/oomkilled.yaml" | nindent 4 }}

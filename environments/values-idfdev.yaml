@@ -39,5 +39,6 @@ applications:
   tap: true
   times-square: true
   vault-secrets-operator: true
+  victoria-metrics: true
   vo-cutouts: true
   wobbly: true

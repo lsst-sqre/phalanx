@@ -1,0 +1,8 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAlertmanagerConfig
+metadata:
+  name: slack-general
+  labels:
+    {{- include "victoria-metrics.labels" . | nindent 4 }}
+spec:
+  {{- .Values.vmAlertmanager.config.slackGeneral.spec | toYaml | nindent 2 }}
