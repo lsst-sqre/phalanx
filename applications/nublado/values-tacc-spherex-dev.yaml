@@ -51,8 +51,6 @@ controller:
           volumeName: "project"
         - containerPath: "/scratch"
           volumeName: "scratch"
-        - containerPath: "/project/SPHEREx/SPHEREx_RefCat"
-          volumeName: "spherexdata"
 jupyterhub:
   hub:
     baseUrl: "/nb"
