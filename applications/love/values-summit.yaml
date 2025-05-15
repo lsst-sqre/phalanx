@@ -845,6 +845,9 @@ love-producer:
   - name: mtptg
     csc: MTPtg:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: mtreflector
+    csc: MTReflector:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtrotator
     csc: MTRotator:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
