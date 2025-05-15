@@ -284,9 +284,9 @@ charset-normalizer==3.4.2 \
     --hash=sha256:fcbe676a55d7445b22c10967bceaaf0ee69407fbe0ece4d032b6eb8d4565982a \
     --hash=sha256:fdb20a30fe1175ecabed17cbf7812f7b804b8a315a25f24678bcdf120a90077f
     # via requests
-click==8.1.8 \
-    --hash=sha256:63c132bbbed01578a06712a2d1f497bb62d9c1c0d329b7903a866228027263b2 \
-    --hash=sha256:ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a
+click==8.2.0 \
+    --hash=sha256:6b303f0b2aa85f1cb4e5303078fadcbcd4e476f114fab9b5007005711839325c \
+    --hash=sha256:f5452aeddd9988eefa20f90f05ab66f17fce1ee2a36907fd30b05bbb5953814d
     # via
     #   phalanx (pyproject.toml)
     #   safir
@@ -838,17 +838,17 @@ rpds-py==0.24.0 \
     # via
     #   jsonschema
     #   referencing
-safir==10.1.0 \
-    --hash=sha256:4d41d9460df0dd4e1aa6c15b27579bdd941d550282129effed94e39ba7bdf24a \
-    --hash=sha256:84d9a05eb907d7c46bcfb7048596720a865bf10e68af7353e4ef8913ff72040a
+safir==10.2.0 \
+    --hash=sha256:0d39460b500d5ebe481e2fedbfd9dda251d725d4b890b3110559ef41d0d08c64 \
+    --hash=sha256:f823ba0a5e26295e6c6612d52f9c851ec7beaad48441301fa15f78a6c08901a5
     # via phalanx (pyproject.toml)
-safir-logging==10.1.0 \
-    --hash=sha256:4f24c5b34c402e3f9b5e8fa14e3390ce3f18d4126b4759856ae822698de4aaf4 \
-    --hash=sha256:c7648e6ff42e52465fec8714139e0367eb0b59d5d7fd7c1355bd3373582b1d7e
+safir-logging==10.2.0 \
+    --hash=sha256:87ee8459e882ac27dda5dbc3176909d80548d2c990b3aa557a02e127360ddcb6 \
+    --hash=sha256:bb7b41739c61586e44c4c7009ddb868484277353c0f8225656198e1d405eb5d4
     # via safir
-sentry-sdk==2.27.0 \
-    --hash=sha256:90f4f883f9eff294aff59af3d58c2d1b64e3927b28d5ada2b9b41f5aeda47daf \
-    --hash=sha256:c58935bfff8af6a0856d37e8adebdbc7b3281c2b632ec823ef03cd108d216ff0
+sentry-sdk==2.28.0 \
+    --hash=sha256:14d2b73bc93afaf2a9412490329099e6217761cbab13b6ee8bc0e82927e1504e \
+    --hash=sha256:51496e6cb3cb625b99c8e08907c67a9112360259b0ef08470e532c3ab184a232
     # via safir
 six==1.17.0 \
     --hash=sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274 \
