@@ -155,6 +155,7 @@ mtheaderservice-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/headerservice
+    revision: 2
     pullPolicy: Always
   env:
     URL_SPEC: --lfa_mode s3 --s3instance ls
