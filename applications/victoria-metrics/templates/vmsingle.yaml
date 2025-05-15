@@ -1,9 +1,0 @@
-apiVersion: "operator.victoriametrics.com/v1beta1"
-kind: "VMSingle"
-metadata:
-  name: "victoria-metrics"
-  labels:
-    {{- include "victoria-metrics.labels" . | nindent 4 }}
-spec:
-  {{- .Values.vm.spec | toYaml | nindent 2 }}
-

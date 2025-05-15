@@ -1,8 +1,0 @@
-apiVersion: operator.victoriametrics.com/v1beta1
-kind: VMAgent
-metadata:
-  name: agent
-  labels:
-    {{- include "victoria-metrics.labels" . | nindent 4 }}
-spec:
-  {{- .Values.vmAgent.spec | toYaml | nindent 2 }}
