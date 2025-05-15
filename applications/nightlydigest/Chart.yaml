@@ -9,3 +9,5 @@ sources:
 dependencies:
   - name: nightlydigest-nginx
     version: 1.0.0
+  - name: nightlydigest-backend
+    version: 1.0.0

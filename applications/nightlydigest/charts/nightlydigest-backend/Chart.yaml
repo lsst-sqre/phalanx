@@ -1,0 +1,4 @@
+apiVersion: v2
+name: nightlydigest-backend
+description: Helm chart for the Nightlydigest FastAPI web server.
+version: 1.0.0
