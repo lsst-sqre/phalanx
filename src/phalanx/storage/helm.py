@@ -179,11 +179,13 @@ class HelmStorage:
                 f" {environment} has errors\n"
             )
             sys.stderr.write(msg)
+            sys.stderr.flush()
             return False
         else:
             self._print_lint_output(application, environment, result.stdout)
             if result.stderr:
                 sys.stderr.write(result.stderr)
+                sys.stderr.flush()
             return True
 
     def lint_environment(self, environment: str) -> bool:
@@ -223,11 +225,13 @@ class HelmStorage:
                 " errors\n"
             )
             sys.stderr.write(msg)
+            sys.stderr.flush()
             return False
         else:
             self._print_lint_output(None, environment, result.stdout)
             if result.stderr:
                 sys.stderr.write(result.stderr)
+                sys.stderr.flush()
             return True
 
     def repo_add(self, url: str, *, quiet: bool = False) -> None:
@@ -332,9 +336,11 @@ class HelmStorage:
         except CommandFailedError as e:
             if e.stderr:
                 sys.stderr.write(e.stderr)
+                sys.stderr.flush()
             raise
         if result.stderr:
             sys.stderr.write(result.stderr)
+            sys.stderr.flush()
         return result.stdout
 
     def template_environment(
@@ -379,9 +385,11 @@ class HelmStorage:
         except CommandFailedError as e:
             if e.stderr:
                 sys.stderr.write(e.stderr)
+                sys.stderr.flush()
             raise
         if result.stderr:
             sys.stderr.write(result.stderr)
+            sys.stderr.flush()
         return result.stdout
 
     def upgrade_application(
