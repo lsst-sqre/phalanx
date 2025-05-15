@@ -26,7 +26,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.defaultExecutionTimeout | string | `"300"` | Default execution timeout for notebooks in seconds |
 | config.enableGitHubApp | string | `"False"` | Toggle to enable the GitHub App functionality |
 | config.githubAppId | string | `""` | GitHub application ID |
-| config.githubCheckRunTimeout | string | `"900"` | Timeout for GitHub check runs in seconds |
+| config.githubCheckRunTimeout | string | `"3600"` | Timeout for GitHub check runs in seconds |
 | config.githubOrgs | string | `"lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"` | GitHub organizations that can sync repos to Times Square (comma-separated). |
 | config.htmlKeyMigration.dryRun | bool | `true` | Whether to run the HTML key migration job as a dry-run only |
 | config.htmlKeyMigration.enabled | bool | `false` |  |

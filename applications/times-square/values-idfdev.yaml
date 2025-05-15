@@ -8,8 +8,7 @@ config:
   updateSchema: "True"
   githubAppId: "196798"
   enableGitHubApp: "True"
-  githubCheckRunTimeout: "3600" # 60 minutes
-  defaultExecutionTimeout: "60" # 1 minute
+  githubCheckRunTimeout: "900" # 15 minutes
   sentryTracesSampleRate: 1
 cloudsql:
   enabled: true
