@@ -5,6 +5,9 @@ metadata:
   labels:
     {{- include "qserv-kafka.labels" . | nindent 4 }}
 data:
+  METRICS_APPLICATION: {{ .Values.config.metrics.application | quote }}
+  METRICS_ENABLED: {{ .Values.config.metrics.enabled | quote }}
+  METRICS_EVENTS_TOPIC_PREFIX: {{ .Values.config.metrics.events.topicPrefix | quote }}
   QSERV_KAFKA_CONSUMER_GROUP_ID: {{ .Values.config.consumerGroupId | quote }}
   QSERV_KAFKA_JOB_CANCEL_TOPIC: {{ .Values.config.jobCancelTopic | quote }}
   QSERV_KAFKA_JOB_RUN_TOPIC: {{ .Values.config.jobRunTopic | quote }}
@@ -21,3 +24,5 @@ data:
   QSERV_KAFKA_REDIS_URL: "redis://qserv-kafka-redis.{{ .Release.Namespace }}:6379/0"
   QSERV_KAFKA_RESULT_TIMEOUT: {{ .Values.config.resultTimeout | quote }}
   QSERV_KAFKA_REWRITE_BASE_URL: {{ .Values.global.baseUrl | quote }}
+  SCHEMA_MANAGER_REGISTRY_URL: {{ .Values.config.metrics.schemaManager.registryUrl | quote }}
+  SCHEMA_MANAGER_SUFFIX: {{ .Values.config.metrics.schemaManager.suffix | quote }}

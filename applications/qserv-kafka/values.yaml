@@ -22,13 +22,40 @@ config:
   # human-friendly)
   logProfile: "production"
 
+  # -- Maximum number of arq jobs each worker can process simultaneously
+  maxWorkerJobs: 2
+
+  metrics:
+    # -- Whether to enable sending metrics
+    enabled: false
+
+    # -- Name under which to log metrics. Generally there is no reason to
+    # change this.
+    application: "qservkafka"
+
+    events:
+      # -- Topic prefix for events. It may sometimes be useful to change this
+      # in development environments.
+      topicPrefix: "lsst.square.metrics.events"
+
+    schemaManager:
+      # -- URL of the Confluent-compatible schema registry server
+      # @default -- Sasquatch in the local cluster
+      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
+
+      # -- Suffix to add to all registered subjects. This is sometimes useful
+      # for experimentation during development.
+      suffix: ""
+
   # -- Extra database connections that may be opened in excess of the pool
-  # size to handle surges in load.
+  # size to handle surges in load. This is used primarily by the frontend for
+  # jobs that complete immediately.
   qservDatabaseOverflow: 50
 
   # -- Database pool size. This is the number of MySQL connections that will
-  # be held open regardless of load.
-  qservDatabasePoolSize: 10
+  # be held open regardless of load. This should generally be set to the same
+  # as `maxWorkerJobs`.
+  qservDatabasePoolSize: 2
 
   # -- URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`)
   # @default -- None, must be set
@@ -83,7 +110,13 @@ frontend:
 
   # -- Resource limits and requests for the qserv-kafka frontend pod
   # @default -- See `values.yaml`
-  resources: {}
+  resources:
+    limits:
+      cpu: "1"
+      memory: "200Mi"
+    requests:
+      cpu: "100m"
+      memory: "100Mi"
 
   # -- Tolerations for the qserv-kafka frontend pod
   tolerations: []
@@ -121,10 +154,10 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "10Mi"
+      memory: "100Mi"
     requests:
       cpu: "10m"
-      memory: "5Mi"
+      memory: "20Mi"
 
 resultWorker:
   # -- Affinity rules for the qserv-kafka worker pods
@@ -157,7 +190,13 @@ resultWorker:
 
   # -- Resource limits and requests for the qserv-kafka worker pods
   # @default -- See `values.yaml`
-  resources: {}
+  resources:
+    limits:
+      cpu: "1"
+      memory: "600Mi"
+    requests:
+      cpu: "1"
+      memory: "300Mi"
 
   # -- Tolerations for the qserv-kafka worker pods
   tolerations: []
