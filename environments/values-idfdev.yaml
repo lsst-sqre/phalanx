@@ -42,6 +42,5 @@ applications:
   times-square: true
   vault-secrets-operator: true
   victoria-metrics: true
-  victoria-metrics-k8s: true
   vo-cutouts: true
   wobbly: true

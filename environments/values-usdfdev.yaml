@@ -46,4 +46,3 @@ applications:
   tasso: true
   times-square: true
   victoria-metrics: true
-  victoria-metrics-k8s: true
