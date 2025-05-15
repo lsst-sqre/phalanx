@@ -23,7 +23,7 @@ spec:
       containers:
       - image: "{{ .Values.initializer.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-        name: user-container
+        name: {{ include "prompt-keda.fullname" . | trimPrefix "prompt-keda-" }}
         env:
         - name: RUBIN_INSTRUMENT
           value: {{ .Values.instrument.name }}
