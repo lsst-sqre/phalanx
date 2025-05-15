@@ -22,6 +22,17 @@ Nightlydigest logging and reporting service
 | global.controlSystem.topicName | string | Set by ArgoCD | Topic name tag for the control system deployment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| nightlydigest-backend.affinity | object | `{}` | Affinity rules applied to the pod. |
+| nightlydigest-backend.annotations | object | `{}` | This allows for the specification of pod annotations. |
+| nightlydigest-backend.env | object | `{}` | This section holds a set of key, value pairs for environmental variables. |
+| nightlydigest-backend.envSecrets | object | `{}` | This section holds a set of key, value pairs for secrets. |
+| nightlydigest-backend.image.pullPolicy | string | `"IfNotPresent"` | The pull policy on the Nightlydigest backend image. |
+| nightlydigest-backend.image.repository | string | `"lsstts/nightlydigest-backend"` | The Nightlydigest backend image to use. |
+| nightlydigest-backend.image.tag | int | `nil` | The cycle revision to add to the image tag. |
+| nightlydigest-backend.namespace | string | `"nightlydigest"` | The overall namespace for the application. |
+| nightlydigest-backend.nodeSelector | object | `{}` | Node selection rules applied to the pod. |
+| nightlydigest-backend.resources | object | `{}` | Resource specifications applied to the pod. |
+| nightlydigest-backend.tolerations | list | `[]` | Toleration specifications applied to the pod. |
 | nightlydigest-nginx.affinity | object | `{}` | Affinity rules for the NGINX pod |
 | nightlydigest-nginx.image.pullPolicy | string | `"IfNotPresent"` | The pull policy on the NGINX image |
 | nightlydigest-nginx.image.repository | string | `"nginx"` | The NGINX image to use |
