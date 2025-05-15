@@ -96,7 +96,7 @@ def test_lint(mock_helm: MockHelmCommand) -> None:
     mock_helm.reset_mock()
     mock_helm.set_capture_callback(callback_error)
     result = run_cli("environment", "lint", "idfdev")
-    assert result.output == (
+    assert result.stderr == (
         "Some error\n"
         "Error: Top-level chart for environment idfdev has errors\n"
     )
