@@ -130,6 +130,7 @@ app-metrics:
     - mobu
     - noteburst
     - nublado
+    - qservkafka
     - sia
     - wobbly
 
