@@ -17,3 +17,4 @@ Argo CD project: ``monitoring``
    sasquatch/index
    telegraf/index
    telegraf-ds/index
+   victoria-metrics/index
