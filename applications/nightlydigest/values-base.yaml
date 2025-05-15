@@ -32,4 +32,23 @@ nightlydigest-nginx:
         root /usr/src;
         try_files $uri$args $uri$args/ $uri/ /nightlydigest/index.html;
       }
+
+      location /nightlydigest/api/ {
+        proxy_pass http://nightlydigest-backend-service:8080/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+      }
     }
+
+nightlydigest-backend:
+  image:
+    repository: ts-dockerhub.lsst.org/nightlydigest-backend
+    pullPolicy: Always
+  resources:
+    requests:
+      cpu: 150m
+      memory: 200Mi
+    limits:
+      cpu: 1000m
+      memory: 1500Mi
