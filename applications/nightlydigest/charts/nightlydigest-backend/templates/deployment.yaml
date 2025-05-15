@@ -21,7 +21,9 @@ spec:
         - name: "pull-secret"
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          # {{- $image := dict "repo" .Values.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" .Values.image.revision }}
+          # image: {{ include "helpers.makeImage" $image }}
+          image: ts-dockerhub.lsst.org/nightlydigest-backend:c0041
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
