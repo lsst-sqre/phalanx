@@ -9,7 +9,7 @@ vaultPathPrefix: "secret/rubin/usdf-rsp-int"
 applications:
   # This environment uses an ingress managed in a separate Kubernetes cluster,
   # despite that configuration not being officially supported by Phalanx.
-  cert-manager: false
+  cert-manager: true
   ingress-nginx: false
 
   butler: true
