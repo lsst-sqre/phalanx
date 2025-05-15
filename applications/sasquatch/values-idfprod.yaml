@@ -99,6 +99,7 @@ app-metrics:
     - mobu
     - noteburst
     - nublado
+    - qservkafka
     - wobbly
 
 backup:
