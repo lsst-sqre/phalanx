@@ -38,7 +38,7 @@ spec:
                 name: db-auth-credentials-file
         restartPolicy: Never
         containers:
-          - name: {{ .Values.instrument.name | lower }}
+          - name: {{ include "prompt-keda.fullname" . | trimPrefix "prompt-keda-" }}
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
             imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
             command:
