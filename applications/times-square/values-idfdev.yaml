@@ -5,7 +5,6 @@ ingress:
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://times-square@localhost/times-square"
-  updateSchema: "True"
   githubAppId: "196798"
   enableGitHubApp: "True"
   githubCheckRunTimeout: "900" # 15 minutes
