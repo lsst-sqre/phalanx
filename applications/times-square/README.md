@@ -26,7 +26,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.defaultExecutionTimeout | string | `"300"` | Default execution timeout for notebooks in seconds |
 | config.enableGitHubApp | string | `"False"` | Toggle to enable the GitHub App functionality |
 | config.githubAppId | string | `""` | GitHub application ID |
-| config.githubCheckRunTimeout | string | `"900"` | Timeout for GitHub check runs in seconds |
+| config.githubCheckRunTimeout | string | `"3600"` | Timeout for GitHub check runs in seconds |
 | config.githubOrgs | string | `"lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"` | GitHub organizations that can sync repos to Times Square (comma-separated). |
 | config.htmlKeyMigration.dryRun | bool | `true` | Whether to run the HTML key migration job as a dry-run only |
 | config.htmlKeyMigration.enabled | bool | `false` |  |
@@ -37,7 +37,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.redisCacheUrl | string | Points to embedded Redis | URL for Redis html / noteburst job cache database |
 | config.redisQueueUrl | string | Points to embedded Redis | URL for Redis arq queue database |
 | config.sentryTracesSampleRate | float | `0` |  |
-| config.updateSchema | bool | false to disable schema upgrades | Whether to run the database migration job |
+| config.updateSchema | string | false to disable schema upgrades | Whether to run the database migration job |
 | config.worker.enableLivenessCheck | bool | `true` | Enable liveness checks for the arq queue |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by times-square Argo CD Application | Base URL for the environment |

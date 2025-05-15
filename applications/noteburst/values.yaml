@@ -152,7 +152,7 @@ config:
     # -- Number of workers to run
     workerCount: 1
 
-    # -- The default notebook execution timeout, in seconds.
+    # -- The maximum allowed notebook execution time, in seconds.
     jobTimeout: 300
 
     # -- Max number of concurrent notebook executions per worker
@@ -170,8 +170,8 @@ config:
     # -- Nublado image reference, applicable when imageSelector is "reference"
     imageReference: ""
 
-    # -- Worker keep alive mode: "normal", "fast", "disabled"
-    keepAlive: "normal"
+    # -- Worker keep alive mode: "normal", "fast", "hourly", "daily", "disabled"
+    keepAlive: "hourly"
 
 redis:
   persistence:
