@@ -39,6 +39,8 @@ Deployment for the Calibration System CSCs
 | linearstage103.enabled | bool | `false` | Enable the LinearStage:103 CSC |
 | linearstage104-sim.enabled | bool | `false` | Enable the LinearStage:104 simulator CSC |
 | linearstage104.enabled | bool | `false` | Enable the LinearStage:104 CSC |
+| mtreflector-sim.enabled | bool | `false` | Enabled the MTReflector simulator CSC |
+| mtreflector.enabled | bool | `false` | Enabled the MTReflector CSC |
 | simulation-gencam.enabled | bool | `false` | Enabled the GenericCamera:1 CSC |
 | tunablelaser-sim.enabled | bool | `false` | Enabled the TunableLaser:0 simulator CSC |
 | tunablelaser.enabled | bool | `false` | Enabled the TunableLaser:0 CSC |

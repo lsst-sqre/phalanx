@@ -194,6 +194,19 @@ linearstage104:
       cpu: 10m
       memory: 130Mi
 
+mtreflector:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtreflector
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 100m
+      memory: 330Mi
+    requests:
+      cpu: 10m
+      memory: 130Mi
+
 simulation-gencam:
   enabled: true
   classifier: genericcamera1
