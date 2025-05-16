@@ -14,7 +14,7 @@ config:
       authorized_groups: ["*"]
     dp1:
       config_uri: "file:///opt/lsst/butler/config/dp1.yaml"
-      authorized_groups: []
+      authorized_groups: ["g_users"]
   shareNubladoSecrets: false
   additionalS3EndpointUrls:
     slac: "https://sdfdatas3.slac.stanford.edu"
