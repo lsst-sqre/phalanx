@@ -2,6 +2,8 @@ config:
   pguser: "rubin"
   s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu"
   repositories:
-    embargo: s3://embargo@rubin-summit-users/butler.yaml
+    embargo:
+      config_uri: s3://embargo@rubin-summit-users/butler.yaml
+      authorized_groups: ["*"]
   additionalS3EndpointUrls:
     embargo: "https://sdfembs3.sdf.slac.stanford.edu"
