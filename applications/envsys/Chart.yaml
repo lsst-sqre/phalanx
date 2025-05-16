@@ -247,16 +247,6 @@ dependencies:
   condition: m2-ess112-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: m2-ess02
-  version: 1.0.0
-  condition: m2-ess02.enabled
-  repository: file://../../charts/csc
-- name: csc
-  alias: m2-ess02-sim
-  version: 1.0.0
-  condition: m2-ess02-sim.enabled
-  repository: file://../../charts/csc
-- name: csc
   alias: mtdome-ess107
   version: 1.0.0
   condition: mtdome-ess107.enabled
@@ -295,6 +285,16 @@ dependencies:
   alias: tma-ess001-sim
   version: 1.0.0
   condition: tma-ess001-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tma-ess002
+  version: 1.0.0
+  condition: tma-ess002.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tma-ess002-sim
+  version: 1.0.0
+  condition: tma-ess002-sim.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: tma-ess104
