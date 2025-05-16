@@ -613,9 +613,6 @@ love-producer:
   - name: m2ess112
     csc: ESS:112 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: m2ess02
-    csc: ESS:2 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtheaderservice
     csc: MTHeaderService:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -754,6 +751,9 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess001
     csc: ESS:1 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tma-ess002
+    csc: ESS:2 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess104
     csc: ESS:104 --log-level 10
