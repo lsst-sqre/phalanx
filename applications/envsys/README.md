@@ -61,6 +61,8 @@ Deployment for the Environmental Awareness Systems CSCs
 | m1m3-ess116.enabled | bool | `false` | Enable the ESS:116 CSC |
 | m1m3-ess117-sim.enabled | bool | `false` | Enable the ESS:117 simulator CSC |
 | m1m3-ess117.enabled | bool | `false` | Enable the ESS:117 CSC |
+| m2-ess02-sim.enabled | bool | `false` | Enable the ESS:2 simulator CSC |
+| m2-ess02.enabled | bool | `false` | Enable the ESS:2 CSC |
 | m2-ess106-sim.enabled | bool | `false` | Enable the ESS:106 simulator CSC |
 | m2-ess106.enabled | bool | `false` | Enable the ESS:106 CSC |
 | m2-ess112-sim.enabled | bool | `false` | Enable the ESS:112 simulator CSC |
