@@ -132,10 +132,10 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "10Mi"
+      memory: "100Mi"
     requests:
       cpu: "10m"
-      memory: "5Mi"
+      memory: "20Mi"
 
 resultWorker:
   # -- Affinity rules for the qserv-kafka worker pods
