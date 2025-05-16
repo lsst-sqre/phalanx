@@ -1,7 +1,21 @@
+replicaCount: 1
+
+image:
+  tag: tickets-DM-50942-per-notebook-idle
+
+resources:
+  limits:
+    # memory: "3.5Gi"
+    memory: "12Gi"
+  requests:
+    cpu: "1"
+    memory: "1Gi"
+terminationGracePeriodSeconds: 3600
 config:
   metrics:
     enabled: true
-  sentryTracesSampleConfig: errors
+  sentryTracesSampleConfig: 0
+  logMonkeysToFile: False
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre
@@ -20,89 +34,173 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
-    - name: "recommended"
-      count: 1
-      users:
-        - username: "bot-mobu-recommended"
+    # - name: "scale-test-simple"
+    #   count: 1000
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-notebook"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   start_batch_size: 50
+    #   start_batch_wait: "1m"
+    #   business:
+    #     type: "NotebookRunnerInfinite"
+    #     options:
+    #       repo_url: "https://github.com/lsst-sqre/scaletest.git"
+    #       repo_ref: "no-code"
+    #       execution_idle_time: 1m
+    #       delete_lab: false
+    #     restart: true
+    # - name: "scale-test-butler"
+    #   count: 1000
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-notebook"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   start_batch_size: 50
+    #   start_batch_wait: "1m"
+    #   business:
+    #     type: "NotebookRunnerInfinite"
+    #     options:
+    #       repo_url: "https://github.com/lsst-sqre/scaletest.git"
+    #       repo_ref: "u/fe/butler"
+    #       execution_idle_time: 0
+    #       delete_lab: false
+    #     restart: true
+    # - name: "scale-test-tap-notebook"
+    #   count: 100
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-notebook"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   start_batch_size: 50
+    #   start_batch_wait: "1m"
+    #   business:
+    #     type: "NotebookRunnerCounting"
+    #     options:
+    #       repo_url: "https://github.com/lsst-sqre/scaletest.git"
+    #       repo_ref: "u/fe/tap"
+    #       idle_time: 0
+    #       delete_lab: false
+    #     restart: true
+    # - name: "scale-test-ssotap"
+    #   count: 300
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-notebook"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   start_batch_size: 50
+    #   start_batch_wait: "1m"
+    #   business:
+    #     type: "NotebookRunnerInfinite"
+    #     options:
+    #       repo_url: "https://github.com/lsst-sqre/scaletest.git"
+    #       repo_ref: "u/stv/ssotap"
+    #       execution_idle_time: "3s"
+    #       idle_time: "1s"
+    #       delete_lab: false
+    #     restart: true
+    # - name: "tap-scale"
+    #   count: 90
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-tap"
+    #   scopes: ["read:tap"]
+    #   business:
+    #     type: "TAPQuerySetRunner"
+    #     options:
+    #       query_set: "dp0.2"
+    #       sync: false
+    #     restart: true
+    # - name: "scale-test-tap-notebook"
+    #   count: 100
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-notebook"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   start_batch_size: 50
+    #   start_batch_wait: "1m"
+    #   business:
+    #     type: "NotebookRunnerCounting"
+    #     options:
+    #       repo_url: "https://github.com/lsst-sqre/scaletest.git"
+    #       repo_ref: "u/fe/tap"
+    #       idle_time: 0
+    #       delete_lab: false
+    #     restart: true
+    - name: "scale-test-qserv"
+      count: 10
+      user_spec:
+        username_prefix: "bot-mobu-scale-notebook"
       scopes:
         - "exec:notebook"
         - "exec:portal"
         - "read:image"
         - "read:tap"
+      start_batch_size: 50
+      start_batch_wait: "1m"
       business:
         type: "NotebookRunnerCounting"
         options:
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_ref: "prod"
-        restart: true
-    - name: "weekly"
-      count: 1
-      users:
-        - username: "bot-mobu-weekly"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          image:
-            image_class: "latest-weekly"
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_ref: "prod"
-        restart: true
-    - name: "tutorial"
-      count: 1
-      users:
-        - username: "bot-mobu-tutorial"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
-          repo_ref: "main"
+          repo_url: "https://github.com/lsst-sqre/scaletest.git"
+          repo_ref: "u/fe/qserv"
           max_executions: 1
+          idle_time: "10s"
+          delete_lab: false
         restart: true
-    - name: "tutorial-weekly"
-      count: 1
-      users:
-        - username: "bot-mobu-tutorial-weekly"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          image:
-            image_class: "latest-weekly"
-          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
-          repo_ref: "main"
-          max_executions: 1
-        restart: true
-    - name: "tap"
-      count: 1
-      users:
-        - username: "bot-mobu-tap"
-      scopes: ["read:tap"]
-      business:
-        type: "TAPQuerySetRunner"
-        options:
-          query_set: "dp0.2"
-        restart: true
-    - name: "sia"
-      count: 1
-      users:
-        - username: "bot-mobu-sia"
-      scopes: ["read:image"]
-      business:
-        type: "SIAQuerySetRunner"
-        options:
-          query_set: "dp02"
-        restart: true
+    # - name: "scale-test-all-dressed"
+    #   count: 100
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-notebook"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   start_batch_size: 50
+    #   start_batch_wait: "1m"
+    #   business:
+    #     type: "NotebookRunnerInfinite"
+    #     options:
+    #       repo_url: "https://github.com/lsst-sqre/scaletest.git"
+    #       repo_ref: "main"
+    #       execution_idle_time: 0
+    #       idle_time: 0
+    #       notebook_idle_time: 0
+    #       delete_lab: false
+    #     restart: true
+    # - name: "scale-test-simple"
+    #   count: 100
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-notebook"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   start_batch_size: 50
+    #   start_batch_wait: "1m"
+    #   business:
+    #     type: "NotebookRunnerList"
+    #     options:
+    #       repo_url: "https://github.com/lsst-sqre/scaletest.git"
+    #       repo_ref: "main"
+    #       execution_idle_time: 1
+    #       idle_time: 10
+    #       notebooks_to_run:
+    #         - TAP_pg.ipynb
+    #       delete_lab: false
+    #     restart: true
