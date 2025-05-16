@@ -190,14 +190,6 @@ m2-ess112-sim:
   # -- Enable the ESS:112 simulator CSC
   enabled: false
 
-m2-ess02:
-  # -- Enable the ESS:2 CSC
-  enabled: false
-
-m2-ess02-sim:
-  # -- Enable the ESS:2 simulator CSC
-  enabled: false
-
 mtdome-ess107:
   # -- Enable the ESS:107 CSC
   enabled: false
@@ -228,6 +220,14 @@ tma-ess001:
 
 tma-ess001-sim:
   # -- Enable the ESS:1 simulator CSC
+  enabled: false
+
+tma-ess002:
+  # -- Enable the ESS:2 CSC
+  enabled: false
+
+tma-ess002-sim:
+  # -- Enable the ESS:2 simulator CSC
   enabled: false
 
 tma-ess104:
