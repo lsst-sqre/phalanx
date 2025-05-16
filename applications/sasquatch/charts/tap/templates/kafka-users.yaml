@@ -57,3 +57,19 @@ spec:
         host: "*"
         operations:
           - All
+      - host: '*'
+        operations:
+          - "Read"
+        resource:
+          name: "app-metrics-events"
+          patternType: "prefix"
+          type: "group"
+      - host: '*'
+        operations:
+          - "Describe"
+          - "Read"
+          - "Write"
+        resource:
+          name: "lsst.square.metrics.events.qservkafka"
+          patternType: "literal"
+          type: "topic"

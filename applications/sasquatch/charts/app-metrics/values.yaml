@@ -26,6 +26,9 @@ globalAppConfig:
   nublado:
     influxTags:
       - "username"
+  qservkafka:
+    influxTags:
+      - "username"
   sia:
     influxTags:
       - "username"
