@@ -634,7 +634,7 @@ lsstcamBacklogWorkerSet:
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 10
+  replicas: 20
   resources:
     requests:
       cpu: 1.0
