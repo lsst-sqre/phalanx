@@ -345,6 +345,14 @@ telegraf-oss:
       topicRegexps: |
         [ "lsst.obsenv" ]
       debug: true
+    oss-scimma:
+      enabled: true
+      database: "lsst.scimma"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.scimma" ]
+      debug: true
     oss-cp:
       enabled: true
       database: "lsst.cp"
@@ -382,6 +390,15 @@ telegraf:
         [ "lsst.obsenv" ]
       debug: true
       offset: newest
+    scimma:
+      enabled: true
+      database: "lsst.scimma"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.scimma" ]
+      debug: true
+      offset: oldest
     cp:
       enabled: true
       database: "lsst.cp"
@@ -599,6 +616,7 @@ rest-proxy:
       - lsst.dm
       - lsst.backpack
       - lsst.obsenv
+      - lsst.scimma
       - lsst.cp
 
 chronograf:
@@ -637,6 +655,9 @@ backup:
       retentionDays: 7
 
 obsenv:
+  enabled: true
+
+scimma:
   enabled: true
 
 backpack:
