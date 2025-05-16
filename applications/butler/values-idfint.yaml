@@ -7,8 +7,15 @@ config:
   dp1PostgresUri: postgresql://butler@dp1.rsp-sql-int.internal:5432/dp1
   s3EndpointUrl: "https://storage.googleapis.com"
   repositories:
-    dp02: "file:///opt/lsst/butler/public/config/dp02-server.yaml"
-    dp1: "file:///opt/lsst/butler/config/dp1.yaml"
+    dp02:
+      config_uri: "file:///opt/lsst/butler/public/config/dp02-server.yaml"
+      authorized_groups: ["*"]
+    dp1:
+      config_uri: "file:///opt/lsst/butler/config/dp1.yaml"
+      # g_users should be equivalent to "all users" like the '*' above, but
+      # production will be configured with an actual group for dp1 and this
+      # keeps things more similar.
+      authorized_groups: ["g_users"]
   shareNubladoSecrets: false
   additionalS3EndpointUrls:
     slac: "https://sdfdatas3.slac.stanford.edu"
