@@ -49,8 +49,9 @@ controller:
         PANDAMON_URL: "https://usdf-panda-bigmon.slac.stanford.edu:8443/"
         PANDA_CONFIG_ROOT: "~"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
+        SCRATCH_PATH: "/delete-weekly"
         TMPDIR: "/tmp"
-        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/project/cst_repos/tutorial-notebooks"
+        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
@@ -94,23 +95,29 @@ controller:
             serverPath: "/home-share"
             server: "10.91.240.5"
             type: "nfs"
-        - name: "project"
+        - name: "rubin"
           source:
-            serverPath: "/share1/project"
-            server: "10.22.240.130"
+            serverPath: "/rubin-share"
+            server: "10.91.240.5"
             type: "nfs"
-        - name: "scratch"
+        - name: "delete-weekly"
           source:
-            serverPath: "/share1/scratch"
-            server: "10.22.240.130"
+            serverPath: "/delete-weekly-share"
+            server: "10.91.240.5"
             type: "nfs"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
+        - containerPath: "/rubin"
+          volumeName: "rubin"
+        - containerPath: "/delete-weekly"
+          volumeName: "delete-weekly"
+        # 20250516: accomodation paths, remove after tutorials
+        # and scratch use changes.
         - containerPath: "/project"
-          volumeName: "project"
+          volumeName: "rubin"
         - containerPath: "/scratch"
-          volumeName: "scratch"
+          volumeName: "delete-weekly"
     metrics:
       enabled: true
 
