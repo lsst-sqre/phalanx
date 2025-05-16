@@ -383,6 +383,22 @@ m2-ess112-sim:
       cpu: 190m
       memory: 480Mi
 
+m2-ess02-sim:
+  enabled: true
+  classifier: ess2
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 2 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
 mtdome-ess107-sim:
   enabled: true
   classifier: ess107

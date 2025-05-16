@@ -364,6 +364,22 @@ m2-ess112:
       cpu: 190m
       memory: 510Mi
 
+m2-ess02:
+  enabled: true
+  classifier: ess2
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 2
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
 mtdome-ess107:
   enabled: true
   classifier: ess107
