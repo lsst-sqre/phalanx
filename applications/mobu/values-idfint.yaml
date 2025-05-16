@@ -177,7 +177,6 @@ config:
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
           repo_ref: "main"
-          max_executions: 1
           execution_idle_time: 0
           idle_time: 0
           notebook_idle_time: 0
