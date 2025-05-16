@@ -39,8 +39,9 @@ controller:
         DAF_BUTLER_REPOSITORY_INDEX: "https://data-dev.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
+        SCRATCH_PATH: "/delete-weekly"
         TMPDIR: "/tmp"
-        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/project/cst_repos/tutorial-notebooks"
+        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
@@ -84,6 +85,11 @@ controller:
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
+        - containerPath: "/rubin"
+          volumeName: "project"
+        - containerPath: "/delete-weekly"
+          volumeName: "scratch"
+        # Accomodation while we move tutorials refs
         - containerPath: "/project"
           volumeName: "project"
         - containerPath: "/scratch"
@@ -112,6 +118,6 @@ cloudsql:
 cronjob:
   enabled: true
   targetVolume:
-    mountPath: "/project"
+    mountPath: "/rubin"
     server: "10.234.16.4"
     path: "/project-share"
