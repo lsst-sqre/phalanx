@@ -1,24 +1,7 @@
 # Default values for Sasquatch.
 
 # Override strimzi-kafka subchart configuration.
-strimzi-kafka:
-  kafka:
-    listeners:
-      tls:
-        # -- Whether internal TLS listener is enabled
-        enabled: true
-
-      plain:
-        # -- Whether internal plaintext listener is enabled
-        enabled: true
-
-      external:
-        # -- Whether external listener is enabled
-        enabled: true
-
-  connect:
-    # -- Whether Kafka Connect is enabled
-    enabled: true
+strimzi-kafka: {}
 
 strimzi-registry-operator:
   # -- Name of the Strimzi Kafka cluster
