@@ -461,6 +461,20 @@ latissWorkerSet:
     limits:
       cpu: 1.0
       memory: 8G
+latissGather1bSet:
+  name: LATISS/runStep1bWorker.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+  replicas: 2
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
 ###
 ### ComCamSim StatefulSets
 ###
