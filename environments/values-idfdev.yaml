@@ -20,6 +20,7 @@ applications:
   flink: true
   ghostwriter: true
   fspurger: true
+  grafana: true
   hips: true
   hoverdrive: true
   jira-data-proxy: true
