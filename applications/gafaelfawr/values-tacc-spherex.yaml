@@ -9,7 +9,7 @@ config:
   #github:
   #  clientId: "Ov23liKfYDkoJPekZaON"
 
-  databaseUrl: "postgresql://gafaelfawr@129.114.35.51/gafaelfawr01"
+  databaseUrl: "postgresql://gafaelfawr@192.168.115.125/gafaelfawr01"
   updateSchema: true
 
   oidcServer:
