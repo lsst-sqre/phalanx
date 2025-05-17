@@ -5,6 +5,13 @@ strimzi-kafka:
       replica.lag.time.max.ms: 120000
       log.retention.minutes: 10080
       offsets.retention.minutes: 10080
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
     externalListener:
       tls:
         enabled: true
@@ -21,13 +28,11 @@ strimzi-kafka:
         - broker: 2
           annotations:
             metallb.universe.tf/address-pool: sdf-rubin-ingest
-
   connect:
     enabled: true
     config:
       # -- Increase the request timeout for Kafka Connect to 120 seconds
       request.timeout.ms: 120000
-
   mirrormaker2:
     enabled: true
     source:
@@ -45,22 +50,15 @@ strimzi-kafka:
       enabled: true
     telegraf:
       enabled: true
-  kraft:
+  controller:
     enabled: true
-  kafkaController:
+  broker:
     enabled: true
-  cruiseControl:
-    enabled: true
-  brokerStorageMigration:
-    enabled: false
-    rebalance:
-      enabled: false
-  brokerStorage:
-    enabled: true
-    nodePoolName: kafka
+    name: kafka
     nodeIds: "[0,1,2]"
-    storageClassName: zfs--rubin-efd
-    size: 5Ti
+    storage:
+      size: 5Ti
+      storageClassName: zfs--rubin-efd
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -81,6 +79,8 @@ strimzi-kafka:
                   values:
                     - sasquatch
             topologyKey: kubernetes.io/hostname
+  cruiseControl:
+    enabled: true
 
 influxdb:
   enabled: false

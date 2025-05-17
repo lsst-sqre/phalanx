@@ -130,7 +130,6 @@ data:
       type: GAUGE
       labels:
         quantile: "0.$4"
-    {{- if .Values.kraft.enabled }}
     # KRaft mode: uncomment the following lines to export KRaft related metrics
     # KRaft overall related metrics
     # distinguish between always increasing COUNTER (total and max) and variable GAUGE (all others) metrics
@@ -152,5 +151,4 @@ data:
     - pattern: "kafka.server<type=broker-metadata-metrics><>(.+):"
       name: kafka_server_brokermetadatametrics_$1
       type: GAUGE
-    {{- end }}
 {{- end}}

@@ -1,5 +1,12 @@
 strimzi-kafka:
   kafka:
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
     externalListener:
       tls:
         enabled: true
@@ -16,22 +23,24 @@ strimzi-kafka:
         - broker: 2
           loadBalancerIP: "34.172.163.125"
           host: sasquatch-dev-kafka-2.lsst.cloud
-    resources:
-      requests:
-        memory: 16Gi
-        cpu: 2
-      limits:
-        memory: 16Gi
-        cpu: 2
   users:
     replicator:
       enabled: true
     telegraf:
       enabled: true
-  kraft:
+  controller:
     enabled: true
-  kafkaController:
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: "1"
+      limits:
+        memory: 8Gi
+        cpu: "1"
+  broker:
     enabled: true
+    storage:
+      size: 500Gi
     resources:
       requests:
         memory: 16Gi
@@ -39,7 +48,6 @@ strimzi-kafka:
       limits:
         memory: 16Gi
         cpu: "2"
-
   registry:
     ingress:
       enabled: true

@@ -1,4 +1,28 @@
 strimzi-kafka:
+  kafka:
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
+    externalListener:
+      tls:
+        enabled: true
+      bootstrap:
+        annotations:
+          metallb.universe.tf/address-pool: sdf-rubin-ingest
+      brokers:
+        - broker: 0
+          annotations:
+            metallb.universe.tf/address-pool: sdf-rubin-ingest
+        - broker: 1
+          annotations:
+            metallb.universe.tf/address-pool: sdf-rubin-ingest
+        - broker: 2
+          annotations:
+            metallb.universe.tf/address-pool: sdf-rubin-ingest
   mirrormaker2:
     enabled: false
     source:
@@ -14,10 +38,26 @@ strimzi-kafka:
   users:
     telegraf:
       enabled: true
-  kraft:
+  controller:
     enabled: true
-  kafkaController:
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: "1"
+      limits:
+        memory: 8Gi
+        cpu: "1"
+  broker:
     enabled: true
+    storage:
+      size: 500Gi
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: "2"
+      limits:
+        memory: 16Gi
+        cpu: "2"
 
 influxdb:
   ingress:
