@@ -32,22 +32,17 @@ controller:
         - name: "home"
           source:
             serverPath: "/data/home"
-            server: "129.114.35.159"
+            server: "192.168.115.150"
             type: "nfs"
         - name: "project"
           source:
             serverPath: "/data/project"
-            server: "129.114.35.159"
+            server: "192.168.115.150"
             type: "nfs"
         - name: "scratch"
           source:
             serverPath: "/data/scratch"
-            server: "129.114.35.159"
-            type: "nfs"
-        - name: "spherexdata"
-          source:
-            serverPath: "/corral/main/projects/JPL-SPHEREx/yjyang/SPHEREx_RefCat"
-            server: "129.114.52.151"
+            server: "192.168.115.150"
             type: "nfs"
       volumeMounts:
         - containerPath: "/home"
@@ -56,13 +51,11 @@ controller:
           volumeName: "project"
         - containerPath: "/scratch"
           volumeName: "scratch"
-        - containerPath: "/project/SPHEREx/SPHEREx_RefCat"
-          volumeName: "spherexdata"
 jupyterhub:
   hub:
     baseUrl: "/nb"
     db:
-      url: "postgresql://jhubsessions@129.114.35.51/jhubsessions01"
+      url: "postgresql://jhubsessions@192.168.115.125/jhubsessions01"
       upgrade: true
   cull:
     timeout: 432000  # 5 days
