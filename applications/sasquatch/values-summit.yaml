@@ -9,8 +9,13 @@ strimzi-kafka:
       log.message.timestamp.type: LogAppendTime
       log.retention.minutes: 10080
       offsets.retention.minutes: 10080
-    storage:
-      storageClassName: rook-ceph-block
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
     externalListener:
       tls:
         enabled: true
@@ -27,13 +32,6 @@ strimzi-kafka:
         - broker: 8
           loadBalancerIP: "139.229.180.94"
           host: sasquatch-summit-kafka-8.lsst.codes
-    resources:
-      requests:
-        memory: 256Gi
-        cpu: 64
-      limits:
-        memory: 256Gi
-        cpu: 64
     metricsConfig:
       enabled: true
   kafkaExporter:
@@ -47,9 +45,7 @@ strimzi-kafka:
         memory: 512Mi
       limits:
         memory: 1024Mi
-  kraft:
-    enabled: true
-  kafkaController:
+  controller:
     enabled: true
     resources:
       requests:
@@ -58,6 +54,35 @@ strimzi-kafka:
       limits:
         memory: 8Gi
         cpu: "2"
+  broker:
+    enabled: true
+    name: "kafka-local-storage"
+    nodeIds: "[6,7,8]"
+    storage:
+      size: 15Ti
+      storageClassName: localdrive
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kafka-broker
+                  operator: In
+                  values:
+                    - "true"
+    # -- Tolerations for Kafka broker pod assignment
+    tolerations:
+      - key: "kafka-broker"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
+    resources:
+      requests:
+        memory: 256Gi
+        cpu: 64
+      limits:
+        memory: 256Gi
+        cpu: 64
   users:
     replicator:
       enabled: true
@@ -72,32 +97,9 @@ strimzi-kafka:
       path: /schema-registry(/|$)(.*)
   connect:
     enabled: false
-    config:
-      key.converter: org.apache.kafka.connect.json.JsonConverter
-      key.converter.schemas.enable: false
   cruiseControl:
     enabled: true
-  brokerStorage:
-    enabled: true
-    storageClassName: localdrive
-    size: 15Ti
-    migration:
-      enabled: false
-      rebalance: false
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kafka-broker
-                  operator: In
-                  values:
-                    - "true"
-    tolerations:
-      - key: "kafka-broker"
-        operator: "Equal"
-        value: "true"
-        effect: "NoSchedule"
+
 influxdb:
   image:
     tag: "1.8.10"

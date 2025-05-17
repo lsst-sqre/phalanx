@@ -1,6 +1,5 @@
 strimzi-kafka:
   kafka:
-    version: "3.9.0"
     listeners:
       plain:
         enabled: false
@@ -10,6 +9,13 @@ strimzi-kafka:
         enabled: false
   controller:
     enabled: true
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: "2"
+      limits:
+        memory: 8Gi
+        cpu: "2"
   broker:
     enabled: true
     storage:
@@ -38,6 +44,13 @@ strimzi-kafka:
         operator: Equal
         value: "kafka"
         effect: NoExecute
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: 2
+      limits:
+        memory: 16Gi
+        cpu: 2
   connect:
     enabled: false
   mirrormaker2:

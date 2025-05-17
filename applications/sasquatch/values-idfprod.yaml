@@ -1,6 +1,5 @@
 strimzi-kafka:
   kafka:
-    version: "3.9.0"
     listeners:
       tls:
         enabled: true
@@ -29,10 +28,24 @@ strimzi-kafka:
       enabled: true
   controller:
     enabled: true
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: "1"
+      limits:
+        memory: 8Gi
+        cpu: "1"
   broker:
     enabled: true
     storage:
       size: 500Gi
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: "2"
+      limits:
+        memory: 16Gi
+        cpu: "2"
   registry:
     ingress:
       enabled: true
@@ -45,6 +58,13 @@ influxdb:
   ingress:
     enabled: false
     hostname: data.lsst.cloud
+  resources:
+    requests:
+      memory: 8Gi
+      cpu: 1
+    limits:
+      memory: 8Gi
+      cpu: 1
 
 customInfluxDBIngress:
   enabled: true
@@ -103,13 +123,10 @@ backup:
   backupItems:
     - name: "chronograf"
       enabled: true
-      retentionDays: 7
+      retentionDays: 3
     - name: "kapacitor"
       enabled: true
-      retentionDays: 7
+      retentionDays: 3
     - name: "influxdb-oss-full"
       enabled: true
       retentionDays: 3
-
-tap:
-  enabled: true

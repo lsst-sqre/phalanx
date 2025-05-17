@@ -96,10 +96,7 @@ Rubin Observatory's telemetry service
 | prompt-processing.enabled | bool | `false` | Whether to enable the prompt-processing subchart |
 | rest-proxy.enabled | bool | `false` | Whether to enable the REST proxy |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations |
-| strimzi-kafka.connect.enabled | bool | `true` | Whether Kafka Connect is enabled |
-| strimzi-kafka.kafka.listeners.external.enabled | bool | `true` | Whether external listener is enabled |
-| strimzi-kafka.kafka.listeners.plain.enabled | bool | `true` | Whether internal plaintext listener is enabled |
-| strimzi-kafka.kafka.listeners.tls.enabled | bool | `true` | Whether internal TLS listener is enabled |
+| strimzi-kafka | object | `{}` |  |
 | strimzi-registry-operator.clusterName | string | `"sasquatch"` | Name of the Strimzi Kafka cluster |
 | strimzi-registry-operator.clusterNamespace | string | `"sasquatch"` | Namespace where the Strimzi Kafka cluster is deployed |
 | strimzi-registry-operator.operatorNamespace | string | `"sasquatch"` | Namespace where the strimzi-registry-operator is deployed |
@@ -521,7 +518,26 @@ Rubin Observatory's telemetry service
 | rest-proxy.service.port | int | `8082` | Kafka REST proxy service port |
 | rest-proxy.tolerations | list | `[]` | Tolerations configuration |
 | square-events.cluster.name | string | `"sasquatch"` |  |
-| strimzi-kafka.brokerStorage | object | `{"enabled":false,"migration":{"brokers":[0,1,2],"enabled":false,"rebalance":false},"size":"1.5Ti","storageClassName":"localdrive"}` | Configuration for deploying Kafka brokers with local storage |
+| strimzi-kafka.broker.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for broker pod assignment |
+| strimzi-kafka.broker.enabled | bool | `false` | Enable node pool for the kafka brokers |
+| strimzi-kafka.broker.name | string | `"kafka"` | Node pool name |
+| strimzi-kafka.broker.nodeIds | string | `"[0,1,2]"` | IDs to assign to the brokers |
+| strimzi-kafka.broker.resources | object | `{"limits":{"cpu":"8","memory":"64Gi"},"requests":{"cpu":"4","memory":"32Gi"}}` | Kubernetes resources for the brokers |
+| strimzi-kafka.broker.storage.size | string | `"1.5Ti"` | Storage size for the brokers |
+| strimzi-kafka.broker.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
+| strimzi-kafka.broker.tolerations | list | `[]` | Tolerations for broker pod assignment |
+| strimzi-kafka.brokerMigration.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka broker pod assignment |
+| strimzi-kafka.brokerMigration.enabled | bool | `false` | Whether to enable another node pool to migrate the kafka brokers to |
+| strimzi-kafka.brokerMigration.name | string | `"broker-migration"` | Name of the node pool |
+| strimzi-kafka.brokerMigration.nodeIDs | string | `"[6,7,8]"` | IDs to assign to the brokers |
+| strimzi-kafka.brokerMigration.rebalance.avoidBrokers | list | `[0,1,2]` | Brokers to avoid during rebalancing These are the brokers you are migrating from and you want to remove after the migration is complete. |
+| strimzi-kafka.brokerMigration.rebalance.enabled | bool | `false` | Whether to rebalance the kafka cluster |
+| strimzi-kafka.brokerMigration.resources.limits.cpu | string | `"8"` |  |
+| strimzi-kafka.brokerMigration.resources.limits.memory | string | `"64Gi"` |  |
+| strimzi-kafka.brokerMigration.resources.requests | object | `{"cpu":"4","memory":"32Gi"}` | Kubernetes resources for the brokers |
+| strimzi-kafka.brokerMigration.size | string | `"1.5Ti"` | Storage size for the brokers |
+| strimzi-kafka.brokerMigration.storageClassName | string | None, use the default storage class | Storage class name for the brokers |
+| strimzi-kafka.brokerMigration.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment |
 | strimzi-kafka.cluster.monitorLabel | object | `{}` | Site wide label required for gathering Prometheus metrics if they are enabled |
 | strimzi-kafka.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations |
 | strimzi-kafka.connect.config."key.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Set the converter for the message ke |
@@ -533,8 +549,15 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.connect.enabled | bool | `false` | Enable Kafka Connect |
 | strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
-| strimzi-kafka.cruiseControl | object | `{"enabled":false,"maxReplicasPerBroker":20000}` | Configuration for the Kafka Cruise Control |
-| strimzi-kafka.kafka.affinity | object | See `values.yaml` | Affinity for Kafka pod assignment |
+| strimzi-kafka.controller.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for controller pod assignment |
+| strimzi-kafka.controller.enabled | bool | `false` | Enable node pool for the kafka controllers |
+| strimzi-kafka.controller.nodeIds | string | `"[3,4,5]"` | IDs to assign to the controllers |
+| strimzi-kafka.controller.resources | object | `{"limits":{"cpu":"1","memory":"8Gi"},"requests":{"cpu":"1","memory":"8Gi"}}` | Kubernetes resources for the controllers |
+| strimzi-kafka.controller.storage.size | string | `"20Gi"` | Storage size for the controllers |
+| strimzi-kafka.controller.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
+| strimzi-kafka.controller.tolerations | list | `[]` | Tolerations for controller pod assignment |
+| strimzi-kafka.cruiseControl.enabled | bool | `false` | Enable cruise control (required for broker migration and rebalancing) |
+| strimzi-kafka.cruiseControl.maxReplicasPerBroker | int | `20000` | Maximum number of replicas per broker |
 | strimzi-kafka.kafka.config."log.retention.minutes" | int | 4320 minutes (3 days) | Number of days for a topic's data to be retained |
 | strimzi-kafka.kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |
 | strimzi-kafka.kafka.config."offsets.retention.minutes" | int | 4320 minutes (3 days) | Number of minutes for a consumer group's offsets to be retained |
@@ -551,15 +574,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
 | strimzi-kafka.kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
 | strimzi-kafka.kafka.replicas | int | `3` | Number of Kafka broker replicas to run |
-| strimzi-kafka.kafka.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka brokers |
-| strimzi-kafka.kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers |
-| strimzi-kafka.kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
-| strimzi-kafka.kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment |
 | strimzi-kafka.kafka.version | string | `"3.8.0"` | Version of Kafka to deploy |
-| strimzi-kafka.kafkaController.enabled | bool | `false` | Enable Kafka Controller |
-| strimzi-kafka.kafkaController.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka Controller |
-| strimzi-kafka.kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers |
-| strimzi-kafka.kafkaController.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
 | strimzi-kafka.kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
 | strimzi-kafka.kafkaExporter.enabled | bool | `false` | Enable Kafka exporter |
 | strimzi-kafka.kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
@@ -567,7 +582,6 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
 | strimzi-kafka.kafkaExporter.showAllOffsets | bool | `true` | Whether to show all offsets or just offsets from connected groups |
 | strimzi-kafka.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
-| strimzi-kafka.kraft.enabled | bool | `false` | Enable KRaft mode for Kafka |
 | strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster |
 | strimzi-kafka.mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
 | strimzi-kafka.mirrormaker2.replication.policy.class | string | `"org.apache.kafka.connect.mirror.IdentityReplicationPolicy"` | Replication policy. |
