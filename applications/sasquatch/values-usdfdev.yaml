@@ -1,5 +1,12 @@
 strimzi-kafka:
   kafka:
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
     externalListener:
       tls:
         enabled: true
@@ -33,10 +40,35 @@ strimzi-kafka:
       enabled: true
     telegraf:
       enabled: true
-  kraft:
+  controller:
     enabled: true
-  kafkaController:
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: "1"
+      limits:
+        memory: 8Gi
+        cpu: "1"
+  broker:
     enabled: true
+    storage:
+      size: 500Gi
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: "2"
+      limits:
+        memory: 16Gi
+        cpu: "2"
+  connect:
+    enabled: true
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: "1"
+      limits:
+        memory: 8Gi
+        cpu: "1"
 
 influxdb:
   ingress:

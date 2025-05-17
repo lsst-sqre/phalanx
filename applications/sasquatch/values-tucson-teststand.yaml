@@ -3,8 +3,13 @@ strimzi-kafka:
     monitorLabel:
       lsst.io/monitor: "true"
   kafka:
-    storage:
-      storageClassName: rook-ceph-block
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
     externalListener:
       tls:
         enabled: true
@@ -21,13 +26,6 @@ strimzi-kafka:
         - broker: 2
           loadBalancerIP: "140.252.146.47"
           host: sasquatch-tts-kafka-2.lsst.codes
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: 1
-      limits:
-        memory: 8Gi
-        cpu: 1
     metricsConfig:
       enabled: true
   kafkaExporter:
@@ -43,17 +41,19 @@ strimzi-kafka:
   users:
     telegraf:
       enabled: true
-  registry:
-    ingress:
-      enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /$2
-      hostname: tucson-teststand.lsst.codes
-      path: /schema-registry(/|$)(.*)
-  kraft:
+  controller:
     enabled: true
-  kafkaController:
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: "1"
+      limits:
+        memory: 8Gi
+        cpu: "1"
+  broker:
     enabled: true
+    storage:
+      size: 500Gi
     resources:
       requests:
         memory: 16Gi
@@ -61,6 +61,13 @@ strimzi-kafka:
       limits:
         memory: 16Gi
         cpu: "2"
+  registry:
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+      hostname: tucson-teststand.lsst.codes
+      path: /schema-registry(/|$)(.*)
 
 influxdb:
   persistence:

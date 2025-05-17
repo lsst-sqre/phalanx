@@ -1,12 +1,18 @@
 strimzi-kafka:
   kafka:
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
     externalListener:
       tls:
         enabled: true
       bootstrap:
         loadBalancerIP: "34.55.132.0"
         host: sasquatch-kafka-bootstrap.lsst.cloud
-
       brokers:
         - broker: 3
           loadBalancerIP: "34.122.37.250"
@@ -20,9 +26,7 @@ strimzi-kafka:
   users:
     telegraf:
       enabled: true
-  kraft:
-    enabled: true
-  kafkaController:
+  controller:
     enabled: true
     resources:
       requests:
@@ -31,6 +35,17 @@ strimzi-kafka:
       limits:
         memory: 8Gi
         cpu: "1"
+  broker:
+    enabled: true
+    storage:
+      size: 500Gi
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: "2"
+      limits:
+        memory: 16Gi
+        cpu: "2"
   registry:
     ingress:
       enabled: true
@@ -38,8 +53,6 @@ strimzi-kafka:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
       hostname: data.lsst.cloud
       path: /schema-registry(/|$)(.*)
-  connect:
-    enabled: false
 
 influxdb:
   ingress:
