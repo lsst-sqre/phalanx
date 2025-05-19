@@ -25,11 +25,12 @@ strimzi-kafka:
       log.message.timestamp.type: LogAppendTime
       log.retention.hours: 30
       log.retention.ms: 108000000
-    storage:
-      storageClassName: rook-ceph-block
-      size: 1Ti
     listeners:
+      tls:
+        enabled: true
       plain:
+        enabled: true
+      external:
         enabled: true
     externalListener:
       tls:
@@ -47,13 +48,6 @@ strimzi-kafka:
         - broker: 8
           loadBalancerIP: "139.229.151.174"
           host: sasquatch-base-kafka-2.lsst.codes
-    resources:
-      requests:
-        memory: 128Gi
-        cpu: 32
-      limits:
-        memory: 128Gi
-        cpu: 32
     metricsConfig:
       enabled: true
   kafkaExporter:
@@ -68,9 +62,7 @@ strimzi-kafka:
       limits:
         cpu: "8"
         memory: 1Gi
-  kraft:
-    enabled: true
-  kafkaController:
+  controller:
     enabled: true
     resources:
       requests:
@@ -79,35 +71,13 @@ strimzi-kafka:
       limits:
         memory: 8Gi
         cpu: "2"
-  users:
-    replicator:
-      enabled: true
-    telegraf:
-      enabled: true
-  registry:
-    ingress:
-      enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /$2
-      hostname: base-lsp.lsst.codes
-      path: /schema-registry(/|$)(.*)
-  connect:
-    config:
-      key.converter: org.apache.kafka.connect.json.JsonConverter
-      key.converter.schemas.enable: false
-  cruiseControl:
+  broker:
     enabled: true
-  brokerStorage:
-    enabled: true
-    migration:
-      enabled: false
-      rebalance: false
-      brokers:
-        - 0
-        - 1
-        - 2
-    size: 1.5Ti
-    storageClassName: localdrive
+    name: "kafka-local-storage"
+    nodeIds: "[6,7,8]"
+    storage:
+      size: 1.5Ti
+      storageClassName: localdrive
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -122,6 +92,32 @@ strimzi-kafka:
         operator: "Equal"
         value: "true"
         effect: "NoSchedule"
+    resources:
+      requests:
+        memory: 128Gi
+        cpu: 32
+      limits:
+        memory: 128Gi
+        cpu: 32
+  users:
+    replicator:
+      enabled: true
+    telegraf:
+      enabled: true
+  registry:
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+      hostname: base-lsp.lsst.codes
+      path: /schema-registry(/|$)(.*)
+  connect:
+    enabled: true
+    config:
+      key.converter: org.apache.kafka.connect.json.JsonConverter
+      key.converter.schemas.enable: false
+  cruiseControl:
+    enabled: true
 
 influxdb:
   ingress:

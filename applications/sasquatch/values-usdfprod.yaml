@@ -5,6 +5,13 @@ strimzi-kafka:
       replica.lag.time.max.ms: 120000
       log.retention.minutes: 10080
       offsets.retention.minutes: 10080
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
     externalListener:
       tls:
         enabled: true
@@ -12,22 +19,20 @@ strimzi-kafka:
         annotations:
           metallb.universe.tf/address-pool: sdf-rubin-ingest
       brokers:
-        - broker: 6
+        - broker: 0
           annotations:
             metallb.universe.tf/address-pool: sdf-rubin-ingest
-        - broker: 7
+        - broker: 1
           annotations:
             metallb.universe.tf/address-pool: sdf-rubin-ingest
-        - broker: 8
+        - broker: 2
           annotations:
             metallb.universe.tf/address-pool: sdf-rubin-ingest
-
   connect:
     enabled: true
     config:
       # -- Increase the request timeout for Kafka Connect to 120 seconds
       request.timeout.ms: 120000
-
   mirrormaker2:
     enabled: true
     source:
@@ -45,23 +50,15 @@ strimzi-kafka:
       enabled: true
     telegraf:
       enabled: true
-  kraft:
+  controller:
     enabled: true
-  kafkaController:
+  broker:
     enabled: true
-  cruiseControl:
-    enabled: true
-  brokerStorage:
-    enabled: true
-    migration:
-      enabled: false
-      rebalance: false
-      brokers:
-        - 3
-        - 4
-        - 5
-    size: 1.5Ti
-    storageClassName: zfs--rubin-efd
+    name: kafka
+    nodeIds: "[0,1,2]"
+    storage:
+      size: 5Ti
+      storageClassName: zfs--rubin-efd
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -70,9 +67,9 @@ strimzi-kafka:
                 - key: kubernetes.io/hostname
                   operator: In
                   values:
-                    - sdfk8sn004
-                    - sdfk8sn003
-                    - sdfk8sn007
+                    - sdfk8so001
+                    - sdfk8so005
+                    - sdfk8so006
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
@@ -82,6 +79,8 @@ strimzi-kafka:
                   values:
                     - sasquatch
             topologyKey: kubernetes.io/hostname
+  cruiseControl:
+    enabled: true
 
 influxdb:
   enabled: false

@@ -20,13 +20,6 @@ kafka:
   # Cannot be greater than the number of replicas.
   minInsyncReplicas: 2
 
-  storage:
-    # -- Size of the backing storage disk for each of the Kafka brokers
-    size: 500Gi
-
-    # -- Name of a StorageClass to use when requesting persistent volumes
-    storageClassName: ""
-
   config:
     # -- Number of minutes for a consumer group's offsets to be retained
     # @default -- 4320 minutes (3 days)
@@ -112,8 +105,22 @@ kafka:
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
 
-  # -- Affinity for Kafka pod assignment
-  # @default -- See `values.yaml`
+controller:
+  # -- Enable node pool for the kafka controllers
+  enabled: false
+
+  # -- IDs to assign to the controllers
+  nodeIds: "[3,4,5]"
+
+  storage:
+    # -- Storage size for the controllers
+    size: 20Gi
+
+    # -- Storage class to use when requesting persistent volumes
+    # @default -- None, use the default storage class
+    storageClassName: ""
+
+  # -- Affinity for controller pod assignment
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -125,11 +132,52 @@ kafka:
                   - kafka
           topologyKey: "kubernetes.io/hostname"
 
-  # -- Tolerations for Kafka broker pod assignment
+  # -- Tolerations for controller pod assignment
   tolerations: []
 
-  # -- Kubernetes requests and limits for the Kafka brokers
-  # @default -- See `values.yaml`
+  # -- Kubernetes resources for the controllers
+  resources:
+    requests:
+      memory: 8Gi
+      cpu: "1"
+    limits:
+      memory: 8Gi
+      cpu: "1"
+
+broker:
+  # -- Enable node pool for the kafka brokers
+  enabled: false
+
+  # -- Node pool name
+  name: kafka
+
+  # -- IDs to assign to the brokers
+  nodeIds: "[0,1,2]"
+
+  storage:
+    # -- Storage size for the brokers
+    size: 1.5Ti
+
+    # -- Storage class to use when requesting persistent volumes
+    # @default -- None, use the default storage class
+    storageClassName: ""
+
+  # -- Affinity for broker pod assignment
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: "app.kubernetes.io/name"
+                operator: In
+                values:
+                  - kafka
+          topologyKey: "kubernetes.io/hostname"
+
+  # -- Tolerations for broker pod assignment
+  tolerations: []
+
+  # -- Kubernetes resources for the brokers
   resources:
     requests:
       memory: 32Gi
@@ -138,24 +186,60 @@ kafka:
       memory: 64Gi
       cpu: "8"
 
-kraft:
-  # -- Enable KRaft mode for Kafka
+cruiseControl:
+  # -- Enable cruise control (required for broker migration and rebalancing)
   enabled: false
 
-kafkaController:
-  # -- Enable Kafka Controller
+  # -- Maximum number of replicas per broker
+  maxReplicasPerBroker: 20000
+
+brokerMigration:
+  # -- Whether to enable another node pool to migrate the kafka brokers to
   enabled: false
 
-  storage:
-    # -- Size of the backing storage disk for each of the Kafka controllers
-    size: 20Gi
+  # -- Name of the node pool
+  name: broker-migration
 
-    # -- Name of a StorageClass to use when requesting persistent volumes
-    storageClassName: ""
+  # -- IDs to assign to the brokers
+  nodeIDs: "[6,7,8]"
 
-  # -- Kubernetes requests and limits for the Kafka Controller
-  # @default -- See `values.yaml`
+  # -- Storage size for the brokers
+  size: 1.5Ti
+
+  # -- Storage class name for the brokers
+  # @default -- None, use the default storage class
+  storageClassName: ""
+
+  rebalance:
+    # -- Whether to rebalance the kafka cluster
+    enabled: false
+
+    # -- Brokers to avoid during rebalancing
+    # These are the brokers you are migrating from and you want to remove
+    # after the migration is complete.
+    avoidBrokers:
+      - 0
+      - 1
+      - 2
+
+  # -- Affinity for Kafka broker pod assignment
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: "app.kubernetes.io/name"
+                operator: In
+                values:
+                  - kafka
+          topologyKey: "kubernetes.io/hostname"
+
+
+  # -- Tolerations for Kafka broker pod assignment
+  tolerations: []
+
   resources:
+    # -- Kubernetes resources for the brokers
     requests:
       memory: 32Gi
       cpu: "4"
@@ -281,20 +365,3 @@ mirrormaker2:
 
       # -- Replication policy.
       class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
-
-# -- Configuration for the Kafka Cruise Control
-cruiseControl:
-  enabled: false
-
-# -- Configuration for deploying Kafka brokers with local storage
-brokerStorage:
-  enabled: false
-  migration:
-    enabled: false
-    rebalance: false
-    brokers:
-      - 0
-      - 1
-      - 2
-  size: 1.5Ti
-  storageClassName: localdrive
