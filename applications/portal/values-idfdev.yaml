@@ -5,8 +5,8 @@ config:
     cleanupInterval: "1h"
     sharedWorkarea:
       nfs:
-        path: "/share1/home/firefly/shared-workarea"
-        server: "10.87.86.26"
+        path: "/firefly-share/shared-workarea"
+        server: "10.234.16.4"
     privateWorkarea:
       pvc:
         size: "20Gi"
