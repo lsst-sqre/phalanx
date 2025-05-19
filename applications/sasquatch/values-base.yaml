@@ -242,7 +242,7 @@ telegraf:
       enabled: true
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.TunableLaser", "lsst.sal.MTReflector" ]
+        [ "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.MTReflector", "lsst.sal.TunableLaser" ]
       debug: true
     mtvms:
       enabled: true
