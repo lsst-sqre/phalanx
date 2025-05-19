@@ -46,7 +46,7 @@
 .. _Telegraf: https://www.influxdata.com/time-series-platform/telegraf/
 .. _tox: https://tox.wiki/en/latest/
 .. _UWS: https://www.ivoa.net/documents/UWS/
-.. _Vault: https://www.vaultproject.io/
+.. _Vault: https://developer.hashicorp.com/vault
 .. _Vault Secrets Operator: https://github.com/ricoberger/vault-secrets-operator
 .. _venv: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment
 .. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
