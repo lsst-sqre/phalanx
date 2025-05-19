@@ -15,9 +15,9 @@ image:
   # -- Pull policy for the ppdb-replication image
   pullPolicy: "Always"
 
-  # -- Tag of image to use
+  # -- Tag of dax_ppdb image to use
   # @default -- The appVersion of the chart
-  tag: "tickets-DM-50567"
+  tag: "main"
 
 ingress:
   # -- Additional annotations for the ingress rule
