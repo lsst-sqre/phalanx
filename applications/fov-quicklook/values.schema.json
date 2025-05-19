@@ -89,6 +89,11 @@
     "frontend": {
       "type": "object",
       "properties": {
+        "replicas": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
         "resources": {
           "$ref": "#/definitions/resources"
         }

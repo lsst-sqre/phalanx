@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: fov-quicklook-frontend
 spec:
-  replicas: 8
+  replicas: {{ .Values.frontend.replicas }}
   selector:
     matchLabels:
       app: fov-quicklook-frontend
