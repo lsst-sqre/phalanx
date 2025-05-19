@@ -9,8 +9,8 @@ config:
   # apdbConfig: "/sdf/group/rubin/user/salnikov/apdb/dm50040/apdb-cassandra-dm50040.yaml"
 
   # -- PPDB config file resource
+  ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm50563.yaml"
   # ppdbConfig: "/sdf/group/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm50040.yaml"
-  ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm50567.yaml"
 
   # -- Target BigQuery dataset
   dataset: "ppdb-dev-438721:ppdb_dm50567"
