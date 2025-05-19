@@ -74,12 +74,12 @@ controller:
             type: "nfs"
         - name: "project"
           source:
-            serverPath: "/project-share"
+            serverPath: "/home-share/reloc-project"
             server: "10.234.16.4"
             type: "nfs"
         - name: "scratch"
           source:
-            serverPath: "/scratch-share"
+            serverPath: "/home-share/reloc-scratch"
             server: "10.234.16.4"
             type: "nfs"
       volumeMounts:
