@@ -72,28 +72,28 @@ controller:
             serverPath: "/home-share"
             server: "10.234.16.4"
             type: "nfs"
-        - name: "project"
+        - name: "rubin"
           source:
-            serverPath: "/home-share/reloc-project"
+            serverPath: "/rubin-share"
             server: "10.234.16.4"
             type: "nfs"
-        - name: "scratch"
+        - name: "delete-weekly"
           source:
-            serverPath: "/home-share/reloc-scratch"
+            serverPath: "/deleted-weekly-share"  # AJT: my bad.  Sorry.
             server: "10.234.16.4"
             type: "nfs"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
         - containerPath: "/rubin"
-          volumeName: "project"
+          volumeName: "rubin"
         - containerPath: "/delete-weekly"
-          volumeName: "scratch"
+          volumeName: "delete-weekly"
         # Accomodation while we move tutorials refs
         - containerPath: "/project"
-          volumeName: "project"
+          volumeName: "rubin"
         - containerPath: "/scratch"
-          volumeName: "scratch"
+          volumeName: "delete-weekly"
     metrics:
       enabled: true
 hub:
@@ -120,4 +120,4 @@ cronjob:
   targetVolume:
     mountPath: "/rubin"
     server: "10.234.16.4"
-    path: "/project-share"
+    path: "/rubin-share"
