@@ -117,7 +117,8 @@ cloudsql:
   serviceAccount: "nublado@science-platform-dev-7696.iam.gserviceaccount.com"
 cronjob:
   enabled: true
-  targetVolumePath: "/rubin"
+  gitTarget: "/rubin/cst_repos/tutorial-notebooks"
+  schedule: "10 * * * *"
   targetVolume:
     mountPath: "/rubin"
     server: "10.234.16.4"
