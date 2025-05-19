@@ -64,7 +64,7 @@ generator:
   resources:
     # -- Resource requests for the generator
     requests:
-      cpu: 100m
+      cpu: 8000m
       memory: 32Gi
     # -- Resource limits for the generator
     limits:
