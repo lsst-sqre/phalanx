@@ -31,6 +31,7 @@ Qserv Kafka bridge
 | config.qservRestUrl | string | None, must be set | URL to the Qserv REST API |
 | config.resultTimeout | int | 3600 (1 hour) | How long to wait for result processing (retrieval and upload) before timing out, in seconds. This doubles as the timeout forcibly terminating result worker pods. |
 | frontend.affinity | object | `{}` | Affinity rules for the qserv-kafka frontend pod |
+| frontend.allowRootDebug | bool | `false` | Whether to allow containers to run as root. Set to true to allow use of debug containers to diagnose issues such as memory leaks. |
 | frontend.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka frontend pod |
 | frontend.podAnnotations | object | `{}` | Annotations for the qserv-kafka frontend pod |
 | frontend.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka frontend pod |
@@ -51,6 +52,7 @@ Qserv Kafka bridge
 | redis.persistence.volumeClaimName | string | `nil` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
 | resultWorker.affinity | object | `{}` | Affinity rules for the qserv-kafka worker pods |
+| resultWorker.allowRootDebug | bool | `false` | Whether to allow containers to run as root. Set to true to allow use of debug containers to diagnose issues such as memory leaks. |
 | resultWorker.autoscaling.enabled | bool | `true` | Enable autoscaling of qserv-kafka result workers |
 | resultWorker.autoscaling.maxReplicas | int | `10` | Maximum number of qserv-kafka worker pods. Each replica will open database connections up to the configured pool size and overflow limits, so make sure the combined connections are under the postgres connection limit. |
 | resultWorker.autoscaling.minReplicas | int | `1` | Minimum number of qserv-kafka worker pods |
