@@ -19,9 +19,7 @@ image:
 
 ingress:
   # -- Additional annotations for the ingress rule
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+  hostname: ""
 
 # -- Affinity rules for the eups-distributor deployment pod
 affinity: {}
