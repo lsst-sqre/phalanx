@@ -172,18 +172,58 @@ telegraf:
       debug: true
     m1m3:
       enabled: true
-      metric_batch_size: 2500
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.MTM1M3" ]
+        [ "lsst.sal.MTM1M3.ackcmd", "lsst.sal.MTM1M3.logevent*", "lsst.sal.MTM1M3.command*" ]
+      debug: true
+    m1m3-tel1:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3.accelerometerData", "lsst.sal.MTM1M3.appliedCylinderForces", "lsst.sal.MTM1M3.appliedForces", "lsst.sal.MTM1M3.gyroData", "lsst.sal.MTM1M3.hardpointActuatorData", "lsst.sal.MTM1M3.hardpointMonitorData" ]
       debug: true
       resources:
         limits:
-          cpu: "2"
+          cpu: "6"
+          memory: "2Gi"
+        requests:
+          cpu: "4"
+          memory: "2Gi"
+    m1m3-tel2:
+      enabled: true
+      database: "efd"
+      metric_batch_size: 750
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3.forceActuatorData", "lsst.sal.MTM1M3.outerLoopData", "lsst.sal.MTM1M3.imsData", "lsst.sal.MTM1M3.inclinometerData", "lsst.sal.MTM1M3.powerSupplyData" ]
+      debug: true
+      resources:
+        limits:
+          cpu: "6"
           memory: "8Gi"
         requests:
-          cpu: "1"
+          cpu: "4"
           memory: "8Gi"
+    m1m3-tel3:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3.appliedAccelerationForces", "lsst.sal.MTM1M3.appliedAzimuthForces", "lsst.sal.MTM1M3.appliedBalanceForces", "lsst.sal.MTM1M3.appliedElevationForces", "lsst.sal.MTM1M3.appliedThermalForces", "lsst.sal.MTM1M3.appliedVelocityForces", "lsst.sal.MTM1M3.forceActuatorPressure", "lsst.sal.MTM1M3.pidData" ]
+      debug: true
+      resources:
+        limits:
+          cpu: "5"
+          memory: "2Gi"
+        requests:
+          cpu: "4"
+          memory: "2Gi"
+    m1m3ts:
+      enabled: true
+      metric_batch_size: 1500
+      max_undelivered_messages: 4000
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3TS" ]
+      debug: true
     m2:
       enabled: true
       database: "efd"
