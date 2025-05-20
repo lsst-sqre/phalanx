@@ -69,6 +69,8 @@ spec:
               value: lsstObsCoreTapTable
             - name: PROPS_OP_searchActionsCmdMask_10
               value: lsstTruthSummaryRadiusTable
+            - name: PROPS_OP_searchActionsCmdMask_11
+              value: datalinkExtractTableDesc
             - name: PROPS_OP_hips_defHipsSources_label
               value: "'Rubin Featured'"
             - name: PROPS_OP_hips_adhocMocSource_label
