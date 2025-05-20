@@ -136,10 +136,11 @@ jupyterhub:
       upgrade: true
 cronjob:
   enabled: true
+  gitTarget: "/rubin/cst_repos/tutorial-notebooks"
   targetVolume:
-    mountPath: "/project"
-    server: "10.22.240.130"
-    path: "/share1/project"
+    mountPath: "/rubin"
+    path: "/rubin-share"
+    server: "10.91.240.5"
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
