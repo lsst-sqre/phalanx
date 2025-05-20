@@ -3,9 +3,10 @@ config:
   metrics:
     enabled: true
   qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-int.slac.stanford.edu:4090/"
-  qservRestSendApiVersion: false
-  qservRestUrl: "https://134.79.23.197:4098/"
-  qservRestUsername: "qsmaster"
+  qservRestUrl: "https://qserv-int-https.slac.stanford.edu:4098/"
+image:
+  tag: "tickets-DM-51004"
+  pullPolicy: "Always"
 frontend:
   allowRootDebug: true
 resultWorker:

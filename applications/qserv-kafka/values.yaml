@@ -102,6 +102,10 @@ frontend:
   # -- Affinity rules for the qserv-kafka frontend pod
   affinity: {}
 
+  # -- Whether to allow containers to run as root. Set to true to allow use of
+  # debug containers to diagnose issues such as memory leaks.
+  allowRootDebug: false
+
   # -- Node selection rules for the qserv-kafka frontend pod
   nodeSelector: {}
 
@@ -162,6 +166,10 @@ redis:
 resultWorker:
   # -- Affinity rules for the qserv-kafka worker pods
   affinity: {}
+
+  # -- Whether to allow containers to run as root. Set to true to allow use of
+  # debug containers to diagnose issues such as memory leaks.
+  allowRootDebug: false
 
   autoscaling:
     # -- Enable autoscaling of qserv-kafka result workers
