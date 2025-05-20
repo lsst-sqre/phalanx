@@ -4,6 +4,8 @@ metadata:
   name: backpack
   namespace: backpack
 spec:
+  selector:
+    matchLabels:
   template:
     spec:
       containers:
@@ -23,7 +25,6 @@ spec:
           value: /etc/kafkauser/user.crt
         - name: KAFKA_CLIENT_KEY_PATH
           value: /etc/kafkauser/user.key
-
         volumeMounts:
         - mountPath: /etc/kafkacluster/ca.crt
           name: kafka
@@ -34,7 +35,6 @@ spec:
         - mountPath: /etc/kafkauser/user.key
           name: kafka
           subPath: ssl.keystore.key
-
       volumes:
       - name: kafka
         secret:
