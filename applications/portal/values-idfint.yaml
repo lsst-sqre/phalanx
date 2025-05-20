@@ -19,7 +19,7 @@ redis:
     storageClass: "standard-rwo"
 
 image:
-  tag: "portal-test-2025.3-t5"
+  tag: "portal-test-2025.3-t6"
 
 resources:
   limits:
