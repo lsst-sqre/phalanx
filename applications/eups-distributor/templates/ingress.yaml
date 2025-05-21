@@ -21,6 +21,7 @@ template:
     tls:
       - hosts:
         - {{ .Values.ingress.hostname | quote }}
+        secretName: eups-distributor-tls
     rules:
       - host: {{ .Values.ingress.hostname | quote }}
         http:
