@@ -163,6 +163,9 @@ config:
     # -- Whether to run the nbstripout migration job as a pre-install/upgrade hook
     enabled: false
 
+    # -- Whether to run the job on demand or as a hook (default)
+    onDemand: false
+
     # -- Whether to run the nbstripout migration job as a dry-run only
     dryRun: true
 
