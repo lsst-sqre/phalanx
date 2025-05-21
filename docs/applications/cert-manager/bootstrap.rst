@@ -11,6 +11,9 @@ The DNS solver uses an AWS service user with write access to Route 53 to answer 
 In order to use ``cert-manager``, you must be hosting the DNS for the external hostname of the Science Platform installation in AWS Route 53.
 See :doc:`/admin/hostnames` for more information.
 
+Route 53 configuration
+======================
+
 First, ensure that ``cert-manager`` is set up for the domain in which the cluster will be hosted.
 If this is a new domain, follow the instructions in :doc:`route53-setup`.
 
@@ -21,8 +24,16 @@ Select **CNAME** from the lower drop-down menu and then **IP address or other va
 For example, if the cluster name is ``data-dev.lsst.cloud``, create a CNAME record at ``_acme-challenge.data-dev.lsst.cloud`` whose value is ``_acme-challenge.tls.lsst.cloud``.
 In the Route 53 console, the name of the record you create in the ``lsst.cloud`` hosted zone will be ``_acme-challenge.data-dev`` (yes, including the period).
 
+.. warning::
+
+   This approach is simple because the same CNAME and zone can be used for every hostname, but it means that simultaneous requests for TLS certificates for multiple hostnames will conflict and only one of the will succeed.
+   cert-manager should make progress and eventually issue all of the certs, but if there are a large number of managed hostnames, consider using a more complicated structure with separate CNAME targets for each hostname in the ``tls`` zone.
+
 This will need to be done for each hostname served by this instance of the RSP.
 See :doc:`add-new-hostname` for a shorter version of these instructions to follow for each new hostname added.
+
+Phalanx configuration
+=====================
 
 Add the following to the ``values-*.yaml`` file for an environment:
 
@@ -47,13 +58,15 @@ The values for the two most common Rubin Science Platform domains are:
 
 This key ID is for an AWS service user that has write access to the ``tls`` subdomain of the domain in which the cluster is hosted, and therefore can answer challenges.
 
+Secrets
+=======
+
 Finally, store the secret key for this AWS access key in Vault as the ``cert-manager`` secret for that cluster.
 The Vault secret should look something like this:
 
 .. code-block:: yaml
 
    data:
-     aws-access-key-id: "<access-key>"
      aws-secret-access-key: "<secret>"
 
 The secrets for the SQuaRE-maintained Rubin Science Platform domains are stored in 1Password (search for ``cert-manager-lsst-codes`` or ``cert-manager-lsst-cloud``).
