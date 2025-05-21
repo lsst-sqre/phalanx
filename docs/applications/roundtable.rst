@@ -16,7 +16,6 @@ Argo CD project: ``roundtable``
    giftless/index
    onepassword-connect/index
    ook/index
-   sqrbot-sr/index
    squarebot/index
    templatebot/index
    unfurlbot/index
