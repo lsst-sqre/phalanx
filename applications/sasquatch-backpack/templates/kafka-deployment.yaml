@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backpack
-  namespace: backpack
+  namespace: sasquatch-backpack
 spec:
   selector:
     matchLabels:
