@@ -10,7 +10,7 @@ prompt-keda:
 
   worker:
     # TODO: need to adjust this once we know how leaky the LSSTCam pipeline is
-    restart: 7
+    restart: 30
 
   instrument:
     pipelines:
@@ -21,7 +21,6 @@ prompt-keda:
       main: |-
         - survey: BLOCK-365  # FBS SV Field Survey
           pipelines:
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         - survey: BLOCK-T427  # Daytime checkout
@@ -75,7 +74,7 @@ prompt-keda:
 
   keda:
     minReplicaCount: 3
-    maxReplicaCount: 1700
+    maxReplicaCount: 1100
 
     # TODO: may need to reduce if we don't have enough capacity
     # redisStreams:
