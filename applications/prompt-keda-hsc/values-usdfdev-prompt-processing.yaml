@@ -13,7 +13,10 @@ prompt-keda:
       # Block-style mappings can have lines of any length.
       main: |-
         - survey: SURVEY
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/HSC/ApPipe.yaml']
+          pipelines:
+            - '${PROMPT_PROCESSING_DIR}/pipelines/HSC/ApPipe.yaml'
+            - '${PROMPT_PROCESSING_DIR}/pipelines/HSC/SingleFrame.yaml'
+            - '${PROMPT_PROCESSING_DIR}/pipelines/HSC/Isr.yaml'
       preprocessing: |-
         - survey: SURVEY
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/HSC/Preprocessing.yaml']
