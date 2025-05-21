@@ -34,7 +34,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.name | string | `"times-square"` | Name of the service. |
 | config.nbstripoutMigration.dryRun | bool | `true` | Whether to run the nbstripout migration job as a dry-run only |
-| config.nbstripoutMigration.enabled | bool | `false` | Whether to run the nbstripout migration job as a pre-install/upgrade hook |
+| config.nbstripoutMigration.enabled | bool | `true` | Whether to run the nbstripout migration job as a pre-install/upgrade hook |
 | config.nbstripoutMigration.onDemand | bool | `false` | Whether to run the job on demand or as a hook (default) |
 | config.profile | string | `"production"` | Run profile: "production" or "development" |
 | config.redisCacheUrl | string | Points to embedded Redis | URL for Redis html / noteburst job cache database |
