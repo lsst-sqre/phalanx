@@ -84,3 +84,5 @@ weaviate:
       enabled: true
     text2vec-openai:
       enabled: true
+  storage:
+    size: 1Ti
