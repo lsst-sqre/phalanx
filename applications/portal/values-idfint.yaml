@@ -18,8 +18,8 @@ redis:
     enabled: true
     storageClass: "standard-rwo"
 
-image:
-  tag: "portal-test-2025.3-t6"
+#image:
+#  tag: "portal-test-2025.3-t6"
 
 resources:
   limits:
