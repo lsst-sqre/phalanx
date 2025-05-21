@@ -9,6 +9,9 @@ config:
   enableGitHubApp: "True"
   githubCheckRunTimeout: "900" # 15 minutes
   sentryTracesSampleRate: 1
+  nbstripoutMigration:
+    enabled: true
+    dryRun: false
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
