@@ -11,5 +11,5 @@ timessquare_db:
   user: "timessquare"
   db: "timessquare"
 
-postgresVolumeSize: "2Gi"
+postgresVolumeSize: "10Gi"
 postgresStorageClass: "wekafs--sdf-k8s01"
