@@ -45,6 +45,7 @@ prompt-keda:
   s3:
     imageBucket: rubin-summit
     endpointUrl: https://sdfembs3.sdf.slac.stanford.edu
+    cred_file_auth: True
 
   raw_microservice: http://172.24.5.158:8080/presence
 
