@@ -1,4 +1,4 @@
 weaviate:
   storage:
-    size: 1Ti
+    size: 32Gi
     storageClassName: wekafs--sdf-k8s01
