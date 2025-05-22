@@ -1,0 +1,13 @@
+apiVersion: v2
+name: nightlydigest
+type: application
+description: Nightlydigest logging and reporting service
+version: 1.0.0
+sources:
+  - https://github.com/lsst-ts/ts_logging_frontend
+  - https://github.com/lsst-ts/ts_logging_and_reporting
+dependencies:
+  - name: nightlydigest-nginx
+    version: 1.0.0
+  - name: nightlydigest-backend
+    version: 1.0.0
