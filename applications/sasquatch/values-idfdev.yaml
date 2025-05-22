@@ -67,6 +67,9 @@ influxdb:
     limits:
       memory: 16Gi
       cpu: 2
+  grafanaDatasources:
+    - lsst.square.metrics
+    - lsst.example
 
 customInfluxDBIngress:
   enabled: true
