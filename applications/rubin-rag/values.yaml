@@ -86,4 +86,3 @@ weaviate:
       enabled: true
   storage:
     size: 1Ti
-    storageClassName: wekafs--sdf-k8s01
