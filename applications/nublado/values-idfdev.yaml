@@ -39,8 +39,9 @@ controller:
         DAF_BUTLER_REPOSITORY_INDEX: "https://data-dev.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
+        SCRATCH_PATH: "/delete-weekly"
         TMPDIR: "/tmp"
-        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/project/cst_repos/tutorial-notebooks"
+        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
@@ -71,23 +72,28 @@ controller:
             serverPath: "/home-share"
             server: "10.234.16.4"
             type: "nfs"
-        - name: "project"
+        - name: "rubin"
           source:
-            serverPath: "/project-share"
+            serverPath: "/rubin-share"
             server: "10.234.16.4"
             type: "nfs"
-        - name: "scratch"
+        - name: "delete-weekly"
           source:
-            serverPath: "/scratch-share"
+            serverPath: "/deleted-weekly-share"  # AJT: my bad.  Sorry.
             server: "10.234.16.4"
             type: "nfs"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
+        - containerPath: "/rubin"
+          volumeName: "rubin"
+        - containerPath: "/delete-weekly"
+          volumeName: "delete-weekly"
+        # Accomodation while we move tutorials refs
         - containerPath: "/project"
-          volumeName: "project"
+          volumeName: "rubin"
         - containerPath: "/scratch"
-          volumeName: "scratch"
+          volumeName: "delete-weekly"
     metrics:
       enabled: true
 hub:
@@ -111,7 +117,9 @@ cloudsql:
   serviceAccount: "nublado@science-platform-dev-7696.iam.gserviceaccount.com"
 cronjob:
   enabled: true
+  gitTarget: "/rubin/cst_repos/tutorial-notebooks"
+  schedule: "10 * * * *"
   targetVolume:
-    mountPath: "/project"
+    mountPath: "/rubin"
     server: "10.234.16.4"
-    path: "/project-share"
+    path: "/rubin-share"

@@ -5,8 +5,8 @@ config:
   volumes:
     sharedWorkarea:
       nfs:
-        path: "/share1/home/firefly/shared-workarea"
-        server: "10.22.240.130"
+        path: "/firefly-share/shared-workarea"
+        server: "10.91.240.5"
     privateWorkarea:
       pvc:
         size: "20Gi"
