@@ -167,7 +167,7 @@ config:
     onDemand: false
 
     # -- Whether to run the nbstripout migration job as a dry-run only
-    dryRun: true
+    dryRun: false
 
   worker:
     # -- Enable liveness checks for the arq queue
