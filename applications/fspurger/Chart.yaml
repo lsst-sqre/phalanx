@@ -3,4 +3,4 @@ description: Purge RSP directories according to policy
 name: fspurger
 type: application
 version: 1.0.0
-appVersion: 0.1.0
+appVersion: 0.1.1
