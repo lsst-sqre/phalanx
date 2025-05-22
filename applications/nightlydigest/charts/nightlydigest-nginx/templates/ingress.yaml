@@ -16,6 +16,7 @@ config:
       service: {{ include "nightlydigest-nginx.name" . }}
       scopes:
         - "exec:internal-tools"
+        - "read:image"
   service: {{ include "nightlydigest-nginx.name" . }}
 template:
   metadata:
