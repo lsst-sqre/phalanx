@@ -1,0 +1,35 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "eups-distributor"
+  labels:
+    {{- include "eups-distributor.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    anonymous: true
+  service: "eups-distributor"
+template:
+  metadata:
+    name: "eups-distributor"
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-dns"
+      {{- with .Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  spec:
+    tls:
+      - hosts:
+        - {{ .Values.ingress.hostname | quote }}
+        secretName: eups-distributor-tls
+    rules:
+      - host: {{ .Values.ingress.hostname | quote }}
+        http:
+          paths:
+            - path: "/"
+              pathType: Prefix
+              backend:
+                service:
+                  name: "eups-distributor"
+                  port:
+                    number: 8080
