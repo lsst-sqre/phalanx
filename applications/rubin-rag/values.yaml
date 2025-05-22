@@ -77,6 +77,7 @@ weaviate:
     AUTHENTICATION_APIKEY_USERS: 'admin'
     AUTHORIZATION_ADMINLIST_ENABLED: 'true'
     AUTHORIZATION_ADMINLIST_USERS: 'admin'
+    LOG_LEVEL: 'debug'
   envSecrets:
     AUTHENTICATION_APIKEY_ALLOWED_KEYS: rubin-rag
   modules:
@@ -84,3 +85,5 @@ weaviate:
       enabled: true
     text2vec-openai:
       enabled: true
+  storage:
+    size: 1Ti
