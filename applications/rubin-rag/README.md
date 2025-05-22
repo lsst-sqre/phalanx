@@ -39,4 +39,3 @@ RAG helpers for documentation searches
 | weaviate.requests.cpu | string | `"300m"` |  |
 | weaviate.requests.memory | string | `"150Mi"` |  |
 | weaviate.storage.size | string | `"1Ti"` |  |
-| weaviate.storage.storageClassName.size | string | `"wekafs--sdf-k8s01"` |  |
