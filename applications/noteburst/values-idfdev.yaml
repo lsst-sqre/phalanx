@@ -10,8 +10,7 @@ config:
     tracesSampleRate: 1
   worker:
     workerCount: 1
-    imageSelector: "reference"
-    imageReference: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/sciplat-lab:exp_w_2025_20_execution-kernel@sha256:c279cd7332de7a5a572d1a0cd6c54820a0ac9bac17f720f026cbe60c9d3c06f3"
+    imageSelector: "weekly"
     identities:
       - username: "bot-noteburst90000"
       - username: "bot-noteburst90001"
