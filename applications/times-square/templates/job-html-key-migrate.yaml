@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "times-square-schema-update"
+  name: "times-square-html-key-migrator"
   labels:
     {{- include "times-square.labels" . | nindent 4 }}
     app.kubernetes.io/component: "html-key-migrator"

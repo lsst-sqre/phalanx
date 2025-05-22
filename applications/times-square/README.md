@@ -29,10 +29,13 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.githubCheckRunTimeout | string | `"3600"` | Timeout for GitHub check runs in seconds |
 | config.githubOrgs | string | `"lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"` | GitHub organizations that can sync repos to Times Square (comma-separated). |
 | config.htmlKeyMigration.dryRun | bool | `true` | Whether to run the HTML key migration job as a dry-run only |
-| config.htmlKeyMigration.enabled | bool | `false` |  |
+| config.htmlKeyMigration.enabled | bool | `false` | Whether to run the HTML key migration job as a pre-install/upgrade hook |
 | config.htmlKeyMigration.page | string | `""` | The name of the page to migrate, if set |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.name | string | `"times-square"` | Name of the service. |
+| config.nbstripoutMigration.dryRun | bool | `false` | Whether to run the nbstripout migration job as a dry-run only |
+| config.nbstripoutMigration.enabled | bool | `true` | Whether to run the nbstripout migration job as a pre-install/upgrade hook |
+| config.nbstripoutMigration.onDemand | bool | `false` | Whether to run the job on demand or as a hook (default) |
 | config.profile | string | `"production"` | Run profile: "production" or "development" |
 | config.redisCacheUrl | string | Points to embedded Redis | URL for Redis html / noteburst job cache database |
 | config.redisQueueUrl | string | Points to embedded Redis | URL for Redis arq queue database |

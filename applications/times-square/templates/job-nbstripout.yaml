@@ -1,12 +1,14 @@
-{{- if .Values.config.updateSchema -}}
+{{- if .Values.config.nbstripoutMigration.enabled -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "times-square-schema-update"
+  name: "times-square-nbstripout"
+  {{- if not .Values.config.nbstripoutMigration.onDemand }}
   annotations:
     helm.sh/hook: "pre-install,pre-upgrade"
-    helm.sh/hook-delete-policy: "hook-succeeded"
-    helm.sh/hook-weight: "1"
+    helm.sh/hook-delete-policy: "before-hook-creation"
+    helm.sh/hook-weight: "2"  # schema update has 1, so run after it
+  {{- end }}
   labels:
     {{- include "times-square.labels" . | nindent 4 }}
 spec:
@@ -18,7 +20,7 @@ spec:
       {{- end }}
       labels:
         {{- include "times-square.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: "schema-update"
+        app.kubernetes.io/component: "nbstripout"
         times-square-redis-client: "true"
     spec:
       {{- if .Values.cloudsql.enabled }}
@@ -30,7 +32,10 @@ spec:
         - name: "times-square"
           command:
             - "times-square"
-            - "update-db-schema"
+            - "nbstripout"
+            {{- if .Values.config.nbstripoutMigration.dryRun }}
+            - "--dry-run"
+            {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           {{- with .Values.resources }}

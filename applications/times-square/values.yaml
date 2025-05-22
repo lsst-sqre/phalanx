@@ -149,11 +149,8 @@ config:
   # Sentry tracing sample rate
   sentryTracesSampleRate: 0.0
 
-  worker:
-    # -- Enable liveness checks for the arq queue
-    enableLivenessCheck: true
-
   htmlKeyMigration:
+    # -- Whether to run the HTML key migration job as a pre-install/upgrade hook
     enabled: false
 
     # -- Whether to run the HTML key migration job as a dry-run only
@@ -161,6 +158,20 @@ config:
 
     # -- The name of the page to migrate, if set
     page: ""
+
+  nbstripoutMigration:
+    # -- Whether to run the nbstripout migration job as a pre-install/upgrade hook
+    enabled: true
+
+    # -- Whether to run the job on demand or as a hook (default)
+    onDemand: false
+
+    # -- Whether to run the nbstripout migration job as a dry-run only
+    dryRun: false
+
+  worker:
+    # -- Enable liveness checks for the arq queue
+    enableLivenessCheck: true
 
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
