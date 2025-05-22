@@ -14,5 +14,5 @@ exposure_checker_db:
   user: "expchecker"
   db: "expchecker"
 
-postgresVolumeSize: "2Gi"
+postgresVolumeSize: "10Gi"
 postgresStorageClass: 'wekafs--sdf-k8s01'
