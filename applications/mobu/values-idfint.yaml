@@ -31,8 +31,8 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
-    - name: "scale-test-webdav"
-      count: 100
+    - name: "scale-test-cutouts"
+      count: 20
       user_spec:
         username_prefix: "bot-mobu-scale-notebook"
       scopes:
@@ -46,7 +46,7 @@ config:
         type: "NotebookRunnerInfinite"
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
-          repo_ref: "u/stvoutsin/webdav-only"
+          repo_ref: "u/fe/cutout"
           delete_lab: false
           notebook_idle_time: "5s"
         restart: true
