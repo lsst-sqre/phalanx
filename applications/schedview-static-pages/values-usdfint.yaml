@@ -1,0 +1,13 @@
+config:
+  separateSecrets: false
+  volumes:
+    - name: sdf-data-rubin
+      persistentVolumeClaim:
+        claimName: sdf-data-rubin
+  volume_mounts:
+    - name: sdf-data-rubin
+      mountPath: /usr/share/nginx/html
+      subPath: shared/scheduler/reports
+  persistentVolumeClaims:
+    - name: sdf-data-rubin
+      storageClassName: sdf-data-rubin
