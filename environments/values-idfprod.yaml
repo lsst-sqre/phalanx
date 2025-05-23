@@ -18,6 +18,7 @@ applications:
   datalinker: true
   filestore-backup: true
   ghostwriter: true
+  google-cloud-observability: true
   hips: true
   mobu: true
   noteburst: true
