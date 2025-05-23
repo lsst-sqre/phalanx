@@ -100,6 +100,9 @@ applications:
   # most other applications use `GafaelfawrIngress`
   gafaelfawr: true
 
+  # -- Enable the google-cloud-observability application
+  google-cloud-observability: false
+
   # -- Enable the grafana application
   grafana: false
 

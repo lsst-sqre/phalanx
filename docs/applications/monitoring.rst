@@ -10,6 +10,7 @@ Argo CD project: ``monitoring``
    :maxdepth: 1
 
    flink/index
+   google-cloud-observability/index
    grafana/index
    monitoring/index
    sasquatch-backpack/index
