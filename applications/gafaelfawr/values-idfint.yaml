@@ -4,6 +4,22 @@ replicaCount: 2
 redis:
   persistence:
     storageClass: "standard-rwo"
+  resources:
+    limits:
+      cpu: "1"
+      memory: "160Mi"
+    requests:
+      cpu: "50m"
+      memory: "15Mi"
+
+maintenance:
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "100m"
+      memory: "150Mi"
 
 config:
   allowSubdomains: true

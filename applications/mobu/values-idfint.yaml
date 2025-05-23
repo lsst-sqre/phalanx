@@ -1,7 +1,18 @@
+replicaCount: 1
+
+resources:
+  limits:
+    # memory: "3.5Gi"
+    memory: "12Gi"
+  requests:
+    cpu: "1"
+    memory: "1Gi"
+terminationGracePeriodSeconds: 3600
 config:
   metrics:
     enabled: true
-  sentryTracesSampleConfig: errors
+  sentryTracesSampleConfig: 0
+  logMonkeysToFile: False
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre
@@ -20,89 +31,23 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
-    - name: "recommended"
-      count: 1
-      users:
-        - username: "bot-mobu-recommended"
+    - name: "scale-test-webdav"
+      count: 100
+      user_spec:
+        username_prefix: "bot-mobu-scale-notebook"
       scopes:
         - "exec:notebook"
         - "exec:portal"
         - "read:image"
         - "read:tap"
+        - "write:files"
+      start_batch_size: 50
+      start_batch_wait: "1m"
       business:
-        type: "NotebookRunnerCounting"
+        type: "NotebookRunnerInfinite"
         options:
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_ref: "prod"
-        restart: true
-    - name: "weekly"
-      count: 1
-      users:
-        - username: "bot-mobu-weekly"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          image:
-            image_class: "latest-weekly"
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_ref: "prod"
-        restart: true
-    - name: "tutorial"
-      count: 1
-      users:
-        - username: "bot-mobu-tutorial"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
-          repo_ref: "main"
-          max_executions: 1
-        restart: true
-    - name: "tutorial-weekly"
-      count: 1
-      users:
-        - username: "bot-mobu-tutorial-weekly"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          image:
-            image_class: "latest-weekly"
-          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
-          repo_ref: "main"
-          max_executions: 1
-        restart: true
-    - name: "tap"
-      count: 1
-      users:
-        - username: "bot-mobu-tap"
-      scopes: ["read:tap"]
-      business:
-        type: "TAPQuerySetRunner"
-        options:
-          query_set: "dp0.2"
-        restart: true
-    - name: "sia"
-      count: 1
-      users:
-        - username: "bot-mobu-sia"
-      scopes: ["read:image"]
-      business:
-        type: "SIAQuerySetRunner"
-        options:
-          query_set: "dp02"
+          repo_url: "https://github.com/lsst-sqre/scaletest.git"
+          repo_ref: "u/stvoutsin/webdav-only"
+          delete_lab: false
+          notebook_idle_time: "5s"
         restart: true
