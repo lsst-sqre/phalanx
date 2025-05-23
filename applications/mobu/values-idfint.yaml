@@ -1,8 +1,5 @@
 replicaCount: 1
 
-image:
-  tag: tickets-DM-50942-per-notebook-idle
-
 resources:
   limits:
     # memory: "3.5Gi"
