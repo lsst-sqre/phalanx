@@ -40,6 +40,7 @@ config:
         - "exec:portal"
         - "read:image"
         - "read:tap"
+        - "write:files"
       start_batch_size: 50
       start_batch_wait: "1m"
       business:
