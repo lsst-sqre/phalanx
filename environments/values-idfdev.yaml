@@ -20,6 +20,8 @@ applications:
   flink: true
   ghostwriter: true
   fspurger: true
+  google-cloud-observability: true
+  grafana: true
   hips: true
   hoverdrive: true
   jira-data-proxy: true

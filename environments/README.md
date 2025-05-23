@@ -29,6 +29,7 @@
 | applications.gafaelfawr | bool | `true` | Enable the Gafaelfawr application. This is required by Phalanx since most other applications use `GafaelfawrIngress` |
 | applications.ghostwriter | bool | `false` | Enable the ghostwriter application |
 | applications.giftless | bool | `false` | Enable the giftless application |
+| applications.grafana | bool | `false` | Enable the grafana application |
 | applications.hips | bool | `false` | Enable the HiPS application |
 | applications.hoverdrive | bool | `false` | Enable the hoverdrive application |
 | applications.ingress-nginx | bool | `true` | Enable the ingress-nginx application. This is required for all environments, but is still configurable because currently USDF uses an unsupported configuration with ingress-nginx deployed in a different cluster. |
