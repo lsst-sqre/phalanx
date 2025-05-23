@@ -1,0 +1,73 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaAlertRuleGroup
+metadata:
+  name: oomkilled
+  annotations:
+    # This needs to go after the folder is created
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  folderRef: cluster-general
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  interval: 1m
+  rules:
+    - title: OOM Kill
+      uid: cluster-general-oomkill
+      for: 0s
+      condition: C
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: {{ .Values.grafana.datasource.uid }}
+          model:
+            datasource:
+                type: prometheus
+                uid: {{ .Values.grafana.datasource.uid }}
+            editorMode: code
+            expr: (min_over_time(kube_pod_container_status_last_terminated_reason{reason="OOMKilled"}[$__rate_interval]) > 0) and ignoring(reason) (increase(kube_pod_container_status_restarts_total[$__rate_interval]) > 0)
+            instant: true
+            intervalMs: 1000
+            legendFormat: __auto
+            maxDataPoints: 43200
+            range: false
+            refId: A
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params:
+                        - 0
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+            datasource:
+                type: __expr__
+                uid: __expr__
+            expression: A
+            intervalMs: 1000
+            maxDataPoints: 43200
+            refId: C
+            type: threshold
+      noDataState: OK
+      execErrState: Error
+      annotations:
+        summary: Container has been OOMKilled
+        description: "Container: {{`{{ $labels.container }}`}} in pod: {{`{{ $labels.namespace }}`}}/{{`{{ $labels.pod }}`}} has been OOMKilled"
+      labels:
+        severity: warning
+      labels: {}
+      isPaused: false
+      notificationSettings:
+        receiver: Slack - General Alerts

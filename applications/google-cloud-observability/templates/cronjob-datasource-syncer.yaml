@@ -1,0 +1,21 @@
+# Adapted from https://raw.githubusercontent.com/GoogleCloudPlatform/prometheus-engine/v0.15.3/cmd/datasource-syncer/datasource-syncer.yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: datasource-syncer
+  labels:
+    {{- include "google-cloud-observability.labels" . | nindent 4 }}
+spec:
+  schedule: "*/10 * * * *" # Run once every 10 minutes, must run at least once an hour.
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "google-cloud-observability.labels" . | nindent 12 }}
+        spec:
+          serviceAccountName: grafana-datasource-syncer
+          containers:
+            - name: datasource-syncer
+              {{- include "google-cloud-observability.datasource-syncer-container" . | nindent 14 }}
+          restartPolicy: Never

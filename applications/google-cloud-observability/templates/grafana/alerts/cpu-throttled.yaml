@@ -1,0 +1,47 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaAlertRuleGroup
+metadata:
+  name: cpu-throttled
+  annotations:
+    # This needs to go after the folder is created
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  folderRef: cluster-general
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  interval: 5m
+  rules:
+    - uid: cluster-general-cpu-throttled
+      title: CPU Throttled
+      condition: A
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: bena7r3pg9728f
+          model:
+            datasource:
+                type: prometheus
+                uid: bena7r3pg9728f
+            editorMode: code
+            expr: ((sum(increase(container_cpu_cfs_throttled_periods_total{container!=""}[5m])) by (container, pod, namespace) / sum(increase(container_cpu_cfs_periods_total[5m])) by (container, pod, namespace))) * 100 > 25
+            instant: true
+            intervalMs: 1000
+            legendFormat: __auto
+            maxDataPoints: 43200
+            range: false
+            refId: A
+      noDataState: OK
+      execErrState: Error
+      for: 5m
+      annotations:
+        summary: "Container has been CPU-throttled"
+        description: "Container: {{`{{ $labels.container }}`}} in pod: {{`{{ $labels.namespace }}`}}/{{`{{ $labels.pod }}`}} is being throttled for {{`{{ $values.A.Value }}`}}% of it's CPU periods in the past 5 minutes"
+      labels:
+        severity: warning
+      isPaused: false
+      notificationSettings:
+        receiver: Slack - General Alerts

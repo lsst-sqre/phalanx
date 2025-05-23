@@ -1,0 +1,9 @@
+datasourceSyncer:
+  serviceAccount: "grafana-datasource-syncer@science-platform-dev-7696.iam.gserviceaccount.com"
+
+googleCloud:
+  projectId: "science-platform-dev-7696"
+
+grafana:
+  datasource:
+    uid: "bena7r3pg9728f"

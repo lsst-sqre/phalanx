@@ -1,0 +1,47 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaAlertRuleGroup
+metadata:
+  name: pvc-usage
+  annotations:
+    # This needs to go after the folder is created
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  folderRef: cluster-general
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  interval: 2m
+  rules:
+    - uid: cluster-general-pvc-usage
+      title: PersistentVolumeClaim Usage High
+      condition: A
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: {{ .Values.grafana.datasource.uid }}
+          model:
+            datasource:
+                type: prometheus
+                uid: {{ .Values.grafana.datasource.uid }}
+            editorMode: code
+            expr: kubelet_volume_stats_available_bytes / kubelet_volume_stats_capacity_bytes * 100 < 10
+            instant: true
+            intervalMs: 1000
+            legendFormat: __auto
+            maxDataPoints: 43200
+            range: false
+            refId: A
+      noDataState: OK
+      execErrState: Error
+      for: 2m
+      annotations:
+        description: 'Remaining space in volume: {{`{{ $labels.persistentvolumeclaim }}`}} in namespace: {{`{{ $labels.namespace }}`}} has {{`{{ $values.A.Value }}`}}% capacity remaining'
+        summary: Kubernetes Volume out of disk space
+      labels:
+        severity: warning
+      isPaused: false
+      notificationSettings:
+        receiver: Slack - General Alerts
