@@ -116,10 +116,15 @@ cloudsql:
   instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
   serviceAccount: "nublado@science-platform-dev-7696.iam.gserviceaccount.com"
 cronjob:
-  enabled: true
-  gitTarget: "/rubin/cst_repos/tutorial-notebooks"
-  schedule: "10 * * * *"
-  targetVolume:
-    mountPath: "/rubin"
-    server: "10.234.16.4"
-    path: "/rubin-share"
+  artifacts:
+    enabled: true
+    targetVolume:
+      mountPath: "/rubin"
+      server: "10.234.16.4"
+      path: "/rubin-share"
+  tutorials:
+    enabled: true
+    targetVolume:
+      mountPath: "/rubin"
+      server: "10.234.16.4"
+      path: "/rubin-share"
