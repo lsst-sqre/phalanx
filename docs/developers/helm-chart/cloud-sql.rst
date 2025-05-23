@@ -1,3 +1,5 @@
+.. _using-cloud-sql:
+
 ###############
 Using Cloud SQL
 ###############
