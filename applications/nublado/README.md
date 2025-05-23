@@ -91,22 +91,36 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.resources | object | See `values.yaml` | Resource limits and requests for the Nublado controller |
 | controller.slackAlerts | bool | `false` | Whether to enable Slack alerts. If set to true, `slack_webhook` must be set in the corresponding Nublado Vault secret. |
 | controller.tolerations | list | `[]` | Tolerations for the Nublado controller |
-| cronjob.affinity | object | `{}` | Affinity rules for the tutorials cronjob. |
-| cronjob.enabled | bool | `false` | Enable tutorials refresh? |
-| cronjob.gitBranch | string | `"main"` | Branch of repository to clone |
-| cronjob.gitSource | string | `"https://github.com/lsst/tutorial-notebooks"` | Source for repository to clone |
-| cronjob.gitTarget | string | `"/project/cst_repos/tutorial-notebooks"` | Target where repository should land |
+| cronjob.affinity | object | `{}` | Affinity rules for the cloning cronjob(s). |
+| cronjob.artifacts.enabled | bool | `false` | Clone the artifacts? |
+| cronjob.artifacts.gid | int | `1000` | GID for the cloning cronjob(s) |
+| cronjob.artifacts.gitBranch | string | `"main"` | Branch of repository to clone |
+| cronjob.artifacts.gitSource | string | `"https://github.com/lsst/tutorial-notebooks-data"` | Source for Tutorials binary artifact repository to clone |
+| cronjob.artifacts.gitTarget | string | `"/rubin/cst_repos/tutorial-notebooks-data"` | Target where Tutorial artifacts repository should land |
+| cronjob.artifacts.schedule | string | `"43 * * * *"` | Schedule for the cloning cronjob(s). |
+| cronjob.artifacts.targetVolume | object | See `values.yaml` | Repository volume definition |
+| cronjob.artifacts.targetVolume.mountPath | string | `"/rubin"` | Where volume will be mounted in the container |
+| cronjob.artifacts.targetVolume.path | string | `"/rubin-share"` | Path on NFS server |
+| cronjob.artifacts.targetVolume.server | string | `nil` | IP address of NFS server (different per environment) |
+| cronjob.artifacts.targetVolumePath | string | `"/rubin"` | Where repository volume should be mounted |
+| cronjob.artifacts.uid | int | `1000` | UID for the cloning cronjob(s) |
 | cronjob.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the repo cloner image |
 | cronjob.image.repository | string | `"ghcr.io/lsst-sqre/repo-cloner"` | Repository cloner image to use |
 | cronjob.image.tag | string | `"0.1.0"` | Tag of repo cloner image to use |
-| cronjob.resources | object | See `values.yaml` | Resource limits and requests for the tutorials cronjob |
-| cronjob.schedule | string | `"43 * * * *"` | Schedule for the tutorials cronjob. |
-| cronjob.targetVolume | object | See `values.yaml` | Repository volume definition |
-| cronjob.targetVolume.mountPath | string | `"/project"` | Where volume will be mounted in the container |
-| cronjob.targetVolume.path | string | `"/project-share"` | Path on NFS server |
-| cronjob.targetVolume.server | string | `nil` | IP address of NFS server (different per environment) |
-| cronjob.targetVolumePath | string | `"/project"` | Where repository volume should be mounted |
-| cronjob.tolerations | list | `[]` | Tolerations for the tutorials cronjob. |
+| cronjob.resources | object | See `values.yaml` | Resource limits and requests for the cloning cronjob(s) |
+| cronjob.tolerations | list | `[]` | Tolerations for the cloning cronjob(s). |
+| cronjob.tutorials.enabled | bool | `false` | Clone the notebooks? |
+| cronjob.tutorials.gid | int | `1000` | GID for the cloning cronjob(s) |
+| cronjob.tutorials.gitBranch | string | `"main"` | Branch of repository to clone |
+| cronjob.tutorials.gitSource | string | `"https://github.com/lsst/tutorial-notebooks"` | Source for Tutorials repository to clone |
+| cronjob.tutorials.gitTarget | string | `"/rubin/cst_repos/tutorial-notebooks"` | Target where Tutorials repository should land |
+| cronjob.tutorials.schedule | string | `"42 * * * *"` | Schedule for the cloning cronjob(s). |
+| cronjob.tutorials.targetVolume | object | See `values.yaml` | Repository volume definition |
+| cronjob.tutorials.targetVolume.mountPath | string | `"/rubin"` | Where volume will be mounted in the container |
+| cronjob.tutorials.targetVolume.path | string | `"/rubin-share"` | Path on NFS server |
+| cronjob.tutorials.targetVolume.server | string | `nil` | IP address of NFS server (different per environment) |
+| cronjob.tutorials.targetVolumePath | string | `"/rubin"` | Where repository volume should be mounted |
+| cronjob.tutorials.uid | int | `1000` | UID for the cloning cronjob(s) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
