@@ -237,6 +237,9 @@ applications:
   # -- Enable the schedview-snapshot application
   schedview-snapshot: false
 
+  # -- Enable the schedview-static-pages application
+  schedview-static-pages: false
+
   # -- Enable the sia over butler application
   sia: false
 
