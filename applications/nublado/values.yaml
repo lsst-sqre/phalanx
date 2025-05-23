@@ -677,33 +677,84 @@ secrets:
   # user's lab.
   templateSecrets: true
 
-# If we're installing tutorials at a given site, this cronjob controls
-# their refresh.
+# If we're installing tutorials and artifacts at a given site, this cronjob
+# controls their refresh.
 cronjob:
-  # -- Enable tutorials refresh?
-  enabled: false
+  # For tutorials notebooks
+  tutorials:
+    # -- Clone the notebooks?
+    enabled: false
 
-  # -- Source for repository to clone
-  gitSource: "https://github.com/lsst/tutorial-notebooks"
+    # -- Source for Tutorials repository to clone
+    gitSource: "https://github.com/lsst/tutorial-notebooks"
 
-  # -- Target where repository should land
-  gitTarget: "/project/cst_repos/tutorial-notebooks"
+    # -- Target where Tutorials repository should land
+    gitTarget: "/rubin/cst_repos/tutorial-notebooks"
 
-  # -- Branch of repository to clone
-  gitBranch: "main"
+    # -- Branch of repository to clone
+    gitBranch: "main"
 
-  # -- Where repository volume should be mounted
-  targetVolumePath: "/project"
+    # -- Where repository volume should be mounted
+    targetVolumePath: "/rubin"
 
-  # -- Repository volume definition
-  # @default -- See `values.yaml`
-  targetVolume:
-    # -- Where volume will be mounted in the container
-    mountPath: "/project"   # Conventional
-    # -- IP address of NFS server (different per environment)
-    server: null            # This must be changed
-    # -- Path on NFS server
-    path: "/project-share"  # Assigned by Terraform
+    # -- Repository volume definition
+    # @default -- See `values.yaml`
+    targetVolume:
+      # -- Where volume will be mounted in the container
+      mountPath: "/rubin"   # Conventional
+
+      # -- IP address of NFS server (different per environment)
+      server: null            # This must be changed
+
+      # -- Path on NFS server
+      path: "/rubin-share"  # Assigned by Terraform
+
+    # -- Schedule for the cloning cronjob(s).
+    schedule: "42 * * * *"
+
+    # -- UID for the cloning cronjob(s)
+    uid: 1000
+
+    # -- GID for the cloning cronjob(s)
+    gid: 1000
+
+  artifacts:
+    # -- Clone the artifacts?
+    enabled: false
+
+    # -- Source for Tutorials binary artifact repository to clone
+    gitSource: "https://github.com/lsst/tutorial-notebooks-data"
+
+    # -- Target where Tutorial artifacts repository should land
+    gitTarget: "/rubin/cst_repos/tutorial-notebooks-data"
+
+    # -- Branch of repository to clone
+    gitBranch: "main"
+
+    # -- Where repository volume should be mounted
+    targetVolumePath: "/rubin"
+
+    # -- Repository volume definition
+    # @default -- See `values.yaml`
+    targetVolume:
+      # -- Where volume will be mounted in the container
+      mountPath: "/rubin"   # Conventional
+
+      # -- IP address of NFS server (different per environment)
+      server: null            # This must be changed
+
+      # -- Path on NFS server
+      path: "/rubin-share"  # Assigned by Terraform
+
+    # -- Schedule for the cloning cronjob(s).
+    schedule: "43 * * * *"
+
+    # -- UID for the cloning cronjob(s)
+    uid: 1000
+
+    # -- GID for the cloning cronjob(s)
+    gid: 1000
+
 
   image:
     # -- Repository cloner image to use
@@ -715,7 +766,7 @@ cronjob:
     # -- Tag of repo cloner image to use
     tag: "0.1.0"
 
-  # -- Resource limits and requests for the tutorials cronjob
+  # -- Resource limits and requests for the cloning cronjob(s)
   # @default -- See `values.yaml`
   resources:
     limits:
@@ -725,12 +776,10 @@ cronjob:
       cpu: "50m"
       memory: "50Mi"
 
-  # -- Tolerations for the tutorials cronjob.
+  # -- Tolerations for the cloning cronjob(s).
   tolerations: []
-  # -- Affinity rules for the tutorials cronjob.
+  # -- Affinity rules for the cloning cronjob(s).
   affinity: {}
-  # -- Schedule for the tutorials cronjob.
-  schedule: "43 * * * *"
 
 
 # The following will be set by parameters injected by Argo CD and should not

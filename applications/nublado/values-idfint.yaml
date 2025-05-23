@@ -135,12 +135,18 @@ jupyterhub:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
 cronjob:
-  enabled: true
-  gitTarget: "/rubin/cst_repos/tutorial-notebooks"
-  targetVolume:
-    mountPath: "/rubin"
-    path: "/rubin-share"
-    server: "10.91.240.5"
+  tutorials:
+    enabled: true
+    targetVolume:
+      mountPath: "/rubin"
+      path: "/rubin-share"
+      server: "10.91.240.5"
+  artifacts:
+    enabled: true
+    targetVolume:
+      mountPath: "/rubin"
+      path: "/rubin-share"
+      server: "10.91.240.5"
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
