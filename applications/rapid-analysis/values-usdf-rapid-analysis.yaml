@@ -99,7 +99,6 @@ lsstcamGather2aSet:
       memory: "8G"
 credentialFile: google_write_creds
 vaultPrefixPath: secret/rubin/usdf-rapid-analysis
-pullSecretsPath: pull-secret
 rubinTvSecretsPath: rubintv-secrets
 credentialSecretsPath: rubintv-broadcaster
 butlerSecret:
@@ -110,8 +109,6 @@ envSecrets:
 - name: ASTROMETRY_NET_API_KEY
   secretName: rubintv-secrets
   secretKey: astrometry-net-api-key
-imagePullSecrets:
-- name: pull-secret
 pvcMountpointClaim:
 - name: sdf-group-rubin
   containerPath: /sdf/group/rubin
