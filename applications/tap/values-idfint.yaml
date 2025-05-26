@@ -2,6 +2,8 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfint-tap"
+      tag: "tickets-DM-51047"
+      pullPolicy: "Always"
 
   config:
     qserv:
