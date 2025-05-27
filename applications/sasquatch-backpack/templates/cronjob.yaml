@@ -12,43 +12,50 @@ spec:
             sasquatch-backpack-redis-client: 'true'
         spec:
           containers:
-          - name: sasquatch-backpack
-            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-            imagePullPolicy: {{ .Values.image.pullPolicy }}
-            command:
-            - sasquatchbackpack
-            - usgs-earthquake-data
-            - -d
-            - "10"
-            - "0"
-            - "--post"
-            envFrom:
-            - configMapRef:
-                name: sasquatch-backpack
-          - env:
-            - name: KAFKA_SECURITY_PROTOCOL
-              secretKeyRef:
-                key: securityProtocol
-                name: backpack-kafka-access
-            - name: KAFKA_BOOTSTRAP_SERVERS
-              valueFrom:
+            - name: sasquatch-backpack
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command:
+              - sasquatchbackpack
+              - usgs-earthquake-data
+              - -d
+              - "10"
+              - "0"
+              - "--post"
+              envFrom:
+              - configMapRef:
+                  name: sasquatch-backpack
+              env:
+              - name: KAFKA_SECURITY_PROTOCOL
                 secretKeyRef:
-                  key: bootstrapServers
+                  key: securityProtocol
                   name: backpack-kafka-access
-            - name: KAFKA_CLUSTER_CA_PATH
-              value: /etc/kafkacluster/ca.crt
-            - name: KAFKA_CLIENT_CERT_PATH
-              value: /etc/kafkauser/user.crt
-            - name: KAFKA_CLIENT_KEY_PATH
-              value: /etc/kafkauser/user.key
-            volumeMounts:
-            - mountPath: /etc/kafkacluster/ca.crt
-              name: kafka
-              subPath: ssl.truststore.crt
-            - mountPath: /etc/kafkauser/user.crt
-              name: kafka
-              subPath: ssl.keystore.crt
-            - mountPath: /etc/kafkauser/user.key
-              name: kafka
-              subPath: ssl.keystore.key
+              - name: KAFKA_BOOTSTRAP_SERVERS
+                valueFrom:
+                  secretKeyRef:
+                    key: bootstrapServers
+                    name: backpack-kafka-access
+              - name: KAFKA_CLUSTER_CA_PATH
+                value: /etc/kafkacluster/ca.crt
+              - name: KAFKA_CLIENT_CERT_PATH
+                value: /etc/kafkauser/user.crt
+              - name: KAFKA_CLIENT_KEY_PATH
+                value: /etc/kafkauser/user.key
+              volumeMounts:
+              - mountPath: /etc/kafkacluster/ca.crt
+                name: kafka
+                subPath: ssl.truststore.crt
+              - mountPath: /etc/kafkauser/user.crt
+                name: kafka
+                subPath: ssl.keystore.crt
+              - mountPath: /etc/kafkauser/user.key
+                name: kafka
+                subPath: ssl.keystore.key
+          volumes:
+            - name: kafka
+              secret:
+                defaultMode: 420
+                # The ``metadata.name`` value from the ``KafkaAccess`` resource in
+                # your app's namespace
+                secretName: backpack-kafka-access
           restartPolicy: OnFailure
