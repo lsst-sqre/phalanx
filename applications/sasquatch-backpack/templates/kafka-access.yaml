@@ -2,7 +2,7 @@
 apiVersion: access.strimzi.io/v1alpha1
 kind: KafkaAccess
 metadata:
-  name: backpack-kafka
+  name: backpack-kafka-access
 spec:
   kafka:
     # The name and namespace of the Strimzi ``Kafka`` resource, probably

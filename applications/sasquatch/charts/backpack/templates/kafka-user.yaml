@@ -4,23 +4,17 @@ kind: KafkaUser
 metadata:
   name: backpack
   labels:
-    # The name of the Strimzi ``Kafka`` resource, probably "sasquatch"
     strimzi.io/cluster: sasquatch
-
+spec:
   authentication:
-    # This should always be "tls"
     type: tls
-
   authorization:
     type: simple
     acls:
-
-      # If you just need to read and/or write to an existing topic, you
-      # just need "Describe", and "Read" and/or "Write" operations.
       - resource:
           type: topic
-          name: "lsst.square-events.myapp.ingest"
-          patternType: literal
+          name: "lsst.backpack"
+          patternType: prefix
         operations:
           - "Describe"
           - "Read"
