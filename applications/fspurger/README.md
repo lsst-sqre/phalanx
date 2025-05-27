@@ -18,7 +18,7 @@ Purge RSP directories according to policy
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the fspurger image |
 | image.repository | string | `"ghcr.io/lsst-sqre/scratchpurger"` | fspurger image to use |
 | image.tag | string | The appVersion of the chart | Tag of fspurger image to use |
-| nfs.path | string | `"/share1/scratch"` | Path (on server) for served /scratch |
+| nfs.path | string | None, must be set for each environment | Path (on server) for served volume |
 | nfs.server | string | None, must be set for each environment | Hostname or IP address for NFS server |
 | nodeSelector | object | `{}` | Node selector rules for fspurger |
 | podAnnotations | object | `{}` | Annotations for the fspurger pod |

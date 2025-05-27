@@ -70,8 +70,9 @@ nfs:
   # @default -- None, must be set for each environment
   server: null
 
-  # -- Path (on server) for served /scratch
-  path: /share1/scratch
+  # -- Path (on server) for served volume
+  # @default -- None, must be set for each environment
+  path: null
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
