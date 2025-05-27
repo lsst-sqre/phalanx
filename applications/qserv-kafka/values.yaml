@@ -117,10 +117,10 @@ frontend:
   resources:
     limits:
       cpu: "1"
-      memory: "200Mi"
+      memory: "300Mi"
     requests:
       cpu: "100m"
-      memory: "100Mi"
+      memory: "145Mi"
 
   # -- Tolerations for the qserv-kafka frontend pod
   tolerations: []
@@ -201,10 +201,10 @@ resultWorker:
   resources:
     limits:
       cpu: "1"
-      memory: "600Mi"
+      memory: "300Mi"
     requests:
       cpu: "1"
-      memory: "300Mi"
+      memory: "145Mi"
 
   # -- Tolerations for the qserv-kafka worker pods
   tolerations: []
