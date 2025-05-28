@@ -1,6 +1,3 @@
-image:
-  tag: "tickets-DM-51017"
-
 slackAlerts: true
 
 nfs:
