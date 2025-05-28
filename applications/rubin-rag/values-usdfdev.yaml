@@ -1,5 +1,5 @@
 config:
-  logLevel: "INFO"
+  logLevel: "DEBUG"
 weaviate:
   storage:
     size: 500Gi
