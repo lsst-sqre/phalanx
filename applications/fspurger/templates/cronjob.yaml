@@ -39,12 +39,12 @@ spec:
               runAsNonRoot: false
               readOnlyRootFilesystem: true
             volumeMounts:
-            - mountPath: /scratch
-              name: scratch
+            - mountPath: /purge
+              name: to-be-purged
             - mountPath: /etc/purger
               name: config
           volumes:
-          - name: scratch
+          - name: to-be-purged
             nfs:
               path: {{ .Values.nfs.path | quote }}
               server: {{ .Values.nfs.server | quote }}
