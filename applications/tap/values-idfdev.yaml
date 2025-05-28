@@ -5,7 +5,7 @@ cadc-tap:
 
   config:
     qserv:
-      host: "qserv-int.slac.stanford.edu:4090"
+      host: "134.79.23.197:4048"
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
 
