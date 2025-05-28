@@ -55,10 +55,10 @@ nodeSelector: {}
 resources:
   limits:
     cpu: "1"
-    memory: "500Mi"
+    memory: "300Mi"
   requests:
     cpu: "50m"
-    memory: "200Mi"
+    memory: "125Mi"
 
 # -- Tolerations for the datalinker deployment pod
 tolerations: []
