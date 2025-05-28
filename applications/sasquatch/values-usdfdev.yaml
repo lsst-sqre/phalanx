@@ -71,6 +71,8 @@ strimzi-kafka:
         cpu: "1"
 
 influxdb:
+  livenessProbe:
+    initialDelaySeconds: 360
   ingress:
     enabled: false
     hostname: usdf-rsp-dev.slac.stanford.edu
