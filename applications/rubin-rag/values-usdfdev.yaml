@@ -1,0 +1,5 @@
+config:
+  logLevel: "DEBUG"
+weaviate:
+  storage:
+    size: 500Gi
