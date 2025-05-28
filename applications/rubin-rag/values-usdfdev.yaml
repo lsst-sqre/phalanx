@@ -1,4 +1,3 @@
 weaviate:
   storage:
     size: 500Gi
-    storageClassName: wekafs--sdf-k8s01
