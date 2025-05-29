@@ -1,5 +1,4 @@
 config:
-  separateSecrets: false
   volumes:
     - name: sdf-data-rubin
       persistentVolumeClaim:
