@@ -10,7 +10,7 @@ image:
   repository: "nginx"
 
   # -- Pull policy for the schedview-static-pages image
-  pullPolicy: "Always"
+  pullPolicy: "IfNotPresent"
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
