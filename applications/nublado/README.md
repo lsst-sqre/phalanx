@@ -61,6 +61,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.initContainers | list | `[]` | Containers run as init containers with each user pod. Each should set `name`, `image` (a Docker image and pull policy specification), and `privileged`, and may contain `volumeMounts` (similar to the main `volumeMountss` configuration). If `privileged` is true, the container will run as root with all capabilities. Otherwise it will run as the user. |
 | controller.config.lab.jupyterlabConfigDir | string | `"/opt/lsst/software/jupyterlab"` | Path inside the lab container where custom JupyterLab configuration is stored |
 | controller.config.lab.labStartCommand | list | `["/opt/lsst/software/jupyterlab/runlab.sh"]` | Command executed in the container to start the lab |
+| controller.config.lab.landingPage | string | `"/lab"` | Default spawn target.  Usually '/lab', but overridden at science sites for custom landing page. |
 | controller.config.lab.namespacePrefix | string | `"nublado"` | Prefix for namespaces for user labs. To this will be added a dash (`-`) and the user's username. |
 | controller.config.lab.nodeSelector | object | `{}` | Node selector rules for user lab pods |
 | controller.config.lab.nss.baseGroup | string | See `values.yaml` | Base `/etc/group` file for lab containers |

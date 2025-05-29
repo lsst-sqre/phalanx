@@ -242,6 +242,10 @@ controller:
       labStartCommand:
         - "/opt/lsst/software/jupyterlab/runlab.sh"
 
+      # -- Default spawn target.  Usually '/lab', but overridden at
+      # science sites for custom landing page.
+      landingPage: "/lab"
+
       # -- Prefix for namespaces for user labs. To this will be added a dash
       # (`-`) and the user's username.
       namespacePrefix: "nublado"
