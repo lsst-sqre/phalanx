@@ -15,13 +15,13 @@ strimzi-kafka:
         annotations:
           metallb.io/address-pool: sdf-rubin-ingest
       brokers:
-        - broker: 0
+        - broker: 3
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
-        - broker: 1
+        - broker: 4
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
-        - broker: 2
+        - broker: 5
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
   mirrormaker2:
