@@ -53,6 +53,15 @@ controller:
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
+        - name: "cstlanding"
+          image:
+            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/cst-landing"
+            tag: "tickets-DM-49959"
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+            - containerPath: "/rubin"
+              volumeName: "rubin"
       landingPage: "/lab/tree/notebooks/tutorials/landing_page.md"
       nodeSelector:
         node_pool: "user-lab-pool"
