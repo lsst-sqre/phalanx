@@ -409,6 +409,10 @@ hub:
   # controls how the database password is managed.
   internalDatabase: false
 
+  # -- Default spawn landing page.  Usually '/lab', but can be
+  # overridden to provide a custom landing page.
+  landingPage: "/lab"
+
   # -- Minimum remaining token lifetime when spawning a lab. The token cannot
   # be renewed, so it should ideally live as long as the lab does. If the
   # token has less remaining lifetime, the user will be redirected to
