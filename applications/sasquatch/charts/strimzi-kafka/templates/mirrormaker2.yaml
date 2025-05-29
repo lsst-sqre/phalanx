@@ -10,9 +10,9 @@ spec:
   replicas:  {{ .Values.mirrormaker2.replicas }}
   # In the unidirectional (active/passive) replication scenario
   # it is recommended to deploy MirrorMaker2 on the target (passive) cluster.
-  connectCluster: "target"
+  connectCluster: "usdf"
   clusters:
-  - alias: "source"
+  - alias: "summit"
     bootstrapServers: {{ .Values.mirrormaker2.source.bootstrapServer }}
     tls: {}
     # The external kafka listeneres in Sasquatch use scram-sha-512 authentication
@@ -25,7 +25,7 @@ spec:
       passwordSecret:
         secretName: sasquatch
         password: replicator-password
-  - alias: "target"
+  - alias: "usdf"
     # For the Kafka target cluster, use the internal listener with tls encryption and mutual tls authentication.
     bootstrapServers: {{ .Values.cluster.name }}-kafka-bootstrap:9093
     tls:
@@ -43,8 +43,8 @@ spec:
       # by the brokers and offset data committed.
       offset.flush.timeout.ms: 10000
   mirrors:
-  - sourceCluster: "source"
-    targetCluster: "target"
+  - sourceCluster: "summit"
+    targetCluster: "usdf"
     sourceConnector:
       tasksMax: 128
       autoRestart:
