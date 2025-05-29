@@ -28,4 +28,4 @@ template:
                 service:
                   name: "schedview-static-pages"
                   port:
-                    number: 8080
+                    number: 80
