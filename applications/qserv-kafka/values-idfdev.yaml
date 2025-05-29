@@ -3,7 +3,7 @@ config:
   metrics:
     enabled: true
   qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-int.slac.stanford.edu:4090/"
-  qservRestUrl: "https://134.79.23.197:4048/"
+  qservRestUrl: "https://134.79.23.197:4098/"
 image:
   tag: "tickets-DM-51121"
   pullPolicy: "Always"
