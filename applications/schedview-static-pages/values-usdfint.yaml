@@ -5,7 +5,7 @@ config:
         claimName: sdf-data-rubin
   volume_mounts:
     - name: sdf-data-rubin
-      mountPath: /usr/share/nginx/html
+      mountPath: /usr/share/nginx/html/schedview-static-pages
       subPath: shared/scheduler/reports
   persistentVolumeClaims:
     - name: sdf-data-rubin
