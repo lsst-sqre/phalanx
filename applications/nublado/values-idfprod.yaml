@@ -79,14 +79,22 @@ controller:
     metrics:
       enabled: true
 
+hub:
+  useSubdomains: true
+
 jupyterhub:
   hub:
     config:
+      JupyterHub:
+        # This has to exist for Zero to JupyterHub to confiugre the proxy
+        # correctly.
+        subdomain_host: "nb.data.lsst.cloud"
       ServerApp:
         shutdown_no_activity_timeout: 432000
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
+
 cronjob:
   tutorials:
     enabled: true
@@ -102,6 +110,7 @@ cronjob:
       mountPath: "/project"
       server: "10.13.105.122"
       path: "/share1/project"
+
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
