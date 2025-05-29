@@ -53,7 +53,7 @@ data:
     c.Spawner.consecutive_failure_limit = 0
 
     # Use JupyterLab by default.
-    c.Spawner.default_url = "/lab"
+    c.Spawner.default_url = "{{ .Values.controller.config.lab.landingPage }}"
 
     # Only poll labs every five minutes because that's how frequently the
     # controller checks their status in Kubernetes.
