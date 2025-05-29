@@ -17,6 +17,7 @@ applications:
   consdbtap: true
   datalinker: true
   exposurelog: true
+  jira-data-proxy: true
   livetap: true
   mobu: true
   narrativelog: true
