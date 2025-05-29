@@ -24,11 +24,13 @@ strimzi-kafka:
         - broker: 5
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
+  connect:
+    enabled: true
   mirrormaker2:
-    enabled: false
+    enabled: true
     source:
-      bootstrapServer: sasquatch-base-kafka-bootstrap.lsst.codes:9094
-      topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*"
+      bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
+      topicsPattern: "lsst.sal.Test.*"
     resources:
       requests:
         cpu: 2
@@ -37,6 +39,8 @@ strimzi-kafka:
         cpu: 4
         memory: 8Gi
   users:
+    replicator:
+      enabled: true
     telegraf:
       enabled: true
   controller:
