@@ -6,6 +6,7 @@ redis:
     storageClass: "standard-rwo"
 
 config:
+  allowSubdomains: true
   slackAlerts: true
 
   cilogon:
