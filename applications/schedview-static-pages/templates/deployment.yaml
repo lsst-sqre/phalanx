@@ -38,6 +38,11 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+            # Mount the reports directory where the default
+            # config of the nginx container will find it.
+            - name: sdf-data-rubin
+              mountPath: /usr/share/nginx/html/schedview-static-pages
+              subPath: shared/scheduler/reports
             # The ngnix container doc:
             # https://hub.docker.com/_/nginx
             # says these directories need to be writeable.
@@ -64,10 +69,14 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
       volumes:
-        - name: varrun
-          emptyDir:
-            sizeLimit: "16Gi"
-        - name: varcachenginx
-          emptyDir:
-            sizeLimit: "16Gi"
+  volumes:
+      - name: sdf-data-rubin
+        persistentVolumeClaim:
+          claimName: sdf-data-rubin
+      - name: varrun
+        emptyDir:
+          sizeLimit: "16Gi"
+      - name: varcachenginx
+        emptyDir:
+          sizeLimit: "16Gi"
 
