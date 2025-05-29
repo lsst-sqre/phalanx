@@ -50,3 +50,8 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: null
+
+config:
+  persistentVolumeClaims:
+    - name: sdf-data-rubin
+      storageClassName: sdf-data-rubin
