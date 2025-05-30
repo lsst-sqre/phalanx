@@ -1,3 +1,5 @@
+.. _static-secrets:
+
 ######################
 Update a static secret
 ######################
