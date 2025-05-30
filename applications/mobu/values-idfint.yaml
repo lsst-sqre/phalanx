@@ -46,7 +46,7 @@ config:
         type: "NotebookRunnerInfinite"
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
-          repo_ref: "u/fe/cutout"
+          repo_ref: "u/fe/tap_and_cut"
           delete_lab: false
           notebook_idle_time: "5s"
         restart: true
