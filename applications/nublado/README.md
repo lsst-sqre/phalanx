@@ -125,7 +125,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | hub.internalDatabase | bool | `false` | Whether to use the cluster-internal PostgreSQL server instead of an external server. This is not used directly by the Nublado chart, but controls how the database password is managed. |
-| hub.landingPage | string | `"/lab"` | Default spawn landing page.  Usually '/lab', but can be overridden to provide a custom landing page. |
+| hub.landingPage | string | `"/lab"` | Default spawn page.  Usually '/lab', but can be overridden in order to specify a custom landing page. |
 | hub.minimumTokenLifetime | string | `jupyterhub.cull.maxAge` if lab culling is enabled, else none | Minimum remaining token lifetime when spawning a lab. The token cannot be renewed, so it should ideally live as long as the lab does. If the token has less remaining lifetime, the user will be redirected to reauthenticate before spawning a lab. |
 | hub.resources | object | See `values.yaml` | Resource limits and requests for the Hub |
 | hub.timeout.startup | int | `90` | Timeout for JupyterLab to start in seconds. Currently this sometimes takes over 60 seconds for reasons we don't understand. |
