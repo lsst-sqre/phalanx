@@ -108,6 +108,7 @@ controller:
 hub:
   useSubdomains: true
   landingPage: "/lab/tree/notebooks/tutorials/landing_page.md"
+
 jupyterhub:
   cull:
     timeout: 43200  # 12 hours
