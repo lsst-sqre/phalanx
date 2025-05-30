@@ -51,6 +51,15 @@ controller:
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
+        - name: "landingpage"
+          image:
+            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/rsp-landing-page-provisioner"
+            tag: "0.9.0"
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+            - containerPath: "/rubin"
+              volumeName: "rubin"
       nodeSelector:
         node_pool: "user-lab-pool"
       secrets:
@@ -98,6 +107,7 @@ controller:
       enabled: true
 hub:
   useSubdomains: true
+  landingPage: "/lab/tree/notebooks/tutorials/landing_page.md"
 jupyterhub:
   cull:
     timeout: 43200  # 12 hours
