@@ -614,7 +614,7 @@ lsstcamAosWorkerSet:
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 32  # 4 deep for corner chips
+  replicas: 72  # temporarily extra-deep to help work around postgres issues
   env:
     LIMITS_CPU: 2
   resources:
