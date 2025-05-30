@@ -32,7 +32,7 @@ config:
       - "read:tap"
   autostart:
     - name: "scale-test-cutouts"
-      count: 20
+      count: 100
       user_spec:
         username_prefix: "bot-mobu-scale-notebook"
       scopes:
