@@ -173,10 +173,10 @@ redis:
   resources:
     limits:
       cpu: "0.5"
-      memory: "10Mi"
+      memory: "20Mi"
     requests:
       cpu: "0.1"
-      memory: "5Mi"
+      memory: "8Mi"
 
   # -- Affinity rules for the Redis pod
   affinity: {}
