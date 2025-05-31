@@ -17,6 +17,9 @@ redis:
   persistence:
     enabled: true
     storageClass: "standard-rwo"
+  resources:
+    limits:
+      memory: "512Mi"
 
 resources:
   limits:
