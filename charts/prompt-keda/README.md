@@ -42,6 +42,7 @@ Event-driven processing of camera images
 | initializer.retries | int | `6` | Maximum number of times to attempt initializing the central repo. If the initializer fails, the PP service cannot run! |
 | initializer.timeout | int | `120` | Maximum time for a single attempt to initialize the central repo (seconds). |
 | instrument.calibRepo | string | None, must be set | URI to the shared repo used for calibrations, templates, and pipeline outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
+| instrument.exportTypes | string | `"- .*"` | Dataset types to export. |
 | instrument.name | string | None, must be set | The "short" name of the instrument |
 | instrument.pipelines.main | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run for which visits' raws. Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | instrument.pipelines.preprocessing | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run before which visits' raw arrival. |

@@ -67,6 +67,8 @@ spec:
                 value: {{ .Values.keda.redisStreams.expiration | toString | quote }}
               - name: PRELOAD_PADDING
                 value: {{ .Values.instrument.preloadPadding | toString | quote }}
+              - name: EXPORT_TYPE_REGEXP
+                value: {{- toYaml .Values.instrument.exportTypes | nindent 18 }}
               - name: IMAGE_BUCKET
                 value: {{ .Values.s3.imageBucket }}
               - name: BUCKET_TOPIC
