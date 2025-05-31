@@ -22,6 +22,7 @@ data:
   QSERV_KAFKA_QSERV_REST_MAX_CONNECTIONS: {{ .Values.config.qservRestMaxConnections | quote }}
   QSERV_KAFKA_QSERV_REST_TIMEOUT: {{ .Values.config.qservRestTimeout | quote }}
   QSERV_KAFKA_QSERV_REST_URL: {{ .Values.config.qservRestUrl | quote }}
+  QSERV_KAFKA_QSERV_UPLOAD_TIMEOUT: {{ .Values.config.qservUploadTimeout | quote }}
   QSERV_KAFKA_REDIS_URL: "redis://qserv-kafka-redis.{{ .Release.Namespace }}:6379/0"
   QSERV_KAFKA_RESULT_TIMEOUT: {{ .Values.config.resultTimeout | quote }}
   QSERV_KAFKA_REWRITE_BASE_URL: {{ .Values.global.baseUrl | quote }}

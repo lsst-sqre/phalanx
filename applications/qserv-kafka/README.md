@@ -29,6 +29,7 @@ Qserv Kafka bridge
 | config.qservRestMaxConnections | int | `20` | Maximum simultaneous connections to open to the REST API. |
 | config.qservRestTimeout | string | `"30s"` | Timeout for REST API calls in Safir `parse_timedelta` format. This includes time spent waiting for a connection if the maximum number of connections has been reached. |
 | config.qservRestUrl | string | None, must be set | URL to the Qserv REST API |
+| config.qservUploadTimeout | string | `"5m"` | How long to allow for user table upload before timing out in Safir `parse_timedelta` format. |
 | config.resultTimeout | int | 3600 (1 hour) | How long to wait for result processing (retrieval and upload) before timing out, in seconds. This doubles as the timeout forcibly terminating result worker pods. |
 | frontend.affinity | object | `{}` | Affinity rules for the qserv-kafka frontend pod |
 | frontend.allowRootDebug | bool | `false` | Whether to allow containers to run as root. Set to true to allow use of debug containers to diagnose issues such as memory leaks. |
