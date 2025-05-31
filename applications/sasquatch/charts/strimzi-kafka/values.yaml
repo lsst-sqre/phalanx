@@ -311,19 +311,47 @@ connect:
       cpu: 2
 
 registry:
+  enabled: false
+  # -- Name of the topic used by the Schema Registry
+  schemaTopic: registry-schemas
   ingress:
     # -- Whether to enable an ingress for the Schema Registry
     enabled: false
+
+    # -- Annotations that will be added to the Ingress resource
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
 
     # -- Hostname for the Schema Registry
     # @default -- None, must be set if ingress is enabled
     hostname: ""
 
-    # -- Annotations that will be added to the Ingress resource
-    annotations: {}
+    # -- Path for the Schema Registry ingress
+    # @default -- `"/schema-registry(/|$)(.*)"`
+    path: "/schema-registry(/|$)(.*)"
 
-  # -- Name of the topic used by the Schema Registry
-  schemaTopic: registry-schemas
+  remote:
+    # -- Enable a Schema Registry for remote topic schemas
+    # Only used if mirrormaker2 replication is enabled
+    enabled: false
+    # -- Name of the topic used by the remote Schema Registry
+    schemaTopic: registry-schemas-remote
+    ingress:
+      # -- Whether to enable an ingress for the Schema Registry
+      enabled: false
+
+      # -- Annotations that will be added to the Ingress resource
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+
+      # -- Hostname for the Schema Registry
+      # @default -- None, must be set if ingress is enabled
+      hostname: ""
+
+      # -- Path for the Schema Registry ingress
+      # @default -- `"/schema-registry(/|$)(.*)"`
+      path: "/schema-registry-remote(/|$)(.*)"
+
 
   # -- Kubernetes requests and limits for the Schema Registry
   # @default -- See `values.yaml`
