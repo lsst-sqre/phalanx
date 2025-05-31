@@ -30,7 +30,7 @@ strimzi-kafka:
     enabled: true
     source:
       bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
-      topicsPattern: "lsst.sal.Test.*"
+      topicsPattern: "registry-schemas, lsst.sal.Test.*"
     resources:
       requests:
         cpu: 2
@@ -49,6 +49,25 @@ strimzi-kafka:
     enabled: true
     storage:
       size: 500Gi
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: "2"
+      limits:
+        memory: 16Gi
+        cpu: "2"
+  registry:
+    enabled: true
+    schemaTopic: registry-schemas
+    ingress:
+      enabled: true
+      hostname: usdf-rsp-int.slac.stanford.edu
+    remote:
+      enabled: true
+      schemaTopic: summit.registry-schemas
+      ingress:
+        enabled: true
+        hostname: usdf-rsp-int.slac.stanford.edu
 
 schema-registry:
   enabled: true
