@@ -77,6 +77,10 @@ config:
   # @default -- None, must be set
   qservRestUrl: null
 
+  # -- How long to allow for user table upload before timing out in Safir
+  # `parse_timedelta` format.
+  qservUploadTimeout: "5m"
+
   # -- How long to wait for result processing (retrieval and upload) before
   # timing out, in seconds. This doubles as the timeout forcibly terminating
   # result worker pods.
