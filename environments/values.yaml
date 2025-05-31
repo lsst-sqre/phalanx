@@ -148,6 +148,9 @@ applications:
   # -- Enable the monitoring application
   monitoring: false
 
+  # -- Enable the mpsky application
+  mpsky: false
+
   # -- Enable the narrativelog application
   narrativelog: false
 
