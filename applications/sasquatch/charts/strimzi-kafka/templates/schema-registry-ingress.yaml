@@ -1,4 +1,4 @@
-{{- if .Values.registry.ingress.enabled }}
+{{- if and .Values.registry.enabled .Values.registry.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -23,3 +23,29 @@ spec:
                 port:
                   number: 8081
 {{- end }}
+{{- if and .Values.registry.enabled .Values.registry.remote.enabled .Values.registry.remote.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sasquatch-schema-registry-remote
+  labels:
+    name: sasquatch-schema-registry-remote
+  annotations:
+    {{- with .Values.registry.remote.ingress.annotations }}
+    {{ toYaml . | indent 4 }}
+    {{- end }}
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: {{ .Values.registry.remote.ingress.hostname | quote }}
+      http:
+        paths:
+          - path: {{ .Values.registry.remote.ingress.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: sasquatch-schema-registry-remote
+                port:
+                  number: 8081
+{{- end }}
+

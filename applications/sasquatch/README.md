@@ -588,9 +588,17 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.mirrormaker2.replication.policy.separator | string | `""` | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
 | strimzi-kafka.mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
 | strimzi-kafka.mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
-| strimzi-kafka.registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
+| strimzi-kafka.registry.enabled | bool | `false` |  |
+| strimzi-kafka.registry.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
 | strimzi-kafka.registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | strimzi-kafka.registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
+| strimzi-kafka.registry.ingress.path | string | `"/schema-registry(/|$)(.*)"` | Path for the Schema Registry ingress |
+| strimzi-kafka.registry.remote.enabled | bool | `false` | Enable a Schema Registry for remote topic schemas Only used if mirrormaker2 replication is enabled |
+| strimzi-kafka.registry.remote.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
+| strimzi-kafka.registry.remote.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
+| strimzi-kafka.registry.remote.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
+| strimzi-kafka.registry.remote.ingress.path | string | `"/schema-registry(/|$)(.*)"` | Path for the Schema Registry ingress |
+| strimzi-kafka.registry.remote.schemaTopic | string | `"registry-schemas-remote"` | Name of the topic used by the remote Schema Registry |
 | strimzi-kafka.registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | strimzi-kafka.registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
