@@ -31,6 +31,10 @@ strimzi-kafka:
     source:
       bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
       topicsPattern: "registry-schemas, lsst.sal.Test.*"
+    replication:
+      policy:
+        separator: "."
+        class: "org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
     resources:
       requests:
         cpu: 2
