@@ -67,7 +67,8 @@ spec:
           - Describe
         type: allow
 {{- end }}
-{{ if and .Values.registry.enabled .Values.registry.remote.enabled }}
+{{ if .Values.registry.remote.enabled }}
+---
 apiVersion: roundtable.lsst.codes/v1beta1
 kind: StrimziSchemaRegistry
 metadata:
@@ -80,18 +81,6 @@ spec:
   cpuRequest: {{ .Values.registry.resources.requests.cpu | quote }}
   memoryLimit: {{ .Values.registry.resources.limits.memory | quote }}
   memoryRequest: {{ .Values.registry.resources.requests.memory | quote }}
----
-apiVersion: kafka.strimzi.io/v1beta2
-kind: KafkaTopic
-metadata:
-  name: {{ .Values.registry.remote.schemaTopic }}
-  labels:
-    strimzi.io/cluster: {{ .Values.cluster.name }}
-spec:
-  partitions: 1
-  replicas: 3
-  config:
-    cleanup.policy: compact
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -111,6 +100,8 @@ spec:
       # schemas topic
       - resource:
           type: topic
+          # Note that the remote schema topic is created by MM2 and doesn't need to be managed
+          # by Strimzi, that's why there's no KafkaTopic resource for it.
           name: {{ .Values.registry.remote.schemaTopic }}
           patternType: literal
         operations:
