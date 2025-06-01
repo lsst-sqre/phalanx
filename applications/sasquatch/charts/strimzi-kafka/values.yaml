@@ -384,12 +384,13 @@ mirrormaker2:
 
   replication:
     policy:
-      # -- Convention used to rename topics when the DefaultReplicationPolicy
-      # replication policy is used. Default is "" when the
-      # IdentityReplicationPolicy replication policy is used.
+      # -- Convention used for the replicated topic name when the DefaultReplicationPolicy
+      # replication policy is used.
+      # @default -- No separator, topic names are preserved when IdentityReplicationPolicy is used.
       separator: ""
 
       # -- Replication policy.
+      # @default -- org.apache.kafka.connect.mirror.IdentityReplicationPolicy
       class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
 
   # -- Kubernetes resources for MirrorMaker2

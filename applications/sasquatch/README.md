@@ -687,8 +687,8 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
 | strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster |
 | strimzi-kafka.mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
-| strimzi-kafka.mirrormaker2.replication.policy.class | string | `"org.apache.kafka.connect.mirror.IdentityReplicationPolicy"` | Replication policy. |
-| strimzi-kafka.mirrormaker2.replication.policy.separator | string | `""` | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
+| strimzi-kafka.mirrormaker2.replication.policy.class | string | org.apache.kafka.connect.mirror.IdentityReplicationPolicy | Replication policy. |
+| strimzi-kafka.mirrormaker2.replication.policy.separator | string | No separator, topic names are preserved when IdentityReplicationPolicy is used. | Convention used for the replicated topic name when the DefaultReplicationPolicy replication policy is used. |
 | strimzi-kafka.mirrormaker2.resources | object | `{"limits":{"cpu":1,"memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for MirrorMaker2 |
 | strimzi-kafka.mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
 | strimzi-kafka.mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
