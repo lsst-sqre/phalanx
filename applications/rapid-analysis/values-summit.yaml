@@ -629,7 +629,7 @@ lsstcamGather1bSet:
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 6
+  replicas: 10
   resources:
     requests:
       cpu: 1.0
