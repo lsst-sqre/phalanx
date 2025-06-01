@@ -614,7 +614,7 @@ lsstcamAosWorkerSet:
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 72  # temporarily extra-deep to help work around postgres issues
+  replicas: 36  # 4 deep keeps up for all data except when there's IT trouble
   env:
     LIMITS_CPU: 2
   resources:
@@ -655,7 +655,7 @@ lsstcamBacklogWorkerSet:
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 20
+  replicas: 50
   resources:
     requests:
       cpu: 1.0
