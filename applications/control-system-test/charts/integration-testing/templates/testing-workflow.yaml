@@ -149,8 +149,21 @@ spec:
             value: auxtel-latiss-daytime-checkout
           - name: reportname
             value: at_latiss_checkout.xml
-      - name: auxtel-telescope-dome-daytime-checkout
+      - name: auxtel-atpneumatics-daytime-checkout
         depends: auxtel-latiss-daytime-checkout
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_ATPneumatics_Checkout.list"
+          - name: jobname
+            value: auxtel-atpneumatics-daytime-checkout
+          - name: reportname
+            value: at_atpneumatics_checkout.xml
+      - name: auxtel-telescope-dome-daytime-checkout
+        depends: auxtel-atpneumatics-daytime-checkout
         templateRef:
           name: integration-test-job-template
           template: inttest-template
