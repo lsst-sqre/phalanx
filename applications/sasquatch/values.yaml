@@ -258,7 +258,7 @@ kapacitor:
     repository: kapacitor
 
     # -- Tag to use for Kapacitor
-    tag: 1.7.6
+    tag: 1.7.7
 
   strategy:
     # -- Deployment strategy, use recreate with persistence enabled
