@@ -69,14 +69,13 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
       volumes:
-  volumes:
-      - name: sdf-data-rubin
-        persistentVolumeClaim:
-          claimName: sdf-data-rubin
-      - name: varrun
-        emptyDir:
-          sizeLimit: "16Gi"
-      - name: varcachenginx
-        emptyDir:
-          sizeLimit: "16Gi"
+        - name: sdf-data-rubin
+          persistentVolumeClaim:
+            claimName: sdf-data-rubin
+        - name: varrun
+          emptyDir:
+            sizeLimit: "16Gi"
+        - name: varcachenginx
+          emptyDir:
+            sizeLimit: "16Gi"
 
