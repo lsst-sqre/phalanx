@@ -4,4 +4,4 @@ persistence:
 config:
   googleServiceAccount: "atlantis@roundtable-dev-abe2.iam.gserviceaccount.com"
   serverConfig:
-    repo-allowlist: "github.com/lsst-sqre/prodromos"
+    repo-allowlist: []

@@ -11,6 +11,7 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/roundtable-prod"
 
 applications:
+  atlantis: true
   checkerboard: true
   eups-distributor: true
   giftless: true
