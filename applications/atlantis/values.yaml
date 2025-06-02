@@ -3,10 +3,6 @@
 # Declare variables to be passed into your templates.
 
 config:
-  # -- The GitHub repos that atlantis will accept webooks from:
-  # [docs](https://www.runatlantis.io/docs/server-configuration.html#repo-allowlist)
-  repoAllowList: []
-
   # -- A GCP service account that has the appropriate powers and allows the
   # Kubernetes service account to impersonate it.
   # googleServiceAccount:
@@ -33,9 +29,9 @@ config:
     hide-unchanged-plan-comments: true
     # -- One of: debug, info, warn, or error.
     log-level: "info"
-    # -- The GitHub repos that atlantis will accept webooks from:
+    # -- Specification of GitHub repos that Atlantis will accept webooks from:
     # [docs](https://www.runatlantis.io/docs/server-configuration.html#repo-allowlist)
-    repo-allowlist: []
+    repo-allowlist: ""
     # -- We're delegating auth for the web UI to gafaelfawr
     web-basic-auth: false
     autoplan-modules: true
