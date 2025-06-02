@@ -17,7 +17,7 @@ Server for static pages from schedview
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the schedview-static-pages image |
-| image.repository | string | `"nginx"` | Image to use in the schedview-static-pages deployment |
+| image.repository | string | `"nginxinc/nginx-unprivileged"` | Image to use in the schedview-static-pages deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the schedview-static-pages deployment pod |

@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the schedview-static-pages deployment
-  repository: "nginx"
+  repository: "nginxinc/nginx-unprivileged"
 
   # -- Pull policy for the schedview-static-pages image
   pullPolicy: "IfNotPresent"
