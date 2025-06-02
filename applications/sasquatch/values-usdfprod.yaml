@@ -230,6 +230,8 @@ telegraf:
     urls:
       - "http://sasquatch-influxdb-enterprise-standby-data.sasquatch:8086"
       - "http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086"
+  registry:
+    url: "https://usdf-rsp-int.slac.stanford.edu/schema-registry-remote"
   kafkaConsumers:
     # Sasquatch backpack connector
     backpack:
