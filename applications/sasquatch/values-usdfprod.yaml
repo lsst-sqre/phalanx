@@ -230,6 +230,8 @@ telegraf:
     urls:
       - "http://sasquatch-influxdb-enterprise-standby-data.sasquatch:8086"
       - "http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086"
+  registry:
+    url: "https://usdf-rsp-int.slac.stanford.edu/schema-registry-remote"
   kafkaConsumers:
     # Sasquatch backpack connector
     backpack:
@@ -274,12 +276,19 @@ telegraf:
       debug: true
     m1m3:
       enabled: true
-      repair: false
-      metric_batch_size: 2000
+      metric_batch_size: 1500
+      max_undelivered_messages: 4000
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
-        [ "lsst.sal.MTM1M3" ]
+        [ "lsst.sal.MTM1M3([^T].*)" ]
+      debug: true
+    m1m3ts:
+      enabled: true
+      metric_batch_size: 1500
+      max_undelivered_messages: 4000
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3TS" ]
       debug: true
     m2:
       enabled: true
