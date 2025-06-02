@@ -39,7 +39,7 @@ controller:
         DAF_BUTLER_REPOSITORY_INDEX: "https://data-dev.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
-        SCRATCH_PATH: "/delete-weekly"
+        SCRATCH_PATH: "/deleted-sundays"
         TMPDIR: "/tmp"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
@@ -77,9 +77,9 @@ controller:
             serverPath: "/rubin-share"
             server: "10.234.16.4"
             type: "nfs"
-        - name: "delete-weekly"
+        - name: "deleted-sundays"
           source:
-            serverPath: "/deleted-weekly-share"  # AJT: my bad.  Sorry.
+            serverPath: "/deleted-weekly-share"
             server: "10.234.16.4"
             type: "nfs"
       volumeMounts:
@@ -87,13 +87,13 @@ controller:
           volumeName: "home"
         - containerPath: "/rubin"
           volumeName: "rubin"
-        - containerPath: "/delete-weekly"
-          volumeName: "delete-weekly"
+        - containerPath: "/deleted-sundays"
+          volumeName: "deleted-sundays"
         # Accomodation while we move tutorials refs
         - containerPath: "/project"
           volumeName: "rubin"
         - containerPath: "/scratch"
-          volumeName: "delete-weekly"
+          volumeName: "deleted-sundays"
     metrics:
       enabled: true
 hub:
