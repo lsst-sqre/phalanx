@@ -64,6 +64,8 @@ spec:
               mountPath: /var/run
             - name: varcachenginx
               mountPath: /var/cache/nginx
+            - name: tmpvol
+              mountPath: /tmp
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -90,6 +92,9 @@ spec:
           emptyDir:
             sizeLimit: "16Gi"
         - name: varcachenginx
+          emptyDir:
+            sizeLimit: "16Gi"
+        - name: tmpvol
           emptyDir:
             sizeLimit: "16Gi"
 
