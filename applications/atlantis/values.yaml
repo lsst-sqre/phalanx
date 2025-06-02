@@ -18,8 +18,7 @@ config:
   repoConfig:
     repos:
     - id: "/.*/"
-      apply_requirements: ["approved", "mergeable", "undiverged"]
-      import_requirements: ["approved", "mergeable", "undiverged"]
+      apply_requirements: ["mergeable", "undiverged"]
 
   # -- Content for the [server
   # config](https://www.runatlantis.io/docs/server-configuration.html) file.
