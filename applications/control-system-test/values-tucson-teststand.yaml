@@ -4,18 +4,8 @@ test42:
     pullPolicy: Always
   env:
     RUN_ARG: 42
-  resources:
-    limits:
-      cpu: 150m
-      memory: 300Mi
-    requests:
-      cpu: 15m
-      memory: 95Mi
 
 integration-testing:
   enabled: true
   envEfd: tucson_teststand_efd
   s3Bucket: rubinobs-lfa-tuc
-
-rumba:
-  enabled: true
