@@ -1,7 +1,5 @@
 x-butler-secret:
   &butler-secret
-  s3Credentials:
-  - lfa-credentials.ini
   butlerSecret:
     containerPath: &bs-cp /home/saluser/.lsst
     dbUser: oods
@@ -20,12 +18,6 @@ atqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 2 --state enabled
     USER_USERNAME: user
-    IMAGE_SERVER_URL: http://lsstcam-mcm.tuc.lsst.org
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
-  envSecrets:
-  - name: USER_USER_PASS
-    key: user-user-pass
   <<: *butler-secret
   nfsMountpoint:
   - name: auxtel-gen3-butler
@@ -65,13 +57,6 @@ atqueue:
           matchLabels:
             csc-class: scriptqueue
         topologyKey: "kubernetes.io/hostname"
-  resources:
-    limits:
-      cpu: 2500m
-      memory: 10Gi
-    requests:
-      cpu: 500m
-      memory: 580Mi
 
 atscheduler:
   classifier: scheduler2
@@ -80,11 +65,14 @@ atscheduler:
     pullPolicy: Always
   env:
     INDEX: 2
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
   nfsMountpoint:
   - name: rubin-sim-data
@@ -104,13 +92,6 @@ atscheduler:
           matchLabels:
             csc-class: scheduler
         topologyKey: "kubernetes.io/hostname"
-  resources:
-    limits:
-      cpu: 2500m
-      memory: 10000Mi
-    requests:
-      cpu: 250m
-      memory: 3100Mi
 
 mtqueue:
   classifier: scriptqueue1
@@ -121,12 +102,6 @@ mtqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 1 --state enabled
     USER_USERNAME: user
-    IMAGE_SERVER_URL: http://lsstcam-mcm.tuc.lsst.org
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
-  envSecrets:
-  - name: USER_USER_PASS
-    key: user-user-pass
   <<: *butler-secret
   nfsMountpoint:
   - name: auxtel-gen3-butler
@@ -166,13 +141,6 @@ mtqueue:
           matchLabels:
             csc-class: scriptqueue
         topologyKey: "kubernetes.io/hostname"
-  resources:
-    limits:
-      cpu: 2500m
-      memory: 10Gi
-    requests:
-      cpu: 500m
-      memory: 430Mi
 
 mtscheduler:
   classifier: scheduler1
@@ -181,11 +149,14 @@ mtscheduler:
     pullPolicy: Always
   env:
     INDEX: 1
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
   nfsMountpoint:
   - name: rubin-sim-data
@@ -205,13 +176,6 @@ mtscheduler:
           matchLabels:
             csc-class: scheduler
         topologyKey: "kubernetes.io/hostname"
-  resources:
-    limits:
-      cpu: 2700m
-      memory: 7000Mi
-    requests:
-      cpu: 270m
-      memory: 2100Mi
 
 ocsqueue:
   classifier: scriptqueue3
@@ -222,12 +186,6 @@ ocsqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 3 --state enabled
     USER_USERNAME: user
-    IMAGE_SERVER_URL: http://lsstcam-mcm.tuc.lsst.org
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
-  envSecrets:
-  - name: USER_USER_PASS
-    key: user-user-pass
   <<: *butler-secret
   nfsMountpoint:
   - name: auxtel-gen3-butler
@@ -267,13 +225,6 @@ ocsqueue:
           matchLabels:
             csc-class: scriptqueue
         topologyKey: "kubernetes.io/hostname"
-  resources:
-    limits:
-      cpu: 2500m
-      memory: 10Gi
-    requests:
-      cpu: 500m
-      memory: 430Mi
 
 ocsscheduler:
   classifier: scheduler3
@@ -282,11 +233,14 @@ ocsscheduler:
     pullPolicy: Always
   env:
     INDEX: 3
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
   nfsMountpoint:
   - name: rubin-sim-data
@@ -306,22 +260,8 @@ ocsscheduler:
           matchLabels:
             csc-class: scheduler
         topologyKey: "kubernetes.io/hostname"
-  resources:
-    limits:
-      cpu: 2600m
-      memory: 7000Mi
-    requests:
-      cpu: 260m
-      memory: 2100Mi
 
 watcher:
   image:
     repository: ts-dockerhub.lsst.org/watcher
     pullPolicy: Always
-  resources:
-    limits:
-      cpu: 2400m
-      memory: 1500Mi
-    requests:
-      cpu: 240m
-      memory: 445Mi

@@ -1,102 +1,3 @@
-cbp-sim:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/cbp
-    pullPolicy: Always
-  env:
-    RUN_ARG: --simulate
-  resources:
-    limits:
-      cpu: 110m
-      memory: 400Mi
-    requests:
-      cpu: 11m
-      memory: 135Mi
-
-electrometer101-sim:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/electrometer
-    pullPolicy: Always
-  env:
-    RUN_ARG: 101 --simulate 1
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  resources:
-    limits:
-      cpu: 100m
-      memory: 400Mi
-    requests:
-      cpu: 10m
-      memory: 135Mi
-
-electrometer102-sim:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/electrometer
-    pullPolicy: Always
-  env:
-    RUN_ARG: 102 --simulate 1
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  resources:
-    limits:
-      cpu: 100m
-      memory: 450Mi
-    requests:
-      cpu: 10m
-      memory: 150Mi
-
-electrometer103-sim:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/electrometer
-    pullPolicy: Always
-  env:
-    RUN_ARG: 103 --simulate 1
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  resources:
-    limits:
-      cpu: 100m
-      memory: 450Mi
-    requests:
-      cpu: 10m
-      memory: 145Mi
-
-electrometer201-sim:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/electrometer
-    pullPolicy: Always
-  env:
-    RUN_ARG: 201 --simulate 1
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  resources:
-    limits:
-      cpu: 100m
-      memory: 396Mi
-    requests:
-      cpu: 10m
-      memory: 132Mi
-
 gcheaderservice1:
   enabled: true
   image:
@@ -106,109 +7,15 @@ gcheaderservice1:
     CAMERA: gc1
     TSTAND_HEADERSERVICE: TUCSON
     URL_SPEC: --lfa_mode s3 --s3instance tuc
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  resources:
-    limits:
-      cpu: 140m
-      memory: 540Mi
-    requests:
-      cpu: 14m
-      memory: 180Mi
-
-ledprojector-sim:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/ledprojector
-    pullPolicy: Always
-  env:
-    RUN_ARG: --simulate
-  resources:
-    limits:
-      cpu: 100m
-      memory: 435Mi
-    requests:
-      cpu: 10m
-      memory: 145Mi
-
-linearstage101-sim:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/linearstage
-    pullPolicy: Always
-  env:
-    RUN_ARG: 101 --simulate
-  resources:
-    limits:
-      cpu: 100m
-      memory: 510Mi
-    requests:
-      cpu: 10m
-      memory: 170Mi
-
-linearstage102-sim:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/linearstage
-    pullPolicy: Always
-  env:
-    RUN_ARG: 102 --simulate
-  resources:
-    limits:
-      cpu: 150m
-      memory: 520Mi
-    requests:
-      cpu: 15m
-      memory: 170Mi
-
-linearstage103-sim:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/linearstage
-    pullPolicy: Always
-  env:
-    RUN_ARG: 103 --simulate
-  resources:
-    limits:
-      cpu: 150m
-      memory: 480Mi
-    requests:
-      cpu: 15m
-      memory: 160Mi
-
-linearstage104-sim:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/linearstage
-    pullPolicy: Always
-  env:
-    RUN_ARG: 104 --simulate
-  resources:
-    limits:
-      cpu: 150m
-      memory: 480Mi
-    requests:
-      cpu: 15m
-      memory: 160Mi
-
-mtreflector-sim:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/mtreflector
-    pullPolicy: Always
-  env:
-    RUN_ARG: --simulate
-  resources:
-    limits:
-      cpu: 100m
-      memory: 330Mi
-    requests:
-      cpu: 10m
-      memory: 130Mi
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
 
 simulation-gencam:
   enabled: true
@@ -218,35 +25,16 @@ simulation-gencam:
     pullPolicy: Always
   env:
     RUN_ARG: 1
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
   service:
     enabled: true
     port: 5013
     type: LoadBalancer
-  resources:
-    limits:
-      cpu: 120m
-      memory: 600Mi
-    requests:
-      cpu: 12m
-      memory: 180Mi
-
-tunablelaser-sim:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/tunablelaser
-    pullPolicy: Always
-  env:
-    RUN_ARG: --simulate 1
-  resources:
-    limits:
-      cpu: "2"
-      memory: 1000Mi
-    requests:
-      cpu: 50m
-      memory: 200Mi
