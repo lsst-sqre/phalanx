@@ -39,6 +39,8 @@ prompt-keda:
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
     calibRepo: ""
+    # -- The average time to wait (in seconds) before retrying a failed connection to the shared repo.
+    repoWait: 5
     # -- YAML-formatted list of regex patterns to specify the dataset types to export.
     exportTypes: "- .*"
 
