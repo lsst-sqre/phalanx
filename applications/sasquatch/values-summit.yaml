@@ -120,6 +120,7 @@ influxdb:
 customInfluxDBIngress:
   enabled: true
   hostname: summit-lsp.lsst.codes
+  path: "/influxdb-standby(/|$)(.*)"
 
 influxdb-enterprise:
   enabled: true
@@ -151,6 +152,7 @@ influxdb-enterprise:
     ingress:
       enabled: true
       hostname: summit-lsp.lsst.codes
+      path: "/influxdb(/|$)(.*)"
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
