@@ -39,6 +39,8 @@ spec:
           value: {{ .Values.instrument.skymap }}
         - name: CALIB_REPO
           value: {{ .Values.instrument.calibRepo }}
+        - name: REPO_RETRY_DELAY
+          value: {{ .Values.instrument.repoWait | toString | quote }}
         - name: LSST_DISABLE_BUCKET_VALIDATION
           value: {{ .Values.s3.disableBucketValidation | toString | quote }}
         - name: CONFIG_APDB

@@ -47,6 +47,7 @@ KEDA Prompt Processing instance for LSSTCam-imSim.
 | prompt-keda.instrument.pipelines.main | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run for which visits' raws. Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | prompt-keda.instrument.pipelines.preprocessing | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run before which visits' raw arrival. |
 | prompt-keda.instrument.preloadPadding | int | `50` | Number of arcseconds to pad the spatial region in preloading. |
+| prompt-keda.instrument.repoWait | int | `5` | The average time to wait (in seconds) before retrying a failed connection to the shared repo. |
 | prompt-keda.instrument.skymap | string | `"DC2_cells_v1"` | Skymap to use with the instrument |
 | prompt-keda.keda.failedJobsHistoryLimit | int | `5` |  |
 | prompt-keda.keda.maxReplicaCount | int | `800` |  |
