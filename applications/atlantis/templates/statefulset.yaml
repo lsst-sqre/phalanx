@@ -72,6 +72,14 @@ spec:
             secretKeyRef:
               name: "atlantis"
               key: "sentry-auth-token"
+
+          # Needed for provisioning Google Cloud Monitoring Notification
+          # Channels
+        - name: "TF_VAR_google_cloud_monitoring_slack_token"
+          valueFrom:
+            secretKeyRef:
+              name: "atlantis"
+              key: "google-cloud-monitoring-slack-token"
         ports:
         - name: "http"
           containerPort: 8080
