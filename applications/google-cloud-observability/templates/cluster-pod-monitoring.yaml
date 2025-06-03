@@ -1,0 +1,21 @@
+# https://github.com/GoogleCloudPlatform/prometheus-engine/blob/v0.15.3/doc/api.md#clusterpodmonitoring
+apiVersion: monitoring.googleapis.com/v1
+kind: ClusterPodMonitoring
+metadata:
+  name: custom-kube-state-metrics
+  labels:
+    {{- include "google-cloud-observability.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kube-state-metrics
+  endpoints:
+  - port: http
+    interval: 30s
+    metricRelabeling:
+    # Drop super-high-cardinality labels
+    - action: labeldrop
+      regex: (uid|container_id|image_id)
+
+  targetLabels:
+    metadata: [] # explicitly empty so the metric labels are respected

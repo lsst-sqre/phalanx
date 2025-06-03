@@ -1,0 +1,36 @@
+{{- if (index .Values "applications" "google-cloud-observability") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "google-cloud-observability"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "google-cloud-observability"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "google-cloud-observability"
+    server: "https://kubernetes.default.svc"
+  project: "monitoring"
+  source:
+    path: "applications/google-cloud-observability"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}
