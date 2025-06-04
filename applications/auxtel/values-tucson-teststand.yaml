@@ -2,6 +2,28 @@ ataos:
   image:
     repository: ts-dockerhub.lsst.org/ataos
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 450m
+      memory: 1200Mi
+    requests:
+      cpu: 45m
+      memory: 400Mi
+
+atbuilding-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/atbuilding
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 120m
+      memory: 396Mi
+    requests:
+      cpu: 12m
+      memory: 132Mi
 
 atdome-sim:
   enabled: true
@@ -10,11 +32,25 @@ atdome-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 170m
+      memory: 396Mi
+    requests:
+      cpu: 17m
+      memory: 132Mi
 
 atdometrajectory:
   image:
     repository: ts-dockerhub.lsst.org/atdometrajectory
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 350m
+      memory: 768Mi
+    requests:
+      cpu: 35m
+      memory: 256Mi
 
 atheaderservice:
   image:
@@ -24,21 +60,34 @@ atheaderservice:
     URL_SPEC: --lfa_mode s3 --s3instance tuc
     TSTAND_HEADERSERVICE: TUCSON
     CAMERA: at
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 800m
+      memory: 1500Mi
+    requests:
+      cpu: 80m
+      memory: 450Mi
 
 athexapod-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/athexapod
     pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 90m
+      memory: 396Mi
+    requests:
+      cpu: 9m
+      memory: 132Mi
 
 atmcs-sim:
   enabled: true
@@ -47,6 +96,13 @@ atmcs-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 600m
+      memory: 1200Mi
+    requests:
+      cpu: 60m
+      memory: 400Mi
 
 atoods:
   image:
@@ -55,6 +111,10 @@ atoods:
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  s3Credentials:
+  - lfa-credentials.ini
   butlerSecret:
     containerPath: &bs-cp /home/saluser/.lsst
     dbUser: oods
@@ -74,6 +134,13 @@ atoods:
     readOnly: false
     server: nfs-auxtel.tu.lsst.org
     serverPath: /auxtel
+  resources:
+    limits:
+      cpu: 400m
+      memory: 1320Mi
+    requests:
+      cpu: 40m
+      memory: 440Mi
   configfile:
     path: /etc
     filename: atoods.yaml
@@ -84,25 +151,31 @@ atoods:
           minutes: 0
           seconds: 0
 
+      ingesterClass:
+          ingesterType: lsst.ctrl.oods.fileIngester
+          ingesterName: FileIngester
       ingester:
           imageStagingDirectory: /data/staging/auxtel/oods
           butlers:
               - butler:
                   instrument: lsst.obs.lsst.Latiss
                   class:
-                      import : lsst.ctrl.oods.gen3ButlerIngester
-                      name : Gen3ButlerIngester
+                      import: lsst.ctrl.oods.fileAttendant
+                      name: FileAttendant
                   stagingDirectory : /data/lsstdata/TTS/auxtel/oods/gen3butler/raw
                   badFileDirectory: /data/lsstdata/TTS/auxtel/oods/gen3butler/badfiles
                   repoDirectory : /repo/LATISS
                   collections:
                       - LATISS/raw/all
+                  cleanCollections:
+                      - collection: LATISS/raw/all
+                        filesOlderThan:
+                            <<: *interval
+                            days: 30
                   scanInterval:
                       <<: *interval
                       hours: 1
-                  filesOlderThan:
-                      <<: *interval
-                      days: 30
+
           batchSize: 20
           scanInterval:
               <<: *interval
@@ -134,6 +207,13 @@ atpneumatics-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 120m
+      memory: 396Mi
+    requests:
+      cpu: 12m
+      memory: 132Mi
 
 atptg:
   image:
@@ -141,6 +221,14 @@ atptg:
     pullPolicy: Always
   env:
     TELESCOPE: AT
+    LSST_KAFKA_TLM_FLUSH_MS: 0
+    LSST_KAFKA_CMDEVT_FLUSH_MS: 0
+  resources:
+    limits:
+      cpu: 900m
+    requests:
+      cpu: 90m
+      memory: 265Mi
 
 atspectrograph-sim:
   enabled: true
@@ -149,6 +237,13 @@ atspectrograph-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 120m
+      memory: 540Mi
+    requests:
+      cpu: 12m
+      memory: 180Mi
 
 hexapod-sim:
   enabled: true
