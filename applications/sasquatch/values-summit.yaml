@@ -120,6 +120,7 @@ influxdb:
 customInfluxDBIngress:
   enabled: true
   hostname: summit-lsp.lsst.codes
+  path: "/influxdb-standby(/|$)(.*)"
 
 influxdb-enterprise:
   enabled: true
@@ -151,6 +152,7 @@ influxdb-enterprise:
     ingress:
       enabled: true
       hostname: summit-lsp.lsst.codes
+      path: "/influxdb(/|$)(.*)"
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
@@ -175,204 +177,13 @@ influxdb-enterprise:
         memory: 256Gi
         cpu: 8
 
-# This set of connectors is used to write to the InfluxDB OSS instance,
-# they will go away once the InfluxDB Enterprise instance is fully operational
-telegraf-oss:
-  enabled: true
-  kafkaConsumers:
-    # CSC connectors
-    oss-maintel:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
-      debug: true
-    oss-mtmount:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTMount" ]
-      debug: true
-    oss-comcam:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
-      debug: true
-    oss-envsys:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-         [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
-      debug: true
-    oss-m1m3:
-      enabled: true
-      metric_batch_size: 1500
-      max_undelivered_messages: 4000
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTM1M3([^T].*)" ]
-      debug: true
-    oss-m1m3ts:
-      enabled: true
-      metric_batch_size: 1500
-      max_undelivered_messages: 4000
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTM1M3TS" ]
-      debug: true
-    oss-m2:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
-      debug: true
-    oss-obssys:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
-      debug: true
-    oss-ocps:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.OCPS" ]
-      debug: true
-    oss-pmd:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.PMD" ]
-      debug: true
-    oss-calsys:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.MTReflector", "lsst.sal.TunableLaser" ]
-      debug: true
-    oss-mtaircompressor:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTAirCompressor" ]
-      debug: true
-    oss-genericcamera:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
-      debug: true
-    oss-gis:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.GIS" ]
-      debug: true
-    oss-mtvms:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTVMS" ]
-      debug: true
-    oss-lsstcam:
-      enabled: true
-      metric_batch_size: 250
-      max_undelivered_messages: 5000
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
-      debug: true
-    oss-auxtel:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
-      debug: true
-    oss-latiss:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
-      debug: true
-    oss-test:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.Test" ]
-      debug: true
-    oss-lasertracker:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.LaserTracker" ]
-      debug: true
-    # CCS connectors (experimental) data is being written on separate databases for now
-    oss-atcamera:
-      enabled: true
-      replicaCount: 1
-      database: "lsst.ATCamera"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      tags: |
-        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source" ]
-      topicRegexps: |
-        [ "lsst.ATCamera" ]
-    oss-cccamera:
-      enabled: true
-      replicaCount: 1
-      database: "lsst.CCCamera"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      tags: |
-        [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source" ]
-      topicRegexps: |
-        [ "lsst.CCCamera" ]
-    oss-mtcamera:
-      enabled: true
-      replicaCount: 1
-      database: "lsst.MTCamera"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      tags: |
-        [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
-      topicRegexps: |
-        [ "lsst.MTCamera" ]
-    # Application connectors
-    oss-obsenv:
-      enabled: true
-      database: "lsst.obsenv"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.obsenv" ]
-      debug: true
-    oss-cp:
-      enabled: true
-      database: "lsst.cp"
-      timestamp_format: "unix"
-      timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.cp" ]
-      tags: |
-        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "exposure", "patch", "visit", "run", "pipeline" ]
-      debug: true
-    oss-backpack:
-      enabled: true
-      replicaCount: 1
-      database: "lsst.backpack"
-      timestamp_format: "unix"
-      timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.backpack" ]
-      debug: true
-
-# This set of connectors is used to write to the InfluxDB Enterprise instance
+# Dual write to the InfluxDB Enterprise and InfluxDB OSS instances
 telegraf:
   enabled: true
   influxdb:
     urls:
       - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
+      - "http://sasquatch-influxdb.sasquatch:8086"
   kafkaConsumers:
     # Application connectors
     obsenv:
@@ -383,7 +194,6 @@ telegraf:
       topicRegexps: |
         [ "lsst.obsenv" ]
       debug: true
-      offset: newest
     cp:
       enabled: true
       database: "lsst.cp"
@@ -394,7 +204,6 @@ telegraf:
       tags: |
         [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "exposure", "patch", "visit", "run", "pipeline" ]
       debug: true
-      offset: newest
     backpack:
       enabled: true
       replicaCount: 1
@@ -404,7 +213,6 @@ telegraf:
       topicRegexps: |
         [ "lsst.backpack" ]
       debug: true
-      offset: newest
     # CSC connectors
     maintel:
       enabled: true
@@ -412,36 +220,32 @@ telegraf:
       topicRegexps: |
         [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
       debug: true
-      offset: newest
     mtmount:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
       debug: true
-      offset: newest
     comcam:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
       debug: true
-      offset: newest
     envsys:
       enabled: true
       database: "efd"
       topicRegexps: |
          [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
       debug: true
-      offset: newest
     m1m3:
       enabled: true
-      metric_batch_size: 2000
+      metric_batch_size: 1500
+      max_undelivered_messages: 4000
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.MTM1M3" ]
+        [ "lsst.sal.MTM1M3([^T].*)" ]
       debug: true
-      offset: newest
       resources:
         limits:
           cpu: "5"
@@ -449,69 +253,68 @@ telegraf:
         requests:
           cpu: "5"
           memory: "8Gi"
+    m1m3ts:
+      enabled: true
+      metric_batch_size: 1500
+      max_undelivered_messages: 4000
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3TS" ]
+      debug: true
     m2:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
       debug: true
-      offset: newest
     obssys:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
       debug: true
-      offset: newest
     ocps:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.OCPS" ]
       debug: true
-      offset: newest
     pmd:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.PMD" ]
       debug: true
-      offset: newest
     calsys:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.MTReflector", "lsst.sal.TunableLaser" ]
       debug: true
-      offset: newest
     mtaircompressor:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTAirCompressor" ]
       debug: true
-      offset: newest
     genericcamera:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
       debug: true
-      offset: newest
     gis:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.GIS" ]
       debug: true
-      offset: newest
     mtvms:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTVMS" ]
       debug: true
-      offset: newest
     lsstcam:
       enabled: true
       metric_batch_size: 250
@@ -520,35 +323,30 @@ telegraf:
       topicRegexps: |
         [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
       debug: true
-      offset: newest
     auxtel:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
       debug: true
-      offset: newest
     latiss:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
       debug: true
-      offset: newest
     test:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.Test" ]
       debug: true
-      offset: newest
     lasertracker:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.LaserTracker" ]
       debug: true
-      offset: newest
     # CCS connectors (experimental) data is being written on separate databases for now
     atcamera:
       enabled: true
@@ -560,7 +358,6 @@ telegraf:
       topicRegexps: |
         [ "lsst.ATCamera" ]
       debug: true
-      offset: newest
     cccamera:
       enabled: true
       database: "lsst.CCCamera"
@@ -571,7 +368,6 @@ telegraf:
       topicRegexps: |
         [ "lsst.CCCamera" ]
       debug: true
-      offset: newest
     mtcamera:
       enabled: true
       database: "lsst.MTCamera"
@@ -582,7 +378,6 @@ telegraf:
       topicRegexps: |
         [ "lsst.MTCamera" ]
       debug: true
-      offset: newest
 
 kafdrop:
   ingress:
@@ -624,6 +419,7 @@ chronograf:
 kapacitor:
   persistence:
     storageClass: rook-ceph-block
+  influxURL: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
 
 backup:
   enabled: true
