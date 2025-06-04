@@ -57,8 +57,10 @@ prompt-keda:
     imageBucket: ""
     # @default -- None, must be set
     endpointUrl: ""
-    # -- If set, get S3 credentials from this application's Vault secret.
-    auth_env: true
+    # -- If set, get S3 credentials from this application's Vault secret and store in env vars.
+    auth_env: false
+    # -- If set, get a S3 credential file from this application's Vault secret.
+    cred_file_auth: true
     # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
     disableBucketValidation: '0'
     # -- If set, configure S3 checksum options.
