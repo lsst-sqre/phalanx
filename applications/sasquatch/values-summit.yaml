@@ -637,6 +637,8 @@ backup:
     - name: kapacitor
       enabled: true
       retentionDays: 7
+  restore:
+    enabled: true
 
 obsenv:
   enabled: true
