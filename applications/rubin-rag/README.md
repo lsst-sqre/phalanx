@@ -38,3 +38,4 @@ RAG helpers for documentation searches
 | weaviate.modules.text2vec-openai.enabled | bool | `true` |  |
 | weaviate.requests.cpu | string | `"300m"` |  |
 | weaviate.requests.memory | string | `"150Mi"` |  |
+| weaviate.storage.size | string | `"1Ti"` |  |

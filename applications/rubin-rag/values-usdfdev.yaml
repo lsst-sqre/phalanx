@@ -1,0 +1,3 @@
+weaviate:
+  storage:
+    size: 500Gi
