@@ -8,22 +8,24 @@ controller:
       numReleases: 0
       numWeeklies: 3
       numDailies: 2
-      cycle: 39
-      recommendedTag: "recommended_c0039"
+      cycle: 41
+      recommendedTag: "recommended_c0041"
     lab:
-      extraAnnotations:
-        k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
         AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
         LSST_SITE: "tucson"
-        LSST_DDS_INTERFACE: "net1"
-        LSST_DDS_PARTITION_PREFIX: "tucson"
+        LSST_TOPIC_SUBNAME: "sal"
+        LSST_KAFKA_PASSFILE: "/opt/lsst/software/jupyterlab/secrets/kafka_credentials.txt"
+        LSST_KAFKA_BROKER_ADDR: "sasquatch-kafka-bootstrap.sasquatch:9092"
+        LSST_SCHEMA_REGISTRY_URL: "http://sasquatch-schema-registry.sasquatch:8081"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
         RSP_SITE_TYPE: "telescope"
       pullSecret: "pull-secret"
       secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "kafka_credentials.txt"
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
       initContainers:
@@ -71,6 +73,11 @@ controller:
             type: "nfs"
             serverPath: "/repo/LSSTComCam"
             server: "comcam-archiver.tu.lsst.org"
+        - name: "lsstcam"
+          source:
+            type: "nfs"
+            serverPath: "/repo/LSSTCam"
+            server: "nfs-lsstcam.tu.lsst.org"
         - name: "auxtel"
           source:
             type: "nfs"
@@ -81,6 +88,11 @@ controller:
             type: "nfs"
             serverPath: "/lsstdata/TTS/comcam"
             server: "comcam-archiver.tu.lsst.org"
+        - name: "maintel"
+          source:
+            type: "nfs"
+            serverPath: "/lsstdata/TTS/lsstcam"
+            server: "nfs-lsstcam.tu.lsst.org"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -96,10 +108,14 @@ controller:
           volumeName: "obs-env"
         - containerPath: "/repo/LSSTComCam"
           volumeName: "lsstcomcam"
+        - containerPath: "/repo/LSSTCam"
+          volumeName: "lsstcam"
         - containerPath: "/data/lsstdata/TTS/auxtel"
           volumeName: "auxtel"
         - containerPath: "/data/lsstdata/TTS/comcam"
           volumeName: "comcam"
+        - containerPath: "/data/lsstdata/TTS/lsstcam"
+          volumeName: "maintel"
 
 jupyterhub:
   hub:
