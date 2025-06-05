@@ -38,11 +38,16 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
-            - name: JIRA_API_TOKEN
+            {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- range $env := .Values.envSecrets }}
+            - name: {{ $env.name }}
               valueFrom:
                 secretKeyRef:
-                  name: nightlydigest
-                  key: jira-api-token
+                  name: {{ $env.secretName }}
+                  key: {{ $env.secretKey }}
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
