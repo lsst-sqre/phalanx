@@ -23,13 +23,13 @@ strimzi-kafka:
         loadBalancerIP: "140.252.146.59"
         host: sasquatch-tts-kafka-bootstrap.lsst.codes
       brokers:
-        - broker: 6
+        - broker: 0
           loadBalancerIP: "140.252.146.46"
           host: sasquatch-tts-kafka-0.lsst.codes
-        - broker: 7
+        - broker: 1
           loadBalancerIP: "140.252.146.58"
           host: sasquatch-tts-kafka-1.lsst.codes
-        - broker: 8
+        - broker: 2
           loadBalancerIP: "140.252.146.47"
           host: sasquatch-tts-kafka-2.lsst.codes
     metricsConfig:
@@ -57,10 +57,9 @@ strimzi-kafka:
   broker:
     enabled: true
     name: "kafka-local-storage"
-    nodeIds: "[6,7,8]"
+    nodeIds: "[0,1,2]"
     storage:
       size: 500Gi
-      storageClassName: localdrive
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -83,7 +82,9 @@ strimzi-kafka:
         memory: 128Gi
         cpu: 32
   users:
-    telegraf:
+    replicator:
+      enabled: true
+    elegraf:
       enabled: true
   registry:
     ingress:
@@ -254,14 +255,6 @@ telegraf:
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.LaserTracker" ]
-      debug: true
-    lsstcam:
-      enabled: true
-      metric_batch_size: 250
-      max_undelivered_messages: 5000
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
       debug: true
     genericcamera:
       enabled: true

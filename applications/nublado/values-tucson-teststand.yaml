@@ -73,11 +73,6 @@ controller:
             type: "nfs"
             serverPath: "/repo/LSSTComCam"
             server: "comcam-archiver.tu.lsst.org"
-        - name: "lsstcam"
-          source:
-            type: "nfs"
-            serverPath: "/repo/LSSTCam"
-            server: "nfs-lsstcam.tu.lsst.org"
         - name: "auxtel"
           source:
             type: "nfs"
@@ -88,11 +83,6 @@ controller:
             type: "nfs"
             serverPath: "/lsstdata/TTS/comcam"
             server: "comcam-archiver.tu.lsst.org"
-        - name: "maintel"
-          source:
-            type: "nfs"
-            serverPath: "/lsstdata/TTS/lsstcam"
-            server: "nfs-lsstcam.tu.lsst.org"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -108,14 +98,10 @@ controller:
           volumeName: "obs-env"
         - containerPath: "/repo/LSSTComCam"
           volumeName: "lsstcomcam"
-        - containerPath: "/repo/LSSTCam"
-          volumeName: "lsstcam"
         - containerPath: "/data/lsstdata/TTS/auxtel"
           volumeName: "auxtel"
         - containerPath: "/data/lsstdata/TTS/comcam"
           volumeName: "comcam"
-        - containerPath: "/data/lsstdata/TTS/lsstcam"
-          volumeName: "maintel"
 
 jupyterhub:
   hub:
