@@ -15,7 +15,8 @@ HiPS tile server backed by Google Cloud Storage
 | autoscaling.maxReplicas | int | `100` | Maximum number of hips deployment pods |
 | autoscaling.minReplicas | int | `1` | Minimum number of hips deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of hips deployment pods |
-| config.gcsBucket | string | None, must be set | Name of Google Cloud Storage bucket holding the HiPS files |
+| config.datasets | string | None, must be set | A mapping of dataset names to locations in GCS. /api/hips/v2/<dataset-name> will serve files out of the corresponding GCS bucket. |
+| config.defaultDatasetName | string | `nil` |  |
 | config.gcsProject | string | None, must be set | Google Cloud project in which the underlying storage is located |
 | config.logLevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `hips` Kubernetes service account and has access to the storage bucket |
