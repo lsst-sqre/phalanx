@@ -13,7 +13,7 @@ obsenv-api:
 obsenv-ui:
   image:
     repository: rubin-cr.lsst.org/obsenv-ui
-    tag: 0.3.0
+    tag: tickets-DM-49976
     pullPolicy: Always
   config:
     pathPrefix: /obsenv-management
