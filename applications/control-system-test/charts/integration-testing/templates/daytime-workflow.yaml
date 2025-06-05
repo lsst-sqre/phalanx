@@ -1,0 +1,138 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: imaging-test-workflow
+  labels:
+    workflows.argoproj.io/type: "integration-test"
+    argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
+spec:
+  serviceAccountName: {{ .Values.serviceAccount }}
+  artifactRepositoryRef:
+    configMap: integration-test-controller-configmap
+    key: artifactRepository
+  volumes:
+  - name: testreports
+    persistentVolumeClaim:
+      claimName: {{ .Values.persistentVolume.claimName }}
+  imagePullSecrets:
+  - name: pull-secret
+  podMetadata:
+    labels:
+      argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
+  arguments:
+    parameters:
+    - name: date-key
+      value: "20230601"
+  entrypoint: run-tests
+  templates:
+  - name: run-tests
+    dag:
+      tasks:
+      - name: call-cleanup-reports
+        templateRef:
+          name: cleanup-reports-workflow
+          template: cleanup-reports
+      - name: auxtel-latiss-daytime-checkout
+        depends: call-cleanup-reports
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_LATISS_Checkout.list"
+          - name: jobname
+            value: auxtel-latiss-daytime-checkout
+          - name: reportname
+            value: at_latiss_checkout.xml
+      - name: auxtel-atpneumatics-daytime-checkout
+        depends: auxtel-latiss-daytime-checkout
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_ATPneumatics_Checkout.list"
+          - name: jobname
+            value: auxtel-telescope-dome-daytime-checkout
+          - name: reportname
+            value: at_atpneumatics_checkout.xml
+      - name: auxtel-telescope-dome-daytime-checkout
+        depends: auxtel-atpneumatics-daytime-checkout
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Telescope_Dome_Checkout.list"
+          - name: jobname
+            value: auxtel-telescope-dome-daytime-checkout
+          - name: reportname
+            value: at_tel_dome_checkout.xml
+      - name: auxtel-telescope-slew-take-image-daytime-checkout
+        depends: auxtel-telescope-dome-daytime-checkout
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Slew_and_Take_Image_Checkout.list"
+          - name: jobname
+            value: auxtel-telescope-slew-take-image-daytime-checkout
+          - name: reportname
+            value: at_slew_take_image_checkout.xml
+      - name: auxtel-prep-flat
+        depends: auxtel-telescope-slew-take-image-daytime-checkout
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Prep_Flat.list"
+          - name: jobname
+            value: auxtel-prep-flat
+          - name: reportname
+            value: at_prep_flat.xml
+      - name: auxtel-flat-calibrations
+        depends: auxtel-prep-flat
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Flat_Calibrations.list"
+          - name: jobname
+            value: auxtel-flat-calibrations
+          - name: reportname
+            value: at_flat_calib.xml
+      - name: auxtel-ptc-calibrations
+        depends: auxtel-flat-calibrations
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_PTC_Calibrations.list"
+          - name: jobname
+            value: auxtel-ptc-calibrations
+          - name: reportname
+            value: at_ptc_calib.xml
+      - name: bigcam-calibrations
+        depends: call-cleanup-reports
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_BigCamera_Calibrations.list"
+          - name: jobname
+            value: bigcam-calibrations
+          - name: reportname
+            value: bigcam_calib.xml
