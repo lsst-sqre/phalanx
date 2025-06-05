@@ -43,6 +43,19 @@ spec:
             value: auxtel-housekeeping
           - name: reportname
             value: athousekeeping.xml
+      - name: auxtel-image-verification
+        depends: auxtel-housekeeping
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Image_Verification.list"
+          - name: jobname
+            value: auxtel-image-verification
+          - name: reportname
+            value: at_image_verify.xml
       - name: maintel-housekeeping
         depends: call-cleanup-reports
         templateRef:
@@ -56,3 +69,16 @@ spec:
             value: maintel-housekeeping
           - name: reportname
             value: mthousekeeping.xml
+      - name: bigcam-image-verification
+        depends: maintel-housekeeping
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_BigCamera_Image_Verification.list"
+          - name: jobname
+            value: bigcam-image-verification
+          - name: reportname
+            value: bigcam_image_verify.xml
