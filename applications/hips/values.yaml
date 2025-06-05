@@ -10,10 +10,21 @@ config:
   # @default -- None, must be set
   gcsProject: ""
 
-  # -- Name of Google Cloud Storage bucket holding the HiPS files
+  # -- A mapping of dataset names to locations in GCS.
+  # /api/hips/v2/<dataset-name> will serve files out of the corresponding GCS
+  # bucket.
   # @default -- None, must be set
-  gcsBucket: ""
+  datasets: null
+    # -- Dataset name
+    # dp02:
+    #   -- Name of Google Cloud Storage bucket holding the HiPS files
+    #   gcsBucket: somebucket
+    # dp1:
+    #   -- Name of Google Cloud Storage bucket holding the HiPS files
+    #   gcsBucket: somebucket
 
+  # The name of the dataset to serve from the v1 endpoint (/api/hips)
+  defaultDatasetName: null
   # -- Choose from the text form of Python logging levels
   logLevel: "INFO"
 
