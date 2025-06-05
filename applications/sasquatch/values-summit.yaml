@@ -255,7 +255,7 @@ telegraf:
           memory: "8Gi"
     m1m3ts:
       enabled: true
-      metric_batch_size: 1500
+      metric_batch_size: 1000
       max_undelivered_messages: 4000
       database: "efd"
       topicRegexps: |
