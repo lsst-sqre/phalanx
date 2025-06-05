@@ -18,15 +18,19 @@ ccheaderservice:
     URL_SPEC: --lfa_mode s3 --s3instance tuc
     TSTAND_HEADERSERVICE: TUCSON
     CAMERA: cc
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1500Mi
+    requests:
+      cpu: 100m
+      memory: 300Mi
 
 ccoods:
   enabled: true
@@ -36,6 +40,10 @@ ccoods:
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     CTRL_OODS_CONFIG_FILE: /etc/ccoods.yaml
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  s3Credentials:
+  - lfa-credentials.ini
   <<: *butler-secret
   nfsMountpoint:
   - name: comcam-gen3-butler
@@ -48,6 +56,13 @@ ccoods:
     readOnly: false
     server: comcam-archiver.tu.lsst.org
     serverPath: /data
+  resources:
+    limits:
+      cpu: 100m
+      memory: 4000Mi
+    requests:
+      cpu: 1m
+      memory: 800Mi
   configfile:
     path: /etc
     filename: ccoods.yaml
@@ -58,25 +73,31 @@ ccoods:
           minutes: 0
           seconds: 0
 
+      ingesterClass:
+          ingesterType: lsst.ctrl.oods.fileIngester
+          ingesterName: FileIngester
       ingester:
           imageStagingDirectory: /data/staging/comcam/oods
           butlers:
               - butler:
                   instrument: lsst.obs.lsst.LsstComCam
                   class:
-                      import : lsst.ctrl.oods.gen3ButlerIngester
-                      name : Gen3ButlerIngester
+                      import: lsst.ctrl.oods.fileAttendant
+                      name: FileAttendant
                   stagingDirectory : /data/lsstdata/TTS/comcam/oods/gen3butler/raw
                   badFileDirectory: /data/lsstdata/TTS/comcam/oods/gen3butler/badfiles
                   repoDirectory : /repo/LSSTComCam
                   collections:
                       - LSSTComCam/raw/all
+                  cleanCollections:
+                      - collection: LSSTComCam/raw/all
+                        filesOlderThan:
+                            <<: *interval
+                            days: 30
                   scanInterval:
                       <<: *interval
                       hours: 1
-                  filesOlderThan:
-                      <<: *interval
-                      days: 30
+
           batchSize: 20
           scanInterval:
               <<: *interval
@@ -108,6 +129,13 @@ lasertracker1-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 1 --simulate 2
+  resources:
+    limits:
+      cpu: 200m
+      memory: 690Mi
+    requests:
+      cpu: 20m
+      memory: 230Mi
 
 mtaircompressor1-sim:
   enabled: true
@@ -116,6 +144,13 @@ mtaircompressor1-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 1 --simulate --state disabled
+  resources:
+    limits:
+      cpu: 100m
+      memory: 450Mi
+    requests:
+      cpu: 10m
+      memory: 150Mi
 
 mtaircompressor2-sim:
   enabled: true
@@ -124,11 +159,22 @@ mtaircompressor2-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 2 --simulate --state disabled
+  resources:
+    limits:
+      cpu: 100m
+      memory: 450Mi
+    requests:
+      cpu: 10m
+      memory: 150Mi
 
 mtaos:
   image:
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   <<: *butler-secret
   nfsMountpoint:
   - name: comcam-gen3-butler
@@ -141,11 +187,28 @@ mtaos:
     readOnly: true
     server: comcam-archiver.tu.lsst.org
     serverPath: /lsstdata/TTS/comcam
+  - name: lsstcam-gen3-butler
+    containerPath: /repo/LSSTCam
+    readOnly: false
+    server: nfs-lsstcam.tu.lsst.org
+    serverPath: /repo/LSSTCam
+  - name: lsstcam-gen3-oods
+    containerPath: /data/lsstdata/TTS/lsstcam
+    readOnly: true
+    server: nfs-lsstcam.tu.lsst.org
+    serverPath: /lsstdata/TTS/lsstcam
   - name: scratch
     containerPath: /scratch
     readOnly: false
     server: nfs-scratch.tu.lsst.org
     serverPath: /scratch
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1860Mi
+    requests:
+      cpu: 30m
+      memory: 620Mi
 
 mtcamhexapod-sim:
   enabled: true
@@ -155,6 +218,13 @@ mtcamhexapod-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1050Mi
+    requests:
+      cpu: 50m
+      memory: 350Mi
 
 mtdome-sim:
   enabled: true
@@ -163,17 +233,86 @@ mtdome-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate 1
+  resources:
+    limits:
+      cpu: 2
+      memory: 450Mi
+    requests:
+      cpu: 200m
+      memory: 150Mi
 
 mtdometrajectory:
   image:
     repository: ts-dockerhub.lsst.org/mtdometrajectory
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 250m
+      memory: 690Mi
+    requests:
+      cpu: 25m
+      memory: 230Mi
+
+mtheaderservice-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    pullPolicy: Always
+  env:
+    URL_SPEC: --lfa_mode s3 --s3instance tuc
+    RUN_ARG: --playback
+    TSTAND_HEADERSERVICE: TUCSON
+    HEADERSERVICE_PLAYLIST_DIR: /project/headerservice
+    CAMERA: mt
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  nfsMountpoint:
+  - name: project-shared
+    containerPath: /project
+    readOnly: false
+    server: nfs-project.tuc.lsst.org
+    serverPath: /project
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2000Mi
+    requests:
+      cpu: 200m
+      memory: 500Mi
 
 mtm1m3-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtm1m3_sim
     pullPolicy: Always
+  env:
+    LSST_KAFKA_TLM_FLUSH_MS: 0
+    LSST_KAFKA_CMDEVT_FLUSH_MS: 0
+    LSST_KAFKA_MAX_QUEUE_MSG: 200
+    LSST_KAFKA_MAX_QUEUE_MS: 100
+  resources:
+    limits:
+      cpu: 2
+    requests:
+      cpu: 200m
+      memory: 1000Mi
+
+mtm1m3ts-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtm1m3ts_sim
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 400m
+      memory: 210Mi
+    requests:
+      cpu: 40m
+      memory: 70Mi
 
 mtm2-sim:
   enabled: true
@@ -182,6 +321,13 @@ mtm2-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 850m
+      memory: 1500Mi
+    requests:
+      cpu: 85m
+      memory: 420Mi
 
 mtm2hexapod-sim:
   enabled: true
@@ -191,6 +337,13 @@ mtm2hexapod-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate 2
+  resources:
+    limits:
+      cpu: 400m
+      memory: 900Mi
+    requests:
+      cpu: 40m
+      memory: 300Mi
 
 mtmount-sim:
   enabled: true
@@ -199,6 +352,103 @@ mtmount-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1400Mi
+    requests:
+      cpu: 50m
+      memory: 460Mi
+
+mtoods:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtoods
+    pullPolicy: Always
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+    CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  s3Credentials:
+  - lfa-credentials.ini
+  <<: *butler-secret
+  nfsMountpoint:
+  - name: lsstcam-gen3-butler
+    containerPath: /repo/LSSTCam
+    readOnly: false
+    server: nfs-lsstcam.tu.lsst.org
+    serverPath: /repo/LSSTCam
+  - name: lsstcam-oods-data
+    containerPath: /data
+    readOnly: false
+    server: nfs-lsstcam.tu.lsst.org
+    serverPath: /data
+  resources:
+    limits:
+      cpu: 400m
+      memory: 4000Mi
+    requests:
+      cpu: 40m
+      memory: 800Mi
+  configfile:
+    path: /etc
+    filename: mtoods.yaml
+    content: |
+      defaultInterval: &interval
+          days: 0
+          hours: 0
+          minutes: 0
+          seconds: 0
+
+      ingesterClass:
+          ingesterType: lsst.ctrl.oods.fileIngester
+          ingesterName: FileIngester
+      ingester:
+          imageStagingDirectory: /data/staging/lsstcam/oods
+          butlers:
+              - butler:
+                  instrument: lsst.obs.lsst.LsstCam
+                  class:
+                      import: lsst.ctrl.oods.fileAttendant
+                      name: FileAttendant
+                  stagingDirectory : /data/lsstdata/TTS/lsstcam/oods/gen3butler/raw
+                  badFileDirectory: /data/lsstdata/TTS/lsstcam/oods/gen3butler/badfiles
+                  repoDirectory : /repo/LSSTCam
+                  collections:
+                      - LSSTCam/raw/all
+                  cleanCollections:
+                      - collection: LSSTCam/raw/all
+                        filesOlderThan:
+                            <<: *interval
+                            days: 30
+                  scanInterval:
+                      <<: *interval
+                      hours: 1
+
+          batchSize: 20
+          scanInterval:
+              <<: *interval
+              seconds: 2
+
+      cacheCleaner:
+          # ONLY clean out empty directories here, never files
+          clearEmptyDirectories:
+              -  /data/lsstdata/TTS/lsstcam/oods/gen3butler/raw
+          # clean out empty directories and old files from these directories
+          clearEmptyDirectoriesAndOldFiles:
+              - /data/lsstdata/TTS/lsstcam/oods/gen3butler/badfiles
+              - /data/staging/lsstcam/oods
+              - /data/staging/lsstcam/forwarder
+          scanInterval:
+              <<: *interval
+              hours: 1
+          filesOlderThan:
+              <<: *interval
+              days: 31
+          directoriesEmptyForMoreThan:
+              <<: *interval
+              days: 2
 
 mtptg:
   image:
@@ -206,6 +456,15 @@ mtptg:
     pullPolicy: Always
   env:
     TELESCOPE: MT
+    LSST_KAFKA_TLM_FLUSH_MS: 0
+    LSST_KAFKA_CMDEVT_FLUSH_MS: 0
+  resources:
+    limits:
+      cpu: 1200m
+      memory: 1000Mi
+    requests:
+      cpu: 120m
+      memory: 300Mi
 
 mtrotator-sim:
   enabled: true
@@ -214,3 +473,24 @@ mtrotator-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 400m
+      memory: 660Mi
+    requests:
+      cpu: 40m
+      memory: 220Mi
+
+mtvms-m1m3-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/vms_sim
+    pullPolicy: Always
+  env:
+    RUN_ARG: M1M3
+  resources:
+    limits:
+      cpu: 250m
+    requests:
+      cpu: 25m
+      memory: 20Mi
