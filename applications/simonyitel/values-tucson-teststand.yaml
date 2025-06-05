@@ -253,37 +253,6 @@ mtdometrajectory:
       cpu: 25m
       memory: 230Mi
 
-mtheaderservice-sim:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/headerservice
-    pullPolicy: Always
-  env:
-    URL_SPEC: --lfa_mode s3 --s3instance tuc
-    RUN_ARG: --playback
-    TSTAND_HEADERSERVICE: TUCSON
-    HEADERSERVICE_PLAYLIST_DIR: /project/headerservice
-    CAMERA: mt
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  nfsMountpoint:
-  - name: project-shared
-    containerPath: /project
-    readOnly: false
-    server: nfs-project.tuc.lsst.org
-    serverPath: /project
-  resources:
-    limits:
-      cpu: 2000m
-      memory: 2000Mi
-    requests:
-      cpu: 200m
-      memory: 500Mi
-
 mtm1m3-sim:
   enabled: true
   image:
@@ -359,96 +328,6 @@ mtmount-sim:
     requests:
       cpu: 50m
       memory: 460Mi
-
-mtoods:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/mtoods
-    pullPolicy: Always
-  env:
-    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
-    CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
-    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  s3Credentials:
-  - lfa-credentials.ini
-  <<: *butler-secret
-  nfsMountpoint:
-  - name: lsstcam-gen3-butler
-    containerPath: /repo/LSSTCam
-    readOnly: false
-    server: nfs-lsstcam.tu.lsst.org
-    serverPath: /repo/LSSTCam
-  - name: lsstcam-oods-data
-    containerPath: /data
-    readOnly: false
-    server: nfs-lsstcam.tu.lsst.org
-    serverPath: /data
-  resources:
-    limits:
-      cpu: 400m
-      memory: 4000Mi
-    requests:
-      cpu: 40m
-      memory: 800Mi
-  configfile:
-    path: /etc
-    filename: mtoods.yaml
-    content: |
-      defaultInterval: &interval
-          days: 0
-          hours: 0
-          minutes: 0
-          seconds: 0
-
-      ingesterClass:
-          ingesterType: lsst.ctrl.oods.fileIngester
-          ingesterName: FileIngester
-      ingester:
-          imageStagingDirectory: /data/staging/lsstcam/oods
-          butlers:
-              - butler:
-                  instrument: lsst.obs.lsst.LsstCam
-                  class:
-                      import: lsst.ctrl.oods.fileAttendant
-                      name: FileAttendant
-                  stagingDirectory : /data/lsstdata/TTS/lsstcam/oods/gen3butler/raw
-                  badFileDirectory: /data/lsstdata/TTS/lsstcam/oods/gen3butler/badfiles
-                  repoDirectory : /repo/LSSTCam
-                  collections:
-                      - LSSTCam/raw/all
-                  cleanCollections:
-                      - collection: LSSTCam/raw/all
-                        filesOlderThan:
-                            <<: *interval
-                            days: 30
-                  scanInterval:
-                      <<: *interval
-                      hours: 1
-
-          batchSize: 20
-          scanInterval:
-              <<: *interval
-              seconds: 2
-
-      cacheCleaner:
-          # ONLY clean out empty directories here, never files
-          clearEmptyDirectories:
-              -  /data/lsstdata/TTS/lsstcam/oods/gen3butler/raw
-          # clean out empty directories and old files from these directories
-          clearEmptyDirectoriesAndOldFiles:
-              - /data/lsstdata/TTS/lsstcam/oods/gen3butler/badfiles
-              - /data/staging/lsstcam/oods
-              - /data/staging/lsstcam/forwarder
-          scanInterval:
-              <<: *interval
-              hours: 1
-          filesOlderThan:
-              <<: *interval
-              days: 31
-          directoriesEmptyForMoreThan:
-              <<: *interval
-              days: 2
 
 mtptg:
   image:

@@ -379,7 +379,7 @@ love-nginx:
         },
         "sal": {
           "urlStatus": "https://tucson-teststand.lsst.codes/sasquatch-rest-proxy/brokers",
-          "expectedBrokerList": [6, 7, 8]
+          "expectedBrokerList": [0, 1, 2]
         }
       }
   - name: serious-alarms
@@ -398,7 +398,7 @@ love-nginx:
         },
         "sal": {
           "urlStatus": "https://tucson-teststand.lsst.codes/sasquatch-rest-proxy/brokers",
-          "expectedBrokerList": [6, 7, 8]
+          "expectedBrokerList": [0, 1, 2]
         }
       }
   - name: no-alarms
@@ -417,7 +417,7 @@ love-nginx:
         },
         "sal": {
           "urlStatus": "https://tucson-teststand.lsst.codes/sasquatch-rest-proxy/brokers",
-          "expectedBrokerList": [6, 7, 8]
+          "expectedBrokerList": [0, 1, 2]
         }
       }
 
@@ -599,9 +599,6 @@ love-producer:
   - name: m2ess112
     csc: ESS:112 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtheaderservice
-    csc: MTHeaderService:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: m2hexapod
     csc: MTHexapod:2 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -613,9 +610,6 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtaos
     csc: MTAOS:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtcamera
-    csc: MTCamera:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtdome
     csc: MTDome:0 --log-level 10
@@ -685,12 +679,6 @@ love-producer:
       limits:
         cpu: 300m
         memory: 450Mi
-  - name: mtocps
-    csc: OCPS:3 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtoods
-    csc: MTOODS:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtptg
     csc: MTPtg:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -729,9 +717,6 @@ love-producer:
       limits:
         cpu: 500m
         memory: 600Mi
-  - name: raocps
-    csc: OCPS:101 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ringssess304
     csc: ESS:304 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription

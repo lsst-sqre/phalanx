@@ -18,7 +18,7 @@ atqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 2 --state enabled
     USER_USERNAME: user
-    IMAGE_SERVER_URL: http://lsstcam-mcm.tuc.lsst.org
+    IMAGE_SERVER_URL: http://comcam-mcm.tu.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: USER_USER_PASS
@@ -49,16 +49,6 @@ atqueue:
     readOnly: true
     server: comcam-archiver.tu.lsst.org
     serverPath: /lsstdata/TTS/comcam
-  - name: lsstcam-gen3-butler
-    containerPath: /repo/LSSTCam
-    readOnly: false
-    server: nfs-lsstcam.tu.lsst.org
-    serverPath: /repo/LSSTCam
-  - name: lsstcam-gen3-oods
-    containerPath: /data/lsstdata/TTS/lsstcam
-    readOnly: true
-    server: nfs-lsstcam.tu.lsst.org
-    serverPath: /lsstdata/TTS/lsstcam
   - name: project-shared
     containerPath: /project
     readOnly: false
@@ -132,7 +122,7 @@ mtqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 1 --state enabled
     USER_USERNAME: user
-    IMAGE_SERVER_URL: http://lsstcam-mcm.tuc.lsst.org
+    IMAGE_SERVER_URL: http://comcam-mcm.tu.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: USER_USER_PASS
@@ -163,16 +153,6 @@ mtqueue:
     readOnly: true
     server: comcam-archiver.tu.lsst.org
     serverPath: /lsstdata/TTS/comcam
-  - name: lsstcam-gen3-butler
-    containerPath: /repo/LSSTCam
-    readOnly: false
-    server: nfs-lsstcam.tu.lsst.org
-    serverPath: /repo/LSSTCam
-  - name: lsstcam-gen3-oods
-    containerPath: /data/lsstdata/TTS/lsstcam
-    readOnly: true
-    server: nfs-lsstcam.tu.lsst.org
-    serverPath: /lsstdata/TTS/lsstcam
   - name: project-shared
     containerPath: /project
     readOnly: false
@@ -246,7 +226,7 @@ ocsqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 3 --state enabled
     USER_USERNAME: user
-    IMAGE_SERVER_URL: http://lsstcam-mcm.tuc.lsst.org
+    IMAGE_SERVER_URL: http://comcam-mcm.tu.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: USER_USER_PASS
@@ -277,16 +257,6 @@ ocsqueue:
     readOnly: true
     server: comcam-archiver.tu.lsst.org
     serverPath: /lsstdata/TTS/comcam
-  - name: lsstcam-gen3-butler
-    containerPath: /repo/LSSTCam
-    readOnly: false
-    server: nfs-lsstcam.tu.lsst.org
-    serverPath: /repo/LSSTCam
-  - name: lsstcam-gen3-oods
-    containerPath: /data/lsstdata/TTS/lsstcam
-    readOnly: true
-    server: nfs-lsstcam.tu.lsst.org
-    serverPath: /lsstdata/TTS/lsstcam
   - name: project-shared
     containerPath: /project
     readOnly: false
