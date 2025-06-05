@@ -52,6 +52,13 @@ nightlydigest-backend:
     repository: ts-dockerhub.lsst.org/nightlydigest-backend
     tag: c0041
     pullPolicy: Always
+  env:
+    - name: JIRA_API_HOSTNAME
+      value: rubinobs.atlassian.net
+  envSecrets:
+    - name: JIRA_TOKEN
+      secretName: nightlydigest
+      secretKey: jira-api-token
   resources:
     requests:
       cpu: 150m
