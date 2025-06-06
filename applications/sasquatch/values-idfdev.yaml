@@ -202,8 +202,18 @@ tap:
 
 # Send alerts to squadcast
 kapacitor:
-  envVars:
-    KAPACITOR_HTTPPOST_0_ENDPOINT: "squadcast"
-    KAPACITOR_HTTPPOST_0_URL: "https://api.squadcast.com/v1/incidents/kapacitor/0352cecd87a2fe20cbeda558bf048320e6a0614b"
-    # Is this going to work?
-    KAPACITOR_HTTPPOST_0_HEADERS_Content_Type: "application/json"
+  enabled: true
+  override_config:
+    toml: |+
+      data_dir = "/var/lib/kapacitor"
+
+      [replay]
+        dir = "/var/lib/kapacitor/replay"
+
+      [storage]
+        boltdb = "/var/lib/kapacitor/kapacitor.db"
+
+      [[httppost]]
+        endpoint = "squadcast"
+        url = "https://api.squadcast.com/v1/incidents/kapacitor/0352cecd87a2fe20cbeda558bf048320e6a0614b"
+        headers = { Content-Type = "application/json" }

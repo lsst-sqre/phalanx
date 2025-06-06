@@ -493,6 +493,33 @@ Rubin Observatory's telemetry service
 | kafka-connect-manager.s3Sink.timezone | string | `"UTC"` | The timezone to use when partitioning with TimeBasedPartitioner |
 | kafka-connect-manager.s3Sink.topicsDir | string | `"topics"` | Top level directory to store the data ingested from Kafka |
 | kafka-connect-manager.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka |
+| kapacitor.affinity | object | `{}` |  |
+| kapacitor.image.pullPolicy | string | `"IfNotPresent"` |  |
+| kapacitor.image.repository | string | `"kapacitor"` |  |
+| kapacitor.image.tag | string | `"1.6.4-alpine"` |  |
+| kapacitor.namespaceOverride | string | `""` |  |
+| kapacitor.override_config.toml | string | `nil` |  |
+| kapacitor.persistence.accessMode | string | `"ReadWriteOnce"` |  |
+| kapacitor.persistence.enabled | bool | `true` |  |
+| kapacitor.persistence.size | string | `"8Gi"` |  |
+| kapacitor.rbac.create | bool | `true` |  |
+| kapacitor.rbac.namespaced | bool | `false` |  |
+| kapacitor.resources.limits.cpu | int | `2` |  |
+| kapacitor.resources.limits.memory | string | `"2Gi"` |  |
+| kapacitor.resources.requests.cpu | float | `0.1` |  |
+| kapacitor.resources.requests.memory | string | `"256Mi"` |  |
+| kapacitor.service.type | string | `"ClusterIP"` |  |
+| kapacitor.serviceAccount.annotations | object | `{}` |  |
+| kapacitor.serviceAccount.create | bool | `true` |  |
+| kapacitor.serviceAccount.name | string | `nil` |  |
+| kapacitor.sidecar.image | string | `"kiwigrid/k8s-sidecar:0.1.116"` |  |
+| kapacitor.sidecar.imagePullPolicy | string | `"IfNotPresent"` |  |
+| kapacitor.sidecar.resources | object | `{}` |  |
+| kapacitor.sidecar.sideload.enabled | bool | `false` |  |
+| kapacitor.sidecar.sideload.folder | string | `"/var/lib/kapacitor/sideload"` |  |
+| kapacitor.sidecar.sideload.label | string | `"kapacitor_sideload"` |  |
+| kapacitor.sidecar.sideload.searchNamespace | string | `nil` |  |
+| kapacitor.tolerations | list | `[]` |  |
 | obsenv.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | obsloctap.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | prompt-processing.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
