@@ -1,0 +1,124 @@
+{{- $bl := empty .Values.influxURL }}
+{{- if not $bl }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "kapacitor.fullname" . }}
+  namespace: {{ template "kapacitor.namespace" . }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    app: {{ template "kapacitor.fullname" . }}
+  annotations:
+    # Include a hash of the configmap in the pod template
+    # This means that if the configmap changes, the deployment will be rolled
+    checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+spec:
+  replicas: 1
+  {{- with .Values.strategy }}
+  strategy:
+{{ toYaml . | trim | indent 4 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ template "kapacitor.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "kapacitor.fullname" . }}
+    spec:
+      serviceAccountName: {{ template "kapacitor.serviceAccountName" . }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: KAPACITOR_HOSTNAME
+          value: {{ template "kapacitor.fullname" . }}.{{ .Release.Namespace }}
+        - name: KAPACITOR_INFLUXDB_0_URLS_0
+          value: {{ .Values.influxURL }}
+        {{- range $key, $val := .Values.envVars }}
+        - name: {{ $key }}
+          value: {{ $val | quote }}
+        {{- end }}
+        {{- if .Values.existingSecret }}
+        - name: KAPACITOR_INFLUXDB_0_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: influxdb-user
+              name: {{ .Values.existingSecret }}
+        - name: KAPACITOR_INFLUXDB_0_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: influxdb-password
+              name: {{ .Values.existingSecret }}
+        {{- end }}
+        ports:
+        - containerPort: 9092
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/kapacitor
+        - name: config
+          mountPath: /etc/kapacitor
+{{- if .Values.sidecar.sideload.enabled }}
+        - name: sc-sideload-volume
+          mountPath: {{ .Values.sidecar.sideload.folder | quote }}
+{{- end}}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+{{- if .Values.sidecar.sideload.enabled }}
+      - name: {{ .Chart.Name }}-sc-sideload
+        image: "{{ .Values.sidecar.image }}"
+        imagePullPolicy: {{ .Values.sidecar.imagePullPolicy }}
+        env:
+        - name: METHOD
+          value: WATCH
+        - name: LABEL
+          value: "{{ .Values.sidecar.sideload.label }}"
+        - name: FOLDER
+          value: "/var/lib/kapacitor/sideload"
+        - name: RESOURCE
+          value: "configmap"
+        {{- if .Values.sidecar.sideload.searchNamespace }}
+        - name: NAMESPACE
+          value: "{{ .Values.sidecar.sideload.searchNamespace }}"
+        {{- end }}
+        {{- if .Values.sidecar.skipTlsVerify }}
+        - name: SKIP_TLS_VERIFY
+          value: "{{ .Values.sidecar.skipTlsVerify }}"
+        {{- end }}
+        - name: REQ_METHOD
+          value: POST
+        - name: REQ_URL
+          value: "http://localhost:9092/kapacitor/v1/sideload/reload"
+        resources:
+{{ toYaml .Values.sidecar.resources | indent 12 }}
+        volumeMounts:
+          - name: sc-sideload-volume
+            mountPath: "/var/lib/kapacitor/sideload"
+{{- end }}
+      {{- if .Values.affinity }}
+      affinity:
+{{ toYaml .Values.affinity | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+      {{- end }}
+      volumes:
+        - name: data
+        {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (include "kapacitor.fullname" .) }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
+        - name: config
+          configMap:
+            name: {{ include "kapacitor.fullname" . }}
+      {{- if .Values.sidecar.sideload.enabled }}
+        - name: sc-sideload-volume
+          emptyDir: {}
+      {{- end -}}
+{{- end }}

@@ -36,13 +36,13 @@ dependencies:
     alias: kafka-connect-manager
     condition: kafka-connect-manager.enabled
     version: 1.0.0
+  - name: kapacitor
+    alias: kapacitor
+    condition: kapacitor.enabled
+    version: 1.0.0
   - name: chronograf
     condition: chronograf.enabled
     version: 1.2.6
-    repository: https://helm.influxdata.com/
-  - name: kapacitor
-    condition: kapacitor.enabled
-    version: 1.4.7
     repository: https://helm.influxdata.com/
   - name: kafdrop
     condition: kafdrop.enabled
