@@ -31,7 +31,7 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
-    - name: "scale-test-cutouts"
+    - name: "scale-test-qserv"
       count: 100
       user_spec:
         username_prefix: "bot-mobu-scale-notebook"
@@ -43,10 +43,11 @@ config:
       start_batch_size: 50
       start_batch_wait: "1m"
       business:
-        type: "NotebookRunnerInfinite"
+        type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
-          repo_ref: "u/fe/tap_and_cut"
+          repo_ref: "u/fe/qserv"
+          max_executions: 1
+          idle_time: "10s"
           delete_lab: false
-          notebook_idle_time: "5s"
         restart: true
