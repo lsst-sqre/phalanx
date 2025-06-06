@@ -2,5 +2,10 @@ replicaCount: 4
 
 config:
   gcsProject: "data-curation-prod-fbdb"
-  gcsBucket: "static-us-central1-dp02-hips"
+  datasets:
+    dp02:
+      gcsBucket: "static-us-central1-dp02-hips"
+    dp1:
+      gcsBucket: static-us-central1-dp1-hips
+  defaultDatasetName: "dp02"
   serviceAccount: "crawlspace-hips@science-platform-stable-6994.iam.gserviceaccount.com"
