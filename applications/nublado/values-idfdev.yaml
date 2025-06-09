@@ -78,7 +78,7 @@ controller:
       volumes:
         - name: "home"
           source:
-            serverPath: "/home-share"
+            serverPath: "/home-tiered-share"
             server: "10.234.16.4"
             type: "nfs"
         - name: "rubin"
