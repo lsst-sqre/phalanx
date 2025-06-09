@@ -61,15 +61,29 @@ uws-api-server:
     exportPath: "/lsstdata/TTS/comcam"
     subPath: ""
     readOnly: true
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi
 
 atocps:
-  enabled: false
+  enabled: true
   classifier: ocps1
   image:
     repository: ts-dockerhub.lsst.org/dmocps
     pullPolicy: Always
   env:
     RUN_ARG: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi
 
 ccocps:
   enabled: false
@@ -79,3 +93,10 @@ ccocps:
     pullPolicy: Always
   env:
     RUN_ARG: 2
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi

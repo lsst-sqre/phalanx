@@ -3,6 +3,12 @@ strimzi-kafka:
     monitorLabel:
       lsst.io/monitor: "true"
   kafka:
+    config:
+      auto.create.topics.enable: false
+      log.cleaner.min.compaction.lag.ms: 108000000
+      log.message.timestamp.type: LogAppendTime
+      log.retention.hours: 30
+      log.retention.ms: 108000000
     listeners:
       tls:
         enabled: true
@@ -31,36 +37,55 @@ strimzi-kafka:
   kafkaExporter:
     enabled: true
     enableSaramaLogging: true
+    showAllOffsets: false
     resources:
       requests:
-        cpu: 200m
-        memory: 64Mi
+        cpu: "3"
+        memory: 512Mi
       limits:
-        cpu: 500m
-        memory: 128Mi
-  users:
-    telegraf:
-      enabled: true
+        cpu: "8"
+        memory: 1Gi
   controller:
     enabled: true
     resources:
       requests:
         memory: 8Gi
-        cpu: "1"
+        cpu: "2"
       limits:
         memory: 8Gi
-        cpu: "1"
+        cpu: "2"
   broker:
     enabled: true
+    name: "kafka-local-storage"
+    nodeIds: "[3,4,5]"
     storage:
       size: 500Gi
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kafka-broker
+                  operator: In
+                  values:
+                    - "true"
+    tolerations:
+      - key: "kafka-broker"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
     resources:
       requests:
-        memory: 16Gi
-        cpu: "2"
+        memory: 128Gi
+        cpu: 32
       limits:
-        memory: 16Gi
-        cpu: "2"
+        memory: 128Gi
+        cpu: 32
+  users:
+    replicator:
+      enabled: true
+    elegraf:
+      enabled: true
   registry:
     ingress:
       enabled: true
@@ -68,6 +93,13 @@ strimzi-kafka:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
       hostname: tucson-teststand.lsst.codes
       path: /schema-registry(/|$)(.*)
+  connect:
+    enabled: true
+    config:
+      key.converter: org.apache.kafka.connect.json.JsonConverter
+      key.converter.schemas.enable: false
+  cruiseControl:
+    enabled: true
 
 influxdb:
   persistence:
@@ -75,6 +107,13 @@ influxdb:
   ingress:
     enabled: false
     hostname: tucson-teststand.lsst.codes
+  resources:
+    requests:
+      memory: 64Gi
+      cpu: 8
+    limits:
+      memory: 64Gi
+      cpu: 8
 
 customInfluxDBIngress:
   enabled: true
@@ -119,7 +158,55 @@ telegraf:
       enabled: true
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.MTM1M3" ]
+        [ "lsst.sal.MTM1M3.ackcmd", "lsst.sal.MTM1M3.logevent*", "lsst.sal.MTM1M3.command*" ]
+      debug: true
+    m1m3-tel1:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3.accelerometerData", "lsst.sal.MTM1M3.appliedCylinderForces", "lsst.sal.MTM1M3.appliedForces", "lsst.sal.MTM1M3.gyroData", "lsst.sal.MTM1M3.hardpointActuatorData", "lsst.sal.MTM1M3.hardpointMonitorData" ]
+      debug: true
+      resources:
+        limits:
+          cpu: "6"
+          memory: "2Gi"
+        requests:
+          cpu: "4"
+          memory: "2Gi"
+    m1m3-tel2:
+      enabled: true
+      database: "efd"
+      metric_batch_size: 750
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3.forceActuatorData", "lsst.sal.MTM1M3.outerLoopData", "lsst.sal.MTM1M3.imsData", "lsst.sal.MTM1M3.inclinometerData", "lsst.sal.MTM1M3.powerSupplyData" ]
+      debug: true
+      resources:
+        limits:
+          cpu: "6"
+          memory: "8Gi"
+        requests:
+          cpu: "4"
+          memory: "8Gi"
+    m1m3-tel3:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3.appliedAccelerationForces", "lsst.sal.MTM1M3.appliedAzimuthForces", "lsst.sal.MTM1M3.appliedBalanceForces", "lsst.sal.MTM1M3.appliedElevationForces", "lsst.sal.MTM1M3.appliedThermalForces", "lsst.sal.MTM1M3.appliedVelocityForces", "lsst.sal.MTM1M3.forceActuatorPressure", "lsst.sal.MTM1M3.pidData" ]
+      debug: true
+      resources:
+        limits:
+          cpu: "5"
+          memory: "2Gi"
+        requests:
+          cpu: "4"
+          memory: "2Gi"
+    m1m3ts:
+      enabled: true
+      metric_batch_size: 1500
+      max_undelivered_messages: 4000
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3TS" ]
       debug: true
     m2:
       enabled: true
@@ -175,6 +262,13 @@ telegraf:
       topicRegexps: |
         [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
       debug: true
+    mtvms:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTVMS" ]
+      debug: true
     obsenv:
       enabled: true
       database: "lsst.obsenv"
@@ -186,10 +280,10 @@ telegraf:
   resources:
     limits:
       cpu: "2"
-      memory: "2Gi"
+      memory: "8Gi"
     requests:
-      cpu: "1"
-      memory: "1Gi"
+      cpu: "2"
+      memory: "8Gi"
 
 kafdrop:
   ingress:
