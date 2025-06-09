@@ -25,13 +25,13 @@ strimzi-kafka:
       brokers:
         - broker: 3
           loadBalancerIP: "140.252.146.46"
-          host: sasquatch-tts-kafka-3.lsst.codes
+          host: sasquatch-tts-kafka-0.lsst.codes
         - broker: 4
           loadBalancerIP: "140.252.146.58"
-          host: sasquatch-tts-kafka-4.lsst.codes
+          host: sasquatch-tts-kafka-1.lsst.codes
         - broker: 5
           loadBalancerIP: "140.252.146.47"
-          host: sasquatch-tts-kafka-5.lsst.codes
+          host: sasquatch-tts-kafka-2.lsst.codes
     metricsConfig:
       enabled: true
     storage:
