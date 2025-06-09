@@ -187,16 +187,6 @@ mtaos:
     readOnly: true
     server: comcam-archiver.tu.lsst.org
     serverPath: /lsstdata/TTS/comcam
-  - name: lsstcam-gen3-butler
-    containerPath: /repo/LSSTCam
-    readOnly: false
-    server: nfs-lsstcam.tu.lsst.org
-    serverPath: /repo/LSSTCam
-  - name: lsstcam-gen3-oods
-    containerPath: /data/lsstdata/TTS/lsstcam
-    readOnly: true
-    server: nfs-lsstcam.tu.lsst.org
-    serverPath: /lsstdata/TTS/lsstcam
   - name: scratch
     containerPath: /scratch
     readOnly: false
