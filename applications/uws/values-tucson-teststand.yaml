@@ -1,5 +1,3 @@
-csc_shared:
-  secretsOnly: true
 uws-api-server:
   targetCluster: "tucson-teststand"
   hostname: tucson-teststand.lsst.codes
