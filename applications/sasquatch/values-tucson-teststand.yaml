@@ -75,7 +75,7 @@ strimzi-kafka:
   users:
     replicator:
       enabled: true
-    elegraf:
+    telegraf:
       enabled: true
   registry:
     ingress:
