@@ -23,30 +23,34 @@ strimzi-kafka:
         loadBalancerIP: "140.252.146.59"
         host: sasquatch-tts-kafka-bootstrap.lsst.codes
       brokers:
-        - broker: 0
-          loadBalancerIP: "140.252.146.46"
+        - broker: 3
+          loadBalancerIP: "140.252.147.202"
           host: sasquatch-tts-kafka-0.lsst.codes
-        - broker: 1
-          loadBalancerIP: "140.252.146.58"
+        - broker: 4
+          loadBalancerIP: "140.252.147.203"
           host: sasquatch-tts-kafka-1.lsst.codes
-        - broker: 2
-          loadBalancerIP: "140.252.146.47"
+        - broker: 5
+          loadBalancerIP: "140.252.147.204"
           host: sasquatch-tts-kafka-2.lsst.codes
     metricsConfig:
       enabled: true
+    storage:
+      storageClassName: "rook-ceph-block"
   kafkaExporter:
     enabled: true
     enableSaramaLogging: true
     showAllOffsets: false
     resources:
       requests:
-        cpu: "3"
-        memory: 512Mi
+        cpu: 1
+        memory: 128Mi
       limits:
-        cpu: "8"
-        memory: 1Gi
+        cpu: 2
+        memory: 256Mi
   controller:
     enabled: true
+    storage:
+      storageClassName: "rook-ceph-block"
     resources:
       requests:
         memory: 8Gi
@@ -56,35 +60,22 @@ strimzi-kafka:
         cpu: "2"
   broker:
     enabled: true
-    name: "kafka-local-storage"
+    name: "kafka"
     nodeIds: "[3,4,5]"
     storage:
       size: 500Gi
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kafka-broker
-                  operator: In
-                  values:
-                    - "true"
-    tolerations:
-      - key: "kafka-broker"
-        operator: "Equal"
-        value: "true"
-        effect: "NoSchedule"
+      storageClassName: "rook-ceph-block"
     resources:
       requests:
-        memory: 128Gi
-        cpu: 32
+        memory: 16Gi
+        cpu: 4
       limits:
-        memory: 128Gi
-        cpu: 32
+        memory: 16Gi
+        cpu: 4
   users:
     replicator:
       enabled: true
-    elegraf:
+    telegraf:
       enabled: true
   registry:
     ingress:
@@ -93,11 +84,6 @@ strimzi-kafka:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
       hostname: tucson-teststand.lsst.codes
       path: /schema-registry(/|$)(.*)
-  connect:
-    enabled: true
-    config:
-      key.converter: org.apache.kafka.connect.json.JsonConverter
-      key.converter.schemas.enable: false
   cruiseControl:
     enabled: true
 
@@ -339,8 +325,8 @@ backup:
 obsenv:
   enabled: true
 
-control-system:
+consdb:
   enabled: true
 
-consdb:
+control-system:
   enabled: true
