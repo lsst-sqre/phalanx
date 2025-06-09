@@ -379,7 +379,7 @@ love-nginx:
         },
         "sal": {
           "urlStatus": "https://tucson-teststand.lsst.codes/sasquatch-rest-proxy/brokers",
-          "expectedBrokerList": [0, 1, 2]
+          "expectedBrokerList": [3, 4, 5]
         }
       }
   - name: serious-alarms
@@ -398,7 +398,7 @@ love-nginx:
         },
         "sal": {
           "urlStatus": "https://tucson-teststand.lsst.codes/sasquatch-rest-proxy/brokers",
-          "expectedBrokerList": [0, 1, 2]
+          "expectedBrokerList": [3, 4, 5]
         }
       }
   - name: no-alarms

@@ -57,7 +57,7 @@ strimzi-kafka:
   broker:
     enabled: true
     name: "kafka-local-storage"
-    nodeIds: "[0,1,2]"
+    nodeIds: "[3,4,5]"
     storage:
       size: 500Gi
     affinity:
