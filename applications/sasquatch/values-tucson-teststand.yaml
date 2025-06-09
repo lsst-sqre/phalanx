@@ -64,6 +64,7 @@ strimzi-kafka:
     nodeIds: "[3,4,5]"
     storage:
       size: 500Gi
+      storageClassName: "rook-ceph-block"
     resources:
       requests:
         memory: 128Gi
