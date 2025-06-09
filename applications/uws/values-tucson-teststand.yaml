@@ -86,7 +86,7 @@ atocps:
       memory: 100Mi
 
 ccocps:
-  enabled: false
+  enabled: true
   classifier: ocps2
   image:
     repository: ts-dockerhub.lsst.org/dmocps
