@@ -67,11 +67,11 @@ strimzi-kafka:
       storageClassName: "rook-ceph-block"
     resources:
       requests:
-        memory: 128Gi
-        cpu: 32
+        memory: 16Gi
+        cpu: 4
       limits:
-        memory: 128Gi
-        cpu: 32
+        memory: 16Gi
+        cpu: 4
   users:
     replicator:
       enabled: true
