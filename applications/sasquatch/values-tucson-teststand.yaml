@@ -23,13 +23,13 @@ strimzi-kafka:
         loadBalancerIP: "140.252.146.59"
         host: sasquatch-tts-kafka-bootstrap.lsst.codes
       brokers:
-        - broker: 3
+        - broker: 0
           loadBalancerIP: "140.252.146.46"
           host: sasquatch-tts-kafka-0.lsst.codes
-        - broker: 4
+        - broker: 1
           loadBalancerIP: "140.252.146.58"
           host: sasquatch-tts-kafka-1.lsst.codes
-        - broker: 5
+        - broker: 2
           loadBalancerIP: "140.252.146.47"
           host: sasquatch-tts-kafka-2.lsst.codes
     metricsConfig:
@@ -49,6 +49,8 @@ strimzi-kafka:
         memory: 1Gi
   controller:
     enabled: true
+    storage:
+      storageClassName: "rook-ceph-block"
     resources:
       requests:
         memory: 8Gi
@@ -62,20 +64,6 @@ strimzi-kafka:
     nodeIds: "[3,4,5]"
     storage:
       size: 500Gi
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kafka-broker
-                  operator: In
-                  values:
-                    - "true"
-    tolerations:
-      - key: "kafka-broker"
-        operator: "Equal"
-        value: "true"
-        effect: "NoSchedule"
     resources:
       requests:
         memory: 128Gi
