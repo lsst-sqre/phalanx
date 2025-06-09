@@ -325,5 +325,8 @@ backup:
 obsenv:
   enabled: true
 
+consdb:
+  enabled: true
+
 control-system:
   enabled: true
