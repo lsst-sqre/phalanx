@@ -91,8 +91,8 @@ atscheduler:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
-    server: nfs-scratch.tu.lsst.org
-    serverPath: /scratch/scheduler
+    server: nfs-project.tu.lsst.org
+    serverPath: /project/scheduler
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
@@ -195,8 +195,8 @@ mtscheduler:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
-    server: nfs-scratch.tu.lsst.org
-    serverPath: /scratch/scheduler
+    server: nfs-project.tu.lsst.org
+    serverPath: /project/scheduler
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
@@ -299,8 +299,8 @@ ocsscheduler:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
-    server: nfs-scratch.tu.lsst.org
-    serverPath: /scratch/scheduler
+    server: nfs-project.tu.lsst.org
+    serverPath: /project/scheduler
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
