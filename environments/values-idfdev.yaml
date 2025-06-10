@@ -16,7 +16,7 @@ vaultPathPrefix: "secret/phalanx/idfdev"
 applications:
   butler: true
   datalinker: true
-  filestore-backup: true
+  filestore-backup: false
   flink: true
   ghostwriter: true
   fspurger: true
