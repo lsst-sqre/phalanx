@@ -1,25 +1,14 @@
-## kapacitor image version
-## ref: https://hub.docker.com/r/library/kapacitor/tags/
-##
-image:
-  repository: "kapacitor"
-  tag: "1.6.4-alpine"
-  pullPolicy: "IfNotPresent"
+# Default values for Kapacitor
 
-## Deployment Strategy type
-# strategy:
-#   type: Recreate
-
-## Specify a service type, defaults to NodePort
-## ref: http://kubernetes.io/docs/user-guide/services/
-##
 service:
+  # -- K8s Service type; expose (if desired) with LoadBalancer or NodePort
   type: ClusterIP
-## Provide a literal TOML config to the pod
-##
+
 override_config:
+  # -- If specified, replace pod config with this TOML
+  # @default -- None, must be specified if you want to override default.
   toml: ~
-  # Provide a literal TOML config
+  # Provide a literal TOML config like so:
   # toml: |+
   #  data_dir = "/var/lib/kapacitor"
   #
@@ -28,87 +17,38 @@ override_config:
   #
   #  [storage]
   #    boltdb = "/var/lib/kapacitor/kapacitor.db"
-## Persist data to a persistent volume
-## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
-##
+
 persistence:
-  enabled: true
-  ## kapacitor data Persistent Volume Storage Class
-  ## If defined, storageClassName: <storageClass>
-  ## If set to "-", storageClassName: "", which disables dynamic provisioning
-  ## If undefined (the default) or set to null, no storageClassName spec is
-  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-  ##   GKE, AWS & OpenStack)
-  ##
-  # storageClass: "-"
+  # -- If undefined or null, default provisioner (gp2 on AWS, standard on GKE, AWS & OpenStack); "-" disables dynamic provisioning
+  storageClass: null
+  # -- Access mode for persistent volume. Usually should be left alone.
   accessMode: ReadWriteOnce
-  size: 8Gi
-  # existingClaim: ""
+  # -- If dynamic provisioning is disabled, use this PVC name for storage
+  existingClaim: ""
 
-## Configure resource requests and limits
-## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-##
-resources:
-  requests:
-    memory: 256Mi
-    cpu: 0.1
-  limits:
-    memory: 2Gi
-    cpu: 2
-
-## Set the environment variables for kapacitor (or anything else you want to use)
-## ref: https://hub.docker.com/_/kapacitor/
-## ref: https://docs.influxdata.com/kapacitor/latest/administration/configuration/
-##
-# Examples below
-#
-# envVars:
-#   KAPACITOR_SLACK_ENABLED: true
-#   KAPACITOR_SLACK_URL: "http://slack.com/xxxxx/xxxxx/xxxx/xxxxxxx"
-#   KAPACITOR_HTTP_LOG_ENABLED: true
-#   KAPACITOR_LOGGING_LEVEL: "INFO"
-#
-# or, at your terminal, with
-#
-# helm install --name kapacitor-rls --set influxURL=http://influxurl.com,envVars.KAPACITOR_SLACK_ENABLED=true,envVars.KAPACITOR_SLACK_URL="http://slack.com/xxxxx/xxxxx/xxxx/xxxxxxx" influxdata/kapacitor
-
-## Set the URL of InfluxDB instance to create subscription on
-## ref: https://docs.influxdata.com/kapacitor/v1.1/introduction/getting_started/
-##
-# influxURL: http://influxdb-influxdb.tick:8086
-
-## Name of an existing Secrect used to set the environment variables for the
-## InfluxDB user and password. The expected keys in the secret are
-## `influxdb-user` and `influxdb-password`.
-##
-# existingSecret: influxdb-auth
-
-## Affinity for pod assignment
-## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-##
+# -- Affinity for pod assignment
+# @default -- None, must be set if you want to control pod affinity
 affinity: {}
 
-## Tolerations for pod assignment
-## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-##
+# -- Tolerations for pod assignment
+# @default -- None, must be set if you want tolerations
 tolerations: []
-# - key: "key"
-#   operator: "Equal|Exists"
-#   value: "value"
-#   effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
 
-## Role based access control
+# -- Role based access control
+# @default -- Enabled, cluster-scoped. See kapacitor `values.yaml`
 rbac:
   create: true
   namespaced: false
 
-## Service account
+# -- Service account
+# @default -- Enabled. See kapacitor `values.yaml`
 serviceAccount:
   annotations: {}
   create: true
   name:
 
-## Sidecars that collect the configmaps with specified label and stores the included files into the respective folders
+# -- Sidecars to collect the configmaps with specified label and mount their data into specified folders
+# @default -- See kapacitor `values.yaml`
 sidecar:
   image: kiwigrid/k8s-sidecar:0.1.116
   imagePullPolicy: IfNotPresent
@@ -127,5 +67,5 @@ sidecar:
     searchNamespace: null
     folder: /var/lib/kapacitor/sideload
 
-## Override the deployment namespace
+# -- Override the deployment namespace
 namespaceOverride: ""

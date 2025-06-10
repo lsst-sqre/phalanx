@@ -2,8 +2,6 @@
 
 InfluxDB's native data processing engine. It can process both stream and batch data from InfluxDB.
 
-**Homepage:** <https://www.influxdata.com/time-series-platform/kapacitor/>
-
 ## Source Code
 
 * <https://github.com/influxdata/kapacitor>
@@ -12,30 +10,14 @@ InfluxDB's native data processing engine. It can process both stream and batch d
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"kapacitor"` |  |
-| image.tag | string | `"1.6.4-alpine"` |  |
-| namespaceOverride | string | `""` |  |
-| override_config.toml | string | `nil` |  |
-| persistence.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.enabled | bool | `true` |  |
-| persistence.size | string | `"8Gi"` |  |
-| rbac.create | bool | `true` |  |
-| rbac.namespaced | bool | `false` |  |
-| resources.limits.cpu | int | `2` |  |
-| resources.limits.memory | string | `"2Gi"` |  |
-| resources.requests.cpu | float | `0.1` |  |
-| resources.requests.memory | string | `"256Mi"` |  |
-| service.type | string | `"ClusterIP"` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.create | bool | `true` |  |
-| serviceAccount.name | string | `nil` |  |
-| sidecar.image | string | `"kiwigrid/k8s-sidecar:0.1.116"` |  |
-| sidecar.imagePullPolicy | string | `"IfNotPresent"` |  |
-| sidecar.resources | object | `{}` |  |
-| sidecar.sideload.enabled | bool | `false` |  |
-| sidecar.sideload.folder | string | `"/var/lib/kapacitor/sideload"` |  |
-| sidecar.sideload.label | string | `"kapacitor_sideload"` |  |
-| sidecar.sideload.searchNamespace | string | `nil` |  |
-| tolerations | list | `[]` |  |
+| affinity | object | None, must be set if you want to control pod affinity | Affinity for pod assignment |
+| namespaceOverride | string | `""` | Override the deployment namespace |
+| override_config.toml | string | None, must be specified if you want to override default. | If specified, replace pod config with this TOML |
+| persistence.accessMode | string | `"ReadWriteOnce"` | Access mode for persistent volume. Usually should be left alone. |
+| persistence.existingClaim | string | `""` | If dynamic provisioning is disabled, use this PVC name for storage |
+| persistence.storageClass | string | `nil` | If undefined or null, default provisioner (gp2 on AWS, standard on GKE, AWS & OpenStack); "-" disables dynamic provisioning |
+| rbac | object | Enabled, cluster-scoped. See kapacitor `values.yaml` | Role based access control |
+| service.type | string | `"ClusterIP"` | K8s Service type; expose (if desired) with LoadBalancer or NodePort |
+| serviceAccount | object | Enabled. See kapacitor `values.yaml` | Service account |
+| sidecar | object | See kapacitor `values.yaml` | Sidecars to collect the configmaps with specified label and mount their data into specified folders |
+| tolerations | list | None, must be set if you want tolerations | Tolerations for pod assignment |
