@@ -1,0 +1,71 @@
+# Default values for Kapacitor
+
+service:
+  # -- K8s Service type; expose (if desired) with LoadBalancer or NodePort
+  type: ClusterIP
+
+override_config:
+  # -- If specified, replace pod config with this TOML
+  # @default -- None, must be specified if you want to override default.
+  toml: ~
+  # Provide a literal TOML config like so:
+  # toml: |+
+  #  data_dir = "/var/lib/kapacitor"
+  #
+  #  [replay]
+  #    dir = "/var/lib/kapacitor/replay"
+  #
+  #  [storage]
+  #    boltdb = "/var/lib/kapacitor/kapacitor.db"
+
+persistence:
+  # -- If undefined or null, default provisioner (gp2 on AWS, standard on GKE, AWS & OpenStack); "-" disables dynamic provisioning
+  storageClass: null
+  # -- Access mode for persistent volume. Usually should be left alone.
+  accessMode: ReadWriteOnce
+  # -- If dynamic provisioning is disabled, use this PVC name for storage
+  existingClaim: ""
+
+# -- Affinity for pod assignment
+# @default -- None, must be set if you want to control pod affinity
+affinity: {}
+
+# -- Tolerations for pod assignment
+# @default -- None, must be set if you want tolerations
+tolerations: []
+
+# -- Role based access control
+# @default -- Enabled, cluster-scoped. See kapacitor `values.yaml`
+rbac:
+  create: true
+  namespaced: false
+
+# -- Service account
+# @default -- Enabled. See kapacitor `values.yaml`
+serviceAccount:
+  annotations: {}
+  create: true
+  name:
+
+# -- Sidecars to collect the configmaps with specified label and mount their data into specified folders
+# @default -- See kapacitor `values.yaml`
+sidecar:
+  image: kiwigrid/k8s-sidecar:0.1.116
+  imagePullPolicy: IfNotPresent
+  resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 100Mi
+    # requests:
+    #   cpu: 50m
+    #   memory: 50Mi
+  ## skipTlsVerify Set to true to skip tls verification for kube api calls
+  # skipTlsVerify: true
+  sideload:
+    enabled: false
+    label: kapacitor_sideload
+    searchNamespace: null
+    folder: /var/lib/kapacitor/sideload
+
+# -- Override the deployment namespace
+namespaceOverride: ""

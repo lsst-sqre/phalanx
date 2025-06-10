@@ -84,12 +84,14 @@ Rubin Observatory's telemetry service
 | kapacitor.enabled | bool | `true` | Whether to enable Kapacitor |
 | kapacitor.envVars | object | See `values.yaml` | Additional environment variables to set |
 | kapacitor.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
-| kapacitor.image.repository | string | `"kapacitor"` | Docker image to use for Kapacitor |
+| kapacitor.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Kapacitor |
+| kapacitor.image.repository | string | `"docker.io/library/kapacitor"` | Docker image to use for Kapacitor |
 | kapacitor.image.tag | string | `"1.7.7"` | Tag to use for Kapacitor |
 | kapacitor.influxURL | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB connection URL |
 | kapacitor.persistence.enabled | bool | `true` | Whether to enable Kapacitor data persistence |
 | kapacitor.persistence.size | string | `"100Gi"` | Size of storage to request if enabled |
 | kapacitor.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Kapacitor |
+| kapacitor.squadcast | object | False. If set to true, you need to create the URL as a secret | Enable Squadcast alerts |
 | kapacitor.strategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
 | obsenv.enabled | bool | `false` | Whether to enable the obsenv subchart |
 | obsloctap.enabled | bool | `false` | Whether to enable the obsloctap subchart |
@@ -493,6 +495,17 @@ Rubin Observatory's telemetry service
 | kafka-connect-manager.s3Sink.timezone | string | `"UTC"` | The timezone to use when partitioning with TimeBasedPartitioner |
 | kafka-connect-manager.s3Sink.topicsDir | string | `"topics"` | Top level directory to store the data ingested from Kafka |
 | kafka-connect-manager.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka |
+| kapacitor.affinity | object | None, must be set if you want to control pod affinity | Affinity for pod assignment |
+| kapacitor.namespaceOverride | string | `""` | Override the deployment namespace |
+| kapacitor.override_config.toml | string | None, must be specified if you want to override default. | If specified, replace pod config with this TOML |
+| kapacitor.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode for persistent volume. Usually should be left alone. |
+| kapacitor.persistence.existingClaim | string | `""` | If dynamic provisioning is disabled, use this PVC name for storage |
+| kapacitor.persistence.storageClass | string | `nil` | If undefined or null, default provisioner (gp2 on AWS, standard on GKE, AWS & OpenStack); "-" disables dynamic provisioning |
+| kapacitor.rbac | object | Enabled, cluster-scoped. See kapacitor `values.yaml` | Role based access control |
+| kapacitor.service.type | string | `"ClusterIP"` | K8s Service type; expose (if desired) with LoadBalancer or NodePort |
+| kapacitor.serviceAccount | object | Enabled. See kapacitor `values.yaml` | Service account |
+| kapacitor.sidecar | object | See kapacitor `values.yaml` | Sidecars to collect the configmaps with specified label and mount their data into specified folders |
+| kapacitor.tolerations | list | None, must be set if you want tolerations | Tolerations for pod assignment |
 | obsenv.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | obsloctap.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | prompt-processing.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |

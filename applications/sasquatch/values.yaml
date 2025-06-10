@@ -255,10 +255,11 @@ kapacitor:
 
   image:
     # -- Docker image to use for Kapacitor
-    repository: kapacitor
-
+    repository: docker.io/library/kapacitor
     # -- Tag to use for Kapacitor
     tag: 1.7.7
+    # -- Pull policy for Kapacitor
+    pullPolicy: "IfNotPresent"
 
   strategy:
     # -- Deployment strategy, use recreate with persistence enabled
@@ -267,12 +268,16 @@ kapacitor:
   persistence:
     # -- Whether to enable Kapacitor data persistence
     enabled: true
-
     # -- Size of storage to request if enabled
     size: 100Gi
 
   # -- InfluxDB connection URL
   influxURL: http://sasquatch-influxdb.sasquatch:8086
+
+  # -- Enable Squadcast alerts
+  # @default -- False. If set to true, you need to create the URL as a secret
+  squadcast:
+    enabled: false
 
   # -- Use `influxdb-user` and `influxdb-password` keys from this secret
   existingSecret: sasquatch

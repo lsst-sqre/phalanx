@@ -199,3 +199,9 @@ backup:
 
 tap:
   enabled: true
+
+# Send alerts to squadcast
+kapacitor:
+  enabled: true
+  squadcast:
+    enabled: true
