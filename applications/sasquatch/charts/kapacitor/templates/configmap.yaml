@@ -15,10 +15,10 @@ data:
 
     [storage]
       boltdb = "/var/lib/kapacitor/kapacitor.db"
-{{ with .Values.squadcastURL }}
+{{ with .Values.squadcast.enabled }}
     [[httppost]]
       endpoint = "squadcast"
-      url = {{ . | quote }}
       headers = { Content-Type = "application/json" }
+      # URL lives in env var KAPACITOR_HTTPPOST_0_URL
 {{- end }}
 {{- end }}

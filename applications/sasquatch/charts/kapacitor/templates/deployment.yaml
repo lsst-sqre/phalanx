@@ -1,5 +1,3 @@
-{{- $bl := empty .Values.influxURL }}
-{{- if not $bl }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -54,6 +52,13 @@ spec:
               key: influxdb-password
               name: {{ .Values.existingSecret }}
         {{- end }}
+        {{- if .Values.squadcast.enabled }}
+        - name: KAPACITOR_HTTPPOST_0_URL
+          valueFrom:
+            secretKeyRef:
+              key: squadcast-webhook
+              name: sasquatch
+        {{- end}}
         ports:
         - containerPort: 9092
         volumeMounts:
@@ -64,7 +69,7 @@ spec:
 {{- if .Values.sidecar.sideload.enabled }}
         - name: sc-sideload-volume
           mountPath: {{ .Values.sidecar.sideload.folder | quote }}
-{{- end}}
+{{- end }}
         resources:
 {{ toYaml .Values.resources | indent 12 }}
 {{- if .Values.sidecar.sideload.enabled }}
@@ -121,4 +126,3 @@ spec:
         - name: sc-sideload-volume
           emptyDir: {}
       {{- end -}}
-{{- end }}

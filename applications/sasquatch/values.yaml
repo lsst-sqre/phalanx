@@ -274,9 +274,10 @@ kapacitor:
   # -- InfluxDB connection URL
   influxURL: http://sasquatch-influxdb.sasquatch:8086
 
-  # -- Squadcast webhook URL
-  # @default -- None, must be set if you want to send squadcast alerts
-  squadcastURL: null
+  # -- Enable Squadcast alerts
+  # @default -- False. If set to true, you need to create the URL as a secret
+  squadcast:
+    enabled: false
 
   # -- Use `influxdb-user` and `influxdb-password` keys from this secret
   existingSecret: sasquatch

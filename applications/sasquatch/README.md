@@ -91,7 +91,7 @@ Rubin Observatory's telemetry service
 | kapacitor.persistence.enabled | bool | `true` | Whether to enable Kapacitor data persistence |
 | kapacitor.persistence.size | string | `"100Gi"` | Size of storage to request if enabled |
 | kapacitor.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Kapacitor |
-| kapacitor.squadcastURL | string | None, must be set if you want to send squadcast alerts | Squadcast webhook URL |
+| kapacitor.squadcast | object | False. If set to true, you need to create the URL as a secret | Enable Squadcast alerts |
 | kapacitor.strategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
 | obsenv.enabled | bool | `false` | Whether to enable the obsenv subchart |
 | obsloctap.enabled | bool | `false` | Whether to enable the obsloctap subchart |
