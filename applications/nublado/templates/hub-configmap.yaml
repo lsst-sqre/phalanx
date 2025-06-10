@@ -52,7 +52,7 @@ data:
     # Turn off restart after n consecutive failures.
     c.Spawner.consecutive_failure_limit = 0
 
-    # Landing page.  Override to provide a custom landing page.
+    # Override to specify custom landing pages.
     c.Spawner.default_url = "{{ .Values.hub.landingPage }}"
 
     # Only poll labs every five minutes because that's how frequently the
