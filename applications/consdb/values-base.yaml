@@ -8,7 +8,7 @@ lfa:
 hinfo:
   latiss:
     enable: true
-    tag: "25.5.2"
+    tag: "tickets-DM-51220"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcomcam:
     enable: false
