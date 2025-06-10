@@ -95,6 +95,7 @@ Rubin Observatory's telemetry service
 | obsloctap.enabled | bool | `false` | Whether to enable the obsloctap subchart |
 | prompt-processing.enabled | bool | `false` | Whether to enable the prompt-processing subchart |
 | rest-proxy.enabled | bool | `false` | Whether to enable the REST proxy |
+| scimma.enabled | bool | `false` | Whether to enable the scimma subchart |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations |
 | strimzi-kafka | object | `{}` |  |
 | strimzi-registry-operator.clusterName | string | `"sasquatch"` | Name of the Strimzi Kafka cluster |

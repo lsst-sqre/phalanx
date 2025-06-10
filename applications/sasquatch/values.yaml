@@ -333,6 +333,10 @@ consdb:
   # -- Whether to enable the consdb subchart
   enabled: false
 
+scimma:
+  # -- Whether to enable the scimma subchart
+  enabled: false
+
 data-transfer-monitoring:
   # -- Whether to enable the data-transfer-monitoring subchart
   enabled: false
