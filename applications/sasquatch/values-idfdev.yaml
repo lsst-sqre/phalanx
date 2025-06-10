@@ -203,4 +203,5 @@ tap:
 # Send alerts to squadcast
 kapacitor:
   enabled: true
-  squadcastURL: https://api.squadcast.com/v1/incidents/kapacitor/0352cecd87a2fe20cbeda558bf048320e6a0614b
+  squadcast:
+    enabled: true

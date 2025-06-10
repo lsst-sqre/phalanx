@@ -1,5 +1,4 @@
 {{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
-{{- if .Values.influxURL }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -20,7 +19,6 @@ spec:
   storageClassName: ""
 {{- else }}
   storageClassName: "{{ .Values.persistence.storageClass }}"
-{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
