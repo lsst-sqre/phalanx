@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: producer-config
+data:
+  config.yaml: |
+{{ .Values.myConfigFile | indent 4 }}

@@ -17,5 +17,6 @@ Argo CD project: ``telescope``
    love/index
    obsenv-management/index
    obssys/index
+   rubin-too-producer/index
    simonyitel/index
    uws/index
