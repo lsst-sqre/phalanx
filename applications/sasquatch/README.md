@@ -517,6 +517,7 @@ Rubin Observatory's telemetry service
 | rest-proxy.schemaregistry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema registry URL |
 | rest-proxy.service.port | int | `8082` | Kafka REST proxy service port |
 | rest-proxy.tolerations | list | `[]` | Tolerations configuration |
+| scimma.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | square-events.cluster.name | string | `"sasquatch"` |  |
 | strimzi-kafka.broker.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for broker pod assignment |
 | strimzi-kafka.broker.enabled | bool | `false` | Enable node pool for the kafka brokers |

@@ -1,0 +1,5 @@
+apiVersion: v2
+name: scimma
+version: 1.0.0
+description: Sasquatch configuration for SCIMMA
+type: application
