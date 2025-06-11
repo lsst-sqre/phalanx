@@ -66,8 +66,14 @@ s3:
   endpointUrl: ""
   # -- If set, get S3 credentials from this application's Vault secret.
   auth_env: true
+  # -- If set, get a S3 credential file from this application's Vault secret.
+  cred_file_auth: false
+  # -- If set, specify a S3 credential profile.
+  aws_profile: ""
   # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
   disableBucketValidation: 0
+  # -- If set, configure S3 checksum options.
+  checksum: WHEN_REQUIRED
 
 # -- The URI to a microservice that maps image metadata to a file location.
 # If empty, Prompt Processing does not use a microservice.
