@@ -20,7 +20,7 @@ image:
 ingress:
   # -- Additional annotations for the ingress rule
   hostname: ""
-  nginx.ingress.kubernetes.io/preserve-trailing-slash: "false"
+  nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
 
 # -- Affinity rules for the eups-distributor deployment pod
 affinity: {}
