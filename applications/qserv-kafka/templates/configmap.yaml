@@ -20,6 +20,9 @@ data:
   QSERV_KAFKA_QSERV_DATABASE_URL: {{ .Values.config.qservDatabaseUrl | quote }}
   QSERV_KAFKA_QSERV_POLL_INTERVAL: {{ .Values.config.qservPollInterval | quote }}
   QSERV_KAFKA_QSERV_REST_MAX_CONNECTIONS: {{ .Values.config.qservRestMaxConnections | quote }}
+  {{- if not .Values.config.qservRestSendApiVersion }}
+  QSERV_KAFKA_QSERV_REST_SEND_API_VERSION: "false"
+  {{- end }}
   QSERV_KAFKA_QSERV_REST_TIMEOUT: {{ .Values.config.qservRestTimeout | quote }}
   QSERV_KAFKA_QSERV_REST_URL: {{ .Values.config.qservRestUrl | quote }}
   QSERV_KAFKA_QSERV_UPLOAD_TIMEOUT: {{ .Values.config.qservUploadTimeout | quote }}
