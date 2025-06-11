@@ -59,7 +59,7 @@ prompt-keda:
     imageBucket: ""
     # @default -- None, must be set
     endpointUrl: ""
-    # -- If set, get S3 credentials from this application's Vault secret.
+    # -- If set, define environment variables with S3 credentials from this application's Vault secret.
     auth_env: true
     # -- If set, get a S3 credential file from this application's Vault secret.
     cred_file_auth: false
