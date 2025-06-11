@@ -27,6 +27,7 @@ prompt-keda:
   s3:
     imageBucket: rubin-pp-dev
     endpointUrl: https://s3dfrgw.slac.stanford.edu
+    aws_profile: prompt-processing-dev
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
