@@ -65,6 +65,7 @@
 | applications.prompt-redis | bool | `false` | Enable the prompt-redis application |
 | applications.qserv-kafka | bool | `false` | Enable the qserv-kafka application |
 | applications.rubin-rag | bool | `false` | Enable the rubin-rag application |
+| applications.rubin-too-producer | bool | `false` | Enable the rubin-too-producer application |
 | applications.rubintv | bool | `false` | Enable the rubintv application |
 | applications.rubintv-dev | bool | `false` | Enable the rubintv-dev application |
 | applications.s3proxy | bool | `false` | Enable the s3proxy application |
