@@ -1,6 +1,6 @@
 image:
-  repository: ts-dockerhub.lsst.org/rapid-analysis
-  tag: c0041
+  repository: ghcr.io/lsst-sitcom/rubintv_production
+  tag: tickets-DM-51197
   pullPolicy: Always
 location: SUMMIT
 siteTag: summit
@@ -13,6 +13,8 @@ securityContext:
   uid: 73006
   gid: 73006
   BUTLER_ROLLOUT_PAUSE: 1.0
+  DEPLOY_BRANCH: deploy-summit
+  RA_PULL_DIRECTORIES: "drp_pipe donut_viz ts_wep atmospec summit_utils summit_extras rubintv_production"
 scripts:
 ###
 ### AuxTel pods
