@@ -222,6 +222,9 @@ applications:
   # -- Enable the rubintv-dev application
   rubintv-dev: false
 
+  # -- Enable the rubin-too-producer application
+  rubin-too-producer: false
+
   # -- Enable the s3proxy application
   s3proxy: false
 
