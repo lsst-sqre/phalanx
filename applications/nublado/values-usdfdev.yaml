@@ -15,6 +15,7 @@ controller:
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
         DAX_APDB_INDEX_URI: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
         HUB_ROUTE: "/nb/hub"
+        HOMEDIR_SCHEMA: "initialThenUsername"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "rubin"
         RSP_SITE_TYPE: "staff"
