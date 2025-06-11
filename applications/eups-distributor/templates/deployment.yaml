@@ -47,7 +47,7 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/stack"
+              path: "/stack/"
               port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
