@@ -65,9 +65,9 @@ s3:
   # @default -- None, must be set
   endpointUrl: ""
   # -- If set, define environment variables with S3 credentials from this application's Vault secret.
-  auth_env: true
+  auth_env: false
   # -- If set, get a S3 credential file from this application's Vault secret.
-  cred_file_auth: false
+  cred_file_auth: true
   # -- If set, specify a S3 credential profile.
   aws_profile: ""
   # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
