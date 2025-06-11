@@ -26,7 +26,8 @@ Qserv Kafka bridge
 | config.qservDatabasePoolSize | int | `2` | Database pool size. This is the number of MySQL connections that will be held open regardless of load. This should generally be set to the same as `maxWorkerJobs`. |
 | config.qservDatabaseUrl | string | None, must be set | URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`) |
 | config.qservPollInterval | string | `"1s"` | Interval at which Qserv is polled for query status in Safir `parse_timedelta` format |
-| config.qservRestMaxConnections | int | `20` | Maximum simultaneous connections to open to the REST API. |
+| config.qservRestMaxConnections | int | `20` | Maximum simultaneous connections to open to the REST API |
+| config.qservRestSendApiVersion | bool | `true` | Whether to send the expected API version in REST API calls to Qserv |
 | config.qservRestTimeout | string | `"30s"` | Timeout for REST API calls in Safir `parse_timedelta` format. This includes time spent waiting for a connection if the maximum number of connections has been reached. |
 | config.qservRestUrl | string | None, must be set | URL to the Qserv REST API |
 | config.qservUploadTimeout | string | `"5m"` | How long to allow for user table upload before timing out in Safir `parse_timedelta` format. |

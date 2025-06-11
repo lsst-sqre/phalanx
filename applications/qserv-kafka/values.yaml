@@ -65,8 +65,11 @@ config:
   # `parse_timedelta` format
   qservPollInterval: "1s"
 
-  # -- Maximum simultaneous connections to open to the REST API.
+  # -- Maximum simultaneous connections to open to the REST API
   qservRestMaxConnections: 20
+
+  # -- Whether to send the expected API version in REST API calls to Qserv
+  qservRestSendApiVersion: true
 
   # -- Timeout for REST API calls in Safir `parse_timedelta` format. This
   # includes time spent waiting for a connection if the maximum number of
