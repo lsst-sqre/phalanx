@@ -3,6 +3,7 @@ config:
   metrics:
     enabled: true
   qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-int.slac.stanford.edu:4090/"
+  qservRestSendApiVersion: false
   qservRestUrl: "https://qserv-int-https.slac.stanford.edu:4098/"
 frontend:
   allowRootDebug: true
