@@ -158,7 +158,6 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
     version: {{ .Values.kafka.version | quote }}
-    replicas: {{ .Values.kafka.replicas }}
     listeners:
     {{- if .Values.kafka.listeners.plain.enabled }}
       # internal listener without tls encryption and with scram-sha-512 authentication
