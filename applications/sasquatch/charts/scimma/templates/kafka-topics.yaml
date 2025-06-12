@@ -2,7 +2,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: "lsst.scimma.too_alert"
+  name: "lsst.scimma.too.alert"
   labels:
     strimzi.io/cluster: {{ $.Values.cluster.name }}
 spec:
@@ -12,7 +12,7 @@ spec:
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: "lsst.scimma.too_alert_test"
+  name: "lsst.scimma.too.alert.test"
   labels:
     strimzi.io/cluster: {{ $.Values.cluster.name }}
 spec:
