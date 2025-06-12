@@ -1,4 +1,13 @@
-{{- define "butler.dp02_config" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: butler-public
+data:
+# WARNING! The files in this configmap are served publicly on the internet via unauthenticated HTTP.
+# DO NOT PUT ANY SENSITIVE INFORMATION IN THESE FILES.
+{{- if .Values.config.dp02PostgresUri }}
+  # Internal Butler server configuration for DP02.
+  dp02-server.yaml: |
     datastore:
       cls: lsst.daf.butler.datastores.chainedDatastore.ChainedDatastore
       datastore_constraints:
@@ -20,13 +29,13 @@
         - datastore:
             name: FileDatastore@s3://butler-us-central1-panda-dev/dc2
             cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
-            root: {{ .fileDatastoreRoot }}
+            root: s3://slac@rubin-dp02-products/
         - datastore:
             # Datasets of type 'raw' are stored in a separate bucket for
             # historical reasons.
             name: FileDatastore@s3://curation-us-central1-desc-dc2-run22i
             cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
-            root: {{ .rawDatastoreRoot }}
+            root: s3://slac@rubin-dp02-raw/
             records:
               table: raw_datastore_records
         - datastore:
@@ -34,17 +43,17 @@
             # are kept in a separate bucket.
             name: FileDatastore@s3://butler-us-central1-dp01-desc-dr6
             cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
-            root: {{ .dp01DatastoreRoot }}
+            root: s3://slac@rubin-dp02-dp01/
             records:
               table: dp01_datastore_records
         - datastore:
             name: FileDatastore@s3://butler-us-central1-dp02-user
             cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
-            root: {{ .userDatastoreRoot }}
+            root: s3://butler-us-central1-dp02-user/
             records:
               table: user_datastore_records
     registry:
-      db: {{ .postgresUri }}
+      db: {{ .Values.config.dp02PostgresUri }}
       managers:
         collections: lsst.daf.butler.registry.collections.synthIntKey.SynthIntKeyCollectionManager
         datasets: lsst.daf.butler.registry.datasets.byDimensions.ByDimensionsDatasetRecordStorageManagerUUID
@@ -53,25 +62,6 @@
         dimensions: lsst.daf.butler.registry.dimensions.static.StaticDimensionRecordStorageManager
         opaque: lsst.daf.butler.registry.opaque.ByNameOpaqueTableStorageManager
       namespace: dc2_20210215
-{{- end }}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: butler-public
-data:
-# WARNING! The files in this configmap are served publicly on the internet via unauthenticated HTTP.
-# DO NOT PUT ANY SENSITIVE INFORMATION IN THESE FILES.
-{{- if .Values.config.dp02PostgresUri }}
-  # Internal Butler server configuration for DP02.
-  dp02-server.yaml: |
-    {{- include "butler.dp02_config" (dict
-       "postgresUri" .Values.config.dp02PostgresUri
-       "fileDatastoreRoot" "s3://slac@rubin-dp02-products/"
-       "rawDatastoreRoot" "s3://slac@rubin-dp02-raw/"
-       "dp01DatastoreRoot" "s3://slac@rubin-dp02-dp01/"
-       "userDatastoreRoot" "s3://butler-us-central1-dp02-user/"
-    )}}
   # Repository index for END USERS defining aliases for Butler configurations.
   # This is NOT the configuration used internally for Butler server itself.
   # It is also NOT the configuration that should be used by Phalanx services
