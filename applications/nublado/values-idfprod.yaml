@@ -17,8 +17,9 @@ controller:
         DAF_BUTLER_REPOSITORY_INDEX: "https://data.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
+        SCRATCH_PATH: "/deleted-sundays"
         TMPDIR: "/tmp"
-        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/project/cst_repos/tutorial-notebooks"
+        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
@@ -112,18 +113,18 @@ jupyterhub:
 cronjob:
   tutorials:
     enabled: true
-    gitTarget: "/project/cst_repos/tutorial-notebooks"
+    gitTarget: "/rubin/cst_repos/tutorial-notebooks"
     targetVolume:
-      mountPath: "/project"
-      server: "10.13.105.122"
-      path: "/share1/project"
+      mountPath: "/rubin"
+      server: "10.231.144.4"
+      path: "/rubin-share"
   artifacts:
     enabled: true
-    gitTarget: "/project/cst_repos/tutorial-notebooks-data"
+    gitTarget: "/rubin/cst_repos/tutorial-notebooks-data"
     targetVolume:
-      mountPath: "/project"
-      server: "10.13.105.122"
-      path: "/share1/project"
+      mountPath: "/rubin"
+      server: "10.231.144.4"
+      path: "/rubin-share"
 
 cloudsql:
   enabled: true
