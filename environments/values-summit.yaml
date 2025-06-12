@@ -27,6 +27,7 @@ applications:
   rapid-analysis: true
   rubintv: true
   rubintv-dev: true
+  rubin-too-producer: true
   sasquatch: true
   sasquatch-backpack: true
   simonyitel: true

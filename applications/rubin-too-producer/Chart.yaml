@@ -1,0 +1,4 @@
+apiVersion: v2
+name: rubin-too-producer
+description: Helm chart for the Rubin Observatory Targets of Opportunity Producer.
+version: 1.0.0
