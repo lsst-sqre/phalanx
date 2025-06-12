@@ -47,6 +47,8 @@ spec:
     targetCluster: "target"
     sourceConnector:
       tasksMax: 128
+      autoRestart:
+        enabled: true
       config:
         replication.factor: 3
         offset-syncs.topic.replication.factor: 3
@@ -84,9 +86,13 @@ spec:
         producer.request.timeout.ms: 240000
         consumer.request.timeout.ms: 240000
     heartbeatConnector:
+      autoRestart:
+        enabled: true
       config:
         heartbeats.topic.replication.factor: 3
     checkpointConnector:
+      autoRestart:
+        enabled: true
       config:
         checkpoints.topic.replication.factor: 3
         # Frequency of checks for new consumer groups.
