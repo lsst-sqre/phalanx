@@ -11,6 +11,7 @@ data:
     environmentName: {{ .Values.global.environmentName | quote }}
     siteDescription: {{ .Values.config.siteDescription | quote }}
     docsBaseUrl: {{ .Values.config.docsBaseUrl | quote }}
+    showPreview: {{ .Values.config.showPreview }}
     {{- if .Values.config.semaphoreUrl }}
     semaphoreUrl: {{ .Values.config.semaphoreUrl | quote }}
     {{- end}}

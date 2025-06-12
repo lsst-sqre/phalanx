@@ -34,6 +34,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | config.sentryReplaysOnErrorSampleRate | int | See `values.yaml` | Sentry error replays sample rate |
 | config.sentryReplaysSessionSampleRate | int | See `values.yaml` | Sentry replays sample rate |
 | config.sentryTracesSampleRate | int | See `values.yaml` | Sentry traces sample rate |
+| config.showPreview | bool | `true` | Show a "preview" badge in the homepage |
 | config.siteDescription | string | `"Access Rubin Observatory Legacy Survey of Space and Time data.\n"` | Site description, used in meta tags |
 | config.siteName | string | `"Rubin Science Platform"` | Name of the site, used in the title and meta tags. |
 | config.supportPageMdx | string | See `values.yaml` | MDX content for the `/support` page |
