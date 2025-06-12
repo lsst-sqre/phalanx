@@ -101,14 +101,6 @@ config:
   # @default -- No configuration file for DP1 will be generated.
   dp1PostgresUri: ""
 
-  # -- True if the 'dp02' Butler repository alias should use client/server
-  # Butler.  False if it should use DirectButler.
-  dp02ClientServerIsDefault: false
-
-  # -- True if the 'dp02' datastore files should be served from SLAC, false
-  # if they should be served from Google.
-  dp02UseSlacDatastore: false
-
   # -- Postgres username used to connect to the Butler DB
   # @default -- Use values specified in per-repository Butler config files.
   pguser: ""

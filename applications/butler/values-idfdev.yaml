@@ -2,15 +2,13 @@ image:
   pullPolicy: Always
 
 config:
-  dp02ClientServerIsDefault: true
   # butler-registry-dp02-dev Google Cloud SQL instance in science-platform-dev
   dp02PostgresUri: postgresql://butler@dp02.rsp-sql-dev.internal:5432/dp02
-  dp02UseSlacDatastore: true
   dp1PostgresUri: postgresql://butler@dp1.rsp-sql-dev.internal:5432/dp1
   s3EndpointUrl: "https://storage.googleapis.com"
   repositories:
     dp02:
-      config_uri: "file:///opt/lsst/butler/public/config/dp02-server.yaml"
+      config_uri: "file:///opt/lsst/butler/config/dp02.yaml"
       authorized_groups: ["*"]
     dp1:
       config_uri: "file:///opt/lsst/butler/config/dp1.yaml"
