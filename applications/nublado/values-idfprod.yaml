@@ -35,8 +35,8 @@ controller:
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
-            - containerPath: "/project"
-              volumeName: "project"
+            - containerPath: "/rubin"
+              volumeName: "rubin"
       nodeSelector:
         node_pool: "user-lab-pool"
       secrets:
