@@ -8,6 +8,8 @@ cadc-tap:
       host: "qserv-prod.slac.stanford.edu:4040"
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
+      image:
+        tag: "3.0.0"
 
     kafka:
       bootstrapServer: "sasquatch-kafka-bootstrap.lsst.cloud:9094"
