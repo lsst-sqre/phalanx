@@ -46,7 +46,9 @@ spec:
   - sourceCluster: "source"
     targetCluster: "target"
     sourceConnector:
-      tasksMax: 32
+      tasksMax: 128
+      autoRestart:
+        enabled: true
       config:
         replication.factor: 3
         offset-syncs.topic.replication.factor: 3
@@ -74,13 +76,23 @@ spec:
         # See also message.max.bytes broker configuration.
         producer.max.request.size: 10485760
         producer.buffer.memory: 10485760
+        # Increase the maximum number of messages fetched per request.
+        # This can improve throughput when you have just a few topic partitions that
+        # handle large numbers of messages.
+        consumer.fetch.max.bytes: 52428800
+        consumer.max.partition.fetch.bytes: 1048576
+        consumer.max.poll.records: 500
         # Increase request timeout
         producer.request.timeout.ms: 240000
         consumer.request.timeout.ms: 240000
     heartbeatConnector:
+      autoRestart:
+        enabled: true
       config:
         heartbeats.topic.replication.factor: 3
     checkpointConnector:
+      autoRestart:
+        enabled: true
       config:
         checkpoints.topic.replication.factor: 3
         # Frequency of checks for new consumer groups.
@@ -102,4 +114,36 @@ spec:
     limits:
       cpu: {{ .Values.mirrormaker2.resources.limits.cpu | quote }}
       memory: {{ .Values.mirrormaker2.resources.limits.memory | quote }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: {{ .Values.cluster.name }}-connect
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: {{ .Values.cluster.name }}-connect
+        operations:
+          - Read
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operations:
+          - All
+      - resource:
+          type: topic
+          name: "*"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - All
 {{ end }}
