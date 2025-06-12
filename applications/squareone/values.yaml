@@ -68,6 +68,9 @@ config:
   # -- Base URL for user documentation (excludes trailing slash)
   docsBaseUrl: "https://rsp.lsst.io"
 
+  # -- Show a "preview" badge in the homepage
+  showPreview: true
+
   # -- URL to the Semaphore (user notifications) API service.
   # @default null disables the Semaphore integration
   semaphoreUrl: null
