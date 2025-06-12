@@ -108,4 +108,36 @@ spec:
     limits:
       cpu: {{ .Values.mirrormaker2.resources.limits.cpu | quote }}
       memory: {{ .Values.mirrormaker2.resources.limits.memory | quote }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: {{ .Values.cluster.name }}-connect
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: {{ .Values.cluster.name }}-connect
+        operations:
+          - Read
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operations:
+          - All
+      - resource:
+          type: topic
+          name: "*"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - All
 {{ end }}
