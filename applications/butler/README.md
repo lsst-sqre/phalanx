@@ -16,9 +16,7 @@ Server for Butler data abstraction service
 | autoscaling.minReplicas | int | `1` | Minimum number of butler deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `25` | Target CPU utilization of butler deployment pods  Butler CPU usage is very low in normal operation because most things are I/O bound.  CPU usage can start creeping up if we have many queries running simultaneously (due to serialization overhead and spatial postprocessing.) In this case the thread pool and database connection pool are probably oversubscribed long before we hit 100% cpu usage, so we want to get more replicas up at fairly low CPU usage. |
 | config.additionalS3EndpointUrls | object | No additional URLs | Endpoint URLs for additional S3 services used by the Butler, as a mapping from profile name to URL. |
-| config.dp02ClientServerIsDefault | bool | `false` | True if the 'dp02' Butler repository alias should use client/server Butler.  False if it should use DirectButler. |
 | config.dp02PostgresUri | string | No configuration file for DP02 will be generated. | Postgres connection string pointing to the registry database hosting Data Preview 0.2 data. |
-| config.dp02UseSlacDatastore | bool | `false` | True if the 'dp02' datastore files should be served from SLAC, false if they should be served from Google. |
 | config.dp1PostgresUri | string | No configuration file for DP1 will be generated. | Postgres connection string pointing to the registry database hosting Data Preview 1 data. |
 | config.enableSentry | bool | `false` | True to enable capture of trace and other diagnostics to Sentry.io. |
 | config.pathPrefix | string | `"/api/butler"` | The prefix of the path portion of the URL where the Butler service will be exposed.  For example, if the service should be exposed at `https://data.lsst.cloud/api/butler`, this should be set to `/api/butler` |
