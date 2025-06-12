@@ -35,8 +35,8 @@ controller:
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
-            - containerPath: "/project"
-              volumeName: "project"
+            - containerPath: "/rubin"
+              volumeName: "rubin"
       nodeSelector:
         node_pool: "user-lab-pool"
       secrets:
@@ -63,28 +63,33 @@ controller:
           operator: "Exists"
           effect: "NoExecute"
       volumes:
+        # /home is pending more space allocated for NetApp
         - name: "home"
           source:
             serverPath: "/share1/home"
             server: "10.13.105.122"
             type: "nfs"
-        - name: "project"
+        - name: "rubin"
           source:
-            serverPath: "/share1/project"
-            server: "10.13.105.122"
+            serverPath: "/rubin-share"
+            server: "10.231.144.4"
             type: "nfs"
-        - name: "scratch"
+        - name: "deleted-sundays"
           source:
-            serverPath: "/share1/scratch"
-            server: "10.13.105.122"
+            serverPath: "/deleted-sundays-share"
+            server: "10.231.144.5"
             type: "nfs"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
+        - containerPath: "/rubin"
+          volumeName: "rubin"
         - containerPath: "/project"
-          volumeName: "project"
+          volumeName: "rubin"
+        - containerPath: "/deleted-sundays"
+          volumeName: "deleted-sundays"
         - containerPath: "/scratch"
-          volumeName: "scratch"
+          volumeName: "deleted-sundays"
     metrics:
       enabled: true
 
