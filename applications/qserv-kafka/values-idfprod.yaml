@@ -1,0 +1,10 @@
+config:
+  logLevel: "DEBUG"
+  metrics:
+    enabled: true
+  qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-prod.slac.stanford.edu:4040/"
+  qservRestSendApiVersion: false
+  qservRestUrl: "https://qserv-prod-https.slac.stanford.edu:4048/"
+resultWorker:
+  autoscaling:
+    maxReplicas: 50
