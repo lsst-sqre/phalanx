@@ -12,11 +12,13 @@ controller:
     lab:
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
-        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
-        GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
-        DAF_BUTLER_REPOSITORY_INDEX: "https://data.lsst.cloud/api/butler/configs/idf-repositories.yaml"
-        S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
+        CST_LANDING_PAGE_SRC_DIR: "/rubin/cst_repos/tutorial-notebooks-data/welcome"
+        CST_LANDING_PAGE_FILES: "welcome.md,logo_for_header.png"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
+        DAF_BUTLER_REPOSITORY_INDEX: "https://data.lsst.cloud/api/butler/configs/idf-repositories.yaml"
+        GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
+        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
+        S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         SCRATCH_PATH: "/deleted-sundays"
         TMPDIR: "/tmp"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
@@ -96,7 +98,7 @@ controller:
 
 hub:
   useSubdomains: true
-  landingPage: "/lab/tree/notebooks/tutorials/landing_page.md"
+  landingPage: "/lab/tree/notebooks/tutorials/welcome/welcome.md"
 
 jupyterhub:
   hub:
