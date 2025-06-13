@@ -5,18 +5,20 @@ config:
   logProfile: "development"
 
   # -- APDB config file resource
-  apdbConfig: "s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcomcamsim-dev.py"
+  apdbConfig: " s3://embargo@rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcam.yaml"
+  # apdbConfig: "s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcomcamsim-dev.py"
   # apdbConfig: "/sdf/group/rubin/user/salnikov/apdb/dm50040/apdb-cassandra-dm50040.yaml"
 
   # -- PPDB config file resource
-  ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm50563.yaml"
+  ppdbConfig: /sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm51379.yaml
+  # ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm50563.yaml"
   # ppdbConfig: "/sdf/group/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm50040.yaml"
 
   # -- Target BigQuery dataset
   dataset: "ppdb-dev-438721:ppdb_dm50567"
 
   # -- Staging directory for replicated data
-  stagingDirectory: "/sdf/group/rubin/user/jeremym/ppdb_staging"
+  stagingDirectory: "/sdf/scratch/rubin/ppdb/staging/lsstcam"
 
   # -- GCS bucket name
   gcsBucket: "rubin-ppdb-test-bucket-1"
