@@ -27,10 +27,13 @@ argo-cd:
         p, role:developer, applications, get, infrastructure/*, allow
         p, role:developer, applications, create, infrastructure/*, deny
         p, role:developer, applications, update, infrastructure/*, deny
+        p, role:developer, applications, update/*, infrastructure/*, deny
         p, role:developer, applications, delete, infrastructure/*, deny
+        p, role:developer, applications, delete/*, infrastructure/*, deny
         p, role:developer, applications, sync, infrastructure/*, deny
         p, role:developer, applications, override, infrastructure/*, deny
         p, role:developer, applications, action/*, infrastructure/*, deny
+        p, role:developer, logs, get, infrastructure/*, allow
 
         g, afausti@slac.stanford.edu, role:admin
         g, athor@slac.stanford.edu, role:admin
