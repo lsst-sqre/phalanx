@@ -100,7 +100,7 @@ config:
         options:
           image:
             image_class: "by-tag"
-            tag: "r29_1_0_rc2"  # Update as new rcs appear
+            tag: "r29_1_0_rc4"  # Update as new rcs appear
           repo_url: "https://github.com/lsst/tutorial-notebooks.git"
           repo_ref: "main"
           max_executions: 1
