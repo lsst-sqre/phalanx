@@ -1,3 +1,5 @@
+replicaCount: 4
+
 config:
   metrics:
     enabled: true
