@@ -21,12 +21,13 @@ prompt-keda:
       preprocessing: |-
         - survey: SURVEY
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing.yaml']
-    calibRepo: s3://rubin-pp-dev-users/central_repo_2
+    calibRepo: s3://rubin-pp-dev-users/central_repo_2/butler-test.yaml
     repoWait: 5
 
   s3:
     imageBucket: rubin-pp-dev
     endpointUrl: https://s3dfrgw.slac.stanford.edu
+    aws_profile: prompt-processing-dev
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092

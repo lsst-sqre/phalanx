@@ -75,6 +75,9 @@ spec:
           value: /app/s3/credentials
         {{- end }}
         {{- with .Values.s3.aws_profile }}
+          {{- if not $.Values.s3.cred_file_auth }}
+            {{- fail "When s3.aws_profile is set, s3.cred_file_auth must be true." }}
+          {{- end }}
         - name: AWS_PROFILE
           value: {{ . }}
         {{- end }}
