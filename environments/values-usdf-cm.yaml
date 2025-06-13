@@ -11,5 +11,5 @@ applications:
   gafaelfawr: true
   ingress-nginx: false
 
-  cm-service: false
+  cm-service: true
   postgres: true
