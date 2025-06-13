@@ -134,6 +134,9 @@ argo-cd:
 
   configs:
     cm:
+      # -- Keep label-based tracking for now until Nublado is updated.
+      application.resourceTrackingMethod: "label"
+
       # -- Configure resource comparison
       resource.compareoptions: |
         ignoreAggregatedRoles: true
