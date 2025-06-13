@@ -83,6 +83,8 @@ spec:
                 -Dbase_url={{ .Values.global.baseUrl }}
                 -Dpath_prefix=/api/{{ .Values.ingress.path }}
                 -Dca.nrc.cadc.util.PropertiesReader.dir=/config/
+                -Durl.rewrite.enabled={{ .Values.config.urlRewrite.enabled | default true }}
+                -Durl.rewrite.rules="{{ .Values.config.urlRewrite.rules | default "ivoa.ObsCore:access_url" }}"
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
             {{- if .Values.config.kafka.auth.enabled }}
             - name: "KAFKA_PASSWORD"

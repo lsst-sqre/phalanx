@@ -18,6 +18,10 @@ cadc-tap:
       auth:
         enabled: true
 
+    urlRewrite:
+      enabled: true
+      rules: "ivoa.ObsCore:access_url"
+
   cloudsql:
     enabled: true
     instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
