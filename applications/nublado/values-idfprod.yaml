@@ -32,7 +32,7 @@ controller:
         - name: "landingpage"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/rsp-landing-page-provisioner"
-            tag: "0.9.1"
+            tag: "tickets-DM-51380"
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
