@@ -62,12 +62,9 @@ controller:
             - containerPath: "/home"
               volumeName: "home"
         - name: "landingpage"
-          env:
-            CST_LANDING_PAGE_FILES: "welcome.md,logo_for_header.png"
-            CST_LANDING_PAGE_SRC_DIR: "/rubin/cst_repos/tutorial-notebooks-data/welcome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/rsp-landing-page-provisioner"
-            tag: "0.9.1"
+            tag: "tickets-DM-51380"
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
