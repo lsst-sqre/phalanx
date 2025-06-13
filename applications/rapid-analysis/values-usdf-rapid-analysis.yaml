@@ -75,7 +75,7 @@ scripts:
 ###
 lsstcamWorkerSet:
   name: LSSTCam/runSfmRunner.py
-  replicas: 410
+  replicas: 820
   mounts:
   - sdf-scratch
   resources:
