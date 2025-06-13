@@ -12,8 +12,6 @@ controller:
     lab:
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
-        CST_LANDING_PAGE_SRC_DIR: "/rubin/cst_repos/tutorial-notebooks-data/welcome"
-        CST_LANDING_PAGE_FILES: "welcome.md,logo_for_header.png"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
         DAF_BUTLER_REPOSITORY_INDEX: "https://data.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
@@ -32,6 +30,9 @@ controller:
             - containerPath: "/home"
               volumeName: "home"
         - name: "landingpage"
+          env:
+            CST_LANDING_PAGE_FILES: "welcome.md,logo_for_header.png"
+            CST_LANDING_PAGE_SRC_DIR: "/rubin/cst_repos/tutorial-notebooks-data/welcome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/rsp-landing-page-provisioner"
             tag: "0.9.1"
