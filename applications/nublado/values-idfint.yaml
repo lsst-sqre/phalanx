@@ -132,7 +132,7 @@ controller:
 
 hub:
   useSubdomains: true
-  landingPage: "/lab/tree/notebooks/tutorials/welcome/welcome.md"
+  landingPage: "/lab/tree/notebooks/tutorials/welcome.md"
 
 jupyterhub:
   hub:
