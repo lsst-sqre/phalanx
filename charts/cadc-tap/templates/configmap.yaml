@@ -21,3 +21,8 @@ data:
 
     # authentication provider
     ca.nrc.cadc.auth.IdentityManager=org.opencadc.auth.StandardIdentityManager
+  tap-config.properties: |
+    # URL rewrite configuration
+    url.rewrite.enabled={{ .Values.config.urlRewrite.enabled | default true }}
+    # Format: table1:column1,table2:column2,table3:column3
+    url.rewrite.rules={{ .Values.config.urlRewrite.rules | default "ivoa.ObsCore:access_url" }}
