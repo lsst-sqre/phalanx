@@ -1,10 +1,11 @@
 image:
-  tag: v1.0
+  tag: tickets-DM-50552
 
 environment:
   AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"
-  S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
-  S3_PROFILE_NAME: ""
+  S3_ENDPOINT_URL: "https://sdfembs3.sdf.slac.stanford.edu"
+  S3_PROFILE_NAME: "rubin-rubintv-data-summit-embargo"
+  S3_BUCKET_NAME: "rubin-rubintv-data-summit"
   LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
   LSST_DISABLE_BUCKET_VALIDATION: "1"
   AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
