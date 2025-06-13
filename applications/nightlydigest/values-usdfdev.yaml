@@ -55,6 +55,8 @@ nightlydigest-backend:
   env:
     - name: JIRA_API_HOSTNAME
       value: rubinobs.atlassian.net
+    - name: EXTERNAL_INSTANCE_URL
+      value: https://usdf-rsp-dev.slac.stanford.edu
   envSecrets:
     - name: JIRA_TOKEN
       secretName: nightlydigest
