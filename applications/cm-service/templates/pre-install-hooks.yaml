@@ -25,6 +25,6 @@ spec:
             - name: DB__PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .secret_name }}
-                  key: {{ .secret_key }}
+                  name: {{ .secretName }}
+                  key: {{ .secretKey }}
 {{- end }}
