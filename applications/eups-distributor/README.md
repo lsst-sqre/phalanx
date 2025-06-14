@@ -14,7 +14,7 @@ Distributes EUPS binaries
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the eups-distributor image |
+| image.pullPolicy | string | `"always"` | Pull policy for the eups-distributor image |
 | image.repository | string | `"ghcr.io/lsst-dm/distrib-docker"` | Image to use in the eups-distributor deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.hostname | string | `""` | Additional annotations for the ingress rule |

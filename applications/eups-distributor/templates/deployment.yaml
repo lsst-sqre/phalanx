@@ -39,7 +39,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - name: "eups"
-              mountPath: "/eups"
+              mountPath: "/usr/local/apache2/htdocs"
               readOnly: true
           ports:
             - name: "http"
@@ -66,6 +66,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       securityContext:
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
         runAsGroup: 1000

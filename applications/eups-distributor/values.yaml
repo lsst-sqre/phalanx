@@ -11,11 +11,11 @@ image:
   repository: "ghcr.io/lsst-dm/distrib-docker"
 
   # -- Pull policy for the eups-distributor image
-  pullPolicy: "IfNotPresent"
+  pullPolicy: "always"
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
-  tag: null
+  tag: pr-1-u-roceb-switchToApache
 
 ingress:
   # -- Additional annotations for the ingress rule
