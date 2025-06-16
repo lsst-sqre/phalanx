@@ -267,6 +267,36 @@ dependencies:
   condition: mtdome-ess108-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: mtdome-ess118
+  version: 1.0.0
+  condition: mtdome-ess118.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: mtdome-ess118-sim
+  version: 1.0.0
+  condition: mtdome-ess118-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: mtdome-ess119
+  version: 1.0.0
+  condition: mtdome-ess119.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: mtdome-ess119-sim
+  version: 1.0.0
+  condition: mtdome-ess119-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: mtdome-ess118
+  version: 1.0.0
+  condition: mtdome-ess118.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: mtdome-ess120-sim
+  version: 1.0.0
+  condition: mtdome-ess120-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: ringss-ess304
   version: 1.0.0
   condition: ringss-ess304.enabled
