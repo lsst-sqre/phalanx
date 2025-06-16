@@ -165,6 +165,8 @@ spec:
                 value: {{ .Values.keda.redisStreams.streamName}}
               - name: REDIS_STREAM_CONSUMER_GROUP
                 value: {{ .Values.keda.redisStreams.consumerGroup}}
+              - name: REDIS_RETRY_DELAY
+                value: {{ .Values.keda.redisStreams.retry | toString | quote }}
               - name: FANNED_OUT_MSG_LISTEN_TIMEOUT
                 value: {{ .Values.keda.redisStreams.msgListenTimeout | toString | quote }}
             volumeMounts:
