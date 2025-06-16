@@ -128,35 +128,35 @@ prompt-keda:
     auth_env: true
 
   keda:
-    # Minimum number of replicas to start with.
+    # -- Minimum number of replicas to start with.
     minReplicaCount: 3
-    # Maximum number of replicas to scale to.
+    # -- Maximum number of replicas to scale to.
     maxReplicaCount: 100
-    # Scaling algorithm
+    # -- Scaling algorithm
     scalingStrategy: eager
-    # Polling interval for Keda to poll scalar for scaling determination.
+    # -- Polling interval for Keda to poll scalar for scaling determination.
     pollingInterval: 2
-    # How many completed jobs should be kept available in Kubernetes.
+    # -- How many completed jobs should be kept available in Kubernetes.
     successfulJobsHistoryLimit: 5
-    # How many failed jobs should be kept available in Kubernetes.
+    # -- How many failed jobs should be kept available in Kubernetes.
     failedJobsHistoryLimit: 5
 
     redisStreams:
-      # Address of Redis Streams Cluster
+      # -- Address of Redis Streams Cluster
       host: prompt-redis.prompt-redis
-      # Name of Redis Stream
+      # -- Name of Redis Stream
       streamName: instrument:hsc
-      # Redis Consumer Group name
+      # -- Redis Consumer Group name
       consumerGroup: hsc_consumer_group
       # -- The time to wait (in seconds) before retrying a stream connection failure.
       retry: 30
-      # Time to wait for fanned out messages before spawning new pod.
+      # -- Time to wait for fanned out messages before spawning new pod.
       msgListenTimeout: 900
-      # Lag count at which scaler triggers
+      # -- Lag count at which scaler triggers
       activationLagCount: "1"
-      #  Number of lagging entries in the consumer group, alternative to pendingEntriesCount scaler trigger
+      # -- Number of lagging entries in the consumer group, alternative to pendingEntriesCount scaler trigger
       lagCount: "1"
-      # Number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
+      # -- Number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
       pendingEntriesCount: "1"
       # -- Maximum message age to process, in seconds.
       expiration: 3600
