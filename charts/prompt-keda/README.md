@@ -60,6 +60,7 @@ Event-driven processing of camera images
 | keda.redisStreams.lagCount | string | `"1"` |  |
 | keda.redisStreams.msgListenTimeout | int | `900` |  |
 | keda.redisStreams.pendingEntriesCount | string | `"1"` |  |
+| keda.redisStreams.retry | int | `30` | The time to wait (in seconds) before retrying a stream connection failure. |
 | keda.redisStreams.streamName | string | `""` |  |
 | keda.scalingStrategy | string | `"eager"` |  |
 | keda.successfulJobsHistoryLimit | int | `25` |  |

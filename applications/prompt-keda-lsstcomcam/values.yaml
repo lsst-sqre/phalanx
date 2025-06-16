@@ -149,6 +149,8 @@ prompt-keda:
       streamName: instrument:lsstcomcam
       # Redis Consumer Group name
       consumerGroup: lsstcomcam_consumer_group
+      # -- The time to wait (in seconds) before retrying a stream connection failure.
+      retry: 30
       # Time to wait for fanned out messages before spawning new pod.
       msgListenTimeout: 900
       # Lag count at which scaler triggers

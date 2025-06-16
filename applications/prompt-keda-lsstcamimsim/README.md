@@ -60,6 +60,7 @@ KEDA Prompt Processing instance for LSSTCam-imSim.
 | prompt-keda.keda.redisStreams.lagCount | string | `"1"` |  |
 | prompt-keda.keda.redisStreams.msgListenTimeout | int | `900` |  |
 | prompt-keda.keda.redisStreams.pendingEntriesCount | string | `"1"` |  |
+| prompt-keda.keda.redisStreams.retry | int | `30` | The time to wait (in seconds) before retrying a stream connection failure. |
 | prompt-keda.keda.redisStreams.streamName | string | `"instrument:lsstcamimsim"` |  |
 | prompt-keda.keda.scalingStrategy | string | `"eager"` |  |
 | prompt-keda.keda.successfulJobsHistoryLimit | int | `5` |  |
