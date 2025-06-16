@@ -727,13 +727,6 @@ love-producer:
   - name: m1m3mtvms1
     csc: MTVMS:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-    resources:
-      requests:
-        cpu: 100m
-        memory: 300Mi
-      limits:
-        cpu: 1
-        memory: 900Mi
   - name: m2ess106
     csc: ESS:106 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -743,13 +736,6 @@ love-producer:
   - name: m2mtvms2
     csc: MTVMS:2 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-    resources:
-      requests:
-        cpu: 100m
-        memory: 300Mi
-      limits:
-        cpu: 1
-        memory: 900Mi
   - name: mtheaderservice
     csc: MTHeaderService:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
