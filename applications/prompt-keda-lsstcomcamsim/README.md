@@ -49,21 +49,21 @@ KEDA Prompt Processing instance for LSSTComCamSim
 | prompt-keda.instrument.preloadPadding | int | `50` | Number of arcseconds to pad the spatial region in preloading. |
 | prompt-keda.instrument.repoWait | int | `5` | The average time to wait (in seconds) before retrying a failed connection to the shared repo. |
 | prompt-keda.instrument.skymap | string | `"ops_rehersal_prep_2k_v1"` | Skymap to use with the instrument |
-| prompt-keda.keda.failedJobsHistoryLimit | int | `5` |  |
-| prompt-keda.keda.maxReplicaCount | int | `150` |  |
-| prompt-keda.keda.minReplicaCount | int | `3` |  |
-| prompt-keda.keda.pollingInterval | int | `2` |  |
-| prompt-keda.keda.redisStreams.activationLagCount | string | `"1"` |  |
-| prompt-keda.keda.redisStreams.consumerGroup | string | `"lsstcomcamsim_consumer_group"` |  |
+| prompt-keda.keda.failedJobsHistoryLimit | int | `5` | How many failed jobs should be kept available in Kubernetes. |
+| prompt-keda.keda.maxReplicaCount | int | `150` | Maximum number of replicas to scale to. |
+| prompt-keda.keda.minReplicaCount | int | `3` | Minimum number of replicas to start with. |
+| prompt-keda.keda.pollingInterval | int | `2` | Polling interval for Keda to poll scalar for scaling determination. |
+| prompt-keda.keda.redisStreams.activationLagCount | string | `"1"` | Lag count at which scaler triggers |
+| prompt-keda.keda.redisStreams.consumerGroup | string | `"lsstcomcamsim_consumer_group"` | Redis Consumer Group name |
 | prompt-keda.keda.redisStreams.expiration | int | `3600` | Maximum message age to process, in seconds. |
-| prompt-keda.keda.redisStreams.host | string | `"prompt-redis.prompt-redis"` |  |
-| prompt-keda.keda.redisStreams.lagCount | string | `"1"` |  |
-| prompt-keda.keda.redisStreams.msgListenTimeout | int | `900` |  |
-| prompt-keda.keda.redisStreams.pendingEntriesCount | string | `"1"` |  |
+| prompt-keda.keda.redisStreams.host | string | `"prompt-redis.prompt-redis"` | Address of Redis Streams Cluster |
+| prompt-keda.keda.redisStreams.lagCount | string | `"1"` | Number of lagging entries in the consumer group, alternative to pendingEntriesCount scaler trigger |
+| prompt-keda.keda.redisStreams.msgListenTimeout | int | `900` | Time to wait for fanned out messages before spawning new pod. |
+| prompt-keda.keda.redisStreams.pendingEntriesCount | string | `"1"` | Number of entries in the Pending Entries List for the specified consumer group in the Redis Stream |
 | prompt-keda.keda.redisStreams.retry | int | `30` | The time to wait (in seconds) before retrying a stream connection failure. |
-| prompt-keda.keda.redisStreams.streamName | string | `"instrument:lsstcomcamsim"` |  |
-| prompt-keda.keda.scalingStrategy | string | `"eager"` |  |
-| prompt-keda.keda.successfulJobsHistoryLimit | int | `5` |  |
+| prompt-keda.keda.redisStreams.streamName | string | `"instrument:lsstcomcamsim"` | Name of Redis Stream |
+| prompt-keda.keda.scalingStrategy | string | `"eager"` | Scaling algorithm |
+| prompt-keda.keda.successfulJobsHistoryLimit | int | `5` | How many completed jobs should be kept available in Kubernetes. |
 | prompt-keda.logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
 | prompt-keda.mpSky_service | string | `""` | The URI to the MPSky ephemerides service. Empty value is allowed, but its handling is undefined. |
 | prompt-keda.nameOverride | string | `""` | Override the base name for resources |
