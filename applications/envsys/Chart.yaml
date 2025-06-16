@@ -287,9 +287,9 @@ dependencies:
   condition: mtdome-ess119-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtdome-ess118
+  alias: mtdome-ess120
   version: 1.0.0
-  condition: mtdome-ess118.enabled
+  condition: mtdome-ess120.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: mtdome-ess120-sim
