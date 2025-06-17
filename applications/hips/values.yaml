@@ -11,16 +11,19 @@ config:
   gcsProject: ""
 
   # -- A mapping of bucket keys to GCS buckets.
-  # /api/hips/v2/<bucket-key> will serve files out of the corresponding GCS
-  # bucket.
+  # /api/hips/v2/<bucket-key>/some/file will serve the file
+  # <objectPrefix>/some/file from the corresponding bucket.
   # @default -- None, must be set
   buckets: null
-    # dp02: somebucket
-    # dp1: somebucket
+    # dp02:
+    #   bucketName: somebucket
+    # dp1:
+    #   bucketName: somebucket
+    #   objectPrefix: someprefix
 
-  # -- The name (not the key) of bucket to serve from the v1 endpoint
+  # -- The key of bucket in the 'buckets' dict to serve from the v1 endpoint
   # (/api/hips)
-  defaultBucket: null
+  defaultBucketKey: null
   # -- Choose from the text form of Python logging levels
   logLevel: "INFO"
 
