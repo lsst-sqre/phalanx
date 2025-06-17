@@ -1,0 +1,3 @@
+config:
+  configVolume:
+    storageClass: rook-ceph-block
