@@ -144,6 +144,13 @@
         "workdir",
         "replicas"
       ]
+    },
+    "context_menu_templates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/context_menu_template"
+      },
+      "default": []
     }
   },
   "required": [
@@ -153,7 +160,8 @@
     "coordinator",
     "frontend",
     "db",
-    "generator"
+    "generator",
+    "context_menu_templates"
   ],
   "additionalProperties": false,
   "definitions": {
@@ -251,6 +259,25 @@
       "required": [
         "jupyter",
         "username"
+      ]
+    },
+    "context_menu_template": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "template": {
+          "type": "string"
+        },
+        "is_url": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "template",
+        "is_url"
       ]
     },
     "envvar": {
