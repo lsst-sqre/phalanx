@@ -45,6 +45,13 @@ spec:
                 secretKeyRef:
                   name: "qserv-kafka"
                   key: "redis-password"
+            {{- if .Values.config.qservRestUsername }}
+            - name: "QSERV_KAFKA_QSERV_REST_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "qserv-kafka"
+                  key: "qserv-password"
+            {{- end }}
             - name: "KAFKA_BOOTSTRAP_SERVERS"
               valueFrom:
                 secretKeyRef:

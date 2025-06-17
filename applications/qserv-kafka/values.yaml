@@ -80,6 +80,11 @@ config:
   # @default -- None, must be set
   qservRestUrl: null
 
+  # -- Username for HTTP Basic Authentication for the Qserv REST API. If not
+  # null, the password will be assumed to be the same as the database
+  # password.
+  qservRestUsername: null
+
   # -- How long to allow for user table upload before timing out in Safir
   # `parse_timedelta` format.
   qservUploadTimeout: "5m"
