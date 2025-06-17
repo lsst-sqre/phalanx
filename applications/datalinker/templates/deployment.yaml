@@ -13,6 +13,8 @@ spec:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
+        # Force the pod to restart when the config map is updated.
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -26,30 +28,12 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-            - name: "DATALINKER_CUTOUT_SYNC_URL"
-              value: "{{ .Values.global.baseUrl }}/api/cutout/sync"
-            - name: "DATALINKER_LINKS_LIFETIME"
-              value: {{ .Values.config.linksLifetime | quote }}
-            - name: "DATALINKER_HIPS_BASE_URL"
-              value: "{{ .Values.global.baseUrl }}/api/hips"
-            - name: "DATALINKER_LOG_LEVEL"
-              value: {{ .Values.config.logLevel | quote }}
-            - name: "DATALINKER_PATH_PREFIX"
-              value: {{ .Values.config.pathPrefix | quote }}
-            - name: "DATALINKER_HIPS_PATH_PREFIX"
-              value: {{ .Values.config.hipsPathPrefix | quote }}
             {{- if .Values.config.slackAlerts }}
             - name: "DATALINKER_SLACK_WEBHOOK"
               valueFrom:
                 secretKeyRef:
                   name: "datalinker"
                   key: "slack-webhook"
-            {{- end }}
-            {{- if .Values.config.tapMetadataUrl }}
-            - name: "DATALINKER_TAP_METADATA_DIR"
-              value: "/tmp/tap-metadata"
-            - name: "DATALINKER_TAP_METADATA_URL"
-              value: {{ .Values.config.tapMetadataUrl | quote }}
             {{- end }}
             - name: "DATALINKER_TOKEN"
               valueFrom:
@@ -81,6 +65,9 @@ spec:
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"
+            - name: "config"
+              mountPath: "/etc/datalinker"
+              readOnly: true
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -97,3 +84,6 @@ spec:
       volumes:
         - name: "tmp"
           emptyDir: {}
+        - name: "config"
+          configMap:
+            name: "datalinker"
