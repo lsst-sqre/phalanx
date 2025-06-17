@@ -49,20 +49,21 @@ Event-driven processing of camera images
 | instrument.preloadPadding | int | `30` | Number of arcseconds to pad the spatial region in preloading. |
 | instrument.repoWait | int | `30` | The average time to wait (in seconds) before retrying a failed connection to the shared repo. |
 | instrument.skymap | string | `""` | Skymap to use with the instrument |
-| keda.failedJobsHistoryLimit | int | `25` |  |
-| keda.maxReplicaCount | int | `10` |  |
-| keda.minReplicaCount | int | `3` |  |
-| keda.pollingInterval | int | `2` |  |
-| keda.redisStreams.activationLagCount | string | `"1"` |  |
-| keda.redisStreams.consumerGroup | string | `""` |  |
+| keda.failedJobsHistoryLimit | int | `25` | How many failed jobs should be kept available in Kubernetes. |
+| keda.maxReplicaCount | int | `10` | Maximum number of replicas to scale to. |
+| keda.minReplicaCount | int | `3` | Minimum number of replicas to start with. |
+| keda.pollingInterval | int | `2` | Polling interval for Keda to poll scalar for scaling determination. |
+| keda.redisStreams.activationLagCount | string | `"1"` | Lag count at which scaler triggers |
+| keda.redisStreams.consumerGroup | string | `""` | Redis Consumer Group name |
 | keda.redisStreams.expiration | int | `3600` | Maximum message age to process, in seconds. |
-| keda.redisStreams.host | string | `""` |  |
-| keda.redisStreams.lagCount | string | `"1"` |  |
-| keda.redisStreams.msgListenTimeout | int | `900` |  |
-| keda.redisStreams.pendingEntriesCount | string | `"1"` |  |
-| keda.redisStreams.streamName | string | `""` |  |
-| keda.scalingStrategy | string | `"eager"` |  |
-| keda.successfulJobsHistoryLimit | int | `25` |  |
+| keda.redisStreams.host | string | `""` | Address of Redis Streams Cluster |
+| keda.redisStreams.lagCount | string | `"1"` | Number of lagging entries in the consumer group, alternative to pendingEntriesCount scaler trigger |
+| keda.redisStreams.msgListenTimeout | int | `900` | Time to wait for fanned out messages before spawning new pod. |
+| keda.redisStreams.pendingEntriesCount | string | `"1"` | Number of entries in the Pending Entries List for the specified consumer group in the Redis Stream |
+| keda.redisStreams.retry | int | `30` | The time to wait (in seconds) before retrying a stream connection failure. |
+| keda.redisStreams.streamName | string | `""` | Name of Redis Stream |
+| keda.scalingStrategy | string | `"eager"` | Scaling algorithm |
+| keda.successfulJobsHistoryLimit | int | `25` | How many completed jobs should be kept available in Kubernetes. |
 | logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
 | mpSky_service | string | `""` | The URI to the MPSky ephemerides service. Empty value is allowed, but its handling is undefined. |
 | nameOverride | string | `""` | Override the base name for resources |
