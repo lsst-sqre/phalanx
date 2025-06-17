@@ -71,8 +71,10 @@ KEDA Prompt Processing instance for LATISS
 | prompt-keda.raw_microservice | string | `""` | The URI to a microservice that maps image metadata to a file location. If empty, Prompt Processing does not use a microservice. |
 | prompt-keda.registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |
 | prompt-keda.resources | object | See `values.yaml` | Kubernetes resource requests and limits |
-| prompt-keda.s3.auth_env | bool | `true` | If set, get S3 credentials from this application's Vault secret. |
+| prompt-keda.s3.auth_env | bool | `false` | If set, define environment variables with S3 credentials from this application's Vault secret. |
+| prompt-keda.s3.aws_profile | string | `""` | If set, specify a S3 credential profile and `cred_file_auth` must be true. If empty and `auth_env`=`false`, the `default` profile is used. |
 | prompt-keda.s3.checksum | string | `"WHEN_REQUIRED"` | If set, configure S3 checksum options. |
+| prompt-keda.s3.cred_file_auth | bool | `true` | If set, get a S3 credential file from this application's Vault secret. Must be true if `aws_profile` is set. |
 | prompt-keda.s3.disableBucketValidation | string | `"0"` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |
 | prompt-keda.s3.endpointUrl | string | `""` |  |
 | prompt-keda.s3.imageBucket | string | None, must be set | Bucket containing the incoming raw images |

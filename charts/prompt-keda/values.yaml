@@ -64,10 +64,18 @@ s3:
   # -- S3 endpoint containing `imageBucket`
   # @default -- None, must be set
   endpointUrl: ""
-  # -- If set, get S3 credentials from this application's Vault secret.
-  auth_env: true
+  # -- If set, define environment variables with S3 credentials from this application's Vault secret.
+  auth_env: false
+  # -- If set, get a S3 credential file from this application's Vault secret.
+  # Must be true if `aws_profile` is set.
+  cred_file_auth: true
+  # -- If set, specify a S3 credential profile and `cred_file_auth` must be true.
+  # If empty and `auth_env`=`false`, the `default` profile is used.
+  aws_profile: ""
   # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
   disableBucketValidation: 0
+  # -- If set, configure S3 checksum options.
+  checksum: WHEN_REQUIRED
 
 # -- The URI to a microservice that maps image metadata to a file location.
 # If empty, Prompt Processing does not use a microservice.
