@@ -11,6 +11,7 @@ Full focal plane viewer
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | config.pathPrefix | string | `"/fov-quicklook"` | URL path prefix |
+| context_menu_templates | list | `[]` | Context menu templates for the frontend |
 | coordinator.resources.limits | object | `{"cpu":"4000m","memory":"256Mi"}` | Resource limits for the coordinator |
 | coordinator.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | Resource requests for the coordinator |
 | db.resources.limits | object | `{"cpu":"2000m","memory":"256Mi"}` | Resource limits for the database |

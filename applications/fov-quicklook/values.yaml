@@ -75,3 +75,6 @@ generator:
     medium: Memory
   # -- Number of replicas for the generator
   replicas: 9
+
+# -- Context menu templates for the frontend
+context_menu_templates: []
