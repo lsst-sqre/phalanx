@@ -50,12 +50,12 @@ controller:
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
       sizes:
-        - size: small
-          cpu: 1.0
-          memory: 4Gi
         - size: large
           cpu: 4.0
           memory: 16Gi
+        - size: small
+          cpu: 1.0
+          memory: 4Gi
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
