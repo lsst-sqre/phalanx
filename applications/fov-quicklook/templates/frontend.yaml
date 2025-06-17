@@ -31,6 +31,8 @@ spec:
             {{- include "fov-quicklook.env.log-level" . | nindent 12 }}
             {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
             {{- include "fov-quicklook.butler-settings.env" . | nindent 12 }}
+            - name: QUICKLOOK_context_menu_templates
+              value: {{ .Values.context_menu_templates | toJson | quote }}
           volumeMounts:
             {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}
           livenessProbe:
