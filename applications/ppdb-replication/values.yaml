@@ -131,24 +131,3 @@ config:
 
   # -- S3 profile URL for additional S3 profile
   additionalS3ProfileUrl: "https://sdfembs3.sdf.slac.stanford.edu"
-
-  # -- Volumes specific to the environment
-  volumes:
-    - name: sdf-group-rubin
-      persistentVolumeClaim:
-        claimName: sdf-group-rubin
-    - name: sdf-data-rubin
-      persistentVolumeClaim:
-        claimName: sdf-data-rubin
-  # -- Volume mounts
-  volumeMounts:
-    - name: sdf-group-rubin
-      mountPath: /sdf/group/rubin
-    - name: sdf-data-rubin
-      mountPath: /sdf/data/rubin
-  # -- Persistent volume claims
-  persistentVolumeClaims:
-    - name: sdf-group-rubin
-      storageClassName: sdf-group-rubin
-    - name: sdf-data-rubin
-      storageClassName: sdf-data-rubin
