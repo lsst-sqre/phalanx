@@ -53,9 +53,6 @@ controller:
         - size: small
           cpu: 1.0
           memory: 4Gi
-        - size: medium
-          cpu: 2.0
-          memory: 8Gi
         - size: large
           cpu: 4.0
           memory: 16Gi
