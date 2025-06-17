@@ -25,3 +25,31 @@ config:
 
   # -- GCS prefix
   gcsPrefix: "data/lsstcam"
+
+  # -- Volumes specific to the environment
+  volumes:
+    - name: sdf-group-rubin
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin
+    - name: sdf-data-rubin
+      persistentVolumeClaim:
+        claimName: sdf-data-rubin
+    - name: sdf-scratch
+      persistentVolumeClain:
+        claimName: sdf-scratch
+  # -- Volume mounts
+  volumeMounts:
+    - name: sdf-group-rubin
+      mountPath: /sdf/group/rubin
+    - name: sdf-data-rubin
+      mountPath: /sdf/data/rubin
+    - name: sdf-scratch
+      mountPath: /sdf/scratch
+  # -- Persistent volume claims
+  persistentVolumeClaims:
+    - name: sdf-group-rubin
+      storageClassName: sdf-group-rubin
+    - name: sdf-data-rubin
+      storageClassName: sdf-data-rubin
+    - name: sdf-scratch
+      storageClassName: sdf-scratch
