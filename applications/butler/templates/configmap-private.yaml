@@ -8,7 +8,7 @@ data:
       cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
       records:
         table: file_datastore_records
-      root: s3://gcs@butler-us-central1-dp1/DM-51298/
+      root: s3://gcs@butler-us-central1-dp1/DM-51372/
     registry:
       db: {{ .Values.config.dp1PostgresUri }}
       managers:
@@ -18,7 +18,7 @@ data:
         datastores: lsst.daf.butler.registry.bridge.monolithic.MonolithicDatastoreRegistryBridgeManager
         dimensions: lsst.daf.butler.registry.dimensions.static.StaticDimensionRecordStorageManager
         opaque: lsst.daf.butler.registry.opaque.ByNameOpaqueTableStorageManager
-      namespace: dm_51298
+      namespace: dm_51372
 
   {{- if .Values.config.dp02PostgresUri }}
   # Internal Butler server configuration for DP02.
