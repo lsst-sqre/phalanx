@@ -85,6 +85,8 @@ spec:
         # Increase request timeout
         producer.request.timeout.ms: 240000
         consumer.request.timeout.ms: 240000
+        # REMOVE: this is for IDF int tests only
+        consumer.auto.offset.reset: latest
     heartbeatConnector:
       autoRestart:
         enabled: true
