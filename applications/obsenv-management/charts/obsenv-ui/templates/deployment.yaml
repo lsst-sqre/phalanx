@@ -47,6 +47,9 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+          volumeMounts:
+          - mountPath: /app/.next/cache
+            name: next-cache
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -59,3 +62,9 @@ spec:
         runAsNonRoot: true
         runAsUser: 1001
         runAsGroup: 1001
+        fsGroup: 1001
+      volumes:
+      - name: next-cache
+        emptyDir:
+          medium: Memory
+          sizeLimit: 128Mi
