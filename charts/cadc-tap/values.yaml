@@ -160,6 +160,15 @@ config:
       # -- Whether auth is enabled
       enabled: false
 
+  # -- Rules for renaming Columns
+  urlRewrite:
+
+    # -- Whether it is enabled
+    enabled: true
+
+    # -- String with a comma-separated list of schema.table:column rules
+    rules: "ivoa.ObsCore:access_url"
+
 mockdb:
   # -- Spin up a container to pretend to be the database.
   enabled: false
