@@ -32,6 +32,7 @@ argo-cd:
         p, role:developer, applications, sync, infrastructure/*, deny
         p, role:developer, applications, override, infrastructure/*, deny
         p, role:developer, applications, action/*, infrastructure/*, deny
+        p, role:developer, logs, get, */*, allow
         p, role:developer, logs, get, infrastructure/*, allow
 
   server:
