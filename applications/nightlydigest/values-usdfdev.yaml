@@ -58,7 +58,7 @@ nightlydigest-backend:
     - name: EXTERNAL_INSTANCE_URL
       value: https://usdf-rsp-dev.slac.stanford.edu
   envSecrets:
-    - name: JIRA_TOKEN
+    - name: JIRA_API_TOKEN
       secretName: nightlydigest
       secretKey: jira-api-token
   resources:

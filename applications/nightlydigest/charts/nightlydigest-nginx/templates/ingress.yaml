@@ -27,9 +27,6 @@ template:
       {{- toYaml . | nindent 6 }}
     {{- end }}
   spec:
-    {{- if .Values.ingress.className }}
-    ingressClassName: {{ .Values.ingress.className }}
-    {{- end }}
     rules:
       - host: {{ .Values.global.host }}
         http:
