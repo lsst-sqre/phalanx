@@ -24,8 +24,6 @@ strimzi-kafka:
         - broker: 5
           annotations:
             metallb.universe.tf/address-pool: sdf-rubin-ingest
-  connect:
-    enabled: true
   mirrormaker2:
     enabled: true
     source:
