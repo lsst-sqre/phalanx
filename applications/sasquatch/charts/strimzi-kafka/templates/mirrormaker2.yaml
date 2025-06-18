@@ -92,20 +92,6 @@ spec:
         enabled: true
       config:
         heartbeats.topic.replication.factor: 3
-    checkpointConnector:
-      autoRestart:
-        enabled: true
-      config:
-        checkpoints.topic.replication.factor: 3
-        # Frequency of checks for new consumer groups.
-        refresh.groups.interval.seconds: 300
-        # Enables synchronization of consumer group offsets to the target cluster.
-        sync.group.offsets.enabled: false
-        # The frequency to sync group offsets.
-        sync.group.offsets.interval.seconds: 60
-        # The frequency of checks for offset tracking.
-        emit.checkpoints.interval.seconds: 60
-        replication.policy.class: {{ default "org.apache.kafka.connect.mirror.IdentityReplicationPolicy" .Values.mirrormaker2.replication.policy.class }}
     # Topic replication from the source cluster defined as a comma-separated list
     # or regular expression pattern.
     topicsPattern: {{ .Values.mirrormaker2.source.topicsPattern }}
