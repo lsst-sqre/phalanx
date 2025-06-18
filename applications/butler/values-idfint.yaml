@@ -1,8 +1,8 @@
 autoscaling:
   minReplicas: 3
 config:
-  dp02PostgresUri: postgresql://butler@dp02.rsp-sql-int.internal:5432/dp02
-  dp1PostgresUri: postgresql://butler@dp1.rsp-sql-int.internal:5432/dp1
+  dp02PostgresUri: postgresql://butler@alloydb-dp.rsp-sql-int.internal:5432/dp02
+  dp1PostgresUri: postgresql://butler@alloydb-dp.rsp-sql-int.internal:5432/dp1
   s3EndpointUrl: "https://storage.googleapis.com"
   repositories:
     dp02:

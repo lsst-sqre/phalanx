@@ -11,6 +11,7 @@ data:
       root: s3://gcs@butler-us-central1-dp1/DM-51372/
     registry:
       db: {{ .Values.config.dp1PostgresUri }}
+      temporary_tables: false
       managers:
         attributes: lsst.daf.butler.registry.attributes.DefaultButlerAttributeManager
         collections: lsst.daf.butler.registry.collections.synthIntKey.SynthIntKeyCollectionManager
@@ -69,6 +70,7 @@ data:
               table: user_datastore_records
     registry:
       db: {{ .Values.config.dp02PostgresUri }}
+      temporary_tables: false
       managers:
         collections: lsst.daf.butler.registry.collections.synthIntKey.SynthIntKeyCollectionManager
         datasets: lsst.daf.butler.registry.datasets.byDimensions.ByDimensionsDatasetRecordStorageManagerUUID
