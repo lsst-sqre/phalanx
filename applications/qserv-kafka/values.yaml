@@ -89,6 +89,13 @@ config:
   # `parse_timedelta` format.
   qservUploadTimeout: "5m"
 
+  # -- How many times to retry after a Qserv API network failure
+  qservRetryCount: 3
+
+  # -- How long to wait between retries after a Qserv API network failure in
+  # Safir `parse_timedelta` format
+  qservRetryDelay: "1s"
+
   # -- How long to wait for result processing (retrieval and upload) before
   # timing out, in seconds. This doubles as the timeout forcibly terminating
   # result worker pods.
