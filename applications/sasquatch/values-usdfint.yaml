@@ -30,7 +30,7 @@ strimzi-kafka:
     enabled: true
     source:
       bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
-      topicsPattern: "registry-schemas, lsst.sal.Test.*"
+      topicsPattern: "registry-schemas, lsst.sal.*"
     replication:
       policy:
         separator: "."
