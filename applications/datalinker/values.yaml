@@ -20,6 +20,18 @@ ingress:
   annotations: {}
 
 config:
+
+  # -- Default dataset for legacy /api/hips endpoints (optional)
+  # If not set it will use hips_base_url
+  hipsDefaultDataset: ""
+
+  # -- HiPS dataset configurations mapping dataset names to their base URLs
+  hipsDatasets: {}
+
+  # -- URL path prefix for the HiPS v2 API (must match the configuration of the
+  # hips service)
+  hipsV2PathPrefix: "/api/hips/v2"
+
   # -- URL path prefix for the HiPS API (must match the configuration of the
   # hips service)
   hipsPathPrefix: "/api/hips"
