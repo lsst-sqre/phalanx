@@ -26,7 +26,7 @@ spec:
           csi:
             driver: gcsfuse.csi.storage.gke.io
             volumeAttributes:
-              bucketName: eups
+              bucketName: eups-prod
               mountOptions: "implicit-dirs"
       {{- with .Values.affinity }}
       affinity:
