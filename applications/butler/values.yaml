@@ -29,9 +29,9 @@ autoscaling:
   # -- Maximum number of butler deployment pods
   #
   # Each replica can have 40 database connections, so we need to make sure the
-  # combined connections are under the postgres connection limit. (Which is
-  # configurable, but currently set to 400 at the IDF.)
-  maxReplicas: 10
+  # combined connections are under the AlloyDB connection limit. (200 x num
+  # replicas as currently configured at IDF.)
+  maxReplicas: 20
 
   # -- Target CPU utilization of butler deployment pods
   #
