@@ -141,11 +141,11 @@ influxdb:
   # @default -- See `values.yaml`
   resources:
     requests:
-      memory: 96Gi
-      cpu: 8
+      memory: 4Gi
+      cpu: 1
     limits:
-      memory: 96Gi
-      cpu: 8
+      memory: 8Gi
+      cpu: 2
 
 customInfluxDBIngress:
   # -- Whether to enable the custom ingress for InfluxDB OSS
@@ -243,11 +243,11 @@ chronograf:
   # @default -- See `values.yaml`
   resources:
     requests:
-      memory: 4Gi
+      memory: 2Gi
       cpu: 1
     limits:
-      memory: 64Gi
-      cpu: 4
+      memory: 4Gi
+      cpu: 2
 
 kapacitor:
   # -- Whether to enable Kapacitor
@@ -295,8 +295,8 @@ kapacitor:
       memory: 1Gi
       cpu: 1
     limits:
-      memory: 16Gi
-      cpu: 4
+      memory: 2Gi
+      cpu: 2
 
 kafdrop:
   # -- Whether to enable the kafdrop subchart

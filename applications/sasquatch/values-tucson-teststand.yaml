@@ -40,24 +40,10 @@ strimzi-kafka:
     enabled: true
     enableSaramaLogging: true
     showAllOffsets: false
-    resources:
-      requests:
-        cpu: 1
-        memory: 128Mi
-      limits:
-        cpu: 2
-        memory: 256Mi
   controller:
     enabled: true
     storage:
       storageClassName: "rook-ceph-block"
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: "2"
-      limits:
-        memory: 8Gi
-        cpu: "2"
   broker:
     enabled: true
     name: "kafka"
@@ -65,13 +51,6 @@ strimzi-kafka:
     storage:
       size: 500Gi
       storageClassName: "rook-ceph-block"
-    resources:
-      requests:
-        memory: 16Gi
-        cpu: 4
-      limits:
-        memory: 16Gi
-        cpu: 4
   users:
     replicator:
       enabled: true

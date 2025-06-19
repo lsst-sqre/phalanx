@@ -31,24 +31,10 @@ strimzi-kafka:
       enabled: true
   controller:
     enabled: true
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: "1"
-      limits:
-        memory: 8Gi
-        cpu: "1"
   broker:
     enabled: true
     storage:
       size: 500Gi
-    resources:
-      requests:
-        memory: 16Gi
-        cpu: "2"
-      limits:
-        memory: 16Gi
-        cpu: "2"
   registry:
     ingress:
       enabled: true
@@ -61,13 +47,6 @@ influxdb:
   ingress:
     enabled: false
     hostname: data-dev.lsst.cloud
-  resources:
-    requests:
-      memory: 16Gi
-      cpu: 2
-    limits:
-      memory: 16Gi
-      cpu: 2
 
 customInfluxDBIngress:
   enabled: true
@@ -91,13 +70,6 @@ influxdb-enterprise:
       secret:
         name: sasquatch
         key: influxdb-enterprise-shared-secret
-    resources:
-      requests:
-        memory: 2Gi
-        cpu: 1
-      limits:
-        memory: 4Gi
-        cpu: 2
   data:
     replicas: 2
     config:
@@ -110,13 +82,6 @@ influxdb-enterprise:
       enabled: true
       accessMode: ReadWriteOnce
       size: 1Ti
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: 2
-      limits:
-        memory: 16Gi
-        cpu: 4
 
 telegraf:
   enabled: true

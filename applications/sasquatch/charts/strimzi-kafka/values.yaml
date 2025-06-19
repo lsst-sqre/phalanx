@@ -138,10 +138,10 @@ controller:
   # -- Kubernetes resources for the controllers
   resources:
     requests:
-      memory: 8Gi
-      cpu: "1"
+      memory: 2Gi
+      cpu: 500m
     limits:
-      memory: 8Gi
+      memory: 4Gi
       cpu: "1"
 
 broker:
@@ -180,11 +180,11 @@ broker:
   # -- Kubernetes resources for the brokers
   resources:
     requests:
-      memory: 32Gi
-      cpu: "4"
+      memory: 4Gi
+      cpu: 1
     limits:
-      memory: 64Gi
-      cpu: "8"
+      memory: 8Gi
+      cpu: 2
 
 cruiseControl:
   # -- Enable cruise control (required for broker migration and rebalancing)
@@ -238,15 +238,6 @@ brokerMigration:
   # -- Tolerations for Kafka broker pod assignment
   tolerations: []
 
-  resources:
-    # -- Kubernetes resources for the brokers
-    requests:
-      memory: 32Gi
-      cpu: "4"
-    limits:
-      memory: 64Gi
-      cpu: "8"
-
 kafkaExporter:
   # -- Enable Kafka exporter
   enabled: false
@@ -268,7 +259,13 @@ kafkaExporter:
 
   # -- Kubernetes requests and limits for the Kafka exporter
   # @default -- See `values.yaml`
-  resources: {}
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 1
+    limits:
+      memory: 1Gi
+      cpu: 2
 
 connect:
   # -- Enable Kafka Connect
@@ -299,6 +296,16 @@ connect:
     # -- URL for the schema registry
     value.converter.schema.registry.url: http://sasquatch-schema-registry.sasquatch:8081
 
+  # -- Kubernetes requests and limits for Kafka Connect
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      memory: 2Gi
+      cpu: 1
+    limits:
+      memory: 4Gi
+      cpu: 2
+
 registry:
   ingress:
     # -- Whether to enable an ingress for the Schema Registry
@@ -318,11 +325,11 @@ registry:
   # @default -- See `values.yaml`
   resources:
     requests:
-      memory: "128Mi"
-      cpu: "5m"
+      memory: 1Gi
+      cpu: 100m
     limits:
-      memory: "2Gi"
-      cpu: "1"
+      memory: 2Gi
+      cpu: 1
 
 
 # -- A list of usernames for users who should have global admin permissions.
@@ -365,3 +372,12 @@ mirrormaker2:
 
       # -- Replication policy.
       class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
+
+  # -- Kubernetes resources for MirrorMaker2
+  resources:
+    requests:
+      memory: 2Gi
+      cpu: 500m
+    limits:
+      memory: 4Gi
+      cpu: 1

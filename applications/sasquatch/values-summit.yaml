@@ -39,21 +39,8 @@ strimzi-kafka:
     logging: debug
     enableSaramaLogging: true
     showAllOffsets: false
-    resources:
-      requests:
-        cpu: "4"
-        memory: 512Mi
-      limits:
-        memory: 1024Mi
   controller:
     enabled: true
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: "2"
-      limits:
-        memory: 8Gi
-        cpu: "2"
   broker:
     enabled: true
     name: "kafka-local-storage"
@@ -140,13 +127,6 @@ influxdb-enterprise:
       secret:
         name: sasquatch
         key: influxdb-enterprise-shared-secret
-    resources:
-      requests:
-        memory: 2Gi
-        cpu: 2
-      limits:
-        memory: 4Gi
-        cpu: 4
   data:
     replicas: 2
     ingress:
@@ -168,10 +148,11 @@ influxdb-enterprise:
                   values:
                     - yagan15
                     - yagan16
-    # -- InfluxDB Enterprise data pod resources, 2x8 cores cluster license
     resources:
       requests:
         memory: 256Gi
+        # The InfluxDB Enterprise license is limited to 16 cpu, the
+        # active instance uses a 2 node x 8 cpu setup
         cpu: 8
       limits:
         memory: 256Gi
@@ -425,6 +406,13 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://summit-lsp.lsst.codes
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/summit.json
+  resources:
+    requests:
+      memory: 16Gi
+      cpu: 1
+    limits:
+      memory: 64Gi
+      cpu: 4
 
 kapacitor:
   persistence:
