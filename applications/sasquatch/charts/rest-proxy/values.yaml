@@ -73,11 +73,11 @@ kafka:
 # @default -- See `values.yaml`
 resources:
   requests:
-    memory: 200Mi
-    cpu: 1
+    memory: 500Mi
+    cpu: 200m
   limits:
-    memory: 4Gi
-    cpu: 2
+    memory: 1Gi
+    cpu: 1
 
 # -- Node selector configuration
 nodeSelector: {}
