@@ -75,6 +75,13 @@ strimzi-kafka:
                   values:
                     - sasquatch
             topologyKey: kubernetes.io/hostname
+    resources:
+      requests:
+        cpu: 8
+        memory: 64Gi
+      limits:
+        cpu: 8
+        memory: 64Gi
   cruiseControl:
     enabled: true
 
@@ -138,6 +145,8 @@ influxdb-enterprise-standby:
     resources:
       requests:
         memory: 96Gi
+        # The InfluxDB Enterprise license is limited to 16 cpu, the
+        # standby instance uses a 1 node x 16 cpu setup
         cpu: 16
       limits:
         memory: 96Gi
@@ -202,6 +211,8 @@ influxdb-enterprise-active:
     resources:
       requests:
         memory: 192Gi
+        # The InfluxDB Enterprise license is limited to 16 cpu, the
+        # active instance uses a 2 node x 8 cpu setup
         cpu: 8
       limits:
         memory: 192Gi
@@ -460,6 +471,13 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://usdf-rsp.slac.stanford.edu/
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/usdfprod.json
+  resources:
+    requests:
+      memory: 16Gi
+      cpu: 1
+    limits:
+      memory: 64Gi
+      cpu: 4
 
 kapacitor:
   influxURL: http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086
