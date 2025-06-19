@@ -179,7 +179,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.data.podSecurityContext | object | `{}` | Pod security context for data pods |
 | influxdb-enterprise.data.preruncmds | list | `[]` | Commands to run in data pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | influxdb-enterprise.data.replicas | int | `1` | Number of data replicas to run |
-| influxdb-enterprise.data.resources | object | `{}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise.data.resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Kubernetes resources and limits for the meta container |
 | influxdb-enterprise.data.securityContext | object | `{}` | Security context for meta pods |
 | influxdb-enterprise.data.service.annotations | object | `{}` | Extra annotations for the data service |
 | influxdb-enterprise.data.service.externalIPs | list | Do not allocate external IPs | External IPs for the data service |
@@ -217,7 +217,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.meta.podSecurityContext | object | `{}` | Pod security context for meta pods |
 | influxdb-enterprise.meta.preruncmds | list | `[]` | Commands to run in meta pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | influxdb-enterprise.meta.replicas | int | `3` | Number of meta pods to run |
-| influxdb-enterprise.meta.resources | object | `{}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise.meta.resources | object | `{"limits":{"cpu":1,"memory":"1Gi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | Kubernetes resources and limits for the meta container |
 | influxdb-enterprise.meta.securityContext | object | `{}` | Security context for meta pods |
 | influxdb-enterprise.meta.service.annotations | object | `{}` | Extra annotations for the meta service |
 | influxdb-enterprise.meta.service.externalIPs | list | Do not allocate external IPs | External IPs for the meta service |
@@ -269,7 +269,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.data.podSecurityContext | object | `{}` | Pod security context for data pods |
 | influxdb-enterprise-active.data.preruncmds | list | `[]` | Commands to run in data pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | influxdb-enterprise-active.data.replicas | int | `1` | Number of data replicas to run |
-| influxdb-enterprise-active.data.resources | object | `{}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise-active.data.resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Kubernetes resources and limits for the meta container |
 | influxdb-enterprise-active.data.securityContext | object | `{}` | Security context for meta pods |
 | influxdb-enterprise-active.data.service.annotations | object | `{}` | Extra annotations for the data service |
 | influxdb-enterprise-active.data.service.externalIPs | list | Do not allocate external IPs | External IPs for the data service |
@@ -307,7 +307,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.meta.podSecurityContext | object | `{}` | Pod security context for meta pods |
 | influxdb-enterprise-active.meta.preruncmds | list | `[]` | Commands to run in meta pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | influxdb-enterprise-active.meta.replicas | int | `3` | Number of meta pods to run |
-| influxdb-enterprise-active.meta.resources | object | `{}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise-active.meta.resources | object | `{"limits":{"cpu":1,"memory":"1Gi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | Kubernetes resources and limits for the meta container |
 | influxdb-enterprise-active.meta.securityContext | object | `{}` | Security context for meta pods |
 | influxdb-enterprise-active.meta.service.annotations | object | `{}` | Extra annotations for the meta service |
 | influxdb-enterprise-active.meta.service.externalIPs | list | Do not allocate external IPs | External IPs for the meta service |
@@ -359,7 +359,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.data.podSecurityContext | object | `{}` | Pod security context for data pods |
 | influxdb-enterprise-standby.data.preruncmds | list | `[]` | Commands to run in data pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | influxdb-enterprise-standby.data.replicas | int | `1` | Number of data replicas to run |
-| influxdb-enterprise-standby.data.resources | object | `{}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise-standby.data.resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Kubernetes resources and limits for the meta container |
 | influxdb-enterprise-standby.data.securityContext | object | `{}` | Security context for meta pods |
 | influxdb-enterprise-standby.data.service.annotations | object | `{}` | Extra annotations for the data service |
 | influxdb-enterprise-standby.data.service.externalIPs | list | Do not allocate external IPs | External IPs for the data service |
@@ -397,7 +397,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.meta.podSecurityContext | object | `{}` | Pod security context for meta pods |
 | influxdb-enterprise-standby.meta.preruncmds | list | `[]` | Commands to run in meta pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | influxdb-enterprise-standby.meta.replicas | int | `3` | Number of meta pods to run |
-| influxdb-enterprise-standby.meta.resources | object | `{}` | Kubernetes resources and limits for the meta container |
+| influxdb-enterprise-standby.meta.resources | object | `{"limits":{"cpu":1,"memory":"1Gi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | Kubernetes resources and limits for the meta container |
 | influxdb-enterprise-standby.meta.securityContext | object | `{}` | Security context for meta pods |
 | influxdb-enterprise-standby.meta.service.annotations | object | `{}` | Extra annotations for the meta service |
 | influxdb-enterprise-standby.meta.service.externalIPs | list | Do not allocate external IPs | External IPs for the meta service |
@@ -537,7 +537,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.broker.enabled | bool | `false` | Enable node pool for the kafka brokers |
 | strimzi-kafka.broker.name | string | `"kafka"` | Node pool name |
 | strimzi-kafka.broker.nodeIds | string | `"[0,1,2]"` | IDs to assign to the brokers |
-| strimzi-kafka.broker.resources | object | `{"limits":{"cpu":"8","memory":"64Gi"},"requests":{"cpu":"4","memory":"32Gi"}}` | Kubernetes resources for the brokers |
+| strimzi-kafka.broker.resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Kubernetes resources for the brokers |
 | strimzi-kafka.broker.storage.size | string | `"1.5Ti"` | Storage size for the brokers |
 | strimzi-kafka.broker.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
 | strimzi-kafka.broker.tolerations | list | `[]` | Tolerations for broker pod assignment |
@@ -547,9 +547,6 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.brokerMigration.nodeIDs | string | `"[6,7,8]"` | IDs to assign to the brokers |
 | strimzi-kafka.brokerMigration.rebalance.avoidBrokers | list | `[0,1,2]` | Brokers to avoid during rebalancing These are the brokers you are migrating from and you want to remove after the migration is complete. |
 | strimzi-kafka.brokerMigration.rebalance.enabled | bool | `false` | Whether to rebalance the kafka cluster |
-| strimzi-kafka.brokerMigration.resources.limits.cpu | string | `"8"` |  |
-| strimzi-kafka.brokerMigration.resources.limits.memory | string | `"64Gi"` |  |
-| strimzi-kafka.brokerMigration.resources.requests | object | `{"cpu":"4","memory":"32Gi"}` | Kubernetes resources for the brokers |
 | strimzi-kafka.brokerMigration.size | string | `"1.5Ti"` | Storage size for the brokers |
 | strimzi-kafka.brokerMigration.storageClassName | string | None, use the default storage class | Storage class name for the brokers |
 | strimzi-kafka.brokerMigration.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment |
@@ -564,10 +561,11 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.connect.enabled | bool | `false` | Enable Kafka Connect |
 | strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
+| strimzi-kafka.connect.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafka Connect |
 | strimzi-kafka.controller.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for controller pod assignment |
 | strimzi-kafka.controller.enabled | bool | `false` | Enable node pool for the kafka controllers |
 | strimzi-kafka.controller.nodeIds | string | `"[3,4,5]"` | IDs to assign to the controllers |
-| strimzi-kafka.controller.resources | object | `{"limits":{"cpu":"1","memory":"8Gi"},"requests":{"cpu":"1","memory":"8Gi"}}` | Kubernetes resources for the controllers |
+| strimzi-kafka.controller.resources | object | `{"limits":{"cpu":"1","memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for the controllers |
 | strimzi-kafka.controller.storage.size | string | `"20Gi"` | Storage size for the controllers |
 | strimzi-kafka.controller.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
 | strimzi-kafka.controller.tolerations | list | `[]` | Tolerations for controller pod assignment |
@@ -601,6 +599,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
 | strimzi-kafka.mirrormaker2.replication.policy.class | string | `"org.apache.kafka.connect.mirror.IdentityReplicationPolicy"` | Replication policy. |
 | strimzi-kafka.mirrormaker2.replication.policy.separator | string | `""` | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
+| strimzi-kafka.mirrormaker2.resources | object | `{"limits":{"cpu":1,"memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for MirrorMaker2 |
 | strimzi-kafka.mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
 | strimzi-kafka.mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
 | strimzi-kafka.registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |

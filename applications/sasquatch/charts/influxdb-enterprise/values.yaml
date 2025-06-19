@@ -219,7 +219,13 @@ meta:
   env: {}
 
   # -- Kubernetes resources and limits for the meta container
-  resources: {}
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 100m
+    limits:
+      memory: 1Gi
+      cpu: 1
 
 data:
   # -- Number of data replicas to run
@@ -405,4 +411,10 @@ data:
   env: {}
 
   # -- Kubernetes resources and limits for the meta container
-  resources: {}
+  resources:
+    requests:
+      memory: 4Gi
+      cpu: 1
+    limits:
+      memory: 8Gi
+      cpu: 2

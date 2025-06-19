@@ -10,7 +10,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | broker.enabled | bool | `false` | Enable node pool for the kafka brokers |
 | broker.name | string | `"kafka"` | Node pool name |
 | broker.nodeIds | string | `"[0,1,2]"` | IDs to assign to the brokers |
-| broker.resources | object | `{"limits":{"cpu":"8","memory":"64Gi"},"requests":{"cpu":"4","memory":"32Gi"}}` | Kubernetes resources for the brokers |
+| broker.resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Kubernetes resources for the brokers |
 | broker.storage.size | string | `"1.5Ti"` | Storage size for the brokers |
 | broker.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
 | broker.tolerations | list | `[]` | Tolerations for broker pod assignment |
@@ -20,9 +20,6 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | brokerMigration.nodeIDs | string | `"[6,7,8]"` | IDs to assign to the brokers |
 | brokerMigration.rebalance.avoidBrokers | list | `[0,1,2]` | Brokers to avoid during rebalancing These are the brokers you are migrating from and you want to remove after the migration is complete. |
 | brokerMigration.rebalance.enabled | bool | `false` | Whether to rebalance the kafka cluster |
-| brokerMigration.resources.limits.cpu | string | `"8"` |  |
-| brokerMigration.resources.limits.memory | string | `"64Gi"` |  |
-| brokerMigration.resources.requests | object | `{"cpu":"4","memory":"32Gi"}` | Kubernetes resources for the brokers |
 | brokerMigration.size | string | `"1.5Ti"` | Storage size for the brokers |
 | brokerMigration.storageClassName | string | None, use the default storage class | Storage class name for the brokers |
 | brokerMigration.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment |
@@ -37,10 +34,11 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | connect.enabled | bool | `false` | Enable Kafka Connect |
 | connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
 | connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
+| connect.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafka Connect |
 | controller.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for controller pod assignment |
 | controller.enabled | bool | `false` | Enable node pool for the kafka controllers |
 | controller.nodeIds | string | `"[3,4,5]"` | IDs to assign to the controllers |
-| controller.resources | object | `{"limits":{"cpu":"1","memory":"8Gi"},"requests":{"cpu":"1","memory":"8Gi"}}` | Kubernetes resources for the controllers |
+| controller.resources | object | `{"limits":{"cpu":"1","memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for the controllers |
 | controller.storage.size | string | `"20Gi"` | Storage size for the controllers |
 | controller.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
 | controller.tolerations | list | `[]` | Tolerations for controller pod assignment |
@@ -74,6 +72,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
 | mirrormaker2.replication.policy.class | string | `"org.apache.kafka.connect.mirror.IdentityReplicationPolicy"` | Replication policy. |
 | mirrormaker2.replication.policy.separator | string | `""` | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
+| mirrormaker2.resources | object | `{"limits":{"cpu":1,"memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for MirrorMaker2 |
 | mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
 | mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
 | registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
