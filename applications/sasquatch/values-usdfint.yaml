@@ -41,24 +41,10 @@ strimzi-kafka:
       enabled: true
   controller:
     enabled: true
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: "1"
-      limits:
-        memory: 8Gi
-        cpu: "1"
   broker:
     enabled: true
     storage:
       size: 500Gi
-    resources:
-      requests:
-        memory: 16Gi
-        cpu: "2"
-      limits:
-        memory: 16Gi
-        cpu: "2"
 
 influxdb:
   ingress:

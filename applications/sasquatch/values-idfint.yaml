@@ -29,13 +29,6 @@ strimzi-kafka:
     source:
       bootstrapServer: sasquatch-dev-kafka-bootstrap.lsst.cloud:9094
       topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*"
-    resources:
-      requests:
-        cpu: "2"
-        memory: 4Gi
-      limits:
-        cpu: "4"
-        memory: 8Gi
   users:
     replicator:
       enabled: true
@@ -43,24 +36,10 @@ strimzi-kafka:
       enabled: true
   controller:
     enabled: true
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: "1"
-      limits:
-        memory: 8Gi
-        cpu: "1"
   broker:
     enabled: true
     storage:
       size: 500Gi
-    resources:
-      requests:
-        memory: 16Gi
-        cpu: "2"
-      limits:
-        memory: 16Gi
-        cpu: "2"
   registry:
     ingress:
       enabled: true
@@ -73,13 +52,6 @@ influxdb:
   ingress:
     enabled: false
     hostname: data-int.lsst.cloud
-  resources:
-    requests:
-      memory: 16Gi
-      cpu: 2
-    limits:
-      memory: 16Gi
-      cpu: 2
 
 customInfluxDBIngress:
   enabled: true

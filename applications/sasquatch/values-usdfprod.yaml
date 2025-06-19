@@ -104,13 +104,6 @@ influxdb-enterprise-standby:
       secret:
         name: sasquatch
         key: influxdb-enterprise-standby-shared-secret
-    resources:
-      requests:
-        memory: 2Gi
-        cpu: 2
-      limits:
-        memory: 4Gi
-        cpu: 4
   data:
     replicas: 1
     affinity:
@@ -174,12 +167,6 @@ influxdb-enterprise-active:
         name: sasquatch
         key: influxdb-enterprise-active-shared-secret
     resources:
-      requests:
-        memory: 8Gi
-        cpu: 4
-      limits:
-        memory: 8Gi
-        cpu: 4
   data:
     replicas: 2
     affinity:

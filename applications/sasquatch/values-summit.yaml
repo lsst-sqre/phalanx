@@ -39,21 +39,8 @@ strimzi-kafka:
     logging: debug
     enableSaramaLogging: true
     showAllOffsets: false
-    resources:
-      requests:
-        cpu: "4"
-        memory: 512Mi
-      limits:
-        memory: 1024Mi
   controller:
     enabled: true
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: "2"
-      limits:
-        memory: 8Gi
-        cpu: "2"
   broker:
     enabled: true
     name: "kafka-local-storage"
@@ -140,13 +127,6 @@ influxdb-enterprise:
       secret:
         name: sasquatch
         key: influxdb-enterprise-shared-secret
-    resources:
-      requests:
-        memory: 2Gi
-        cpu: 2
-      limits:
-        memory: 4Gi
-        cpu: 4
   data:
     replicas: 2
     ingress:

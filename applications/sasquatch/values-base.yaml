@@ -8,13 +8,6 @@ strimzi-kafka:
       policy:
         separator: "."
         class: "org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
-    resources:
-      requests:
-        cpu: 2
-        memory: 4Gi
-      limits:
-        cpu: 4
-        memory: 8Gi
   cluster:
     monitorLabel:
       lsst.io/monitor: "true"
@@ -55,22 +48,8 @@ strimzi-kafka:
     logging: debug
     enableSaramaLogging: true
     showAllOffsets: false
-    resources:
-      requests:
-        cpu: "3"
-        memory: 512Mi
-      limits:
-        cpu: "8"
-        memory: 1Gi
   controller:
     enabled: true
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: "2"
-      limits:
-        memory: 8Gi
-        cpu: "2"
   broker:
     enabled: true
     name: "kafka-local-storage"
