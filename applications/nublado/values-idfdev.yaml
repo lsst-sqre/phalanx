@@ -62,6 +62,13 @@ controller:
               volumeName: "rubin"
       nodeSelector:
         node_pool: "user-lab-pool"
+      sizes:
+        - size: large
+          cpu: 4.0
+          memory: 16Gi
+        - size: small
+          cpu: 1.0
+          memory: 4Gi
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "aws-credentials.ini"
