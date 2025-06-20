@@ -27,7 +27,10 @@ spec:
             driver: gcsfuse.csi.storage.gke.io
             volumeAttributes:
               bucketName: eups-prod
-              mountOptions: "implicit-dirs"
+              mountOptions: "implicit-dirs,file-cache:max-size-mb:-1,file-cache:cache-file-for-range-read:true,metadata-cache:ttl-secs:-1,metadata-cache:stat-cache-max-size-mb:-1,metadata-cache:type-cache-max-size-mb:-1"
+              skipCSIBucketAccessCheck: "true"
+              gcsfuseMetadataPrefetchOnMount: "true"
+
       {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
