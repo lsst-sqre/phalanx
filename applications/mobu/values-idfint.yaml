@@ -86,10 +86,10 @@ config:
           repo_ref: "main"
           max_executions: 1
         restart: true
-    - name: "tutorial-r291"
+    - name: "tutorial-r2911"
       count: 1
       users:
-        - username: "bot-mobu-tutorial-r291"
+        - username: "bot-mobu-tutorial-r2911"
       scopes:
         - "exec:notebook"
         - "exec:portal"
