@@ -100,9 +100,9 @@ config:
         options:
           image:
             image_class: "by-tag"
-            tag: "r29_1_0"
+            tag: "r29_1_1"
           repo_url: "https://github.com/lsst/tutorial-notebooks.git"
-          repo_ref: "main"
+          repo_ref: "tickets/SP-2237"
           max_executions: 1
         restart: true
     - name: "tap"
