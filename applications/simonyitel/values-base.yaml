@@ -77,6 +77,11 @@ mtaos:
     readOnly: false
     server: nfs-scratch.ls.lsst.org
     serverPath: /scratch
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.ls.lsst.org
+    serverPath: /obs-env
   resources:
     limits:
       cpu: 1000m
