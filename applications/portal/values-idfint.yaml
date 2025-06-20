@@ -12,6 +12,7 @@ config:
         size: "20Gi"
         storageClass: "standard-rwo"
   ssotap: "ssotap"
+  hipsUrl: "{{ .Values.global.baseUrl }}/api/hips/v2/dp1/deep_coadd/color_gri"
 
 redis:
   persistence:
