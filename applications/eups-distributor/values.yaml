@@ -31,16 +31,21 @@ nodeSelector: {}
 # -- Annotations for the eups-distributor deployment pod
 podAnnotations:
   gke-gcsfuse/volumes: "true"
+  gke-gcsfuse/cpu-limit: "10"
+  gke-gcsfuse/memory-limit: 10Gi
+  gke-gcsfuse/cpu-request: 500m
+  gke-gcsfuse/memory-request: 1Gi
+  gke-gcsfuse/ephemeral-storage-request: 50Gi
 
 # -- Resource limits and requests for the eups-distributor deployment pod
 # @default -- See `values.yaml`
 resources:
   limits:
-    cpu: "4"
-    memory: "8Gi"
+    cpu: "8"
+    memory: "15Gi"
   requests:
-    cpu: "1"
-    memory: "1Gi"
+    cpu: "4"
+    memory: "10Gi"
 
 # -- Tolerations for the eups-distributor deployment pod
 tolerations: []
@@ -59,3 +64,8 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: null
+pvc:
+  name: "gke-ssd"
+volumes:
+  name: "gke-gcsfuse-cache"
+  claimName: "gke-ssd"
