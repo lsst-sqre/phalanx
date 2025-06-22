@@ -1,6 +1,16 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
+  image:
+  # -- Nublado controller image to use
+    repository: "ghcr.io/lsst-sqre/nublado-controller"
+
+  # -- Pull policy for the controller image
+    pullPolicy: "Always"
+
+  # -- Tag of Nublado controller image to use
+  # @default -- The appVersion of the chart
+    tag: tickets-DM-42959-webdavpopup
   config:
     dropdownMenu:
       release:
