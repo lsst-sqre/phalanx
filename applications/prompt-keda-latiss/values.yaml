@@ -39,6 +39,10 @@ prompt-keda:
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
     centralRepo: ""
+    # -- Optional URI to a separate repo used for pipeline inputs.
+    # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
+    # @default -- Matches `centralRepo`
+    readRepo: ""
     # -- The average time to wait (in seconds) before retrying a failed connection to the shared repo.
     repoWait: 30
     # -- YAML-formatted list of regex patterns to specify the dataset types to export.
@@ -108,6 +112,7 @@ prompt-keda:
 
   registry:
     # -- If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted.
+    # If `instrument.readRepo` is also set, the secret must contain a `read_repo_file` key.
     centralRepoFile: false
 
   # -- Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level).
