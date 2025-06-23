@@ -11,7 +11,6 @@ from collections.abc import Callable
 from datetime import timedelta
 from functools import wraps
 from pathlib import Path
-from typing import ParamSpec
 
 import click
 import yaml
@@ -30,8 +29,6 @@ from .models.vault import (
     VaultCredentials,
     VaultTokenCredentials,
 )
-
-P = ParamSpec("P")
 
 __all__ = [
     "application",
@@ -106,7 +103,7 @@ def _find_config() -> Path:
     return current
 
 
-def _report_usage_errors(f: Callable[P, None]) -> Callable[P, None]:
+def _report_usage_errors[**P](f: Callable[P, None]) -> Callable[P, None]:
     """Convert `~phalanx.exceptions.UsageError` to `click.UsageError`."""
 
     @wraps(f)
