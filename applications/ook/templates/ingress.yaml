@@ -45,7 +45,6 @@ config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   loginRedirect: true
   scopes:
-    anonymous: false
     all:
       - "exec:admin"
   service: "ook"
