@@ -40,7 +40,7 @@ prompt-keda:
         # Don't preprocess anything unknown
         - {pipelines: []}
     preloadPadding: 50.1
-    calibRepo: s3://rubin-summit-users
+    centralRepo: s3://rubin-summit-users
     exportTypes: |-
       - ".*_(config|metadata|log)"
       - "packages"
