@@ -187,7 +187,7 @@ eas:
       memory: 300Mi
     limits:
       cpu: 750m
-      memory: 900Mi
+      memory: "2Gi"
 
 epm-ess303:
   enabled: true
