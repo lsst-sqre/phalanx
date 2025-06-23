@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Dashboard for currently running versions of CSCs
+name: csc-versions
+sources:
+- https://github.com/lsst-ts/cscv
+type: application
+version: 1.0.0
