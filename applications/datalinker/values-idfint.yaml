@@ -17,6 +17,7 @@ config:
     dp1:
       url: "https://data-int.lsst.cloud/api/hips/v2/dp1"
       paths:
+        - "deep_coadd/color_ugri"
         - "deep_coadd/color_gri"
         - "deep_coadd/color_izy"
         - "deep_coadd/color_riz"
