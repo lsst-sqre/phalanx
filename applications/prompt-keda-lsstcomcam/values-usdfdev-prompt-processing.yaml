@@ -18,7 +18,7 @@ prompt-keda:
       preprocessing: |-
         - survey: SURVEY
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Preprocessing.yaml']
-    calibRepo: s3://rubin-pp-dev-users/central_repo_2
+    centralRepo: s3://rubin-pp-dev-users/central_repo_2
 
   s3:
     imageBucket: rubin-pp-dev

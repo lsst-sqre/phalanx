@@ -37,8 +37,8 @@ spec:
           value: {{- toYaml .Values.instrument.exportTypes | nindent 12 }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
-        - name: CALIB_REPO
-          value: {{ .Values.instrument.calibRepo }}
+        - name: CENTRAL_REPO
+          value: {{ .Values.instrument.centralRepo }}
         - name: REPO_RETRY_DELAY
           value: {{ .Values.instrument.repoWait | toString | quote }}
         - name: LSST_DISABLE_BUCKET_VALIDATION
@@ -110,7 +110,7 @@ spec:
           name: s3-credentials-file
         {{- end }}
         {{- if .Values.registry.centralRepoFile }}
-        - mountPath: {{ .Values.instrument.calibRepo }}
+        - mountPath: {{ .Values.instrument.centralRepo }}
           name: central-repo-file
         {{- end }}
         {{- with .Values.additionalVolumeMounts }}

@@ -35,10 +35,10 @@ prompt-keda:
     skymap: "DC2_cells_v1"
     # -- Number of arcseconds to pad the spatial region in preloading.
     preloadPadding: 50
-    # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
+    # -- URI to the shared repo used for pipeline inputs and outputs.
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
-    calibRepo: ""
+    centralRepo: ""
     # -- The average time to wait (in seconds) before retrying a failed connection to the shared repo.
     repoWait: 5
     # -- YAML-formatted list of regex patterns to specify the dataset types to export.
