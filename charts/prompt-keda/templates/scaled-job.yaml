@@ -79,6 +79,10 @@ spec:
                 value: {{ .Values.imageNotifications.imageTimeout | toString | quote }}
               - name: CENTRAL_REPO
                 value: {{ .Values.instrument.centralRepo }}
+              {{- with .Values.instrument.readRepo }}
+              - name: READ_CENTRAL_REPO
+                value: {{ . }}
+              {{- end }}
               - name: REPO_RETRY_DELAY
                 value: {{ .Values.instrument.repoWait | toString | quote }}
               - name: LSST_DISABLE_BUCKET_VALIDATION
@@ -182,6 +186,10 @@ spec:
               {{- if .Values.registry.centralRepoFile }}
               - mountPath: {{ .Values.instrument.centralRepo }}
                 name: central-repo-file
+              {{- with .Values.instrument.readRepo }}
+              - mountPath: {{ . }}
+                name: read-repo-file
+              {{- end }}
               {{- end }}
               {{- with .Values.additionalVolumeMounts }}
               {{- toYaml . | nindent 8 }}
@@ -220,6 +228,14 @@ spec:
               items:
               - key: central_repo_file
                 path: butler.yaml
+          {{- if .Values.instrument.readRepo }}
+          - name: read-repo-file
+            secret:
+              secretName: {{ template "prompt-keda.fullname" . }}-secret
+              items:
+              - key: read_repo_file
+                path: butler.yaml
+          {{- end }}
           {{- end }}
           {{- with .Values.tolerations }}
         tolerations:

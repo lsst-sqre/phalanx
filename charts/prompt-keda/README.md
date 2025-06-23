@@ -47,6 +47,7 @@ Event-driven processing of camera images
 | instrument.pipelines.main | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run for which visits' raws. Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | instrument.pipelines.preprocessing | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run before which visits' raw arrival. |
 | instrument.preloadPadding | int | `30` | Number of arcseconds to pad the spatial region in preloading. |
+| instrument.readRepo | string | Matches `centralRepo` | Optional URI to a separate repo used for pipeline inputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
 | instrument.repoWait | int | `30` | The average time to wait (in seconds) before retrying a failed connection to the shared repo. |
 | instrument.skymap | string | `""` | Skymap to use with the instrument |
 | keda.failedJobsHistoryLimit | int | `25` | How many failed jobs should be kept available in Kubernetes. |
@@ -70,7 +71,7 @@ Event-driven processing of camera images
 | nodeSelector | object | `{}` | Node selection rules for the Prompt Porcessing pod |
 | podAnnotations | object | `{"prometheus.io/port":"8000","prometheus.io/scrape":"true"}` | Pod annotations for the Prompt Processing Pod |
 | raw_microservice | string | `""` | The URI to a microservice that maps image metadata to a file location. If empty, Prompt Processing does not use a microservice. |
-| registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.centralRepo` is the local path where this file is mounted. |
+| registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.centralRepo` is the local path where this file is mounted. If `instrument.readRepo` is also set, the secret must contain a `read_repo_file` key. |
 | resources | object | See `values.yaml` | Kubernetes resource requests and limits |
 | s3.auth_env | bool | `false` | If set, define environment variables with S3 credentials from this application's Vault secret. |
 | s3.aws_profile | string | `""` | If set, specify a S3 credential profile and `cred_file_auth` must be true. If empty and `auth_env`=`false`, the `default` profile is used. |
