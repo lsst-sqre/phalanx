@@ -162,6 +162,9 @@ backup:
       enabled: true
       retentionDays: 3
 
+  restore:
+    enabled: true
+
 tap:
   enabled: true
 
