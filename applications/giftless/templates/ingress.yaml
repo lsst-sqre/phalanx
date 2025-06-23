@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "giftless.labels" . | nindent 4 }}
 config:
-  allowCookies: false
   scopes:
     anonymous: true
 template:
