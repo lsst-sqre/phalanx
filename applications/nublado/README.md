@@ -27,10 +27,10 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.affinity | object | `{}` | Affinity rules for the Nublado controller |
 | controller.config.fileserver.affinity | object | `{}` | Affinity rules for user file server pods |
 | controller.config.fileserver.application | string | `"nublado-fileservers"` | Argo CD application in which to collect user file servers |
-| controller.config.fileserver.creationTimeout | string | `"2m"` | Timeout to wait for Kubernetes to create file servers, in Safir `parse_timedelta` format |
-| controller.config.fileserver.deleteTimeout | string | `"1m"` | Timeout for deleting a user's file server from Kubernetes, in Safir `parse_timedelta` format |
+| controller.config.fileserver.creationTimeout | string | `"3m"` | Timeout to wait for Kubernetes to create file servers, in Safir `parse_timedelta` format |
+| controller.config.fileserver.deleteTimeout | string | `"2m"` | Timeout for deleting a user's file server from Kubernetes, in Safir `parse_timedelta` format |
 | controller.config.fileserver.enabled | bool | `false` | Enable user file servers |
-| controller.config.fileserver.idleTimeout | string | `"1h"` | Timeout for idle user fileservers, in Safir `parse_timedelta` format |
+| controller.config.fileserver.idleTimeout | string | `"1d"` | Timeout for idle user fileservers, in Safir `parse_timedelta` format |
 | controller.config.fileserver.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for file server image |
 | controller.config.fileserver.image.repository | string | `"ghcr.io/lsst-sqre/worblehat"` | File server image to use |
 | controller.config.fileserver.image.tag | string | `"0.1.0"` | Tag of file server image to use |

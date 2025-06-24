@@ -68,15 +68,15 @@ controller:
 
       # -- Timeout to wait for Kubernetes to create file servers, in Safir
       # `parse_timedelta` format
-      creationTimeout: 2m
+      creationTimeout: 3m
 
       # -- Timeout for deleting a user's file server from Kubernetes, in Safir
       # `parse_timedelta` format
-      deleteTimeout: 1m
+      deleteTimeout: 2m
 
       # -- Timeout for idle user fileservers, in Safir `parse_timedelta`
       # format
-      idleTimeout: 1h
+      idleTimeout: 1d
 
       image:
         # -- File server image to use
