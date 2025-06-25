@@ -97,6 +97,8 @@ strimzi-kafka:
       key.converter.schemas.enable: false
   cruiseControl:
     enabled: true
+    metricsConfig:
+      enabled: true
 
 influxdb:
   ingress:

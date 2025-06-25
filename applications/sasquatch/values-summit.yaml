@@ -86,6 +86,8 @@ strimzi-kafka:
     enabled: false
   cruiseControl:
     enabled: true
+    metricsConfig:
+      enabled: true
 
 influxdb:
   image:
