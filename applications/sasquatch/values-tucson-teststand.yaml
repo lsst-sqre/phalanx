@@ -65,6 +65,8 @@ strimzi-kafka:
       path: /schema-registry(/|$)(.*)
   cruiseControl:
     enabled: true
+    metricsConfig:
+      enabled: true
 
 influxdb:
   persistence:

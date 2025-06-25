@@ -571,6 +571,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.controller.tolerations | list | `[]` | Tolerations for controller pod assignment |
 | strimzi-kafka.cruiseControl.enabled | bool | `false` | Enable cruise control (required for broker migration and rebalancing) |
 | strimzi-kafka.cruiseControl.maxReplicasPerBroker | int | `20000` | Maximum number of replicas per broker |
+| strimzi-kafka.cruiseControl.metricsConfig.enabled | bool | `false` | Enable metrics generation |
 | strimzi-kafka.kafka.config."log.retention.minutes" | int | 4320 minutes (3 days) | Number of days for a topic's data to be retained |
 | strimzi-kafka.kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |
 | strimzi-kafka.kafka.config."offsets.retention.minutes" | int | 4320 minutes (3 days) | Number of minutes for a consumer group's offsets to be retained |

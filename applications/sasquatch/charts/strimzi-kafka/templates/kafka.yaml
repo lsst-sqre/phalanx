@@ -276,4 +276,12 @@ spec:
   cruiseControl:
     config:
       max.replicas.per.broker: {{ .Values.cruiseControl.maxReplicasPerBroker }}
+    {{- if .Values.cruiseControl.metricsConfig.enabled }}
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-cruise-control-metrics
+          key: kafka-cruise-control-metrics-config.yml
+    {{- end }}
   {{- end }}
