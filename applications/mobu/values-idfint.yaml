@@ -86,25 +86,6 @@ config:
           repo_ref: "main"
           max_executions: 1
         restart: true
-    - name: "tutorial-r2911"
-      count: 1
-      users:
-        - username: "bot-mobu-tutorial-r2911"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          image:
-            image_class: "by-tag"
-            tag: "r29_1_1"
-          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
-          repo_ref: "tickets/SP-2237"
-          max_executions: 1
-        restart: true
     - name: "tap"
       count: 1
       users:
