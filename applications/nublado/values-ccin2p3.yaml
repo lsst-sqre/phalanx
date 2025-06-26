@@ -11,6 +11,7 @@ controller:
         registry: "registry.hub.docker.com"
         repository: "lsstsqre/sciplat-lab"
     lab:
+      defaultSize: "small"
       env:
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "lsstprod_ro"

@@ -56,7 +56,7 @@ controller:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.8.9"
+            tag: "8.9.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -81,13 +81,6 @@ controller:
           secretKey: "butler-hmac-idf-creds.json"
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
-      sizes:
-        - size: large
-          cpu: 4.0
-          memory: 16Gi
-        - size: small
-          cpu: 1.0
-          memory: 4Gi
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
