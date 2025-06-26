@@ -23,6 +23,7 @@ applications:
   jira-data-proxy: true
   livetap: true
   mobu: true
+  mpsky: true
   narrativelog: true
   nightlydigest: true
   nightreport: true
