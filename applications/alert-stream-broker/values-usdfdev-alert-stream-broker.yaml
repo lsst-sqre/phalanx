@@ -78,31 +78,31 @@ alert-stream-broker:
 
     # The actual community broker users
     - username: "alerce-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "broker-alerts"]
       groups: ["alerce-idfint"]
 
     - username: "ampel-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "broker-alerts"]
       groups: ["ampel-idfint"]
 
     - username: "antares-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "broker-alerts"]
       groups: ["antares-idfint"]
 
     - username: "babamul-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "broker-alerts"]
       groups: ["babamul-idfint"]
 
     - username: "fink-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "broker-alerts"]
       groups: ["fink-idfint"]
 
     - username: "lasair-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "broker-alerts"]
       groups: ["lasair-idfint"]
 
     - username: "pittgoogle-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "broker-alerts"]
       groups: ["pittgoogle-idfint"]
 
   testTopicName: alert-stream-test
@@ -112,6 +112,10 @@ alert-stream-broker:
   simulatedTopicName: alerts-simulated
   simulatedTopicPartitions: 45
   simulatedTopicReplicas: 1
+
+  brokerAlertsTopicName: broker-alerts
+  brokerAlertsTopicPartitions: 45
+  brokerAlertsTopicReplicas: 1
 
   latissTopicName: latiss-alerts
   latissTopicPartitions: 45
