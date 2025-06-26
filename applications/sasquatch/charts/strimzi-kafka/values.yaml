@@ -105,6 +105,9 @@ kafka:
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
 
+# -- Readiness probe configuration for the Kafka brokers.
+readinessProbe: {}
+
 controller:
   # -- Enable node pool for the kafka controllers
   enabled: false

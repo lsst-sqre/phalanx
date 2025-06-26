@@ -76,6 +76,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | mirrormaker2.resources | object | `{"limits":{"cpu":1,"memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for MirrorMaker2 |
 | mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
 | mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
+| readinessProbe | object | `{}` | Readiness probe configuration for the Kafka brokers. |
 | registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |

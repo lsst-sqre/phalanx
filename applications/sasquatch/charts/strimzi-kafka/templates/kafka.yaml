@@ -142,6 +142,10 @@ metadata:
     strimzi.io/node-pools: enabled
 spec:
   kafka:
+    {{- with .Values.kafka.readinessProbe }}
+    readinessProbe:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
     template:
       persistentVolumeClaim:
         metadata:
