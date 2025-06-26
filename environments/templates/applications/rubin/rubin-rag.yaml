@@ -31,4 +31,10 @@ spec:
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"
+  ignoreDifferences:
+    - group: ""
+      kind: "Secret"
+      jsonPointers:
+        - "/data/password"
+        - "/data/username"
 {{- end -}}
