@@ -1,6 +1,6 @@
 config:
   slackAlerts: true
-  hipsDefaultDataset: "dp02"
+  hipsDefaultDataset: "dp1"
   hipsDatasets:
     dp02:
       url: "https://data.lsst.cloud/api/hips/v2/dp02"
