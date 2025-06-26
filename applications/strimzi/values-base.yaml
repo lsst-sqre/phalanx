@@ -7,3 +7,4 @@ strimzi-kafka-operator:
   watchNamespaces:
     - "sasquatch"
   logLevel: "INFO"
+  operationTimeoutMs: 900000
