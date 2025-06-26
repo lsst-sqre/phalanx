@@ -3,6 +3,8 @@ cadc-tap:
     image:
       repository: "lsstsqre/tap-schema-idfprod-tap"
 
+  replicaCount: 4
+
   config:
     qserv:
       host: "qserv-prod.slac.stanford.edu:4040"
@@ -10,8 +12,6 @@ cadc-tap:
       passwordEnabled: true
       image:
         tag: "3.3.1"
-
-    replicaCount: 4
 
     kafka:
       bootstrapServer: "sasquatch-kafka-bootstrap.lsst.cloud:9094"
