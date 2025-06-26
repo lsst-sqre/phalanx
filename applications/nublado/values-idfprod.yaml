@@ -65,11 +65,10 @@ controller:
           operator: "Exists"
           effect: "NoExecute"
       volumes:
-        # /home is pending more space allocated for NetApp
         - name: "home"
           source:
-            serverPath: "/share1/home"
-            server: "10.13.105.122"
+            serverPath: "/home-share"
+            server: "10.231.144.5"
             type: "nfs"
         - name: "rubin"
           source:
