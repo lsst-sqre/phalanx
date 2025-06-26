@@ -36,6 +36,7 @@ config:
       g_users:
         - "dp0.2"
         - "dp0.3"
+        - "dp1"
 
   # Enable metrics reporting.
   metrics:
@@ -54,15 +55,15 @@ config:
     "exec:admin":
       - "g_admins"
     "exec:notebook":
-      - "g_users"
+      - "g_rubin"
     "exec:portal":
-      - "g_users"
+      - "g_rubin"
     "read:image":
-      - "g_users"
+      - "g_rubin"
     "read:tap":
-      - "g_users"
+      - "g_rubin"
     "write:files":
-      - "g_users"
+      - "g_rubin"
 
   initialAdmins:
     - "afausti"
@@ -74,9 +75,8 @@ config:
     - "svoutsin"
 
   errorFooter: |
-    To report problems or ask for help, please open an issue in the
-    <a href="https://github.com/rubin-dp0/Support/issues">GitHub
-    rubin-dp0/Support project</a>.
+    To report problems or ask for help, see the instructions at
+    <a href="https://rsp.lsst.io/support/index.html">Getting Help</a>.
 
 cloudsql:
   enabled: true
