@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "vo-cutouts.labels" . | nindent 4 }}
 config:
+  authType: "basic"
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
