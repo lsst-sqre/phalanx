@@ -1,6 +1,6 @@
 image:
   repository: ts-dockerhub.lsst.org/nightreport
-  tag: c0039
+  tag: c0041
   pullPolicy: Always
 config:
   site_id: usdfdev
