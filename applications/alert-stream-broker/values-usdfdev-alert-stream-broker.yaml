@@ -113,17 +113,9 @@ alert-stream-broker:
   simulatedTopicPartitions: 45
   simulatedTopicReplicas: 1
 
-  devTopicName: dev-topic
-  devTopicPartitions: 10
-  devTopicReplicas: 1
-
   latissTopicName: latiss-alerts
   latissTopicPartitions: 45
   latissTopicReplicas: 1
-
-  comcamTopicName: lsstcomcam-alerts
-  comcamTopicPartitions: 45
-  comcamTopicReplicas: 1
 
   lsstcamTopicName: lsst-alerts-v7.4
   lsstcamTopicPartitions: 45
