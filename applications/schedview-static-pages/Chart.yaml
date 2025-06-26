@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Server for static pages from schedview
+name: schedview-static-pages
+sources:
+- https://github.com/lsst/schedview
+type: application
+version: 1.0.0

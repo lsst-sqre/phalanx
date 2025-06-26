@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "schedview-static-pages"
+  labels:
+    {{- include "schedview-static-pages.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "schedview-static-pages.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "schedview-static-pages.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            # The plain official ngnix docker container
+            # looks like it is going to use port 80 by
+            # defaut, but the helm charts look like they are
+            # expecting the service provided by the container
+            # to be on port 8080. If I understand the container
+            # doc (https://hub.docker.com/_/nginx) correctly,
+            # this should get it to serve on 8080, even though
+            # nginx does not usually pay attention to env
+            # variables (see the
+            # "Using environment variables in nginx configuration"
+            # section).
+            - name: NGINX_PORT
+              value: "8080"
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            # Mount the reports directory where the default
+            # config of the nginx container will find it.
+            - name: sdf-data-rubin
+              mountPath: /usr/share/nginx/html/schedview-static-pages
+              subPath: shared/scheduler/reports
+            # The ngnix container doc:
+            # https://hub.docker.com/_/nginx
+            # says these directories need to be writeable.
+            - name: varrun
+              mountPath: /var/run
+            - name: varcachenginx
+              mountPath: /var/cache/nginx
+            - name: tmpvol
+              mountPath: /tmp
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: sdf-data-rubin
+          persistentVolumeClaim:
+            claimName: sdf-data-rubin
+        - name: varrun
+          emptyDir:
+            sizeLimit: "16Gi"
+        - name: varcachenginx
+          emptyDir:
+            sizeLimit: "16Gi"
+        - name: tmpvol
+          emptyDir:
+            sizeLimit: "16Gi"
+
