@@ -36,7 +36,7 @@ audio-broadcaster:
 love-commander:
   image:
     repository: ts-dockerhub.lsst.org/love-commander
-    revision: 0
+    revision: 8
     pullPolicy: Always
   env:
     S3_INSTANCE: cp
