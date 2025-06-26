@@ -306,10 +306,21 @@ detectorConfig:
     186: True
     187: True
     188: True
-  LSSTCam-TEST-2025031700001:
-    0: True
-  LSSTCam-TEST-2025031700002:
-    0: True
+  LSSTCam-TEST-2025050100367:
+    30: True
+    158: True
+  LSSTCam-TEST-2025050100395:
+    30: True
+    158: True
+  LSSTCam-TEST-2025050100463:
+    30: True
+    66: True
+  LSSTCam-TEST-2025050100499:
+    30: True
+    66: True
+  LSSTCam-TEST-2025050100553:
+    30: True
+    173: True
   LSSTCam-imSim:
     <<: *LSSTCam
   LSSTCam-imSim-TEST-496960:
