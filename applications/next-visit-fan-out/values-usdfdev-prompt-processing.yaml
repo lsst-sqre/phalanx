@@ -14,6 +14,6 @@ image:
   repository: ghcr.io/lsst-dm/next_visit_fan_out
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: main
+  tag: tickets-DM-50223
 
 instruments: "LATISS LSSTCam LSSTCam-imSim LSSTComCam LSSTComCamSim HSC"
