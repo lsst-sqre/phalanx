@@ -11,6 +11,8 @@ cadc-tap:
       image:
         tag: "3.3.0"
 
+    replicaCount: 4
+
     kafka:
       bootstrapServer: "sasquatch-kafka-bootstrap.lsst.cloud:9094"
       schemaRegistry:
