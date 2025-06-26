@@ -9,7 +9,7 @@ cadc-tap:
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
       image:
-        tag: "3.2.0"
+        tag: "3.3.0"
 
     kafka:
       bootstrapServer: "sasquatch-kafka-bootstrap.lsst.cloud:9094"
