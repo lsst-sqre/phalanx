@@ -97,6 +97,11 @@ controller:
       # -- Path prefix for user file servers
       pathPrefix: "/files"
 
+      # -- How frequently to reconcile file server state against Kubernetes to
+      # catch deletions from outside Nublado, in Safir `parse_timedelta`
+      # format
+      reconcileInterval: "1h"
+
       # -- Resource requests and limits for user file servers
       # @default -- See `values.yaml`
       resources:
@@ -118,6 +123,12 @@ controller:
       #   volumeName: "project"
 
     images:
+      # -- How frequently to refresh the list of available images and compare
+      # it to the cached images on nodes to prepull new images, in Safir
+      # `parse_timedelta` format. Newly-available images will not appear in
+      # the menu for up to this interval.
+      refreshInterval: "5m"
+
       # -- Source for prepulled images. For Docker, set `type` to `docker`,
       # `registry` to the hostname and `repository` to the name of the
       # repository. For Google Artifact Repository, set `type` to `google`,
@@ -161,6 +172,11 @@ controller:
 
       # -- Argo CD application in which to collect user lab objects
       application: "nublado-users"
+
+      # -- Default size selected on the spawner form. This must be either
+      # `null` or the name of one of the sizes listed in `sizes`. If `null`,
+      # the first listed size will be the default.
+      defaultSize: "large"
 
       # -- Timeout for deleting a user's lab resources from Kubernetes in
       # Safir `parse_timedelta` format
@@ -320,6 +336,13 @@ controller:
       # @default -- Do not use a pull secret
       pullSecret: null
 
+      # -- How frequently to reconcile lab state against Kubernetes to catch
+      # deletions from outside Nublado, in Safir `parse_timedelta` format. If
+      # a lab is deleted by a node replacement or upgrade, or manually with
+      # `kubectl`, that deletion will not be noticed, and the user will not be
+      # able to spawn a new lab, for up to this interval.
+      reconcileInterval: "5m"
+
       # -- Directory in the lab under which runtime information such as
       # tokens, environment variables, and container information will be
       # mounted
@@ -342,9 +365,6 @@ controller:
         - size: "small"
           cpu: 1.0
           memory: "4Gi"
-        - size: "medium"
-          cpu: 2.0
-          memory: "8Gi"
         - size: "large"
           cpu: 4.0
           memory: "16Gi"
@@ -474,7 +494,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.8.9"
+      tag: "8.9.0"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
