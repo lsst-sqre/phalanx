@@ -100,6 +100,14 @@ telegraf:
       timestamp_field: "timestamp"
       topicRegexps: |
         [ "lsst.example" ]
+    backpack:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.backpack"
+      timestamp_format: "unix"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.backpack" ]
 
 kafdrop:
   cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=true --topic.createEnabled=true"
@@ -116,6 +124,7 @@ rest-proxy:
     topicPrefixes:
       - lsst.example
       - lsst.tap
+      - lsst.backpack
 
 chronograf:
   ingress:
@@ -161,6 +170,9 @@ backup:
     - name: "influxdb-oss-full"
       enabled: true
       retentionDays: 3
+
+backpack:
+  enabled: true
 
 tap:
   enabled: true
