@@ -505,7 +505,7 @@ backup:
     - name: influxdb-enterprise-incremental
       enabled: true
   restore:
-    enabled: true
+    enabled: false
 
 prompt-processing:
   enabled: true
