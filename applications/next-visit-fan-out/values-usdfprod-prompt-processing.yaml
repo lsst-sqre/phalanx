@@ -2,6 +2,7 @@ knative:
   maxMessages: 2000
 
 kafka:
+  summitSasquatchAuth: true
   schemaRegistryUrl: http://10.104.61.102:8081
   sasquatchAddress: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
   consumerGroup: next-visit-fan-out-1

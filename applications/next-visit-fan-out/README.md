@@ -21,6 +21,7 @@ Poll next visit events from Kafka, duplicate them, and send them to all applicat
 | kafka.offset | string | `"latest"` |  |
 | kafka.saslMechamism | string | `"SCRAM-SHA-512"` |  |
 | kafka.securityProtocol | string | `"SASL_SSL"` |  |
+| kafka.summitSasquatchAuth | bool | `false` | Enable secret for authenticating to the Summit.  Only should be enabled for prod. |
 | keda.redisHealthCheckInterval | int | `3` | Redis health check interval in seconds. |
 | keda.redisHost | string | See `values.yaml`. | Redis cluster host. |
 | keda.redisRetryCount | int | `3` | Redis max retry count |
