@@ -128,86 +128,24 @@ config:
       ## Data previews
 
       <CardGroup>
+        <a href="https://dp1.lsst.io/">
+          <Card>
+            ### Data Preview 1 (DP1)
+
+            Data Preview 1 contains image and catalog products from LSST Science Pipelines
+            v29 processing of observations obtained with the LSST Commissioning Camera of
+            seven ~1 square degree fields over seven weeks in late 2024.
+          </Card>
+        </a>
+
         <a href="https://dp0.lsst.io/">
           <Card>
             ### Data Preview 0 (DP0)
 
-            DP0 is the first of three data previews during the period leading up to the start of Rubin Observatory Operations.
-            This site provides resources to delegates for exploring the DP0 datasets with the Rubin Science Platform.
+            DP0 is the first of three data previews during the period leading up to the start of Rubin Observatory Operations. DP0.2 features simulated Galactic and extragalactic data products. DP0.3 contains simulated Solar System objects.
           </Card>
         </a>
 
-      </CardGroup>
-
-    </Section>
-
-    <Section>
-
-      ## Data documentation
-
-      ### DP0.3
-
-      <CardGroup>
-        <a href="https://dp0-3.lsst.io/">
-          <Card>
-            ### Data Preview 0.3 (DP0.3)
-
-            DP0.3 provides a catalog of solar system objects from a
-            simulated LSST ten-year wide-fast-deep survey by the Solar System
-            Science Collaboration.
-          </Card>
-        </a>
-
-        <a href="https://dp0-3.lsst.io/tutorials-dp0-3/index.html">
-          <Card>
-            ### DP0.3 Tutorials
-
-            Tutorials for exploring the DP0.3 solar system object dataset on
-            the Rubin Science Platform.
-          </Card>
-        </a>
-
-        <a href="https://sdm-schemas.lsst.io/dp03.html">
-          <Card>
-            ### DP0.3 Catalog Schema
-
-            Schema reference for the DP0.3 catalog dataset available through
-            the Table Access Protocol (TAP) service.
-          </Card>
-        </a>
-      </CardGroup>
-
-      ### DP0.2
-
-      <CardGroup>
-        <a href="https://dp0-2.lsst.io/">
-          <Card>
-            ### Data Preview 0.2 (DP0.2)
-
-            DP0.2 is the second phase of the Data Preview 0 program using
-            simulated images from the DESC DC2 data challenge processed with
-            version 23.0 of the LSST Science Pipelines.
-          </Card>
-        </a>
-
-        <a href="https://dp0-2.lsst.io/tutorials-examples/index.html">
-          <Card>
-            ### DP0.2 Tutorials
-
-            Tutorials for exploring the DP0.2 dataset on the Rubin Science
-            Platform.
-          </Card>
-        </a>
-
-
-        <a href="https://sdm-schemas.lsst.io/dp02.html">
-          <Card>
-            ### DP0.2 Catalog Schema
-
-            Schema reference for the DP0.2 catalog dataset available through
-            the Table Access Protocol (TAP) service.
-          </Card>
-        </a>
       </CardGroup>
 
     </Section>
