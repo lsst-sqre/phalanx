@@ -43,6 +43,8 @@ strimzi-kafka:
           host: sasquatch-base-kafka-2.lsst.codes
     metricsConfig:
       enabled: true
+    readinessProbe:
+      initialDelaySeconds: 600
   kafkaExporter:
     enabled: true
     logging: debug

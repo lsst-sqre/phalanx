@@ -24,6 +24,8 @@ strimzi-kafka:
         - broker: 2
           loadBalancerIP: "34.172.163.125"
           host: sasquatch-dev-kafka-2.lsst.cloud
+    readinessProbe:
+      initialDelaySeconds: 240
   users:
     replicator:
       enabled: true
