@@ -48,7 +48,7 @@ config:
     useNativeHttplib: "1"
 
 image:
-  tag: "0.4.0"
+  tag: "0.4.4"
   pullPolicy: IfNotPresent
 
 daemon:
@@ -57,5 +57,5 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.4.0"
+    tag: "0.4.4"
     pullPolicy: IfNotPresent
