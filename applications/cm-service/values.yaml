@@ -12,7 +12,7 @@ config:
     profiles: {}
 
     # -- URL to use as an S3 (Object Store) Endpoint
-    s3EndpointUrl: null
+    defaultS3EndpointUrl: null
 
     # -- Name of a secret with AWS authn details
     secretName: "cm-service"
@@ -55,6 +55,9 @@ config:
   logProfile: "production"
 
   outputVolume:
+    # -- If specified, full path to the output volume mount target
+    mountPath: null
+
     # -- If specified, name of storage class requested in service output area PVC
     storageClassName: null
 
@@ -66,6 +69,9 @@ config:
 
   # -- URL path prefix
   pathPrefix: "/cm-service"
+
+  # -- URL FQDN, used to write absolute URLs in notifications
+  fqdnUrl: null
 
   butler:
 
@@ -93,6 +99,9 @@ config:
 
     # -- Name of an htcondor collector host
     collectorHost: null
+
+    # -- Max Duration of an HTCondor Glidein, in SBATCH terms ("days-hours:minutes:seconds")
+    sbatchDuration: "0-1:0:0"
 
     # -- If specified, name of an htcondor schedd host
     scheddHost: null
