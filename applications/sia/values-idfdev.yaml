@@ -1,3 +1,6 @@
+image:
+  tag: "tickets-DM-51576"
+
 config:
   metrics:
     enabled: false
