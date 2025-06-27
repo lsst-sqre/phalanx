@@ -14,7 +14,7 @@ config:
   logProfile: "production"
   db:
     hostname: "postgres.postgres"
-    echo: true
+    echo: false
   outputVolume:
     storageClassName: "sdf-data-rubin"
     subPath: "shared/campaigns/users/usdf-cm"
@@ -32,6 +32,7 @@ config:
       "/repo/embargo": "s3://embargo@rubin-summit-users/butler.yaml"
       "/repo/embargo+sasquatch_dev": "s3://embargo@rubin-summit-users/butler+sasquatch_dev.yaml"
   htcondor:
+    sbatchDuration: "2-0:0:0"
     scheddHost: sdfiana012.sdf.slac.stanford.edu
     collectorHost: sdfiana012.sdf.slac.stanford.edu
     fsRemoteDir:
@@ -40,7 +41,7 @@ config:
       mountPath: "/sdf/group/rubin/services/htcondor/shared"
 
 image:
-  tag: "0.4.0"
+  tag: "0.4.2"
   pullPolicy: IfNotPresent
 
 daemon:
@@ -49,5 +50,5 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.4.0"
+    tag: "0.4.2"
     pullPolicy: IfNotPresent
