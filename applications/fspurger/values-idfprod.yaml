@@ -1,0 +1,22 @@
+slackAlerts: true
+
+nfs:
+  server: "10.231.144.5"
+  path: "/deleted-sundays-share"
+schedule: "35 05 * * 0"  # Sunday morning, 12:35 AM (UTC-5)
+
+policy:
+  directories:
+  - path: /purge
+    threshold: 1GiB
+    # This is the case where we just purge everything once a week.
+    # Set the threshold to 1 second: yeah, *everything*
+    intervals:
+      large:
+        accessInterval: 1s
+        modificationInterval: 1s
+        creationInterval: 1s
+      small:
+        accessInterval: 1s
+        modificationInterval: 1s
+        creationInterval: 1s
