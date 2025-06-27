@@ -56,14 +56,19 @@ config:
       - "g_admins"
     "exec:notebook":
       - "g_rubin"
+      - "g_users"
     "exec:portal":
       - "g_rubin"
+      - "g_users"
     "read:image":
       - "g_rubin"
+      - "g_users"
     "read:tap":
       - "g_rubin"
+      - "g_users"
     "write:files":
       - "g_rubin"
+      - "g_users"
 
   initialAdmins:
     - "afausti"
