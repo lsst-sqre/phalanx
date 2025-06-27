@@ -90,9 +90,6 @@ applications:
   # -- Enable the fastapi-bootcamp application
   fastapi-bootcamp: false
 
-  # -- Enable the filestore-backup application
-  filestore-backup: false
-
   # -- Enable the flink application
   flink: false
 

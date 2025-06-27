@@ -24,7 +24,6 @@
 | applications.exposure-checker | bool | `false` | Enable the exposure-checker application |
 | applications.exposurelog | bool | `false` | Enable the exposurelog application |
 | applications.fastapi-bootcamp | bool | `false` | Enable the fastapi-bootcamp application |
-| applications.filestore-backup | bool | `false` | Enable the filestore-backup application |
 | applications.flink | bool | `false` | Enable the flink application |
 | applications.fspurger | bool | `false` | Enable the fspurger application |
 | applications.gafaelfawr | bool | `true` | Enable the Gafaelfawr application. This is required by Phalanx since most other applications use `GafaelfawrIngress` |
