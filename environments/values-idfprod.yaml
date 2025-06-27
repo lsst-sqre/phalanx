@@ -17,6 +17,7 @@ applications:
   butler: true
   datalinker: true
   filestore-backup: true
+  fspurger: true
   ghostwriter: true
   google-cloud-observability: true
   hips: true
