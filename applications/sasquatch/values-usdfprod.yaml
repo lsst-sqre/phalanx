@@ -504,6 +504,8 @@ backup:
       retentionDays: 7
     - name: influxdb-enterprise-incremental
       enabled: true
+  restore:
+    enabled: true
 
 prompt-processing:
   enabled: true
