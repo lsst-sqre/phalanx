@@ -104,6 +104,26 @@ spec:
               value: "{{ .Values.rubinsim.bucketVal }}"
             - name: "MPLCONFIGDIR"
               value: "/tmp/.config/matplotlib"
+            - name: "consdb_database"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "consdb-database"
+            - name: "consdb_username"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "consdb-username"
+            - name: "consdb_url"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "consdb-url"
+            - name: "consdb_password"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "consdb-password"
           volumeMounts:
             - name: "tmp-volume"
               mountPath: "/tmp"
