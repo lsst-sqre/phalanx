@@ -52,8 +52,13 @@ data:
     # Turn off restart after n consecutive failures.
     c.Spawner.consecutive_failure_limit = 0
 
-    # Override to specify custom landing pages.
+    # Override to allow specification custom landing pages.
     c.Spawner.default_url = "{{ .Values.hub.landingPage }}"
+    # If we are in an abnormal startup state, we likely cannot write the
+    # landing page, so force it to "/lab" in that case (and working dir
+    # will be some temporary directory).
+    if os.getenv("ABNORMAL_STARTUP"):
+        c.Spawner.default_url = "/lab"
 
     # Only poll labs every five minutes because that's how frequently the
     # controller checks their status in Kubernetes.
