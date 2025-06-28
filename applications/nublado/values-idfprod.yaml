@@ -85,11 +85,7 @@ controller:
           volumeName: "home"
         - containerPath: "/rubin"
           volumeName: "rubin"
-        - containerPath: "/project"
-          volumeName: "rubin"
         - containerPath: "/deleted-sundays"
-          volumeName: "deleted-sundays"
-        - containerPath: "/scratch"
           volumeName: "deleted-sundays"
     metrics:
       enabled: true

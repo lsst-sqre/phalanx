@@ -118,12 +118,6 @@ controller:
           volumeName: "rubin"
         - containerPath: "/deleted-sundays"
           volumeName: "deleted-sundays"
-        # 20250516: accomodation paths, remove after tutorials
-        # and scratch use changes.
-        - containerPath: "/project"
-          volumeName: "rubin"
-        - containerPath: "/scratch"
-          volumeName: "deleted-sundays"
     metrics:
       enabled: true
 
