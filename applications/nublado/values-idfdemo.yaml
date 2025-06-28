@@ -47,23 +47,9 @@ controller:
             type: nfs
             serverPath: "/share1/home"
             server: "10.32.121.98"
-        - name: "project"
-          source:
-            type: nfs
-            serverPath: "/share1/project"
-            server: "10.32.121.98"
-        - name: "scratch"
-          source:
-            type: nfs
-            serverPath: "/share1/scratch"
-            server: "10.32.121.98"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
-        - containerPath: "/project"
-          volumeName: "project"
-        - containerPath: "/scratch"
-          volumeName: "scratch"
 jupyterhub:
   hub:
     db:

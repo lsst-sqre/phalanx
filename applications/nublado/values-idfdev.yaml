@@ -98,11 +98,6 @@ controller:
           volumeName: "rubin"
         - containerPath: "/deleted-sundays"
           volumeName: "deleted-sundays"
-        # Accomodation while we move tutorials refs
-        - containerPath: "/project"
-          volumeName: "rubin"
-        - containerPath: "/scratch"
-          volumeName: "deleted-sundays"
     metrics:
       enabled: true
 hub:
