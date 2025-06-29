@@ -1,3 +1,6 @@
+image:
+  tag: tickets-DM-51609-fix-refresh
+  pullPolicy: Always
 config:
   logLevel: DEBUG
   logMonkeysToFile: false
