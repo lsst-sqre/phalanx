@@ -4,7 +4,6 @@ image:
 config:
   logLevel: DEBUG
   logMonkeysToFile: false
-  profile: development
   metrics:
     enabled: true
   sentryTracesSampleConfig: errors
@@ -26,84 +25,100 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
-    - name: "dfuchs-test"
+    - name: "dfuchs-test-single"
       count: 1
       users:
-        - username: "bot-mobu-dfuchs-test"
+        - username: "bot-mobu-dfuchs-test-single"
       scopes:
         - "exec:notebook"
       business:
         type: "NotebookRunnerCounting"
         options:
+          idle_time: 2s
+          max_executions: 1000
           repo_url: "https://github.com/lsst-sqre/dfuchs-test-mobu.git"
           repo_ref: "main"
         restart: true
-    - name: "recommended"
-      count: 1
-      users:
-        - username: "bot-mobu-recommended"
+    - name: "dfuchs-test-many"
+      count: 5
+      user_spec:
+        username_prefix: "bot-mobu-dfuchs-test-many"
       scopes:
         - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
       business:
         type: "NotebookRunnerCounting"
         options:
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_ref: "prod"
-        restart: true
-    - name: "daily"
-      count: 1
-      users:
-        - username: "bot-mobu-daily"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          image:
-            image_class: latest-daily
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_ref: "prod"
-        restart: true
-    - name: "tutorial"
-      count: 1
-      users:
-        - username: "bot-mobu-tutorial"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
+          idle_time: 2s
+          max_executions: 1000
+          repo_url: "https://github.com/lsst-sqre/dfuchs-test-mobu.git"
           repo_ref: "main"
-          max_executions: 1
         restart: true
-    - name: "tap"
-      count: 1
-      users:
-        - username: "bot-mobu-tap"
-      scopes: ["read:tap"]
-      business:
-        type: "TAPQuerySetRunner"
-        options:
-          sync: false
-          query_set: "dp0.2"
-        restart: true
-    - name: "sia"
-      count: 1
-      users:
-        - username: "bot-mobu-sia"
-      scopes: ["read:image"]
-      business:
-        type: "SIAQuerySetRunner"
-        options:
-          query_set: "dp02"
-        restart: true
+    # - name: "recommended"
+    #   count: 1
+    #   users:
+    #     - username: "bot-mobu-recommended"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   business:
+    #     type: "NotebookRunnerCounting"
+    #     options:
+    #       repo_url: "https://github.com/lsst-sqre/system-test.git"
+    #       repo_ref: "prod"
+    #     restart: true
+    # - name: "daily"
+    #   count: 1
+    #   users:
+    #     - username: "bot-mobu-daily"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   business:
+    #     type: "NotebookRunnerCounting"
+    #     options:
+    #       image:
+    #         image_class: latest-daily
+    #       repo_url: "https://github.com/lsst-sqre/system-test.git"
+    #       repo_ref: "prod"
+    #     restart: true
+    # - name: "tutorial"
+    #   count: 1
+    #   users:
+    #     - username: "bot-mobu-tutorial"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   business:
+    #     type: "NotebookRunnerCounting"
+    #     options:
+    #       repo_url: "https://github.com/lsst/tutorial-notebooks.git"
+    #       repo_ref: "main"
+    #       max_executions: 1
+    #     restart: true
+    # - name: "tap"
+    #   count: 1
+    #   users:
+    #     - username: "bot-mobu-tap"
+    #   scopes: ["read:tap"]
+    #   business:
+    #     type: "TAPQuerySetRunner"
+    #     options:
+    #       sync: false
+    #       query_set: "dp0.2"
+    #     restart: true
+    # - name: "sia"
+    #   count: 1
+    #   users:
+    #     - username: "bot-mobu-sia"
+    #   scopes: ["read:image"]
+    #   business:
+    #     type: "SIAQuerySetRunner"
+    #     options:
+    #       query_set: "dp02"
+    #     restart: true
