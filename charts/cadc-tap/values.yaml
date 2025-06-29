@@ -212,7 +212,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "tickets-DM-51511-ordering"
+    tag: "tickets-DM-51560"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
