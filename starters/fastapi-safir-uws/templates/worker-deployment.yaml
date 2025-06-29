@@ -28,7 +28,7 @@ spec:
       {{- end }}
       serviceAccountName: "<CHARTNAME>"
       containers:
-        - name: "worker"
+        - name: "<CHARTNAME>-worker"
           env:
             # Password for Redis for the job queue.
             - name: "<CHARTENVPREFIX>_ARQ_QUEUE_PASSWORD"

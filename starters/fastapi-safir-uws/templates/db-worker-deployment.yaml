@@ -28,7 +28,7 @@ spec:
       {{- end }}
       automountServiceAccountToken: false
       containers:
-        - name: "db-worker"
+        - name: "<CHARTNAME>-db-worker"
           command:
             - "arq"
             - "<CHARTNAME>.workers.uws.WorkerSettings"
