@@ -28,7 +28,7 @@ spec:
       {{- end }}
       serviceAccountName: "vo-cutouts"
       containers:
-        - name: "worker"
+        - name: "vo-cutouts-worker"
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
