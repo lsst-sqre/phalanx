@@ -47,6 +47,8 @@ spec:
               value: {{ .Values.global.host | quote }}
             - name: "PROPS_lsst__hips__masterUrl"
               value: "{{ .Values.global.baseUrl }}/api/hips/list"
+            - name: PROPS_job__cleanup__interval
+              value: "120"
             - name: PROPS_OP_searchActionsCmdMask_0
               value: tableTapUpload
             - name: PROPS_OP_searchActionsCmdMask_1
@@ -113,6 +115,13 @@ spec:
               value: "[\"https://raw.githubusercontent.com/lsst-sqre/portal-config/refs/heads/main/dce-searchPage-idf.xml\"]"
             - name: PROPS_uws.history.svcs
               value: {{ .Values.global.baseUrl }}/api/tap/async|DP02_DC|TAP
+            - name: PROPS_OP_showUserInfo
+              value: >-
+                {{- if .Values.config.showUserInfo }}
+                       {{ .Values.config.showUserInfo }}
+                {{- else }}
+                       true
+                {{- end }}
             - name: "PROPS_OP_coverage_hipsSourceURL"
               value: >-
                 {{- if .Values.config.hipsUrl }}

@@ -67,6 +67,8 @@ config:
   # @default -- `/api/hips/images/color_gri` in the local Science Platform
   hipsUrl: ""
 
+  showUserInfo: "true"
+
   # -- Search path for FITS files
   visualizeFitsSearchPath: "/datasets"
 

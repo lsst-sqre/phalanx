@@ -16,6 +16,7 @@ Rubin Science Platform Portal Aspect
 | config.debug | string | `"FALSE"` | Set to `TRUE` to enable service debugging |
 | config.hipsUrl | string | `/api/hips/images/color_gri` in the local Science Platform | URL for default HiPS service |
 | config.livetap | string | `""` | Endpoint under `/api/` for the live TAP service on the instance, if present |
+| config.showUserInfo | string | `"true"` |  |
 | config.ssotap | string | `""` | Endpoint under `/api/` for the DP0.3 SSO TAP service on the instance, if present |
 | config.visualizeFitsSearchPath | string | `"/datasets"` | Search path for FITS files |
 | config.volumes.config | object | use an `emptyDir` | configuration directory accessible read-only to all Portal pods |
