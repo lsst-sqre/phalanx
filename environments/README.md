@@ -17,6 +17,7 @@
 | applications.cm-service | bool | `false` | Enable the cm-service application |
 | applications.consdbtap | bool | `false` | Enable the consdbtap application |
 | applications.control-system-test | bool | `false` | Enable the control-system-test application |
+| applications.csc-versions | bool | `false` | Enable the csc-versions application |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
 | applications.envsys | bool | `false` | Enable the envsys control system application |
 | applications.eups-distributor | bool | `false` | Enable the eups-distributor application |
