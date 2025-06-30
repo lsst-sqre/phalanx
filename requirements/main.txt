@@ -340,17 +340,17 @@ dacite==1.9.2 \
     --hash=sha256:053f7c3f5128ca2e9aceb66892b1a3c8936d02c686e707bee96e19deef4bc4a0 \
     --hash=sha256:6ccc3b299727c7aa17582f0021f6ae14d5de47c7227932c47fec4cdfefd26f09
     # via dataclasses-avroschema
-dataclasses-avroschema==0.65.10 \
-    --hash=sha256:5bb3cab29c990ab013001dbf5d81baf8bc66aca9703a3bae49165e825d8e1943 \
-    --hash=sha256:a6d7178d3db2a1f3a95469e6ac57df77226e003b09026c715930bd8c4f87474c
+dataclasses-avroschema==0.65.11 \
+    --hash=sha256:01e90ca9a23f3df0e9417ce4af8a3ef613cbbe551483b105c751678e31006bbf \
+    --hash=sha256:1131010a6fc62be2761b618de0754ca70f41404353e82923a8e7ba00fc34eaec
     # via safir
 fast-depends==2.4.12 \
     --hash=sha256:9393e6de827f7afa0141e54fa9553b737396aaf06bd0040e159d1f790487b16d \
     --hash=sha256:9e5d110ddc962329e46c9b35e5fe65655984247a13ee3ca5a33186db7d2d75c2
     # via faststream
-fastapi==0.115.13 \
-    --hash=sha256:0a0cab59afa7bab22f5eb347f8c9864b681558c278395e94035a741fc10cd865 \
-    --hash=sha256:55d1d25c2e1e0a0a50aceb1c8705cd932def273c102bff0b1c1da88b3c6eb307
+fastapi==0.115.14 \
+    --hash=sha256:6c0c8bf9420bd58f565e585036d971872472b4f7d3f6c73b698e10cffdefb3ca \
+    --hash=sha256:b1de15cdc1c499a4da47914db35d0e4ef8f1ce62b624e94e0e5824421df99739
     # via safir
 fastavro==1.11.1 \
     --hash=sha256:0253e5b6a3c9b62fae9fc3abd8184c5b64a833322b6af7d666d3db266ad879b5 \
@@ -636,9 +636,9 @@ pydantic-core==2.33.2 \
     # via
     #   pydantic
     #   safir
-pydantic-settings==2.10.0 \
-    --hash=sha256:33781dfa1c7405d5ed2b6f150830a93bb58462a847357bd8f162f8bacb77c027 \
-    --hash=sha256:7a12e0767ba283954f3fd3fefdd0df3af21b28aa849c40c35811d52d682fa876
+pydantic-settings==2.10.1 \
+    --hash=sha256:06f0062169818d0f5524420a360d632d5857b83cffd4d42fe29597807a1614ee \
+    --hash=sha256:a60952460b99cf661dc25c29c0ef171721f98bfcb52ef8d9ea4c943d7c8cc796
     # via safir
 pyjwt==2.10.1 \
     --hash=sha256:3cc5772eb20009233caf06e9d8a0577824723b44e6648ee0a2aedb6cf9381953 \
@@ -650,9 +650,9 @@ python-dateutil==2.9.0.post0 \
     # via
     #   dataclasses-avroschema
     #   onepasswordconnectsdk
-python-dotenv==1.1.0 \
-    --hash=sha256:41f90bc6f5f177fb41f53e87666db362025010eb28f60a01c9143bfa33a2b2d5 \
-    --hash=sha256:d7c01d9e2293916c18baf562d95698754b0dbbb5e74d457c45d4f6561fb9d55d
+python-dotenv==1.1.1 \
+    --hash=sha256:31f23644fe2602f88ff55e1f5c79ba497e01224ee7737937930c448e4d0e24dc \
+    --hash=sha256:a8a6399716257f45be6a007360200409fce5cda2661e3dec71d23dc15f6189ab
     # via pydantic-settings
 python-schema-registry-client==2.6.1 \
     --hash=sha256:017fd45a36a4517d9c87c03c992393cce2c437c5ffa8fe1c9dfde1664caa89c9 \
@@ -854,9 +854,9 @@ safir-logging==11.0.0 \
     --hash=sha256:3dc8107dc276146ca415a3c809b454b2fd7c46f13293acae31158c45f299580f \
     --hash=sha256:450f2d700bb26fc6a9b8471c8604f84fbcd137785ef1b2dab738d7b6d7e5bfcd
     # via safir
-sentry-sdk==2.30.0 \
-    --hash=sha256:436369b02afef7430efb10300a344fb61a11fe6db41c2b11f41ee037d2dd7f45 \
-    --hash=sha256:59391db1550662f746ea09b483806a631c3ae38d6340804a1a4c0605044f6877
+sentry-sdk==2.32.0 \
+    --hash=sha256:6cf51521b099562d7ce3606da928c473643abe99b00ce4cb5626ea735f4ec345 \
+    --hash=sha256:9016c75d9316b0f6921ac14c8cd4fb938f26002430ac5be9945ab280f78bec6b
     # via safir
 six==1.17.0 \
     --hash=sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274 \

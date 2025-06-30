@@ -347,9 +347,9 @@ distlib==0.3.9 \
     --hash=sha256:47f8c22fd27c27e25a65601af709b38e4f0a45ea4fc2e710f65755fa8caaaf87 \
     --hash=sha256:a60f20dea646b8a33f3e7772f74dc0b2d0772d2837ee1342a00645c81edf9403
     # via virtualenv
-documenteer==1.4.3 \
-    --hash=sha256:2b0cb1a5b9982ff8fce7121d479547e754a68bd7628620633653d2a5eeb883b5 \
-    --hash=sha256:6a387ba5589a374b75d5c6f1f2a93d7c356b10002de4a1ffbdda0304873e4742
+documenteer==1.4.5 \
+    --hash=sha256:350e980e6b4e0ba2cf2502df8db34873fec1a42318de32c462f376ffc8728c43 \
+    --hash=sha256:bdd2fc207124f6a122228e10aec9048da61f53364955a2f59ac65439717c1670
     # via -r requirements/dev.in
 docutils==0.21.2 \
     --hash=sha256:3a6b18732edf182daa3cd12775bbb338cf5691468f91eeeb109deff6ebfa986f \
@@ -500,6 +500,7 @@ jinja2==3.1.6 \
     #   myst-parser
     #   sphinx
     #   sphinx-jinja
+    #   sphinx-prompt
     #   sphinxcontrib-redoc
 jsonschema==4.24.0 \
     --hash=sha256:0b4e8069eb12aedfa881333004bccaec24ecef5a8a6a4b6df142b2cc9599d196 \
@@ -758,9 +759,9 @@ pure-eval==0.2.3 \
     --hash=sha256:1db8e35b67b3d218d818ae653e27f06c3aa420901fa7b081ca98cbedc874e0d0 \
     --hash=sha256:5f4e983f40564c576c7c8635ae88db5956bb2229d7e9237d03b3c0b0190eaf42
     # via stack-data
-pybtex==0.25.0 \
-    --hash=sha256:10684ffb05af33b041b06dabe15868078fd75847b24e1dffd8dd91348bbb3a4b \
-    --hash=sha256:bbc211abd458b42c5256d50185ea4f80000f43351959e1d5a3e86cd567a07a6d
+pybtex==0.25.1 \
+    --hash=sha256:9053b0d619409a0a83f38abad5d9921de5f7b3ede00742beafcd9f10ad0d8c5c \
+    --hash=sha256:9eaf90267c7e83e225af89fea65c370afbf65f458220d3946a9e3049e1eca491
     # via
     #   pybtex-docutils
     #   sphinxcontrib-bibtex
@@ -885,9 +886,9 @@ pydantic-core==2.33.2 \
     # via
     #   -c requirements/main.txt
     #   pydantic
-pydantic-settings==2.10.0 \
-    --hash=sha256:33781dfa1c7405d5ed2b6f150830a93bb58462a847357bd8f162f8bacb77c027 \
-    --hash=sha256:7a12e0767ba283954f3fd3fefdd0df3af21b28aa849c40c35811d52d682fa876
+pydantic-settings==2.10.1 \
+    --hash=sha256:06f0062169818d0f5524420a360d632d5857b83cffd4d42fe29597807a1614ee \
+    --hash=sha256:a60952460b99cf661dc25c29c0ef171721f98bfcb52ef8d9ea4c943d7c8cc796
     # via
     #   -c requirements/main.txt
     #   autodoc-pydantic
@@ -929,9 +930,9 @@ python-dateutil==2.9.0.post0 \
     # via
     #   -c requirements/main.txt
     #   jupyter-client
-python-dotenv==1.1.0 \
-    --hash=sha256:41f90bc6f5f177fb41f53e87666db362025010eb28f60a01c9143bfa33a2b2d5 \
-    --hash=sha256:d7c01d9e2293916c18baf562d95698754b0dbbb5e74d457c45d4f6561fb9d55d
+python-dotenv==1.1.1 \
+    --hash=sha256:31f23644fe2602f88ff55e1f5c79ba497e01224ee7737937930c448e4d0e24dc \
+    --hash=sha256:a8a6399716257f45be6a007360200409fce5cda2661e3dec71d23dc15f6189ab
     # via
     #   -c requirements/main.txt
     #   pydantic-settings
@@ -1114,6 +1115,7 @@ requests==2.32.4 \
     #   -c requirements/main.txt
     #   documenteer
     #   sphinx
+    #   sphinx-prompt
     #   sphinxcontrib-youtube
 rpds-py==0.25.1 \
     --hash=sha256:0317177b1e8691ab5879f4f33f4b6dc55ad3b344399e23df2e499de7b10a548d \
@@ -1240,9 +1242,7 @@ rpds-py==0.25.1 \
 setuptools==80.9.0 \
     --hash=sha256:062d34222ad13e0cc312a4c02d73f059e86a4acbfbdea8f8f76b28c99f306922 \
     --hash=sha256:f36b47402ecde768dbfafc46e8e4207b4360c654f1f3bb84475f0a28628fb19c
-    # via
-    #   documenteer
-    #   sphinxcontrib-bibtex
+    # via documenteer
 six==1.17.0 \
     --hash=sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274 \
     --hash=sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81
@@ -1317,17 +1317,17 @@ sphinx-jinja==2.0.2 \
     # via
     #   -r requirements/dev.in
     #   documenteer
-sphinx-prompt==1.9.0 \
-    --hash=sha256:471b3c6d466dce780a9b167d9541865fd4e9a80ed46e31b06a52a0529ae995a1 \
-    --hash=sha256:fd731446c03f043d1ff6df9f22414495b23067c67011cc21658ea8d36b3575fc
+sphinx-prompt==1.10.0 \
+    --hash=sha256:23dca4c07ade840c9e87089d79d3499040fa524b3c422941427454e215fdd111 \
+    --hash=sha256:d62f7a1aa346225d30222a271dc78997031204a5f199ce5006c14ece0d94b217
     # via documenteer
 sphinxcontrib-applehelp==2.0.0 \
     --hash=sha256:2f29ef331735ce958efa4734873f084941970894c6090408b079c61b2e1c06d1 \
     --hash=sha256:4cd3f0ec4ac5dd9c17ec65e9ab272c9b867ea77425228e68ecf08d6b28ddbdb5
     # via sphinx
-sphinxcontrib-bibtex==2.6.4 \
-    --hash=sha256:aad018b730d324201f09777f6c25c4a2ff7ac1d5e66af187f21fc21840768760 \
-    --hash=sha256:bfd34d36322ba0ef0624a1bbee44adcedde86e0fa0ce5b2310304a3e68263f6f
+sphinxcontrib-bibtex==2.6.5 \
+    --hash=sha256:455ea4509642ea0b28ede3721550273626f85af65af01f161bfd8e19dc1edd7d \
+    --hash=sha256:9b3224dd6fece9268ebd8c905dc0a83ff2f6c54148a9235fe70e9d1e9ff149c0
     # via documenteer
 sphinxcontrib-devhelp==2.0.0 \
     --hash=sha256:411f5d96d445d1d73bb5d52133377b4248ec79db5c793ce7dbe59e074b4dd1ad \
