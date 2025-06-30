@@ -5,4 +5,4 @@ name: csc-versions
 sources:
 - https://github.com/lsst-ts/cscv
 type: application
-version: 0.1.0
+version: 1.0.0
