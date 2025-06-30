@@ -2,4 +2,4 @@ config:
   serviceAccount: "vo-cutouts@science-platform-stable-6994.iam.gserviceaccount.com"
   storageBucketUrl: "gs://rubin-cutouts-stable-us-central1-output/"
 cutoutWorker:
-  replicaCount: 4
+  replicaCount: 10
