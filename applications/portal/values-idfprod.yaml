@@ -17,6 +17,7 @@ config:
 redis:
   persistence:
     enabled: true
+    size: "32Gi"
     storageClass: "standard-rwo"
   resources:
     limits:
