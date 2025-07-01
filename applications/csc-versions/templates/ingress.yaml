@@ -6,6 +6,7 @@ metadata:
     {{- include "csc-versions.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
+  loginRedirect: true
   scopes:
     all:
       - "read:image"
