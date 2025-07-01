@@ -23,15 +23,17 @@ spec:
         - name: "cache"
           emptyDir: {}
         - name: "gke-gcsfuse-cache"
-          emptyDir: {}
+          emptyDir:
+            medium: Memory
           # persistentVolumeClaim:
-            # claimName: "gcsfuse-cache2"
+          #   claimName: "gcsfuse-cache2"
         - name: "eups"
           csi:
             driver: gcsfuse.csi.storage.gke.io
             volumeAttributes:
               bucketName: eups-prod
-              mountOptions: "implicit-dirs,file-cache:max-size-mb:-1,file-cache:cache-file-for-range-read:true,metadata-cache:ttl-secs:3600,metadata-cache:stat-cache-max-size-mb:500,metadata-cache:type-cache-max-size-mb:-1,file-system:kernel-list-cache-ttl-secs:-1"
+              mountOptions: "implicit-dirs,file-cache:max-size-mb:-1,file-cache:cache-file-for-range-read:true,metadata-cache:ttl-secs:-1,metadata-cache:stat-cache-max-size-mb:-1,metadata-cache:type-cache-max-size-mb:-1"
+              #mountOptions: "implicit-dirs,file-cache:max-size-mb:-1,file-cache:cache-file-for-range-read:true,metadata-cache:ttl-secs:3600,metadata-cache:stat-cache-max-size-mb:500,metadata-cache:type-cache-max-size-mb:-1,file-system:kernel-list-cache-ttl-secs:-1"
               # mountOptions: "implicit-dirs,file-cache:max-size-mb:-1,file-cache:cache-file-for-range-read:true,metadata-cache:ttl-secs:3600,metadata-cache:stat-cache-max-size-mb:320,metadata-cache:type-cache-max-size-mb:100,file-system:kernel-list-cache-ttl-secs:-1"
               #mountOptions: "implicit-dirs"
               skipCSIBucketAccessCheck: "true"
@@ -75,6 +77,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       securityContext:
+        fsGroup: 1001
+        runAsGroup: 1001
         runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
+        runAsUser: 1001

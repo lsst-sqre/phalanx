@@ -20,7 +20,7 @@ Distributes EUPS binaries
 | ingress."nginx.ingress.kubernetes.io/preserve-trailing-slash" | string | `"true"` |  |
 | ingress.hostname | string | `""` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the eups-distributor deployment pod |
-| podAnnotations | object | `{"gke-gcsfuse/cpu-limit":"10","gke-gcsfuse/cpu-request":"500m","gke-gcsfuse/ephemeral-storage-request":"50Gi","gke-gcsfuse/memory-limit":"10Gi","gke-gcsfuse/memory-request":"1Gi","gke-gcsfuse/volumes":"true"}` | Annotations for the eups-distributor deployment pod |
+| podAnnotations | object | `{"gke-gcsfuse/volumes":"true"}` | Annotations for the eups-distributor deployment pod |
 | pvc.name | string | `"gke-ssd"` |  |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the eups-distributor deployment pod |

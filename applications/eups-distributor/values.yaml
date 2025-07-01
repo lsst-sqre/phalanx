@@ -31,11 +31,11 @@ nodeSelector: {}
 # -- Annotations for the eups-distributor deployment pod
 podAnnotations:
   gke-gcsfuse/volumes: "true"
-  gke-gcsfuse/cpu-limit: "10"
-  gke-gcsfuse/memory-limit: 10Gi
-  gke-gcsfuse/cpu-request: 500m
-  gke-gcsfuse/memory-request: 1Gi
-  gke-gcsfuse/ephemeral-storage-request: 50Gi
+  # gke-gcsfuse/cpu-limit: "10"
+  # gke-gcsfuse/memory-limit: 10Gi
+  # gke-gcsfuse/cpu-request: 500m
+  # gke-gcsfuse/memory-request: 1Gi
+  # gke-gcsfuse/ephemeral-storage-request: 50Gi
 
 # -- Resource limits and requests for the eups-distributor deployment pod
 # @default -- See `values.yaml`
@@ -44,8 +44,8 @@ resources:
     cpu: "8"
     memory: "15Gi"
   requests:
-    cpu: "4"
-    memory: "10Gi"
+    cpu: "1"
+    memory: "5Gi"
 
 # -- Tolerations for the eups-distributor deployment pod
 tolerations: []
