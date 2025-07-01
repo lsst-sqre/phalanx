@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the csc-versions deployment
-  repository: "ghcr.io/lsst-ts/cscv:v0.1.0"
+  repository: "ghcr.io/lsst-ts/cscv"
 
   # -- Pull policy for the csc-versions image
   pullPolicy: "IfNotPresent"
