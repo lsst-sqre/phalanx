@@ -8,3 +8,5 @@ data:
   CSC_VERSIONS_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
   CSC_VERSIONS_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
   CSC_VERSIONS_PROFILE: {{ .Values.config.logProfile | quote }}
+  CYCLE_BRANCH: {{ .Values.cycleBranch | quote }}
+  ENV_EFD: {{ .Values.envEfd | quote }}
