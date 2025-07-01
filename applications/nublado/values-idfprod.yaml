@@ -27,9 +27,11 @@ controller:
         DAF_BUTLER_REPOSITORY_INDEX: "https://data.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
+        RUBIN_DIR: "/rubin"
         S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         SCRATCH_PATH: "/deleted-sundays"
         TMPDIR: "/tmp"
+        TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"

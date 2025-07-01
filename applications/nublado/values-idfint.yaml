@@ -44,8 +44,10 @@ controller:
         PANDACACHE_URL: "https://usdf-panda-server.slac.stanford.edu:8443/server/panda"
         PANDAMON_URL: "https://usdf-panda-bigmon.slac.stanford.edu:8443/"
         PANDA_CONFIG_ROOT: "~"
+        RUBIN_DIR: "/rubin"
         SCRATCH_PATH: "/deleted-sundays"
         TMPDIR: "/tmp"
+        TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
