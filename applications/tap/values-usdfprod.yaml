@@ -8,6 +8,8 @@ cadc-tap:
       host: "sdfqserv001.sdf.slac.stanford.edu:4040"
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
+      image:
+        tag: "2.13.1"
 
     gcsBucket: "rubin:rubin-qserv"
     gcsBucketUrl: "https://s3dfrgw.slac.stanford.edu"
