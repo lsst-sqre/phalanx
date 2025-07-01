@@ -33,8 +33,6 @@ applications:
   simonyitel: true
   squareone: true
   strimzi: true
-  telegraf: true
-  telegraf-ds: true
   uws: true
 
 controlSystem:

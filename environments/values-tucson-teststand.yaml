@@ -33,8 +33,6 @@ applications:
   squareone: true
   strimzi: true
   uws: true
-  telegraf: true
-  telegraf-ds: true
 
 controlSystem:
   imageTag: "c0041"

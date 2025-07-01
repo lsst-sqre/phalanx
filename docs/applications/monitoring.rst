@@ -15,5 +15,3 @@ Argo CD project: ``monitoring``
    monitoring/index
    sasquatch-backpack/index
    sasquatch/index
-   telegraf/index
-   telegraf-ds/index

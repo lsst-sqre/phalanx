@@ -83,8 +83,6 @@
 | applications.strimzi-access-operator | bool | `false` | Enable the strimzi-access-operator application |
 | applications.tap | bool | `false` | Enable the tap application |
 | applications.tasso | bool | `false` | Enable the tasso application |
-| applications.telegraf | bool | `false` | Enable the telegraf application |
-| applications.telegraf-ds | bool | `false` | Enable the telegraf-ds application |
 | applications.templatebot | bool | `false` | Enable the templatebot application |
 | applications.times-square | bool | `false` | Enable the times-square application |
 | applications.unfurlbot | bool | `false` | Enable the unfurlbot application |
