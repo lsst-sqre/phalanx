@@ -22,9 +22,6 @@ redis:
     limits:
       memory: "512Mi"
 
-image:
-  tag: "FIREFLY-1793-rubin-fixes_b4"
-
 resources:
   limits:
     memory: "30Gi"
