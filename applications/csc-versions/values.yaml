@@ -14,7 +14,7 @@ image:
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
-  tag: null
+  tag: "v0.1.0"
 
 config:
   # -- Logging level
