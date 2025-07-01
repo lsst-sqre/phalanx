@@ -273,12 +273,6 @@ applications:
   # -- Enable the tasso application
   tasso: false
 
-  # -- Enable the telegraf application
-  telegraf: false
-
-  # -- Enable the telegraf-ds application
-  telegraf-ds: false
-
   # -- Enable the templatebot application
   templatebot: false
 

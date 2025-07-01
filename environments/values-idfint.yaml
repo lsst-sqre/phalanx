@@ -36,8 +36,6 @@ applications:
   strimzi: true
   strimzi-access-operator: true
   tap: true
-  telegraf: true
-  telegraf-ds: true
   times-square: true
   vo-cutouts: true
   wobbly: true
