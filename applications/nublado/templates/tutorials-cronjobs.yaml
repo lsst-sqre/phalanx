@@ -51,7 +51,7 @@ spec:
               name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
           {{- with .Values.controller.config.lab.volumes }}
           volumes:
-          {{- toYaml . | nindent 10 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
 {{- end }}
 {{ if .Values.cronjob.artifacts.enabled }}
@@ -107,6 +107,6 @@ spec:
               name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
           {{- with .Values.controller.config.lab.volumes }}
           volumes:
-          {{ toYaml . | nindent 10 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
 {{- end }}
