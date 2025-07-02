@@ -71,6 +71,9 @@ config:
       count: 1
       users:
         - username: "bot-mobu-tutorial"
+          groups:
+            - name: "g_users"
+              id: 2000003
       scopes:
         - "exec:notebook"
         - "exec:portal"
@@ -98,6 +101,9 @@ config:
       count: 1
       users:
         - username: "bot-mobu-sia"
+          groups:
+            - name: "g_users"
+              id: 2000003
       scopes: ["read:image"]
       business:
         type: "SIAQuerySetRunner"
