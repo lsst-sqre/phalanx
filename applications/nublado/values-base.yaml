@@ -30,7 +30,7 @@ controller:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "8.9.0"
+            tag: "8.9.2"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
