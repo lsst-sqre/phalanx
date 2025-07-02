@@ -128,19 +128,40 @@ jupyterhub:
       image:
         tag: "5.0.1"
 
+purger:
+  enabled: true
+  schedule: "27 05 * * 0"  # Sunday morning, 12:27 AM (UTC-5)
+  volumeName: "deleted-sundays"
+  policy:
+    directories:
+      - path: /purge
+        threshold: 1GiB
+        # This is the case where we just purge everything once a week.
+        # Set the threshold to 1 second: yeah, *everything*
+        intervals:
+          large:
+            accessInterval: 1s
+            modificationInterval: 1s
+            creationInterval: 1s
+          small:
+            accessInterval: 1s
+            modificationInterval: 1s
+            creationInterval: 1s
+
 cronjob:
   tutorials:
     enabled: true
+    gitTarget: "/rubin/cst_repos/tutorial-notebooks"
     targetVolume:
       mountPath: "/rubin"
-      path: "/rubin-share"
-      server: "10.91.240.5"
+      volumeName: "rubin"
   artifacts:
     enabled: true
+    gitTarget: "/rubin/cst_repos/tutorial-notebooks-data"
     targetVolume:
       mountPath: "/rubin"
-      path: "/rubin-share"
-      server: "10.91.240.5"
+      volumeName: "rubin"
+
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
