@@ -114,7 +114,9 @@ spec:
             - name: PROPS_inventory.serverURLAry
               value: "[\"https://raw.githubusercontent.com/lsst-sqre/portal-config/refs/heads/main/dce-searchPage-idf.xml\"]"
             - name: PROPS_uws.history.svcs
-              value: {{ .Values.global.baseUrl }}/api/tap/async|DP02_DC|TAP
+              value: {{ .Values.global.baseUrl }}/api/tap/async?LAST={{ .Values.config.tapHistoryLimit }}|DP02_DC|TAP
+            - name: PROPS_OP_background_history_note
+              value: "Note: The jobs shown are a limited number of the most recent jobs associated with your user account and may include jobs submitted from other applications, not just this one.\nYou must be logged in to view your jobs. Only jobs created within the retention period will be displayed."
             - name: PROPS_OP_showUserInfo
               value: >-
                 {{- if .Values.config.showUserInfo }}
