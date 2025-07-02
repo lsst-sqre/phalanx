@@ -24,6 +24,8 @@ prompt-keda:
     endpointUrl: https://s3dfrgw.slac.stanford.edu
     aws_profile: prompt-processing-dev
 
+  iers_cache: s3://rubin-pp-dev-users/iers-cache.zip
+
   imageNotifications:
     kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
     topic: prompt-processing-dev

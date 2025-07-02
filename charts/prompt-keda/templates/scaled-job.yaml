@@ -98,6 +98,10 @@ spec:
               - name: MP_SKY_URL
                 value: {{ . }}
               {{- end }}
+              {{- with .Values.iers_cache }}
+              - name: CENTRAL_IERS_CACHE
+                value: {{ . }}
+              {{- end }}
               - name: SASQUATCH_URL
                 value: {{ .Values.sasquatch.endpointUrl }}
               {{- if and .Values.sasquatch.endpointUrl .Values.sasquatch.auth_env }}

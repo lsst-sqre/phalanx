@@ -24,6 +24,7 @@ KEDA Prompt Processing instance for LSSTComCamSim
 | prompt-keda.debug.exportOutputs | bool | `true` | Whether or not pipeline outputs should be exported to the central repo. This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination. |
 | prompt-keda.debug.monitorDaxApdb | bool | `false` | Whether `dax_apdb` should run in debug mode and log metrics. |
 | prompt-keda.fullnameOverride | string | `"prompt-keda-lsstcomcamsim"` | Override the full name for resources (includes the release name) |
+| prompt-keda.iers_cache | string | `""` | The URI where IERS data has been pre-downloaded and cached for use by Prompt Processing. If empty, Prompt Processing does not try to update IERS data. |
 | prompt-keda.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | prompt-keda.image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
 | prompt-keda.image.tag | string | `"latest"` | Overrides the image tag whose default is the chart appVersion. |
