@@ -13,11 +13,11 @@ spec:
           automountServiceAccountToken: false
           {{- with .Values.purger.tolerations }}
           tolerations:
-{{ toYaml . | indent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.purger.affinity }}
           affinity:
-{{ toYaml . | indent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           containers:
           - name: purger
@@ -25,14 +25,14 @@ spec:
             imagePullPolicy: "{{ .Values.purger.image.pullPolicy }}"
             {{- with .Values.purger.resources }}
             resources:
-{{ toYaml . | indent 14 }}
+              {{- toYaml . | nindent 14 }}
             {{- end }}
             env:
             - name: "RSP_SCRATCHPURGER_ALERT_HOOK"
               valueFrom:
-                secretKeyRef:
-                  name: "purger-secret"
-                  key: "slack-webhook"
+              secretKeyRef:
+                name: "nublado-secret"
+                key: "slack-webhook"
             command: [ "rsp_execute" ]
             securityContext:
               allowPrivilegeEscalation: true
@@ -45,7 +45,7 @@ spec:
               name: config
           volumes:
           {{- with .Values.controller.config.lab.volumes }}
-{{ toYaml . | indent 10 }}
+          {{- toYaml . | nindent 10 }}
           {{- end }}
           - name: config
             configMap:

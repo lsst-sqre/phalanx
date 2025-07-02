@@ -15,11 +15,11 @@ spec:
           automountServiceAccountToken: false
           {{- with .Values.cronjob.tolerations }}
           tolerations:
-{{- toYaml . | indent 12 }}
+            {{- toYaml . | indent 12 }}
           {{- end }}
           {{- with .Values.cronjob.affinity }}
           affinity:
-{{- toYaml . | indent 12 }}
+            {{- toYaml . | indent 12 }}
           {{- end }}
           containers:
           - name: tutorial
@@ -27,7 +27,7 @@ spec:
             imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
             {{- with .Values.cronjob.resources }}
             resources:
-{{ toYaml . | indent 14 }}
+              {{- toYaml . | nindent 14 }}
             {{- end }}
             command: [ "/entrypoint.sh" ]
             securityContext:
@@ -51,7 +51,7 @@ spec:
               name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
           {{- with .Values.controller.config.lab.volumes }}
           volumes:
-{{ toYaml . | indent 10 }}
+          {{- toYaml . | nindent 10 }}
           {{- end }}
 {{- end }}
 {{ if .Values.cronjob.artifacts.enabled }}
@@ -71,11 +71,11 @@ spec:
           automountServiceAccountToken: false
           {{- with .Values.cronjob.tolerations }}
           tolerations:
-{{- toYaml . | indent 12 }}
+            {{- toYaml . | indent 12 }}
           {{- end }}
           {{- with .Values.cronjob.affinity }}
           affinity:
-{{- toYaml . | indent 12 }}
+            {{- toYaml . | indent 12 }}
           {{- end }}
           containers:
           - name: artifacts
@@ -83,7 +83,7 @@ spec:
             imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
             {{- with .Values.cronjob.resources }}
             resources:
-{{ toYaml . | indent 14 }}
+              {{ toYaml . | nindent 14 }}
             {{- end }}
             command: [ "/entrypoint.sh" ]
             securityContext:
@@ -107,6 +107,6 @@ spec:
               name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
           {{- with .Values.controller.config.lab.volumes }}
           volumes:
-{{ toYaml . | indent 10 }}
+          {{ toYaml . | nindent 10 }}
           {{- end }}
 {{- end }}
