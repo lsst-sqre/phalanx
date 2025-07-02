@@ -47,13 +47,12 @@ spec:
             - name: "GIT_BRANCH"
               value: {{ .Values.cronjob.tutorials.gitBranch | quote }}
             volumeMounts:
-            - mountPath: {{ .Values.cronjob.tutorials.targetVolume.mountPath }}
-              name: target
+            - mountPath: {{ .Values.cronjob.tutorials.targetVolume.mountPath | quote }}
+              name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
+          {{- with .Values.controller.config.lab.volumes }}
           volumes:
-          - name: target
-            nfs:
-              server: {{ .Values.cronjob.tutorials.targetVolume.server }}
-              path: {{ .Values.cronjob.tutorials.targetVolume.path }}
+{{ toYaml . | indent 10 }}
+          {{- end }}
 {{- end }}
 {{ if .Values.cronjob.artifacts.enabled }}
 ---
@@ -104,11 +103,10 @@ spec:
             - name: "GIT_BRANCH"
               value: {{ .Values.cronjob.artifacts.gitBranch | quote }}
             volumeMounts:
-            - mountPath: {{ .Values.cronjob.artifacts.targetVolume.mountPath }}
-              name: target
+            - mountPath: {{ .Values.cronjob.artifacts.targetVolume.mountPath | quote }}
+              name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
+          {{- with .Values.controller.config.lab.volumes }}
           volumes:
-          - name: target
-            nfs:
-              server: {{ .Values.cronjob.artifacts.targetVolume.server }}
-              path: {{ .Values.cronjob.artifacts.targetVolume.path }}
+{{ toYaml . | indent 10 }}
+          {{- end }}
 {{- end }}

@@ -130,15 +130,13 @@ cronjob:
     gitTarget: "/rubin/cst_repos/tutorial-notebooks"
     targetVolume:
       mountPath: "/rubin"
-      server: "10.231.144.4"
-      path: "/rubin-share"
+      volumeName: "rubin"
   artifacts:
     enabled: true
     gitTarget: "/rubin/cst_repos/tutorial-notebooks-data"
     targetVolume:
       mountPath: "/rubin"
-      server: "10.231.144.4"
-      path: "/rubin-share"
+      volumeName: "rubin"
 
 cloudsql:
   enabled: true
