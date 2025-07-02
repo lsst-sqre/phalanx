@@ -22,6 +22,7 @@ KEDA Prompt Processing instance for LSSTComCam.
 | prompt-keda.cache.patchesPerImage | int | `16` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
 | prompt-keda.cache.refcatsPerImage | int | `6` | A factor by which to multiply `baseSize` for refcat datasets. |
 | prompt-keda.fullnameOverride | string | `"prompt-keda-lsstcomcam"` | Override the full name for resources (includes the release name) |
+| prompt-keda.iers_cache | string | `""` | The URI where IERS data has been pre-downloaded and cached for use by Prompt Processing. If empty, Prompt Processing does not try to update IERS data. |
 | prompt-keda.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | prompt-keda.image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
 | prompt-keda.image.tag | string | `"latest"` | Overrides the image tag whose default is the chart appVersion. |
