@@ -38,8 +38,6 @@ applications:
   strimzi: true
   strimzi-access-operator: true
   tap: true
-  telegraf: true
-  telegraf-ds: true
   times-square: true
   vault-secrets-operator: true
   vo-cutouts: true
