@@ -764,10 +764,8 @@ purger:
       - path: /scratch
         # -- Files this large or larger will be subject to the "large" interval set
         threshold: 1GiB
-        # -- If any of these times are older than specified, remove the
-        # file.  Zero means "never remove".
-        # @default -- see `values.yaml`, but in short, never remove: each
-        # environment must set its own values.
+        # -- If any of these times are older than specified, remove the file.  Zero means "never remove".
+        # @default -- see `values.yaml`
         intervals:
           large:
             accessInterval: 0
