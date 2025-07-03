@@ -41,3 +41,6 @@ controlSystem:
   imageTag: "c0041"
   siteTag: "summit"
   s3EndpointUrl: "https://s3.cp.lsst.org"
+
+revisions:
+  strimzi: strimzi-0.45.0
