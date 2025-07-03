@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/semaphore"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "semaphore") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

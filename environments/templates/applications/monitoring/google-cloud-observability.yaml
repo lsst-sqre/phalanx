@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/google-cloud-observability"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "google-cloud-observability") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"
