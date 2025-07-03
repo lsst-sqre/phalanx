@@ -227,6 +227,9 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
+            - mountPath: "/firefly/alerts"
+              name: "alerts"
+              readOnly: true
             - mountPath: "/firefly/shared-workarea"
               name: "firefly-shared-workarea"
             - mountPath: "/firefly/config"
@@ -241,6 +244,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: "alerts"
+          configMap:
+            name: "portal-alerts"
         - name: "firefly-shared-workarea"
           {{- if .Values.config.volumes.sharedWorkarea.hostPath }}
           hostPath:
