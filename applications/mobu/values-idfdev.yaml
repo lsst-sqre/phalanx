@@ -48,7 +48,7 @@ config:
         type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_ref: "prod"
+          repo_ref: "u/stvoutsin/dp1-upload-notebook"
         restart: true
     - name: "daily"
       count: 1
