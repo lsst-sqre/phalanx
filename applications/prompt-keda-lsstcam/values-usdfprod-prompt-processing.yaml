@@ -1,7 +1,7 @@
 prompt-keda:
   image:
     pullPolicy: IfNotPresent
-    tag: 6.15.0
+    tag: 6.15.1
 
   alerts:
     username: kafka-admin
@@ -41,6 +41,7 @@ prompt-keda:
         - {pipelines: []}
     preloadPadding: 50.1
     centralRepo: s3://rubin-summit-users
+    readRepo: s3://rubin-summit-users/butler-nochain-readonly.yaml
     exportTypes: |-
       - ".*_(config|metadata|log)"
       - "packages"
