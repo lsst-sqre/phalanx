@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/obsenv-management"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "obsenv-management") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

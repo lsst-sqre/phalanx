@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/hips"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "hips") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

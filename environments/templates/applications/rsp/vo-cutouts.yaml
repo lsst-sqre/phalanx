@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/vo-cutouts"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "vo-cutouts") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.baseUrl"

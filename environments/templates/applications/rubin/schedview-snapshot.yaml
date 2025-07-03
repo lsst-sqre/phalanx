@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/schedview-snapshot"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "schedview-snapshot") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

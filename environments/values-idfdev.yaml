@@ -42,3 +42,6 @@ applications:
   vault-secrets-operator: true
   vo-cutouts: true
   wobbly: true
+
+revisions:
+  strimzi: renovate/strimzi-kafka-operator-0.x

@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/datalinker"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "datalinker") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.baseUrl"

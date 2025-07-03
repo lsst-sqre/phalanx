@@ -20,7 +20,8 @@ butlerServerRepositories: {}
 # -- URL of the repository for all applications
 repoUrl: https://github.com/lsst-sqre/phalanx.git
 
-# -- Revision of repository to use for all applications
+# -- Revision of repository to use for all applications unless overridden by
+# branches below
 targetRevision: "main"
 
 # -- URL of Vault server for this environment
@@ -302,7 +303,11 @@ applications:
   # running any Safir-based UWS services
   wobbly: false
 
-# -- Add labels for application namespaces.
+# -- Mapping of applications to branches to run some applications from
+# revisions other than main
+revisions: {}
+
+# -- Add labels for application namespaces
 namespaceLabels: {}
 
 # The following settings are used for the control system
