@@ -50,7 +50,7 @@ strimzi-kafka:
   broker:
     enabled: true
     storage:
-      size: 500Gi
+      size: 1.5Ti
     resources:
       requests:
         memory: 16Gi
