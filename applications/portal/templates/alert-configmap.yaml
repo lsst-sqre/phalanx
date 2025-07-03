@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "portal-alerts"
+  labels:
+    {{- include "portal.labels" . | nindent 4 }}
+data:
+  {{- if .Values.config.alertMessage }}
+  message.txt: {{ .Values.config.alertMessage | quote }}
+  {{- end }}
