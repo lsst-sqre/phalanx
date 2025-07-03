@@ -15,11 +15,11 @@ spec:
           automountServiceAccountToken: false
           {{- with .Values.cronjob.tolerations }}
           tolerations:
-            {{- toYaml . | indent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.cronjob.affinity }}
           affinity:
-            {{- toYaml . | indent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           containers:
           - name: tutorial
@@ -71,11 +71,11 @@ spec:
           automountServiceAccountToken: false
           {{- with .Values.cronjob.tolerations }}
           tolerations:
-            {{- toYaml . | indent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.cronjob.affinity }}
           affinity:
-            {{- toYaml . | indent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           containers:
           - name: artifacts
