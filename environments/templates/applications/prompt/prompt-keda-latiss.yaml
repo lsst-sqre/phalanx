@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/prompt-keda-latiss"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "prompt-keda-latiss") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

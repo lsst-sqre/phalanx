@@ -102,8 +102,9 @@
 | controlSystem.topicName | string | `"sal"` | Topic name tag for the control system deployment |
 | fqdn | string | None, must be set | Fully-qualified domain name where the environment is running |
 | name | string | None, must be set | Name of the environment |
-| namespaceLabels | object | `{}` | Add labels for application namespaces. |
+| namespaceLabels | object | `{}` | Add labels for application namespaces |
 | repoUrl | string | `"https://github.com/lsst-sqre/phalanx.git"` | URL of the repository for all applications |
-| targetRevision | string | `"main"` | Revision of repository to use for all applications |
+| revisions | object | `{}` | Mapping of applications to branches to run some applications from revisions other than main |
+| targetRevision | string | `"main"` | Revision of repository to use for all applications unless overridden by branches below |
 | vaultPathPrefix | string | None, must be set | Prefix for Vault secrets for this environment |
 | vaultUrl | string | `"https://vault.lsst.cloud/"` | URL of Vault server for this environment |

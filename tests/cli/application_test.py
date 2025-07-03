@@ -126,6 +126,12 @@ def test_create(tmp_path: Path) -> None:
     env_values = (config_path / "environments" / "values.yaml").read_text()
     assert env_values == read_output_data("minikube", "values-after-add.yaml")
 
+    # Check that the Argo CD application templates were created.
+    argo_path = config_path / "environments" / "templates" / "applications"
+    assert (argo_path / "infrastructure" / "aaa-new-app.yaml").exists()
+    assert (argo_path / "rsp" / "hips.yaml").exists()
+    assert (argo_path / "rsp" / "zzz-other-app.yaml").exists()
+
     # Check that the documentation files were created.
     assert (app_docs_path / "aaa-new-app" / "index.rst").exists()
     assert (app_docs_path / "aaa-new-app" / "values.md").exists()

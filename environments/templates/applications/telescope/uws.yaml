@@ -22,7 +22,7 @@ spec:
   source:
     path: "applications/uws"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "uws") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

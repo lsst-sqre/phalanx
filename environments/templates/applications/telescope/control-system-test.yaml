@@ -22,7 +22,7 @@ spec:
   source:
     path: "applications/control-system-test"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "control-system-test") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/exposure-checker"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "exposure-checker") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"
