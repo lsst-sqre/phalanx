@@ -121,8 +121,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cronjob.tutorials.schedule | string | `"42 * * * *"` | Schedule for the cloning cronjob(s). |
 | cronjob.tutorials.targetVolume | object | See `values.yaml` | Repository volume definition |
 | cronjob.tutorials.targetVolume.mountPath | string | `"/rubin"` | Where volume will be mounted in the container |
-| cronjob.tutorials.targetVolume.path | string | `"/rubin-share"` | Path on NFS server |
-| cronjob.tutorials.targetVolume.server | string | `nil` | IP address of NFS server (different per environment) |
+| cronjob.tutorials.targetVolume.volumeName | string | None, must be set for each environment | Name of volume to mount (from controller.lab.config.volumes) |
 | cronjob.tutorials.targetVolumePath | string | `"/rubin"` | Where repository volume should be mounted |
 | cronjob.tutorials.uid | int | `1000` | UID for the cloning cronjob(s) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
@@ -165,4 +164,24 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.scheduling.userPlaceholder.enabled | bool | `false` | Whether to spawn placeholder pods representing fake users to force autoscaling in advance of running out of resources |
 | jupyterhub.scheduling.userScheduler.enabled | bool | `false` | Whether the user scheduler should be enabled |
 | proxy.ingress.annotations | object | See `values.yaml` | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |
+| purger.affinity | object | `{}` | Affinity rules for purger |
+| purger.config.dryRun | bool | `false` | Report only; do not purge |
+| purger.config.logging.addTimestamps | bool | `false` | Add timestamps to log lines |
+| purger.config.logging.log_level | string | `"info"` | Level at which to log |
+| purger.config.logging.profile | string | `"production"` | "production" (JSON logs) or "development" (human-friendly) |
+| purger.config.policyFile | string | `"/etc/purger/policy.yaml"` | File holding purge policy |
+| purger.enabled | bool | `false` | Purge scratch space? |
+| purger.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the purger image |
+| purger.image.repository | string | `"ghcr.io/lsst-sqre/nublado-purger"` | purger image to use |
+| purger.image.tag | string | The appVersion of the chart | Tag of purger image to use |
+| purger.nodeSelector | object | `{}` | Node selector rules for purger |
+| purger.podAnnotations | object | `{}` | Annotations for the purger pod |
+| purger.policy.directories[0].intervals | object | see `values.yaml` | If any of these times are older than specified, remove the file.  Zero means "never remove". |
+| purger.policy.directories[0].path | string | `"/scratch"` |  |
+| purger.policy.directories[0].threshold | string | `"1GiB"` | Files this large or larger will be subject to the "large" interval set |
+| purger.resources | object | See `values.yaml` | Resource limits and requests for the filesystem purger |
+| purger.schedule | string | `"05 03 * * *"` | Crontab entry for when to run. |
+| purger.slackAlerts | bool | `false` | Whether to enable Slack alerts. If set to true, `slack_webhook` must be set in the corresponding purger Vault secret. |
+| purger.tolerations | list | `[]` | Tolerations for purger |
+| purger.volumeName | string | None, must be set for each environment | Name of volume to purge (from controller.lab.config.volumes) |
 | secrets.templateSecrets | bool | `true` | Whether to use the new secrets management mechanism. If enabled, the Vault nublado secret will be split into a nublado secret for JupyterHub and a nublado-lab-secret secret used as a source for secret values for the user's lab. |
