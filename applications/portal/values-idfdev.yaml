@@ -17,7 +17,7 @@ config:
     }
     </style>
     <div class= 'myWarning'>
-    alert: be very afraid
+    keep calm and <a href="https://rsp.lsst.io>read the docs</a>
     </div>
   volumes:
     cleanupInterval: "1h"
