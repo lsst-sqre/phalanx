@@ -60,10 +60,10 @@ frontend:
   resources:
     limits:
       cpu: "0.5"
-      memory: "500Mi"
+      memory: "250Mi"
     requests:
       cpu: "0.1"
-      memory: "230Mi"
+      memory: "110Mi"
 
   # -- Affinity rules for the vo-cutouts frontend pod
   affinity: {}
@@ -126,7 +126,7 @@ databaseWorker:
       memory: "200Mi"
     requests:
       cpu: "0.02"
-      memory: "85Mi"
+      memory: "110Mi"
 
   # -- Affinity rules for the database worker pod
   affinity: {}
