@@ -115,35 +115,16 @@ cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
   serviceAccount: "nublado@science-platform-dev-7696.iam.gserviceaccount.com"
-purger:
-  enabled: true
-  volumeName: "deleted-sundays"
-  schedule: "19 05 * * 0"  # Sunday morning, 12:19 AM (UTC-5)
-  policy:
-    directories:
-      - path: /purge
-        threshold: 1GiB
-        # This is the case where we just purge everything once a week.
-        # Set the threshold to 1 second: yeah, *everything*
-        intervals:
-          large:
-            accessInterval: 1s
-            modificationInterval: 1s
-            creationInterval: 1s
-          small:
-            accessInterval: 1s
-            modificationInterval: 1s
-            creationInterval: 1s
 cronjob:
-  tutorials:
-    enabled: true
-    gitTarget: "/rubin/cst_repos/tutorial-notebooks"
-    targetVolume:
-      mountPath: "/rubin"
-      volumeName: "rubin"
   artifacts:
     enabled: true
-    gitTarget: "/rubin/cst_repos/tutorial-notebooks-data"
     targetVolume:
       mountPath: "/rubin"
-      volumeName: "rubin"
+      server: "10.234.16.4"
+      path: "/rubin-share"
+  tutorials:
+    enabled: true
+    targetVolume:
+      mountPath: "/rubin"
+      server: "10.234.16.4"
+      path: "/rubin-share"

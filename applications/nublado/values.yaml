@@ -701,85 +701,6 @@ secrets:
   # user's lab.
   templateSecrets: true
 
-# Configuration for the scratch purger
-purger:
-  # -- Purge scratch space?
-  enabled: false
-
-  # -- Affinity rules for purger
-  affinity: {}
-
-  # -- Node selector rules for purger
-  nodeSelector: {}
-
-  # -- Annotations for the purger pod
-  podAnnotations: {}
-
-  # -- Whether to enable Slack alerts. If set to true, `slack_webhook` must be
-  # set in the corresponding purger Vault secret.
-  slackAlerts: false
-
-  # -- Tolerations for purger
-  tolerations: []
-
-  # -- Resource limits and requests for the filesystem purger
-  # @default -- See `values.yaml`
-  resources:
-    limits:
-      cpu: "1"
-      memory: "1Gi"
-    requests:
-      cpu: "0.05"
-      memory: "120Mi"
-
-  image:
-    # -- purger image to use
-    repository: "ghcr.io/lsst-sqre/nublado-purger"
-
-    # -- Pull policy for the purger image
-    pullPolicy: "IfNotPresent"
-
-    # -- Tag of purger image to use
-    # @default -- The appVersion of the chart
-    tag: null
-
-  # -- Crontab entry for when to run.
-  schedule: "05 03 * * *"
-
-  config:
-    # -- File holding purge policy
-    policyFile: /etc/purger/policy.yaml
-    # -- Report only; do not purge
-    dryRun: false
-    logging:
-      # -- Level at which to log
-      log_level: info
-      # -- "production" (JSON logs) or "development" (human-friendly)
-      profile: production
-      # -- Add timestamps to log lines
-      addTimestamps: false
-
-  policy:
-    directories:
-      - path: /scratch
-        # -- Files this large or larger will be subject to the "large" interval set
-        threshold: 1GiB
-        # -- If any of these times are older than specified, remove the file.  Zero means "never remove".
-        # @default -- see `values.yaml`
-        intervals:
-          large:
-            accessInterval: 0
-            modificationInterval: 0
-            creationInterval: 0
-          small:
-            accessInterval: 0
-            modificationInterval: 0
-            creationInterval: 0
-  # -- Name of volume to purge (from controller.lab.config.volumes)
-  # @default -- None, must be set for each environment
-  volumeName: null
-
-
 # If we're installing tutorials and artifacts at a given site, this cronjob
 # controls their refresh.
 cronjob:
@@ -803,12 +724,14 @@ cronjob:
     # -- Repository volume definition
     # @default -- See `values.yaml`
     targetVolume:
-      # -- Name of volume to mount (from controller.lab.config.volumes)
-      # @default -- None, must be set for each environment
-      volumeName: null
-
       # -- Where volume will be mounted in the container
       mountPath: "/rubin"   # Conventional
+
+      # -- IP address of NFS server (different per environment)
+      server: null            # This must be changed
+
+      # -- Path on NFS server
+      path: "/rubin-share"  # Assigned by Terraform
 
     # -- Schedule for the cloning cronjob(s).
     schedule: "42 * * * *"
