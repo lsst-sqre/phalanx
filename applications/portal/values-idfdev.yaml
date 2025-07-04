@@ -8,6 +8,11 @@ config:
         text-align: center;
         font-size:var(--joy-fontSize-lg);
         margin-top: 5px
+        a:any-link {
+          color: --joy-palette-primary-400;
+          text-decoration-line: underline;
+          cursor: auto;
+        }
     }
     div div:has(.myWarning) {
         padding:0;
