@@ -45,6 +45,10 @@ spec:
           value: {{ .Values.s3.disableBucketValidation | toString | quote }}
         - name: CONFIG_APDB
           value: {{ .Values.apdb.config }}
+        {{- with .Values.iers_cache }}
+        - name: CENTRAL_IERS_CACHE
+          value: {{ . }}
+        {{- end }}
         - name: SASQUATCH_URL
           value: {{ .Values.sasquatch.endpointUrl }}
         {{- if and .Values.sasquatch.endpointUrl .Values.sasquatch.auth_env }}
