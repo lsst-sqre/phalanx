@@ -1,7 +1,7 @@
 image:
   repository: ghcr.io/lsst-sitcom/rubintv_production
-  tag: tickets-DM-50534-w21
-  pullPolicy: Always
+  tag: tickets-DM-50534-w27
+  pullPolicy: IfNotPresent
 location: USDF
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /config/data-repos.yaml
@@ -20,7 +20,7 @@ env:
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   AWS_RESPONSE_CHECKSUM_VALIDATION: WHEN_REQUIRED
   HOME: /home/saluser
-  RA_PULL_DIRECTORIES: "drp_pipe"
+  RA_PULL_DIRECTORIES: ""
 podAnnotations:
   edu.stanford.slac.sdf.project/usdf-embargo: "true"
 affinity:
