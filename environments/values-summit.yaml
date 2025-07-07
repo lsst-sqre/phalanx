@@ -14,6 +14,7 @@ applications:
   calsys: true
   consdb: true
   control-system-test: true
+  csc-versions: true
   envsys: true
   exposurelog: true
   love: true
