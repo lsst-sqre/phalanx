@@ -44,6 +44,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | controller.tolerations | list | `[]` | Tolerations for controller pod assignment |
 | cruiseControl.enabled | bool | `false` | Enable cruise control (required for broker migration and rebalancing) |
 | cruiseControl.maxReplicasPerBroker | int | `20000` | Maximum number of replicas per broker |
+| cruiseControl.metricsConfig.enabled | bool | `false` | Enable metrics generation |
 | kafka.config."log.retention.minutes" | int | 4320 minutes (3 days) | Number of days for a topic's data to be retained |
 | kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |
 | kafka.config."offsets.retention.minutes" | int | 4320 minutes (3 days) | Number of minutes for a consumer group's offsets to be retained |

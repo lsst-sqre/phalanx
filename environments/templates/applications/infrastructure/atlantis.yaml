@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/atlantis"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "atlantis") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

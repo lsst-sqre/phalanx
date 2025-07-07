@@ -3,13 +3,13 @@ cadc-tap:
     image:
       repository: "lsstsqre/tap-schema-idfint-tap"
 
+  replicaCount: 4
+
   config:
     qserv:
       host: "qserv-int.slac.stanford.edu:4090"
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
-      image:
-        tag: "3.2.0"
 
     sentryEnabled: true
     sentryTracesSampleRate: "0.1"
@@ -23,7 +23,7 @@ cadc-tap:
 
     urlRewrite:
       enabled: true
-      rules: "ivoa.ObsCore:access_url, dp02_dc2_catalogs.ObsCore:access_url, dp1_v29.ObsCore:access_url"
+      rules: "ivoa.ObsCore:access_url, dp02_dc2_catalogs.ObsCore:access_url, dp1.ObsCore:access_url"
 
   cloudsql:
     enabled: true

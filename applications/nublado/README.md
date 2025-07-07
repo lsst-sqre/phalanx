@@ -27,16 +27,17 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.affinity | object | `{}` | Affinity rules for the Nublado controller |
 | controller.config.fileserver.affinity | object | `{}` | Affinity rules for user file server pods |
 | controller.config.fileserver.application | string | `"nublado-fileservers"` | Argo CD application in which to collect user file servers |
-| controller.config.fileserver.creationTimeout | string | `"2m"` | Timeout to wait for Kubernetes to create file servers, in Safir `parse_timedelta` format |
-| controller.config.fileserver.deleteTimeout | string | `"1m"` | Timeout for deleting a user's file server from Kubernetes, in Safir `parse_timedelta` format |
+| controller.config.fileserver.creationTimeout | string | `"3m"` | Timeout to wait for Kubernetes to create file servers, in Safir `parse_timedelta` format |
+| controller.config.fileserver.deleteTimeout | string | `"2m"` | Timeout for deleting a user's file server from Kubernetes, in Safir `parse_timedelta` format |
 | controller.config.fileserver.enabled | bool | `false` | Enable user file servers |
-| controller.config.fileserver.idleTimeout | string | `"1h"` | Timeout for idle user fileservers, in Safir `parse_timedelta` format |
+| controller.config.fileserver.idleTimeout | string | `"1d"` | Timeout for idle user fileservers, in Safir `parse_timedelta` format |
 | controller.config.fileserver.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for file server image |
 | controller.config.fileserver.image.repository | string | `"ghcr.io/lsst-sqre/worblehat"` | File server image to use |
 | controller.config.fileserver.image.tag | string | `"0.1.0"` | Tag of file server image to use |
 | controller.config.fileserver.namespace | string | `"fileservers"` | Namespace for user file servers |
 | controller.config.fileserver.nodeSelector | object | `{}` | Node selector rules for user file server pods |
 | controller.config.fileserver.pathPrefix | string | `"/files"` | Path prefix for user file servers |
+| controller.config.fileserver.reconcileInterval | string | `"1h"` | How frequently to reconcile file server state against Kubernetes to catch deletions from outside Nublado, in Safir `parse_timedelta` format |
 | controller.config.fileserver.resources | object | See `values.yaml` | Resource requests and limits for user file servers |
 | controller.config.fileserver.tolerations | list | `[]` | Tolerations for user file server pods |
 | controller.config.fileserver.volumeMounts | list | `[]` | Volumes that should be made available via WebDAV |
@@ -47,10 +48,12 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.images.numWeeklies | int | `2` | Number of most-recent weeklies to prepull. |
 | controller.config.images.pin | list | `[]` | List of additional image tags to prepull. Listing the image tagged as recommended here is recommended when using a Docker image source to ensure its name can be expanded properly in the menu. |
 | controller.config.images.recommendedTag | string | `"recommended"` | Tag marking the recommended image (shown first in the menu) |
+| controller.config.images.refreshInterval | string | `"5m"` | How frequently to refresh the list of available images and compare it to the cached images on nodes to prepull new images, in Safir `parse_timedelta` format. Newly-available images will not appear in the menu for up to this interval. |
 | controller.config.images.source | object | None, must be specified | Source for prepulled images. For Docker, set `type` to `docker`, `registry` to the hostname and `repository` to the name of the repository. For Google Artifact Repository, set `type` to `google`, `location` to the region, `projectId` to the Google project, `repository` to the name of the repository, and `image` to the name of the image. |
 | controller.config.lab.activityInterval | string | `"1h"` | How frequently the lab should report activity to JupyterHub in Safir `parse_timedelta` format |
 | controller.config.lab.affinity | object | `{}` | Affinity rules for user lab pods |
 | controller.config.lab.application | string | `"nublado-users"` | Argo CD application in which to collect user lab objects |
+| controller.config.lab.defaultSize | string | `"large"` | Default size selected on the spawner form. This must be either `null` or the name of one of the sizes listed in `sizes`. If `null`, the first listed size will be the default. |
 | controller.config.lab.deleteTimeout | string | `"1m"` | Timeout for deleting a user's lab resources from Kubernetes in Safir `parse_timedelta` format |
 | controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab |
 | controller.config.lab.extraAnnotations | object | `{}` | Extra annotations to add to user lab pods |
@@ -66,6 +69,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.nss.baseGroup | string | See `values.yaml` | Base `/etc/group` file for lab containers |
 | controller.config.lab.nss.basePasswd | string | See `values.yaml` | Base `/etc/passwd` file for lab containers |
 | controller.config.lab.pullSecret | string | Do not use a pull secret | Pull secret to use for labs. Set to the string `pull-secret` to use the normal pull secret from Vault. |
+| controller.config.lab.reconcileInterval | string | `"5m"` | How frequently to reconcile lab state against Kubernetes to catch deletions from outside Nublado, in Safir `parse_timedelta` format. If a lab is deleted by a node replacement or upgrade, or manually with `kubectl`, that deletion will not be noticed, and the user will not be able to spawn a new lab, for up to this interval. |
 | controller.config.lab.runtimeMountsDir | string | `"/opt/lsst/software/jupyterlab"` | Directory in the lab under which runtime information such as tokens, environment variables, and container information will be mounted |
 | controller.config.lab.secrets | list | `[]` | Secrets to set in the user pods. Each should have a `secretKey` key pointing to a secret in the same namespace as the controller (generally `nublado-secret`) and `secretRef` pointing to a field in that key. |
 | controller.config.lab.sizes | list | See `values.yaml` | Available lab sizes. Sizes must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI suffixes for memory are supported. Sizes will be shown in the order defined here, and the first defined size will be the default. |
@@ -148,7 +152,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/nublado-jupyterhub"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"8.8.8"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"8.9.2"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | See `values.yaml` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |

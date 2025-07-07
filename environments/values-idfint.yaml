@@ -16,7 +16,6 @@ vaultPathPrefix: "secret/phalanx/idfint"
 applications:
   butler: true
   datalinker: true
-  filestore-backup: false
   fspurger: true
   ghostwriter: true
   google-cloud-observability: true
@@ -37,8 +36,6 @@ applications:
   strimzi: true
   strimzi-access-operator: true
   tap: true
-  telegraf: true
-  telegraf-ds: true
   times-square: true
   vo-cutouts: true
   wobbly: true

@@ -40,6 +40,8 @@ keda:
     LSSTCam-imSim: instrument:lsstcamimsim
 
 kafka:
+  # -- Enable secret for authenticating to the Summit.  Only should be enabled for prod.
+  summitSasquatchAuth: false
   offset: latest
   saslMechamism: SCRAM-SHA-512
   securityProtocol: SASL_SSL

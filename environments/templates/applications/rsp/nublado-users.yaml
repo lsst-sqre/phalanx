@@ -14,5 +14,5 @@ spec:
   source:
     path: "applications/nublado-users"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "nublado-users") .Values.targetRevision | quote }}
 {{- end -}}

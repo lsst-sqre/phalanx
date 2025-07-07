@@ -24,7 +24,6 @@
 | applications.exposure-checker | bool | `false` | Enable the exposure-checker application |
 | applications.exposurelog | bool | `false` | Enable the exposurelog application |
 | applications.fastapi-bootcamp | bool | `false` | Enable the fastapi-bootcamp application |
-| applications.filestore-backup | bool | `false` | Enable the filestore-backup application |
 | applications.flink | bool | `false` | Enable the flink application |
 | applications.fspurger | bool | `false` | Enable the fspurger application |
 | applications.gafaelfawr | bool | `true` | Enable the Gafaelfawr application. This is required by Phalanx since most other applications use `GafaelfawrIngress` |
@@ -73,6 +72,7 @@
 | applications.sasquatch | bool | `false` | Enable the sasquatch application |
 | applications.sasquatch-backpack | bool | `false` | Enable the sasquatch-backpack application |
 | applications.schedview-snapshot | bool | `false` | Enable the schedview-snapshot application |
+| applications.schedview-static-pages | bool | `false` | Enable the schedview-static-pages application |
 | applications.semaphore | bool | `false` | Enable the semaphore application |
 | applications.sia | bool | `false` | Enable the sia over butler application |
 | applications.simonyitel | bool | `false` | Enable the simonyitel control system application |
@@ -83,8 +83,6 @@
 | applications.strimzi-access-operator | bool | `false` | Enable the strimzi-access-operator application |
 | applications.tap | bool | `false` | Enable the tap application |
 | applications.tasso | bool | `false` | Enable the tasso application |
-| applications.telegraf | bool | `false` | Enable the telegraf application |
-| applications.telegraf-ds | bool | `false` | Enable the telegraf-ds application |
 | applications.templatebot | bool | `false` | Enable the templatebot application |
 | applications.times-square | bool | `false` | Enable the times-square application |
 | applications.unfurlbot | bool | `false` | Enable the unfurlbot application |
@@ -104,8 +102,9 @@
 | controlSystem.topicName | string | `"sal"` | Topic name tag for the control system deployment |
 | fqdn | string | None, must be set | Fully-qualified domain name where the environment is running |
 | name | string | None, must be set | Name of the environment |
-| namespaceLabels | object | `{}` | Add labels for application namespaces. |
+| namespaceLabels | object | `{}` | Add labels for application namespaces |
 | repoUrl | string | `"https://github.com/lsst-sqre/phalanx.git"` | URL of the repository for all applications |
-| targetRevision | string | `"main"` | Revision of repository to use for all applications |
+| revisions | object | `{}` | Mapping of applications to branches to run some applications from revisions other than main |
+| targetRevision | string | `"main"` | Revision of repository to use for all applications unless overridden by branches below |
 | vaultPathPrefix | string | None, must be set | Prefix for Vault secrets for this environment |
 | vaultUrl | string | `"https://vault.lsst.cloud/"` | URL of Vault server for this environment |

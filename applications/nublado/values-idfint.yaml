@@ -33,10 +33,6 @@ controller:
         image: "sciplat-lab"
     lab:
       env:
-        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
-        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
-        GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
-        CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
         DAF_BUTLER_REPOSITORY_INDEX: "https://data-int.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         IDDS_CONFIG: "/opt/lsst/software/jupyterlab/panda/idds.cfg.client.template"
         PANDA_AUTH: "oidc"
@@ -48,15 +44,16 @@ controller:
         PANDACACHE_URL: "https://usdf-panda-server.slac.stanford.edu:8443/server/panda"
         PANDAMON_URL: "https://usdf-panda-bigmon.slac.stanford.edu:8443/"
         PANDA_CONFIG_ROOT: "~"
-        S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
+        RUBIN_DIR: "/rubin"
         SCRATCH_PATH: "/deleted-sundays"
         TMPDIR: "/tmp"
+        TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.8.8"
+            tag: "8.9.2"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -72,22 +69,16 @@ controller:
               volumeName: "rubin"
       nodeSelector:
         node_pool: "user-lab-pool"
-      secrets:
-        - secretName: "nublado-lab-secret"
-          secretKey: "aws-credentials.ini"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-gcs-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-hmac-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "postgres-credentials.txt"
       sizes:
-        - size: large
-          cpu: 4.0
-          memory: 16Gi
-        - size: small
+        - size: "small"
           cpu: 1.0
-          memory: 4Gi
+          memory: "4Gi"
+        - size: "large"
+          cpu: 4.0
+          memory: "16Gi"
+        - size: "huge"
+          cpu: 8.0
+          memory: "32Gi"
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
@@ -115,12 +106,6 @@ controller:
           volumeName: "rubin"
         - containerPath: "/deleted-sundays"
           volumeName: "deleted-sundays"
-        # 20250516: accomodation paths, remove after tutorials
-        # and scratch use changes.
-        - containerPath: "/project"
-          volumeName: "rubin"
-        - containerPath: "/scratch"
-          volumeName: "deleted-sundays"
     metrics:
       enabled: true
 
@@ -138,6 +123,11 @@ jupyterhub:
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
+  proxy:
+    chp:
+      image:
+        tag: "5.0.1"
+
 cronjob:
   tutorials:
     enabled: true

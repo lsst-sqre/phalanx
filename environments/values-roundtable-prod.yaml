@@ -26,8 +26,6 @@ applications:
   strimzi: true
   strimzi-access-operator: true
   squarebot: true
-  telegraf: true
-  telegraf-ds: true
   templatebot: true
   unfurlbot: true
   vault: true

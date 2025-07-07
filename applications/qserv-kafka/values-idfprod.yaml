@@ -8,4 +8,5 @@ config:
   qservRestUsername: "qsmaster"
 resultWorker:
   autoscaling:
+    minReplicas: 4
     maxReplicas: 50

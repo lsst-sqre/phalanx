@@ -54,7 +54,8 @@ config:
     - "stvoutsin"
 
   errorFooter: |
-    To report problems or ask for help, contact #dm-square on the LSSTC Slack.
+    To report problems or ask for help, contact #square-team on the Rubin
+    Observatory Slack.
 
 ingress:
   additionalHosts:

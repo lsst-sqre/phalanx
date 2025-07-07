@@ -39,8 +39,8 @@ resources:
     cpu: "4"
     memory: "8Gi"
   requests:
-    cpu: "1"
-    memory: "1Gi"
+    cpu: "2"
+    memory: "2Gi"
 
 # -- Tolerations for the eups-distributor deployment pod
 tolerations: []

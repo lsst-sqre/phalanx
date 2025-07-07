@@ -3,7 +3,7 @@ slackAlerts: true
 nfs:
   server: "10.234.16.4"
   path: "/deleted-weekly-share"
-schedule: "19 05 * * 0"  # Sunday morning, 12:19 AM
+schedule: "19 05 * * 0"  # Sunday morning, 12:19 AM (UTC-5)
 
 policy:
   directories:

@@ -11,6 +11,7 @@ controller:
       cycle: 41
       recommendedTag: "recommended_c0041"
     lab:
+      defaultSize: "small"
       env:
         AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
@@ -32,7 +33,7 @@ controller:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "8.8.8"
+            tag: "8.9.2"
           privileged: true
           volumeMounts:
             - containerPath: "/home"

@@ -38,12 +38,13 @@ KEDA Prompt Processing instance for LSSTComCam.
 | prompt-keda.initializer.resources.memoryRequest | string | `"512Mi"` | The minimum memory to request for the initializer. |
 | prompt-keda.initializer.retries | int | `6` | Maximum number of times to attempt initializing the central repo. If the initializer fails, the PP service cannot run! |
 | prompt-keda.initializer.timeout | int | `120` | Maximum time for a single attempt to initialize the central repo (seconds). |
-| prompt-keda.instrument.calibRepo | string | None, must be set | URI to the shared repo used for calibrations, templates, and pipeline outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
+| prompt-keda.instrument.centralRepo | string | None, must be set | URI to the shared repo used for pipeline inputs and outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
 | prompt-keda.instrument.exportTypes | string | `"- .*"` | YAML-formatted list of regex patterns to specify the dataset types to export. |
 | prompt-keda.instrument.name | string | `"LSSTComCam"` | The "short" name of the instrument |
 | prompt-keda.instrument.pipelines.main | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run for which visits' raws. Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | prompt-keda.instrument.pipelines.preprocessing | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run before which visits' raw arrival. |
 | prompt-keda.instrument.preloadPadding | int | `50` | Number of arcseconds to pad the spatial region in preloading. |
+| prompt-keda.instrument.readRepo | string | Matches `centralRepo` | Optional URI to a separate repo used for pipeline inputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
 | prompt-keda.instrument.repoWait | int | `5` | The average time to wait (in seconds) before retrying a failed connection to the shared repo. |
 | prompt-keda.instrument.skymap | string | `"lsst_cells_v1"` | Skymap to use with the instrument |
 | prompt-keda.keda.failedJobsHistoryLimit | int | `5` | How many failed jobs should be kept available in Kubernetes. |
@@ -67,7 +68,7 @@ KEDA Prompt Processing instance for LSSTComCam.
 | prompt-keda.nodeSelector | object | `{}` | Node selection rules for the Prompt Processing pod |
 | prompt-keda.podAnnotations | object | `{}` | Pod annotations for the Prompt Processing Pod |
 | prompt-keda.raw_microservice | string | `""` | The URI to a microservice that maps image metadata to a file location. If empty, Prompt Processing does not use a microservice. |
-| prompt-keda.registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |
+| prompt-keda.registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. If `instrument.readRepo` is also set, the secret must contain a `read_repo_file` key. |
 | prompt-keda.resources | object | See `values.yaml` | Kubernetes resource requests and limits |
 | prompt-keda.s3.auth_env | bool | `false` | If set, define environment variables with S3 credentials from this application's Vault secret. |
 | prompt-keda.s3.aws_profile | string | `""` | If set, specify a S3 credential profile and `cred_file_auth` must be true. If empty and `auth_env`=`false`, the `default` profile is used. |

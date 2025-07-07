@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "sia.labels" . | nindent 4 }}
 config:
+  authType: "basic"
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
@@ -18,8 +19,11 @@ config:
 template:
   metadata:
     name: {{ template "sia.fullname" . }}
-    {{- with .Values.ingress.annotations }}
     annotations:
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "1800"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
+    {{- with .Values.ingress.annotations }}
       {{- toYaml . | nindent 6 }}
     {{- end }}
   spec:

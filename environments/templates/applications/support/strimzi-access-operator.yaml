@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/strimzi-access-operator"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "strimzi-access-operator") .Values.targetRevision | quote }}
     helm:
       valueFiles:
         - "values.yaml"

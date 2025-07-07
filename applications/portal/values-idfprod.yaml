@@ -12,10 +12,13 @@ config:
         size: "40Gi"
         storageClass: "standard-rwo"
   ssotap: "ssotap"
+  hipsUrl: "https://data.lsst.cloud/api/hips/v2/dp1/deep_coadd/band_r"
+  showUserInfo: "false"
 
 redis:
   persistence:
     enabled: true
+    size: "32Gi"
     storageClass: "standard-rwo"
   resources:
     limits:
@@ -25,3 +28,6 @@ resources:
   limits:
     cpu: "6"
     memory: "90Gi"
+  requests:
+    cpu: "1"
+    memory: "16Gi"

@@ -71,7 +71,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "1.21.1"
+      tag: "1.21.2"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -89,7 +89,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "2.13.1"
+      tag: "3.4.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -99,7 +99,7 @@ config:
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
   # -- Datalink payload URL
-  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/w.2025.24/datalink-snippets.zip"
+  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/DP1-v1.1.0-rc1/datalink-snippets.zip"
 
   # -- Name of GCS bucket in which to store results
   gcsBucket: "async-results.lsst.codes"
@@ -212,7 +212,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "tickets-DM-51478-order-hotfix"
+    tag: "DP1-v1.1.0-rc1"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
@@ -245,7 +245,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "2.13.1"
+    tag: "3.4.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`

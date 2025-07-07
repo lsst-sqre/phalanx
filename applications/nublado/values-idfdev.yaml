@@ -34,19 +34,17 @@ controller:
         image: "sciplat-lab"
     lab:
       env:
-        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         DAF_BUTLER_REPOSITORY_INDEX: "https://data-dev.lsst.cloud/api/butler/configs/idf-repositories.yaml"
-        GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
-        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
-        S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
+        RUBIN_DIR: "/rubin"
         SCRATCH_PATH: "/deleted-sundays"
         TMPDIR: "/tmp"
+        TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.8.8"
+            tag: "8.9.2"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -62,22 +60,6 @@ controller:
               volumeName: "rubin"
       nodeSelector:
         node_pool: "user-lab-pool"
-      sizes:
-        - size: large
-          cpu: 4.0
-          memory: 16Gi
-        - size: small
-          cpu: 1.0
-          memory: 4Gi
-      secrets:
-        - secretName: "nublado-lab-secret"
-          secretKey: "aws-credentials.ini"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-gcs-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-hmac-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "postgres-credentials.txt"
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
@@ -105,11 +87,6 @@ controller:
           volumeName: "rubin"
         - containerPath: "/deleted-sundays"
           volumeName: "deleted-sundays"
-        # Accomodation while we move tutorials refs
-        - containerPath: "/project"
-          volumeName: "rubin"
-        - containerPath: "/scratch"
-          volumeName: "deleted-sundays"
     metrics:
       enabled: true
 hub:
@@ -129,6 +106,11 @@ jupyterhub:
     db:
       upgrade: true
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
+  proxy:
+    chp:
+      image:
+        tag: "5.0.1"
+
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"

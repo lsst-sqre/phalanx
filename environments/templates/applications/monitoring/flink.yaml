@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/flink"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "flink") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"
@@ -31,4 +31,9 @@ spec:
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"
+  ignoreDifferences:
+    - group: "apiextensions.k8s.io"
+      kind: "CustomResourceDefinition"
+      jqPathExpressions:
+        - ".spec.versions.[].additionalPrinterColumns.[].priority"
 {{- end -}}

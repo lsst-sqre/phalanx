@@ -7,6 +7,6 @@ config:
       bucketName: "static-us-central1-dp02-hips"
     dp1:
       bucketName: "static-us-central1-dp1-hips"
-      objectPrefix: "DM-51426"
+      objectPrefix: "DM-51494"
   defaultBucketKey: "dp02"
   serviceAccount: "crawlspace-hips@science-platform-int-dc5d.iam.gserviceaccount.com"

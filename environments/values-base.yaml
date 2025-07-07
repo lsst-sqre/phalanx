@@ -34,11 +34,12 @@ applications:
   simonyitel: true
   squareone: true
   strimzi: true
-  telegraf: true
-  telegraf-ds: true
   uws: true
 
 controlSystem:
   imageTag: "c0041"
   siteTag: "base"
   s3EndpointUrl: "https://s3.ls.lsst.org"
+
+revisions:
+  strimzi: strimzi-0.45.0

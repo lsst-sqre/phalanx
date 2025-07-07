@@ -193,6 +193,10 @@ cruiseControl:
   # -- Maximum number of replicas per broker
   maxReplicasPerBroker: 20000
 
+  metricsConfig:
+    # -- Enable metrics generation
+    enabled: false
+
 brokerMigration:
   # -- Whether to enable another node pool to migrate the kafka brokers to
   enabled: false
