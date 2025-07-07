@@ -1,6 +1,29 @@
 replicaCount: 4
 
 config:
+  alertMessage: |
+    <style>
+    .myWarning{
+        background-color: var(--joy-palette-primary-softBg);
+        text-align: center;
+        font-size:var(--joy-fontSize-lg);
+        margin-top: 5px
+        a:any-link {
+          color: var(--joy-palette-primary-400);
+          text-decoration-line: underline;
+          cursor: auto;
+        }
+    }
+    div div:has(.myWarning) {
+        padding:0;
+    }
+    div:has(.myWarning) {
+        width: 100%;
+    }
+    </style>
+    <div class= 'myWarning'>
+    Service disruption see alert on <a href="https://data.lsst.cloud">data.lsst.cloud</a>
+    </div>
   cleanupInterval: "1h"
   volumes:
     sharedWorkarea:
