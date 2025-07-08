@@ -51,9 +51,11 @@ spec:
           volumes:
           {{- range .Values.controller.config.lab.volumes }}
           - name: {{ .name | quote }}
+	  {{- if eq .source.type "nfs" }}
             nfs:
-              server: {{ .server | quote }}
-              path: {{ .serverPath | quote }}
+              server: {{ .source.server | quote }}
+              path: {{ .source.serverPath | quote }}
+	  {{- end }}
           {{- end }}
 {{- end }}
 {{ if .Values.cronjob.artifacts.enabled }}
@@ -110,8 +112,10 @@ spec:
           volumes:
           {{- range .Values.controller.config.lab.volumes }}
           - name: {{ .name | quote }}
+	  {{- if eq .source.type "nfs" }}
             nfs:
-              server: {{ .server | quote }}
-              path: {{ .serverPath | quote }}
+              server: {{ .source.server | quote }}
+              path: {{ .source.serverPath | quote }}
+	  {{- end }}
           {{- end }}
 {{- end }}
