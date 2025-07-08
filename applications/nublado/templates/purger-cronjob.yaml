@@ -46,14 +46,18 @@ spec:
               name: {{ .Values.purger.volumeName | quote }}
             - mountPath: /etc/purger
               name: config
+          # We need to extend this for PVCs too
           volumes:
           {{- range .Values.controller.config.lab.volumes }}
           - name: {{ .name | quote }}
-	  {{- if eq .source.type "nfs" }}
+          {{- if eq .source.type "nfs" }}
             nfs:
               server: {{ .source.server | quote }}
               path: {{ .source.serverPath | quote }}
-	  {{- end }}
+          {{- else if eq .source.type "hostPath" }}
+            hostPath:
+              path: {{ .source.path | quote }}
+          {{- end }}
           {{- end }}
           - name: config
             configMap:

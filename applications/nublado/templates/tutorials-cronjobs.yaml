@@ -48,14 +48,18 @@ spec:
             volumeMounts:
             - mountPath: {{ .Values.cronjob.tutorials.targetVolume.mountPath | quote }}
               name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
+          # We need to extend this for PVCs too
           volumes:
           {{- range .Values.controller.config.lab.volumes }}
           - name: {{ .name | quote }}
-	  {{- if eq .source.type "nfs" }}
+          {{- if eq .source.type "nfs" }}
             nfs:
               server: {{ .source.server | quote }}
               path: {{ .source.serverPath | quote }}
-	  {{- end }}
+          {{- else if eq .source.type "hostPath" }}
+            hostPath:
+              path: {{ .source.path | quote }}
+          {{- end }}
           {{- end }}
 {{- end }}
 {{ if .Values.cronjob.artifacts.enabled }}
@@ -109,13 +113,17 @@ spec:
             volumeMounts:
             - mountPath: {{ .Values.cronjob.artifacts.targetVolume.mountPath | quote }}
               name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
+          # We need to extend this for PVCs too
           volumes:
           {{- range .Values.controller.config.lab.volumes }}
           - name: {{ .name | quote }}
-	  {{- if eq .source.type "nfs" }}
+          {{- if eq .source.type "nfs" }}
             nfs:
               server: {{ .source.server | quote }}
               path: {{ .source.serverPath | quote }}
-	  {{- end }}
+          {{- else if eq .source.type "hostPath" }}
+            hostPath:
+              path: {{ .source.path | quote }}
+          {{- end }}
           {{- end }}
 {{- end }}
