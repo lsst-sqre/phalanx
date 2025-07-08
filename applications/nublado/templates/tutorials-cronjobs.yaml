@@ -49,7 +49,12 @@ spec:
             - mountPath: {{ .Values.cronjob.tutorials.targetVolume.mountPath | quote }}
               name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
           volumes:
-          {{- toYaml .Values.controller.config.lab.volumes | nindent 10 }}
+          {{- range .Values.controller.config.lab.volumes }}
+          - name: {{ .name | quote }}
+            nfs:
+              server: {{ .server | quote }}
+              path: {{ .serverPath | quote }}
+          {{- end }}
 {{- end }}
 {{ if .Values.cronjob.artifacts.enabled }}
 ---
@@ -103,5 +108,10 @@ spec:
             - mountPath: {{ .Values.cronjob.artifacts.targetVolume.mountPath | quote }}
               name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
           volumes:
-          {{- toYaml .Values.controller.config.lab.volumes | nindent 10 }}
+          {{- range .Values.controller.config.lab.volumes }}
+          - name: {{ .name | quote }}
+            nfs:
+              server: {{ .server | quote }}
+              path: {{ .serverPath | quote }}
+          {{- end }}
 {{- end }}

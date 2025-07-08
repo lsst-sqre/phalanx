@@ -47,7 +47,12 @@ spec:
             - mountPath: /etc/purger
               name: config
           volumes:
-          {{- toYaml .Values.controller.config.lab.volumes | nindent 10 }}
+          {{- range .Values.controller.config.lab.volumes }}
+          - name: {{ .name | quote }}
+            nfs:
+              server: {{ .server | quote }}
+              path: {{ .serverPath | quote }}
+          {{- end }}
           - name: config
             configMap:
               name: "purger-configmap"
