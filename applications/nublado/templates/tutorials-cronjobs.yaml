@@ -1,5 +1,4 @@
 {{ if .Values.cronjob.tutorials.enabled }}
----
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -15,11 +14,11 @@ spec:
           automountServiceAccountToken: false
           {{- with .Values.cronjob.tolerations }}
           tolerations:
-{{- toYaml . | indent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.cronjob.affinity }}
           affinity:
-{{- toYaml . | indent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           containers:
           - name: tutorial
@@ -27,7 +26,7 @@ spec:
             imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
             {{- with .Values.cronjob.resources }}
             resources:
-{{ toYaml . | indent 14 }}
+              {{- toYaml . | nindent 14 }}
             {{- end }}
             command: [ "/entrypoint.sh" ]
             securityContext:
@@ -49,10 +48,8 @@ spec:
             volumeMounts:
             - mountPath: {{ .Values.cronjob.tutorials.targetVolume.mountPath | quote }}
               name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
-          {{- with .Values.controller.config.lab.volumes }}
           volumes:
-{{ toYaml . | indent 10 }}
-          {{- end }}
+          {{- toYaml .Values.controller.config.lab.volumes | nindent 10 }}
 {{- end }}
 {{ if .Values.cronjob.artifacts.enabled }}
 ---
@@ -71,11 +68,11 @@ spec:
           automountServiceAccountToken: false
           {{- with .Values.cronjob.tolerations }}
           tolerations:
-{{- toYaml . | indent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.cronjob.affinity }}
           affinity:
-{{- toYaml . | indent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           containers:
           - name: artifacts
@@ -83,7 +80,7 @@ spec:
             imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
             {{- with .Values.cronjob.resources }}
             resources:
-{{ toYaml . | indent 14 }}
+              {{- toYaml . | nindent 14 }}
             {{- end }}
             command: [ "/entrypoint.sh" ]
             securityContext:
@@ -105,8 +102,6 @@ spec:
             volumeMounts:
             - mountPath: {{ .Values.cronjob.artifacts.targetVolume.mountPath | quote }}
               name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
-          {{- with .Values.controller.config.lab.volumes }}
           volumes:
-{{ toYaml . | indent 10 }}
-          {{- end }}
+          {{- toYaml .Values.controller.config.lab.volumes | nindent 10 }}
 {{- end }}

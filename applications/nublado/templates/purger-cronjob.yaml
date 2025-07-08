@@ -14,11 +14,11 @@ spec:
           automountServiceAccountToken: false
           {{- with .Values.purger.tolerations }}
           tolerations:
-{{ toYaml . | indent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.purger.affinity }}
           affinity:
-{{ toYaml . | indent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           containers:
           - name: purger
@@ -26,16 +26,16 @@ spec:
             imagePullPolicy: "{{ .Values.purger.image.pullPolicy }}"
             {{- with .Values.purger.resources }}
             resources:
-{{ toYaml . | indent 14 }}
+              {{- toYaml . | nindent 14 }}
             {{- end }}
+            {{- if .Values.controller.slackAlerts }}
             env:
-{{- if .Values.controller.slackAlerts }}
             - name: "RSP_SCRATCHPURGER_ALERT_HOOK"
               valueFrom:
                 secretKeyRef:
                   name: "nublado-secret"
                   key: "slack-webhook"
-{{- end }}
+            {{- end }}
             command: [ "rsp_execute" ]
             securityContext:
               allowPrivilegeEscalation: true
@@ -43,13 +43,11 @@ spec:
               readOnlyRootFilesystem: true
             volumeMounts:
             - mountPath: /purge
-              name: {{ .Values.purger.volumeName }}
+              name: {{ .Values.purger.volumeName | quote }}
             - mountPath: /etc/purger
               name: config
-          {{- with .Values.controller.config.lab.volumes }}
           volumes:
-{{ toYaml . | indent 12 }}
-          {{- end }}
+          {{- toYaml .Values.controller.config.lab.volumes | nindent 10 }}
           - name: config
             configMap:
               name: "purger-configmap"
