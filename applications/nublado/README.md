@@ -176,7 +176,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | purger.image.tag | string | The appVersion of the chart | Tag of purger image to use |
 | purger.nodeSelector | object | `{}` | Node selector rules for purger |
 | purger.podAnnotations | object | `{}` | Annotations for the purger pod |
-| purger.policy.directories[0].intervals | object | see `values.yaml`, but in short, never remove: each | If any of these times are older than specified, remove the file.  Zero means "never remove". environment must set its own values. |
+| purger.policy.directories[0].intervals | object | see `values.yaml`; each environment must set its own values. | If any of these times are older than specified, remove the file.  Zero means "never remove". |
 | purger.policy.directories[0].path | string | `"/scratch"` |  |
 | purger.policy.directories[0].threshold | string | `"1GiB"` | Files this large or larger will be subject to the "large" interval set |
 | purger.resources | object | See `values.yaml` | Resource limits and requests for the filesystem purger |
