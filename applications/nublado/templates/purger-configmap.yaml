@@ -1,0 +1,13 @@
+{{- if .Values.purger.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "purger-configmap"
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+data:
+  config.yaml: |-
+    {{- toYaml .Values.purger.config | nindent 4 }}
+  policy.yaml: |-
+    {{- toYaml .Values.purger.policy | nindent 4 }}
+{{- end }}
