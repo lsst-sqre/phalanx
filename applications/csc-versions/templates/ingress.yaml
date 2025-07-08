@@ -8,8 +8,12 @@ config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
-      - "read:image"
+      - "exec:internal-tools"
   service: "csc-versions"
+  delegate:
+    internal:
+      service: "csc-versions"
+      scopes: []
 template:
   metadata:
     name: "csc-versions"
