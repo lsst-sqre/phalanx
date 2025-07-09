@@ -3,11 +3,9 @@ controller:
     logLevel: "DEBUG"
     images:
       source:
-        type: "google"
-        location: "us-central1"
-        projectId: "rubin-shared-services-71ec"
-        repository: "sciplat"
-        image: "sciplat-lab"
+        type: "ghcr"
+        registry: "ghcr.io"
+        repository: "lsstsqure/nublado-controller"
       pin:
         - "w_2025_17"
     lab:
