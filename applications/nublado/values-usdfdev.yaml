@@ -3,7 +3,7 @@ controller:
     logLevel: "DEBUG"
     images:
       source:
-        type: "ghcr"
+        type: "docker"
         registry: "ghcr.io"
         repository: "lsstsqre/nublado-controller"
       pin:
