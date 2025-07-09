@@ -2,10 +2,6 @@ controller:
   config:
     logLevel: "DEBUG"
     images:
-      source:
-        type: "ghcr"
-        registry: "ghcr.io"
-        repository: "lsst-sqre/nublado-controller"
       pin:
         - "w_2025_17"
     lab:
