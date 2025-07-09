@@ -2,10 +2,10 @@ controller:
   config:
     logLevel: "DEBUG"
     images:
-      source:
-        type: "docker"
-        registry: "docker-registry.slac.stanford.edu"
-        repository: "lsstsqre/sciplat-lab"
+#      source:
+#        type: "docker"
+#        registry: "docker-registry.slac.stanford.edu"
+#        repository: "lsstsqre/sciplat-lab"
       pin:
         - "w_2025_17"
     lab:
