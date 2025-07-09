@@ -90,26 +90,7 @@ strimzi-kafka:
       enabled: true
 
 influxdb:
-  image:
-    tag: "1.8.10"
-  persistence:
-    storageClass: rook-ceph-block
-    size: 5Ti
-  ingress:
-    enabled: false
-    hostname: summit-lsp.lsst.codes
-  resources:
-    requests:
-      memory: 128Gi
-      cpu: 16
-    limits:
-      memory: 128Gi
-      cpu: 16
-
-customInfluxDBIngress:
-  enabled: true
-  hostname: summit-lsp.lsst.codes
-  path: "/influxdb-standby(/|$)(.*)"
+  enabled: false
 
 influxdb-enterprise:
   enabled: true
