@@ -5,7 +5,7 @@ controller:
       source:
         type: "ghcr"
         registry: "ghcr.io"
-        repository: "lsstsqure/nublado-controller"
+        repository: "lsstsqre/nublado-controller"
       pin:
         - "w_2025_17"
     lab:
