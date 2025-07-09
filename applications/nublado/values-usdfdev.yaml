@@ -2,6 +2,8 @@ controller:
   config:
     logLevel: "DEBUG"
     images:
+      type: docker
+      repository: sciplat
       pin:
         - "w_2025_17"
     lab:
