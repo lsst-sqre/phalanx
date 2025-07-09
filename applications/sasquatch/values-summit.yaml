@@ -147,7 +147,6 @@ telegraf:
   influxdb:
     urls:
       - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
-      - "http://sasquatch-influxdb.sasquatch:8086"
   kafkaConsumers:
     # Application connectors
     obsenv:
