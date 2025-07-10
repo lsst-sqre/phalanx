@@ -207,6 +207,16 @@ initializer:
   # @default -- See the `values.yaml` file.
   podAnnotations: {}
 
+butler_writer:
+  image:
+    # -- Image to use for the Butler writer service
+    repository: ghcr.io/lsst-dm/prompt_processing_butler_writer
+    # -- Docker container version to use for the Butler writer service
+    tag: tickets-dm-49670
+  # -- Kafka topic that prompt processing output events will be written to,
+  # for consumption by the Butler writer service.
+  kafka_topic: rubin-prompt-processing-butler-output
+
 # -- Override the base name for resources
 nameOverride: ""
 

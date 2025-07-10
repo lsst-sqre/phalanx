@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: butler-writer-{{ include "prompt-keda.fullname" . }}
+spec:
+  replicas: 1
+  template:
+    spec:
+      initContainers:
+        {{ include "prompt-keda.dbauth-initcontainer" . | indent 8}}
+      containers:
+        - name: butler-writer
+          image: "{{ .Values.butler_writer.image.repository }}:{{ .Values.butler_writer.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          env:
+            - name: BUTLER_REPOSITORY
+              value: {{ .Values.instrument.centralRepo }}
+            - name: KAFKA_CLUSTER
+              value: {{ .Values.imageNotifications.kafkaClusterAddress }}
+            - name: KAFKA_TOPIC
+              value: {{ .Values.butler_writer.kafka_topic }}
+            {{ include "prompt-keda.butler-env" . | indent 10}}
+          volumeMounts:
+            {{ include "prompt-keda.butler-volumeMounts" . | indent 12}}
+      volumes:
+        {{ include "prompt-keda.butler-volumes" . | indent 10}}
