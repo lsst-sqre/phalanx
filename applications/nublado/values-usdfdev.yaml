@@ -2,9 +2,12 @@ controller:
   config:
     logLevel: "DEBUG"
     images:
-      type: docker
-      registry: ghcr.io
-      repository: lsst-sqre/sciplat-lab
+      source:
+        type: docker
+        registry: ghcr.io
+        repository: lsst-sqre/sciplat-lab
+      pin:
+        - "w_2024_17"
     lab:
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
