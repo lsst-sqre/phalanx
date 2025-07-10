@@ -207,6 +207,28 @@ prompt-keda:
     # @default -- See the `values.yaml` file.
     podAnnotations: {}
 
+  butler_writer:
+    # -- If false, pipeline outputs will be written directly to the central repo.
+    # If true, a Kafka message will be sent to a service to aggregate these writes instead.
+    # The init job writes directly to the central repo regardless of this setting.
+    enabled: false
+    # -- Address of Kafka broker where prompt processing output events will be
+    # written, for consumption by the Butler writer service.
+    # @default -- None, must be set
+    kafka_cluster: ""
+    # -- Username for Kafka broker where prompt processing output events will be
+    # written, for consumption by the Butler writer service.
+    # @default -- None, must be set
+    kafka_username: ""
+    # -- Kafka topic that prompt processing output events will be written to,
+    # for consumption by the Butler writer service.
+    # @default -- None, must be set
+    kafka_topic: ""
+    # -- Root path where output dataset files will be written when transferring
+    # back to the central repository.
+    # @default -- None, must be set
+    output_file_path: ""
+
   # -- Override the base name for resources
   nameOverride: ""
 
