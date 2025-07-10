@@ -4,8 +4,7 @@ controller:
     images:
       source:
         type: docker
-        registry: ghcr.io
-        repository: lsst-sqre/sciplat-lab
+        repository: "ghcr.io/lsst-sqre/sciplat-lab"
       pin:
         - "w_2024_17"
     lab:
