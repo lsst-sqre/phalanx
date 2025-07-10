@@ -57,6 +57,23 @@ spec:
                 value: {{ .Values.s3.imageBucket }}
               - name: BUCKET_TOPIC
                 value: {{ .Values.imageNotifications.topic }}
+              {{- if .Values.butler_writer.enabled }}
+              - name: USE_KAFKA_BUTLER_WRITER
+                value: "1"
+              - name: BUTLER_WRITER_KAFKA_CLUSTER
+                value: {{ .Values.butler_writer.kafka_cluster }}
+              - name: BUTLER_WRITER_KAFKA_USERNAME
+                value: {{ .Values.butler_writer.kafka_username }}
+              - name: BUTLER_WRITER_KAFKA_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ template "prompt-keda.fullname" . }}-secret
+                    key: butler-writer-password
+              - name: BUTLER_WRITER_KAFKA_TOPIC
+                value: {{ .Values.butler_writer.kafka_topic }}
+              - name: BUTLER_WRITER_FILE_OUTPUT_PATH
+                value: {{ .Values.butler_writer.output_file_path }}
+              {{- end}}
               - name: BUCKET_NOTIFICATION_KAFKA_OFFSET_RESET
                 value: {{ .Values.imageNotifications.consumerOffsetReset }}
               - name: IMAGE_TIMEOUT
