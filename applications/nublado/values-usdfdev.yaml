@@ -3,9 +3,8 @@ controller:
     logLevel: "DEBUG"
     images:
       type: docker
-      repository: sciplat
-      pin:
-        - "w_2025_17"
+      registry: ghcr.io/lsst-sqre/sciplat-lab
+      repository: lsst-sqre
     lab:
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
