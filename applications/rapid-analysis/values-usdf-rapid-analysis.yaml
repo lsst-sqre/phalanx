@@ -104,7 +104,7 @@ credentialSecretsPath: rubintv-broadcaster
 butlerSecret:
   key: butler-secret
   containerPath: /secrets
-  dbUser: rubin
+  dbUser: rapid_analysis
 envSecrets:
 - name: ASTROMETRY_NET_API_KEY
   secretName: rubintv-secrets
