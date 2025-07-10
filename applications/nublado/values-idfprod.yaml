@@ -13,6 +13,17 @@ controller:
         cutoffVersion: "28.0.0"
       experimental:
         age: "3w"
+    fileserver:
+      enabled: true
+      nodeSelector:
+        node_pool: "user-lab-pool"
+      tolerations:
+        - key: "nublado.lsst.io/permitted"
+          operator: "Exists"
+          effect: "NoExecute"
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
     images:
       source:
         type: "google"
