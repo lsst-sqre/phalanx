@@ -94,23 +94,21 @@ config:
 
     <Lede>Integrate Rubin data into your analysis tools with APIs.</Lede>
 
-    To access most APIs you need an [*access token*](/auth/tokens).
-    See our guide [Creating user tokens](https://rsp.lsst.io/guides/auth/creating-user-tokens.html) to learn more.
+    To access APIs you need an [*access token*](/auth/tokens).
+    See our guide [Creating user tokens](https://rsp.lsst.io/guides/auth/creating-user-tokens.html) to learn how to create tokens and use them in VO clients.
 
-    ## Table Access Protocol
+    ## API endpoints
 
-    You can access catalog data using the Table Access Protocol (TAP)
-    service with popular tools such as
-    [TOPCAT](http://www.star.bris.ac.uk/~mbt/topcat) (GUI) and
-    [pyvo](https://pyvo.readthedocs.io/en/latest/index.html)
-    (Python package). The TAP endpoint is:
+    - DP1 [HiPS](https://www.ivoa.net/documents/HiPS) (Hierarchical Progressive Survey): `https://data.lsst.cloud/api/hips/v2/dp1/list`
+    - DP1 [SIA](https://www.ivoa.net/documents/SIA/) (Simple Image Access) (v2): `https://data.lsst.cloud/api/dp02/query`
+    - [ObsTAP](https://www.ivoa.net/documents/TAP/) (includes [ObsCore](https://www.ivoa.net/documents/ObsCore/)): `https://data.lsst.cloud/api/tap`
+    - [SODA](https://www.ivoa.net/documents/SODA/20170517/REC-SODA-1.0.html) Cutout: `https://data.lsst.cloud/api/cutout/`
+    - SSO (Solar system objects) [TAP](https://www.ivoa.net/documents/TAP/): `https://data.lsst.cloud/api/ssotap`
 
-    ```
-    https://data.lsst.cloud/api/tap
-    ```
+    ### Additional DP0.2-specific endpoints
 
-    See our tutorial [Authenticating from TOPCat outside the Science Platform](https://rsp.lsst.io/guides/auth/using-topcat-outside-rsp.html)
-    to learn more about accessing TAP datasets from your own computer.
+    - DP0.2 [HiPS](https://www.ivoa.net/documents/HiPS) (Hierarchical Progressive Survey): `https://data.lsst.cloud/api/hips/v2/dp02/list`
+    - DP0.2 [SIA](https://www.ivoa.net/documents/SIA/) (Simple Image Access) (v2): `https://data.lsst.cloud/api/dp02/query`
 
     ## Documentation
 
