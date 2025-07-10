@@ -101,7 +101,7 @@ config:
 
     - DP1 [HiPS](https://www.ivoa.net/documents/HiPS) (Hierarchical Progressive Survey): `https://data.lsst.cloud/api/hips/v2/dp1/list`
     - DP1 [SIA](https://www.ivoa.net/documents/SIA/) (Simple Image Access) (v2): `https://data.lsst.cloud/api/dp02/query`
-    - [ObsTAP](https://www.ivoa.net/documents/TAP/) (includes [ObsCore](https://www.ivoa.net/documents/ObsCore/)): `https://data.lsst.cloud/api/tap`
+    - [ObsTAP](https://www.ivoa.net/documents/TAP/): `https://data.lsst.cloud/api/tap`
     - [SODA](https://www.ivoa.net/documents/SODA/20170517/REC-SODA-1.0.html) Cutout: `https://data.lsst.cloud/api/cutout/`
     - SSO (Solar system objects) [TAP](https://www.ivoa.net/documents/TAP/): `https://data.lsst.cloud/api/ssotap`
 
