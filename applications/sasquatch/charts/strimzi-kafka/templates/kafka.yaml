@@ -148,15 +148,6 @@ spec:
           annotations:
             argocd.argoproj.io/compare-options: IgnoreExtraneous
             argocd.argoproj.io/sync-options: Prune=false
-      pod:
-        {{- with .Values.kafka.affinity }}
-        affinity:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
-        {{- with .Values.kafka.tolerations }}
-        tolerations:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
     version: {{ .Values.kafka.version | quote }}
     listeners:
     {{- if .Values.kafka.listeners.plain.enabled }}
