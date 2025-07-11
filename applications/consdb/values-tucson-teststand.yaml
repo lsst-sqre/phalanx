@@ -20,7 +20,7 @@ hinfo:
 
 pq:
   image:
-    tag: "25.3.2"
+    tag: "25.7.1"
 
 resources:
   requests:
