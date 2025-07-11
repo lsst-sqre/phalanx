@@ -22,6 +22,11 @@ spec:
       {{- end}}
       deleteClaim: false
   template:
+    persistentVolumeClaim:
+      metadata:
+        annotations:
+          argocd.argoproj.io/compare-options: IgnoreExtraneous
+          argocd.argoproj.io/sync-options: Prune=false
     pod:
       {{- with .Values.controller.affinity }}
       affinity:
@@ -61,6 +66,11 @@ spec:
       {{- end}}
       deleteClaim: false
   template:
+    persistentVolumeClaim:
+      metadata:
+        annotations:
+          argocd.argoproj.io/compare-options: IgnoreExtraneous
+          argocd.argoproj.io/sync-options: Prune=false
     pod:
       {{- with .Values.broker.affinity }}
       affinity:
@@ -142,12 +152,6 @@ metadata:
     strimzi.io/node-pools: enabled
 spec:
   kafka:
-    template:
-      persistentVolumeClaim:
-        metadata:
-          annotations:
-            argocd.argoproj.io/compare-options: IgnoreExtraneous
-            argocd.argoproj.io/sync-options: Prune=false
     version: {{ .Values.kafka.version | quote }}
     listeners:
     {{- if .Values.kafka.listeners.plain.enabled }}
