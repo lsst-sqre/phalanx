@@ -22,5 +22,12 @@ spec:
             {{ include "prompt-keda.butler-env" . | indent 10}}
           volumeMounts:
             {{ include "prompt-keda.butler-volumeMounts" . | indent 12}}
+          resources:
+            requests:
+              cpu: {{ .Values.butler_writer.resources.cpuRequest | toString | quote}}
+              memory: {{ .Values.butler_writer.resources.memoryRequest }}
+            limits:
+              cpu: {{ .Values.butler_writer.resources.cpuLimit | toString | quote}}
+              memory: {{ .Values.butler_writer.resources.memoryLimit }}
       volumes:
         {{ include "prompt-keda.butler-volumes" . | indent 10}}

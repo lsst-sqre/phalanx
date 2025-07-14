@@ -216,6 +216,15 @@ butler_writer:
   # -- Kafka topic that prompt processing output events will be written to,
   # for consumption by the Butler writer service.
   kafka_topic: rubin-prompt-processing-butler-output
+  resources:
+    # -- The cpu cores requested for the Butler writer service.
+    cpuRequest: 0.25
+    # -- The maximum cpu cores for the Butler writer service.
+    cpuLimit: 1
+    # -- The minimum memory to request for the Butler writer service.
+    memoryRequest: "2Gi"
+    # -- The maximum memory limit for the Butler writer service.
+    memoryLimit: "4Gi"
 
 # -- Override the base name for resources
 nameOverride: ""

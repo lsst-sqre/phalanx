@@ -21,6 +21,10 @@ Event-driven processing of camera images
 | butler_writer.image.repository | string | `"ghcr.io/lsst-dm/prompt_processing_butler_writer"` | Image to use for the Butler writer service |
 | butler_writer.image.tag | string | `"tickets-dm-49670"` | Docker container version to use for the Butler writer service |
 | butler_writer.kafka_topic | string | `"rubin-prompt-processing-butler-output"` | Kafka topic that prompt processing output events will be written to, for consumption by the Butler writer service. |
+| butler_writer.resources.cpuLimit | int | `1` | The maximum cpu cores for the Butler writer service. |
+| butler_writer.resources.cpuRequest | float | `0.25` | The cpu cores requested for the Butler writer service. |
+| butler_writer.resources.memoryLimit | string | `"4Gi"` | The maximum memory limit for the Butler writer service. |
+| butler_writer.resources.memoryRequest | string | `"2Gi"` | The minimum memory to request for the Butler writer service. |
 | cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
 | cache.patchesPerImage | int | `4` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
 | cache.refcatsPerImage | int | `4` | A factor by which to multiply `baseSize` for refcat datasets. |
