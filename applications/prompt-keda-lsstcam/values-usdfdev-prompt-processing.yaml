@@ -51,3 +51,6 @@ prompt-keda:
     redisStreams:
       # Dev processes very old images, set to ~20 years
       expiration: 600_000_000.0
+
+  butler_writer:
+    output_file_path: s3://rubin-pp-dev-users/central_repo_2

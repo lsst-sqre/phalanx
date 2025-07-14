@@ -220,6 +220,9 @@ butler_writer:
   # -- Kafka topic that prompt processing output events will be written to,
   # for consumption by the Butler writer service.
   kafka_topic: rubin-prompt-processing-butler-output
+  # -- Root path where output dataset files will be written when transferring
+  # back to the central repository.  Only used if butler_writer.enable is true.
+  output_file_path: ""
   resources:
     # -- The cpu cores requested for the Butler writer service.
     cpuRequest: 0.25

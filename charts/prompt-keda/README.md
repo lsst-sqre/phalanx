@@ -22,6 +22,7 @@ Event-driven processing of camera images
 | butler_writer.image.repository | string | `"ghcr.io/lsst-dm/prompt_processing_butler_writer"` | Image to use for the Butler writer service |
 | butler_writer.image.tag | string | `"tickets-dm-49670"` | Docker container version to use for the Butler writer service |
 | butler_writer.kafka_topic | string | `"rubin-prompt-processing-butler-output"` | Kafka topic that prompt processing output events will be written to, for consumption by the Butler writer service. |
+| butler_writer.output_file_path | string | `""` | Root path where output dataset files will be written when transferring back to the central repository.  Only used if butler_writer.enable is true. |
 | butler_writer.resources.cpuLimit | int | `1` | The maximum cpu cores for the Butler writer service. |
 | butler_writer.resources.cpuRequest | float | `0.25` | The cpu cores requested for the Butler writer service. |
 | butler_writer.resources.memoryLimit | string | `"4Gi"` | The maximum memory limit for the Butler writer service. |

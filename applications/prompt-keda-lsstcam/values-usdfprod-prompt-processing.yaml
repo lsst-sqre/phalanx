@@ -119,6 +119,9 @@ prompt-keda:
       edu.stanford.slac.sdf.project/usdf-embargo: "true"
     }
 
+  butler_writer:
+    output_file_path: "s3://embargo@rubin-summit-users"
+
   podAnnotations: {
     edu.stanford.slac.sdf.project/usdf-embargo: "true"
   }
