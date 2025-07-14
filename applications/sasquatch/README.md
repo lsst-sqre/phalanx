@@ -86,7 +86,7 @@ Rubin Observatory's telemetry service
 | kapacitor.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
 | kapacitor.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Kapacitor |
 | kapacitor.image.repository | string | `"docker.io/library/kapacitor"` | Docker image to use for Kapacitor |
-| kapacitor.image.tag | string | `"1.7.7"` | Tag to use for Kapacitor |
+| kapacitor.image.tag | string | `"1.8.0"` | Tag to use for Kapacitor |
 | kapacitor.influxURL | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB connection URL |
 | kapacitor.persistence.enabled | bool | `true` | Whether to enable Kapacitor data persistence |
 | kapacitor.persistence.size | string | `"100Gi"` | Size of storage to request if enabled |
