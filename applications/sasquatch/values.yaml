@@ -257,7 +257,7 @@ kapacitor:
     # -- Docker image to use for Kapacitor
     repository: docker.io/library/kapacitor
     # -- Tag to use for Kapacitor
-    tag: 1.7.7
+    tag: 1.8.0
     # -- Pull policy for Kapacitor
     pullPolicy: "IfNotPresent"
 
