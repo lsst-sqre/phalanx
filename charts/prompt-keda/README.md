@@ -18,6 +18,7 @@ Event-driven processing of camera images
 | alerts.topic | string | `""` | Topic name where alerts will be sent |
 | alerts.username | string | `""` | Username for sending alerts to the alert stream |
 | apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
+| butler_writer.enabled | bool | `false` | If false, output datasets will be written directly to the central Butler database.  If true, a Kafka message will be sent to a service to aggregate these writes instead. |
 | butler_writer.image.repository | string | `"ghcr.io/lsst-dm/prompt_processing_butler_writer"` | Image to use for the Butler writer service |
 | butler_writer.image.tag | string | `"tickets-dm-49670"` | Docker container version to use for the Butler writer service |
 | butler_writer.kafka_topic | string | `"rubin-prompt-processing-butler-output"` | Kafka topic that prompt processing output events will be written to, for consumption by the Butler writer service. |

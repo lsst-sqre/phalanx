@@ -208,6 +208,10 @@ initializer:
   podAnnotations: {}
 
 butler_writer:
+  # -- If false, output datasets will be written directly to the central
+  # Butler database.  If true, a Kafka message will be sent to a service
+  # to aggregate these writes instead.
+  enabled: false
   image:
     # -- Image to use for the Butler writer service
     repository: ghcr.io/lsst-dm/prompt_processing_butler_writer
