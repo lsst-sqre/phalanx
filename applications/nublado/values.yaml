@@ -186,6 +186,7 @@ controller:
       # @default -- See `values.yaml`
       env:
         API_ROUTE: "/api"
+        ARROW_DEFAULT_MEMORY_POOL: "jemalloc"  # Arrow >17 memory leak hack
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
         FIREFLY_ROUTE: "/portal/app"
         HUB_ROUTE: "/nb/hub"
