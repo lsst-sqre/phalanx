@@ -1,4 +1,4 @@
-# This is a separate documentation build just to check links.  We don't check
+# This is a separate documentation build just to check links. We don't check
 # links as part of the normal documentation build since, unlike Sphinx errors
 # and warnings, we don't want broken links to block a merge. (Sometimes they
 # will be fixed by the same merge, sometimes they're temporary rate limit
@@ -22,7 +22,7 @@ env:
     branches-ignore:
       # These should always correspond to pull requests, so ignore them for
       # the push trigger and let them be triggered by the pull_request
-      # trigger, avoiding running the workflow twice.  This is a minor
+      # trigger, avoiding running the workflow twice. This is a minor
       # optimization so there's no need to ensure this is comprehensive.
       - "dependabot/**"
       - "gh-readonly-queue/**"
@@ -32,11 +32,10 @@ env:
     tags:
       - "*"
     paths:
+      # Only check links on changes that are likely to include links that
+      # might break with the change. Rely on the weekly check to pick up other
+      # bad links.
       - "docs/**"
-      - "applications/*/Chart.yaml"
-      - "applications/*/values.yaml"
-      - "applications/gafaelfawr/values-*.yaml"
-      - "environments/values-*.yaml"
   schedule:
     - cron: "0 12 * * 1"
   workflow_dispatch: {}
@@ -44,6 +43,9 @@ env:
 jobs:
   linkcheck:
     runs-on: ubuntu-latest
+
+    # Takes about 35m to run with rate limiting from GitHub as of 2025-07-14.
+    timeout-minutes: 60
 
     steps:
       - name: Checkout
