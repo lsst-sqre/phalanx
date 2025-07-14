@@ -44,8 +44,10 @@ strimzi-kafka:
     enabled: true
 
 influxdb:
-  livenessProbe:
-    initialDelaySeconds: 360
+  startupProbe:
+    enabled: true
+    failureThreshold: 12
+    periodSeconds: 300
   ingress:
     enabled: false
     hostname: usdf-rsp-dev.slac.stanford.edu
