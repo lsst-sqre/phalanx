@@ -8,7 +8,7 @@ spec:
   template:
     spec:
       initContainers:
-        {{ include "prompt-keda.dbauth-initcontainer" . | indent 8}}
+        {{- include "prompt-keda.dbauth-initcontainer" . | nindent 8}}
       containers:
         - name: butler-writer
           image: "{{ .Values.butler_writer.image.repository }}:{{ .Values.butler_writer.image.tag }}"
@@ -22,9 +22,9 @@ spec:
               value: {{ .Values.butler_writer.kafka_topic }}
             - name: FILE_STAGING_ROOT_PATH
               value: {{ .Values.butler_writer.output_file_path }}
-            {{ include "prompt-keda.butler-env" . | indent 10}}
+            {{- include "prompt-keda.butler-env" . | nindent 8}}
           volumeMounts:
-            {{ include "prompt-keda.butler-volumeMounts" . | indent 12}}
+            {{- include "prompt-keda.butler-volumeMounts" . | nindent 12}}
           resources:
             requests:
               cpu: {{ .Values.butler_writer.resources.cpuRequest | toString | quote}}
@@ -33,5 +33,5 @@ spec:
               cpu: {{ .Values.butler_writer.resources.cpuLimit | toString | quote}}
               memory: {{ .Values.butler_writer.resources.memoryLimit }}
       volumes:
-        {{ include "prompt-keda.butler-volumes" . | indent 10}}
+        {{- include "prompt-keda.butler-volumes" . | nindent 10}}
 {{- end }}
