@@ -57,7 +57,13 @@ influxdb:
   config:
     coordinator:
       query-timeout: 300s
-
+  resources:
+    requests:
+      memory: 96Gi
+      cpu: 8
+    limits:
+      memory: 96Gi
+      cpu: 8
 
 customInfluxDBIngress:
   enabled: true
