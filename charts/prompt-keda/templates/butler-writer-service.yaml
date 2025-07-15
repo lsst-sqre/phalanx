@@ -20,6 +20,8 @@ spec:
               value: {{ .Values.imageNotifications.kafkaClusterAddress }}
             - name: KAFKA_TOPIC
               value: {{ .Values.butler_writer.kafka_topic }}
+            - name: FILE_STAGING_ROOT_PATH
+              value: {{ .Values.butler_writer.output_file_path }}
             {{ include "prompt-keda.butler-env" . | indent 10}}
           volumeMounts:
             {{ include "prompt-keda.butler-volumeMounts" . | indent 12}}
