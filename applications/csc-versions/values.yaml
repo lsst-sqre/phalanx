@@ -10,11 +10,11 @@ image:
   repository: "ghcr.io/lsst-ts/cscv"
 
   # -- Pull policy for the csc-versions image
-  pullPolicy: "IfNotPresent"
+  pullPolicy: "Always"
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
-  tag: "v0.2.1"
+  tag: "v0.2.2"
 
 config:
   # -- Logging level
