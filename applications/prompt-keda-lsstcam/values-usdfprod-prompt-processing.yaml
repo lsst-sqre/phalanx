@@ -101,6 +101,9 @@ prompt-keda:
     namespace: lsst.prompt.prod
     auth_env: false
 
+  debug:
+    monitorDaxApdb: true
+
   keda:
     minReplicaCount: 3
     maxReplicaCount: 1700
