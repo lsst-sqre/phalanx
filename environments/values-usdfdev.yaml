@@ -46,3 +46,6 @@ applications:
   tap: true
   tasso: true
   times-square: true
+
+revisions:
+  strimzi: strimzi-0.45.0
