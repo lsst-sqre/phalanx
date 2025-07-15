@@ -163,6 +163,10 @@ spec:
                 value: {{ .Values.cache.patchesPerImage | toString | quote }}
               - name: DEBUG_EXPORT_OUTPUTS
                 value: {{ if .Values.debug.exportOutputs }}'1'{{ else }}'0'{{ end }}
+              {{- if .Values.debug.monitorDaxApdb }}
+              - name: DAX_APDB_MONITOR_CONFIG
+                value: 'logging:lsst.dax.apdb.monitor'
+              {{- end }}
               - name: REDIS_STREAM_HOST
                 value: {{ .Values.keda.redisStreams.host}}
               - name: REDIS_STREAM_NAME
