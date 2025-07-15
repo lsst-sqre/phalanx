@@ -204,6 +204,13 @@ prompt-keda:
   # -- Override the full name for resources (includes the release name)
   fullnameOverride: "prompt-keda-lsstcomcam"
 
+  debug:
+    # -- Whether or not pipeline outputs should be exported to the central repo.
+    # This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination.
+    exportOutputs: true
+    # -- Whether `dax_apdb` should run in debug mode and log metrics.
+    monitorDaxApdb: false
+
   # -- Kubernetes resource requests and limits
   # @default -- See `values.yaml`
   resources:

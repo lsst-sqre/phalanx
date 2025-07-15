@@ -22,6 +22,7 @@ KEDA Prompt Processing instance for HSC
 | prompt-keda.cache.patchesPerImage | int | `6` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
 | prompt-keda.cache.refcatsPerImage | int | `4` | A factor by which to multiply `baseSize` for refcat datasets. |
 | prompt-keda.debug.exportOutputs | bool | `true` | Whether or not pipeline outputs should be exported to the central repo. This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination. |
+| prompt-keda.debug.monitorDaxApdb | bool | `false` | Whether `dax_apdb` should run in debug mode and log metrics. |
 | prompt-keda.fullnameOverride | string | `"prompt-keda-hsc"` | Override the full name for resources (includes the release name) |
 | prompt-keda.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | prompt-keda.image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
