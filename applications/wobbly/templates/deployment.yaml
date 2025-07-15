@@ -31,6 +31,11 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+            # Uvicorn keepalive timeout, in seconds. This should be longer than
+            # any keepalive timeouts on any downstream proxies. The keepalive
+            # timeout for ingress-nginx connections is 60s.
+            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
+              value: "61"
             - name: "WOBBLY_DATABASE_PASSWORD"
               valueFrom:
                 secretKeyRef:
