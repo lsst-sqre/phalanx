@@ -19,7 +19,7 @@ spec:
       {{- end }}
       spec:
         initContainers:
-          {{ include "prompt-keda.dbauth-initcontainer" . | indent 10}}
+          {{- include "prompt-keda.dbauth-initcontainer" . | nindent 10}}
         restartPolicy: Never
         containers:
           - name: {{ include "prompt-keda.fullname" . | trimPrefix "prompt-keda-" }}
@@ -105,7 +105,7 @@ spec:
               {{- end }}
               - name: DAF_BUTLER_SASQUATCH_NAMESPACE
                 value: {{ .Values.sasquatch.namespace }}
-              {{ include "prompt-keda.butler-env" . | indent 12}}
+              {{- include "prompt-keda.butler-env" . | nindent 14}}
               - name: AP_KAFKA_PRODUCER_PASSWORD
                 valueFrom:
                   secretKeyRef:
@@ -146,7 +146,7 @@ spec:
             volumeMounts:
               - mountPath: /tmp-butler
                 name: ephemeral
-              {{ include "prompt-keda.butler-volumeMounts" . | indent 14}}
+              {{- include "prompt-keda.butler-volumeMounts" . | nindent 14}}
               {{- if .Values.registry.centralRepoFile }}
               - mountPath: {{ .Values.instrument.centralRepo }}
                 name: central-repo-file
@@ -166,7 +166,7 @@ spec:
           - name: ephemeral
             emptyDir:
               sizeLimit: {{ .Values.keda.ephemeralStorageLimit }}
-          {{ include "prompt-keda.butler-volumes" . | indent 10}}
+          {{- include "prompt-keda.butler-volumes" . | nindent 10}}
           {{- if .Values.registry.centralRepoFile }}
           - name: central-repo-file
             secret:

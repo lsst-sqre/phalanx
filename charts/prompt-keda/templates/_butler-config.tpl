@@ -8,22 +8,22 @@ butler-writer-service.yaml
 */}}
 {{- define "prompt-keda.dbauth-initcontainer" -}}
 - name: init-db-auth
-# Make a copy of the read-only secret that's owned by lsst
-# lsst account is created by main image with id 1000
-image: busybox
-imagePullPolicy: IfNotPresent
-command:
+  # Make a copy of the read-only secret that's owned by lsst
+  # lsst account is created by main image with id 1000
+  image: busybox
+  imagePullPolicy: IfNotPresent
+  command:
     [
     "sh",
     "-c",
     "cp -L /app/db-auth-mount/db-auth.yaml /app/dbauth/ && chown 1000:1000 /app/dbauth/db-auth.yaml && chmod u=r,go-rwx /app/dbauth/db-auth.yaml",
     ]
-volumeMounts:
+  volumeMounts:
     - mountPath: /app/db-auth-mount
-    name: db-auth-mount
-    readOnly: true
+      name: db-auth-mount
+      readOnly: true
     - mountPath: /app/dbauth
-    name: db-auth-credentials-file
+      name: db-auth-credentials-file
 {{- end }}
 
 {{/* Environment variables used to configure the Butler */}}
@@ -63,13 +63,13 @@ volumeMounts:
 
 {{/* volumeMounts containing credential files used by the Butler */}}
 {{- define "prompt-keda.butler-volumeMounts" -}}
- - mountPath: /app/lsst-credentials
-   name: db-auth-credentials-file
-   readOnly: true
- {{- if .Values.s3.cred_file_auth }}
- - mountPath: /app/s3/
-   name: s3-credentials-file
- {{- end }}
+- mountPath: /app/lsst-credentials
+  name: db-auth-credentials-file
+  readOnly: true
+{{- if .Values.s3.cred_file_auth }}
+- mountPath: /app/s3/
+  name: s3-credentials-file
+{{- end }}
 {{- end }}
 
 {{/* volumes containing credential files used by the Butler */}}
