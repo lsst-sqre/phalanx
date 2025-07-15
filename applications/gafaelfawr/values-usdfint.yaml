@@ -25,12 +25,12 @@ config:
     usernameClaim: "name"
 
   ldap:
-    url: ldaps://ldap-unix.slac.stanford.edu:636
-    groupBaseDn: ou=Group,dc=slac,dc=stanford,dc=edu
+    url: ldaps://sdfldap001.sdf.slac.stanford.edu:636
+    groupBaseDn: ou=Group,dc=sdf,dc=slac,dc=stanford,dc=edu
     groupObjectClass: posixGroup
     groupMemberAttr: memberUid
     groupSearchByDn: false
-    userBaseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
+    userBaseDn: ou=People,dc=sdf,dc=slac,dc=stanford,dc=edu
     userSearchAttr: uid
     addUserGroup: false
     uidAttr: uidNumber
