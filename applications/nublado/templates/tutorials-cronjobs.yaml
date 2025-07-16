@@ -112,7 +112,7 @@ spec:
               value: {{ .Values.cronjob.artifacts.gitBranch | quote }}
             volumeMounts:
             - mountPath: {{ .Values.cronjob.artifacts.targetVolume.mountPath | quote }}
-              name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
+              name: {{ .Values.cronjob.artifacts.targetVolume.volumeName | quote }}
           # We need to extend this for PVCs too
           volumes:
           {{- range .Values.controller.config.lab.volumes }}
