@@ -83,7 +83,7 @@ grafana:
   # docs](https://gafaelfawr.lsst.io/user-guide/gafaelfawringress.html#config-section)
   gafaelfawrScopes:
     all:
-      - "exec:admin"
+      - "exec:internal-tools"
 
   # -- Config for the Grafana CRD spec.
   # [Docs](https://grafana.github.io/grafana-operator/docs/api/#grafanaspec)
