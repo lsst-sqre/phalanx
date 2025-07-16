@@ -93,6 +93,9 @@ dependencies:
   - name: data-transfer-monitoring
     condition: data-transfer-monitoring.enabled
     version: 1.0.0
+  - name: grafana
+    condition: grafana.enabled
+    version: 1.0.0
 
 annotations:
   phalanx.lsst.io/docs: |
