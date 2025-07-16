@@ -21,7 +21,7 @@ spec:
               - -d
               - "10"
               - "0"
-              - "--post"
+              - "--publish"
               envFrom:
               - configMapRef:
                   name: sasquatch-backpack
