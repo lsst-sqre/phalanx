@@ -10,7 +10,7 @@ Run InfluxDB Enterprise on Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
+| bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `influxdb-user` and `influxdb-password`. |
 | bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
 | data.affinity | object | See `values.yaml` | Affinity rules for data pods |
