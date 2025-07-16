@@ -13,9 +13,9 @@ applications:
   prompt-keda-hsc: true
   prompt-keda-latiss: true
   prompt-keda-lsstcam: true
-  prompt-keda-lsstcamimsim: true
-  prompt-keda-lsstcomcam: true
-  prompt-keda-lsstcomcamsim: true
+  prompt-keda-lsstcamimsim: false
+  prompt-keda-lsstcomcam: false
+  prompt-keda-lsstcomcamsim: false
   prompt-redis: true
   strimzi: true
   vault-secrets-operator: false
