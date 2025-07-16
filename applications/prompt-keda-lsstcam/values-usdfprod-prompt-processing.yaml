@@ -80,6 +80,8 @@ prompt-keda:
   # TODO: replace with permanent service once it's up
   mpSky_service: http://sdfiana014.sdf.slac.stanford.edu:3666/ephemerides/
 
+  iers_cache: s3://rubin-summit-users/iers-cache.zip
+
   imageNotifications:
     kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
     topic: rubin-summit-notification
