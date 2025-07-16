@@ -716,10 +716,6 @@ purger:
   # -- Annotations for the purger pod
   podAnnotations: {}
 
-  # -- Whether to enable Slack alerts. If set to true, `slack_webhook` must be
-  # set in the corresponding purger Vault secret.
-  slackAlerts: false
-
   # -- Tolerations for purger
   tolerations: []
 
@@ -839,14 +835,12 @@ cronjob:
     # -- Repository volume definition
     # @default -- See `values.yaml`
     targetVolume:
+      # -- Name of volume to mount (from controller.lab.config.volumes)
+      # @default -- None, must be set for each environment
+      volumeName: null
+
       # -- Where volume will be mounted in the container
       mountPath: "/rubin"   # Conventional
-
-      # -- IP address of NFS server (different per environment)
-      server: null            # This must be changed
-
-      # -- Path on NFS server
-      path: "/rubin-share"  # Assigned by Terraform
 
     # -- Schedule for the cloning cronjob(s).
     schedule: "43 * * * *"

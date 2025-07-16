@@ -104,8 +104,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cronjob.artifacts.schedule | string | `"43 * * * *"` | Schedule for the cloning cronjob(s). |
 | cronjob.artifacts.targetVolume | object | See `values.yaml` | Repository volume definition |
 | cronjob.artifacts.targetVolume.mountPath | string | `"/rubin"` | Where volume will be mounted in the container |
-| cronjob.artifacts.targetVolume.path | string | `"/rubin-share"` | Path on NFS server |
-| cronjob.artifacts.targetVolume.server | string | `nil` | IP address of NFS server (different per environment) |
+| cronjob.artifacts.targetVolume.volumeName | string | None, must be set for each environment | Name of volume to mount (from controller.lab.config.volumes) |
 | cronjob.artifacts.targetVolumePath | string | `"/rubin"` | Where repository volume should be mounted |
 | cronjob.artifacts.uid | int | `1000` | UID for the cloning cronjob(s) |
 | cronjob.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the repo cloner image |
@@ -181,7 +180,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | purger.policy.directories[0].threshold | string | `"1GiB"` | Files this large or larger will be subject to the "large" interval set |
 | purger.resources | object | See `values.yaml` | Resource limits and requests for the filesystem purger |
 | purger.schedule | string | `"05 03 * * *"` | Crontab entry for when to run. |
-| purger.slackAlerts | bool | `false` | Whether to enable Slack alerts. If set to true, `slack_webhook` must be set in the corresponding purger Vault secret. |
 | purger.tolerations | list | `[]` | Tolerations for purger |
 | purger.volumeName | string | None, must be set for each environment | Name of volume to purge (from controller.lab.config.volumes) |
 | secrets.templateSecrets | bool | `true` | Whether to use the new secrets management mechanism. If enabled, the Vault nublado secret will be split into a nublado secret for JupyterHub and a nublado-lab-secret secret used as a source for secret values for the user's lab. |
