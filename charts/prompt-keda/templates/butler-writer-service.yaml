@@ -28,6 +28,13 @@ spec:
               value: {{ .Values.imageNotifications.kafkaClusterAddress }}
             - name: KAFKA_TOPIC
               value: {{ .Values.butler_writer.kafka_topic }}
+            - name: KAFKA_USERNAME
+              value: {{ .Values.butler_writer.kafka_username }}
+            - name: KAFKA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "prompt-keda.fullname" . }}-secret
+                  key: prompt-kafka
             - name: FILE_STAGING_ROOT_PATH
               value: {{ .Values.butler_writer.output_file_path }}
             {{- include "prompt-keda.butler-env" . | nindent 8}}

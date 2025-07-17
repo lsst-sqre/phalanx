@@ -217,9 +217,16 @@ butler_writer:
     repository: ghcr.io/lsst-dm/prompt_processing_butler_writer
     # -- Docker container version to use for the Butler writer service
     tag: tickets-dm-49670
+
+  # -- Address of Kafka broker where prompt processing output events will be
+  # written, for consumption by the Butler writer service.
+  kafka_cluster: ""
+  # -- Username for Kafka broker where prompt processing output events will be
+  # written, for consumption by the Butler writer service.
+  kafka_username: ""
   # -- Kafka topic that prompt processing output events will be written to,
   # for consumption by the Butler writer service.
-  kafka_topic: rubin-prompt-processing-butler-output
+  kafka_topic: ""
   # -- Root path where output dataset files will be written when transferring
   # back to the central repository.  Only used if butler_writer.enable is true.
   output_file_path: ""
