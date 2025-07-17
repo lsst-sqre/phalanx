@@ -19,6 +19,10 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "square"
+    "admin:userinfo":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "exec:admin":
       - github:
           organization: "lsst-sqre"

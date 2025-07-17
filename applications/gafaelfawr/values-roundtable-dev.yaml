@@ -25,6 +25,10 @@ config:
       Can query Checkerboard for user mappings
 
   groupMapping:
+    "admin:userinfo":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "exec:admin":
       - github:
           organization: "lsst-sqre"

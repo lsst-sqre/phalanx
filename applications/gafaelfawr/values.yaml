@@ -274,6 +274,8 @@ config:
       Can create and destroy labs for any user
     "admin:token": >-
       Can create and modify tokens for any user
+    "admin:userinfo": >-
+      Can see user information for any user
     "exec:admin": >-
       Administrative access to all APIs
     "exec:internal-tools": >-
