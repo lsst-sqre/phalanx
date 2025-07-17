@@ -12,7 +12,6 @@ Argo CD project: ``rsp``
    butler/index
    consdbtap/index
    datalinker/index
-   fspurger/index
    hips/index
    hoverdrive/index
    jira-data-proxy/index
