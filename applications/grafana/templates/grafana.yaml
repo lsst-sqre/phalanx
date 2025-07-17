@@ -85,3 +85,5 @@ spec:
       enable_login_token: "false"
     log:
       level: {{ .Values.grafana.config.log.level | quote }}
+    users:
+      {{ .Values.grafana.config.users | toYaml | nindent 6 }}
