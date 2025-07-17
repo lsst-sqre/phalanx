@@ -45,6 +45,11 @@ config:
   # User quota settings for services.
   quota:
     default:
+      api:
+        hips: 1000
+        sia: 1000
+        tap: 3000
+        vo-cutouts: 500
       notebook:
         cpu: 4.0
         memory: 16
