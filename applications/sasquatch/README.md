@@ -43,6 +43,7 @@ Rubin Observatory's telemetry service
 | customInfluxDBIngress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
 | customInfluxDBIngress.path | string | `"/influxdb(/\|$)(.*)"` | Path for the ingress |
 | data-transfer-monitoring.enabled | bool | `false` | Whether to enable the data-transfer-monitoring subchart |
+| grafana.enabled | bool | `false` | Whether to enable the grafana subchart |
 | influxdb-enterprise-active.enabled | bool | `false` | Whether to enable influxdb-enterprise-active |
 | influxdb-enterprise-standby.enabled | bool | `false` | Whether to enable influxdb-enterprise-standby |
 | influxdb-enterprise.enabled | bool | `false` | Whether to enable influxdb-enterprise |
@@ -143,7 +144,9 @@ Rubin Observatory's telemetry service
 | control-system.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | control-system.topics | list | `[]` | Create lsst.s3.* related topics for the ts-salkafka user. |
 | data-transfer-monitoring.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
-| influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
+| grafana.influxdb.databases | list | `[]` | Databases in InfluxDB exposed to Grafana. |
+| grafana.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL for the InfluxDB instance used by Grafana. |
+| influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `influxdb-user` and `influxdb-password`. |
 | influxdb-enterprise.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | influxdb-enterprise.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
 | influxdb-enterprise.data.affinity | object | See `values.yaml` | Affinity rules for data pods |
@@ -233,7 +236,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | influxdb-enterprise.serviceAccount.create | bool | `false` | Whether to create a Kubernetes service account to run as |
 | influxdb-enterprise.serviceAccount.name | string | Name based on the chart fullname | Name of the Kubernetes service account to run as |
-| influxdb-enterprise-active.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
+| influxdb-enterprise-active.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `influxdb-user` and `influxdb-password`. |
 | influxdb-enterprise-active.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | influxdb-enterprise-active.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
 | influxdb-enterprise-active.data.affinity | object | See `values.yaml` | Affinity rules for data pods |
@@ -323,7 +326,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | influxdb-enterprise-active.serviceAccount.create | bool | `false` | Whether to create a Kubernetes service account to run as |
 | influxdb-enterprise-active.serviceAccount.name | string | Name based on the chart fullname | Name of the Kubernetes service account to run as |
-| influxdb-enterprise-standby.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
+| influxdb-enterprise-standby.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `influxdb-user` and `influxdb-password`. |
 | influxdb-enterprise-standby.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | influxdb-enterprise-standby.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
 | influxdb-enterprise-standby.data.affinity | object | See `values.yaml` | Affinity rules for data pods |

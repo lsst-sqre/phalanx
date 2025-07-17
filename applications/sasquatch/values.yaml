@@ -175,7 +175,7 @@ influxdb-enterprise-standby:
 influxdb-enterprise-active:
   # -- Whether to enable influxdb-enterprise-active
   enabled: false
-
+  #
 kafka-connect-manager:
   # -- Whether to enable the Kafka Connect Manager
   enabled: false
@@ -366,3 +366,7 @@ app-metrics:
 
   # -- The apps to create configuration for.
   apps: []
+
+grafana:
+  # -- Whether to enable the grafana subchart
+  enabled: false
