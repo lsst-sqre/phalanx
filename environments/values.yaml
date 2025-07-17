@@ -202,15 +202,6 @@ applications:
   # -- Enable the prompt-keda-lsstcam application
   prompt-keda-lsstcam: false
 
-  # -- Enable the prompt-keda-lsstcamimsim application
-  prompt-keda-lsstcamimsim: false
-
-  # -- Enable the prompt-keda-lsstcomcam application
-  prompt-keda-lsstcomcam: false
-
-  # -- Enable the prompt-keda-lsstcomcamsim application
-  prompt-keda-lsstcomcamsim: false
-
   # -- Enable the prompt-redis application
   prompt-redis: false
 
