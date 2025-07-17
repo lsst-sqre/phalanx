@@ -16,7 +16,6 @@ vaultPathPrefix: "secret/phalanx/idfprod"
 applications:
   butler: true
   datalinker: true
-  fspurger: true
   ghostwriter: true
   google-cloud-observability: true
   hips: true
