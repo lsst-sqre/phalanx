@@ -18,7 +18,6 @@ applications:
   datalinker: true
   flink: true
   ghostwriter: true
-  fspurger: true
   google-cloud-observability: true
   grafana: true
   hips: true
