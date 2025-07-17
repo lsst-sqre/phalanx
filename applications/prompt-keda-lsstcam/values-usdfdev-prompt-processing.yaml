@@ -53,4 +53,7 @@ prompt-keda:
       expiration: 600_000_000.0
 
   butler_writer:
+    kafka_cluster: prompt-keda
+    kafka_username: butler-writer
+    kafka_topic: butler-writer
     output_file_path: s3://rubin-pp-dev-users/central_repo_2
