@@ -236,9 +236,9 @@ butler_writer:
     # -- The maximum cpu cores for the Butler writer service.
     cpuLimit: 1
     # -- The minimum memory to request for the Butler writer service.
-    memoryRequest: "2Gi"
+    memoryRequest: "0.5Gi"
     # -- The maximum memory limit for the Butler writer service.
-    memoryLimit: "4Gi"
+    memoryLimit: "1Gi"
 
 # -- Override the base name for resources
 nameOverride: ""
