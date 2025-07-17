@@ -32,7 +32,7 @@ config:
     usernameClaim: "name"
 
   ldap:
-    url: ldaps://sdfldap001.sdf.slac.stanford.edu:636
+    url: ldap://sdfldapsrv.sdf.slac.stanford.edu:389
     groupBaseDn: ou=Group,dc=sdf,dc=slac,dc=stanford,dc=edu
     groupObjectClass: posixGroup
     groupMemberAttr: memberUid
