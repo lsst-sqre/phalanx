@@ -25,7 +25,7 @@ spec:
             - name: BUTLER_REPOSITORY
               value: {{ .Values.instrument.centralRepo }}
             - name: KAFKA_CLUSTER
-              value: {{ .Values.imageNotifications.kafkaClusterAddress }}
+              value: {{ .Values.butler_writer.kafka_cluster }}
             - name: KAFKA_TOPIC
               value: {{ .Values.butler_writer.kafka_topic }}
             - name: KAFKA_USERNAME
