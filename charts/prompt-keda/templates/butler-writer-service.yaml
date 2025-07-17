@@ -33,8 +33,8 @@ spec:
             - name: KAFKA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "prompt-keda.fullname" . }}-secret
-                  key: prompt-kafka
+                  name: {{ template "prompt-keda.fullname" . }}-kafka-secret
+                  key: butler-writer-password
             - name: FILE_STAGING_ROOT_PATH
               value: {{ .Values.butler_writer.output_file_path }}
             {{- include "prompt-keda.butler-env" . | nindent 12}}
