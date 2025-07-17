@@ -30,7 +30,7 @@ config:
     groupObjectClass: posixGroup
     groupMemberAttr: memberUid
     groupSearchByDn: false
-    userBaseDn: ou=People,dc=slac,dc=stanford,dc=edu
+    userBaseDn: ou=People,dc=sdf,dc=slac,dc=stanford,dc=edu
     userSearchAttr: uid
     addUserGroup: false
     uidAttr: uidNumber
