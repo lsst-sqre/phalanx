@@ -37,7 +37,7 @@ spec:
                   key: prompt-kafka
             - name: FILE_STAGING_ROOT_PATH
               value: {{ .Values.butler_writer.output_file_path }}
-            {{- include "prompt-keda.butler-env" . | nindent 8}}
+            {{- include "prompt-keda.butler-env" . | nindent 12}}
           volumeMounts:
             {{- include "prompt-keda.butler-volumeMounts" . | nindent 12}}
           resources:
