@@ -63,6 +63,7 @@ spec:
     auth:
       # We'll assume that Gafaelfawr has already auth'd any requests that come in
       disable_login_form: {{ if .Values.grafana.authProxy.enabled }}"true"{{ else }}"false"{{ end }}
+      signout_redirect_url: {{ .Values.global.baseUrl }}
     auth.proxy:
       enabled: {{ if .Values.grafana.authProxy.enabled }}"true"{{ else }}"false"{{ end }}
       # HTTP Header name that will contain the username or email
