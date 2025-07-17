@@ -54,6 +54,15 @@ config:
       #- github:
       #    organization: "lsst-sqre"
       #    team: "tacc-spherex"
+    "admin:userinfo":
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- githu:
+      #    organization: "lsst-sqre"
+      #    team: "square"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
     "exec:admin":
       - "G-820288"
       - "TACC-ACI-CIC"
