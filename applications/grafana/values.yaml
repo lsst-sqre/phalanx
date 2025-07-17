@@ -117,3 +117,6 @@ grafana:
       host: "localhost"
     log:
       level: "info"
+    users:
+      auto_assign_org: "true"
+      auto_assign_org_role: Editor
