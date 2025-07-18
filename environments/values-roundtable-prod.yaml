@@ -17,7 +17,6 @@ applications:
   giftless: true
   google-cloud-observability: true
   jira-data-proxy: true
-  monitoring: true
   mobu: true
   onepassword-connect: true
   ook: true

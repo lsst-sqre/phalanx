@@ -273,9 +273,7 @@ class ApplicationService:
         even if this chart doesn't use them. That should be harmless, although
         it doesn't exactly simulate what Argo CD does.
         """
-        enabled_apps = [a.name for a in environment.all_applications()]
         values = {
-            "global.enabledServices": "@" + "@".join(enabled_apps),
             "global.host": environment.fqdn,
             "global.baseUrl": f"https://{environment.fqdn}",
             "global.environmentName": environment.name,

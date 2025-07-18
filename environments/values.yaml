@@ -146,9 +146,6 @@ applications:
   # -- Enable the mobu application
   mobu: false
 
-  # -- Enable the monitoring application
-  monitoring: false
-
   # -- Enable the narrativelog application
   narrativelog: false
 
