@@ -3,6 +3,9 @@ nightlydigest-nginx:
     repository: nginx
     tag: 1.25.1
     pullPolicy: Always
+  env:
+    - name: VITE_EXTERNAL_INSTANCE_URL
+      value: https://usdf-rsp-dev.slac.stanford.edu
   ingress:
     httpPath: /nightlydigest
     annotations:
