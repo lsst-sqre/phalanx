@@ -38,7 +38,6 @@
 | applications.livetap | bool | `false` | Enable the livetap application |
 | applications.love | bool | `false` | Enable the love control system application |
 | applications.mobu | bool | `false` | Enable the mobu application |
-| applications.monitoring | bool | `false` | Enable the monitoring application |
 | applications.narrativelog | bool | `false` | Enable the narrativelog application |
 | applications.next-visit-fan-out | bool | `false` | Enable the next-visit-fan-out application |
 | applications.noteburst | bool | `false` | Enable the noteburst application (required by times-square) |
