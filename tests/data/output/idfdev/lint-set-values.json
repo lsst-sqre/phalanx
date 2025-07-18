@@ -1,5 +1,4 @@
 [
-  "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres",
   "global.host=data-dev.lsst.cloud",
   "global.baseUrl=https://data-dev.lsst.cloud",
   "global.environmentName=idfdev",

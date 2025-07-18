@@ -17,7 +17,6 @@ applications:
   google-cloud-observability: true
   jira-data-proxy: true
   mobu: true
-  monitoring: true
   onepassword-connect: true
   ook: true
   sasquatch: true

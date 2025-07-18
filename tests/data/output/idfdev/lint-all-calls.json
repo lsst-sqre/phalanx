@@ -38,7 +38,7 @@
     "--values",
     "argocd/values-idfdev.yaml",
     "--set",
-    "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
+    "global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
   ],
   [
     "lint",
@@ -49,7 +49,7 @@
     "--values",
     "argocd/values-minikube.yaml",
     "--set",
-    "global.enabledServices=@argocd@gafaelfawr@mobu@postgres,global.host=minikube.lsst.cloud,global.baseUrl=https://minikube.lsst.cloud,global.environmentName=minikube,global.vaultSecretsPath=secret/phalanx/minikube"
+    "global.host=minikube.lsst.cloud,global.baseUrl=https://minikube.lsst.cloud,global.environmentName=minikube,global.vaultSecretsPath=secret/phalanx/minikube"
   ],
   [
     "lint",
@@ -60,7 +60,7 @@
     "--values",
     "argocd/values-usdfdev-prompt-processing.yaml",
     "--set",
-    "global.enabledServices=@argocd,global.host=usdf-prompt-processing-dev.slac.stanford.edu,global.baseUrl=https://usdf-prompt-processing-dev.slac.stanford.edu,global.environmentName=usdfdev-prompt-processing,global.vaultSecretsPath=secret/rubin/usdf-prompt-processing-dev"
+    "global.host=usdf-prompt-processing-dev.slac.stanford.edu,global.baseUrl=https://usdf-prompt-processing-dev.slac.stanford.edu,global.environmentName=usdfdev-prompt-processing,global.vaultSecretsPath=secret/rubin/usdf-prompt-processing-dev"
   ],
   [
     "dependency",
@@ -76,7 +76,7 @@
     "--values",
     "gafaelfawr/values-idfdev.yaml",
     "--set",
-    "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
+    "global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
   ],
   [
     "lint",
@@ -87,7 +87,7 @@
     "--values",
     "gafaelfawr/values-minikube.yaml",
     "--set",
-    "global.enabledServices=@argocd@gafaelfawr@mobu@postgres,global.host=minikube.lsst.cloud,global.baseUrl=https://minikube.lsst.cloud,global.environmentName=minikube,global.vaultSecretsPath=secret/phalanx/minikube"
+    "global.host=minikube.lsst.cloud,global.baseUrl=https://minikube.lsst.cloud,global.environmentName=minikube,global.vaultSecretsPath=secret/phalanx/minikube"
   ],
   [
     "dependency",
@@ -103,7 +103,7 @@
     "--values",
     "nublado/values-idfdev.yaml",
     "--set",
-    "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
+    "global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
   ],
   [
     "dependency",
@@ -119,7 +119,7 @@
     "--values",
     "portal/values-idfdev.yaml",
     "--set",
-    "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
+    "global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
   ],
   [
     "dependency",
@@ -135,7 +135,7 @@
     "--values",
     "postgres/values-idfdev.yaml",
     "--set",
-    "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
+    "global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
   ],
   [
     "lint",
@@ -146,6 +146,6 @@
     "--values",
     "postgres/values-minikube.yaml",
     "--set",
-    "global.enabledServices=@argocd@gafaelfawr@mobu@postgres,global.host=minikube.lsst.cloud,global.baseUrl=https://minikube.lsst.cloud,global.environmentName=minikube,global.vaultSecretsPath=secret/phalanx/minikube"
+    "global.host=minikube.lsst.cloud,global.baseUrl=https://minikube.lsst.cloud,global.environmentName=minikube,global.vaultSecretsPath=secret/phalanx/minikube"
   ]
 ]
