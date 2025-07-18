@@ -18,6 +18,17 @@ Event-driven processing of camera images
 | alerts.topic | string | `""` | Topic name where alerts will be sent |
 | alerts.username | string | `""` | Username for sending alerts to the alert stream |
 | apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
+| butler_writer.enabled | bool | `false` | If false, output datasets will be written directly to the central Butler database.  If true, a Kafka message will be sent to a service to aggregate these writes instead. |
+| butler_writer.image.repository | string | `"ghcr.io/lsst-dm/prompt_processing_butler_writer"` | Image to use for the Butler writer service |
+| butler_writer.image.tag | string | `"tickets-dm-49670"` | Docker container version to use for the Butler writer service |
+| butler_writer.kafka_cluster | string | `""` | Address of Kafka broker where prompt processing output events will be written, for consumption by the Butler writer service. |
+| butler_writer.kafka_topic | string | `""` | Kafka topic that prompt processing output events will be written to, for consumption by the Butler writer service. |
+| butler_writer.kafka_username | string | `""` | Username for Kafka broker where prompt processing output events will be written, for consumption by the Butler writer service. |
+| butler_writer.output_file_path | string | `""` | Root path where output dataset files will be written when transferring back to the central repository.  Only used if butler_writer.enable is true. |
+| butler_writer.resources.cpuLimit | int | `1` | The maximum cpu cores for the Butler writer service. |
+| butler_writer.resources.cpuRequest | float | `0.25` | The cpu cores requested for the Butler writer service. |
+| butler_writer.resources.memoryLimit | string | `"1Gi"` | The maximum memory limit for the Butler writer service. |
+| butler_writer.resources.memoryRequest | string | `"0.5Gi"` | The minimum memory to request for the Butler writer service. |
 | cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
 | cache.patchesPerImage | int | `4` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
 | cache.refcatsPerImage | int | `4` | A factor by which to multiply `baseSize` for refcat datasets. |
