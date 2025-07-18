@@ -60,9 +60,18 @@ spec:
               {{- if .Values.butler_writer.enabled }}
               - name: USE_KAFKA_OUTPUT_WRITER
                 value: "1"
-              - name: OUTPUT_TOPIC
+              - name: BUTLER_WRITER_KAFKA_CLUSTER
+                value: {{ .Values.butler_writer.kafka_cluster }}
+              - name: BUTLER_WRITER_KAFKA_USERNAME
+                value: {{ .Values.butler_writer.kafka_username }}
+              - name: BUTLER_WRITER_KAFKA_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ template "prompt-keda.fullname" . }}-kafka-secret
+                    key: butler-writer-password
+              - name: BUTLER_WRITER_KAFKA_TOPIC
                 value: {{ .Values.butler_writer.kafka_topic }}
-              - name: OUTPUT_FILE_PATH
+              - name: BUTLER_WRITER_FILE_OUTPUT_PATH
                 value: {{ .Values.butler_writer.output_file_path }}
               {{- end}}
               - name: BUCKET_NOTIFICATION_KAFKA_OFFSET_RESET
