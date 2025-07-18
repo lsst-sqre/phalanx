@@ -1,3 +1,7 @@
+image:
+  tag: "tickets-DM-51818"
+  pullPolicy: "Always"
+
 # Use the CSI storage class so that we can use snapshots.
 redis:
   persistence:
@@ -46,6 +50,8 @@ config:
 
   groupMapping:
     "admin:jupyterlab":
+      - "g_admins"
+    "admin:userinfo":
       - "g_admins"
     "exec:admin":
       - "g_admins"

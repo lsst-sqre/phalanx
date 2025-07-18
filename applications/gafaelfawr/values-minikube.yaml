@@ -1,3 +1,7 @@
+image:
+  tag: "tickets-DM-51818"
+  pullPolicy: "Always"
+
 # Reset token storage on every Redis restart.
 redis:
   persistence:
@@ -20,6 +24,10 @@ config:
   # Allow access by GitHub team.
   groupMapping:
     "admin:jupyterlab":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "admin:userinfo":
       - github:
           organization: "lsst-sqre"
           team: "square"

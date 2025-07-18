@@ -49,6 +49,8 @@ config:
   groupMapping:
     "admin:jupyterlab":
       - "g_admins"
+    "admin:userinfo":
+      - "g_admins"
     "exec:admin":
       - "g_admins"
     "exec:internal-tools":
