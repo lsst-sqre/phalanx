@@ -53,10 +53,9 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources.noteburst | nindent 12 }}
-          envFrom:
-            - configMapRef:
-                name: {{ include "noteburst.fullname" . }}
           env:
+            - name: "NOTEBURST_ENVIRONMENT_URL"
+              value: {{ .Values.global.baseUrl | quote }}
             - name: "NOTEBURST_GAFAELFAWR_TOKEN"
               valueFrom:
                 secretKeyRef:
@@ -68,7 +67,7 @@ spec:
                   name: {{ template "noteburst.fullname" . }}
                   key: "NOTEBURST_SLACK_WEBHOOK_URL"
 
-            {{- if .Values.config.sentry.enabled }}
+            {{- if .Values.sentry.enabled }}
             - name: "SENTRY_DSN"
               valueFrom:
                 secretKeyRef:
@@ -105,6 +104,9 @@ spec:
             readOnlyRootFilesystem: true
           {{- if .Values.config.metrics.enabled }}
           volumeMounts:
+            - name: "config"
+              mountPath: "/etc/noteburst"
+              readOnly: true
             - name: "kafka"
               mountPath: "/etc/noteburst-kafka/ca.crt"
               readOnly: true
@@ -120,6 +122,9 @@ spec:
           {{- end }}
       {{- if .Values.config.metrics.enabled }}
       volumes:
+        - name: "config"
+          configMap:
+            name: {{ include "noteburst.fullname" . }}
         - name: "kafka"
           secret:
             secretName: "noteburst-kafka"
