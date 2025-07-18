@@ -72,12 +72,12 @@ controller:
             type: "nfs"
         - name: "rubin"
           source:
-            serverPath: "/rubin-share"
+            serverPath: "/home-tiered-share/_reloc/rubin"
             server: "10.234.16.4"
             type: "nfs"
         - name: "deleted-sundays"
           source:
-            serverPath: "/deleted-weekly-share"
+            serverPath: "/home-tiered-share/_reloc/deleted-sundays"
             server: "10.234.16.4"
             type: "nfs"
       volumeMounts:
