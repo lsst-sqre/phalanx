@@ -1,23 +1,28 @@
 image:
+  tag: tickets-DM-51763-rsp-identity-from-env-var
   pullPolicy: Always
+
+workerReplicas: 1
+
+sentry:
+  enabled: true
+  tracesSampleRate: 1
 
 config:
   logLevel: "DEBUG"
   metrics:
     enabled: true
-  sentry:
-    enabled: true
-    tracesSampleRate: 1
-  worker:
-    workerCount: 1
-    imageSelector: "weekly"
-    identities:
-      - username: "bot-noteburst90000"
-      - username: "bot-noteburst90001"
-      - username: "bot-noteburst90002"
-      - username: "bot-noteburst90003"
-      - username: "bot-noteburst90004"
-      - username: "bot-noteburst90005"
+  nubladoControllerPathPrefix: "/nublado"
+
+workerConfig:
+  imageSelector: "weekly"
+  identities:
+    - username: "bot-noteburst90000"
+    - username: "bot-noteburst90001"
+    - username: "bot-noteburst90002"
+    - username: "bot-noteburst90003"
+    - username: "bot-noteburst90004"
+    - username: "bot-noteburst90005"
 
 # Use SSD for Redis storage.
 redis:

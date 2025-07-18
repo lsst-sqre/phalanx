@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "noteburst.fullname" . }}-worker
   labels:
@@ -8,27 +8,13 @@ metadata:
     app.kubernetes.io/part-of: "noteburst"
 spec:
   {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.config.worker.workerCount }}
+  replicas: {{ .Values.workerCount }}
   {{- end }}
   selector:
     matchLabels:
       {{- include "noteburst.selectorLabels" . | nindent 6 }}
-  {{- if gt (int .Values.config.worker.workerCount) 1 }}
-  # If we have more than one worker, use a rolling update strategy to
-  # ensure only one worker starts up at a time.
-  strategy:
-    rollingUpdate:
-      maxSurge: 0
-      maxUnavailable: 1
+  updateStrategy:
     type: RollingUpdate
-  {{- else }}
-  # With one worker, start one worker before stopping the old one.
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  {{- end }}
   template:
     metadata:
       annotations:
@@ -59,10 +45,13 @@ spec:
           args: ["noteburst.worker.main.WorkerSettings"]
           resources:
             {{- toYaml .Values.resources.noteburstWorker | nindent 12 }}
-          envFrom:
-            - configMapRef:
-                name: {{ include "noteburst.fullname" . }}-worker
           env:
+            - name: "NOTEBURST_ENVIRONMENT_URL"
+              value: {{ .Values.global.baseUrl | quote }}
+            - name: "NOTEBURST_IDENTITY_INDEX"
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['apps.kubernetes.io/pod-index']
             - name: "NOTEBURST_GAFAELFAWR_TOKEN"
               valueFrom:
                 secretKeyRef:
@@ -73,9 +62,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "noteburst.fullname" . }}
                   key: "NOTEBURST_SLACK_WEBHOOK_URL"
-            - name: "NOTEBURST_WORKER_IDENTITIES_PATH"
-              value: "/etc/noteburst/identities.yaml"
-            {{- if .Values.config.sentry.enabled }}
+            {{- if .Values.sentry.enabled }}
             - name: "SENTRY_DSN"
               valueFrom:
                 secretKeyRef:
@@ -105,7 +92,7 @@ spec:
               value: "/etc/noteburst-kafka/ca.crt"
             {{- end }}
           volumeMounts:
-            - name: "identities"
+            - name: "config"
               mountPath: "/etc/noteburst"
               readOnly: true
             {{- if .Values.config.metrics.enabled }}
@@ -129,9 +116,9 @@ spec:
                 - ALL
             readOnlyRootFilesystem: true
       volumes:
-        - name: "identities"
+        - name: "config"
           configMap:
-            name: {{ include "noteburst.fullname" . }}-worker-identities
+            name: {{ include "noteburst.fullname" . }}-worker
         {{- if .Values.config.metrics.enabled }}
         - name: "kafka"
           secret:

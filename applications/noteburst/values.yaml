@@ -103,24 +103,25 @@ nodeSelector: {}
 
 tolerations: []
 affinity: {}
+
+sentry:
+  # -- Whether to enable sentry at all
+  enabled: false
+
+  # -- A number between 0 and 1, controlling the percentage chance a given
+  # transaction will be sent to Sentry. 0 represents 0% while 1 represents
+  # 100%. This has no effect on error reporting, only tracing.
+  tracesSampleRate: 0
+
 config:
   # -- Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
   logLevel: "INFO"
 
   # -- URL path prefix for the JupyterHub service
-  hubPathPrefix: "/nb"
+  jupyterhubPathPrefix: "/nb"
 
   # -- URL path prefix for the Nublado JupyterLab Controller service
   nubladoControllerPathPrefix: "/nublado"
-
-  sentry:
-    # -- Whether to enable sentry at all
-    enabled: false
-
-    # -- A number between 0 and 1, controlling the percentage chance a given
-    # transaction will be sent to Sentry. 0 represents 0% while 1 represents
-    # 100%. This has no effect on error reporting, only tracing.
-    tracesSampleRate: 0
 
   metrics:
     # -- Whether to enable sending metrics
@@ -144,34 +145,33 @@ config:
       # for experimentation during development.
       suffix: ""
 
-  worker:
-    # -- Science Platform user identities that workers can acquire. Each item
-    # is an object with username and uuid keys
-    identities: []
+workerCount: 1
 
-    # -- Number of workers to run
-    workerCount: 1
+workerConfig:
+  # -- Science Platform user identities that workers can acquire. Each item
+  # is an object with username and uuid keys
+  identities: []
 
-    # -- The maximum allowed notebook execution time, in seconds.
-    jobTimeout: 300
+  # -- The maximum allowed notebook execution time, in seconds.
+  jobTimeout: 300
 
-    # -- Max number of concurrent notebook executions per worker
-    maxConcurrentJobs: 1
+  # -- Max number of concurrent notebook executions per worker
+  maxConcurrentJobs: 1
 
-    # -- Worker token lifetime, in seconds.
-    tokenLifetime: "2419200"
+  # -- Worker token lifetime, in seconds.
+  tokenLifetime: "2419200"
 
-    # -- Nublado2 worker account's token scopes as a comma-separated list.
-    tokenScopes: "exec:notebook,read:image,read:tap,read:alertdb"
+  # -- Nublado2 worker account's token scopes as a comma-separated list.
+  tokenScopes: "exec:notebook,read:image,read:tap,read:alertdb"
 
-    # -- Nublado image stream to select: "recommended", "weekly" or "reference"
-    imageSelector: "recommended"
+  # -- Nublado image stream to select: "recommended", "weekly" or "reference"
+  imageSelector: "recommended"
 
-    # -- Nublado image reference, applicable when imageSelector is "reference"
-    imageReference: ""
+  # -- Nublado image reference, applicable when imageSelector is "reference"
+  imageReference: ""
 
-    # -- Worker keep alive mode: "normal", "fast", "hourly", "daily", "disabled"
-    keepAlive: "hourly"
+  # -- Worker keep alive mode: "normal", "fast", "hourly", "daily", "disabled"
+  keepAlive: "hourly"
 
 redis:
   persistence:
