@@ -55,19 +55,16 @@ scripts:
 - name: LSSTCam/runOneOffVisitImage.py
   mounts:
   - sdf-scratch
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
 - name: LSSTCam/runMetadataServerRaPerformance.py
   mounts:
   - sdf-scratch
-- name: LSSTCam/runCleanup.py
-  mounts:
-  - sdf-scratch
-  resources:
-    requests:
-      cpu: .5
-      memory: 3G
-    limits:
-      cpu: 1
-      memory: 6G
 - name: LSSTCam/runPerformanceMonitor.py
   mounts:
   - sdf-scratch
@@ -78,16 +75,6 @@ scripts:
     limits:
       cpu: 1
       memory: 8G
-- name: LSSTCam/runRadialPlotting.py
-  mounts:
-  - sdf-scratch
-  resources:
-    requests:
-      cpu: 1
-      memory: 12G
-    limits:
-      cpu: 1.2
-      memory: 16G
 - name: LSSTCam/runFWHMPlotting.py
   mounts:
   - sdf-scratch
