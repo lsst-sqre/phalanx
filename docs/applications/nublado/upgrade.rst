@@ -7,12 +7,15 @@ Upgrading Nublado
 Routine upgrades
 ================
 
-There is currently a sequencing problem when syncing Nublado.
-If it is synced in the obvious way, both JupyterHub and the Nublado controller restart at the same time.
+There is currently a sequencing problem when both JupyterHub and the Nublado controller restart at the same time.
 If JupyterHub comes up first and the Nublado controller is unresponsive, it will decide that all running labs are invalid, making them inaccessible and forcing them to be shut down and respawned.
 
-This is worth avoiding by syncing everything *except* the ``nublado-controller`` deployment first, and then syncing ``nublado-controller`` once JupyterHub is back up.
+The controller deployment is in a later `ArgoCD sync wave`_ so that if there are changes to both the hub and controller deployments, an ArgoCD sync will wait for everything else in the app to be ready, including the hub deployment, before the controller deployment is restarted.
+
+If you have to restart Nublado components manually, make sure you restart everything *except* the ``nublado-controller`` deployment first, and then restart ``nublado-controller`` once JupyterHub is back up.
 This ensures that the Nublado controller is running during the critical startup phase of JupyterHub.
+
+.. _ArgoCD sync wave: https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/#how-do-i-configure-waves
 
 Schema updates
 ==============
