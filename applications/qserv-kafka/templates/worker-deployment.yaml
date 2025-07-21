@@ -103,7 +103,7 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      terminationGracePeriodSeconds: {{ add .Values.config.resultTimeout 5 }}
+      terminationGracePeriodSeconds: {{ add .Values.config.resultTimeout 10 }}
       {{- with .Values.resultWorker.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
