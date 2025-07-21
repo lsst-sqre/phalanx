@@ -30,6 +30,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Ensure the documentation gets the right version.
+          fetch-depth: 0
 
       - name: Print GitHub event name
         run: echo "${{ github.event_name }}"

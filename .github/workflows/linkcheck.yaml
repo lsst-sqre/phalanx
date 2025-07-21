@@ -50,6 +50,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Ensure the documentation gets the right version.
+          fetch-depth: 0
 
       - name: Install graphviz
         run: sudo apt-get install graphviz
