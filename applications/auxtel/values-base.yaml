@@ -5,10 +5,10 @@ ataos:
   resources:
     limits:
       cpu: 450m
-      memory: 600Mi
+      memory: 1024Mi
     requests:
       cpu: 45m
-      memory: 200Mi
+      memory: 420Mi
 
 atbuilding-sim:
   enabled: true
