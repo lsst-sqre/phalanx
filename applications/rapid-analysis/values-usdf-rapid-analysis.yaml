@@ -1,10 +1,11 @@
 image:
   repository: ghcr.io/lsst-sitcom/rubintv_production
-  tag: tickets-DM-50534-w27
+  tag: tickets-DM-50534-w48
   pullPolicy: IfNotPresent
 location: USDF
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /config/data-repos.yaml
+  DAF_BUTLER_CONFIG_PATH: /repos/drp_pipe/bps/compression/LSSTCam/nightly-validation/config
   http_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
   https_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
   squid_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
@@ -20,7 +21,8 @@ env:
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   AWS_RESPONSE_CHECKSUM_VALIDATION: WHEN_REQUIRED
   HOME: /home/saluser
-  RA_PULL_DIRECTORIES: ""
+  RA_PULL_DIRECTORIES: "drp_pipe"
+  TARTS_DATA_DIR: /sdf/scratch/rubin/rapid-analysis/aos_data/TARTS
 podAnnotations:
   edu.stanford.slac.sdf.project/usdf-embargo: "true"
 affinity:
@@ -52,9 +54,39 @@ scripts:
 - name: LSSTCam/runOneOffPostIsr.py
   mounts:
   - sdf-scratch
-- name: LSSTCam/runOneOffCalexp.py
+- name: LSSTCam/runOneOffVisitImage.py
   mounts:
   - sdf-scratch
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
+- name: LSSTCam/runMetadataServerRaPerformance.py
+  mounts:
+  - sdf-scratch
+- name: LSSTCam/runPerformanceMonitor.py
+  mounts:
+  - sdf-scratch
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
+- name: LSSTCam/runFWHMPlotting.py
+  mounts:
+  - sdf-scratch
+  resources:
+    requests:
+      cpu: 1
+      memory: 4G
+    limits:
+      cpu: 1
+      memory: 6G
 - name: LSSTCam/runPlotter.py
   mounts:
   - sdf-scratch
@@ -93,10 +125,10 @@ lsstcamGather2aSet:
   resources:
     requests:
       cpu: 1.0
-      memory: "4G"
+      memory: "8G"
     limits:
       cpu: 1.0
-      memory: "8G"
+      memory: "12G"
 lsstcamAosWorkerSet:
   name: LSSTCam/runAosWorker.py
   mounts:
@@ -111,6 +143,18 @@ lsstcamAosWorkerSet:
     limits:
       cpu: 2.0
       memory: 8G
+lsstcamGather2aAosSet:
+  name: LSSTCam/runStep1bAosWorker.py
+  mounts:
+  - sdf-scratch
+  replicas: 4
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
 credentialFile: google_write_creds
 vaultPrefixPath: secret/rubin/usdf-rapid-analysis
 rubinTvSecretsPath: rubintv-secrets
