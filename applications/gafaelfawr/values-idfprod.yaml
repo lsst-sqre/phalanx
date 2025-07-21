@@ -59,6 +59,8 @@ config:
       - "g_admins"
     "exec:admin":
       - "g_admins"
+    "exec:internal-tools":
+      - "g_rubin"
     "exec:notebook":
       - "g_rubin"
       - "g_users"
