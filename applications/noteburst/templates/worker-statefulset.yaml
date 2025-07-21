@@ -1,5 +1,11 @@
+# This is a StatefulSet instead of a deployment so that every replica can have
+# a consistent identifier (the StatefulSet index) to use to reserve an RSP
+# identity. If a worker shuts down uncleanly, a Nublado lab could remain
+# running when the worker starts up again. Having this consistent ID lets us
+# confidently shut the lab down upon restart without the fear that the lab is
+# being used by some other replica.
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "noteburst.fullname" . }}-worker
   labels:
@@ -13,22 +19,8 @@ spec:
   selector:
     matchLabels:
       {{- include "noteburst.selectorLabels" . | nindent 6 }}
-  {{- if gt (int .Values.config.worker.workerCount) 1 }}
-  # If we have more than one worker, use a rolling update strategy to
-  # ensure only one worker starts up at a time.
-  strategy:
-    rollingUpdate:
-      maxSurge: 0
-      maxUnavailable: 1
+  updateStrategy:
     type: RollingUpdate
-  {{- else }}
-  # With one worker, start one worker before stopping the old one.
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  {{- end }}
   template:
     metadata:
       annotations:
@@ -63,6 +55,10 @@ spec:
             - configMapRef:
                 name: {{ include "noteburst.fullname" . }}-worker
           env:
+            - name: "NOTEBURST_IDENTITY_INDEX"
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['apps.kubernetes.io/pod-index']
             - name: "NOTEBURST_GAFAELFAWR_TOKEN"
               valueFrom:
                 secretKeyRef:
