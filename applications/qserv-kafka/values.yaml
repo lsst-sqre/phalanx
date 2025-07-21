@@ -102,6 +102,11 @@ config:
   # @default -- 3600 (1 hour)
   resultTimeout: 3600
 
+  # -- Name of the TAP service for which this Qserv Kafka instance is managing
+  # queries. This must match the name of the TAP service for the corresponding
+  # query quota in the Gafaelfawr configuration.
+  tapService: "qserv"
+
 image:
   # -- Image to use in the qserv-kafka deployment
   repository: "ghcr.io/lsst-sqre/qserv-kafka"
