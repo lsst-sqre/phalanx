@@ -45,6 +45,11 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+            # Uvicorn keepalive timeout, in seconds. This should be longer than
+            # any keepalive timeouts on any downstream proxies. The keepalive
+            # timeout for ingress-nginx connections is 60s.
+            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
+              value: "61"
             - name: AWS_SHARED_CREDENTIALS_FILE
               value: "/opt/lsst/butler/secrets/aws-credentials.ini"
             - name: PGPASSFILE
@@ -94,6 +99,24 @@ spec:
             - name: config-private
               mountPath: "/opt/lsst/butler/config"
               readOnly: true
+
+          lifecycle:
+            # Number of seconds k8s should wait before sending SIGTERM on
+            # graceful restarts/deployments/shutdowns. We need this because it
+            # takes ingress-nginx some time to configure itself to stop sending
+            # traffic to the pods scheduled for termination. If Uvicorn gets
+            # the SIGTERM and starts closing connections, we could end up with
+            # a TCP race condition if ingress-nginx still tries to send data
+            # over those connections.
+            #
+            # Note that terminationGracePeriodSeconds includes the time that is
+            # spent in the preStop hook. If you’re adding a preStop hook and
+            # your terminationGracePeriodSeconds is super fine-tuned, then you
+            # should update your terminationGracePeriodSeconds to add the
+            # amount of time you’ll be spending in your preStop hook.
+            preStop:
+              sleep:
+                seconds: 10
       volumes:
         # butler-secrets-raw pulls in the secrets from the vault as files.
         # These files are owned by root and group/world readable.
