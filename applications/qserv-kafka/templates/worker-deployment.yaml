@@ -35,6 +35,27 @@ spec:
             - "arq"
             - "qservkafka.workers.main.WorkerSettings"
           env:
+            - name: "KAFKA_BOOTSTRAP_SERVERS"
+              valueFrom:
+                secretKeyRef:
+                  name: "qserv-kafka-access"
+                  key: "bootstrapServers"
+            - name: "KAFKA_CLIENT_CERT_PATH"
+              value: "/etc/qserv-kafka/user.crt"
+            - name: "KAFKA_CLIENT_KEY_PATH"
+              value: "/etc/qserv-kafka/user.key"
+            - name: "KAFKA_CLUSTER_CA_PATH"
+              value: "/etc/qserv-kafka/ca.crt"
+            - name: "KAFKA_SECURITY_PROTOCOL"
+              valueFrom:
+                secretKeyRef:
+                  name: "qserv-kafka-access"
+                  key: "securityProtocol"
+            - name: "QSERV_KAFKA_GAFAELFAWR_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "qserv-kafka-token"
+                  key: "token"
             - name: "QSERV_KAFKA_QSERV_DATABASE_PASSWORD"
               valueFrom:
                 secretKeyRef:
@@ -52,22 +73,6 @@ spec:
                   name: "qserv-kafka"
                   key: "qserv-password"
             {{- end }}
-            - name: "KAFKA_BOOTSTRAP_SERVERS"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka-access"
-                  key: "bootstrapServers"
-            - name: "KAFKA_CLIENT_CERT_PATH"
-              value: "/etc/qserv-kafka/user.crt"
-            - name: "KAFKA_CLIENT_KEY_PATH"
-              value: "/etc/qserv-kafka/user.key"
-            - name: "KAFKA_CLUSTER_CA_PATH"
-              value: "/etc/qserv-kafka/ca.crt"
-            - name: "KAFKA_SECURITY_PROTOCOL"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka-access"
-                  key: "securityProtocol"
           envFrom:
             - configMapRef:
                 name: "qserv-kafka"
