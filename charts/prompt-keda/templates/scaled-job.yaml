@@ -58,7 +58,7 @@ spec:
               - name: BUCKET_TOPIC
                 value: {{ .Values.imageNotifications.topic }}
               {{- if .Values.butler_writer.enabled }}
-              - name: USE_KAFKA_OUTPUT_WRITER
+              - name: USE_KAFKA_BUTLER_WRITER
                 value: "1"
               - name: BUTLER_WRITER_KAFKA_CLUSTER
                 value: {{ .Values.butler_writer.kafka_cluster }}
