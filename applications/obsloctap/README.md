@@ -19,10 +19,8 @@ Publish observing schedule
 | consumekafka.image.pullPolicy | string | `"Always"` | Pull policy for the obsloctap image |
 | consumekafka.image.repository | string | `"ghcr.io/lsst-dm/consumekafka"` | obsloctap image to use |
 | consumekafka.image.tag | string | The appVersion of the chart | Tag of image to use |
-| environment | object | `{}` | Environment variables (e.g. butler configuration/auth parms) for panel |
 | consumekafka.logLevel | string | `"verbose"` |  |
 | environment | string | `nil` | Environment variables (e.g. butler configuration/auth parms) for panel |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
