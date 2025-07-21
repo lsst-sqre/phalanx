@@ -340,9 +340,9 @@ dacite==1.9.2 \
     --hash=sha256:053f7c3f5128ca2e9aceb66892b1a3c8936d02c686e707bee96e19deef4bc4a0 \
     --hash=sha256:6ccc3b299727c7aa17582f0021f6ae14d5de47c7227932c47fec4cdfefd26f09
     # via dataclasses-avroschema
-dataclasses-avroschema==0.65.11 \
-    --hash=sha256:01e90ca9a23f3df0e9417ce4af8a3ef613cbbe551483b105c751678e31006bbf \
-    --hash=sha256:1131010a6fc62be2761b618de0754ca70f41404353e82923a8e7ba00fc34eaec
+dataclasses-avroschema==0.65.12 \
+    --hash=sha256:4a95e9cd02b627a4f33b0d19e71aec2fe7af6958d475830f31e1ad2de4ed4eea \
+    --hash=sha256:4f663ff0c92cb584f6e87f1aa7db22fad6127f7ffe7e806bae39cf36d938e005
     # via safir
 fast-depends==2.4.12 \
     --hash=sha256:9393e6de827f7afa0141e54fa9553b737396aaf06bd0040e159d1f790487b16d \
@@ -392,9 +392,9 @@ fastavro==1.11.1 \
     # via
     #   dataclasses-avroschema
     #   python-schema-registry-client
-faststream==0.5.47 \
-    --hash=sha256:21e630ce8baa4d4507433ace11004d737ee2f02f41e60f2ff2e55280060d966c \
-    --hash=sha256:a2665423ae944b89f3c22533a31e384ed806c9f2135732a1ebe42049379553f3
+faststream==0.5.48 \
+    --hash=sha256:b7082552e626afd832410752da5d26714f893148fd9f3d2ce431117b3ba5cdb1 \
+    --hash=sha256:ee48956405019f82847ba5e1ef5a90ad648338d86bcc377eb8938edd1615c928
     # via safir
 gidgethub==5.4.0 \
     --hash=sha256:522bd3a846a315c3163925a840930c4c9a0d685d5853afe852fd589cb472daf5 \
@@ -441,9 +441,9 @@ jinja2==3.1.6 \
     --hash=sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d \
     --hash=sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67
     # via phalanx (pyproject.toml)
-jsonschema==4.24.0 \
-    --hash=sha256:0b4e8069eb12aedfa881333004bccaec24ecef5a8a6a4b6df142b2cc9599d196 \
-    --hash=sha256:a462455f19f5faf404a7902952b6f0e3ce868f3ee09a359b05eca6673bd8412d
+jsonschema==4.25.0 \
+    --hash=sha256:24c2e8da302de79c8b9382fee3e76b355e44d2a4364bb207159ce10b517bd716 \
+    --hash=sha256:e63acf5c11762c0e6672ffb61482bdf57f0876684d8d249c0fe2d730d48bc55f
     # via python-schema-registry-client
 jsonschema-specifications==2025.4.1 \
     --hash=sha256:4653bffbd6584f7de83a67e0d620ef16900b390ddc7939d56684d6c81e33f1af \
@@ -881,9 +881,9 @@ safir-logging==11.1.0 \
     --hash=sha256:2dcc6a04258242ce90b1727cf9228a870de24de9da0fdd10dd03bcafb36b7f21 \
     --hash=sha256:d66adcbd3fbe9abe6b0a6e7803e98d006a1f95327898477928076fce321e0b69
     # via safir
-sentry-sdk==2.32.0 \
-    --hash=sha256:6cf51521b099562d7ce3606da928c473643abe99b00ce4cb5626ea735f4ec345 \
-    --hash=sha256:9016c75d9316b0f6921ac14c8cd4fb938f26002430ac5be9945ab280f78bec6b
+sentry-sdk==2.33.1 \
+    --hash=sha256:3ae544cf8841a519722872a63da1432ab007ef7ffb3dd43d15d1924cde9a07b4 \
+    --hash=sha256:a870f406d4c7041e7b47aaa6a1d21d005ba0f285dfdd39e7e7e5210c38f2955c
     # via safir
 six==1.17.0 \
     --hash=sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274 \
@@ -899,9 +899,9 @@ sniffio==1.3.1 \
     --hash=sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2 \
     --hash=sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc
     # via anyio
-starlette==0.47.1 \
-    --hash=sha256:5e11c9f5c7c3f24959edbf2dffdc01bba860228acf657129467d8a7468591527 \
-    --hash=sha256:aef012dd2b6be325ffa16698f9dc533614fb1cebd593a906b90dc1025529a79b
+starlette==0.47.2 \
+    --hash=sha256:6ae9aa5db235e4846decc1e7b79c4f346adf41e9777aebeb49dfd09bbd7023d8 \
+    --hash=sha256:c5847e96134e5c5371ee9fac6fdf1a67336d5815e09eb2a01fdb57a351ef915b
     # via
     #   fastapi
     #   safir
