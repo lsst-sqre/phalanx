@@ -16,7 +16,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        component:
         {{- include "obsloctap.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
