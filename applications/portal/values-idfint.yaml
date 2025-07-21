@@ -13,6 +13,13 @@ config:
         storageClass: "standard-rwo"
   ssotap: "ssotap"
   hipsUrl: "https://data-int.lsst.cloud/api/hips/v2/dp1/deep_coadd/band_r"
+  # -- Maximum number of recent TAP queries to show in history
+  tapHistoryLimit: "100000"
+
+image:
+  # -- Tag of Portal image to use
+  # @default -- The appVersion of the chart
+  tag: "rc-2025-3-optimize-redis-1"
 
 redis:
   persistence:
