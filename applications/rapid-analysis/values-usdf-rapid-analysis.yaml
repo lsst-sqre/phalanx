@@ -136,10 +136,10 @@ lsstcamGather2aSet:
   resources:
     requests:
       cpu: 1.0
-      memory: "4G"
+      memory: "8G"
     limits:
       cpu: 1.0
-      memory: "8G"
+      memory: "12G"
 lsstcamAosWorkerSet:
   name: LSSTCam/runAosWorker.py
   mounts:
