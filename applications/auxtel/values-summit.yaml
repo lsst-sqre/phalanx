@@ -85,7 +85,7 @@ athexapod:
 atmcs:
   enabled: true
   image:
-    repository: ts-dockerhub.lsst.org/atmcs_sim
+    repository: ts-dockerhub.lsst.org/atmcs
     pullPolicy: Always
   resources:
     limits:
@@ -176,7 +176,7 @@ atoods:
 atpneumatics:
   enabled: true
   image:
-    repository: ts-dockerhub.lsst.org/at_pneumatics_sim
+    repository: ts-dockerhub.lsst.org/at_pneumatics
     pullPolicy: Always
   resources:
     limits:

@@ -92,7 +92,7 @@ athexapod-sim:
 atmcs-sim:
   enabled: true
   image:
-    repository: ts-dockerhub.lsst.org/atmcs_sim
+    repository: ts-dockerhub.lsst.org/atmcs
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
@@ -176,7 +176,7 @@ atoods:
 atpneumatics-sim:
   enabled: true
   image:
-    repository: ts-dockerhub.lsst.org/at_pneumatics_sim
+    repository: ts-dockerhub.lsst.org/at_pneumatics
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
