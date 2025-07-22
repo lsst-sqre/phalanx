@@ -31,7 +31,7 @@ config:
       persistentVolumeClaim:
         claimName: sdf-data-rubin
     - name: sdf-scratch
-      persistentVolumeClain:
+      persistentVolumeClaim:
         claimName: sdf-scratch
   # -- Volume mounts
   volumeMounts:
