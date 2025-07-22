@@ -8,10 +8,6 @@
   (printf "--wait-interval=%d" (int .Values.config.waitInterval))
   (printf "--upload-interval=%d" (int .Values.config.uploadInterval))
 }}
-# Enable deletion of the local chunks after upload
-{{- if .Values.config.deleteChunks }}
-{{- $args = append $args "--delete-chunks" }}
-{{- end }}
 {{- include "ppdb-replication.deployment" (dict
   "Chart" .Chart
   "Values" .Values
