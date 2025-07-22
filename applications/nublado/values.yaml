@@ -606,6 +606,15 @@ jupyterhub:
         # each user's lab environment in its own namespace
         interNamespaceAccessLabels: "accept"
 
+      # -- Extra CLI options to pass to the proxy. The most up-to-date list is
+      # [here](https://github.com/jupyterhub/configurable-http-proxy/blob/main/bin/configurable-http-proxy)
+      # (not the docs, unfortunately)
+      extraCommandLineFlags:
+        # Keepalive timeout, in milliseconds. This should be longer than any
+        # keepalive timeouts on any downstream proxies. The keepalive timeout
+        # for ingress-nginx connections is 60s.
+        - --keep-alive-timeout=61000
+
       # -- Resource limits and requests for proxy pod
       # @default -- See `values.yaml`
       resources:
