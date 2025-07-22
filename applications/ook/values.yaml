@@ -193,10 +193,10 @@ cloudsql:
     resources:
       limits:
         cpu: "100m"
-        memory: "20Mi"
+        memory: "30Mi"
       requests:
         cpu: "5m"
-        memory: "7Mi"
+        memory: "15Mi"
 
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   instanceConnectionName: ""
