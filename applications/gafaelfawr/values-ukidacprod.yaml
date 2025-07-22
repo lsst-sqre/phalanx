@@ -19,6 +19,10 @@ config:
 
 # Allow access by GitHub team.
   groupMapping:
+    "admin:userinfo":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
     "exec:admin":
       - github:
           organization: "lsp-uk"

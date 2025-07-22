@@ -74,9 +74,11 @@ config:
   #   - "mainetti"
 
   groupMapping:
+    "admin:jupyterlab":
+      - "ccin2p3"
     "admin:token":
       - "ccin2p3"
-    "admin:jupyterlab":
+    "admin:userinfo":
       - "ccin2p3"
     "exec:admin":
       - "ccin2p3"
