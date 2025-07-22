@@ -638,16 +638,6 @@ cloudsql:
     # -- Cloud SQL Auth Proxy image to use
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
-    # -- Resource requests and limits for Cloud SQL pod
-    # @default -- See `values.yaml`
-    resources:
-      limits:
-        cpu: "50m"
-        memory: "64Mi"
-      requests:
-        cpu: "1m"
-        memory: "15Mi"
-
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
 
@@ -663,10 +653,10 @@ cloudsql:
   resources:
     limits:
       cpu: "100m"
-      memory: "20Mi"
+      memory: "30Mi"
     requests:
       cpu: "5m"
-      memory: "7Mi"
+      memory: "15Mi"
 
   # -- Annotations for the Cloud SQL Auth Proxy pod
   podAnnotations: {}
