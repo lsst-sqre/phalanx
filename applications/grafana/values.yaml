@@ -46,10 +46,10 @@ cloudsql:
   resources:
     limits:
       cpu: "1"
-      memory: "20Mi"
+      memory: "30Mi"
     requests:
       cpu: "5m"
-      memory: "7Mi"
+      memory: "15Mi"
 
 # -- Config for the grafana-operator, which is a dependency of this chart
 # @default -- [chart values](https://github.com/grafana/grafana-operator/blob/master/deploy/helm/grafana-operator/values.yaml)

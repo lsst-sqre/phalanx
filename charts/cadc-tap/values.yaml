@@ -301,10 +301,10 @@ cloudsql:
   resources:
     limits:
       cpu: "100m"
-      memory: "20Mi"
+      memory: "30Mi"
     requests:
       cpu: "5m"
-      memory: "7Mi"
+      memory: "15Mi"
 
 # -- The service account will allways be created when cloudsql.enabled is set to true
 # In this case the serviceAccount configuration here is required
