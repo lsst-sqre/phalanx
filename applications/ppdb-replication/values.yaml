@@ -115,7 +115,7 @@ config:
   checkInterval: 30
 
   # -- Time to wait between uploader file scans
-  waitInterval: 60
+  waitInterval: 300
 
   # -- Time to wait between uploader file uploads
   uploadInterval: 0
@@ -131,3 +131,6 @@ config:
 
   # -- S3 profile URL for additional S3 profile
   additionalS3ProfileUrl: "https://sdfembs3.sdf.slac.stanford.edu"
+
+  # -- Enable deletion of chunks after upload
+  deleteChunks: false
