@@ -8,7 +8,7 @@ config:
   apdbConfig: "s3://embargo@rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcam.yaml"
 
   # -- PPDB config file resource
-  ppdbConfig: "/sdf/home/j/jeremym/rubin-user/dev/DM-50563/ppdb-config/ppdb_lsstcam.yaml"
+  ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_lsstcam.yaml"
 
   # -- Target BigQuery dataset in the form of `project:dataset`
   dataset: "ppdb-prod:ppdb_lsstcam"
