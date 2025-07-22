@@ -18,6 +18,7 @@ Replicates data from the APDB to the PPDB
 | config.batchSize | int | `1000` | Size of record batches when writing parquet files |
 | config.checkInterval | int | `30` | Time to wait before checking for new chunks, if no chunk appears |
 | config.dataset | string | `nil` | Target BigQuery dataset |
+| config.deleteChunks | bool | `false` | Enable deletion of chunks after upload |
 | config.disableBucketValidation | int | `1` | Disable bucket validation in LSST S3 tools |
 | config.gcsBucket | string | `nil` | GCS bucket name |
 | config.gcsPrefix | string | `nil` | GCS bucket prefix |
@@ -33,7 +34,7 @@ Replicates data from the APDB to the PPDB
 | config.stagingDirectory | string | `nil` | Staging directory for replicated data |
 | config.updateExisting | bool | `false` | Allow updates to already replicated data |
 | config.uploadInterval | int | `0` | Time to wait between uploader file uploads |
-| config.waitInterval | int | `60` | Time to wait between uploader file scans |
+| config.waitInterval | int | `300` | Time to wait between uploader file scans |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
