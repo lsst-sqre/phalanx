@@ -28,15 +28,12 @@ Replicates data from the APDB to the PPDB
 | config.monLogger | string | `"lsst.dax.ppdb.monitor"` | Name of logger for monitoring |
 | config.monRules | string | `nil` | Comma-separated list of monitoring filter rules |
 | config.pathPrefix | string | `"/ppdb-replication"` | URL path prefix |
-| config.persistentVolumeClaims | list | `[{"name":"sdf-group-rubin","storageClassName":"sdf-group-rubin"},{"name":"sdf-data-rubin","storageClassName":"sdf-data-rubin"}]` | Persistent volume claims |
 | config.ppdbConfig | string | `nil` | PPDB config file resource |
 | config.s3EndpointUrl | string | `"https://s3dfrgw.slac.stanford.edu"` | S3 endpoint URL |
 | config.stagingDirectory | string | `nil` | Staging directory for replicated data |
 | config.updateExisting | bool | `false` | Allow updates to already replicated data |
 | config.uploadInterval | int | `0` | Time to wait between uploader file uploads |
-| config.volumeMounts | list | `[{"mountPath":"/sdf/group/rubin","name":"sdf-group-rubin"},{"mountPath":"/sdf/data/rubin","name":"sdf-data-rubin"}]` | Volume mounts |
-| config.volumes | list | `[{"name":"sdf-group-rubin","persistentVolumeClaim":{"claimName":"sdf-group-rubin"}},{"name":"sdf-data-rubin","persistentVolumeClaim":{"claimName":"sdf-data-rubin"}}]` | Volumes specific to the environment |
-| config.waitInterval | int | `60` | Time to wait between uploader file scans |
+| config.waitInterval | int | `300` | Time to wait between uploader file scans |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

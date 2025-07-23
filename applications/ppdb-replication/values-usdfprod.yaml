@@ -2,26 +2,22 @@ config:
 
   # -- Logging profile (`production` for JSON, `development` for
   # human-friendly)
-  logProfile: "development"
+  logProfile: "production"
 
   # -- APDB config file resource
   apdbConfig: "s3://embargo@rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcam.yaml"
-  # apdbConfig: "s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcomcamsim-dev.py"
-  # apdbConfig: "/sdf/group/rubin/user/salnikov/apdb/dm50040/apdb-cassandra-dm50040.yaml"
 
   # -- PPDB config file resource
-  ppdbConfig: /sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm51379.yaml
-  # ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm50563.yaml"
-  # ppdbConfig: "/sdf/group/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_dm50040.yaml"
+  ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_lsstcam.yaml"
 
-  # -- Target BigQuery dataset
-  dataset: "ppdb-dev-438721:ppdb_dm50567"
+  # -- Target BigQuery dataset in the form of `project:dataset`
+  dataset: "ppdb-prod:ppdb_lsstcam"
 
   # -- Staging directory for replicated data
-  stagingDirectory: "/sdf/scratch/rubin/ppdb/staging/lsstcam"
+  stagingDirectory: "/sdf/scratch/rubin/ppdb/data/lsstcam"
 
   # -- GCS bucket name
-  gcsBucket: "rubin-ppdb-test-bucket-1"
+  gcsBucket: "rubin-ppdb-lsstcam"
 
   # -- GCS prefix
   gcsPrefix: "data/lsstcam"
@@ -35,7 +31,7 @@ config:
       persistentVolumeClaim:
         claimName: sdf-data-rubin
     - name: sdf-scratch
-      persistentVolumeClain:
+      persistentVolumeClaim:
         claimName: sdf-scratch
   # -- Volume mounts
   volumeMounts:

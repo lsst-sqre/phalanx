@@ -19,6 +19,7 @@ applications:
   mobu: true
   nublado: true
   plot-navigator: true
+  ppdb-replication: true
   portal: true
   postgres: true
   sasquatch: true
