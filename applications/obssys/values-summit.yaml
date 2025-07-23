@@ -61,10 +61,10 @@ atqueue:
   resources:
     limits:
       cpu: 5000m
-      memory: 10Gi
+      memory: 48Gi
     requests:
       cpu: 1000m
-      memory: 580Mi
+      memory: 4Gi
 
 atscheduler:
   classifier: scheduler2
