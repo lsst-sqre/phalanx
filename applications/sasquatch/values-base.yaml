@@ -48,6 +48,13 @@ strimzi-kafka:
     logging: debug
     enableSaramaLogging: true
     showAllOffsets: false
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 2
+      limits:
+        memory: 1Gi
+        cpu: 2
   controller:
     enabled: true
   broker:
