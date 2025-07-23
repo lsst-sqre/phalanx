@@ -13,7 +13,7 @@ config:
         storageClass: "standard-rwo"
   ssotap: "ssotap"
   hipsUrl: "https://data.lsst.cloud/api/hips/v2/dp1/deep_coadd/band_r"
-  showUserInfo: "true"
+  showUserInfo: "false"
 
 redis:
   persistence:
