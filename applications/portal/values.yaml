@@ -83,7 +83,7 @@ config:
   livetap: ""
 
   # -- Maximum number of recent TAP queries to show in history
-  tapHistoryLimit: "50"
+  tapHistoryLimit: "1000"
 
   # @default -- See documentation at `https://phalanx.lsst.io/applications/portal/volumes.html`
   volumes:
