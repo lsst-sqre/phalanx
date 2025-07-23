@@ -46,10 +46,10 @@ config:
   quota:
     default:
       api:
-        hips: 1000
-        sia: 1000
-        tap: 3000
-        vo-cutouts: 500
+        hips: 70
+        sia: 70
+        tap: 200
+        vo-cutouts: 35
       notebook:
         cpu: 4.0
         memory: 16
