@@ -53,6 +53,9 @@ config:
       notebook:
         cpu: 4.0
         memory: 16
+      tap:
+        qserv:
+          concurrent: 12
 
   groupMapping:
     "admin:jupyterlab":
