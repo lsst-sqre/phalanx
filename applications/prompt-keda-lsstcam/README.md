@@ -83,6 +83,7 @@ KEDA Prompt Processing instance for LSSTCam
 | prompt-keda.sasquatch.auth_env | bool | `true` | If set, this application's Vault secret must contain a `sasquatch_token` key containing the authentication token for `sasquatch.endpointUrl`. Leave unset to attempt anonymous access. |
 | prompt-keda.sasquatch.endpointUrl | string | `""` | Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload. This is a preliminary implementation of Sasquatch support, and this parameter may be deprecated if we instead support `SasquatchDatastore` in the future. |
 | prompt-keda.sasquatch.namespace | string | `"lsst.prompt"` | Namespace in the Sasquatch system with which to associate metrics. |
+| prompt-keda.sattle.uri_base | string | `"http://sdfembdb101.sdf.slac.stanford.edu:9999"` | Base URI of the sattle service.  Leave blank if not used. |
 | prompt-keda.tolerations | list | `[]` | Tolerations for the Prompt Processing pod |
 | prompt-keda.worker.grace_period | int | `45` | When Kubernetes shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds). |
 | prompt-keda.worker.restart | int | `0` | The number of requests to process before rebooting a worker. If 0, workers process requests indefinitely. |
