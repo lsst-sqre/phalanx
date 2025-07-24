@@ -10,6 +10,7 @@ controller:
         AUTO_REPO_URLS: "https://github.com/lsst-uk/rsp-uk-notebooks"
         AUTO_REPO_BRANCH: "main"
         AUTO_REPO_SPECS: "https://github.com/lsst-uk/rsp-uk-notebooks@main"
+        DAF_BUTLER_REPOSITORY_INDEX: "/data/butler/data-repos.yaml"
       initContainers:
         - name: "inithome"
           image:
@@ -36,6 +37,11 @@ controller:
             serverPath: "/datasets"
             server: "192.41.122.33"
             type: "nfs"
+        - name: "lsdb-data"
+          source:
+            serverPath: "/data/butler/lsdb_data"
+            server: "192.41.122.94"
+            type: "nfs"
       volumeMounts:
         - containerPath: "/data"
           volumeName: "data"
@@ -43,6 +49,8 @@ controller:
           volumeName: "home"
         - containerPath: "/datasets"
           volumeName: "datasets"
+        - containerPath: "/rubin/lsdb_data"
+          volumeName: "lsdb-data"
 
 proxy:
   ingress:
