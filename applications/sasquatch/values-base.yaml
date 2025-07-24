@@ -54,7 +54,7 @@ strimzi-kafka:
         cpu: 2
       limits:
         memory: 1Gi
-        cpu: 2
+        cpu: 4
   controller:
     enabled: true
   broker:
