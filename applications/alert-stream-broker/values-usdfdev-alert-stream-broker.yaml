@@ -132,8 +132,9 @@ alert-stream-schema-registry:
 
 alert-database:
   ingester:
+    # The image can use either a tag or a digest to determine which is being used.
     image:
-      tag: v2.0.2
+      tag: tickets-DM-51925
 
     logLevel: verbose
 
