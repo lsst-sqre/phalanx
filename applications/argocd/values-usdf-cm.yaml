@@ -35,3 +35,4 @@ argo-cd:
   server:
     ingress:
       hostname: "usdf-cm.slac.stanford.edu"
+      tls: false
