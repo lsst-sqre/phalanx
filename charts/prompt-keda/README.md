@@ -85,6 +85,7 @@ Event-driven processing of camera images
 | sasquatch.auth_env | bool | `true` | If set, this application's Vault secret must contain a `sasquatch_token` key containing the authentication token for `sasquatch.endpointUrl`. Leave unset to attempt anonymous access. |
 | sasquatch.endpointUrl | string | `""` | Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload. This is a preliminary implementation of Sasquatch support, and this parameter may be deprecated if we instead support `SasquatchDatastore` in the future. |
 | sasquatch.namespace | string | `"lsst.prompt"` | Namespace in the Sasquatch system with which to associate metrics. |
+| sattle.uri_base | string | `""` | Base URI of the sattle service.  Leave blank if not used. |
 | tolerations | list | `[]` | Tolerations for the Prompt Processing pod |
 | worker.grace_period | int | `45` | When Kubernetes shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds). |
 | worker.restart | int | `0` | The number of requests to process before rebooting a worker. If 0, workers process requests indefinitely. |
