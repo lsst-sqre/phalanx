@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: "alert-database-ingester"
-          image: "lsstdm/alert_database_ingester:tickets-DM-44907"
+          image: "lsstdm/alert_database_ingester:tickets-DM-59125"
           imagePullPolicy: "{{ .Values.ingester.image.imagePullPolicy}}"
           volumeMounts:
             - name: "kafka-client-secret"
