@@ -26,11 +26,11 @@ config:
 
   ldap:
     url: ldap://sdfldapsrv.slac.stanford.edu:389
-    groupBaseDn: ou=Group,dc=slac,dc=stanford,dc=edu
+    groupBaseDn: ou=Group,dc=sdf,dc=slac,dc=stanford,dc=edu
     groupObjectClass: posixGroup
     groupMemberAttr: memberUid
     groupSearchByDn: false
-    userBaseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
+    userBaseDn: ou=People,dc=sdf,dc=slac,dc=stanford,dc=edu
     userSearchAttr: uid
     addUserGroup: false
     uidAttr: uidNumber
