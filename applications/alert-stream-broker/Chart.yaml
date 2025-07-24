@@ -17,7 +17,7 @@ dependencies:
     version: 2.1.0
 
   - name: alert-database
-    version: 2.1.0
+    version: 3.0.0
 
   - name: strimzi-registry-operator
     version: 2.1.0

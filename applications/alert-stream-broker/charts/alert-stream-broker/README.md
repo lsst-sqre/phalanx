@@ -21,15 +21,13 @@ Kafka broker cluster for distributing alerts
 | kafka.externalListener.brokers | list | `[]` | List of hostname and IP for each broker. The format of this is a list of maps with 'ip' and 'host' keys. For example:     - ip: "192.168.1.1"      host: broker-0.example    - ip: "192.168.1.2"      host: broker-1.example  Each replica should get a host and IP. If these are unset, then IP addresses will be chosen automatically by the Kubernetes cluster's LoadBalancer controller, and hostnames will be unset, which will break TLS connections. |
 | kafka.externalListener.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of the certificate issuer. |
 | kafka.externalListener.tls.enabled | bool | `false` | Whether TLS encryption is enabled. |
-| kafka.interBrokerProtocolVersion | float | `3.2` | Version of the protocol for inter-broker communication, see https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str. |
-| kafka.logMessageFormatVersion | float | `3.2` | Encoding version for messages, see https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str. |
 | kafka.nodePool.affinities | list | `[{"key":"kafka","value":"ok"}]` | List of node affinities to set for the broker's nodes. The key should be a label key, and the value should be a label value, and then the broker will prefer running Kafka and Zookeeper on nodes with those key-value pairs. |
 | kafka.nodePool.tolerations | list | `[{"effect":"NoSchedule","key":"kafka","value":"ok"}]` | List of taint tolerations when scheduling the broker's pods onto nodes. The key should be a taint key, the value should be a taint value, and effect should be a taint effect that can be tolerated (ignored) when scheduling the broker's Kafka and Zookeeper pods. |
 | kafka.prometheusScrapingEnabled | bool | `false` | Enable Prometheus to scrape metrics. |
-| kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
+| kafka.replicas | int | `6` | Number of Kafka broker replicas to run. |
 | kafka.storage.size | string | `"1000Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | kafka.storage.storageClassName | string | `"standard"` | Name of a StorageClass to use when requesting persistent volumes. |
-| kafka.version | string | `"3.4.0"` | Version of Kafka to deploy. |
+| kafka.version | string | `"3.7.0"` | Version of Kafka to deploy. |
 | kafkaController.enabled | bool | `false` | Enable Kafka Controller |
 | kafkaController.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka Controller |
 | kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers |
