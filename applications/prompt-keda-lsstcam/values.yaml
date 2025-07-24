@@ -128,6 +128,10 @@ prompt-keda:
     lsst.associateApdb=VERBOSE lsst.loadDiaCatalogs=VERBOSE lsst.computeReliability=VERBOSE
     lsst.daf.butler=VERBOSE
 
+  sattle:
+    # -- Base URI of the sattle service.  Leave blank if not used.
+    uri_base: "http://sdfembdb101.sdf.slac.stanford.edu:9999"
+
   sasquatch:
     # -- Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload.
     # This is a preliminary implementation of Sasquatch support, and this parameter may be deprecated

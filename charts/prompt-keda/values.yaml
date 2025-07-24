@@ -139,6 +139,10 @@ sasquatch:
   # Leave unset to attempt anonymous access.
   auth_env: true
 
+sattle:
+  # -- Base URI of the sattle service.  Leave blank if not used.
+  uri_base: ""
+
 keda:
   # -- Minimum number of replicas to start with.
   minReplicaCount: 3
