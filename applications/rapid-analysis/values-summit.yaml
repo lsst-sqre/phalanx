@@ -372,10 +372,10 @@ scripts:
   resources:
     requests:
       cpu: .5
-      memory: 3G
+      memory: 5G
     limits:
       cpu: 1
-      memory: 6G
+      memory: 10G
 - name: LSSTCam/runPlotter.py
   mounts:
   - lsstcam-data
