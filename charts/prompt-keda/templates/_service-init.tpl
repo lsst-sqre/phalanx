@@ -52,7 +52,7 @@ spec:
         {{- with .Values.sattle.uri_base }}
         - name: SATTLE_URI_BASE
           value: {{ . }}
-	{{- end }}
+        {{- end }}
         - name: SASQUATCH_URL
           value: {{ .Values.sasquatch.endpointUrl }}
         {{- if and .Values.sasquatch.endpointUrl .Values.sasquatch.auth_env }}
