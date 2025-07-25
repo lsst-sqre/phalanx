@@ -335,7 +335,7 @@ love-nginx:
     frontend:
       image:
         repository: ts-dockerhub.lsst.org/love-frontend-k8s
-        revision: 8
+        revision: 9
         pullPolicy: Always
     manager:
       image:
