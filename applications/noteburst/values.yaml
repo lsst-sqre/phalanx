@@ -92,6 +92,20 @@ resources:
       cpu: "2m"
       memory: "256Mi"
 
+# -- Config for the CronJob that publishes metrics periodically
+periodicMetrics:
+  # -- Cron schedule string for publishing periodic metrics (in UTC)
+  schedule: "* * * * *"
+
+  # -- Resources for the periodic metrics cron job
+  resources:
+    limits:
+      cpu: "250m"
+      memory: "512Mi"
+    requests:
+      cpu: "2m"
+      memory: "128Mi"
+
 autoscaling:
   enabled: false
   minReplicas: 1
