@@ -257,24 +257,6 @@ topics:
     replicas: 1
     # -- Retention time of events in milliseconds
     retention: 3600000
-  lsstcomcam:
-    # -- Enable lsstcomcam topic
-    enabled: false
-    # -- Number of partitions on topic
-    partitions: 1
-    # -- Number of replicas
-    replicas: 1
-    # -- Retention time of events in milliseconds
-    retention: 3600000
-  lsstcomcamsim:
-    # -- Enable lsstcomcamsim topic
-    enabled: false
-    # -- Number of partitions on topic
-    partitions: 1
-    # -- Number of replicas
-    replicas: 1
-    # -- Retention time of events in milliseconds
-    retention: 3600000
 
 users:
   butlerWriter:
