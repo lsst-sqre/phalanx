@@ -16,9 +16,9 @@ Alert transmission to community brokers
 | strimzi-registry-operator.operatorNamespace | string | `"alert-stream-broker"` |  |
 | strimzi-registry-operator.watchNamespace | string | `"alert-stream-broker"` |  |
 | alert-database.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| alert-database.ingester.image.digest | string | `"sha256:ffbb2fb03f4147359a5945ecb4773a2ee3822614c00594ef0757de6061a22911"` |  |
 | alert-database.ingester.image.imagePullPolicy | string | `"Always"` |  |
 | alert-database.ingester.image.repository | string | `"lsstdm/alert_database_ingester"` |  |
-| alert-database.ingester.image.tag | string | `"tickets-DM-51925"` |  |
 | alert-database.ingester.kafka.cluster | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
 | alert-database.ingester.kafka.port | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal listener that expects SCRAM SHA-512 auth. |
 | alert-database.ingester.kafka.strimziAPIVersion | string | `"v1beta2"` | API version of the Strimzi installation's custom resource definitions |
