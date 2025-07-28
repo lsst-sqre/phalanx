@@ -40,7 +40,7 @@ Alert transmission to community brokers
 | alert-database.nameOverride | string | `""` | Override the base name for resources |
 | alert-database.server.image.imagePullPolicy | string | `"Always"` |  |
 | alert-database.server.image.repository | string | `"lsstdm/alert_database_server"` |  |
-| alert-database.server.image.tag | string | `"tickets-DM-44907"` |  |
+| alert-database.server.image.tag | string | `"tickets-DM-59125"` |  |
 | alert-database.server.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
 | alert-database.server.s3.alertBucket | string | `"alert-archive"` |  |
 | alert-database.server.s3.endpointURL | string | `"https://sdfembs3.sdf.slac.stanford.edu/"` | Project ID which has the above GCP IAM service account |

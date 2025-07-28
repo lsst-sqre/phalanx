@@ -54,7 +54,7 @@ ingester:
 server:
   image:
     repository: lsstdm/alert_database_server
-    tag: tickets-DM-44907
+    tag: tickets-DM-59125
     imagePullPolicy: Always
 
   s3:
