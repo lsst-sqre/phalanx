@@ -48,6 +48,11 @@ prompt-keda:
     auth_env: false
 
   keda:
+    maxReplicaCount: 1500
     redisStreams:
       # Dev processes very old images, set to ~20 years
       expiration: 600_000_000.0
+
+  podAnnotations: {
+    edu.stanford.slac.sdf.project/usdf-embargo: "true"
+  }
