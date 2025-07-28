@@ -52,6 +52,7 @@ prompt-keda:
     auth_env: false
 
   keda:
+    maxReplicaCount: 1500
     redisStreams:
       # Dev processes very old images, set to ~20 years
       expiration: 600_000_000.0
@@ -61,3 +62,7 @@ prompt-keda:
     kafka_cluster: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
     kafka_username: butler-writer
     kafka_topic: butler-writer
+
+  podAnnotations: {
+    edu.stanford.slac.sdf.project/usdf-embargo: "true"
+  }
