@@ -229,53 +229,6 @@ registry:
 superusers:
   - kafka-admin
 
-# -- Topic configuration.  Enable for supporting certain instruments.
-topics:
-  hsc:
-    # -- Enable hsc topic
-    enabled: false
-    # -- Number of partitions on topic
-    partitions: 1
-    # -- Number of replicas
-    replicas: 1
-    retention: 3600000
-  latiss:
-    # -- Enable latiss topic
-    enabled: false
-    # -- Number of partitions on topic
-    partitions: 1
-    # -- Number of replicas
-    replicas: 1
-    # -- Retention time of events in milliseconds
-    retention: 3600000
-  lsstcam:
-    # -- Enable lsstcam topic
-    enabled: false
-    # -- Number of partitions on topic
-    partitions: 1
-    # -- Number of replicas
-    replicas: 1
-    # -- Retention time of events in milliseconds
-    retention: 3600000
-  lsstcomcam:
-    # -- Enable lsstcomcam topic
-    enabled: false
-    # -- Number of partitions on topic
-    partitions: 1
-    # -- Number of replicas
-    replicas: 1
-    # -- Retention time of events in milliseconds
-    retention: 3600000
-  lsstcomcamsim:
-    # -- Enable lsstcomcamsim topic
-    enabled: false
-    # -- Number of partitions on topic
-    partitions: 1
-    # -- Number of replicas
-    replicas: 1
-    # -- Retention time of events in milliseconds
-    retention: 3600000
-
 users:
   butlerWriter:
     # -- Enable user butler-writer (deployed by parent Prompt Kafka chart).
