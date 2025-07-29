@@ -30,6 +30,8 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+            - name: PYTHONMALLOC
+              value: malloc
             - name: "KAFKA_BOOTSTRAP_SERVERS"
               valueFrom:
                 secretKeyRef:
@@ -102,6 +104,8 @@ spec:
               mountPath: "/etc/qserv-kafka/user.key"
               readOnly: true
               subPath: "ssl.keystore.key"
+            - name: debug-storage
+              mountPath: /debug
       {{- with .Values.frontend.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -118,3 +122,6 @@ spec:
         - name: "kafka"
           secret:
             secretName: "qserv-kafka-access"
+        - name: debug-storage
+          persistentVolumeClaim:
+            claimName: qserv-kafka-debug
