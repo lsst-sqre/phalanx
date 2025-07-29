@@ -205,25 +205,20 @@ config:
     from Rubin Observatory staff. Here are the ways to ask for help.</Lede>
 
     <Section>
-      ## Data Preview 0 science questions
+      ## Community forum
 
-      For questions about the Data Preview dataset (DESC DC2) and analyzing
-      that data (such as with the LSST Science Pipelines), create a new
-      topic in the [Data Preview 0 Support category](https://community.lsst.org/c/support/dp0/49)
-      of the Community forum.
+      Ask questions and solve problems with the help of Rubin Observatory staff and other users:
 
-      <CtaLink href="http://community.lsst.org/new-topic?category=support/dp0">Create a science support topic in the forum</CtaLink>
-    </Section>
+      - [RSP service issues category](https://community.lsst.org/c/support/rsp-issues/52) for issues with the Rubin Science Platform including Portal, Notebooks, API services.
+      - [Data Products category](https://community.lsst.org/c/support/data/34) for questions about the LSST data products.
+      - [Data Preview 0 category](https://community.lsst.org/c/support/dp0/49) for questions about the Data Preview 0 datasets (pre DP1).
+      - [Rubin Science Platform category](https://community.lsst.org/c/support/lsp/39) for discussions about the Rubin Science Platform.
 
-    <Section>
-      ## Rubin Science Platform technical support and feature requests
+      ## Keeping up to date
 
-      For technical issues or feature requests related to the Rubin Science
-      Platform itself (the Portal, Notebooks, and API services such as TAP)
-      create a GitHub issue in the
-      [rubin-dp0/Support](https://github.com/rubin-dp0/Support) repository.
+      The Rubin Science Platform is constantly improving with exciting new features and bug fixes.
+      [*Staying up to date*](https://rsp.lsst.io/guides/life/updates.html) provides tips for following the latest developments to make the most of the platform.
 
-      <CtaLink href="https://github.com/rubin-dp0/Support/issues/new/choose">Create a GitHub issue</CtaLink>
     </Section>
 
   # -- MDX content for the `/enrollment/thanks-for-signing-up` page
