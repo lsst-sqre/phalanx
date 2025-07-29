@@ -3,7 +3,7 @@ knative:
   retryRequests: false
 
 kafka:
-  schemaRegistryUrl: http://10.106.6.127:8081
+  schemaRegistryUrl: http://10.105.217.231:8081
   sasquatchAddress: 172.24.10.24:9094
   consumerGroup: test-group-3
   nextVisitTopic: test.next-visit-job
