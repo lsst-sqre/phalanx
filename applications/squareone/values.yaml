@@ -214,6 +214,11 @@ config:
       - [Data Preview 0 category](https://community.lsst.org/c/support/dp0/49) for questions about the Data Preview 0 datasets (pre DP1).
       - [Rubin Science Platform category](https://community.lsst.org/c/support/lsp/39) for discussions about the Rubin Science Platform.
 
+      ## Keeping up to date
+
+      The Rubin Science Platform is constantly improving with exciting new features and bug fixes.
+      [*Staying up to date*](https://rsp.lsst.io/guides/life/updates.html) provides tips for following the latest developments to make the most of the platform.
+
     </Section>
 
   # -- MDX content for the `/enrollment/thanks-for-signing-up` page
