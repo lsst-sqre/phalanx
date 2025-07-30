@@ -20,7 +20,7 @@ config:
   gcsBucket: "ppdb-dev"
 
   # -- GCS prefix
-  gcsPrefix: "data/dm50562"
+  gcsPrefix: "data"
 
   # -- Volumes specific to the environment
   volumes:
