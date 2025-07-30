@@ -2,7 +2,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
-  name: kafdrop
+  name: {{ .Values.kafka.user }}
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:
@@ -12,7 +12,7 @@ spec:
       valueFrom:
         secretKeyRef:
           name: sasquatch
-          key: kafdrop-password
+          key: {{ .Values.kafka.user }}-password
   authorization:
     type: simple
     acls:
@@ -24,9 +24,10 @@ spec:
           - All
       - resource:
           type: topic
-          name: "*"
-          patternType: literal
+          name: {{ .Values.kafka.topicPrefix }}
+          patternType: prefix
         type: allow
         host: "*"
         operations:
-          - All
+          - Read
+          - Describe

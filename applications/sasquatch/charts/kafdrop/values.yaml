@@ -19,8 +19,15 @@ image:
   tag: 4.2.0
 
 kafka:
-  # -- Bootstrap list of Kafka host/port pairs
+  # -- Kafka bootstrap servers to connect to
+  # @default -- sasquatch-kafka-bootstrap.sasquatch:9092
   broker: "sasquatch-kafka-bootstrap.sasquatch:9092"
+  # -- Kafka user to use for kafdrop
+  # @default -- kafdrop
+  user: "kafdrop"
+  # -- Kafka topic prefix to filter topics by
+  # @default -- lsst
+  topicPrefix: "lsst"
 
 jvm:
   # -- JVM options
