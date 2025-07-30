@@ -60,7 +60,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: sasquatch
-                key: kafdrop-kafka-properties
+                key: {{ .Values.kafka.user }}-kafka-properties
           ports:
             - name: http
               containerPort: {{ .Values.server.port }}

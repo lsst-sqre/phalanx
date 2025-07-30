@@ -24,7 +24,9 @@ A subchart to deploy the Kafdrop UI for Sasquatch.
 | ingress.path | string | `"/kafdrop"` | Ingress path |
 | jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
 | jvm.opts | string | `""` | JVM options |
-| kafka.broker | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Bootstrap list of Kafka host/port pairs |
+| kafka.broker | string | sasquatch-kafka-bootstrap.sasquatch:9092 | Kafka bootstrap servers to connect to |
+| kafka.topicPrefix | string | lsst | Kafka topic prefix to filter topics by |
+| kafka.user | string | kafdrop | Kafka user to use for kafdrop |
 | nodeSelector | object | `{}` | Node selector configuration |
 | podAnnotations | object | `{}` | Pod annotations |
 | replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |

@@ -47,6 +47,10 @@ dependencies:
   - name: kafdrop
     condition: kafdrop.enabled
     version: 1.0.0
+  - name: kafdrop
+    alias: kafdrop-remote
+    condition: kafdrop-remote.enabled
+    version: 1.0.0
   - name: telegraf
     condition: telegraf.enabled
     version: 1.0.0
