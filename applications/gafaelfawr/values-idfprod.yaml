@@ -46,7 +46,6 @@ config:
   quota:
     default:
       api:
-        hips: 70
         sia: 70
         tap: 200
         vo-cutouts: 35
