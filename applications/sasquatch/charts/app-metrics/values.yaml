@@ -23,6 +23,7 @@ globalAppConfig:
   noteburst:
     influxTags:
       - "username"
+      - "queue"
   nublado:
     influxTags:
       - "username"
