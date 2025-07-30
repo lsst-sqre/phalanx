@@ -13,6 +13,9 @@ appVersion: 0.1.0
 dependencies:
   - name: strimzi-kafka
     version: 1.0.0
+  - name: strimzi-registry-operator
+    version: 2.1.0
+    repository: https://lsst-sqre.github.io/charts/
   - name: influxdb
     alias: influxdb
     condition: influxdb.enabled
@@ -44,19 +47,16 @@ dependencies:
   - name: kafdrop
     condition: kafdrop.enabled
     version: 1.0.0
-  - name: schema-registry
-    condition: registry.enabled
-    version: 1.0.0
-  - name: schema-registry
-    alias: schema-registry-remote
-    condition: schema-registry-remote.enabled
+  - name: kafdrop
+    alias: kafdrop-remote
+    condition: kafdrop-remote.enabled
     version: 1.0.0
   - name: telegraf
     condition: telegraf.enabled
     version: 1.0.0
   - name: telegraf
-    alias: telegraf-standby
-    condition: telegraf-standby.enabled
+    alias: telegraf-oss
+    condition: telegraf-oss.enabled
     version: 1.0.0
   - name: rest-proxy
     condition: rest-proxy.enabled

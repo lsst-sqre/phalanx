@@ -307,6 +307,10 @@ kafdrop:
   # -- Whether to enable the kafdrop subchart
   enabled: true
 
+kafdrop-remote:
+  # -- Whether to enable the kafdrop-remote subchart
+  enabled: false
+
 squareEvents:
   # -- Enable the Square Events subchart with topic and user configurations
   enabled: false
