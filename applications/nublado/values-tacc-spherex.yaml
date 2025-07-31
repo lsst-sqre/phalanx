@@ -46,7 +46,7 @@ controller:
             serverPath: "/data/scratch"
             server: "192.168.115.150"
             type: "nfs"
-        - name: "AST25011"
+        - name: "ast25011"
           source:
             serverPath: "/corral/main/projects/AST25011"
             server: "129.114.52.151"
