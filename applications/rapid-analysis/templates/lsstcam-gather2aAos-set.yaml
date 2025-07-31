@@ -93,6 +93,9 @@ spec:
             - configMapRef:
                 name: env-configmap
           volumeMounts:
+            - name: user-secrets
+              mountPath: {{ default "/home/saluser/.lsst" $.Values.butlerSecret.containerPath }}
+              readOnly: true
             - name: rubintv-creds
               mountPath: "/etc/rubintv/creds"
               readOnly: true
@@ -127,46 +130,20 @@ spec:
           {{- end }}
           {{- end }}
           {{- end }}
-          {{- if $.Values.butlerSecret }}
-            - name: butler-secret
-              mountPath: {{ $.Values.butlerSecret.containerPath }}
-          {{- end }}
           {{- if or $.Values.resources $script.resources }}
           {{- $resources := $script.resources | default $.Values.resources }}
           resources:
             {{- toYaml $resources | nindent 12 }}
           {{- end }}
-      {{- if $.Values.butlerSecret }}
       initContainers:
-        - name: butler-secret-perm-fixer
-          image: "alpine:latest"
-          command:
-            - "/bin/ash"
-            - "-c"
-            - |
-              cp -RL /secrets-raw/* /secrets
-              cat /secrets-rubintv/aws-credentials.ini > new-aws-credentials.ini
-              printf "\n" >> new-aws-credentials.ini
-              cat /secrets-rubintv/aws_credentials.ini >> new-aws-credentials.ini
-              printf "\n" >> new-aws-credentials.ini
-              mv new-aws-credentials.ini /secrets/aws-credentials.ini
-              chown 73006:73006 /secrets/*
-              chmod 0600 /secrets/*
-          volumeMounts:
-            - name: raw-butler-secret
-              mountPath: /secrets-raw
-              readOnly: true
-            - name: butler-secret
-              mountPath: /secrets
-            - name: rubintv-aws-creds
-              mountPath: /secrets-rubintv
-              readOnly: true
-      {{- end }}
+        {{ include "secret-perm-fixer-init-container" $ | nindent 8 }}
       volumes:
+        - name: user-secrets
+          emptyDir: {}
         - name: rubintv-creds
           secret:
             secretName: google-creds
-        - name: rubintv-aws-creds
+        - name: rubintv-secrets
           secret:
             secretName: rubintv-secrets
       {{- if $.Values.nfsMountpoint }}
@@ -197,14 +174,6 @@ spec:
             claimName: {{ $values.name }}
       {{- end }}
       {{- end }}
-      {{- end }}
-      {{- if $.Values.butlerSecret }}
-        - name: butler-secret
-          emptyDir: {}
-        - name: raw-butler-secret
-          secret:
-            secretName: butler-secret
-            defaultMode: 0600
       {{- end }}
       {{- if or $.Values.nodeSelector $script.nodeSelector }}
       {{- $nodeSelector := $script.nodeSelector | default $.Values.nodeSelector }}
