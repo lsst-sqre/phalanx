@@ -502,7 +502,6 @@ pullSecretsPath: pull-secret
 rubinTvSecretsPath: rubintv
 credentialSecretsPath: rubintv-broadcaster
 butlerSecret:
-  key: butler-secret
   containerPath: /home/saluser/.lsst
   dbUser: oods
 imagePullSecrets:
