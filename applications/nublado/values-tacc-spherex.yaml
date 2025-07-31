@@ -63,7 +63,8 @@ controller:
 #          volumeName: "ast25011"
 jupyterhub:
   hub:
-    baseUrl: "/nb"
+    #baseUrl: "/nb"
+    baseUrl: "/nublado"
     db:
       url: "postgresql://jhubsessions@192.168.115.125/jhubsessions01"
       upgrade: true
