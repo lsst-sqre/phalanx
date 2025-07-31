@@ -73,3 +73,6 @@ jupyterhub:
 
 hub:
   internalDatabase: false
+
+cronjob:
+  enabled: false
