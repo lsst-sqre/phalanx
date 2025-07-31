@@ -39,7 +39,7 @@ controller:
             type: "nfs"
         - name: "rubin"
           source:
-            serverPath: "/data/rubin"
+            serverPath: "/data/butler/rubin"
             server: "192.41.122.94"
             type: "nfs"
       volumeMounts:
