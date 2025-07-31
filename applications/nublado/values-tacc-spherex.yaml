@@ -76,3 +76,5 @@ cronjob:
   enabled: false
   tutorials:
     enabled: false
+  artifacts:
+    enabled: false
