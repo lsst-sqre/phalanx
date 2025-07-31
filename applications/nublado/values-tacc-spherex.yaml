@@ -78,3 +78,7 @@ cronjob:
     enabled: false
   artifacts:
     enabled: false
+purger:
+  enabled: false
+cloudsql:
+  enabled: false
