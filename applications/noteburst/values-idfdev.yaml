@@ -1,6 +1,6 @@
 image:
   pullPolicy: Always
-  tag: tickets-DM-51912-arq-metrics
+  tag: tickets-DM-51912-arq-periodic-metrics
 
 config:
   logLevel: "DEBUG"
