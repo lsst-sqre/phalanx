@@ -45,6 +45,12 @@ controller:
             serverPath: "/data/scratch"
             server: "192.168.115.150"
             type: "nfs"
+        - name: "AST25011"
+          source:
+            serverPath: "/corral/main/projects/AST25011"
+            server: "129.114.52.151"
+            type: "nfs"
+            readOnly: true
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -52,6 +58,8 @@ controller:
           volumeName: "project"
         - containerPath: "/scratch"
           volumeName: "scratch"
+        - containerPath: "/AST25011"
+          volumeName: "AST25011"
 jupyterhub:
   hub:
     baseUrl: "/nb"
