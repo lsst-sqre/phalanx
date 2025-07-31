@@ -58,8 +58,8 @@ controller:
           volumeName: "project"
         - containerPath: "/scratch"
           volumeName: "scratch"
-        - containerPath: "/AST25011"
-          volumeName: "AST25011"
+        - containerPath: "/ast25011"
+          volumeName: "ast25011"
 jupyterhub:
   hub:
     baseUrl: "/nb"
