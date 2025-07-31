@@ -5,7 +5,7 @@ version: 1.0.0
 description: "Qserv Kafka bridge"
 sources:
   - "https://github.com/lsst-sqre/qserv-kafka"
-appVersion: 1.1.0
+appVersion: 1.2.0
 
 dependencies:
   - name: "redis"
