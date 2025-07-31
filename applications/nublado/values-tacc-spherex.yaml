@@ -70,9 +70,9 @@ jupyterhub:
   cull:
     timeout: 432000  # 5 days
     maxAge: 691200  # 8 days
-
 hub:
   internalDatabase: false
-
 cronjob:
   enabled: false
+  tutorials:
+    enabled: false
