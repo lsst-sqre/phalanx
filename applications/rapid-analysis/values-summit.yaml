@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-sitcom/rubintv_production
-  tag: tickets-DM-52002
+  tag: tickets-DM-52030
   pullPolicy: Always
 location: SUMMIT
 siteTag: summit
@@ -14,7 +14,7 @@ securityContext:
   gid: 73006
   BUTLER_ROLLOUT_PAUSE: 1.0
   DEPLOY_BRANCH: deploy-summit
-  RA_PULL_DIRECTORIES: "drp_pipe donut_viz ts_wep atmospec summit_utils summit_extras rubintv_production"
+  RA_PULL_DIRECTORIES: "donut_viz ts_wep summit_utils summit_extras rubintv_production"
 scripts:
 ###
 ### AuxTel pods
