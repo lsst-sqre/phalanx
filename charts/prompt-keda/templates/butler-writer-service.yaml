@@ -1,0 +1,52 @@
+{{- if .Values.butler_writer.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: butler-writer-{{ include "prompt-keda.fullname" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: butler-writer-{{ include "prompt-keda.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: butler-writer-{{ include "prompt-keda.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      initContainers:
+        {{- include "prompt-keda.dbauth-initcontainer" . | nindent 8}}
+      containers:
+        - name: butler-writer
+          image: "{{ .Values.butler_writer.image.repository }}:{{ .Values.butler_writer.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          env:
+            - name: BUTLER_REPOSITORY
+              value: {{ .Values.instrument.centralRepo }}
+            - name: KAFKA_CLUSTER
+              value: {{ .Values.butler_writer.kafka_cluster }}
+            - name: KAFKA_TOPIC
+              value: {{ .Values.butler_writer.kafka_topic }}
+            - name: KAFKA_USERNAME
+              value: {{ .Values.butler_writer.kafka_username }}
+            - name: KAFKA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "prompt-keda.fullname" . }}-kafka-secret
+                  key: butler-writer-password
+            - name: FILE_STAGING_ROOT_PATH
+              value: {{ .Values.butler_writer.output_file_path }}
+            {{- include "prompt-keda.butler-env" . | nindent 12}}
+          volumeMounts:
+            {{- include "prompt-keda.butler-volumeMounts" . | nindent 12}}
+          resources:
+            requests:
+              cpu: {{ .Values.butler_writer.resources.cpuRequest | toString | quote}}
+              memory: {{ .Values.butler_writer.resources.memoryRequest }}
+            limits:
+              cpu: {{ .Values.butler_writer.resources.cpuLimit | toString | quote}}
+              memory: {{ .Values.butler_writer.resources.memoryLimit }}
+      volumes:
+        {{- include "prompt-keda.butler-volumes" . | nindent 10}}
+{{- end }}
