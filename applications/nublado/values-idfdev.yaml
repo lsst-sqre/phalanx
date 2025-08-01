@@ -44,7 +44,6 @@ controller:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.9.2"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -106,10 +105,6 @@ jupyterhub:
     db:
       upgrade: true
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
-  proxy:
-    chp:
-      image:
-        tag: "5.0.1"
 
 cloudsql:
   enabled: true
