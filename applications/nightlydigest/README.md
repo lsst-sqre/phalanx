@@ -23,8 +23,8 @@ Nightlydigest logging and reporting service
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | nightlydigest-backend.affinity | object | `{}` | Affinity rules applied to the pod. |
 | nightlydigest-backend.annotations | object | `{}` | This allows for the specification of pod annotations. |
-| nightlydigest-backend.env | object | `{}` | This section holds a set of key, value pairs for environmental variables. |
-| nightlydigest-backend.envSecrets | object | `{}` | This section holds a set of key, value pairs for secrets. |
+| nightlydigest-backend.env | list | `[]` | List of Kubernetes environment variable specifiers. |
+| nightlydigest-backend.envSecrets | list | `[]` | List of environment variables that should come from secrets. |
 | nightlydigest-backend.image.pullPolicy | string | `"IfNotPresent"` | The pull policy on the Nightlydigest backend image. |
 | nightlydigest-backend.image.repository | string | `"lsstts/nightlydigest-backend"` | The Nightlydigest backend image to use. |
 | nightlydigest-backend.image.tag | int | `nil` | The cycle revision to add to the image tag. |
