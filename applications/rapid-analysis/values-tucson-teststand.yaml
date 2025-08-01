@@ -2,11 +2,16 @@ image:
   repository: ts-dockerhub.lsst.org/rapid-analysis
   tag: c0039
   pullPolicy: Always
+location: TTS
+siteTag: tts
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
   DEPLOY_BRANCH: deploy-tts
-siteTag: tts
-location: TTS
+  LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.tu.lsst.org
+  AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+securityContext:
+  uid: 73006
+  gid: 73006
 scripts:
 ###
 ### AuxTel pods

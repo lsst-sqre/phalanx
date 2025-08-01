@@ -1,6 +1,5 @@
 rubintv:
   siteTag: "usdf-dev"
-  separateSecrets: false
 
   imagePullSecrets:
   - name: pull-secret
@@ -37,6 +36,8 @@ rubintv:
       value: *s3E
     - name: DAF_BUTLER_REPOSITORY_INDEX
       value: "s3://rubin-summit-users/data-repos.yaml"
+    - name: PGUSER
+      value: "rubin"
     - name: DEPLOY_BRANCH
       value: *dbE
     pvcMountpoint:
