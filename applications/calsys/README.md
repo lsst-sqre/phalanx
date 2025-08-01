@@ -18,7 +18,6 @@ Deployment for the Calibration System CSCs
 | electrometer201-sim.enabled | bool | `false` | Enable the Electrometer:201 simulator CSC |
 | electrometer201.enabled | bool | `false` | Enable the Electrometer:201 CSC |
 | gcheaderservice1.enabled | bool | `false` | Enable the GCHeaderService:1 CSC |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.controlSystem.appNamespace | string | Set by ArgoCD | Application namespace for the control system deployment |
 | global.controlSystem.imageTag | string | Set by ArgoCD | Image tag for the control system deployment |
 | global.controlSystem.kafkaBrokerAddress | string | Set by ArgoCD | Kafka broker address for the control system deployment |

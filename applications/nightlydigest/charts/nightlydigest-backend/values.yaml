@@ -7,10 +7,10 @@ image:
   tag:
   # -- The pull policy on the Nightlydigest backend image.
   pullPolicy: IfNotPresent
-# -- This section holds a set of key, value pairs for environmental variables.
-env: {}
-# -- This section holds a set of key, value pairs for secrets.
-envSecrets: {}
+# -- List of Kubernetes environment variable specifiers.
+env: []
+# -- List of environment variables that should come from secrets.
+envSecrets: []
 # -- This allows for the specification of pod annotations.
 annotations: {}
 # -- Resource specifications applied to the pod.

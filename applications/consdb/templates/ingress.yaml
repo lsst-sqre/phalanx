@@ -7,7 +7,6 @@ metadata:
   labels:
     {{- include "consdb.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
       - "read:image"

@@ -7,7 +7,6 @@ kind: GafaelfawrIngress
 metadata:
   name: "ghostwriter-{{ $res_src }}"
 config:
-  baseUrl: {{ $root.Values.global.baseUrl | quote }}
   scopes:
     all:
       - "read:image"

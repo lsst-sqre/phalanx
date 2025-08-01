@@ -17,7 +17,6 @@ Dashboard for currently running versions of CSCs
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
 | cyleBranch | string | `nil` | The branch name for the current Cycle revision |
 | envEfd | string | `nil` | The Name of the EFD instance. |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"Always"` | Pull policy for the csc-versions image |

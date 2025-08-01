@@ -58,21 +58,6 @@ resources:
 # -- Tolerations for the sasquatch-backpack deployment pod
 tolerations: []
 
-# The following will be set by parameters injected by Argo CD and should not
-# be set in the individual environment values files.
-global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: null
-
-  # -- Host name for ingress
-  # @default -- Set by Argo CD
-  host: null
-
-  # -- Base path for Vault secrets
-  # @default -- Set by Argo CD
-  vaultSecretsPath: null
-
 redis:
   persistence:
     # -- Whether to persist Redis storage.  Setting this to false will use
@@ -110,3 +95,14 @@ redis:
 
   # -- Affinity rules for the Redis pod
   affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

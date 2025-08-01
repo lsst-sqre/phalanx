@@ -3,7 +3,6 @@ kind: GafaelfawrIngress
 metadata:
   name: argo-workflows
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   loginRedirect: true
   scopes:
     all: {{ .Values.ingress.scopes }}

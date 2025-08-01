@@ -7,7 +7,6 @@ metadata:
   labels:
     {{- include "ook.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   loginRedirect: false
   scopes:
     anonymous: true
@@ -42,7 +41,6 @@ metadata:
   labels:
     {{- include "ook.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   loginRedirect: true
   scopes:
     all:
@@ -77,7 +75,6 @@ metadata:
   labels:
     {{- include "ook.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   loginRedirect: false
   scopes:
     all:

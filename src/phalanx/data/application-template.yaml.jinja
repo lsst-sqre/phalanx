@@ -22,12 +22,12 @@ spec:
     targetRevision: {{ or (index .Values "revisions" "[[ name ]]") .Values.targetRevision | quote }}
     helm:
       parameters:
-        - name: "global.host"
-          value: {{ .Values.fqdn | quote }}
         - name: "global.baseUrl"
           value: "https://{{ .Values.fqdn }}"
         - name: "global.environmentName"
           value: {{ .Values.name | quote }}
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:

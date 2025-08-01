@@ -6,7 +6,6 @@ metadata:
   labels:
     {{- include "mobu.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     anonymous: true
 template:

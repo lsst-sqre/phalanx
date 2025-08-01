@@ -8,7 +8,6 @@ NVR camera illuminator control
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the nvr-control deployment pod |
 | config.configVolume.storageClass | string | `nil` | Storage class for configuration persistent volume |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the nvr-control image |

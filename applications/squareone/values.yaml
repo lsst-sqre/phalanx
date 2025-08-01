@@ -305,16 +305,16 @@ config:
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD Application
-  baseUrl: ""
-
-  # -- Host name for ingress
-  # @default -- Set by Argo CD Application
-  host: ""
-
-  # -- Base path for Vault secrets
-  # @default -- Set by Argo CD Application
-  vaultSecretsPathPrefix: ""
+  baseUrl: null
 
   # -- Name of the Phalanx environment
   # @default -- Set by Argo CD Application
-  environmentName: ""
+  environmentName: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD Application
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD Application
+  vaultSecretsPathPrefix: null

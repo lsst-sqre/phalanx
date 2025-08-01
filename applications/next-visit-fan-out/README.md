@@ -10,7 +10,6 @@ Poll next visit events from Kafka, duplicate them, and send them to all applicat
 | debug | bool | `false` | If set, enable debug logging. |
 | detectorConfig | object | See `values.yaml`. | A mapping, for each instrument, of detector number to whether that detector is "active" (i.e., producing images). |
 | fullnameOverride | string | `""` |  |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
