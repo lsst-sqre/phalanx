@@ -44,6 +44,8 @@ rubintv:
       value: "/project/data-repos.yaml"
     - name: LSST_RESOURCES_S3_PROFILE_butler
       value: *s3E
+    - name: PGUSER
+      value: "oods"
     - name: DEPLOY_BRANCH
       value: *dbE
     nfsMountpoint:

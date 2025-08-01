@@ -30,8 +30,6 @@ spec:
         env:
         - name: PGPASSFILE
           value: /etc/secrets/postgres-credentials.txt
-        - name: PGUSER
-          value: "rubin"
         - name: AWS_SHARED_CREDENTIALS_FILE
           value: /etc/secrets/aws-credentials.ini
         - name: REDIS_HOST
