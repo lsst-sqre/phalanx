@@ -6,7 +6,6 @@ Google Cloud observability tooling
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | kube-state-metrics | object | See `values.yaml` | Config for kube-state-metrics chart: [values](https://artifacthub.io/packages/helm/prometheus-community/kube-state-metrics/?modal=values) |

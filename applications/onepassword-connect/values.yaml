@@ -4,7 +4,6 @@
 
 connect:
   api:
-
     # -- Resource requests and limits for connect-api pod
     # @default -- see `values.yaml`
     resources:
@@ -16,7 +15,6 @@ connect:
         memory: "15Mi"
 
   sync:
-
     # -- Resource requests and limits for connect-sync pod
     # @default -- see `values.yaml`
     resources:
@@ -40,10 +38,6 @@ connect:
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: ""
-
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: ""

@@ -346,19 +346,6 @@ data-transfer-monitoring:
   # -- Whether to enable the data-transfer-monitoring subchart
   enabled: false
 
-global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: ""
-
-  # -- Host name for ingress
-  # @default -- Set by Argo CD
-  host: ""
-
-  # -- Base path for Vault secrets
-  # @default -- Set by Argo CD
-  vaultSecretsPath: ""
-
 app-metrics:
   # -- Enable the app-metrics subchart with topic, user, and telegraf
   # configurations
@@ -370,3 +357,12 @@ app-metrics:
 grafana:
   # -- Whether to enable the grafana subchart
   enabled: false
+
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

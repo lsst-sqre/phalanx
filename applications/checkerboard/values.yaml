@@ -113,10 +113,6 @@ config:
   slackProfileField: "GitHub username"
 
 global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: ""
-
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: ""

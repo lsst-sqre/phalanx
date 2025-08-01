@@ -13,7 +13,6 @@ Server for static pages from schedview
 | affinity | object | `{}` | Affinity rules for the schedview-static-pages deployment pod |
 | config.persistentVolumeClaims[0].name | string | `"sdf-data-rubin"` |  |
 | config.persistentVolumeClaims[0].storageClassName | string | `"sdf-data-rubin"` |  |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the schedview-static-pages image |

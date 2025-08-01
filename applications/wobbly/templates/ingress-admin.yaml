@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "wobbly.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
       - "exec:admin"

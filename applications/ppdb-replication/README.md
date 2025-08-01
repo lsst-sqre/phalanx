@@ -34,7 +34,6 @@ Replicates data from the APDB to the PPDB
 | config.updateExisting | bool | `false` | Allow updates to already replicated data |
 | config.uploadInterval | int | `0` | Time to wait between uploader file uploads |
 | config.waitInterval | int | `300` | Time to wait between uploader file scans |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"Always"` | Pull policy for the ppdb-replication image |

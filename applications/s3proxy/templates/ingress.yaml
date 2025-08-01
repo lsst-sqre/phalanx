@@ -6,7 +6,6 @@ metadata:
     {{- include "s3proxy.labels" . | nindent 4 }}
 config:
   authCacheDuration: 5m
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   loginRedirect: true
   scopes:
     all:
