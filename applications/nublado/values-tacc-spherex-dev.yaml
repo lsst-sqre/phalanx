@@ -46,12 +46,6 @@ controller:
             serverPath: "/data/scratch"
             server: "192.168.115.150"
             type: "nfs"
-        - name: "ast25011"
-          source:
-            serverPath: "/corral/main/projects/AST25011"
-            server: "129.114.52.151"
-            type: "nfs"
-            readOnly: true
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -59,8 +53,6 @@ controller:
           volumeName: "project"
         - containerPath: "/scratch"
           volumeName: "scratch"
-        - containerPath: "/ast25011"
-          volumeName: "ast25011"
 jupyterhub:
   hub:
     baseUrl: "/nb"
@@ -72,3 +64,13 @@ jupyterhub:
     maxAge: 691200  # 8 days
 hub:
   internalDatabase: false
+cronjob:
+  enabled: false
+  tutorials:
+    enabled: false
+  artifacts:
+    enabled: false
+purger:
+  enabled: false
+cloudsql:
+  enabled: false
