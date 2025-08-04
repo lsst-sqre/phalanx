@@ -49,6 +49,9 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | ingress.path | string | `"/noteburst"` | Path prefix where noteburst is hosted |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` |  |
+| periodicMetrics | object | `{"resources":{"limits":{"cpu":"250m","memory":"512Mi"},"requests":{"cpu":"2m","memory":"128Mi"}},"schedule":"* * * * *"}` | Config for the CronJob that publishes metrics periodically |
+| periodicMetrics.resources | object | `{"limits":{"cpu":"250m","memory":"512Mi"},"requests":{"cpu":"2m","memory":"128Mi"}}` | Resources for the periodic metrics cron job |
+| periodicMetrics.schedule | string | `"* * * * *"` | Cron schedule string for publishing periodic metrics (in UTC) |
 | podAnnotations | object | `{}` | Annotations for API and worker pods |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
 | redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
