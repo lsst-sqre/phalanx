@@ -126,9 +126,16 @@ frontend:
   # -- Affinity rules for the qserv-kafka frontend pod
   affinity: {}
 
-  # -- Whether to allow containers to run as root. Set to true to allow use of
-  # debug containers to diagnose issues such as memory leaks.
-  allowRootDebug: false
+  debug:
+    # -- Set to true to allow containers to run as root and to create and mount
+    # a debug PVC. Useful ro run debug containers to diagnose issues such as
+    # memory leaks.
+    enabled: false
+
+    # Set to true to disable the [pymalloc
+    # allocator](https://bloomberg.github.io/memray/python_allocators.html#how-does-this-affect-memory-profiling).
+    # You may want to do this when debugging memory leaks.
+    disablePymalloc: false
 
   # -- Node selection rules for the qserv-kafka frontend pod
   nodeSelector: {}

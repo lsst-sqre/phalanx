@@ -37,7 +37,8 @@ Qserv Kafka bridge
 | config.resultTimeout | int | 3600 (1 hour) | How long to wait for result processing (retrieval and upload) before timing out, in seconds. This doubles as the timeout forcibly terminating result worker pods. |
 | config.tapService | string | `"qserv"` | Name of the TAP service for which this Qserv Kafka instance is managing queries. This must match the name of the TAP service for the corresponding query quota in the Gafaelfawr configuration. |
 | frontend.affinity | object | `{}` | Affinity rules for the qserv-kafka frontend pod |
-| frontend.allowRootDebug | bool | `false` | Whether to allow containers to run as root. Set to true to allow use of debug containers to diagnose issues such as memory leaks. |
+| frontend.debug.disablePymalloc | bool | `false` |  |
+| frontend.debug.enabled | bool | `false` | Set to true to allow containers to run as root and to create and mount a debug PVC. Useful ro run debug containers to diagnose issues such as memory leaks. |
 | frontend.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka frontend pod |
 | frontend.podAnnotations | object | `{}` | Annotations for the qserv-kafka frontend pod |
 | frontend.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka frontend pod |
