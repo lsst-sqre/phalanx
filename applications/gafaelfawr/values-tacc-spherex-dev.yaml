@@ -9,15 +9,15 @@ config:
   #github:
   #  clientId: "Ov23liKfYDkoJPekZaON"
 
-  databaseUrl: "postgresql://gafaelfawr@192.168.115.125/gafaelfawr01"
+  databaseUrl: "postgresql://gafaelfawr@192.168.114.188/gafaelfawr01"
   updateSchema: true
 
   oidcServer:
     enabled: true
 
   oidc:
-    clientId: "rsp-tacc"
-    audience: "rsp-tacc"
+    clientId: "rsp-tacc-dev"
+    audience: "rsp-tacc-dev"
     loginUrl: "https://tacc.tapis.io/v3/oauth2/authorize"
     tokenUrl: "https://tacc.tapis.io/v3/oauth2/tokens/oidc"
     issuer: "https://tacc.tapis.io/v3/tokens"
@@ -46,15 +46,6 @@ config:
   # Allow access by GitHub team.
   groupMapping:
     "admin:jupyterlab":
-      - "G-820288"
-      - "TACC-ACI-CIC"
-      #- githu:
-      #    organization: "lsst-sqre"
-      #    team: "square"
-      #- github:
-      #    organization: "lsst-sqre"
-      #    team: "tacc-spherex"
-    "admin:userinfo":
       - "G-820288"
       - "TACC-ACI-CIC"
       #- githu:
