@@ -23,6 +23,14 @@ Members of the https://github.com/lsst-sqre/phalanx repository on GitHub can clo
 
 Otherwise, fork lsst-sqre/phalanx `following GitHub's guide <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo>`__.
 
+Install uv
+==========
+
+Phalanx uses uv_ to manage dependencies.
+You will need it to do any kind of Phalanx development.
+
+Follow the instructions in the `uv install documentation <https://docs.astral.sh/uv/getting-started/installation/>`__ to install uv if it is not already installed.
+
 .. _about-venv:
 
 Create a Python virtual environment
@@ -32,9 +40,18 @@ Phalanx comes with a Python command-line tool which depends on a variety of Pyth
 To ensure consistent behavior, those dependencies are pinned to specific versions.
 This tool should therefore always be run from inside a Python virtual environment or venv_.
 
-Ensure that you have Python 3.12 or later available.
-Then, create a virtual environment for that version of Python with your method of choice.
-virtualenvwrapper_ is one popular approach.
+The recommended way to create a virtual environment is with uv from the top of your Phalanx checkout:
+
+.. prompt:: bash
+
+   uv venv
+
+This will create a virtual environment in the :file:`.venv` subdirectory of your Phalanx checkout.
+You can then switch to that virtual environment with:
+
+.. prompt:: bash
+
+   source .venv/bin/activate
 
 Whenever you do Phalanx development, you should switch to this virtualenv.
 
@@ -43,9 +60,9 @@ Initialize the development environment
 
 From the ``phalanx`` directory, with the virtualenv from the previous step activated, initialize your environment:
 
-.. code-block:: bash
+.. prompt:: bash
 
-    make init
+   make init
 
 This step populates your virtual environment with Phalanx's dependencies, installs tox_ (used for testing and other build steps), and installs pre-commit_ (used to check and sometimes reformat your changes before committing them).
 
@@ -64,7 +81,7 @@ To see which binary is most appropriate for a Linux system, run :command:`uname 
 .. warning::
 
    You must have the same verison of helm-docs installed locally that is used by GitHub Actions, or you risk GitHub Actions seeing output changes, which will block merging of your PR.
-   To see what version of helm-docs is used by GitHub actions, look for helm-docs in :file:`.github/workflows/ci.yaml`.
+   To see what version of helm-docs is used by GitHub actions, look for ``HELM_DOCS_VERION`` in :file:`.github/workflows/ci.yaml`.
 
    The best (but possibly not the most convenient) way to make certain you have the same version is to run the same :command:`go install` command that GitHub Actions uses.
    However, this (unlike the installation methods documented in the installation guide) will require that you have Go installed locally.
