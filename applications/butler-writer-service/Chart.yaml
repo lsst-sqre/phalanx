@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Write proxy for the Butler that buffers concurrent requests.
+name: butler-writer-service
+sources:
+  - https://github.com/lsst-dm/prompt_processing_butler_writer
+type: application
+version: 1.0.0
