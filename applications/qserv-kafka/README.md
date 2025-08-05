@@ -50,6 +50,8 @@ Qserv Kafka bridge
 | image.repository | string | `"ghcr.io/lsst-sqre/qserv-kafka"` | Image to use in the qserv-kafka deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
+| periodicMetrics.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka periodic metrics pods |
+| periodicMetrics.schedule | string | `"* * * * *"` | How often to run the periodic metrics job |
 | redis.config.secretKey | string | `"redis-password"` | Key inside secret from which to get the Redis password (do not change) |
 | redis.config.secretName | string | `"qserv-kafka"` | Name of secret containing Redis password |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |

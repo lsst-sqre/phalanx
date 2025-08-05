@@ -35,47 +35,10 @@ spec:
             - "arq"
             - "qservkafka.workers.main.WorkerSettings"
           env:
-            - name: "KAFKA_BOOTSTRAP_SERVERS"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka-access"
-                  key: "bootstrapServers"
-            - name: "KAFKA_CLIENT_CERT_PATH"
-              value: "/etc/qserv-kafka/user.crt"
-            - name: "KAFKA_CLIENT_KEY_PATH"
-              value: "/etc/qserv-kafka/user.key"
-            - name: "KAFKA_CLUSTER_CA_PATH"
-              value: "/etc/qserv-kafka/ca.crt"
-            - name: "KAFKA_SECURITY_PROTOCOL"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka-access"
-                  key: "securityProtocol"
-            - name: "QSERV_KAFKA_GAFAELFAWR_TOKEN"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka-token"
-                  key: "token"
-            - name: "QSERV_KAFKA_QSERV_DATABASE_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka"
-                  key: "qserv-password"
-            - name: "QSERV_KAFKA_REDIS_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka"
-                  key: "redis-password"
-            {{- if .Values.config.qservRestUsername }}
-            - name: "QSERV_KAFKA_QSERV_REST_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka"
-                  key: "qserv-password"
-            {{- end }}
+            {{- include "qserv-kafka.envVars" (dict "Values" .Values) | nindent 12 }}
           envFrom:
-            - configMapRef:
-                name: "qserv-kafka"
+          - configMapRef:
+              name: "qserv-kafka"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
