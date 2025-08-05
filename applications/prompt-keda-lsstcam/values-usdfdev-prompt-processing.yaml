@@ -29,6 +29,8 @@ prompt-keda:
     endpointUrl: https://s3dfrgw.slac.stanford.edu
     aws_profile: prompt-processing-dev
 
+  raw_microservice: http://172.24.5.253:8080/presence
+
   iers_cache: s3://rubin-pp-dev-users/iers-cache.zip
 
   imageNotifications:
@@ -52,7 +54,3 @@ prompt-keda:
     redisStreams:
       # Dev processes very old images, set to ~20 years
       expiration: 600_000_000.0
-
-  podAnnotations: {
-    edu.stanford.slac.sdf.project/usdf-embargo: "true"
-  }
