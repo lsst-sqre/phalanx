@@ -50,7 +50,7 @@ To create a new Phalanx environment, take the following steps:
    - :px-app-bootstrap:`nublado`
    - :px-app-bootstrap:`portal`
 
-#. Add the URL of your new environment to :file:`docs/documenteer.toml` under ``phinx.linkcheck.ignore``.
+#. Add the URL of your new environment to :file:`docs/documenteer.toml` under ``sphinx.linkcheck.ignore``.
    The Argo CD URL of your environment will be unreachable, so you need to tell Sphinx valid link checking to ignore it.
 
 Next steps
