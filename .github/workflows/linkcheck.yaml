@@ -2,11 +2,11 @@
 # links as part of the normal documentation build since, unlike Sphinx errors
 # and warnings, we don't want broken links to block a merge. (Sometimes they
 # will be fixed by the same merge, sometimes they're temporary rate limit
-# issues.)
+# issues.) It also takes about 30 minutes to run the link check due to GitHub
+# throttling.
 #
-# Instead, we do an advisory run of link checking on relevant PRs that doesn't
-# block merging, and we do a weekly link check to catch any links that have
-# gone stale.
+# Instead, we only run link checking when explicitly requested and once per
+# week to catch any links that have gone stale or were broken.
 
 name: Link Check
 
@@ -18,24 +18,6 @@ env:
   PYTHON_VERSION: "3.13"
 
 "on":
-  push:
-    branches-ignore:
-      # These should always correspond to pull requests, so ignore them for
-      # the push trigger and let them be triggered by the pull_request
-      # trigger, avoiding running the workflow twice. This is a minor
-      # optimization so there's no need to ensure this is comprehensive.
-      - "dependabot/**"
-      - "gh-readonly-queue/**"
-      - "renovate/**"
-      - "tickets/**"
-      - "u/**"
-    tags:
-      - "*"
-    paths:
-      # Only check links on changes that are likely to include links that
-      # might break with the change. Rely on the weekly check to pick up other
-      # bad links.
-      - "docs/**"
   schedule:
     - cron: "0 12 * * 1"
   workflow_dispatch: {}
@@ -48,19 +30,21 @@ jobs:
     timeout-minutes: 60
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           # Ensure the documentation gets the right version.
           fetch-depth: 0
 
-      - name: Install graphviz
-        run: sudo apt-get install graphviz
-
-      - name: Check links
-        uses: lsst-sqre/run-tox@v1
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-          tox-envs: docs-linkcheck
-          tox-requirements: requirements/tox.txt
-          cache-key-prefix: docs-linkcheck
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Install graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz
+
+      - name: Check links
+        run: uv run --only-group=tox tox run -e docs-linkcheck
