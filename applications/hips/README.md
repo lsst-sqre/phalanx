@@ -20,7 +20,6 @@ HiPS tile server backed by Google Cloud Storage
 | config.gcsProject | string | None, must be set | Google Cloud project in which the underlying storage is located |
 | config.logLevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `hips` Kubernetes service account and has access to the storage bucket |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the hips image |
 | image.repository | string | `"ghcr.io/lsst-sqre/crawlspace"` | Image to use in the hips deployment |

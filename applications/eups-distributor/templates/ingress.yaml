@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "eups-distributor.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     anonymous: true
   service: "eups-distributor"

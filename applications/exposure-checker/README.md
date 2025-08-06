@@ -22,7 +22,6 @@ An interface for visually identifying artifacts in Rubin images.
 | config.volume_mounts | list | `[]` | Mount points for additional volumes |
 | config.volumes | list | `[]` | Additional volumes to attach |
 | environment | object | `{}` | Environment variables |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.repository | string | `"ghcr.io/lsst-sitcom/rubin_exp_checker"` | rubin_exp_checker image to use |

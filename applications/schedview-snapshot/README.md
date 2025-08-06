@@ -17,7 +17,6 @@ Dashboard for examination of scheduler snapshots
 | autoscaling.maxReplicas | int | `100` | Maximum number of schedview-snapshot deployment pods |
 | autoscaling.minReplicas | int | `1` | Minimum number of schedview-snapshot deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of schedview-snapshot deployment pods |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"Always"` | Pull policy for the schedview-snapshot image |

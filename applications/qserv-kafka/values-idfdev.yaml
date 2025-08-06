@@ -6,7 +6,5 @@ config:
   qservRestSendApiVersion: false
   qservRestUrl: "https://134.79.23.197:4098/"
   qservRestUsername: "qsmaster"
-frontend:
-  allowRootDebug: true
 resultWorker:
   allowRootDebug: true

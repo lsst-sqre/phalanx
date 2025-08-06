@@ -39,7 +39,6 @@ Deployment for the Environmental Awareness Systems CSCs
 | epm-generator-ess305.enabled | bool | `false` | Enable the ESS:305 CSC |
 | epm-generator-ess306-sim.enabled | bool | `false` | Enable the ESS:303 simulator CSC |
 | epm-generator-ess306.enabled | bool | `false` | Enable the ESS:306 CSC |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.controlSystem.appNamespace | string | Set by ArgoCD | Application namespace for the control system deployment |
 | global.controlSystem.imageTag | string | Set by ArgoCD | Image tag for the control system deployment |
 | global.controlSystem.kafkaBrokerAddress | string | Set by ArgoCD | Kafka broker address for the control system deployment |

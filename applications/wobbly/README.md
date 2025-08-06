@@ -30,7 +30,6 @@ IVOA UWS database storage
 | config.services | list | See `values.yaml` | Services allowed to use Wobbly for their backend |
 | config.slackAlerts | bool | `true` | Whether to send Slack alerts for unexpected failures |
 | config.updateSchema | bool | `false` | Whether to automatically update the Wobbly database schema |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the wobbly image |
