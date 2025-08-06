@@ -12,7 +12,7 @@ spec:
       valueFrom:
         secretKeyRef:
           name: prompt-kafka
-          key: butler-writer
+          key: butler-writer-password
   authorization:
     type: simple
     acls:
