@@ -3,16 +3,6 @@
 # Override strimzi-kafka subchart configuration.
 strimzi-kafka: {}
 
-strimzi-registry-operator:
-  # -- Name of the Strimzi Kafka cluster
-  clusterName: sasquatch
-
-  # -- Namespace where the Strimzi Kafka cluster is deployed
-  clusterNamespace: sasquatch
-
-  # -- Namespace where the strimzi-registry-operator is deployed
-  operatorNamespace: sasquatch
-
 influxdb:
   # -- Whether InfluxDB is enabled
   enabled: true

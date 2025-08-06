@@ -100,9 +100,6 @@ Rubin Observatory's telemetry service
 | scimma.enabled | bool | `false` | Whether to enable the scimma subchart |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations |
 | strimzi-kafka | object | `{}` |  |
-| strimzi-registry-operator.clusterName | string | `"sasquatch"` | Name of the Strimzi Kafka cluster |
-| strimzi-registry-operator.clusterNamespace | string | `"sasquatch"` | Namespace where the Strimzi Kafka cluster is deployed |
-| strimzi-registry-operator.operatorNamespace | string | `"sasquatch"` | Namespace where the strimzi-registry-operator is deployed |
 | tap.enabled | bool | `false` | Whether to enable the tap subchart |
 | telegraf.enabled | bool | `false` | Whether to enable the telegraf subchart |
 | app-metrics.affinity | object | `{}` | Affinity for pod assignment |
