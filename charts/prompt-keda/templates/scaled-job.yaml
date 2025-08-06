@@ -137,6 +137,10 @@ spec:
                 value: {{ .Values.logLevel }}
               - name: LOCAL_REPO_CACHE_SIZE
                 value: {{ .Values.cache.baseSize | toString | quote }}
+              - name: REFCATS_PER_IMAGE
+                value: '6'
+              - name: PATCHES_PER_IMAGE
+                value: '12'
               - name: DEBUG_EXPORT_OUTPUTS
                 value: {{ if .Values.debug.exportOutputs }}'1'{{ else }}'0'{{ end }}
               {{- if .Values.debug.monitorDaxApdb }}
