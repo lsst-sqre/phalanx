@@ -57,6 +57,7 @@ prompt-keda:
       expiration: 600_000_000.0
 
   butler_writer:
+    enabled: true
     kafka_cluster: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
     kafka_username: butler-writer
     kafka_topic: butler-writer
