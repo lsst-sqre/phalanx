@@ -29,7 +29,7 @@ prompt-keda:
     endpointUrl: https://s3dfrgw.slac.stanford.edu
     aws_profile: prompt-processing-dev
 
-  raw_microservice: http://172.24.5.253:8080/presence
+  raw_microservice: http://10.101.245.154:8080/presence
 
   iers_cache: s3://rubin-pp-dev-users/iers-cache.zip
 
