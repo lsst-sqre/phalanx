@@ -32,6 +32,7 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | config.algolia.documents_index | string | `"documents_dev"` | Name of the Algolia index for documents |
 | config.databaseUrl | string | `""` | Database URL |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
+| config.migrateCountryCodes | bool | false to disable country code migration | Whether to migrate country codes in the database |
 | config.topics.ingest | string | `"lsst.square-events.ook.ingest"` | Kafka topic name for ingest events |
 | config.updateSchema | bool | false to disable schema upgrades | Whether to run the database migration job |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |

@@ -80,6 +80,10 @@ config:
   # @default -- false to disable schema upgrades
   updateSchema: false
 
+  # -- Whether to migrate country codes in the database
+  # @default -- false to disable country code migration
+  migrateCountryCodes: false
+
   topics:
     # -- Kafka topic name for ingest events
     ingest: "lsst.square-events.ook.ingest"
