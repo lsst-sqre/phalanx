@@ -1,0 +1,6 @@
+image:
+  tag: "tickets-DM-52032"
+
+clusterName: "sasquatch"
+clusterNamespace: "sasquatch"
+operatorNamespace: "strimzi-registry-operator"

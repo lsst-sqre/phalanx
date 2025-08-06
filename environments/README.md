@@ -77,6 +77,7 @@
 | applications.ssotap | bool | `false` | Enable the ssotap application |
 | applications.strimzi | bool | `false` | Enable the strimzi application |
 | applications.strimzi-access-operator | bool | `false` | Enable the strimzi-access-operator application |
+| applications.strimzi-registry-operator | bool | `false` | Enable the strimzi-registry-operator application |
 | applications.tap | bool | `false` | Enable the tap application |
 | applications.tasso | bool | `false` | Enable the tasso application |
 | applications.templatebot | bool | `false` | Enable the templatebot application |
