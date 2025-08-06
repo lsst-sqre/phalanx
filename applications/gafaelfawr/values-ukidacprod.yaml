@@ -39,6 +39,10 @@ config:
       - github:
           organization: "lsp-uk"
           team: "dev"
+    "exec:portal-admin":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
     "read:image":
       - github:
           organization: "lsp-uk"

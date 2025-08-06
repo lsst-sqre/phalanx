@@ -45,6 +45,9 @@ config:
       - "rsp-summit"
     "exec:portal":
       - "rsp-summit"
+    "exec:portal-admin":
+      - "k8s-yagan-admins"
+      - "sqre"
     "read:image":
       - "rsp-summit"
     "read:tap":
