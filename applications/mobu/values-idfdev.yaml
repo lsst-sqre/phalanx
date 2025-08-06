@@ -1,3 +1,6 @@
+image:
+  tag: tickets-DM-52087-disable-app-metrics-compatibility-checks
+  pullPolicy: always
 config:
   logLevel: DEBUG
   logMonkeysToFile: false
