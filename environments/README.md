@@ -11,6 +11,7 @@
 | applications.atlantis | bool | `false` | Enable the atlantis application |
 | applications.auxtel | bool | `false` | Enable the auxtel control system application |
 | applications.butler | bool | `false` | Enable the butler application |
+| applications.butler-writer-service | bool | `false` | Enable the Butler writer application |
 | applications.calsys | bool | `false` | Enable the calsys control system application |
 | applications.cert-manager | bool | `true` | Enable the cert-manager application, required unless the environment makes separate arrangements to inject a current TLS certificate |
 | applications.checkerboard | bool | `false` | Enable the checkerboard application |
