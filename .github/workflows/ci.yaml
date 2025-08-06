@@ -128,14 +128,14 @@ jobs:
               - "docs/**"
             minikube:
               - ".github/workflows/ci.yaml"
-              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/Chart.yaml"
-              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/templates/**"
-              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values.yaml"
-              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values-minikube.yaml"
-              - "environments/Chart.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/Chart.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/templates/**"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values-minikube.yaml"
               - "environments/templates/applications/infrastructure/*"
               - "environments/values-minikube.yaml"
               - "src/phalanx/**"
+              - "uv.lock"
 
   minikube:
     name: Test deploy
