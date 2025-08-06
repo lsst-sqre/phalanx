@@ -153,6 +153,9 @@ config:
       - "rubin_admin_datasets"
       - "rubin_admin_repos"
       - "unix-admin"
+    "exec:portal-admin":
+      - "rubinmgr"
+      - "unix-admin"
     "read:image":
       - "lsst"
       - "lsst-ccs"

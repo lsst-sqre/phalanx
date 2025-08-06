@@ -92,7 +92,7 @@ config:
       #- github:
       #    organization: "lsst-sqre"
       #    team: "tacc-spherex"
-    "read:image":
+    "exec:portal":
       - "G-827698"
       - "G-820288"
       - "TACC-ACI-CIC"
@@ -102,7 +102,16 @@ config:
       #- github:
       #    organization: "lsst-sqre"
       #    team: "tacc-spherex"
-    "exec:portal":
+    "exec:portal-admin":
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "square"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+    "read:image":
       - "G-827698"
       - "G-820288"
       - "TACC-ACI-CIC"

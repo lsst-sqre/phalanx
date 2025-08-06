@@ -71,6 +71,8 @@ config:
     "exec:portal":
       - "g_rubin"
       - "g_users"
+    "exec:portal-admin":
+      - "g_portal_admins"
     "read:image":
       - "g_rubin"
       - "g_users"
