@@ -58,6 +58,7 @@ config:
     "exec:portal":
       - "g_users"
     "exec:portal-admin":
+      - "g_admins"
       - "g_developers"
     "read:image":
       - "g_users"
