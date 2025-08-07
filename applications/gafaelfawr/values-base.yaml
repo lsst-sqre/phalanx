@@ -34,6 +34,9 @@ config:
     "admin:jupyterlab":
       - "k8s-manke-admins"
       - "sqre"
+    "admin:userinfo":
+      - "k8s-manke-admins"
+      - "sqre"
     "exec:admin":
       - "integration-testers"
       - "k8s-manke-admins"
@@ -44,6 +47,9 @@ config:
       - "rsp-bts"
     "exec:portal":
       - "rsp-bts"
+    "exec:portal-admin":
+      - "k8s-manke-admins"
+      - "sqre"
     "read:image":
       - "rsp-bts"
     "read:tap":

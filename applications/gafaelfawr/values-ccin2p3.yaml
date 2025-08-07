@@ -74,9 +74,11 @@ config:
   #   - "mainetti"
 
   groupMapping:
+    "admin:jupyterlab":
+      - "ccin2p3"
     "admin:token":
       - "ccin2p3"
-    "admin:jupyterlab":
+    "admin:userinfo":
       - "ccin2p3"
     "exec:admin":
       - "ccin2p3"
@@ -86,6 +88,8 @@ config:
       - "lsst"
     "exec:portal":
       - "lsst"
+    "exec:portal-admin":
+      - "ccin2p3"
     "read:image":
       - "lsst"
     "read:tap":

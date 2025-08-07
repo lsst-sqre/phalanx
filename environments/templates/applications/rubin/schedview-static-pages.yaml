@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/schedview-static-pages"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "schedview-static-pages") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

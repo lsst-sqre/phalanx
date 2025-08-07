@@ -26,7 +26,6 @@ Simple Image Access (SIA) IVOA Service using Butler
 | config.sentryTracesSampleRate | float | `0` |  |
 | config.slackAlerts | bool | `false` | Whether to send alerts and status to Slack. |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the sia image |

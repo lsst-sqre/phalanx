@@ -66,17 +66,7 @@ spec:
                 - ALL
             readOnlyRootFilesystem: true
           volumeMounts:
-            - name: "kafka"
-              mountPath: "/etc/kafkacluster/ca.crt"
-              subPath: "ssl.truststore.crt" # CA cert from the Kafka cluster
-            - name: "kafka"
-              mountPath: "/etc/kafkauser/user.crt"
-              subPath: "ssl.keystore.crt" # User cert from the Kafka cluster signed by the clients' CA
-            - name: "kafka"
-              mountPath: "/etc/kafkauser/user.key"
-              subPath: "ssl.keystore.key" # private key for the consuming client
-            - name: "tmp"
-              mountPath: "/tmp/kafka_certs"
+            {{- include "ook.volumeMounts" (dict "Chart" .Chart "Release" .Release "Values" .Values) | nindent 12 }}
       {{- if .Values.cloudsql.enabled }}
       initContainers:
         {{- include "ook.cloudsqlSidecar" . | nindent 8 }}
@@ -94,12 +84,4 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        # This secret comes from the KafkaAccess operator
-        - name: "kafka"
-          secret:
-            secretName: ook-kafka
-        - name: "ook"
-          secret:
-            secretName: "ook"
-        - name: "tmp"
-          emptyDir: {}
+        {{- include "ook.volumes" (dict "Chart" .Chart "Release" .Release "Values" .Values) | nindent 8 }}

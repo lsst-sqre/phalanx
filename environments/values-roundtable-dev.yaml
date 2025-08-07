@@ -17,7 +17,6 @@ applications:
   google-cloud-observability: true
   jira-data-proxy: true
   mobu: true
-  monitoring: true
   onepassword-connect: true
   ook: true
   sasquatch: true
@@ -25,8 +24,6 @@ applications:
   squareone: true
   strimzi: true
   strimzi-access-operator: true
-  telegraf: true
-  telegraf-ds: true
   templatebot: true
   unfurlbot: true
   vault: true

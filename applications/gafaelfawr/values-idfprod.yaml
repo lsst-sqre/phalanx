@@ -36,6 +36,7 @@ config:
       g_users:
         - "dp0.2"
         - "dp0.3"
+        - "dp1"
 
   # Enable metrics reporting.
   metrics:
@@ -44,24 +45,43 @@ config:
   # User quota settings for services.
   quota:
     default:
+      api:
+        sia: 70
+        tap: 200
+        vo-cutouts: 35
       notebook:
         cpu: 4.0
         memory: 16
+      tap:
+        qserv:
+          concurrent: 12
 
   groupMapping:
     "admin:jupyterlab":
       - "g_admins"
+    "admin:userinfo":
+      - "g_admins"
     "exec:admin":
       - "g_admins"
+    "exec:internal-tools":
+      - "g_rubin"
     "exec:notebook":
+      - "g_rubin"
       - "g_users"
     "exec:portal":
+      - "g_rubin"
       - "g_users"
+    "exec:portal-admin":
+      - "g_admins"
+      - "g_portal_admins"
     "read:image":
+      - "g_rubin"
       - "g_users"
     "read:tap":
+      - "g_rubin"
       - "g_users"
     "write:files":
+      - "g_rubin"
       - "g_users"
 
   initialAdmins:
@@ -74,9 +94,8 @@ config:
     - "svoutsin"
 
   errorFooter: |
-    To report problems or ask for help, please open an issue in the
-    <a href="https://github.com/rubin-dp0/Support/issues">GitHub
-    rubin-dp0/Support project</a>.
+    To report problems or ask for help, see the instructions at
+    <a href="https://rsp.lsst.io/support/index.html">Getting Help</a>.
 
 cloudsql:
   enabled: true

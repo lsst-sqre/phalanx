@@ -17,7 +17,6 @@ Jira API read-only proxy for Times Square users.
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of jira-data-proxy deployment pods |
 | config.jiraUrl | string | `"https://rubinobs.atlassian.net/"` | Jira base URL |
 | config.logLevel | string | `"info"` | Logging level |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the jira-data-proxy image |

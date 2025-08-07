@@ -12,11 +12,14 @@ Rubin Science Platform Portal Aspect
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the Portal pod |
+| config.alertMessage | string | `nil` | If not null, display this alert to all users in a banner |
 | config.cleanupInterval | string | `"36h"` | How long results should be retained before being deleted |
 | config.debug | string | `"FALSE"` | Set to `TRUE` to enable service debugging |
 | config.hipsUrl | string | `/api/hips/images/color_gri` in the local Science Platform | URL for default HiPS service |
 | config.livetap | string | `""` | Endpoint under `/api/` for the live TAP service on the instance, if present |
+| config.showUserInfo | string | `"true"` | Whether to show information about the logged-in user |
 | config.ssotap | string | `""` | Endpoint under `/api/` for the DP0.3 SSO TAP service on the instance, if present |
+| config.tapHistoryLimit | string | `"1000"` | Maximum number of recent TAP queries to show in history |
 | config.visualizeFitsSearchPath | string | `"/datasets"` | Search path for FITS files |
 | config.volumes.config | object | use an `emptyDir` | configuration directory accessible read-only to all Portal pods |
 | config.volumes.privateWorkarea | object | use an `emptyDir` | private work area accessible read-write to a single Portal pod |

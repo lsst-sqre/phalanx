@@ -100,7 +100,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.7"
+    tag: "1.37.8"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -119,10 +119,10 @@ cloudsql:
   resources:
     limits:
       cpu: "1"
-      memory: "20Mi"
+      memory: "30Mi"
     requests:
       cpu: "5m"
-      memory: "7Mi"
+      memory: "15Mi"
 
 maintenance:
   # -- Cron schedule string for Wobbly periodic maintenance (in UTC)
@@ -139,10 +139,6 @@ maintenance:
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: null
-
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null

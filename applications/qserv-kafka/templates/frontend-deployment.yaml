@@ -30,42 +30,14 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-            - name: "QSERV_KAFKA_QSERV_DATABASE_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka"
-                  key: "qserv-password"
-            - name: "QSERV_KAFKA_REDIS_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka"
-                  key: "redis-password"
-            {{- if .Values.config.qservRestUsername }}
-            - name: "QSERV_KAFKA_QSERV_REST_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka"
-                  key: "qserv-password"
+            {{- include "qserv-kafka.envVars" (dict "Values" .Values) | nindent 12 }}
+            {{- if (and .Values.frontend.debug.enabled .Values.frontend.debug.disablePymalloc) }}
+            - name: PYTHONMALLOC
+              value: malloc
             {{- end }}
-            - name: "KAFKA_BOOTSTRAP_SERVERS"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka-access"
-                  key: "bootstrapServers"
-            - name: "KAFKA_CLIENT_CERT_PATH"
-              value: "/etc/qserv-kafka/user.crt"
-            - name: "KAFKA_CLIENT_KEY_PATH"
-              value: "/etc/qserv-kafka/user.key"
-            - name: "KAFKA_CLUSTER_CA_PATH"
-              value: "/etc/qserv-kafka/ca.crt"
-            - name: "KAFKA_SECURITY_PROTOCOL"
-              valueFrom:
-                secretKeyRef:
-                  name: "qserv-kafka-access"
-                  key: "securityProtocol"
           envFrom:
-            - configMapRef:
-                name: "qserv-kafka"
+          - configMapRef:
+              name: "qserv-kafka"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -97,6 +69,10 @@ spec:
               mountPath: "/etc/qserv-kafka/user.key"
               readOnly: true
               subPath: "ssl.keystore.key"
+            {{- if .Values.frontend.debug.enabled }}
+            - name: debug-storage
+              mountPath: /debug
+            {{- end }}
       {{- with .Values.frontend.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -106,10 +82,15 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       securityContext:
-        runAsNonRoot: {{ not .Values.frontend.allowRootDebug }}
+        runAsNonRoot: {{ not .Values.frontend.debug.enabled }}
         runAsUser: 1000
         runAsGroup: 1000
       volumes:
         - name: "kafka"
           secret:
             secretName: "qserv-kafka-access"
+        {{- if .Values.frontend.debug.enabled }}
+        - name: debug-storage
+          persistentVolumeClaim:
+            claimName: qserv-kafka-debug
+        {{- end }}

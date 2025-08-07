@@ -4,6 +4,15 @@ metadata:
   name: "nublado-controller"
   labels:
     {{- include "nublado.labels" . | nindent 4 }}
+  annotations:
+    # If the controller is unavailable when the hub comes up, the hub will
+    # think all of the labs are unresponsive and shut them them down. This puts
+    # the controller deployment in a later ArgoCD sync wave than the hub, which
+    # means it won't get synced until after the hub is synced:
+    #
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/#how-do-i-configure-waves
+    # https://phalanx.lsst.io/applications/nublado/upgrade.html#routine-upgrades
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   replicas: 1
   selector:

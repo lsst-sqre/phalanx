@@ -8,7 +8,6 @@ config:
   # The Butler server often services large numbers of small requests,
   # so this cache reduces the load on Gafaelfawr.
   authCacheDuration: 5m
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
       - "read:image"

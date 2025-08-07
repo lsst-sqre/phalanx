@@ -1,0 +1,75 @@
+{{- if .Values.config.migrateCountryCodes -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "ook-country-code-migrate"
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "hook-succeeded"
+    helm.sh/hook-weight: "10" # Ensure this runs after schema update
+  labels:
+    {{- include "ook.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "ook.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "country-code-migrate"
+    spec:
+      {{- if or .Values.cloudsql.enabled }}
+      serviceAccountName: "ook"
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        - name: "ook"
+          command:
+            - "ook"
+            - "migrate-country-codes"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          envFrom:
+            - configMapRef:
+                name: "ook"
+          env:
+            {{- include "ook.envVars" (dict "Chart" .Chart "Release" .Release "Values" .Values) | nindent 16 }}
+          volumeMounts:
+            {{- include "ook.volumeMounts" (dict "Chart" .Chart "Release" .Release "Values" .Values) | nindent 12 }}
+      {{- if .Values.cloudsql.enabled }}
+      initContainers:
+        {{- include "ook.cloudsqlSidecar" . | nindent 8 }}
+      {{- end }}
+      restartPolicy: "Never"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        {{- include "ook.volumes" (dict "Chart" .Chart "Release" .Release "Values" .Values) | nindent 8 }}
+{{- end }}

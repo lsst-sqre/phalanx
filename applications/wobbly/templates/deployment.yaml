@@ -31,6 +31,11 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+            # Uvicorn keepalive timeout, in seconds. This should be longer than
+            # any keepalive timeouts on any downstream proxies. The keepalive
+            # timeout for ingress-nginx connections is 60s.
+            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
+              value: "61"
             - name: "WOBBLY_DATABASE_PASSWORD"
               valueFrom:
                 secretKeyRef:
@@ -112,6 +117,23 @@ spec:
               readOnly: true
               subPath: "ssl.keystore.key"
           {{- end }}
+          lifecycle:
+            # Number of seconds k8s should wait before sending SIGTERM on
+            # graceful restarts/deployments/shutdowns. We need this because it
+            # takes ingress-nginx some time to configure itself to stop sending
+            # traffic to the pods scheduled for termination. If Uvicorn gets
+            # the SIGTERM and starts closing connections, we could end up with
+            # a TCP race condition if ingress-nginx still tries to send data
+            # over those connections.
+            #
+            # Note that terminationGracePeriodSeconds includes the time that is
+            # spent in the preStop hook. If you’re adding a preStop hook and
+            # your terminationGracePeriodSeconds is super fine-tuned, then you
+            # should update your terminationGracePeriodSeconds to add the
+            # amount of time you’ll be spending in your preStop hook.
+            preStop:
+              sleep:
+                seconds: 10
       {{- if .Values.cloudsql.enabled }}
       initContainers:
         {{- include "wobbly.cloudsqlSidecar" . | nindent 8 }}

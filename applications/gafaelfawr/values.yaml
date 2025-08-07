@@ -274,6 +274,8 @@ config:
       Can create and destroy labs for any user
     "admin:token": >-
       Can create and modify tokens for any user
+    "admin:userinfo": >-
+      Can see user information for any user
     "exec:admin": >-
       Administrative access to all APIs
     "exec:internal-tools": >-
@@ -286,6 +288,8 @@ config:
       Retrieve alert packets and schemas from the alert archive database
     "read:image": >-
       Retrieve images from project datasets
+    "exec:portal-admin": >-
+      Read access to the Portal admin page
     "read:tap": >-
       Execute SELECT queries in the TAP interface on project datasets
     "write:files": >-
@@ -317,7 +321,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.7"
+    tag: "1.37.8"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -336,10 +340,10 @@ cloudsql:
   resources:
     limits:
       cpu: "100m"
-      memory: "20Mi"
+      memory: "30Mi"
     requests:
       cpu: "5m"
-      memory: "7Mi"
+      memory: "15Mi"
 
   # -- Affinity rules for the standalone Cloud SQL Proxy pod
   affinity: {}
@@ -506,12 +510,12 @@ redis:
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
-  baseUrl: ""
+  baseUrl: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
-  host: ""
+  host: null
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
-  vaultSecretsPath: ""
+  vaultSecretsPath: null

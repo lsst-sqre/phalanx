@@ -94,23 +94,21 @@ config:
 
     <Lede>Integrate Rubin data into your analysis tools with APIs.</Lede>
 
-    To access most APIs you need an [*access token*](/auth/tokens).
-    See our guide [Creating user tokens](https://rsp.lsst.io/guides/auth/creating-user-tokens.html) to learn more.
+    To access APIs you need an [*access token*](/auth/tokens).
+    See our guide [Creating user tokens](https://rsp.lsst.io/guides/auth/creating-user-tokens.html) to learn how to create tokens and use them in VO clients.
 
-    ## Table Access Protocol
+    ## API endpoints
 
-    You can access catalog data using the Table Access Protocol (TAP)
-    service with popular tools such as
-    [TOPCAT](http://www.star.bris.ac.uk/~mbt/topcat) (GUI) and
-    [pyvo](https://pyvo.readthedocs.io/en/latest/index.html)
-    (Python package). The TAP endpoint is:
+    - DP1 [HiPS](https://www.ivoa.net/documents/HiPS) (Hierarchical Progressive Survey): `https://data.lsst.cloud/api/hips/v2/dp1/list`
+    - DP1 [SIA](https://www.ivoa.net/documents/SIA/) (Simple Image Access) (v2): `https://data.lsst.cloud/api/dp1/query`
+    - [ObsTAP](https://www.ivoa.net/documents/TAP/): `https://data.lsst.cloud/api/tap`
+    - [SODA](https://www.ivoa.net/documents/SODA/20170517/REC-SODA-1.0.html) Cutout: `https://data.lsst.cloud/api/cutout/`
+    - SSO (Solar system objects) [TAP](https://www.ivoa.net/documents/TAP/): `https://data.lsst.cloud/api/ssotap`
 
-    ```
-    https://data.lsst.cloud/api/tap
-    ```
+    ### Additional DP0.2-specific endpoints
 
-    See our tutorial [Authenticating from TOPCat outside the Science Platform](https://rsp.lsst.io/guides/auth/using-topcat-outside-rsp.html)
-    to learn more about accessing TAP datasets from your own computer.
+    - DP0.2 [HiPS](https://www.ivoa.net/documents/HiPS) (Hierarchical Progressive Survey): `https://data.lsst.cloud/api/hips/v2/dp02/list`
+    - DP0.2 [SIA](https://www.ivoa.net/documents/SIA/) (Simple Image Access) (v2): `https://data.lsst.cloud/api/dp02/query`
 
     ## Documentation
 
@@ -128,86 +126,24 @@ config:
       ## Data previews
 
       <CardGroup>
+        <a href="https://dp1.lsst.io/">
+          <Card>
+            ### Data Preview 1 (DP1)
+
+            Data Preview 1 contains image and catalog products from LSST Science Pipelines
+            v29 processing of observations obtained with the LSST Commissioning Camera of
+            seven ~1 square degree fields over seven weeks in late 2024.
+          </Card>
+        </a>
+
         <a href="https://dp0.lsst.io/">
           <Card>
             ### Data Preview 0 (DP0)
 
-            DP0 is the first of three data previews during the period leading up to the start of Rubin Observatory Operations.
-            This site provides resources to delegates for exploring the DP0 datasets with the Rubin Science Platform.
+            DP0 is the first of three data previews during the period leading up to the start of Rubin Observatory Operations. DP0.2 features simulated Galactic and extragalactic data products. DP0.3 contains simulated Solar System objects.
           </Card>
         </a>
 
-      </CardGroup>
-
-    </Section>
-
-    <Section>
-
-      ## Data documentation
-
-      ### DP0.3
-
-      <CardGroup>
-        <a href="https://dp0-3.lsst.io/">
-          <Card>
-            ### Data Preview 0.3 (DP0.3)
-
-            DP0.3 provides a catalog of solar system objects from a
-            simulated LSST ten-year wide-fast-deep survey by the Solar System
-            Science Collaboration.
-          </Card>
-        </a>
-
-        <a href="https://dp0-3.lsst.io/tutorials-dp0-3/index.html">
-          <Card>
-            ### DP0.3 Tutorials
-
-            Tutorials for exploring the DP0.3 solar system object dataset on
-            the Rubin Science Platform.
-          </Card>
-        </a>
-
-        <a href="https://sdm-schemas.lsst.io/dp03.html">
-          <Card>
-            ### DP0.3 Catalog Schema
-
-            Schema reference for the DP0.3 catalog dataset available through
-            the Table Access Protocol (TAP) service.
-          </Card>
-        </a>
-      </CardGroup>
-
-      ### DP0.2
-
-      <CardGroup>
-        <a href="https://dp0-2.lsst.io/">
-          <Card>
-            ### Data Preview 0.2 (DP0.2)
-
-            DP0.2 is the second phase of the Data Preview 0 program using
-            simulated images from the DESC DC2 data challenge processed with
-            version 23.0 of the LSST Science Pipelines.
-          </Card>
-        </a>
-
-        <a href="https://dp0-2.lsst.io/tutorials-examples/index.html">
-          <Card>
-            ### DP0.2 Tutorials
-
-            Tutorials for exploring the DP0.2 dataset on the Rubin Science
-            Platform.
-          </Card>
-        </a>
-
-
-        <a href="https://sdm-schemas.lsst.io/dp02.html">
-          <Card>
-            ### DP0.2 Catalog Schema
-
-            Schema reference for the DP0.2 catalog dataset available through
-            the Table Access Protocol (TAP) service.
-          </Card>
-        </a>
       </CardGroup>
 
     </Section>
@@ -269,25 +205,21 @@ config:
     from Rubin Observatory staff. Here are the ways to ask for help.</Lede>
 
     <Section>
-      ## Data Preview 0 science questions
+      ## Community forum
 
-      For questions about the Data Preview dataset (DESC DC2) and analyzing
-      that data (such as with the LSST Science Pipelines), create a new
-      topic in the [Data Preview 0 Support category](https://community.lsst.org/c/support/dp0/49)
-      of the Community forum.
+      Ask questions and solve problems with the help of Rubin Observatory staff and colleagues in the [Support category of the Rubin Observatory Community forum](https://community.lsst.org/c/support/).
 
-      <CtaLink href="http://community.lsst.org/new-topic?category=support/dp0">Create a science support topic in the forum</CtaLink>
-    </Section>
+      <CtaLink href="http://community.lsst.org/new-topic?category=support">Create a science support topic in the forum</CtaLink>
 
-    <Section>
-      ## Rubin Science Platform technical support and feature requests
+      ## Rubin Science Assemblies
 
-      For technical issues or feature requests related to the Rubin Science
-      Platform itself (the Portal, Notebooks, and API services such as TAP)
-      create a GitHub issue in the
-      [rubin-dp0/Support](https://github.com/rubin-dp0/Support) repository.
+      Weekly [Rubin Science Assemblies](https://rubinobservatory.org/for-scientists/events-deadlines/events-rsa) offer presentations, hands-on tutorials, and drop-in office hours to support use of the Rubin data products, services, and tools.
 
-      <CtaLink href="https://github.com/rubin-dp0/Support/issues/new/choose">Create a GitHub issue</CtaLink>
+      ## Keeping up to date
+
+      The Rubin Science Platform is constantly improving with exciting new features and bug fixes.
+      [*Staying up to date*](https://rsp.lsst.io/guides/life/updates.html) provides tips for following the latest developments to make the most of the platform.
+
     </Section>
 
   # -- MDX content for the `/enrollment/thanks-for-signing-up` page
@@ -373,16 +305,16 @@ config:
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD Application
-  baseUrl: ""
-
-  # -- Host name for ingress
-  # @default -- Set by Argo CD Application
-  host: ""
-
-  # -- Base path for Vault secrets
-  # @default -- Set by Argo CD Application
-  vaultSecretsPathPrefix: ""
+  baseUrl: null
 
   # -- Name of the Phalanx environment
   # @default -- Set by Argo CD Application
-  environmentName: ""
+  environmentName: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD Application
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD Application
+  vaultSecretsPathPrefix: null

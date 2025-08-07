@@ -175,7 +175,7 @@ influxdb-enterprise-standby:
 influxdb-enterprise-active:
   # -- Whether to enable influxdb-enterprise-active
   enabled: false
-
+  #
 kafka-connect-manager:
   # -- Whether to enable the Kafka Connect Manager
   enabled: false
@@ -257,7 +257,7 @@ kapacitor:
     # -- Docker image to use for Kapacitor
     repository: docker.io/library/kapacitor
     # -- Tag to use for Kapacitor
-    tag: 1.7.7
+    tag: 1.8.0
     # -- Pull policy for Kapacitor
     pullPolicy: "IfNotPresent"
 
@@ -346,19 +346,6 @@ data-transfer-monitoring:
   # -- Whether to enable the data-transfer-monitoring subchart
   enabled: false
 
-global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: ""
-
-  # -- Host name for ingress
-  # @default -- Set by Argo CD
-  host: ""
-
-  # -- Base path for Vault secrets
-  # @default -- Set by Argo CD
-  vaultSecretsPath: ""
-
 app-metrics:
   # -- Enable the app-metrics subchart with topic, user, and telegraf
   # configurations
@@ -366,3 +353,16 @@ app-metrics:
 
   # -- The apps to create configuration for.
   apps: []
+
+grafana:
+  # -- Whether to enable the grafana subchart
+  enabled: false
+
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

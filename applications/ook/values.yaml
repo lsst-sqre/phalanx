@@ -7,11 +7,11 @@
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
-  baseUrl: ""
+  baseUrl: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
-  host: ""
+  host: null
 
 # -- Number of API pods to run
 replicaCount: 1
@@ -79,6 +79,10 @@ config:
   # -- Whether to run the database migration job
   # @default -- false to disable schema upgrades
   updateSchema: false
+
+  # -- Whether to migrate country codes in the database
+  # @default -- false to disable country code migration
+  migrateCountryCodes: false
 
   topics:
     # -- Kafka topic name for ingest events
@@ -183,7 +187,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.7"
+    tag: "1.37.8"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -193,10 +197,10 @@ cloudsql:
     resources:
       limits:
         cpu: "100m"
-        memory: "20Mi"
+        memory: "30Mi"
       requests:
         cpu: "5m"
-        memory: "7Mi"
+        memory: "15Mi"
 
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   instanceConnectionName: ""

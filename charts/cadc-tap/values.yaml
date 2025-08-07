@@ -89,7 +89,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "2.13.1"
+      tag: "3.6.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -99,7 +99,7 @@ config:
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
   # -- Datalink payload URL
-  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/w.2025.24/datalink-snippets.zip"
+  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/DP1-v1.1.4-rc1/datalink-snippets.zip"
 
   # -- Name of GCS bucket in which to store results
   gcsBucket: "async-results.lsst.codes"
@@ -212,7 +212,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "tickets-DM-51549"
+    tag: "DP1-v1.1.4-rc1"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
@@ -245,7 +245,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "2.13.1"
+    tag: "3.6.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
@@ -279,7 +279,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.7"
+    tag: "1.37.8"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -301,10 +301,10 @@ cloudsql:
   resources:
     limits:
       cpu: "100m"
-      memory: "20Mi"
+      memory: "30Mi"
     requests:
       cpu: "5m"
-      memory: "7Mi"
+      memory: "15Mi"
 
 # -- The service account will allways be created when cloudsql.enabled is set to true
 # In this case the serviceAccount configuration here is required
@@ -324,12 +324,12 @@ serviceAccount:
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
-  baseUrl: ""
+  baseUrl: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
-  host: ""
+  host: null
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
-  vaultSecretsPath: ""
+  vaultSecretsPath: null

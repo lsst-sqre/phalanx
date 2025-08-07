@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "checkerboard.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
       - "read:checkerboard"

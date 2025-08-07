@@ -25,6 +25,10 @@ config:
       Can query Checkerboard for user mappings
 
   groupMapping:
+    "admin:userinfo":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "exec:admin":
       - github:
           organization: "lsst-sqre"
@@ -55,7 +59,8 @@ config:
     - "stvoutsin"
 
   errorFooter: |
-    To report problems or ask for help, contact #dm-square on the LSSTC Slack.
+    To report problems or ask for help, contact #square-team on the Rubin
+    Observatory Slack.
 
 ingress:
   additionalHosts:

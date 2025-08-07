@@ -16,8 +16,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.resources | object | See `values.yaml` | Resource requests and limits for Cloud SQL pod |
-| cloudsql.image.tag | string | `"1.37.7"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.8"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.nodeSelector | object | `{}` | Node selection rules for the Cloud SQL Auth Proxy pod |
 | cloudsql.podAnnotations | object | `{}` | Annotations for the Cloud SQL Auth Proxy pod |
@@ -104,8 +103,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cronjob.artifacts.schedule | string | `"43 * * * *"` | Schedule for the cloning cronjob(s). |
 | cronjob.artifacts.targetVolume | object | See `values.yaml` | Repository volume definition |
 | cronjob.artifacts.targetVolume.mountPath | string | `"/rubin"` | Where volume will be mounted in the container |
-| cronjob.artifacts.targetVolume.path | string | `"/rubin-share"` | Path on NFS server |
-| cronjob.artifacts.targetVolume.server | string | `nil` | IP address of NFS server (different per environment) |
+| cronjob.artifacts.targetVolume.volumeName | string | None, must be set for each environment | Name of volume to mount (from controller.lab.config.volumes) |
 | cronjob.artifacts.targetVolumePath | string | `"/rubin"` | Where repository volume should be mounted |
 | cronjob.artifacts.uid | int | `1000` | UID for the cloning cronjob(s) |
 | cronjob.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the repo cloner image |
@@ -121,8 +119,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cronjob.tutorials.schedule | string | `"42 * * * *"` | Schedule for the cloning cronjob(s). |
 | cronjob.tutorials.targetVolume | object | See `values.yaml` | Repository volume definition |
 | cronjob.tutorials.targetVolume.mountPath | string | `"/rubin"` | Where volume will be mounted in the container |
-| cronjob.tutorials.targetVolume.path | string | `"/rubin-share"` | Path on NFS server |
-| cronjob.tutorials.targetVolume.server | string | `nil` | IP address of NFS server (different per environment) |
+| cronjob.tutorials.targetVolume.volumeName | string | None, must be set for each environment | Name of volume to mount (from controller.lab.config.volumes) |
 | cronjob.tutorials.targetVolumePath | string | `"/rubin"` | Where repository volume should be mounted |
 | cronjob.tutorials.uid | int | `1000` | UID for the cloning cronjob(s) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
@@ -152,17 +149,37 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/nublado-jupyterhub"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"8.9.0"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"8.12.0"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | See `values.yaml` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |
 | jupyterhub.ingress.enabled | bool | `false` | Whether to enable the default ingress. Should always be disabled since we install our own `GafaelfawrIngress` to avoid repeating the global hostname and manually configuring authentication |
 | jupyterhub.prePuller.continuous.enabled | bool | `false` | Whether to run the JupyterHub continuous prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.prePuller.hook.enabled | bool | `false` | Whether to run the JupyterHub hook prepuller (the Nublado controller does its own prepulling) |
+| jupyterhub.proxy.chp.extraCommandLineFlags | list | `["--keep-alive-timeout=61000"]` | Extra CLI options to pass to the proxy. The most up-to-date list is [here](https://github.com/jupyterhub/configurable-http-proxy/blob/main/bin/configurable-http-proxy) (not the docs, unfortunately) |
 | jupyterhub.proxy.chp.networkPolicy.interNamespaceAccessLabels | string | `"accept"` | Enable access to the proxy from other namespaces, since we put each user's lab environment in its own namespace |
 | jupyterhub.proxy.chp.resources | object | See `values.yaml` | Resource limits and requests for proxy pod |
 | jupyterhub.proxy.service.type | string | `"ClusterIP"` | Only expose the proxy to the cluster, overriding the default of exposing the proxy directly to the Internet |
 | jupyterhub.scheduling.userPlaceholder.enabled | bool | `false` | Whether to spawn placeholder pods representing fake users to force autoscaling in advance of running out of resources |
 | jupyterhub.scheduling.userScheduler.enabled | bool | `false` | Whether the user scheduler should be enabled |
 | proxy.ingress.annotations | object | See `values.yaml` | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |
+| purger.affinity | object | `{}` | Affinity rules for purger |
+| purger.config.dryRun | bool | `false` | Report only; do not purge |
+| purger.config.logging.addTimestamps | bool | `false` | Add timestamps to log lines |
+| purger.config.logging.log_level | string | `"info"` | Level at which to log |
+| purger.config.logging.profile | string | `"production"` | "production" (JSON logs) or "development" (human-friendly) |
+| purger.config.policyFile | string | `"/etc/purger/policy.yaml"` | File holding purge policy |
+| purger.enabled | bool | `false` | Purge scratch space? |
+| purger.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the purger image |
+| purger.image.repository | string | `"ghcr.io/lsst-sqre/nublado-purger"` | purger image to use |
+| purger.image.tag | string | The appVersion of the chart | Tag of purger image to use |
+| purger.nodeSelector | object | `{}` | Node selector rules for purger |
+| purger.podAnnotations | object | `{}` | Annotations for the purger pod |
+| purger.policy.directories[0].intervals | object | see `values.yaml`; each environment must set its own values. | If any of these times are older than specified, remove the file.  Zero means "never remove". |
+| purger.policy.directories[0].path | string | `"/scratch"` |  |
+| purger.policy.directories[0].threshold | string | `"1GiB"` | Files this large or larger will be subject to the "large" interval set |
+| purger.resources | object | See `values.yaml` | Resource limits and requests for the filesystem purger |
+| purger.schedule | string | `"05 03 * * *"` | Crontab entry for when to run. |
+| purger.tolerations | list | `[]` | Tolerations for purger |
+| purger.volumeName | string | None, must be set for each environment | Name of volume to purge (from controller.lab.config.volumes) |
 | secrets.templateSecrets | bool | `true` | Whether to use the new secrets management mechanism. If enabled, the Vault nublado secret will be split into a nublado secret for JupyterHub and a nublado-lab-secret secret used as a source for secret values for the user's lab. |

@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "nublado.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     anonymous: true
 template:

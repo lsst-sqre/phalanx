@@ -16,7 +16,6 @@ Documentation links for VO.
 | config.ookApiUrl | string | `"https://roundtable.lsst.cloud/ook"` | Ook API URL |
 | config.pathPrefix | string | `"/api/hoverdrive"` | URL path prefix |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the hoverdrive image |

@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "vo-cutouts.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.databaseWorker.replicaCount }}
+  replicas: {{ .Values.cutoutWorker.replicaCount }}
   selector:
     matchLabels:
       {{- include "vo-cutouts.selectorLabels" . | nindent 6 }}
@@ -28,7 +28,7 @@ spec:
       {{- end }}
       serviceAccountName: "vo-cutouts"
       containers:
-        - name: "worker"
+        - name: "vo-cutouts-worker"
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

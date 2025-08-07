@@ -7,7 +7,6 @@
   (printf "--prefix=%s" .Values.config.gcsPrefix)
   (printf "--wait-interval=%d" (int .Values.config.waitInterval))
   (printf "--upload-interval=%d" (int .Values.config.uploadInterval))
-  "--delete-chunks"
 }}
 {{- include "ppdb-replication.deployment" (dict
   "Chart" .Chart

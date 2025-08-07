@@ -17,53 +17,26 @@ controller:
         image: "sciplat-lab"
     lab:
       env:
-        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
-        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
-        GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
-        S3_ENDPOINT_URL: "https://storage.googleapis.com"
         TMPDIR: "/tmp"
       initContainers:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.9.0"
+            tag: "8.12.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
-      secrets:
-        - secretName: "nublado-lab-secret"
-          secretKey: "aws-credentials.ini"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-gcs-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-hmac-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "postgres-credentials.txt"
       volumes:
         - name: "home"
           source:
             type: nfs
             serverPath: "/share1/home"
             server: "10.32.121.98"
-        - name: "project"
-          source:
-            type: nfs
-            serverPath: "/share1/project"
-            server: "10.32.121.98"
-        - name: "scratch"
-          source:
-            type: nfs
-            serverPath: "/share1/scratch"
-            server: "10.32.121.98"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
-        - containerPath: "/project"
-          volumeName: "project"
-        - containerPath: "/scratch"
-          volumeName: "scratch"
 jupyterhub:
   hub:
     db:

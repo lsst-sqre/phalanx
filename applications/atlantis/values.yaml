@@ -15,6 +15,13 @@ config:
     repos:
     - id: "/.*/"
       apply_requirements: ["mergeable", "undiverged"]
+      pre_workflow_hooks:
+      - run: "rm -rf src/prodromos/templates"
+        description: |
+          The prodromos repo has .tf files in the templates dir
+          which confuses the module autoplanner. There is no way
+          to tell the module autoplanner to ignore anything :(
+        commands: "plan, apply"
 
   # -- Content for the [server
   # config](https://www.runatlantis.io/docs/server-configuration.html) file.

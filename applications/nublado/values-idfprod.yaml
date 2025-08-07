@@ -2,6 +2,28 @@ controller:
   googleServiceAccount: "nublado-controller@science-platform-stable-6994.iam.gserviceaccount.com"
   slackAlerts: true
   config:
+    dropdownMenu:
+      release:
+        cutoffVersion: "27.0.0"
+      weekly:
+        number: 78
+      daily:
+        number: 25
+      releaseCandidate:
+        cutoffVersion: "28.0.0"
+      experimental:
+        age: "3w"
+    fileserver:
+      enabled: true
+      nodeSelector:
+        node_pool: "user-lab-pool"
+      tolerations:
+        - key: "nublado.lsst.io/permitted"
+          operator: "Exists"
+          effect: "NoExecute"
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
     images:
       source:
         type: "google"
@@ -16,15 +38,17 @@ controller:
         DAF_BUTLER_REPOSITORY_INDEX: "https://data.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
+        RUBIN_DIR: "/rubin"
         S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         SCRATCH_PATH: "/deleted-sundays"
         TMPDIR: "/tmp"
+        TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.9.0"
+            tag: "8.12.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -54,11 +78,10 @@ controller:
           operator: "Exists"
           effect: "NoExecute"
       volumes:
-        # /home is pending more space allocated for NetApp
         - name: "home"
           source:
-            serverPath: "/share1/home"
-            server: "10.13.105.122"
+            serverPath: "/home-share"
+            server: "10.231.144.5"
             type: "nfs"
         - name: "rubin"
           source:
@@ -75,11 +98,7 @@ controller:
           volumeName: "home"
         - containerPath: "/rubin"
           volumeName: "rubin"
-        - containerPath: "/project"
-          volumeName: "rubin"
         - containerPath: "/deleted-sundays"
-          volumeName: "deleted-sundays"
-        - containerPath: "/scratch"
           volumeName: "deleted-sundays"
     metrics:
       enabled: true
@@ -100,6 +119,10 @@ jupyterhub:
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
+  proxy:
+    chp:
+      image:
+        tag: "5.0.1"
 
 cronjob:
   tutorials:
@@ -107,15 +130,13 @@ cronjob:
     gitTarget: "/rubin/cst_repos/tutorial-notebooks"
     targetVolume:
       mountPath: "/rubin"
-      server: "10.231.144.4"
-      path: "/rubin-share"
+      volumeName: "rubin"
   artifacts:
     enabled: true
     gitTarget: "/rubin/cst_repos/tutorial-notebooks-data"
     targetVolume:
       mountPath: "/rubin"
-      server: "10.231.144.4"
-      path: "/rubin-share"
+      volumeName: "rubin"
 
 cloudsql:
   enabled: true

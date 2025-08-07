@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "grafana.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   loginRedirect: true
   scopes:
     {{- .Values.grafana.gafaelfawrScopes | toYaml | nindent 4 }}

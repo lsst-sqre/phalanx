@@ -15,6 +15,7 @@ applications:
   calsys: true
   consdb: true
   control-system-test: true
+  csc-versions: true
   envsys: true
   exposurelog: true
   love: true
@@ -32,10 +33,11 @@ applications:
   squareone: true
   strimzi: true
   uws: true
-  telegraf: true
-  telegraf-ds: true
 
 controlSystem:
   imageTag: "c0041"
   siteTag: "tucson"
   s3EndpointUrl: "https://s3.tu.lsst.org"
+
+revisions:
+  strimzi: strimzi-0.45.0

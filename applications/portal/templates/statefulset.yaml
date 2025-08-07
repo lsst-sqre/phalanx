@@ -47,6 +47,8 @@ spec:
               value: {{ .Values.global.host | quote }}
             - name: "PROPS_lsst__hips__masterUrl"
               value: "{{ .Values.global.baseUrl }}/api/hips/list"
+            - name: PROPS_job__cleanup__interval
+              value: "120"
             - name: PROPS_OP_searchActionsCmdMask_0
               value: tableTapUpload
             - name: PROPS_OP_searchActionsCmdMask_1
@@ -69,6 +71,26 @@ spec:
               value: lsstObsCoreTapTable
             - name: PROPS_OP_searchActionsCmdMask_10
               value: lsstTruthSummaryRadiusTable
+            - name: PROPS_OP_searchActionsCmdMask_11
+              value: showDatalinkTable
+            - name: PROPS_OP_dataServiceOptions_targetPanelExampleRow1_0
+              value: "53.01, -28.35"
+            - name: PROPS_OP_dataServiceOptions_targetPanelExampleRow1_1
+              value: "37.98, 7.0"
+            - name: PROPS_OP_dataServiceOptions_targetPanelExampleRow1_2
+              value: "NGC 1494"
+            - name: PROPS_OP_dataServiceOptions_targetPanelExampleRow2_0
+              value: "95.04, -25.0 EQ_J2000"
+            - name: PROPS_OP_dataServiceOptions_targetPanelExampleRow2_1
+              value: "from simulated data: 62, -37 (DP0.2)"
+            - name: PROPS_OP_dataServiceOptions_DP1ImagesSIAv2_targetPanelExampleRow1_0
+              value: "NGC 1494"
+            - name: PROPS_OP_dataServiceOptions_DP1ImagesSIAv2_targetPanelExampleRow1_1
+              value: "53.01, -28.35"
+            - name: PROPS_OP_dataServiceOptions_DP1ImagesSIAv2_targetPanelExampleRow1_2
+              value: "37.98, 7.0"
+            - name: PROPS_OP_dataServiceOptions_DP1ImagesSIAv2_targetPanelExampleRow2_0
+              value: "95.04, -25.0 EQ_J2000"
             - name: PROPS_OP_hips_defHipsSources_label
               value: "'Rubin Featured'"
             - name: PROPS_OP_hips_adhocMocSource_label
@@ -90,20 +112,31 @@ spec:
             - name: PROPS_OP_hips_adhocMocSource_sources_7
               value: ivo://CDS/P/2MASS/color
             - name: PROPS_inventory.serverURLAry
-              value: "[\"https://raw.githubusercontent.com/lsst-sqre/portal-config/refs/heads/tickets/DM-43947/dce-searchPage-idf.xml\"]"
+              value: "[\"https://raw.githubusercontent.com/lsst-sqre/portal-config/refs/heads/main/dce-searchPage-idf.xml\"]"
+            - name: PROPS_uws.history.svcs
+              value: {{ .Values.global.baseUrl }}/api/tap/async?LAST={{ .Values.config.tapHistoryLimit }}|DP02_DC|TAP
+            - name: PROPS_OP_background_history_note
+              value: "Note: The jobs shown are a limited number of the most recent jobs associated with your user account and may include jobs submitted from other applications, not just this one.\nYou must be logged in to view your jobs. Only jobs created within the retention period will be displayed."
+            - name: PROPS_OP_showUserInfo
+              value: >-
+                {{- if .Values.config.showUserInfo }}
+                       {{ .Values.config.showUserInfo }}
+                {{- else }}
+                       true
+                {{- end }}
             - name: "PROPS_OP_coverage_hipsSourceURL"
               value: >-
                 {{- if .Values.config.hipsUrl }}
-                       "{{ .Values.config.hipsUrl }}"
+                       {{ .Values.config.hipsUrl }}
                 {{- else }}
-                       "{{ .Values.global.baseUrl }}/api/hips/images/color_gri"
+                       {{ .Values.global.baseUrl }}/api/hips/images/color_gri
                 {{- end }}
             - name: "PROPS_OP_coverage_hipsSource360URL"
               value: >-
                 {{- if .Values.config.hipsUrl }}
-                       "{{ .Values.config.hipsUrl }}"
+                       {{ .Values.config.hipsUrl }}
                 {{- else }}
-                       "{{ .Values.global.baseUrl }}/api/hips/images/color_gri"
+                       {{ .Values.global.baseUrl }}/api/hips/images/color_gri
                 {{- end }}
             - name: "PROPS_FIREFLY_OPTIONS"
               value: >-
@@ -112,7 +145,19 @@ spec:
                       "additional": {
                           "services": [
                             {
-                               "label": "LSST SIAV2 DP0.2 DC2",
+                               "label": "DP1 Images SIAv2",
+                               "serviceId": "DP1ImagesSIAv2",
+                               "value": "{{ .Values.global.baseUrl }}/api/sia/dp1/query",
+                               {{- if .Values.config.hipsUrl }}
+                               "hipsUrl": "{{ .Values.config.hipsUrl }}",
+                               {{- else }}
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                               {{- end }}
+                               "centerWP": "40.1;-34.4;EQ_J2000",
+                               "fovDeg": 10
+                            },
+                            {
+                               "label": "DP0 Images SIAv2",
                                "serviceId": "RubinSiaDp02Dc2",
                                "value": "{{ .Values.global.baseUrl }}/api/sia/dp02/query",
                                {{- if .Values.config.hipsUrl }}
@@ -130,8 +175,8 @@ spec:
                       "additional": {
                           "services": [
                             {
-                               "label": "LSST DP0.2 DC2",
-                               "serviceId": "RubinDp02Dc2",
+                               "label": "Rubin TAP",
+                               "serviceId": "RubinPrimaryTAPID",
                                "value": "{{ .Values.global.baseUrl }}/api/tap",
                                {{- if .Values.config.hipsUrl }}
                                "hipsUrl": "{{ .Values.config.hipsUrl }}",
@@ -182,6 +227,9 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
+            - mountPath: "/firefly/alerts"
+              name: "alerts"
+              readOnly: true
             - mountPath: "/firefly/shared-workarea"
               name: "firefly-shared-workarea"
             - mountPath: "/firefly/config"
@@ -196,6 +244,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: "alerts"
+          configMap:
+            name: "portal-alerts"
         - name: "firefly-shared-workarea"
           {{- if .Values.config.volumes.sharedWorkarea.hostPath }}
           hostPath:

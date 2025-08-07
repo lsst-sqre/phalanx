@@ -17,7 +17,6 @@ Kubernetes workflow engine
 | argo-workflows.server.baseHref | string | `"/argo-workflows/"` |  |
 | argo-workflows.server.extraArgs[0] | string | `"--auth-mode=server"` |  |
 | argo-workflows.server.ingress.enabled | bool | `false` |  |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |

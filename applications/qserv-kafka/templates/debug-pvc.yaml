@@ -1,0 +1,14 @@
+{{- if .Values.frontend.debug.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: qserv-kafka-debug
+  namespace: qserv-kafka
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: "standard-rwo"
+{{- end }}

@@ -25,6 +25,7 @@ Guides
    manage-schema
    quotas
    recreate-token
+   add-scope
    add-oidc-client
    github-organizations
    troubleshoot

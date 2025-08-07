@@ -27,7 +27,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.7"
+    tag: "1.37.8"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -46,10 +46,10 @@ cloudsql:
   resources:
     limits:
       cpu: "1"
-      memory: "20Mi"
+      memory: "30Mi"
     requests:
       cpu: "5m"
-      memory: "7Mi"
+      memory: "15Mi"
 
 # -- Config for the grafana-operator, which is a dependency of this chart
 # @default -- [chart values](https://github.com/grafana/grafana-operator/blob/master/deploy/helm/grafana-operator/values.yaml)
@@ -83,7 +83,7 @@ grafana:
   # docs](https://gafaelfawr.lsst.io/user-guide/gafaelfawringress.html#config-section)
   gafaelfawrScopes:
     all:
-      - "exec:admin"
+      - "exec:internal-tools"
 
   # -- Config for the Grafana CRD spec.
   # [Docs](https://grafana.github.io/grafana-operator/docs/api/#grafanaspec)
@@ -117,3 +117,6 @@ grafana:
       host: "localhost"
     log:
       level: "info"
+    users:
+      auto_assign_org: "true"
+      auto_assign_org_role: Editor

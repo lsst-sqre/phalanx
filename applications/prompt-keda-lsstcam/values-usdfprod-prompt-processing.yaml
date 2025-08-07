@@ -1,7 +1,7 @@
 prompt-keda:
   image:
     pullPolicy: IfNotPresent
-    tag: 6.14.0
+    tag: 7.0.0
 
   alerts:
     username: kafka-admin
@@ -41,6 +41,7 @@ prompt-keda:
         - {pipelines: []}
     preloadPadding: 50.1
     centralRepo: s3://rubin-summit-users
+    readRepo: s3://rubin-summit-users/butler-nochain-readonly.yaml
     exportTypes: |-
       - ".*_(config|metadata|log)"
       - "packages"
@@ -79,6 +80,8 @@ prompt-keda:
   # TODO: replace with permanent service once it's up
   mpSky_service: http://sdfiana014.sdf.slac.stanford.edu:3666/ephemerides/
 
+  iers_cache: s3://rubin-summit-users/iers-cache.zip
+
   imageNotifications:
     kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
     topic: rubin-summit-notification
@@ -89,13 +92,19 @@ prompt-keda:
   apdb:
     config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcam.yaml
 
-  logLevel: timer.lsst.activator=DEBUG timer.lsst.daf.butler=VERBOSE lsst.associateApdb=VERBOSE lsst.loadDiaCatalogs=VERBOSE lsst.computeReliability=VERBOSE lsst.daf.butler=VERBOSE
+  logLevel: >-
+    timer.lsst.activator=DEBUG timer.lsst.daf.butler=VERBOSE
+    lsst.associateApdb=VERBOSE lsst.loadDiaCatalogs=VERBOSE lsst.computeReliability=VERBOSE
+    lsst.daf.butler=VERBOSE
 
   sasquatch:
     # TODO: production Sasquatch not yet ready
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     namespace: lsst.prompt.prod
     auth_env: false
+
+  debug:
+    monitorDaxApdb: true
 
   keda:
     minReplicaCount: 3

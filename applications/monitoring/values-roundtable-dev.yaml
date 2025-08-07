@@ -10,21 +10,6 @@ influxdb2:
   ingress:
     enabled: true
     hostname: "monitoring-dev.lsst.cloud"
-  tolerations:
-  - key: "dedicated"
-    operator: "Equal"
-    value: "kafka"
-    effect: "NoExecute"
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          # This should probably be roundtable-dev' but in fact it is not.
-          - key: "roundtable.lsst.cloud/pool"
-            operator: "In"
-            values:
-            - "kafka"
 chronograf:
   enabled: true
   ingress:

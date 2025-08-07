@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/cm-service"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "cm-service") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

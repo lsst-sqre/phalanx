@@ -33,6 +33,16 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "friends"
+    "admin:userinfo":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "exec:admin":
       - github:
           organization: "lsst-sqre"

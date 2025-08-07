@@ -98,6 +98,14 @@ spec:
               - name: MP_SKY_URL
                 value: {{ . }}
               {{- end }}
+              {{- with .Values.iers_cache }}
+              - name: CENTRAL_IERS_CACHE
+                value: {{ . }}
+              {{- end }}
+              {{- with .Values.sattle.uri_base }}
+              - name: SATTLE_URI_BASE
+                value: {{ . }}
+              {{- end }}
               - name: SASQUATCH_URL
                 value: {{ .Values.sasquatch.endpointUrl }}
               {{- if and .Values.sasquatch.endpointUrl .Values.sasquatch.auth_env }}
@@ -157,12 +165,12 @@ spec:
                 value: {{ .Values.logLevel }}
               - name: LOCAL_REPO_CACHE_SIZE
                 value: {{ .Values.cache.baseSize | toString | quote }}
-              - name: REFCATS_PER_IMAGE
-                value: {{ .Values.cache.refcatsPerImage | toString | quote }}
-              - name: PATCHES_PER_IMAGE
-                value: {{ .Values.cache.patchesPerImage | toString | quote }}
               - name: DEBUG_EXPORT_OUTPUTS
                 value: {{ if .Values.debug.exportOutputs }}'1'{{ else }}'0'{{ end }}
+              {{- if .Values.debug.monitorDaxApdb }}
+              - name: DAX_APDB_MONITOR_CONFIG
+                value: 'logging:lsst.dax.apdb.monitor'
+              {{- end }}
               - name: REDIS_STREAM_HOST
                 value: {{ .Values.keda.redisStreams.host}}
               - name: REDIS_STREAM_NAME

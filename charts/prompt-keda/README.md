@@ -19,10 +19,10 @@ Event-driven processing of camera images
 | alerts.username | string | `""` | Username for sending alerts to the alert stream |
 | apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
 | cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
-| cache.patchesPerImage | int | `4` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
-| cache.refcatsPerImage | int | `4` | A factor by which to multiply `baseSize` for refcat datasets. |
 | debug.exportOutputs | bool | `true` | Whether or not pipeline outputs should be exported to the central repo. This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination. |
+| debug.monitorDaxApdb | bool | `false` | Whether `dax_apdb` should run in debug mode and log metrics. |
 | fullnameOverride | string | `"prompt-keda"` | Override the full name for resources (includes the release name) |
+| iers_cache | string | `""` | The URI where IERS data has been pre-downloaded and cached for use by Prompt Processing. If empty, Prompt Processing does not try to update IERS data. |
 | image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev.  Set to `IfNotPresent` for scale testing in dev. | Pull policy for the Prompt Processing image |
 | image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the Prompt Processing deployment |
 | image.tag | string | `"latest"` | Overrides the image tag whose default is the chart appVersion. |
@@ -83,6 +83,7 @@ Event-driven processing of camera images
 | sasquatch.auth_env | bool | `true` | If set, this application's Vault secret must contain a `sasquatch_token` key containing the authentication token for `sasquatch.endpointUrl`. Leave unset to attempt anonymous access. |
 | sasquatch.endpointUrl | string | `""` | Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload. This is a preliminary implementation of Sasquatch support, and this parameter may be deprecated if we instead support `SasquatchDatastore` in the future. |
 | sasquatch.namespace | string | `"lsst.prompt"` | Namespace in the Sasquatch system with which to associate metrics. |
+| sattle.uri_base | string | `""` | Base URI of the sattle service.  Leave blank if not used. |
 | tolerations | list | `[]` | Tolerations for the Prompt Processing pod |
 | worker.grace_period | int | `45` | When Kubernetes shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds). |
 | worker.restart | int | `0` | The number of requests to process before rebooting a worker. If 0, workers process requests indefinitely. |

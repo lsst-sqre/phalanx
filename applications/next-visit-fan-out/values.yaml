@@ -7,10 +7,7 @@ knative:
   urls:
     HSC: http://prompt-proto-service-hsc.prompt-proto-service-hsc/next-visit
     LATISS: http://prompt-proto-service-latiss.prompt-proto-service-latiss/next-visit
-    LSSTComCam: http://prompt-proto-service-lsstcomcam.prompt-proto-service-lsstcomcam/next-visit
-    LSSTComCamSim: http://prompt-proto-service-lsstcomcamsim.prompt-proto-service-lsstcomcamsim/next-visit
     LSSTCam: http://prompt-proto-service-lsstcam.prompt-proto-service-lsstcam/next-visit
-    LSSTCam-imSim: http://prompt-proto-service-lsstcamimsim.prompt-proto-service-lsstcamimsim/next-visit
   # -- The maximum number of messages that can be forwarded to all Knative instances combined.
   # @default -- None, must be set.
   maxMessages: ""
@@ -34,12 +31,11 @@ keda:
   redisStreams:
     HSC: instrument:hsc
     LATISS: instrument:latiss
-    LSSTComCam: instrument:lsstcomcam
-    LSSTComCamSim: instrument:lsstcomcamsim
     LSSTCam: instrument:lsstcam
-    LSSTCam-imSim: instrument:lsstcamimsim
 
 kafka:
+  # -- Enable secret for authenticating to the Summit.  Only should be enabled for prod.
+  summitSasquatchAuth: false
   offset: latest
   saslMechamism: SCRAM-SHA-512
   securityProtocol: SASL_SSL
@@ -77,10 +73,6 @@ affinity: {}
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: ""
-
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: ""
@@ -102,18 +94,6 @@ instruments: ""
 detectorConfig:
   LATISS:
     0: True
-  LSSTComCam: &ComCam
-    0: True
-    1: True
-    2: True
-    3: True
-    4: True
-    5: True
-    6: True
-    7: True
-    8: True
-  LSSTComCamSim:
-    <<: *ComCam
   LSSTCam: &LSSTCam
     0: True
     1: True
@@ -304,17 +284,21 @@ detectorConfig:
     186: True
     187: True
     188: True
-  LSSTCam-TEST-2025031700001:
-    0: True
-  LSSTCam-TEST-2025031700002:
-    0: True
-  LSSTCam-imSim:
-    <<: *LSSTCam
-  LSSTCam-imSim-TEST-496960:
-    95: True
-  LSSTCam-imSim-TEST-496989:
-    95: True
-    105: True
+  LSSTCam-TEST-2025050100367:
+    30: True
+    158: True
+  LSSTCam-TEST-2025050100395:
+    30: True
+    158: True
+  LSSTCam-TEST-2025050100463:
+    30: True
+    66: True
+  LSSTCam-TEST-2025050100499:
+    30: True
+    66: True
+  LSSTCam-TEST-2025050100553:
+    30: True
+    173: True
   HSC:
     0: True
     1: True

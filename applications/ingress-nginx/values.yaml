@@ -30,6 +30,10 @@ ingress-nginx:
       # than the Gafaelfawr one.
       proxy-buffer-size: "64k"
 
+      # -- Maximum size of the buffers that can be busy sending a response
+      # to the client. This must be at least as large as proxy-buffer-size.
+      proxy-busy-buffers-size: "64k"
+
       # -- Redirect all non-SSL access to SSL
       ssl-redirect: "true"
 

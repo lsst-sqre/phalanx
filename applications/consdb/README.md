@@ -20,7 +20,6 @@ Consolidated Database of Image Metadata
 | db.database | string | `"consdb"` | Database name |
 | db.host | string | `"postgres.postgres"` | Database host |
 | db.user | string | `"consdb"` | Database user |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | hinfo.image.pullPolicy | string | `"Always"` | Pull policy for the consdb-hinfo image |

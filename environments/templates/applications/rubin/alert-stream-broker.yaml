@@ -23,7 +23,7 @@ spec:
   source:
     path: "applications/alert-stream-broker"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "alert-stream-broker") .Values.targetRevision | quote }}
     helm:
       valueFiles:
         - "values.yaml"

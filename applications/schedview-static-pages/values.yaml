@@ -14,7 +14,7 @@ image:
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
-  tag: "1.28.0"
+  tag: "1.29.0"
 
 ingress:
   # -- Additional annotations for the ingress rule
@@ -39,10 +39,6 @@ tolerations: []
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: null
-
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null

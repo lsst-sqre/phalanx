@@ -9,7 +9,7 @@ Grafana observability visualization tooling
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.37.7"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.8"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL is used | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `grafana` Kubernetes service account and has the `cloudsql.client` role |
@@ -19,8 +19,8 @@ Grafana observability visualization tooling
 | grafana | object | See values.yaml | Config for the Grafana instance |
 | grafana-operator | object | [chart values](https://github.com/grafana/grafana-operator/blob/master/deploy/helm/grafana-operator/values.yaml) | Config for the grafana-operator, which is a dependency of this chart |
 | grafana.authProxy | object | `{"enabled":true}` | Whether auth proxy is enabled. We always want to run with this enabled and depend on Gafaelfawr to handle requests. Only once during the configuration of a new instance (when we need to make an auth-proxy user the instance admin) should we ever turn this off. |
-| grafana.config | object | `{"admin_user":"grafana-admin","database":{"host":"localhost","name":"grafana","type":"postgres","user":"grafana"},"log":{"level":"info"}}` | Config for the Grafana CRD spec config options. [Docs](https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/) |
-| grafana.gafaelfawrScopes | object | `{"all":["exec:admin"]}` | Gafaelfawr scopes that can access Grafana See the [Gafaelfawr docs](https://gafaelfawr.lsst.io/user-guide/gafaelfawringress.html#config-section) |
+| grafana.config | object | `{"admin_user":"grafana-admin","database":{"host":"localhost","name":"grafana","type":"postgres","user":"grafana"},"log":{"level":"info"},"users":{"auto_assign_org":"true","auto_assign_org_role":"Editor"}}` | Config for the Grafana CRD spec config options. [Docs](https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/) |
+| grafana.gafaelfawrScopes | object | `{"all":["exec:internal-tools"]}` | Gafaelfawr scopes that can access Grafana See the [Gafaelfawr docs](https://gafaelfawr.lsst.io/user-guide/gafaelfawringress.html#config-section) |
 | grafana.ingress | object | `{"annotations":{}}` | Config for the Gafaelfawr ingress |
 | grafana.ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | grafana.pathPrefix | string | `"grafana"` | Path prefix for Grafana. |

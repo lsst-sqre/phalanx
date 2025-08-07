@@ -16,14 +16,6 @@ strimzi-kafka:
       size: 100Gi
       storageClassName: "premium-rwo"
     affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: "roundtable.lsst.cloud/pool"
-                  operator: In
-                  values:
-                    - "kafka"
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
@@ -33,11 +25,6 @@ strimzi-kafka:
                   values:
                     - "sasquatch"
             topologyKey: "kubernetes.io/hostname"
-    tolerations:
-      - key: dedicated
-        operator: Equal
-        value: "kafka"
-        effect: NoExecute
   connect:
     enabled: false
   mirrormaker2:

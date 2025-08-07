@@ -23,12 +23,14 @@ globalAppConfig:
   noteburst:
     influxTags:
       - "username"
+      - "queue"
   nublado:
     influxTags:
       - "username"
   qservkafka:
     influxTags:
       - "username"
+      - "queue"
   sia:
     influxTags:
       - "username"

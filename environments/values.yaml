@@ -20,7 +20,8 @@ butlerServerRepositories: {}
 # -- URL of the repository for all applications
 repoUrl: https://github.com/lsst-sqre/phalanx.git
 
-# -- Revision of repository to use for all applications
+# -- Revision of repository to use for all applications unless overridden by
+# branches below
 targetRevision: "main"
 
 # -- URL of Vault server for this environment
@@ -69,6 +70,9 @@ applications:
   # -- Enable the control-system-test application
   control-system-test: false
 
+  # -- Enable the csc-versions application
+  csc-versions: false
+
   # -- Eanble the datalinker application
   datalinker: false
 
@@ -87,14 +91,8 @@ applications:
   # -- Enable the fastapi-bootcamp application
   fastapi-bootcamp: false
 
-  # -- Enable the filestore-backup application
-  filestore-backup: false
-
   # -- Enable the flink application
   flink: false
-
-  # -- Enable the fspurger application
-  fspurger: false
 
   # -- Enable the Gafaelfawr application. This is required by Phalanx since
   # most other applications use `GafaelfawrIngress`
@@ -148,8 +146,8 @@ applications:
   # -- Enable the mobu application
   mobu: false
 
-  # -- Enable the monitoring application
-  monitoring: false
+  # -- Enable the mpsky application
+  mpsky: false
 
   # -- Enable the narrativelog application
   narrativelog: false
@@ -203,15 +201,6 @@ applications:
 
   # -- Enable the prompt-keda-lsstcam application
   prompt-keda-lsstcam: false
-
-  # -- Enable the prompt-keda-lsstcamimsim application
-  prompt-keda-lsstcamimsim: false
-
-  # -- Enable the prompt-keda-lsstcomcam application
-  prompt-keda-lsstcomcam: false
-
-  # -- Enable the prompt-keda-lsstcomcamsim application
-  prompt-keda-lsstcomcamsim: false
 
   # -- Enable the prompt-redis application
   prompt-redis: false
@@ -273,12 +262,6 @@ applications:
   # -- Enable the tasso application
   tasso: false
 
-  # -- Enable the telegraf application
-  telegraf: false
-
-  # -- Enable the telegraf-ds application
-  telegraf-ds: false
-
   # -- Enable the templatebot application
   templatebot: false
 
@@ -308,7 +291,11 @@ applications:
   # running any Safir-based UWS services
   wobbly: false
 
-# -- Add labels for application namespaces.
+# -- Mapping of applications to branches to run some applications from
+# revisions other than main
+revisions: {}
+
+# -- Add labels for application namespaces
 namespaceLabels: {}
 
 # The following settings are used for the control system

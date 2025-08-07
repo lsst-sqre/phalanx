@@ -56,10 +56,6 @@ cache:
   # -- The default number of datasets of each type to keep.
   # The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache.
   baseSize: 3
-  # -- A factor by which to multiply `baseSize` for refcat datasets.
-  refcatsPerImage: 4
-  # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
-  patchesPerImage: 4
 
 s3:
   # -- Bucket containing the incoming raw images
@@ -88,6 +84,10 @@ raw_microservice: ""
 # -- The URI to the MPSky ephemerides service.
 # Empty value is allowed, but its handling is undefined.
 mpSky_service: ""
+
+# -- The URI where IERS data has been pre-downloaded and cached for use by Prompt Processing.
+# If empty, Prompt Processing does not try to update IERS data.
+iers_cache: ""
 
 imageNotifications:
   # -- Hostname and port of the Kafka provider
@@ -134,6 +134,10 @@ sasquatch:
   # -- If set, this application's Vault secret must contain a `sasquatch_token` key containing the authentication token for `sasquatch.endpointUrl`.
   # Leave unset to attempt anonymous access.
   auth_env: true
+
+sattle:
+  # -- Base URI of the sattle service.  Leave blank if not used.
+  uri_base: ""
 
 keda:
   # -- Minimum number of replicas to start with.
@@ -213,6 +217,8 @@ debug:
   # -- Whether or not pipeline outputs should be exported to the central repo.
   # This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination.
   exportOutputs: true
+  # -- Whether `dax_apdb` should run in debug mode and log metrics.
+  monitorDaxApdb: false
 
 
 # -- Kubernetes resource requests and limits

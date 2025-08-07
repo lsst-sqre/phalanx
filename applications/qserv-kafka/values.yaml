@@ -102,6 +102,11 @@ config:
   # @default -- 3600 (1 hour)
   resultTimeout: 3600
 
+  # -- Name of the TAP service for which this Qserv Kafka instance is managing
+  # queries. This must match the name of the TAP service for the corresponding
+  # query quota in the Gafaelfawr configuration.
+  tapService: "qserv"
+
 image:
   # -- Image to use in the qserv-kafka deployment
   repository: "ghcr.io/lsst-sqre/qserv-kafka"
@@ -121,9 +126,16 @@ frontend:
   # -- Affinity rules for the qserv-kafka frontend pod
   affinity: {}
 
-  # -- Whether to allow containers to run as root. Set to true to allow use of
-  # debug containers to diagnose issues such as memory leaks.
-  allowRootDebug: false
+  debug:
+    # -- Set to true to allow containers to run as root and to create and mount
+    # a debug PVC. Useful ro run debug containers to diagnose issues such as
+    # memory leaks.
+    enabled: false
+
+    # Set to true to disable the [pymalloc
+    # allocator](https://bloomberg.github.io/memray/python_allocators.html#how-does-this-affect-memory-profiling).
+    # You may want to do this when debugging memory leaks.
+    disablePymalloc: false
 
   # -- Node selection rules for the qserv-kafka frontend pod
   nodeSelector: {}
@@ -227,6 +239,20 @@ resultWorker:
 
   # -- Tolerations for the qserv-kafka worker pods
   tolerations: []
+
+periodicMetrics:
+  # -- How often to run the periodic metrics job
+  schedule: "* * * * *"
+
+  # -- Resource limits and requests for the qserv-kafka periodic metrics pods
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "200m"
+      memory: "100Mi"
+    requests:
+      cpu: "100m"
+      memory: "50Mi"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
