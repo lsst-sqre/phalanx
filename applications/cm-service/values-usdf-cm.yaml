@@ -15,7 +15,7 @@ config:
   db:
     hostname: "postgres.postgres"
     echo: false
-  fqdn: https://usdf-cm.slac.stanford.edu
+  fqdnUrl: https://usdf-cm.slac.stanford.edu
   outputVolume:
     storageClassName: "sdf-data-rubin"
     subPath: "shared/campaigns/users/usdf-cm"
