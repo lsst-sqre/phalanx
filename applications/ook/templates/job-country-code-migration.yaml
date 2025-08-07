@@ -1,12 +1,12 @@
-{{- if .Values.config.updateSchema -}}
+{{- if .Values.config.migrateCountryCodes -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "ook-schema-update"
+  name: "ook-country-code-migrate"
   annotations:
     helm.sh/hook: "pre-install,pre-upgrade"
     helm.sh/hook-delete-policy: "hook-succeeded"
-    helm.sh/hook-weight: "1"
+    helm.sh/hook-weight: "10" # Ensure this runs after schema update
   labels:
     {{- include "ook.labels" . | nindent 4 }}
 spec:
@@ -18,7 +18,7 @@ spec:
       {{- end }}
       labels:
         {{- include "ook.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: "schema-update"
+        app.kubernetes.io/component: "country-code-migrate"
     spec:
       {{- if or .Values.cloudsql.enabled }}
       serviceAccountName: "ook"
@@ -29,7 +29,7 @@ spec:
         - name: "ook"
           command:
             - "ook"
-            - "update-db-schema"
+            - "migrate-country-codes"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           {{- with .Values.resources }}
