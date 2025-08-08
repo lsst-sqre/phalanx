@@ -1,0 +1,18 @@
+image:
+  pullPolicy: Always
+  # TODO: tickets-dm-49670 is the only tag right now; replace with latest once it exists
+  tag: tickets-dm-49670
+
+outputRepo: s3://rubin-pp-dev-users/central_repo_2
+
+datasetFilePath: s3://rubin-pp-dev-users/central_repo_2/pp-transfer/
+
+kafka:
+  clusterAddress: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
+  username: butler-writer
+  topic: butler-writer
+
+s3:
+  endpointUrl: https://s3dfrgw.slac.stanford.edu
+  # Needed because the profile is hardcoded into butler.yaml!
+  aws_profile: prompt-processing-dev
