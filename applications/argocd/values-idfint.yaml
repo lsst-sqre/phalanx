@@ -18,7 +18,6 @@ argo-cd:
     rbac:
       policy.csv: |
         p, role:developer, applications, *, */*, allow
-        p, role:developer, applications, get, infrastructure/*, allow
         p, role:developer, applications, create, infrastructure/*, deny
         p, role:developer, applications, update, infrastructure/*, deny
         p, role:developer, applications, update/*, infrastructure/*, deny
@@ -28,7 +27,15 @@ argo-cd:
         p, role:developer, applications, override, infrastructure/*, deny
         p, role:developer, applications, action/*, infrastructure/*, deny
         p, role:developer, logs, get, */*, allow
-        p, role:developer, logs, get, infrastructure/*, allow
+
+        p, role:portal, applications, get, */*, allow
+        p, role:portal, applications, update, rsp/portal, allow
+        p, role:portal, applications, update/*, rsp/portal, allow
+        p, role:portal, applications, delete/*, rsp/portal, allow
+        p, role:portal, applications, sync, rsp/portal, allow
+        p, role:portal, applications, override, rsp/portal, allow
+        p, role:portal, applications, action/*, rsp/portal, allow
+        p, role:portal, logs, get, */*, allow
 
         g, adam@lsst.cloud, role:admin
         g, afausti@lsst.cloud, role:admin
@@ -49,11 +56,11 @@ argo-cd:
         g, gpdf@lsst.cloud, role:developer
         g, jeremym@lsst.cloud, role:developer
         g, kkoehler@lsst.cloud, role:developer
+        g, leanne@lsst.cloud, role:developer
         g, loi@lsst.cloud, role:developer
         g, roby@lsst.cloud, role:developer
         g, salnikov@lsst.cloud, role:developer
         g, yablonski@lsst.cloud, role:developer
-        g, leanne@lsst.cloud, role:developer
       scopes: "[email]"
 
   server:
