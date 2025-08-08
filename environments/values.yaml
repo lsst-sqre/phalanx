@@ -284,6 +284,9 @@ applications:
   # environments.
   vault-secrets-operator: true
 
+  # -- Enable the victoria-metrics application
+  victoria-metrics: false
+
   # -- Enable the vo-cutouts application
   vo-cutouts: false
 
