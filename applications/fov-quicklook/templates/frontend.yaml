@@ -75,7 +75,7 @@ config:
   scopes:
     all:
       - "read:image"
-  service: service
+  service: fov-quicklook-frontend
   loginRedirect: true
 template:
   metadata:
