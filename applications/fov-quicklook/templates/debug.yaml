@@ -69,7 +69,7 @@ config:
   scopes:
     all:
       - "exec:notebook"
-  service: service
+  service: fov-quicklook-debug
   loginRedirect: true
   # baseUrl: {{ .Values.global.baseUrl | quote }}
 template:
