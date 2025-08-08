@@ -9,3 +9,7 @@ dependencies:
     version: 0.58.3
     repository: https://victoriametrics.github.io/helm-charts/
     alias: vmstack
+  - name: victoria-logs-single
+    version: 0.11.5
+    repository: https://victoriametrics.github.io/helm-charts/
+    alias: vmlogs

@@ -21,6 +21,61 @@ externalGrafanaOperator:
   installed: true
   pathPrefix: "grafana"
 
+vmlogs:
+  enabled: true
+
+  # Config for gafaelfawr ingresses
+  gafaelfawr:
+    # -- Path prefix for web ui
+    pathPrefix: "vmlogs"
+
+    # -- Config for the Gafaelfawr ingress to instance
+    annotations: {}
+
+    # -- The name of the k8s Service to send requests to. These names are created dynamically by the operator.
+    serviceName: victoria-metrics-vmlogs-server
+
+  dashboards:
+    enabled: true
+    grafanaOperator:
+      enabled: true
+      spec:
+        allowCrossNamespaceImport: true
+
+
+  # -- True to provision a VictoriaLogs server
+  server:
+    enabled: true
+    retentionDiskSpaceUsage: 18GB
+
+    extraArgs:
+      defaultMsgValue: event
+
+    vmServiceScrape:
+      enabled: true
+
+    resources:
+      limits:
+        cpu: "2"
+        memory: 5Gi
+      requests:
+        cpu: "1"
+        memory: 2Gi
+
+    persistentVolume:
+      size: 20Gi  # Adjust based on your log volume
+
+  # -- True to enable the Vector log collector
+  vector:
+    enabled: true
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "500m"
+      limits:
+        memory: "1024Mi"
+        cpu: "6000m"
+
 vmstack:
   # https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-k8s-stack/values.yaml
 
@@ -28,10 +83,10 @@ vmstack:
   # @default -- see `values.yaml` and [here](https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-k8s-stack/values.yaml)
   victoria-metrics-operator:
     enabled: true
-    annotations:
-      # Install this operator before anything else in the chart, and destroy it
-      # after destroying everything else in the chart.
-      argocd.argoproj.io/sync-wave: "-1"
+    # annotations:
+    #   # Install this operator before anything else in the chart, and destroy it
+    #   # after destroying everything else in the chart.
+    #   argocd.argoproj.io/sync-wave: "-1"
     # -- Extra settings for the operator deployment. Full list [here](https://docs.victoriametrics.com/operator/vars)
     env:
       # Create resources with stricter security contexts:
@@ -49,6 +104,14 @@ vmstack:
         enabled: true
     serviceMonitor:
       enabled: true
+
+    resources:
+      limits:
+        cpu: 120m
+        memory: 320Mi
+      requests:
+        cpu: 80m
+        memory: 120Mi
 
   # -- Configuration for the VictoriaMetrics [VMSingle instance](https://docs.victoriametrics.com/operator/resources/vmsingle/)
   # @default -- see `values.yaml` and [here](https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-k8s-stack/values.yaml)
@@ -84,13 +147,13 @@ vmstack:
       #   - configMapRef:
       #       name: "vmsingle-extra-args"
 
-      # resources:
-      #   limits:
-      #     cpu: "1"
-      #     memory: "1Gi"
-      #   requests:
-      #     cpu: "1"
-      #     memory: "1Gi"
+      resources:
+        limits:
+          cpu: "1"
+          memory: "2Gi"
+        requests:
+          cpu: "1"
+          memory: "2Gi"
 
       # -- The amount of time to retain data. Takes a number followed by a time
       # unit character - h(ours), d(ays), w(eeks), y(ears). If the time unit is
@@ -143,6 +206,14 @@ vmstack:
               requests:
                 storage: "5Gi"
 
+      resources:
+        limits:
+          cpu: 1
+          memory: 1Gi
+        requests:
+          cpu: 1
+          memory: 500Mi
+
   alertmanager:
     enabled: true
 
@@ -156,6 +227,7 @@ vmstack:
       # -- The name of the k8s Service to send requests to. These names are created dynamically by the operator.
       serviceName: "vmalertmanager-victoria-metrics-vmstack"
 
+    # -- Full spec for VMAlertmanager CRD. Allowed values described [here](https://docs.victoriametrics.com/operator/api#vmalertmanagerspec)
     spec:
       disableNamespaceMatcher: true
       selectAllByDefault: true
@@ -272,6 +344,14 @@ vmstack:
         - configMapRef:
             name: "vmagent-extra-args"
 
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+
   # -- Create grafana datasources for the VictoriaMetrics instance
   defaultDatasources:
     grafanaOperator:
@@ -292,6 +372,14 @@ vmstack:
 
   kube-state-metrics:
     enabled: true
+    spec:
+    resources:
+      limits:
+       cpu: 250m
+       memory: 1Gi
+      requests:
+       cpu: 250m
+       memory: 500m
 
   kubelet:
     enabled: true

@@ -1,3 +1,7 @@
+vmlogs:
+    persistentVolume:
+      storageClassName: "standard-rwo"
+
 vmstack:
   vmsingle:
     spec:
