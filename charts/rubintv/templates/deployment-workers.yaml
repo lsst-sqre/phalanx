@@ -103,11 +103,11 @@ spec:
         - "-c"
         - |
           cd /secrets-user
-          cat /secrets-rubintv/butler-credentials.ini > aws-credentials.ini
+          cat /secrets-rubintv/butler-aws-credentials.ini > aws-credentials.ini
           printf "\n" >> aws-credentials.ini
           cat /secrets-rubintv/aws-credentials.ini >> aws-credentials.ini
           printf "\n" >> aws-credentials.ini
-          cat /secrets-rubintv/butler-credentials.txt > postgres-credentials.txt
+          cat /secrets-rubintv/butler-postgres-credentials.txt > postgres-credentials.txt
           cat /secrets-rubintv/postgres-credentials.txt >> postgres-credentials.txt
           chown {{ required "workers.uid must be set" .Values.workers.uid }}:{{ required "workers.gid must be set" .Values.workers.gid }} \
            /secrets-user
