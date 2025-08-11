@@ -9,4 +9,4 @@ dependencies:
     # You can't query versions from OCI repos, so look on GitHub to find
     # versions:
     # https://github.com/grafana/grafana-operator/releases
-    version: "v5.19.0"
+    version: "v5.19.4"
