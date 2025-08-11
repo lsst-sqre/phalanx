@@ -51,6 +51,15 @@ resources:
     cpu: "50m"
     memory: "256Mi"
 
+worker:
+  resources:
+    limits:
+      cpu: "1"
+      memory: "2048Mi"
+    requests:
+      cpu: "50m"
+      memory: "512Mi"
+
 redis:
   config:
     # -- Name of secret containing Redis password
