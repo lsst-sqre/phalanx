@@ -64,4 +64,4 @@ productionTools:
       readOnly: true
 
 image:
-  tag: SP-6723
+  tag: SP-2525
