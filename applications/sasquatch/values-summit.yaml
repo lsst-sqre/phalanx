@@ -39,6 +39,13 @@ strimzi-kafka:
     logging: debug
     enableSaramaLogging: true
     showAllOffsets: false
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 2
+      limits:
+        memory: 1Gi
+        cpu: 4
   controller:
     enabled: true
   broker:
@@ -291,6 +298,13 @@ telegraf:
       topicRegexps: |
         [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
       debug: true
+      resources:
+        limits:
+          cpu: "5"
+          memory: "8Gi"
+        requests:
+          cpu: "2"
+          memory: "8Gi"
     obssys:
       enabled: true
       database: "efd"
