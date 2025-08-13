@@ -122,6 +122,55 @@ controller:
       #   readOnly: true
       #   volumeName: "project"
 
+
+    fsadmin:
+      # -- Affinity rules for fsadmin pods
+      affinity: {}
+
+      # -- Argo CD application in which to collect fsadmins
+      application: "nublado-fileservers"
+
+      # -- Extra volumes that should be made available to fsadmin
+      extraVolumes: []
+
+      # -- Extra volumes that should be mounted to fsadmin
+      extraVolumeMounts: []
+
+      image:
+        # -- File server image to use
+        repository: "ghcr.io/lsst-sqre/idf-fsadmin"
+
+        # -- Pull policy for file server image
+        pullPolicy: "Always"
+
+        # -- Tag of fsadmin image to use
+        tag: "latest"
+
+      # -- Mount prefix, to be prepended to mountpoints in order to
+      # collect them in one place
+      mountPrefix: null
+
+      # -- Node selector rules for fsadmin pods
+      nodeSelector: {}
+
+      # -- Resource requests and limits for fsadmin
+      # @default -- See `values.yaml`
+      resources:
+        requests:
+          cpu: 0.1
+          memory: "250Mi"
+        limits:
+          cpu: 1
+          memory: "10Gi"
+
+      # -- Timeout to wait for Kubernetes to create/destroy fsadmin, in Safir
+      # `parse_timedelta` format
+      timeout: 2m
+
+      # -- Tolerations for fsadmin pod
+      tolerations: []
+
+
     images:
       # -- How frequently to refresh the list of available images and compare
       # it to the cached images on nodes to prepull new images, in Safir

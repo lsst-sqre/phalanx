@@ -40,6 +40,18 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fileserver.resources | object | See `values.yaml` | Resource requests and limits for user file servers |
 | controller.config.fileserver.tolerations | list | `[]` | Tolerations for user file server pods |
 | controller.config.fileserver.volumeMounts | list | `[]` | Volumes that should be made available via WebDAV |
+| controller.config.fsadmin.affinity | object | `{}` | Affinity rules for fsadmin pods |
+| controller.config.fsadmin.application | string | `"nublado-fileservers"` | Argo CD application in which to collect fsadmins |
+| controller.config.fsadmin.extraVolumeMounts | list | `[]` | Extra volumes that should be mounted to fsadmin |
+| controller.config.fsadmin.extraVolumes | list | `[]` | Extra volumes that should be made available to fsadmin |
+| controller.config.fsadmin.image.pullPolicy | string | `"Always"` | Pull policy for file server image |
+| controller.config.fsadmin.image.repository | string | `"ghcr.io/lsst-sqre/idf-fsadmin"` | File server image to use |
+| controller.config.fsadmin.image.tag | string | `"latest"` | Tag of fsadmin image to use |
+| controller.config.fsadmin.mountPrefix | string | `nil` | Mount prefix, to be prepended to mountpoints in order to collect them in one place |
+| controller.config.fsadmin.nodeSelector | object | `{}` | Node selector rules for fsadmin pods |
+| controller.config.fsadmin.resources | object | See `values.yaml` | Resource requests and limits for fsadmin |
+| controller.config.fsadmin.timeout | string | `"2m"` | Timeout to wait for Kubernetes to create/destroy fsadmin, in Safir `parse_timedelta` format |
+| controller.config.fsadmin.tolerations | list | `[]` | Tolerations for fsadmin pod |
 | controller.config.images.aliasTags | list | `[]` | Additional tags besides `recommendedTag` that should be recognized as aliases. |
 | controller.config.images.cycle | string | `nil` | Restrict images to this SAL cycle, if given. |
 | controller.config.images.numDailies | int | `3` | Number of most-recent dailies to prepull. |
