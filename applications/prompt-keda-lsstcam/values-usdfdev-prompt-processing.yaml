@@ -14,13 +14,13 @@ prompt-keda:
       main: |-
         - survey: SURVEY
           pipelines:
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/dev/ApPipe.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/dev/SingleFrame.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/dev/Isr.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/dev/Isr-cal.yaml
       preprocessing: |-
         - survey: SURVEY
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing.yaml']
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/dev/Preprocessing.yaml']
     centralRepo: s3://rubin-pp-dev-users/central_repo_2
     repoWait: 5
 
