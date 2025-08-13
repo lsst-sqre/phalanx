@@ -1,5 +1,8 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
+  image:
+    tag:
+      "tickets-DM-52131"
   slackAlerts: true
   config:
     dropdownMenu:
@@ -25,6 +28,15 @@ controller:
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
+    fsadmin:
+      mount_prefix: "/mnt"
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
+        - containerPath: "/rubin"
+          volumeName: "rubin"
+        - containerPath: "/deleted-sundays"
+          volumeName: "deleted-sundays"
     images:
       source:
         type: "google"
