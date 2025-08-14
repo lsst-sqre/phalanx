@@ -1,0 +1,13 @@
+{{- if .Values.topic.create }}
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: {{ .Values.topic.name }}
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: 1
+  replicas: 3
+  config:
+    cleanup.policy: compact
+{{- end }}

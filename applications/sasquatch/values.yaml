@@ -3,6 +3,11 @@
 # Override strimzi-kafka subchart configuration.
 strimzi-kafka: {}
 
+
+schema-registry:
+  # -- Whether to enable the schema-registry subchart
+  enabled: false
+
 influxdb:
   # -- Whether InfluxDB is enabled
   enabled: true
