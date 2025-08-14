@@ -1,0 +1,20 @@
+apiVersion: roundtable.lsst.codes/v1beta1
+kind: StrimziSchemaRegistry
+metadata:
+  name: {{ include "schema-registry.fullname" . }}
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  strimziVersion: v1beta2
+  listener: tls
+  securityProtocol: SSL
+  compatibilityLevel: {{ .Values.compatibilityLevel | quote }}
+  registryImage: {{ .Values.image.repository | quote }}
+  registryImageTag: {{ .Values.image.tag | quote }}
+  registryTopic: {{ .Values.topic.name | quote }}
+  replicas: {{ .Values.replicas }}
+  serviceType: ClusterIP
+  cpuLimit: {{ .Values.resources.limits.cpu | quote }}
+  cpuRequest: {{ .Values.resources.requests.cpu | quote }}
+  memoryLimit: {{ .Values.resources.limits.memory | quote }}
+  memoryRequest: {{ .Values.resources.requests.memory | quote }}
