@@ -47,6 +47,9 @@ dependencies:
   - name: kafdrop
     condition: kafdrop.enabled
     version: 1.0.0
+  - name: schema-registry
+    condition: registry.enabled
+    version: 1.0.0
   - name: telegraf
     condition: telegraf.enabled
     version: 1.0.0
