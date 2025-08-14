@@ -48,7 +48,7 @@ template:
               name: "production-tools"
               port:
                 number: 8080
-        - path: "/plot-navigator/images"
+        - path: "/plot-navigator/images/uuid"
           pathType: "Prefix"
           backend:
             service:
