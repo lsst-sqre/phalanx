@@ -24,6 +24,7 @@ applications:
   nightreport: true
   noteburst: true
   nublado: true
+  obsloctap: true
   plot-navigator: true
   portal: true
   postgres: true
