@@ -46,6 +46,9 @@ strimzi-kafka:
     storage:
       size: 500Gi
 
+schema-registry:
+  enabled: true
+
 influxdb:
   ingress:
     enabled: false

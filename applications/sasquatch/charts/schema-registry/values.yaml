@@ -1,0 +1,51 @@
+## Default values.yaml for the schema-registry subchart
+
+image:
+  # -- Docker image for the Confluent Schema Registry.
+  repository: confluentinc/cp-schema-registry
+  # -- Docker image tag for the Confluent Schema Registry.
+  tag: "8.0.0"
+
+cluster:
+  # -- Name of the Strimzi cluster used by the Schema Registry.
+  name: sasquatch
+
+# -- Compatibility level for the Schema Registry.
+# Options are: none, backward, backward_transitive, forward,
+# forward_transitive, full, and full_transitive.
+compatibilityLevel: none
+
+topic:
+  # -- Name of the Kafka topic used by the Schema Registry to store schemas.
+  name: registry-schemas
+  # -- Whether to create the registry topic using a Strimzi KafkaTopic resource.
+  create: true
+
+# -- Number of Schema Registry replicas to deploy.
+# @default -- 3
+replicas: 3
+
+ingress:
+  # -- Whether to enable an ingress for the Schema Registry
+  enabled: false
+
+  # -- Hostname for the Schema Registry
+  # @default -- None, must be set if ingress is enabled
+  hostname: ""
+
+  # -- Path for the ingress
+  # @default -- `"/schema-registry(/|$)(.*)"`
+  path: "/schema-registry(/|$)(.*)"
+
+  # -- Annotations that will be added to the Ingress resource
+  annotations: {}
+
+# -- Kubernetes requests and limits for the Schema Registry
+# @default -- See `values.yaml`
+resources:
+  requests:
+    memory: 1Gi
+    cpu: 100m
+  limits:
+    memory: 2Gi
+    cpu: 1

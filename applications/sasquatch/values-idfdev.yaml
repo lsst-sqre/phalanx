@@ -35,13 +35,14 @@ strimzi-kafka:
     enabled: true
     storage:
       size: 500Gi
-  registry:
-    ingress:
-      enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /$2
-      hostname: data-dev.lsst.cloud
-      path: /schema-registry(/|$)(.*)
+
+schema-registry:
+  enabled: true
+
+schema-registry-remote:
+  enabled: true
+  topic:
+    name: registry-schemas-remote
 
 influxdb:
   ingress:

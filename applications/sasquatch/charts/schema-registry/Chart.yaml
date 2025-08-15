@@ -1,0 +1,5 @@
+apiVersion: v2
+name: schema-registry
+version: 1.0.0
+description: Sasquatch configuration do deploy the Confluent Schema Registry as managed by the strimzi-registry-operator.
+type: application
