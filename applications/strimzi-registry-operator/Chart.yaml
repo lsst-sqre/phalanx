@@ -1,0 +1,9 @@
+apiVersion: v2
+description: Operator to deploy the Confluent Schema Registry
+name: strimzi-registry-operator
+type: application
+version: 1.0.0
+dependencies:
+  - name: strimzi-registry-operator
+    version: "2.1.2"
+    repository: https://lsst-sqre.github.io/charts/

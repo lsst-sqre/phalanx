@@ -32,6 +32,7 @@ applications:
   simonyitel: true
   squareone: true
   strimzi: true
+  strimzi-registry-operator: true
   uws: true
 
 controlSystem:

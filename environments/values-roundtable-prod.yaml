@@ -24,6 +24,7 @@ applications:
   squareone: true
   strimzi: true
   strimzi-access-operator: true
+  strimzi-registry-operator: true
   squarebot: true
   templatebot: true
   unfurlbot: true
