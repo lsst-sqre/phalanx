@@ -18,7 +18,7 @@ Alert transmission to community brokers
 | alert-database.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | alert-database.ingester.image.imagePullPolicy | string | `"Always"` |  |
 | alert-database.ingester.image.repository | string | `"lsstdm/alert_database_ingester"` |  |
-| alert-database.ingester.image.tag | string | `"tickets-DM-44907"` |  |
+| alert-database.ingester.image.tag | string | `"tickets-DM-51925"` |  |
 | alert-database.ingester.kafka.cluster | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
 | alert-database.ingester.kafka.port | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal listener that expects SCRAM SHA-512 auth. |
 | alert-database.ingester.kafka.strimziAPIVersion | string | `"v1beta2"` | API version of the Strimzi installation's custom resource definitions |
@@ -40,7 +40,7 @@ Alert transmission to community brokers
 | alert-database.nameOverride | string | `""` | Override the base name for resources |
 | alert-database.server.image.imagePullPolicy | string | `"Always"` |  |
 | alert-database.server.image.repository | string | `"lsstdm/alert_database_server"` |  |
-| alert-database.server.image.tag | string | `"tickets-DM-44907"` |  |
+| alert-database.server.image.tag | string | `"tickets-DM-59125"` |  |
 | alert-database.server.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
 | alert-database.server.s3.alertBucket | string | `"alert-archive"` |  |
 | alert-database.server.s3.endpointURL | string | `"https://sdfembs3.sdf.slac.stanford.edu/"` | Project ID which has the above GCP IAM service account |
