@@ -256,6 +256,9 @@ applications:
   # -- Enable the strimzi-access-operator application
   strimzi-access-operator: false
 
+  # -- Enable the strimzi-registry-operator application
+  strimzi-registry-operator: false
+
   # -- Enable the tap application
   tap: false
 

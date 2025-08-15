@@ -31,4 +31,5 @@ applications:
   squareone: true
   strimzi: true
   strimzi-access-operator: true
+  strimzi-registry-operator: true
   tap: true
