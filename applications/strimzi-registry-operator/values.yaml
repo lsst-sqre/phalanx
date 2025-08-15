@@ -1,0 +1,24 @@
+# Default values for strimzi-registry-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+strimzi-registry-operator:
+  # Whether to deploy the strimzi-registry-operator
+  enabled: false
+
+  # -- Name of the Strimzi Kafka cluster
+  clusterName: "sasquatch"
+
+  # -- Namespace where the Strimzi Kafka cluster is deployed
+  clusterNamespace: "sasquatch"
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
