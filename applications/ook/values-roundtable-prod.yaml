@@ -3,6 +3,7 @@ config:
   algolia:
     documentIndex: "document_dev"
   updateSchema: true
+  migrateCountryCodes: true
 audit:
   enabled: true
   schedule: "30 2 * * *"

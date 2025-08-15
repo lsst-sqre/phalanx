@@ -5,28 +5,11 @@ environment:
   AWS_SHARED_CREDENTIALS_FILE: "/home/worker/.lsst/aws-credentials.ini"
   S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
   EFD: "usdf-efd"
-  database_schema: "obsloctap_dev"
-  vaultUrl: "https://vault.slac.stanford.edu"
-  vaultPathPrefix: secret/rubin/usdf-butler/postgres
-  obsloctapVaultPrefix: secret/rubin/usdf-butler/postgres
 
 config:
+  database_schema: "obsloctap_dev"
   separateSecrets: false
-  volumes:
-    - name: sdf-group-rubin
-      persistentVolumeClaim:
-        claimName: sdf-group-rubin
-    - name: sdf-data-rubin
-      persistentVolumeClaim:
-        claimName: sdf-data-rubin
-  volume_mounts:
-    - name: sdf-group-rubin
-      mountPath: /sdf/group/rubin
-    - name: sdf-data-rubin
-      mountPath: /sdf/data/rubin
   persistentVolumeClaims:
-    - name: sdf-group-rubin
-      storageClassName: sdf-group-rubin
     - name: sdf-data-rubin
       storageClassName: sdf-data-rubin
 
@@ -36,4 +19,11 @@ image:
 controller:
   config:
     safir:
-      logLevel: "DEBUG"
+      logLevel: "None"
+
+lfa:
+  s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu/"
+
+
+kafka:
+  sasquatchAddress: 10.100.226.209:9094

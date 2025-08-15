@@ -13,13 +13,8 @@ clean:
 
 .PHONY: init
 init:
-	pip install --upgrade pip uv
-	uv pip install -r requirements/main.txt -r requirements/dev.txt \
-	    -r requirements/tox.txt
-	uv pip install --editable .
-	rm -rf .tox
-	uv pip install --upgrade pre-commit
-	pre-commit install
+	uv sync --frozen --all-groups
+	uv run pre-commit install
 
 # This is defined as a Makefile target instead of only a tox command because
 # if the command fails we want to cat output.txt, which contains the
@@ -37,15 +32,5 @@ update: update-deps init
 
 .PHONY: update-deps
 update-deps:
-	pip install --upgrade pip uv
-	uv pip install --upgrade pre-commit
-	pre-commit autoupdate
-	uv pip compile --python-version 3.12 --upgrade --universal	\
-	    --generate-hashes --output-file requirements/main.txt	\
-	    pyproject.toml
-	uv pip compile --python-version 3.12 --upgrade --universal	\
-	    --generate-hashes --output-file requirements/dev.txt	\
-	    requirements/dev.in
-	uv pip compile --python-version 3.12 --upgrade --universal	\
-	    --generate-hashes --output-file requirements/tox.txt	\
-	    requirements/tox.in
+	uv lock --upgrade
+	uv run --only-group=lint pre-commit autoupdate

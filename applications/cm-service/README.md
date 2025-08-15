@@ -12,9 +12,9 @@ Campaign Management for Rubin Data Release Production
 |-----|------|---------|-------------|
 | config.aws.credentialsFileSecretKey | string | `"aws-credentials-file"` | Key within the AWS secret with the contents of an AWS credentials file |
 | config.aws.defaultAccessKeyIdSecretKey | string | `"aws-access-key-id"` | Key within the AWS secret with the ACCESS_KEY_ID for the default profile |
+| config.aws.defaultS3EndpointUrl | string | `nil` | URL to use as an S3 (Object Store) Endpoint |
 | config.aws.defaultSecretAccessKeySecretKey | string | `"aws-secret-access-key"` | Key within the AWS secret with the SECRET_ACCESS_KEY for the default profile |
 | config.aws.profiles | object | `{}` | Named profiles to include in service's AWS config file |
-| config.aws.s3EndpointUrl | string | `nil` | URL to use as an S3 (Object Store) Endpoint |
 | config.aws.secretName | string | `"cm-service"` | Name of a secret with AWS authn details |
 | config.butler.dbAuth.secretKey | string | `""` | The keyname within the secret data dictionary with the dbAuth payload |
 | config.butler.dbAuth.secretName | string | `""` | The name of a secret with Butler a dbAuth payload |
@@ -29,13 +29,16 @@ Campaign Management for Rubin Data Release Production
 | config.db.secretKey | string | `"internalDatabasePassword"` | Key within db authn secret with db password |
 | config.db.secretName | string | `"cm-service"` | Name of a secret with db authn details |
 | config.db.username | string | `"cmservice"` | Name of the database user to use for the application |
+| config.fqdnUrl | string | `nil` | URL FQDN, used to write absolute URLs in notifications |
 | config.htcondor.collectorHost | string | `nil` | Name of an htcondor collector host |
 | config.htcondor.fsRemoteDir.storage | string | `"1Gi"` | Minimum storage requested in the condor fs-remote PVC |
 | config.htcondor.fsRemoteDir.storageClassName | string | `nil` | If specified, name of storage class requested for condor fs-remote PVC |
 | config.htcondor.fsRemoteDir.subPath | string | `nil` | If specified, sub-path within bound PV to be mounted as condor fs-remote |
+| config.htcondor.sbatchDuration | string | `"0-1:0:0"` | Max Duration of an HTCondor Glidein, in SBATCH terms ("days-hours:minutes:seconds") |
 | config.htcondor.scheddHost | string | `nil` | If specified, name of an htcondor schedd host |
 | config.logLevel | string | `"INFO"` | Logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`, or `CRITICAL`) |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
+| config.outputVolume.mountPath | string | `nil` | If specified, full path to the output volume mount target |
 | config.outputVolume.storage | string | `"1Gi"` | Minimum storage requested in service output area PVC |
 | config.outputVolume.storageClassName | string | `nil` | If specified, name of storage class requested in service output area PVC |
 | config.outputVolume.subPath | string | `nil` | If specified, sub-path within bound PV to be mounted at service output area |

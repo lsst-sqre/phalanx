@@ -29,6 +29,10 @@ prompt-keda:
     endpointUrl: https://s3dfrgw.slac.stanford.edu
     aws_profile: prompt-processing-dev
 
+  raw_microservice: http://embargo-butler-presence.autoingest.svc.cluster.local:8080/presence
+
+  mpSky_service: http://172.24.5.245/ephemerides/
+
   iers_cache: s3://rubin-pp-dev-users/iers-cache.zip
 
   imageNotifications:

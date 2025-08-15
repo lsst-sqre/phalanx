@@ -30,6 +30,7 @@ globalAppConfig:
   qservkafka:
     influxTags:
       - "username"
+      - "queue"
   sia:
     influxTags:
       - "username"

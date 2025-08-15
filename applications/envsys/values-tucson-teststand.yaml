@@ -256,6 +256,21 @@ epm-generator-ess306-sim:
       cpu: 190m
       memory: 450Mi
 
+hvac-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/hvac
+    pullPolicy: Always
+  env:
+    RUN_ARG: --state enabled --simulate
+  resources:
+    requests:
+      cpu: 40m
+      memory: 120Mi
+    limits:
+      cpu: 400m
+      memory: 3000Mi
+
 m1m3-ess113-sim:
   enabled: true
   classifier: ess113

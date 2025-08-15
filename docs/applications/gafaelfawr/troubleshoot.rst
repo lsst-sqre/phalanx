@@ -9,21 +9,32 @@ Troubleshooting
 User has no access to services
 ==============================
 
-If a user successfully authenticates through the Gafaelfawr ``/login`` route but then cannot access an application such as the Notebook or Portal, or if Gafaelfawr tells them that they are not a member of any authorized groups, start by determining what groups the user is a member of.
+If a user successfully authenticates through the Gafaelfawr ``/login`` route but then cannot access an application such as the Notebook or Portal, or if Gafaelfawr tells them that they are not a member of any authorized groups, the problem is likely the user's group memberships.
 
-Have the user go to ``/auth/api/v1/user-info``, which will provide a JSON dump of their authentication information.
-There is nothing secret in this information, so they can safely cut and paste it into a help ticket, Slack, etc.
+GitHub
+------
 
+If the environment is using GitHub, there is no simple way to see Gafaelfawr's view of their group memberships other than finding the log message for their failed login.
+However, one thing to check is if the organizational membership is private and the user didn't release it.
+See :doc:`github-organizations` for more details about that problem.
+
+If not, check that the user is indeed a member of the organizations and teams that should be granted access.
+Sometimes the user forgot to accept the invitation to the group or team.
+
+LDAP
+----
+
+For environments using LDAP, you can see the user's group information directly as an environment administrator.
+
+As someone with ``admin:userinfo`` scope, go to :samp:`/auth/api/v1/users/{username}` in the corresponding Phalanx environment.
+This will display the user's metadata from LDAP.
 The important information is in the ``groups`` portion of the JSON document.
 This shows the group membership as seen by Gafaelfawr.
+
 Scopes are then assigned based on the ``config.groupMapping`` configuration in the ``values-*.yaml`` file for that environment.
 Chances are good that the user is not a member of a group that conveys the appropriate scopes.
 
 From there, the next step is usually to determine why the user is not a member of the appropriate group.
-Usually this means they weren't added or (in the case of groups from GitHub teams) didn't accept the invitation.
-
-For a new GitHub configuration, it's possible that the organizational membership is private and the user didn't release it.
-See :doc:`github-organizations` for more details about that problem.
 
 COmanage enrollment fails after prompting for attributes
 ========================================================

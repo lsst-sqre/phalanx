@@ -1,0 +1,157 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "consumekafka"
+  labels:
+    {{- include "obsloctap.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "obsloctap.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "obsloctap.selectorLabels" . | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: "consumekafka"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          image: "{{ .Values.consumekafka.image.repository }}:{{ .Values.consumekafka.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.consumekafka.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: "database"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "database"
+            - name: "database_user"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "username"
+            - name: "database_url"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "url"
+            - name: "database_password"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "password"
+            - name: "database_schema"
+              value: "{{ .Values.config.database_schema }}"
+            - name: "INSTRUMENT"
+              value: "LSSTCam"
+            - name: "LOG_CONFIG"
+              value: "{{ .Values.consumekafka.logLevel }}"
+            - name: "LFA_AWS_ACCESS_KEY_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "lfa-key"
+            - name: "AWS_ACCESS_KEY_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "default-key"
+            - name: "LFA_AWS_SECRET_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "lfa-password"
+            - name: "AWS_SECRET_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "default-password"
+            - name: "BUCKET_PREFIX"
+              value: "{{ .Values.lfa.bucket_prefix }}"
+            - name: "S3_ENDPOINT_URL"
+              value: "{{ .Values.lfa.s3EndpointUrl }}"
+            - name: "KAFKA_BOOTSTRAP"
+              value: "{{ .Values.kafka.bootstrap }}"
+            - name: KAFKA_CLUSTER
+              value: "{{ .Values.kafka.sasquatchAddress }}"
+            - name: "KAFKA_USERNAME"
+              value: "{{ .Values.kafka.username }}"
+            - name: "KAFKA_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "obsloctap-password"
+            - name: "KAFKA_GROUP_ID"
+              value: "{{ .Values.kafka.group_id }}"
+            - name: "SCHEMA_URL"
+              value: "{{ .Values.kafka.schema_url }}"
+            - name: "RUBIN_SIM_DATA_DIR"
+              value: "{{ .Values.rubinsim.dataDir }}"
+            - name: "LSST_DISABLE_BUCKET_VALIDATION"
+              value: "{{ .Values.rubinsim.bucketVal }}"
+            - name: "MPLCONFIGDIR"
+              value: "/tmp/.config/matplotlib"
+            - name: "consdb_database"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "consdb-database"
+            - name: "consdb_username"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "consdb-username"
+            - name: "consdb_url"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "consdb-url"
+            - name: "consdb_password"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "consdb-password"
+          volumeMounts:
+            - name: "tmp-volume"
+              mountPath: "/tmp"
+            - name: sdf-data-rubin
+              mountPath: /sdf/data/rubin
+              readOnly: true
+
+      volumes:
+          - name: tmp-volume
+            emptyDir:
+              sizeLimit: 500Mi
+          - name: sdf-data-rubin
+            persistentVolumeClaim:
+              claimName: sdf-data-rubin
+
+
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -240,6 +240,20 @@ resultWorker:
   # -- Tolerations for the qserv-kafka worker pods
   tolerations: []
 
+periodicMetrics:
+  # -- How often to run the periodic metrics job
+  schedule: "* * * * *"
+
+  # -- Resource limits and requests for the qserv-kafka periodic metrics pods
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "200m"
+      memory: "100Mi"
+    requests:
+      cpu: "100m"
+      memory: "50Mi"
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:

@@ -1,5 +1,4 @@
 config:
-  logLevel: "DEBUG"
   metrics:
     enabled: true
   qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-prod.slac.stanford.edu:4040/"

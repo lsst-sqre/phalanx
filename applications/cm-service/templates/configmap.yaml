@@ -9,6 +9,8 @@ data:
   AWS_SHARED_CREDENTIALS_FILE: /etc/aws/credentials
   AWS_ENDPOINT_URL_S3: {{ .Values.config.aws.defaultS3EndpointUrl }}
   ASGI__PREFIX: {{ .Values.config.pathPrefix | quote }}
+  ASGI__FQDN: {{ .Values.config.fqdnUrl | quote }}
+  BPS__ARTIFACT_PATH: {{ .Values.config.outputVolume.mountPath }}
 {{- with .Values.config.db }}
   DB__URL: "postgresql://{{ .username }}@{{ .hostname }}:{{ .port }}/{{ .name }}"
   DB__ECHO: {{ .echo | quote }}
@@ -36,6 +38,7 @@ metadata:
 data:
 {{- with .Values.config.htcondor }}
   DAEMON__allocate_resources: "1"
+  SLURM__DURATION: {{ .sbatchDuration }}
   HTCONDOR__schedd_host: {{ .scheddHost }}
   HTCONDOR__collector_host: {{ .collectorHost }}
   HTCONDOR__condor_home: /opt/htcondor

@@ -35,6 +35,7 @@ applications:
   simonyitel: true
   squareone: true
   strimzi: true
+  strimzi-access-operator: true
   uws: true
 
 controlSystem:

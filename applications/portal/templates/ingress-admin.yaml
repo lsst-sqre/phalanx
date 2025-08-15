@@ -8,7 +8,7 @@ config:
   loginRedirect: true
   scopes:
     all:
-      - "exec:admin"
+      - "exec:portal-admin"
   service: "portal"
 template:
   metadata:
