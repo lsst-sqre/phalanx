@@ -39,6 +39,11 @@ strimzi-kafka:
 schema-registry:
   enabled: true
 
+schema-registry-remote:
+  enabled: true
+  topic:
+    name: registry-schemas-remote
+
 influxdb:
   ingress:
     enabled: false

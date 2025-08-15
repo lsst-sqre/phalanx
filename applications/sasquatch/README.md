@@ -97,6 +97,7 @@ Rubin Observatory's telemetry service
 | obsloctap.enabled | bool | `false` | Whether to enable the obsloctap subchart |
 | prompt-processing.enabled | bool | `false` | Whether to enable the prompt-processing subchart |
 | rest-proxy.enabled | bool | `false` | Whether to enable the REST proxy |
+| schema-registry-remote.enabled | bool | `false` | Whether to enable schema-registry-remote, an instance of the schema-registry for remote topics |
 | schema-registry.enabled | bool | `false` | Whether to enable the schema-registry subchart |
 | scimma.enabled | bool | `false` | Whether to enable the scimma subchart |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations |
@@ -543,6 +544,18 @@ Rubin Observatory's telemetry service
 | schema-registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | schema-registry.topic.create | bool | `true` | Whether to create the registry topic using a Strimzi KafkaTopic resource. |
 | schema-registry.topic.name | string | `"registry-schemas"` | Name of the Kafka topic used by the Schema Registry to store schemas. |
+| schema-registry-remote.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster used by the Schema Registry. |
+| schema-registry-remote.compatibilityLevel | string | `"none"` | Compatibility level for the Schema Registry. Options are: none, backward, backward_transitive, forward, forward_transitive, full, and full_transitive. |
+| schema-registry-remote.image.repository | string | `"confluentinc/cp-schema-registry"` | Docker image for the Confluent Schema Registry. |
+| schema-registry-remote.image.tag | string | `"8.0.0"` | Docker image tag for the Confluent Schema Registry. |
+| schema-registry-remote.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
+| schema-registry-remote.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
+| schema-registry-remote.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
+| schema-registry-remote.ingress.path | string | `"/schema-registry(/|$)(.*)"` | Path for the ingress |
+| schema-registry-remote.replicas | int | 3 | Number of Schema Registry replicas to deploy. |
+| schema-registry-remote.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
+| schema-registry-remote.topic.create | bool | `true` | Whether to create the registry topic using a Strimzi KafkaTopic resource. |
+| schema-registry-remote.topic.name | string | `"registry-schemas"` | Name of the Kafka topic used by the Schema Registry to store schemas. |
 | scimma.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | square-events.cluster.name | string | `"sasquatch"` |  |
 | strimzi-kafka.broker.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for broker pod assignment |

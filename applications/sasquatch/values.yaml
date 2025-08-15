@@ -7,6 +7,11 @@ schema-registry:
   # -- Whether to enable the schema-registry subchart
   enabled: false
 
+schema-registry-remote:
+  # -- Whether to enable schema-registry-remote, an instance
+  # of the schema-registry for remote topics
+  enabled: false
+
 influxdb:
   # -- Whether InfluxDB is enabled
   enabled: true
