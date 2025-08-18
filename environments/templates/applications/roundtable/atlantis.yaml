@@ -1,25 +1,25 @@
-{{- if (index .Values "applications" "keda") -}}
+{{- if (index .Values "applications" "atlantis") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "keda"
+  name: "atlantis"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "keda"
+  name: "atlantis"
   namespace: "argocd"
   finalizers:
     - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: "keda"
+    namespace: "atlantis"
     server: "https://kubernetes.default.svc"
-  project: "infrastructure"
+  project: "roundtable"
   source:
-    path: "applications/keda"
+    path: "applications/atlantis"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ or (index .Values "revisions" "keda") .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "atlantis") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"
@@ -31,7 +31,4 @@ spec:
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"
-  syncPolicy:
-    syncOptions:
-      - ServerSideApply=true
 {{- end -}}
