@@ -197,7 +197,7 @@ chronograf:
     repository: "quay.io/influxdb/chronograf"
 
     # -- Docker tag to use for Chronograf
-    tag: 1.10.7
+    tag: 1.10.8
 
   updateStrategy:
     # -- Deployment strategy, use recreate with persistence enabled
