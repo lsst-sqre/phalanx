@@ -4,3 +4,5 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+
+# serial: 1 (sometimes needed to restart dependabot)
