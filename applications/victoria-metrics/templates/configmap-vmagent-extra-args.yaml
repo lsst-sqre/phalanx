@@ -1,0 +1,15 @@
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "vmagent-extra-args"
+  labels:
+    {{- include "victoria-metrics.labels" . | nindent 4 }}
+data:
+  promscrape_dropOriginalLabels: "false"
+  {{- if .Values.externalGrafanaOperator.installed }}
+  external_url: "{{ .Values.global.baseUrl }}/{{ .Values.externalGrafanaOperator.pathPrefix }}"
+  external_alert_source: {{`'explore?left={"datasource":"{{ if eq .Type "vlogs" }}VictoriaLogs{{ else }}VictoriaMetrics{{ end }}","queries":[{"expr":{{ .Expr|jsonEscape|queryEscape }},"refId":"A"}],"range":{"from":"{{ .ActiveAt.UnixMilli }}","to":"now"}}'`}}
+  {{- else }}
+  external_url: "{{ .Values.global.baseUrl }}/vm
+  external_alert.source: {{`'vmui/#/?g0.expr={{.Expr|queryEscape}}'`}}
+  {{- end }}
