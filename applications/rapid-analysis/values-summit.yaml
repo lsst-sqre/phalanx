@@ -1,6 +1,6 @@
 image:
-  repository: ts-dockerhub.lsst.org/rapid-analysis
-  tag: c0041
+  repository: ghcr.io/lsst-sitcom/rubintv_production
+  tag: tickets-DM-52030
   pullPolicy: Always
 location: SUMMIT
 siteTag: summit
@@ -9,6 +9,8 @@ env:
   DEPLOY_BRANCH: deploy-summit
   LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  BUTLER_ROLLOUT_PAUSE: 1.0
+  RA_PULL_DIRECTORIES: "donut_viz ts_wep summit_utils summit_extras rubintv_production"
 securityContext:
   uid: 73006
   gid: 73006
@@ -44,7 +46,7 @@ scripts:
   - auxtel-data
   - auxtel-gen3-data
   - project-shared
-# - name: LATISS/runOneOffCalexp.py
+# - name: LATISS/runOneOffVisitImage.py
 #   mounts:
 #   - auxtel-data
 #   - auxtel-gen3-data
@@ -204,7 +206,7 @@ scripts:
 #   - comcam-data
 #   - comcam-gen3-data
 #   - project-shared
-# - name: LSSTComCam/runOneOffCalexp.py
+# - name: LSSTComCam/runOneOffVisitImage.py
 #   mounts:
 #   - comcam-data
 #   - comcam-gen3-data
@@ -230,10 +232,10 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1.0
+      cpu: 2.0
       memory: 6G
     limits:
-      cpu: 1
+      cpu: 2.0
       memory: 8G
 - name: summit/misc/runStarTracker.py
   mounts:
@@ -336,10 +338,43 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
-- name: LSSTCam/runOneOffCalexp.py
+  resources:
+    requests:
+      cpu: 1
+      memory: 4G
+    limits:
+      cpu: 1
+      memory: 5G
+- name: LSSTCam/runOneOffVisitImage.py
   mounts:
   - lsstcam-data
   - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 4G
+    limits:
+      cpu: 1
+      memory: 5G
+- name: LSSTCam/runMetadataServerAos.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+- name: LSSTCam/runMetadataServerRaPerformance.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+- name: LSSTCam/runCleanup.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: .5
+      memory: 5G
+    limits:
+      cpu: 1
+      memory: 10G
 - name: LSSTCam/runPlotter.py
   mounts:
   - lsstcam-data
@@ -351,6 +386,65 @@ scripts:
     limits:
       cpu: 1
       memory: 12G
+- name: LSSTCam/runPlotter2nd.py  # if we need a third make this a StatefulSet
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 8G
+    limits:
+      cpu: 1
+      memory: 12G
+- name: LSSTCam/runPsfPlotting.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 2
+      memory: 10G
+- name: LSSTCam/runPerformanceMonitor.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
+- name: LSSTCam/runClusterManager.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+- name: LSSTCam/runRadialPlotting.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 12G
+    limits:
+      cpu: 1.2
+      memory: 16G
+- name: LSSTCam/runFWHMPlotting.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 4G
+    limits:
+      cpu: 1
+      memory: 6G
 ##
 ## LATISS StatefulSets
 ##
@@ -368,6 +462,20 @@ latissWorkerSet:
     limits:
       cpu: 1.0
       memory: 8G
+latissGather1bSet:
+  name: LATISS/runStep1bWorker.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+  replicas: 2
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
 ###
 ### ComCamSim StatefulSets
 ###
@@ -385,8 +493,8 @@ latissWorkerSet:
 #     limits:
 #       cpu: 1.0
 #       memory: 8G
-# comcamsimGather2aSet:
-#   name: LSSTComCamSim/runStep2aWorker.py
+# comcamsimGather1bSet:
+#   name: LSSTComCamSim/runStep1bWorker.py
 #   mounts:
 #   - comcam-data
 #   - comcam-gen3-data
@@ -444,8 +552,8 @@ latissWorkerSet:
 #     limits:
 #       cpu: 1.0
 #       memory: 8G
-# comcamGather2aSet:
-#   name: LSSTComCam/runStep2aWorker.py
+# comcamGather1bSet:
+#   name: LSSTComCam/runStep1bWorker.py
 #   mounts:
 #   - comcam-data
 #   - comcam-gen3-data
@@ -458,8 +566,8 @@ latissWorkerSet:
 #     limits:
 #       cpu: 1.0
 #       memory: "8G"
-# comcamGather2aAosSet:
-#   name: LSSTComCam/runStep2aAosWorker.py
+# comcamGather1bAosSet:
+#   name: LSSTComCam/runStep1bAosWorker.py
 #   mounts:
 #   - comcam-data
 #   - comcam-gen3-data
@@ -494,7 +602,7 @@ lsstcamWorkerSet:
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 378
+  replicas: 410
   resources:
     requests:
       cpu: 1.0
@@ -502,6 +610,73 @@ lsstcamWorkerSet:
     limits:
       cpu: 1.0
       memory: 8G  # we should check this value
+lsstcamAosWorkerSet:
+  name: LSSTCam/runAosWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 36  # 4 deep keeps up for all data except when there's IT trouble
+  env:
+    LIMITS_CPU: 2
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 2.0
+      memory: 8G
+lsstcamGather1bSet:
+  name: LSSTCam/runStep1bWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 10
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
+lsstcamGather1bAosSet:
+  name: LSSTCam/runStep1bAosWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 4
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
+lsstcamBacklogWorkerSet:
+  name: LSSTCam/runBacklogWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 50
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
+lsstcamGatherRollupSet:
+  name: LSSTCam/runNightlyWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "12G"
+    limits:
+      cpu: 1.0
+      memory: "24G"
 pullSecretsPath: pull-secret
 butlerSecret:
   containerPath: /home/saluser/.lsst
@@ -570,10 +745,10 @@ redis:
     request: 10Gi
   resources:
     requests:
-      cpu: 100m
+      cpu: 2
       memory: 1Gi
     limits:
-      cpu: 1
+      cpu: 3
       memory: 50Gi
 squid:
   enabled: true
