@@ -68,10 +68,6 @@ pvcMountpoint: []
 # _containerPath_ (The path inside the container to mount),
 # _subPath_ (persistent volume subpath, optional)
 pvcMountpointClaim: []
-# -- The key for the credentials including any sub-paths.
-credentialSecretsPath: ""
-# -- The name of the expected credential file for the broadcasters
-credentialFile: ""
 # -- Adds an extra string to the release name.
 nameOverride: ""
 # -- Specify the deployed application name specifically. Overrides all other names.

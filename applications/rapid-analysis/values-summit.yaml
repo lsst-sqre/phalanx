@@ -502,10 +502,8 @@ lsstcamWorkerSet:
     limits:
       cpu: 1.0
       memory: 8G  # we should check this value
-credentialFile: google_write_creds
 pullSecretsPath: pull-secret
 rubinTvSecretsPath: rubintv
-credentialSecretsPath: rubintv-broadcaster
 butlerSecret:
   containerPath: /home/saluser/.lsst
   dbUser: oods

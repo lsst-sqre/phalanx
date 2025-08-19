@@ -221,13 +221,9 @@ lsstcamBacklogWorkerSet:
     limits:
       cpu: 1.0
       memory: "8G"
-# TODO: remove google credentials
-credentialFile: google_write_creds
 vaultPrefixPath: secret/k8s_operator/base-lsp.lsst.codes
 pullSecretsPath: pull-secret
 rubinTvSecretsPath: rubintv
-# TODO: remove google credentials
-credentialSecretsPath: rubintv
 butlerSecret:
   key: butler-secret
   containerPath: /home/saluser/.lsst

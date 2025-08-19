@@ -8,8 +8,6 @@ A Helm chart for deploying the Rapid Analysis services.
 |-----|------|---------|-------------|
 | affinity | object | `{}` | This specifies the scheduling constraints of the pod. |
 | butlerSecret | object | `{}` | This section allows for specification of Butler secret information. If this section is used, it must contain the following attributes: _key_ (The vault key for the Butler secret), _containerPath_ (The directory location for the Butler secret), _dbUser_ (The username for the Butler backend database) |
-| credentialFile | string | `""` | The name of the expected credential file for the broadcasters |
-| credentialSecretsPath | string | `""` | The key for the credentials including any sub-paths. |
 | env | object | `{"AWS_REQUEST_CHECKSUM_CALCULATION":"WHEN_REQUIRED","AWS_RESPONSE_CHECKSUM_VALIDATION":"WHEN_REQUIRED"}` | This section holds a set of key, value pairs for environmental variables (ENV_VAR: value). NOTE: RUN_ARG is taken care of by the chart using _script_. |
 | envSecrets | list | `[]` | This section holds specifications for secret injection. If this section is used, each object listed must have the following attributes defined: _name_ (The label for the secret), _secretName_ (The name of the vault store reference. Uses the _namespace_ attribute to construct the full name), _secretKey_ (The key in the vault store containing the necessary secret) |
 | fullnameOverride | string | `""` | Specify the deployed application name specifically. Overrides all other names. |

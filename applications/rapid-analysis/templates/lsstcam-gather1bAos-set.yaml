@@ -89,15 +89,9 @@ spec:
           {{- end }}
           {{- end }}
           {{- end }}
-          envFrom:
-            - configMapRef:
-                name: env-configmap
           volumeMounts:
             - name: user-secrets
               mountPath: {{ default "/home/saluser/.lsst" $.Values.butlerSecret.containerPath }}
-              readOnly: true
-            - name: rubintv-creds
-              mountPath: "/etc/rubintv/creds"
               readOnly: true
           {{- if $.Values.nfsMountpoint }}
           {{- range $values := $.Values.nfsMountpoint }}
@@ -140,9 +134,6 @@ spec:
       volumes:
         - name: user-secrets
           emptyDir: {}
-        - name: rubintv-creds
-          secret:
-            secretName: google-creds
         - name: rubintv-secrets
           secret:
             secretName: rubintv-secrets
