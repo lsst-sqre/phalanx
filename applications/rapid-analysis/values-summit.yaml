@@ -1,6 +1,6 @@
 image:
   repository: ts-dockerhub.lsst.org/rapid-analysis
-  tag: c0040
+  tag: c0041
   pullPolicy: Always
 location: SUMMIT
 siteTag: summit
@@ -231,10 +231,10 @@ scripts:
   resources:
     requests:
       cpu: 1.0
-      memory: 4G
-    limits:
-      cpu: 2
       memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
 - name: summit/misc/runStarTracker.py
   mounts:
   - project-shared
@@ -270,26 +270,26 @@ scripts:
     limits:
       cpu: 1
       memory: 8G
-- name: summit/misc/runSoarSeeingUploader.py
-  mounts:
-  - project-shared
-  resources:
-    requests:
-      cpu: .5
-      memory: 2G
-    limits:
-      cpu: .5
-      memory: 2G
-- name: summit/misc/runSoarSeeingScraper.py
-  mounts:
-  - project-shared
-  resources:
-    requests:
-      cpu: .5
-      memory: 4G
-    limits:
-      cpu: .5
-      memory: 4G
+# - name: summit/misc/runSoarSeeingUploader.py
+#   mounts:
+#   - project-shared
+#   resources:
+#     requests:
+#       cpu: .5
+#       memory: 2G
+#     limits:
+#       cpu: .5
+#       memory: 2G
+# - name: summit/misc/runSoarSeeingScraper.py
+#   mounts:
+#   - project-shared
+#   resources:
+#     requests:
+#       cpu: .5
+#       memory: 4G
+#     limits:
+#       cpu: .5
+#       memory: 4G
 ###
 ### ComCam pods
 ###

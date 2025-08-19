@@ -1,11 +1,11 @@
-{{ $_ := set $.Values "script" $.Values.lsstcamGather2aAosSet }}
-{{ $script := $.Values.lsstcamGather2aAosSet }}
+{{ $_ := set $.Values "script" $.Values.lsstcamBacklogWorkerSet }}
+{{ $script := $.Values.lsstcamBacklogWorkerSet }}
 {{- if $script.name }}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "rapid-analysis.deploymentName" $ }}-gather2aaosset
+  name: {{ include "rapid-analysis.deploymentName" $ }}-backlogset
   namespace: {{ $.Values.namespace }}
   labels:
     {{- include "rapid-analysis.labels" $ | nindent 4 }}
@@ -18,10 +18,9 @@ spec:
   podManagementPolicy: Parallel
   template:
     metadata:
-      {{- if or $.Values.podAnnotations $script.podAnnotations }}
-      {{- $podAnnotations := $script.podAnnotations | default $.Values.podAnnotations }}
+      {{- with $.Values.podAnnotations }}
       annotations:
-        {{- toYaml $podAnnotations | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include "rapid-analysis.selectorLabels" $ | nindent 8 }}
@@ -55,6 +54,12 @@ spec:
                   fieldPath: metadata.labels['statefulset.kubernetes.io/pod-name']
             - name: RAPID_ANALYSIS_LOCATION
               value: {{ $.Values.location | upper | quote }}
+          {{- if $script.env }}
+          {{- range $env_var, $env_value := $script.env }}
+            - name: {{ $env_var }}
+              value: {{ $env_value | quote }}
+          {{- end }}
+          {{- end }}
           {{- if or $.Values.env $.Values.envSecrets }}
           {{- range $env_var, $env_value := $.Values.env }}
             - name: {{ $env_var }}

@@ -22,7 +22,9 @@ location: ""
 scripts: {}
 # -- This section holds a set of key, value pairs for environmental variables (ENV_VAR: value).
 # NOTE: RUN_ARG is taken care of by the chart using _script_.
-env: {}
+env:
+  AWS_RESPONSE_CHECKSUM_VALIDATION: WHEN_REQUIRED
+  AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
 # -- This section holds specifications for secret injection.
 # If this section is used, each object listed must have the following attributes defined:
 # _name_ (The label for the secret),
