@@ -144,16 +144,8 @@ controller:
       # collect them in one place
       mountPrefix: null
 
-      # -- Namespace for fsadmin
-      namespace: "fsadmin"
-
       # -- Node selector rules for fsadmin pods
       nodeSelector: {}
-
-      # -- How frequently to reconcile file server state against Kubernetes to
-      # catch deletions from outside Nublado, in Safir `parse_timedelta`
-      # format
-      reconcileInterval: "1h"
 
       # -- Resource requests and limits for fsadmin
       # @default -- See `values.yaml`

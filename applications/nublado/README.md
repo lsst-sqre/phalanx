@@ -46,9 +46,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fsadmin.image.repository | string | `"ghcr.io/lsst-sqre/idf-fsadmin"` | File server image to use |
 | controller.config.fsadmin.image.tag | string | `"latest"` | Tag of fsadmin image to use |
 | controller.config.fsadmin.mountPrefix | string | `nil` | Mount prefix, to be prepended to mountpoints in order to collect them in one place |
-| controller.config.fsadmin.namespace | string | `"fsadmin"` | Namespace for fsadmin |
 | controller.config.fsadmin.nodeSelector | object | `{}` | Node selector rules for fsadmin pods |
-| controller.config.fsadmin.reconcileInterval | string | `"1h"` | How frequently to reconcile file server state against Kubernetes to catch deletions from outside Nublado, in Safir `parse_timedelta` format |
 | controller.config.fsadmin.resources | object | See `values.yaml` | Resource requests and limits for fsadmin |
 | controller.config.fsadmin.timeout | string | `"2m"` | Timeout to wait for Kubernetes to create/destroy fsadmin, in Safir `parse_timedelta` format |
 | controller.config.fsadmin.tolerations | list | `[]` | Tolerations for fsadmin pod |
