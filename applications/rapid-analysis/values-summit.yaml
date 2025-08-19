@@ -3,10 +3,15 @@ image:
   tag: c0040
   pullPolicy: Always
 location: SUMMIT
+siteTag: summit
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+  DEPLOY_BRANCH: deploy-summit
   LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+securityContext:
+  uid: 73006
+  gid: 73006
 scripts:
 ###
 ### AuxTel pods
@@ -502,7 +507,6 @@ pullSecretsPath: pull-secret
 rubinTvSecretsPath: rubintv
 credentialSecretsPath: rubintv-broadcaster
 butlerSecret:
-  key: butler-secret
   containerPath: /home/saluser/.lsst
   dbUser: oods
 imagePullSecrets:

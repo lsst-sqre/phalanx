@@ -8,7 +8,7 @@ rubintv:
     debug: true
     env:
     - name: S3_ENDPOINT_URL
-      value: &s3E "https://s3.rubintv.cp.lsst.org"
+      value: &s3E "https://s3.cp.lsst.org"
     - name: RAPID_ANALYSIS_LOCATION
       value: "SUMMIT"
     - name: DDV_DEPLOY_BRANCH
@@ -41,12 +41,19 @@ rubintv:
     - name: S3_ENDPOINT_URL
       value: *s3E
     - name: DAF_BUTLER_REPOSITORY_INDEX
-      value: "s3://rubin-summit-users/data-repos.yaml"
-    - name: DAF_BUTLER_REPOSITORY
-      value: "/sdf/group/rubin/repo/ir2/butler.yaml"
+      value: "/project/data-repos.yaml"
+    - name: LSST_RESOURCES_S3_PROFILE_butler
+      value: *s3E
+    - name: PGUSER
+      value: "oods"
     - name: DEPLOY_BRANCH
       value: *dbE
     nfsMountpoint:
+    - name: project-shared
+      containerPath: /project
+      readOnly: false
+      server: nfs-project.ls.lsst.org
+      serverPath: /project
     - name: project-rubintv-ddv-config
       containerPath: /var/ddv-config
       readOnly: false
