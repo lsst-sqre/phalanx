@@ -194,19 +194,19 @@ app.kubernetes.io/instance: {{ include "rapid-analysis.squid.fullname" . }}
     - "-c"
     - |
       cd /secrets-user
-      cat /secrets-rubintv/butler-credentials.ini > aws-credentials.ini
+      cat /secrets-rapid-analysis/butler-aws-credentials.ini > aws-credentials.ini
       printf "\n" >> aws-credentials.ini
-      cat /secrets-rubintv/aws-credentials.ini >> aws-credentials.ini
+      cat /secrets-rapid-analysis/aws-credentials.ini >> aws-credentials.ini
       printf "\n" >> aws-credentials.ini
-      cat /secrets-rubintv/butler-credentials.txt > postgres-credentials.txt
-      cat /secrets-rubintv/postgres-credentials.txt >> postgres-credentials.txt
+      cat /secrets-rapid-analysis/butler-postgres-credentials.txt > postgres-credentials.txt
+      cat /secrets-rapid-analysis/postgres-credentials.txt >> postgres-credentials.txt
       chown {{ required "securityContext.uid must be set" .Values.securityContext.uid }}:{{ required "securityContext.gid must be set" .Values.securityContext.gid }} \
            /secrets-user/* && \
       chmod 0600 /secrets-user/*
   volumeMounts:
     - name: user-secrets
       mountPath: /secrets-user
-    - name: rubintv-secrets
-      mountPath: /secrets-rubintv
+    - name: rapid-analysis-secrets
+      mountPath: /secrets-rapid-analysis
       readOnly: true
 {{- end -}}

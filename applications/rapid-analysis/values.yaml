@@ -1,6 +1,6 @@
 image:
   # -- The Docker registry name for the container image.
-  repository: ts-dockerhub.lsst.org/rubintv-broadcaster
+  repository: ghcr.io/lsst-sitcom/rubintv_production
   # -- The tag of the container image to use.
   tag: develop
   # -- The policy to apply when pulling an image for deployment.
@@ -35,8 +35,6 @@ envSecrets: []
 vaultPrefixPath: ""
 # The key for the pull secrets including any sub-paths.
 pullSecretsPath: ""
-# Path for the rubin tv specific secrets vault.
-rubinTvSecretsPath: ""
 # -- This key allows specification of a script to override the entrypoint.
 # -- The list of pull secrets needed for the images.
 # If this section is used, each object listed can have the following attributes defined:
@@ -68,10 +66,6 @@ pvcMountpoint: []
 # _containerPath_ (The path inside the container to mount),
 # _subPath_ (persistent volume subpath, optional)
 pvcMountpointClaim: []
-# -- The key for the credentials including any sub-paths.
-credentialSecretsPath: ""
-# -- The name of the expected credential file for the broadcasters
-credentialFile: ""
 # -- Adds an extra string to the release name.
 nameOverride: ""
 # -- Specify the deployed application name specifically. Overrides all other names.
