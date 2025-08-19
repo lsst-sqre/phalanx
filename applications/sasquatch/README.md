@@ -79,6 +79,7 @@ Rubin Observatory's telemetry service
 | influxdb.securityContext.runAsUser | int | `1500` |  |
 | influxdb.setDefaultUser.enabled | bool | `true` | Whether the default InfluxDB user is set |
 | influxdb.setDefaultUser.user.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
+| kafdrop-remote.enabled | bool | `false` | Whether to enable the kafdrop-remote subchart |
 | kafdrop.enabled | bool | `true` | Whether to enable the kafdrop subchart |
 | kafka-connect-manager.enabled | bool | `false` | Whether to enable the Kafka Connect Manager |
 | kapacitor.enabled | bool | `true` | Whether to enable Kapacitor |
@@ -429,7 +430,9 @@ Rubin Observatory's telemetry service
 | kafdrop.ingress.path | string | `"/kafdrop"` | Ingress path |
 | kafdrop.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
 | kafdrop.jvm.opts | string | `""` | JVM options |
-| kafdrop.kafka.broker | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Bootstrap list of Kafka host/port pairs |
+| kafdrop.kafka.broker | string | sasquatch-kafka-bootstrap.sasquatch:9092 | Kafka bootstrap servers to connect to |
+| kafdrop.kafka.topicPrefix | string | lsst | Kafka topic prefix to filter topics by |
+| kafdrop.kafka.user | string | kafdrop | Kafka user to use for kafdrop |
 | kafdrop.nodeSelector | object | `{}` | Node selector configuration |
 | kafdrop.podAnnotations | object | `{}` | Pod annotations |
 | kafdrop.replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
@@ -440,6 +443,33 @@ Rubin Observatory's telemetry service
 | kafdrop.service.annotations | object | `{}` | Additional annotations to add to the service |
 | kafdrop.service.port | int | `9000` | Service port |
 | kafdrop.tolerations | list | `[]` | Tolerations configuration |
+| kafdrop-remote.affinity | object | `{}` | Affinity configuration |
+| kafdrop-remote.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
+| kafdrop-remote.cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |
+| kafdrop-remote.existingSecret | string | Do not use a secret | Existing Kubernetes secrect use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |
+| kafdrop-remote.host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
+| kafdrop-remote.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| kafdrop-remote.image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository |
+| kafdrop-remote.image.tag | string | `"4.1.0"` | Kafdrop image version |
+| kafdrop-remote.ingress.annotations | object | `{}` | Additional ingress annotations |
+| kafdrop-remote.ingress.enabled | bool | `false` | Whether to enable the ingress |
+| kafdrop-remote.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
+| kafdrop-remote.ingress.path | string | `"/kafdrop"` | Ingress path |
+| kafdrop-remote.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
+| kafdrop-remote.jvm.opts | string | `""` | JVM options |
+| kafdrop-remote.kafka.broker | string | sasquatch-kafka-bootstrap.sasquatch:9092 | Kafka bootstrap servers to connect to |
+| kafdrop-remote.kafka.topicPrefix | string | lsst | Kafka topic prefix to filter topics by |
+| kafdrop-remote.kafka.user | string | kafdrop | Kafka user to use for kafdrop |
+| kafdrop-remote.nodeSelector | object | `{}` | Node selector configuration |
+| kafdrop-remote.podAnnotations | object | `{}` | Pod annotations |
+| kafdrop-remote.replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
+| kafdrop-remote.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafdrop |
+| kafdrop-remote.schemaregistry | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | The endpoint of Schema Registry |
+| kafdrop-remote.server.port | int | `9000` | The web server port to listen on |
+| kafdrop-remote.server.servlet.contextPath | string | `"/kafdrop"` | The context path to serve requests on |
+| kafdrop-remote.service.annotations | object | `{}` | Additional annotations to add to the service |
+| kafdrop-remote.service.port | int | `9000` | Service port |
+| kafdrop-remote.tolerations | list | `[]` | Tolerations configuration |
 | kafka-connect-manager.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations |
 | kafka-connect-manager.enabled | bool | `false` | Whether to enable Kafka Connect Manager |
 | kafka-connect-manager.env.kafkaBrokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker URL |
@@ -605,11 +635,19 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.mirrormaker2.resources | object | `{"limits":{"cpu":1,"memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for MirrorMaker2 |
 | strimzi-kafka.mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
 | strimzi-kafka.mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
-| strimzi-kafka.registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
+| strimzi-kafka.registry.enabled | bool | `false` |  |
+| strimzi-kafka.registry.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
 | strimzi-kafka.registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | strimzi-kafka.registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
+| strimzi-kafka.registry.ingress.path | string | `"/schema-registry(/|$)(.*)"` | Path for the Schema Registry ingress |
+| strimzi-kafka.registry.remote.enabled | bool | `false` | Enable a Schema Registry for remote topics when MirrorMaker2 is enabled |
+| strimzi-kafka.registry.remote.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
+| strimzi-kafka.registry.remote.ingress.enabled | bool | `false` | Whether to enable an ingress for the Remote Schema Registry |
+| strimzi-kafka.registry.remote.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
+| strimzi-kafka.registry.remote.ingress.path | string | `"/schema-registry(/|$)(.*)"` | Path for the Remote Schema Registry ingress |
+| strimzi-kafka.registry.remote.schemaTopic | string | `"registry-schemas-remote"` | Name of the Remote Schema Registry topic |
 | strimzi-kafka.registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
-| strimzi-kafka.registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
+| strimzi-kafka.registry.schemaTopic | string | `registry-schemas` | Name of the Schema Registry topic |
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | strimzi-kafka.users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | strimzi-kafka.users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
