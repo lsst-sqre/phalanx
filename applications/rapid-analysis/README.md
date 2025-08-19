@@ -14,7 +14,7 @@ A Helm chart for deploying the Rapid Analysis services.
 | gather2aSet | object | `{}` | This configures a StatefulSet used for visit-level gather processing. |
 | gatherRollupSet | object | `{}` | This configures a StatefulSet used for night-summary rollup. |
 | image.pullPolicy | string | `"IfNotPresent"` | The policy to apply when pulling an image for deployment. |
-| image.repository | string | `"ts-dockerhub.lsst.org/rubintv-broadcaster"` | The Docker registry name for the container image. |
+| image.repository | string | `"ghcr.io/lsst-sitcom/rubintv_production"` | The Docker registry name for the container image. |
 | image.tag | string | `"develop"` | The tag of the container image to use. |
 | imagePullSecrets | list | `[]` | The list of pull secrets needed for the images. If this section is used, each object listed can have the following attributes defined: _name_ (The label identifying the pull-secret to use) |
 | location | string | `""` | Provide the location where the system is running. |

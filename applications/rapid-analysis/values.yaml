@@ -1,6 +1,6 @@
 image:
   # -- The Docker registry name for the container image.
-  repository: ts-dockerhub.lsst.org/rubintv-broadcaster
+  repository: ghcr.io/lsst-sitcom/rubintv_production
   # -- The tag of the container image to use.
   tag: develop
   # -- The policy to apply when pulling an image for deployment.
