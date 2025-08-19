@@ -238,7 +238,6 @@ comcamGatherRollupSet:
       memory: "24G"
 vaultPrefixPath: secret/k8s_operator/tucson-teststand.lsst.codes
 pullSecretsPath: pull-secret
-rubinTvSecretsPath: rubintv
 butlerSecret:
   key: butler-secret
   containerPath: /home/saluser/.lsst
@@ -285,7 +284,7 @@ redis:
     MASTER: true
   envSecrets:
   - name: REDIS_PASSWORD
-    secretName: rubintv-secrets
+    secretName: rapid-analysis-secrets
     secretKey: redis-password
   storage:
     classname: rook-ceph-block

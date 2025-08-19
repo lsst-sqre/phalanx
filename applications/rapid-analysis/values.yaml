@@ -35,8 +35,6 @@ envSecrets: []
 vaultPrefixPath: ""
 # The key for the pull secrets including any sub-paths.
 pullSecretsPath: ""
-# Path for the rubin tv specific secrets vault.
-rubinTvSecretsPath: ""
 # -- This key allows specification of a script to override the entrypoint.
 # -- The list of pull secrets needed for the images.
 # If this section is used, each object listed can have the following attributes defined:

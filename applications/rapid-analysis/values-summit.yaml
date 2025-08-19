@@ -503,7 +503,6 @@ lsstcamWorkerSet:
       cpu: 1.0
       memory: 8G  # we should check this value
 pullSecretsPath: pull-secret
-rubinTvSecretsPath: rubintv
 butlerSecret:
   containerPath: /home/saluser/.lsst
   dbUser: oods
@@ -564,7 +563,7 @@ redis:
     MASTER: true
   envSecrets:
   - name: REDIS_PASSWORD
-    secretName: rubintv-secrets
+    secretName: rapid-analysis-secrets
     secretKey: redis-password
   storage:
     classname: rook-ceph-block
