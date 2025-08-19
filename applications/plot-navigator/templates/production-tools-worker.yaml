@@ -27,7 +27,7 @@ spec:
         {{- . | toYaml | nindent 8 }}
         {{- end }}
       containers:
-      - name: plot-navigator
+      - name: production-tools-worker
         image: {{ .Values.productionTools.image.repository }}:{{ .Values.productionTools.image.tag | default .Chart.AppVersion}}
         imagePullPolicy: Always
         env:
@@ -51,7 +51,7 @@ spec:
                 name: redis-secret
                 key: password
         resources:
-          {{- toYaml .Values.resources | nindent 10 }}
+          {{- toYaml .Values.worker.resources | nindent 10 }}
         {{- if .Values.productionTools.envFromSecretPath }}
         envFrom:
           - secretRef: {{ include "plot-navigator.fullname" . }}
