@@ -236,10 +236,8 @@ comcamGatherRollupSet:
     limits:
       cpu: 1.0
       memory: "24G"
-vaultPrefixPath: secret/k8s_operator/tucson-teststand.lsst.codes
 pullSecretsPath: pull-secret
 butlerSecret:
-  key: butler-secret
   containerPath: /home/saluser/.lsst
   dbUser: oods
 imagePullSecrets:

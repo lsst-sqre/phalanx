@@ -221,10 +221,8 @@ lsstcamBacklogWorkerSet:
     limits:
       cpu: 1.0
       memory: "8G"
-vaultPrefixPath: secret/k8s_operator/base-lsp.lsst.codes
 pullSecretsPath: pull-secret
 butlerSecret:
-  key: butler-secret
   containerPath: /home/saluser/.lsst
   dbUser: oods
 imagePullSecrets:
