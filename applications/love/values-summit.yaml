@@ -36,7 +36,7 @@ audio-broadcaster:
 love-commander:
   image:
     repository: ts-dockerhub.lsst.org/love-commander
-    revision: 9
+    revision: 12
     pullPolicy: Always
   env:
     S3_INSTANCE: cp
@@ -335,7 +335,7 @@ love-nginx:
     frontend:
       image:
         repository: ts-dockerhub.lsst.org/love-frontend-k8s
-        revision: 9
+        revision: 12
         pullPolicy: Always
     manager:
       image:
