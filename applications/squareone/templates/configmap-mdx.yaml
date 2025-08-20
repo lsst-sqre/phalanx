@@ -1,3 +1,4 @@
+{{- $environmentName := .Values.global.environmentName -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -5,10 +6,18 @@ metadata:
   labels:
     {{- include "squareone.labels" . | nindent 4 }}
 data:
-  "api-aspect.mdx": {{ .Values.config.apiAspectPageMdx | quote }}
-  "docs.mdx": {{ .Values.config.docsPageMdx | quote }}
-  "support.mdx": {{ .Values.config.supportPageMdx | quote }}
-  "enrollment__thanks-for-signing-up.mdx": {{ .Values.config.verifyEmailPageMdx | quote }}
-  "enrollment__thanks-for-verifying.mdx": {{ .Values.config.emailVerifiedPageMdx | quote }}
-  "enrollment__pending-approval.mdx": {{ .Values.config.pendingApprovalPageMdx | quote }}
-  "enrollment__pending-verification.mdx": {{ .Values.config.pendingVerificationPageMdx | quote }}
+{{- $files := list "api-aspect.mdx" "docs.mdx" "support.mdx" "enrollment__thanks-for-signing-up.mdx" "enrollment__thanks-for-verifying.mdx" "enrollment__pending-approval.mdx" "enrollment__pending-verification.mdx" }}
+{{- range $fileName := $files }}
+  {{- $envPath := printf "content/%s/%s" $environmentName $fileName }}
+  {{- $fallbackPath := printf "content/idfprod/%s" $fileName }}
+  {{- $content := "" }}
+  {{- if $.Files.Get $envPath }}
+    {{- $content = $.Files.Get $envPath }}
+  {{- else if $.Files.Get $fallbackPath }}
+    {{- $content = $.Files.Get $fallbackPath }}
+  {{- end }}
+  {{- if $content }}
+  {{ $fileName | quote }}: |
+{{ $content | nindent 4 }}
+  {{- end }}
+{{- end }}
