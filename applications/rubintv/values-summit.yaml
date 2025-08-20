@@ -22,7 +22,7 @@ rubintv:
     envSecrets:
     - name: RA_REDIS_PASSWORD
       secretName: rubintv-secrets
-      secretKey: redis-password
+      secretKey: ra-redis-password
     image:
       tag: v2.6.8
       pullPolicy: Always
