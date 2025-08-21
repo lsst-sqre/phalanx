@@ -14,6 +14,7 @@ controller:
       defaultSize: "small"
       env:
         AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
         LSST_SITE: "tucson"
         LSST_TOPIC_SUBNAME: "sal"
@@ -23,8 +24,11 @@ controller:
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
         RSP_SITE_TYPE: "telescope"
+        S3_ENDPOINT_URL: "https://s3-butler.tu.lsst.org"
       pullSecret: "pull-secret"
       secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "aws-credentials.ini"
         - secretName: "nublado-lab-secret"
           secretKey: "kafka_credentials.txt"
         - secretName: "nublado-lab-secret"
