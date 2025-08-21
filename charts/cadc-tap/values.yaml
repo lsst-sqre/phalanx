@@ -89,7 +89,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.6.0"
+      tag: "3.7.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -105,7 +105,7 @@ config:
   gcsBucket: "async-results.lsst.codes"
 
   # -- Base URL for results stored in GCS bucket
-  gcsBucketUrl: "https://tap-files.lsst.codes"
+  gcsBucketUrl: "https://storage.googleapis.com/async-results.lsst.codes"
 
   # -- GCS bucket type (GCS or S3)
   gcsBucketType: "GCS"
@@ -245,7 +245,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "3.6.0"
+    tag: "3.7.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
