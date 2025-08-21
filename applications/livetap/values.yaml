@@ -16,7 +16,7 @@ cadc-tap:
     pg:
       # -- Postgres hostname:port to connect to
       # @default -- `"mock-pg:5432"` (the mock pg)
-      host: "usdf-butler.slac.stanford.edu:5432"
+      host: "usdf-butler-main-transaction.slac.stanford.edu:5432"
 
       # -- Postgres database to connect to
       database: "lsstdb1"
