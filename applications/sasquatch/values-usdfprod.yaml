@@ -85,6 +85,9 @@ strimzi-kafka:
   cruiseControl:
     enabled: true
 
+schema-registry:
+  enabled: true
+
 influxdb:
   enabled: false
 

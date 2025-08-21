@@ -43,6 +43,9 @@ strimzi-kafka:
   connect:
     enabled: true
 
+schema-registry:
+  enabled: true
+
 influxdb:
   startupProbe:
     enabled: true

@@ -1,32 +1,9 @@
-apiVersion: roundtable.lsst.codes/v1beta1
-kind: StrimziSchemaRegistry
-metadata:
-  name: {{ .Values.cluster.name }}-schema-registry
-spec:
-  listener: tls
-  compatibilityLevel: none
-  registryImageTag: "7.7.1"
-  cpuLimit: {{ .Values.registry.resources.limits.cpu | quote }}
-  cpuRequest: {{ .Values.registry.resources.requests.cpu | quote }}
-  memoryLimit: {{ .Values.registry.resources.limits.memory | quote }}
-  memoryRequest: {{ .Values.registry.resources.requests.memory | quote }}
----
-apiVersion: kafka.strimzi.io/v1beta2
-kind: KafkaTopic
-metadata:
-  name: {{ .Values.registry.schemaTopic }}
-  labels:
-    strimzi.io/cluster: {{ .Values.cluster.name }}
-spec:
-  partitions: 1
-  replicas: 3
-  config:
-    cleanup.policy: compact
----
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
-  name: {{ .Values.cluster.name }}-schema-registry
+  # strimzi-registry-operator requires a KafkaUser with the same name as the
+  # StrimziSchemaRegistry name.
+  name: {{ include "schema-registry.fullname" . }}
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:
@@ -41,21 +18,21 @@ spec:
       # schemas topic
       - resource:
           type: topic
-          name: {{ .Values.registry.schemaTopic }}
+          name: {{ .Values.topic.name }}
           patternType: literal
         operations:
           - Read
         type: allow
       - resource:
           type: topic
-          name: {{ .Values.registry.schemaTopic }}
+          name: {{ .Values.topic.name }}
           patternType: literal
         operations:
           - Write
         type: allow
       - resource:
           type: topic
-          name: {{ .Values.registry.schemaTopic }}
+          name: {{ .Values.topic.name }}
           patternType: literal
         operations:
           - DescribeConfigs

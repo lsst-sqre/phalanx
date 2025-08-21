@@ -43,6 +43,9 @@ strimzi-kafka:
   mirrormaker2:
     enabled: false
 
+schema-registry:
+  enabled: true
+
 influxdb:
   enabled: false
 
