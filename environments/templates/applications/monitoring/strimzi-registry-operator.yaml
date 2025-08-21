@@ -1,0 +1,36 @@
+{{- if (index .Values "applications" "strimzi-registry-operator") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "strimzi-registry-operator"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "strimzi-registry-operator"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "strimzi-registry-operator"
+    server: "https://kubernetes.default.svc"
+  project: "monitoring"
+  source:
+    path: "applications/strimzi-registry-operator"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ or (index .Values "revisions" "strimzi-registry-operator") .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}
