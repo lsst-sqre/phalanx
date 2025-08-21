@@ -124,6 +124,26 @@ jupyterhub:
       image:
         tag: "5.0.1"
 
+purger:
+  enabled: true
+  schedule: "32 05 * * 0"  # Sunday morning, 12:32 AM (UTC-5)
+  volumeName: "deleted-sundays"
+  policy:
+    directories:
+      - path: /purge
+        threshold: 1GiB
+        # This is the case where we just purge everything once a week.
+        # Set the threshold to 1 second: yeah, *everything*
+        intervals:
+          large:
+            accessInterval: 1s
+            modificationInterval: 1s
+            creationInterval: 1s
+          small:
+            accessInterval: 1s
+            modificationInterval: 1s
+            creationInterval: 1s
+
 cronjob:
   tutorials:
     enabled: true
