@@ -55,3 +55,10 @@ prompt-keda:
     redisStreams:
       # Dev processes very old images, set to ~20 years
       expiration: 600_000_000.0
+
+  butler_writer:
+    enabled: true
+    kafka_cluster: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
+    kafka_username: butler-writer
+    kafka_topic: butler-writer
+    output_file_path: s3://rubin-pp-dev-users/central_repo_2/pp-transfer/

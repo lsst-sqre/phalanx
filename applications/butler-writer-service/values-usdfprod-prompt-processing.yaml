@@ -1,0 +1,24 @@
+image:
+  pullPolicy: IfNotPresent
+  tag: 1.0.0
+
+outputRepo: s3://embargo@rubin-summit-users/
+
+datasetFilePath: s3://embargo@rubin-summit-users/pp-transfer/
+
+kafka:
+  clusterAddress: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
+  username: butler-writer
+  topic: butler-writer
+
+s3:
+  endpointUrl: https://sdfembs3.sdf.slac.stanford.edu
+  aws_profile: embargo
+
+nameOverride: ""
+fullnameOverride: ""
+
+# Service handles embargoed data
+podAnnotations: {
+  edu.stanford.slac.sdf.project/usdf-embargo: "true"
+}
