@@ -1,3 +1,5 @@
+replicaCount: 3
+
 config:
   metrics:
     enabled: true
@@ -20,63 +22,27 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
-    # - name: "firefighter"
-    #   count: 5
-    #   user_spec:
-    #     username_prefix: "bot-mobu-recommended"
-    #   scopes:
-    #     - "exec:notebook"
-    #     - "exec:portal"
-    #     - "read:image"
-    #     - "read:tap"
-    #   business:
-    #     type: "NotebookRunnerCounting"
-    #     options:
-    #       repo_url: "https://github.com/lsst-sqre/system-test.git"
-    #       repo_ref: "prod"
-    #       max_executions: 1
-    #     restart: true
-    # - name: "quickbeam"
-    #   count: 1
-    #   users:
-    #     - username: "bot-mobu-persistent"
-    #   scopes:
-    #     - "exec:notebook"
-    #     - "exec:portal"
-    #     - "read:image"
-    #     - "read:tap"
-    #   business:
-    #     type: "NotebookRunnerCounting"
-    #     options:
-    #       repo_url: "https://github.com/lsst-sqre/system-test.git"
-    #       repo_ref: "prod"
-    #       idle_time: 900
-    #       delete_lab: false
-    #     restart: true
-    - name: "tutorial"
-      count: 1
-      users:
-        - username: "bot-mobu-tutorial"
+    - name: "scaletestqserv"
+      count: 100
+      user_spec:
+        username_prefix: "bot-mobu-scale-qserv"
       scopes:
         - "exec:notebook"
         - "exec:portal"
         - "read:image"
         - "read:tap"
+      # start_batch_size: 50
+      # start_batch_wait: "1m"
       business:
-        type: "NotebookRunnerCounting"
+        type: "NotebookRunnerInfinite"
         options:
-          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
+          repo_url: "https://github.com/lsst-sqre/scaletest.git"
           repo_ref: "main"
-          max_executions: 1
-        restart: true
-    - name: "tap"
-      count: 1
-      users:
-        - username: "bot-mobu-tap"
-      scopes: ["read:tap"]
-      business:
-        type: "TAPQuerySetRunner"
-        options:
-          sync: false
-          query_set: "dp0.2"
+          notebook_idle_time: 0
+          execution_idle_time: 0
+          idle_time: 0
+          collection_rules:
+            - type: "intersect_union_of"
+              patterns:
+              - "dm_v_and_v/test_DMS-REQ-0356.ipynb"
         restart: true
