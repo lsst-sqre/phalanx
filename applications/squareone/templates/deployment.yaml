@@ -49,6 +49,8 @@ spec:
           env:
             - name: "SQUAREONE_CONFIG_PATH"
               value: "/etc/squareone/squareone.config.yaml"
+            - name: "SQUAREONE_ENVIRONMENT_NAME"
+              value: {{ .Values.global.environmentName | quote }}
             {{- if .Values.config.enableSentry }}
             - name: "SENTRY_DSN"
               valueFrom:
@@ -56,6 +58,8 @@ spec:
                   name: {{ template "squareone.fullname" . }}-secret
                   key: "sentry-dsn"
             {{- end }}
+            - name: "SENTRY_TRACES_SAMPLE_RATE"
+              value: {{ .Values.config.sentryTracesSampleRate | quote }}
           volumeMounts:
             - name: "config"
               mountPath: "/etc/squareone"
