@@ -18,7 +18,7 @@ Alert transmission to community brokers
 | alert-database.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | alert-database.ingester.image.imagePullPolicy | string | `"Always"` |  |
 | alert-database.ingester.image.repository | string | `"lsstdm/alert_database_ingester"` |  |
-| alert-database.ingester.image.tag | string | `"tickets-DM-44907"` |  |
+| alert-database.ingester.image.tag | string | `"v3.0.0"` |  |
 | alert-database.ingester.kafka.cluster | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
 | alert-database.ingester.kafka.port | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal listener that expects SCRAM SHA-512 auth. |
 | alert-database.ingester.kafka.strimziAPIVersion | string | `"v1beta2"` | API version of the Strimzi installation's custom resource definitions |
@@ -40,7 +40,7 @@ Alert transmission to community brokers
 | alert-database.nameOverride | string | `""` | Override the base name for resources |
 | alert-database.server.image.imagePullPolicy | string | `"Always"` |  |
 | alert-database.server.image.repository | string | `"lsstdm/alert_database_server"` |  |
-| alert-database.server.image.tag | string | `"tickets-DM-44907"` |  |
+| alert-database.server.image.tag | string | `"v3.0.0"` |  |
 | alert-database.server.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
 | alert-database.server.s3.alertBucket | string | `"alert-archive"` |  |
 | alert-database.server.s3.endpointURL | string | `"https://sdfembs3.sdf.slac.stanford.edu/"` | Project ID which has the above GCP IAM service account |
@@ -67,15 +67,13 @@ Alert transmission to community brokers
 | alert-stream-broker.kafka.externalListener.brokers | list | `[]` | List of hostname and IP for each broker. The format of this is a list of maps with 'ip' and 'host' keys. For example:     - ip: "192.168.1.1"      host: broker-0.example    - ip: "192.168.1.2"      host: broker-1.example  Each replica should get a host and IP. If these are unset, then IP addresses will be chosen automatically by the Kubernetes cluster's LoadBalancer controller, and hostnames will be unset, which will break TLS connections. |
 | alert-stream-broker.kafka.externalListener.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of the certificate issuer. |
 | alert-stream-broker.kafka.externalListener.tls.enabled | bool | `false` | Whether TLS encryption is enabled. |
-| alert-stream-broker.kafka.interBrokerProtocolVersion | float | `3.2` | Version of the protocol for inter-broker communication, see https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str. |
-| alert-stream-broker.kafka.logMessageFormatVersion | float | `3.2` | Encoding version for messages, see https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str. |
 | alert-stream-broker.kafka.nodePool.affinities | list | `[{"key":"kafka","value":"ok"}]` | List of node affinities to set for the broker's nodes. The key should be a label key, and the value should be a label value, and then the broker will prefer running Kafka and Zookeeper on nodes with those key-value pairs. |
 | alert-stream-broker.kafka.nodePool.tolerations | list | `[{"effect":"NoSchedule","key":"kafka","value":"ok"}]` | List of taint tolerations when scheduling the broker's pods onto nodes. The key should be a taint key, the value should be a taint value, and effect should be a taint effect that can be tolerated (ignored) when scheduling the broker's Kafka and Zookeeper pods. |
 | alert-stream-broker.kafka.prometheusScrapingEnabled | bool | `false` | Enable Prometheus to scrape metrics. |
-| alert-stream-broker.kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
+| alert-stream-broker.kafka.replicas | int | `6` | Number of Kafka broker replicas to run. |
 | alert-stream-broker.kafka.storage.size | string | `"1000Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | alert-stream-broker.kafka.storage.storageClassName | string | `"standard"` | Name of a StorageClass to use when requesting persistent volumes. |
-| alert-stream-broker.kafka.version | string | `"3.4.0"` | Version of Kafka to deploy. |
+| alert-stream-broker.kafka.version | string | `"3.7.0"` | Version of Kafka to deploy. |
 | alert-stream-broker.kafkaController.enabled | bool | `false` | Enable Kafka Controller |
 | alert-stream-broker.kafkaController.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka Controller |
 | alert-stream-broker.kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers |

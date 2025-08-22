@@ -9,7 +9,7 @@ Archival database of alerts sent through the alert stream.
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | ingester.image.imagePullPolicy | string | `"Always"` |  |
 | ingester.image.repository | string | `"lsstdm/alert_database_ingester"` |  |
-| ingester.image.tag | string | `"tickets-DM-44907"` |  |
+| ingester.image.tag | string | `"v3.0.0"` |  |
 | ingester.kafka.cluster | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
 | ingester.kafka.port | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal listener that expects SCRAM SHA-512 auth. |
 | ingester.kafka.strimziAPIVersion | string | `"v1beta2"` | API version of the Strimzi installation's custom resource definitions |
@@ -31,7 +31,7 @@ Archival database of alerts sent through the alert stream.
 | nameOverride | string | `""` | Override the base name for resources |
 | server.image.imagePullPolicy | string | `"Always"` |  |
 | server.image.repository | string | `"lsstdm/alert_database_server"` |  |
-| server.image.tag | string | `"tickets-DM-44907"` |  |
+| server.image.tag | string | `"v3.0.0"` |  |
 | server.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
 | server.s3.alertBucket | string | `"alert-archive"` |  |
 | server.s3.endpointURL | string | `"https://sdfembs3.sdf.slac.stanford.edu/"` | Project ID which has the above GCP IAM service account |

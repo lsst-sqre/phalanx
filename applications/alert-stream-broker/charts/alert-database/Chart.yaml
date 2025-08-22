@@ -1,6 +1,6 @@
 apiVersion: v2
 name: alert-database
-version: 2.1.0
+version: 3.0.0
 description: Archival database of alerts sent through the alert stream.
 maintainers:
   - name: bsmart
