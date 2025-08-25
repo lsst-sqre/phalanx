@@ -84,7 +84,7 @@ metadata:
 spec:
   config:
     cleanup.policy: "delete"
-    retention.ms: {{ .Values.maxMillisecondsRetained }} # 7 days
+    retention.ms: {{ .Values.lsstcamMaxMillisecondsRetained }} # 7 days
     retention.bytes: {{ .Values.lsstcamMaxBytesRetained }}
     compression.type: {{ .Values.topicCompression }}
     # The default timestamp is the creation time of the alert.

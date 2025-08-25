@@ -78,31 +78,31 @@ alert-stream-broker:
 
     # The actual community broker users
     - username: "alerce-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
       groups: ["alerce-idfint"]
 
     - username: "ampel-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
       groups: ["ampel-idfint"]
 
     - username: "antares-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
       groups: ["antares-idfint"]
 
     - username: "babamul-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
       groups: ["babamul-idfint"]
 
     - username: "fink-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
       groups: ["fink-idfint"]
 
     - username: "lasair-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
       groups: ["lasair-idfint"]
 
     - username: "pittgoogle-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
       groups: ["pittgoogle-idfint"]
 
   testTopicName: alert-stream-test
@@ -117,10 +117,11 @@ alert-stream-broker:
   latissTopicPartitions: 45
   latissTopicReplicas: 1
 
-  lsstcamTopicName: lsst-alerts-v7.4
+  lsstcamTopicName: lsst-alerts-v9.0
   lsstcamTopicPartitions: 45
   lsstcamTopicReplicas: 1
   lsstcamMaxBytesRetained: "300000000000"
+  lsstcamMaxMillisecondsRetained: "2629740000"
 
   # Compression set to snappy to balance alert packet compression speed and size.
   topicCompression: snappy
@@ -145,7 +146,7 @@ alert-database:
     kafka:
       cluster: alert-broker
       port: 9092
-      topic: lsst-alerts-v7.4
+      topic: lsst-alerts-v9.0
 
   server:
     serviceAccountName: alert-database-reader
