@@ -11,8 +11,8 @@ Confluent Schema Registry for managing schema versions for the Alert Stream
 | hostname | string | `"usdf-alert-schemas-dev.slac.stanford.edu"` | Hostname for an ingress which sends traffic to the Schema Registry. |
 | name | string | `"alert-schema-registry"` | Name used by the registry, and by its users. |
 | port | int | `8081` | Port where the registry is listening. NOTE: Not actually configurable in strimzi-registry-operator, so this basically cannot be changed. |
-| schemaSync | object | `{"image":{"digest":"sha256:343f3decb48e4328a0fc002e87b6a78caec2f2e0220d61cdac105a6c0a705079","pullPolicy":"Always","repository":"lsstdm/lsst_alert_packet"},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
-| schemaSync.image.digest | string | `"sha256:343f3decb48e4328a0fc002e87b6a78caec2f2e0220d61cdac105a6c0a705079"` | Version of the container to use. If container isn't updating in Argo, switch to digest. tag: tickets-DM-42606 |
+| schemaSync | object | `{"image":{"digest":"sha256:da82c66a4b832c68ee1833f0e4024cabbb14e3eb443fdf61a4c3049ebc70633a","pullPolicy":"Always","repository":"lsstdm/lsst_alert_packet"},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
+| schemaSync.image.digest | string | `"sha256:da82c66a4b832c68ee1833f0e4024cabbb14e3eb443fdf61a4c3049ebc70633a"` | Version of the container to use. If container isn't updating in Argo, switch to digest. tag: tickets-DM-42606 |
 | schemaSync.image.repository | string | `"lsstdm/lsst_alert_packet"` | Repository of a container which has the alert_packet syncLatestSchemaToRegistry.py program. |
 | schemaSync.subject | string | `"alert-packet"` | Subject name to use when inserting data into the Schema Registry |
 | schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry to store data. |

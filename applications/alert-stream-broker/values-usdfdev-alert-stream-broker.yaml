@@ -117,11 +117,17 @@ alert-stream-broker:
   latissTopicPartitions: 45
   latissTopicReplicas: 1
 
-  lsstcamTopicName: lsst-alerts-v9.0
-  lsstcamTopicPartitions: 45
-  lsstcamTopicReplicas: 1
-  lsstcamMaxBytesRetained: "300000000000"
-  lsstcamMaxMillisecondsRetained: "2629740000"
+  lsstcamTopicName90: lsst-alerts-v9.0
+  lsstcamTopicPartitions90: 45
+  lsstcamTopicReplicas90: 1
+  lsstcamMaxBytesRetained90: "300000000000"
+  lsstcamMaxMillisecondsRetained90: "2629740000"
+
+  lsstcamTopicName74: lsst-alerts-v7.4
+  lsstcamTopicPartitions74: 45
+  lsstcamTopicReplicas74: 1
+  lsstcamMaxBytesRetained74: "300000000000"
+  lsstcamMaxMillisecondsRetained74: "2629740000"
 
   # Compression set to snappy to balance alert packet compression speed and size.
   topicCompression: snappy
