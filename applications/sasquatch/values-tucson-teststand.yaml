@@ -313,3 +313,6 @@ consdb:
 
 control-system:
   enabled: true
+  topics:
+    - lsst.s3.raw.latiss
+    - lsst.s3.raw.comcam

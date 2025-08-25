@@ -1,5 +1,7 @@
-x-butler-secret:
-  &butler-secret
+x-butler-lfa-combo: &butler-lfa-combo
+  s3Credentials:
+  - lfa-credentials.ini
+  - butler-credentials.ini
   butlerSecret:
     containerPath: &bs-cp /home/saluser/.lsst
     dbUser: oods
@@ -20,35 +22,13 @@ atqueue:
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://comcam-mcm.tu.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.tu.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
   envSecrets:
   - name: USER_USER_PASS
     key: user-user-pass
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  <<: *butler-secret
+  <<: *butler-lfa-combo
   nfsMountpoint:
-  - name: auxtel-gen3-butler
-    containerPath: /repo/LATISS
-    readOnly: false
-    server: nfs-auxtel.tu.lsst.org
-    serverPath: /auxtel/repo/LATISS
-  - name: auxtel-gen3-oods
-    containerPath: /data/lsstdata/TTS/auxtel
-    readOnly: true
-    server: nfs-auxtel.tu.lsst.org
-    serverPath: /auxtel/lsstdata/TTS/auxtel
-  - name: comcam-gen3-butler
-    containerPath: /repo/LSSTComCam
-    readOnly: false
-    server: comcam-archiver.tu.lsst.org
-    serverPath: /repo/LSSTComCam
-  - name: comcam-gen3-oods
-    containerPath: /data/lsstdata/TTS/comcam
-    readOnly: true
-    server: comcam-archiver.tu.lsst.org
-    serverPath: /lsstdata/TTS/comcam
   - name: project-shared
     containerPath: /project
     readOnly: false
@@ -124,35 +104,13 @@ mtqueue:
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://comcam-mcm.tu.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.tu.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
   envSecrets:
   - name: USER_USER_PASS
     key: user-user-pass
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  <<: *butler-secret
+  <<: *butler-lfa-combo
   nfsMountpoint:
-  - name: auxtel-gen3-butler
-    containerPath: /repo/LATISS
-    readOnly: false
-    server: nfs-auxtel.tu.lsst.org
-    serverPath: /auxtel/repo/LATISS
-  - name: auxtel-gen3-oods
-    containerPath: /data/lsstdata/TTS/auxtel
-    readOnly: true
-    server: nfs-auxtel.tu.lsst.org
-    serverPath: /auxtel/lsstdata/TTS/auxtel
-  - name: comcam-gen3-butler
-    containerPath: /repo/LSSTComCam
-    readOnly: false
-    server: comcam-archiver.tu.lsst.org
-    serverPath: /repo/LSSTComCam
-  - name: comcam-gen3-oods
-    containerPath: /data/lsstdata/TTS/comcam
-    readOnly: true
-    server: comcam-archiver.tu.lsst.org
-    serverPath: /lsstdata/TTS/comcam
   - name: project-shared
     containerPath: /project
     readOnly: false
@@ -228,35 +186,13 @@ ocsqueue:
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://comcam-mcm.tu.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.tu.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
   envSecrets:
   - name: USER_USER_PASS
     key: user-user-pass
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  <<: *butler-secret
+  <<: *butler-lfa-combo
   nfsMountpoint:
-  - name: auxtel-gen3-butler
-    containerPath: /repo/LATISS
-    readOnly: false
-    server: nfs-auxtel.tu.lsst.org
-    serverPath: /auxtel/repo/LATISS
-  - name: auxtel-gen3-oods
-    containerPath: /data/lsstdata/TTS/auxtel
-    readOnly: true
-    server: nfs-auxtel.tu.lsst.org
-    serverPath: /auxtel/lsstdata/TTS/auxtel
-  - name: comcam-gen3-butler
-    containerPath: /repo/LSSTComCam
-    readOnly: false
-    server: comcam-archiver.tu.lsst.org
-    serverPath: /repo/LSSTComCam
-  - name: comcam-gen3-oods
-    containerPath: /data/lsstdata/TTS/comcam
-    readOnly: true
-    server: comcam-archiver.tu.lsst.org
-    serverPath: /lsstdata/TTS/comcam
   - name: project-shared
     containerPath: /project
     readOnly: false
