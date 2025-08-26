@@ -9,6 +9,10 @@ config:
   # -- Kafka topic for query cancellation requests
   jobCancelTopic: "lsst.tap.job-delete"
 
+  # -- Maximum batch size for query execution requests. This should generally
+  # be the same as `qservRestMaxConnections`.
+  jobRunBatchSize: 20
+
   # -- Kafka topic for query execution requests
   jobRunTopic: "lsst.tap.job-run"
 

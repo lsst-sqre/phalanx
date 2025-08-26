@@ -12,6 +12,7 @@ Qserv Kafka bridge
 |-----|------|---------|-------------|
 | config.consumerGroupId | string | `"qserv"` | Kafka consumer group ID |
 | config.jobCancelTopic | string | `"lsst.tap.job-delete"` | Kafka topic for query cancellation requests |
+| config.jobRunBatchSize | int | `20` | Maximum batch size for query execution requests. This should generally be the same as `qservRestMaxConnections`. |
 | config.jobRunTopic | string | `"lsst.tap.job-run"` | Kafka topic for query execution requests |
 | config.jobStatusTopic | string | `"lsst.tap.job-status"` | Kafka topic for query status |
 | config.logLevel | string | `"INFO"` | Logging level |
