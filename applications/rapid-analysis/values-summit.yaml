@@ -445,6 +445,10 @@ scripts:
     limits:
       cpu: 1
       memory: 6G
+- name: LSSTCam/runGuiderAnalysis.py
+  mounts:
+  - lsstcam-data
+  - project-shared
 ##
 ## LATISS StatefulSets
 ##
