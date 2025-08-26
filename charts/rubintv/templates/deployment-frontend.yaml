@@ -68,16 +68,16 @@ spec:
                 - ALL
             readOnlyRootFilesystem: false
           volumeMounts:
-            - name: {{ $.Release.Name }}-secrets
+            - name: rubintv-secrets
               mountPath: "/etc/secrets"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
       volumes:
-        - name: {{ $.Release.Name }}-secrets
+        - name: rubintv-secrets
           secret:
-            secretName: {{ include "rubintv.fullname" . }}-secrets
+            secretName: rubintv-secrets
       {{- with .Values.frontend.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
