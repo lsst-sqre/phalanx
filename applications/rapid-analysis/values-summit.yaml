@@ -449,6 +449,13 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
 ##
 ## LATISS StatefulSets
 ##
