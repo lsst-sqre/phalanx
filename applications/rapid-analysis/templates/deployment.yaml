@@ -88,6 +88,8 @@ spec:
           {{- end }}
           {{- end }}
           {{- end }}
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "{{ $.Values.butlerSecret.containerPath }}/gcs-credentials.json"
           volumeMounts:
             - name: user-secrets
               mountPath: {{ default "/home/saluser/.lsst" $.Values.butlerSecret.containerPath }}
