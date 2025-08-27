@@ -53,7 +53,7 @@ alert-stream-broker:
             metallb.universe.tf/address-pool: 'sdf-dmz'
 
     storage:
-      size: 2500Gi
+      size: 35Ti
       storageClassName: wekafs--sdf-k8s01
 
   kafkaExporter:
@@ -120,7 +120,7 @@ alert-stream-broker:
   lsstcamTopicName90: lsst-alerts-v9.0
   lsstcamTopicPartitions90: 45
   lsstcamTopicReplicas90: 1
-  lsstcamMaxBytesRetained90: "300000000000"
+  lsstcamMaxBytesRetained90: "755000000000"
   lsstcamMaxMillisecondsRetained90: "2629740000"
 
   lsstcamTopicName74: lsst-alerts-v7.4
