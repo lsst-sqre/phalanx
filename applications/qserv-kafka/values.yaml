@@ -164,7 +164,7 @@ frontend:
   resources:
     limits:
       cpu: "1"
-      memory: "300Mi"
+      memory: "450Mi"
     requests:
       cpu: "100m"
       memory: "145Mi"
