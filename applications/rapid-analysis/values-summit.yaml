@@ -360,6 +360,10 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
+- name: LSSTCam/runMetadataServerGuiders.py
+  mounts:
+  - lsstcam-data
+  - project-shared
 - name: LSSTCam/runMetadataServerRaPerformance.py
   mounts:
   - lsstcam-data
