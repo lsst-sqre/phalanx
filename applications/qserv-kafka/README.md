@@ -12,7 +12,8 @@ Qserv Kafka bridge
 |-----|------|---------|-------------|
 | config.consumerGroupId | string | `"qserv"` | Kafka consumer group ID |
 | config.jobCancelTopic | string | `"lsst.tap.job-delete"` | Kafka topic for query cancellation requests |
-| config.jobRunBatchSize | int | `20` | Maximum batch size for query execution requests. This should generally be the same as `qservRestMaxConnections`. |
+| config.jobRunBatchSize | int | `10` | Maximum batch size for query execution requests. This should generally be the same as `qservRestMaxConnections`. |
+| config.jobRunMaxBytes | int | 10MiB | Maximum size of a batch read from Kafka in bytes. Wide queries can be up to 500KiB in size, so this should be at least 500KiB * 10. |
 | config.jobRunTopic | string | `"lsst.tap.job-run"` | Kafka topic for query execution requests |
 | config.jobStatusTopic | string | `"lsst.tap.job-status"` | Kafka topic for query status |
 | config.logLevel | string | `"INFO"` | Logging level |
@@ -23,11 +24,11 @@ Qserv Kafka bridge
 | config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
-| config.qservDatabaseOverflow | int | `50` | Extra database connections that may be opened in excess of the pool size to handle surges in load. This is used primarily by the frontend for jobs that complete immediately. |
-| config.qservDatabasePoolSize | int | `2` | Database pool size. This is the number of MySQL connections that will be held open regardless of load. This should generally be set to the same as `maxWorkerJobs`. |
+| config.qservDatabaseOverflow | int | `20` | Extra database connections that may be opened in excess of the pool size to handle surges in load. This is used primarily by the frontend for jobs that complete immediately. |
+| config.qservDatabasePoolSize | int | `10` | Database pool size. This is the number of MySQL connections that will be held open regardless of load. This should generally be set to the same as `maxWorkerJobs`. |
 | config.qservDatabaseUrl | string | None, must be set | URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`) |
 | config.qservPollInterval | string | `"1s"` | Interval at which Qserv is polled for query status in Safir `parse_timedelta` format |
-| config.qservRestMaxConnections | int | `20` | Maximum simultaneous connections to open to the REST API |
+| config.qservRestMaxConnections | int | `15` | Maximum simultaneous connections to open to the REST API. This should be set to `jobRunBatchSize` plus some extra connections for the monitor and cancel jobs. |
 | config.qservRestSendApiVersion | bool | `true` | Whether to send the expected API version in REST API calls to Qserv |
 | config.qservRestTimeout | string | `"30s"` | Timeout for REST API calls in Safir `parse_timedelta` format. This includes time spent waiting for a connection if the maximum number of connections has been reached. |
 | config.qservRestUrl | string | None, must be set | URL to the Qserv REST API |
@@ -35,6 +36,7 @@ Qserv Kafka bridge
 | config.qservRetryCount | int | `3` | How many times to retry after a Qserv API network failure |
 | config.qservRetryDelay | string | `"1s"` | How long to wait between retries after a Qserv API network failure in Safir `parse_timedelta` format |
 | config.qservUploadTimeout | string | `"5m"` | How long to allow for user table upload before timing out in Safir `parse_timedelta` format. |
+| config.redisMaxConnections | int | `15` | Size of the Redis connection pool. This should be set to `jobRunBatchSize` plus some extra connections for the monitor, cancel jobs. |
 | config.resultTimeout | int | 3600 (1 hour) | How long to wait for result processing (retrieval and upload) before timing out, in seconds. This doubles as the timeout forcibly terminating result worker pods. |
 | config.tapService | string | `"qserv"` | Name of the TAP service for which this Qserv Kafka instance is managing queries. This must match the name of the TAP service for the corresponding query quota in the Gafaelfawr configuration. |
 | frontend.affinity | object | `{}` | Affinity rules for the qserv-kafka frontend pod |
