@@ -1,6 +1,8 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-int-dc5d.iam.gserviceaccount.com"
   slackAlerts: true
+  image:
+    tag: "8.13.0"
   config:
     fsadmin:
       # -- Affinity rules for fsadmin pods
