@@ -2,7 +2,7 @@ controller:
   googleServiceAccount: "nublado-controller@science-platform-int-dc5d.iam.gserviceaccount.com"
   slackAlerts: true
   image:
-    tag: "8.13.0"
+    tag: "8.13.1"
   config:
     fsadmin:
       # -- Affinity rules for fsadmin pods
@@ -25,7 +25,7 @@ controller:
         pullPolicy: "IfNotPresent"
 
         # -- Tag of fsadmin image to use
-        tag: "8.13.0"
+        tag: "8.13.1"
 
     dropdownMenu:
       release:
