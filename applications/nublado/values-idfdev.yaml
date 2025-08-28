@@ -29,7 +29,7 @@ controller:
 
       # -- Mount prefix, to be prepended to mountpoints in order to
       # collect them in one place
-      mountPrefix: null
+      mountPrefix: "/mnt/user-filesystems"
 
       # -- Node selector rules for fsadmin pods
       nodeSelector: {}
@@ -50,6 +50,7 @@ controller:
 
       # -- Tolerations for fsadmin pod
       tolerations: []
+
     dropdownMenu:
       release:
         cutoffVersion: "27.0.0"

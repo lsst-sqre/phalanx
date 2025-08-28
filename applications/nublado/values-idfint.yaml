@@ -27,6 +27,30 @@ controller:
         # -- Tag of fsadmin image to use
         tag: "8.13.1"
 
+      # -- Mount prefix, to be prepended to mountpoints in order to
+      # collect them in one place
+      mountPrefix: "/mnt/user-filesystems"
+
+      # -- Node selector rules for fsadmin pods
+      nodeSelector: {}
+
+      # -- Resource requests and limits for fsadmin
+      # @default -- See `values.yaml`
+      resources:
+        requests:
+          cpu: 0.1
+          memory: "250Mi"
+        limits:
+          cpu: 1
+          memory: "10Gi"
+
+      # -- Timeout to wait for Kubernetes to create/destroy fsadmin, in Safir
+      # `parse_timedelta` format
+      timeout: 2m
+
+      # -- Tolerations for fsadmin pod
+      tolerations: []
+
     dropdownMenu:
       release:
         cutoffVersion: "27.0.0"
