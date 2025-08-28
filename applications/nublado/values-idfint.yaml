@@ -2,6 +2,29 @@ controller:
   googleServiceAccount: "nublado-controller@science-platform-int-dc5d.iam.gserviceaccount.com"
   slackAlerts: true
   config:
+    fsadmin:
+      # -- Affinity rules for fsadmin pods
+      affinity: {}
+
+      # -- Argo CD application in which to collect fsadmins
+      application: "nublado-fileservers"
+
+      # -- Extra volumes that should be made available to fsadmin
+      extraVolumes: []
+
+      # -- Extra volumes that should be mounted to fsadmin
+      extraVolumeMounts: []
+
+      image:
+        # -- Fsadmin image to use
+        repository: "ghcr.io/lsst-sqre/nublado-fsadmin"
+
+        # -- Pull policy for file server image
+        pullPolicy: "IfNotPresent"
+
+        # -- Tag of fsadmin image to use
+        tag: "9.0.0"
+
     dropdownMenu:
       release:
         cutoffVersion: "27.0.0"

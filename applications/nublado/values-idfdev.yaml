@@ -2,6 +2,52 @@ controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
   config:
+    fsadmin:
+      # -- Affinity rules for fsadmin pods
+      affinity: {}
+
+      # -- Argo CD application in which to collect fsadmins
+      application: "nublado-fileservers"
+
+      # -- Extra volumes that should be made available to fsadmin
+      extraVolumes: []
+
+      # -- Extra volumes that should be mounted to fsadmin
+      extraVolumeMounts: []
+
+      image:
+        # -- Fsadmin image to use
+        repository: "ghcr.io/lsst-sqre/nublado-fsadmin"
+
+        # -- Pull policy for file server image
+        pullPolicy: "IfNotPresent"
+
+        # -- Tag of fsadmin image to use
+        tag: "9.0.0"
+
+      # -- Mount prefix, to be prepended to mountpoints in order to
+      # collect them in one place
+      mountPrefix: null
+
+      # -- Node selector rules for fsadmin pods
+      nodeSelector: {}
+
+      # -- Resource requests and limits for fsadmin
+      # @default -- See `values.yaml`
+      resources:
+        requests:
+          cpu: 0.1
+          memory: "250Mi"
+        limits:
+          cpu: 1
+          memory: "10Gi"
+
+      # -- Timeout to wait for Kubernetes to create/destroy fsadmin, in Safir
+      # `parse_timedelta` format
+      timeout: 2m
+
+      # -- Tolerations for fsadmin pod
+      tolerations: []
     dropdownMenu:
       release:
         cutoffVersion: "27.0.0"
