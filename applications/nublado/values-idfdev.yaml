@@ -1,8 +1,7 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   image:
-    tag: "tickets-DM-52131"
-    pullPolicy: Always
+    tag: "9.0.0"
   slackAlerts: true
   config:
     dropdownMenu:
@@ -16,6 +15,8 @@ controller:
         cutoffVersion: "28.0.0"
       experimental:
         age: "3w"
+    fsadmin:
+      mountPrefix: "/mnt/user-filesystems"
     logLevel: "DEBUG"
     fileserver:
       enabled: true
@@ -28,11 +29,6 @@ controller:
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
-    fsadmin:
-      mountPrefix: "/mnt/user-filesystems"
-      image:
-        tag: "tickets-DM-52131"
-        pullPolicy: "Always"
     images:
       source:
         type: "google"
@@ -52,7 +48,7 @@ controller:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.12.0"
+            tag: "9.0.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
