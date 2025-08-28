@@ -138,13 +138,13 @@ controller:
 
       image:
         # -- File server image to use
-        repository: "ghcr.io/lsst-sqre/idf-fsadmin"
+        repository: "ghcr.io/lsst-sqre/nublado-fsadmin"
 
         # -- Pull policy for file server image
-        pullPolicy: "Always"
+        pullPolicy: "IfNotPresent"
 
         # -- Tag of fsadmin image to use
-        tag: "latest"
+        tag: "9.0.0"
 
       # -- Mount prefix, to be prepended to mountpoints in order to
       # collect them in one place
@@ -544,7 +544,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.12.0"
+      tag: "9.0.0"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
