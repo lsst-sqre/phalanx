@@ -23,7 +23,7 @@ controller:
         pullPolicy: "IfNotPresent"
 
         # -- Tag of fsadmin image to use
-        tag: "9.0.0"
+        tag: "8.13.0"
 
     dropdownMenu:
       release:
