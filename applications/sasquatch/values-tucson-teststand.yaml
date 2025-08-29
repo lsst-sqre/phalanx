@@ -91,6 +91,8 @@ customInfluxDBIngress:
 
 telegraf:
   enabled: true
+  image:
+    tag: 1.35.4-alpine
   kafkaConsumers:
     auxtel:
       enabled: true
