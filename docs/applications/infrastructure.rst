@@ -15,4 +15,5 @@ Argo CD project: ``infrastructure``
    ingress-nginx/index
    gafaelfawr/index
    mobu/index
+   repertoire/index
    vault-secrets-operator/index
