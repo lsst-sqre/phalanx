@@ -1,0 +1,9 @@
+image:
+  tag: "tickets-DM-52228"
+  pullPolicy: "Always"
+config:
+  datasets:
+    - name: "dp02"
+    - name: "dp03"
+    - name: "dp1"
+  slackAlerts: true

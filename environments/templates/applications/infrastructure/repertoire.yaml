@@ -1,0 +1,41 @@
+{{- if (index .Values "applications" "repertoire") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "repertoire"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "repertoire"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "repertoire"
+    server: "https://kubernetes.default.svc"
+  project: "infrastructure"
+  source:
+    path: "applications/repertoire"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ or (index .Values "revisions" "repertoire") .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+      valuesObject:
+        config:
+          applications:
+            {{- include "enabledServicesYamlList" . | nindent 12 }}
+          baseHostname: {{ .Values.fqdn | quote }}
+          butlerConfigs:
+            {{ toYaml .Values.butlerServerRepositories | nindent 12 }}
+{{- end -}}

@@ -297,24 +297,29 @@ class ApplicationService:
             key = "vault-secrets-operator.vault.address"
             values[key] = str(environment.vault_url)
 
+        # repertoire gets a ton of injected information but thankfully most of
+        # it is not needed for linting. Only inject the base hostname, which
+        # must be set. This means that the configuration for the application
+        # will only be correct when generated via Argo CD, which uses
+        # valuesObject to inject additional structured data.
+        if application == "repertoire":
+            values["config.baseHostname"] = environment.fqdn
+
+        # T&S sites inject a bunch of additional global settings for the
+        # telescope control system.
         if environment.control_system:
+            settings = environment.control_system
             extras = {
-                "appNamespace": environment.control_system.app_namespace,
-                "imageTag": environment.control_system.image_tag,
-                "siteTag": environment.control_system.site_tag,
-                "topicName": environment.control_system.topic_name,
-                "kafkaBrokerAddress": (
-                    environment.control_system.kafka_broker_address
-                ),
+                "appNamespace": settings.app_namespace,
+                "imageTag": settings.image_tag,
+                "siteTag": settings.site_tag,
+                "topicName": settings.topic_name,
+                "kafkaBrokerAddress": settings.kafka_broker_address,
                 "kafkaTopicReplicationFactor": (
-                    str(
-                        environment.control_system.kafka_topic_replication_factor
-                    )
+                    str(settings.kafka_topic_replication_factor)
                 ),
-                "schemaRegistryUrl": (
-                    environment.control_system.schema_registry_url
-                ),
-                "s3EndpointUrl": environment.control_system.s3_endpoint_url,
+                "schemaRegistryUrl": settings.schema_registry_url,
+                "s3EndpointUrl": settings.s3_endpoint_url,
             }
             values.update(
                 {
