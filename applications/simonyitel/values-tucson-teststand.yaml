@@ -77,7 +77,7 @@ ccoods:
                   class:
                       import: lsst.ctrl.oods.messageAttendant
                       name: MessageAttendant
-                  repoDirectory : s3://butler@rubinobs-butler-lsstcomcam
+                  repoDirectory : s3://butler@rubinobs-butler-comcam
                   s3profile: butler
                   collections:
                       - LSSTComCam/raw/all
