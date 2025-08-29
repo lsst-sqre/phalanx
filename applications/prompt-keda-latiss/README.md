@@ -22,7 +22,6 @@ KEDA Prompt Processing instance for LATISS
 | prompt-keda.butler_writer.kafka_cluster | string | None, must be set | Address of Kafka broker where prompt processing output events will be written, for consumption by the Butler writer service. |
 | prompt-keda.butler_writer.kafka_topic | string | None, must be set | Kafka topic that prompt processing output events will be written to, for consumption by the Butler writer service. |
 | prompt-keda.butler_writer.kafka_username | string | None, must be set | Username for Kafka broker where prompt processing output events will be written, for consumption by the Butler writer service. |
-| prompt-keda.butler_writer.output_file_path | string | None, must be set | Root path where output dataset files will be written when transferring back to the central repository. |
 | prompt-keda.cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
 | prompt-keda.debug.exportOutputs | bool | `true` | Whether or not pipeline outputs should be exported to the central repo. This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination. |
 | prompt-keda.debug.monitorDaxApdb | bool | `false` | Whether `dax_apdb` should run in debug mode and log metrics. |
