@@ -43,4 +43,5 @@ Telegraf is an agent for collecting, processing, aggregating, and writing metric
 | podLabels | object | `{}` | Labels for the Telegraf pods |
 | registry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema Registry URL |
 | resources | object | See `values.yaml` | Kubernetes resources requests and limits |
+| supportedKafkaVersion | object | `{}` |  |
 | tolerations | list | `[]` | Tolerations for pod assignment |

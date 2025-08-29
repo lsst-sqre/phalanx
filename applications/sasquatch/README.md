@@ -674,6 +674,7 @@ Rubin Observatory's telemetry service
 | telegraf.podLabels | object | `{}` | Labels for the Telegraf pods |
 | telegraf.registry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema Registry URL |
 | telegraf.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
+| telegraf.supportedKafkaVersion | object | `{}` |  |
 | telegraf.tolerations | list | `[]` | Tolerations for pod assignment |
 | telegraf-oss.affinity | object | `{}` | Affinity for pod assignment |
 | telegraf-oss.args | list | `[]` | Arguments passed to the Telegraf agent on startup |
@@ -712,4 +713,5 @@ Rubin Observatory's telemetry service
 | telegraf-oss.podLabels | object | `{}` | Labels for the Telegraf pods |
 | telegraf-oss.registry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema Registry URL |
 | telegraf-oss.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
+| telegraf-oss.supportedKafkaVersion | object | `{}` |  |
 | telegraf-oss.tolerations | list | `[]` | Tolerations for pod assignment |

@@ -184,6 +184,8 @@ kafkaConsumers:
     # @default -- 3
     compression_codec: 3
 
+supportedKafkaVersion: {}
+
 influxdb:
   # -- URL of the InfluxDB v1 instance to write to
   urls:
