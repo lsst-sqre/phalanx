@@ -52,8 +52,6 @@ spec:
                 secretKeyRef:
                   name: {{ template "butler-writer-service.fullname" . }}-secret
                   key: butler-writer-password
-            - name: FILE_STAGING_ROOT_PATH
-              value: {{ .Values.datasetFilePath }}
             - name: S3_ENDPOINT_URL
               value: {{ .Values.s3.endpointUrl }}
             - name: AWS_SHARED_CREDENTIALS_FILE

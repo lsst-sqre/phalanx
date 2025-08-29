@@ -61,4 +61,3 @@ prompt-keda:
     kafka_cluster: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
     kafka_username: butler-writer
     kafka_topic: butler-writer
-    output_file_path: s3://rubin-pp-dev-users/central_repo_2/pp-transfer/
