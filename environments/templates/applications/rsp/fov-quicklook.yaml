@@ -1,0 +1,36 @@
+{{- if (index .Values "applications" "fov-quicklook") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "fov-quicklook"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "fov-quicklook"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "fov-quicklook"
+    server: "https://kubernetes.default.svc"
+  project: "rsp"
+  source:
+    path: "applications/fov-quicklook"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ or (index .Values "revisions" "fov-quicklook") .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}
