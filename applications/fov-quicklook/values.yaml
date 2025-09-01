@@ -1,14 +1,80 @@
-# Default values for fov-quicklook.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+# -- Use vault to store secrets
+use_vault: true
 
-# The following will be set by parameters injected by Argo CD and should not
-# be set in the individual environment values files.
-global:
-  # -- Host name for ingress
-  # @default -- Set by Argo CD
-  host: null
+# -- Use gafaelfawr to authenticate
+use_gafaelfawr: true
 
-  # -- Base path for Vault secrets
-  # @default -- Set by Argo CD
-  vaultSecretsPath: null
+image:
+  # -- Image to use in the fov-quicklook deployment
+  repository: ghcr.io/michitaro/rubin-fov-viewer
+
+  # -- Pull policy for the fov-quicklook image
+  pullPolicy: Always
+
+  # -- Tag of image to use
+  tag: latest
+
+config:
+  # -- URL path prefix
+  pathPrefix: /fov-quicklook
+
+# -- S3 configuration for the tile storage
+s3_tile:
+  endpoint: sdfembs3.sdf.slac.stanford.edu:443
+  secure: true
+  bucket: fov-quicklook-tile
+
+# -- Storage class to use for the database
+db_storage_class: null
+
+coordinator:
+  resources:
+    # -- Resource requests for the coordinator
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    # -- Resource limits for the coordinator
+    limits:
+      cpu: 4000m
+      memory: 256Mi
+
+frontend:
+  resources:
+    # -- Resource requests for the frontend
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    # -- Resource limits for the frontend
+    limits:
+      cpu: 8000m
+      memory: 512Mi
+
+db:
+  resources:
+    # -- Resource requests for the database
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    # -- Resource limits for the database
+    limits:
+      cpu: 2000m
+      memory: 256Mi
+
+generator:
+  resources:
+    # -- Resource requests for the generator
+    requests:
+      cpu: 8000m
+      memory: 32Gi
+    # -- Resource limits for the generator
+    limits:
+      cpu: 16000m
+      memory: 32Gi
+  workdir:
+    # -- Work directory type for the generator
+    medium: Memory
+  # -- Number of replicas for the generator
+  replicas: 9
+
+# -- Context menu templates for the frontend
+context_menu_templates: []

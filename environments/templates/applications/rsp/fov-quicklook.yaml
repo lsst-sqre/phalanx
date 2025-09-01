@@ -19,15 +19,13 @@ spec:
   source:
     path: "applications/fov-quicklook"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ or (index .Values "revisions" "fov-quicklook") .Values.targetRevision | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
-        - name: "global.baseUrl"
-          value: "https://{{ .Values.fqdn }}"
-        - name: "global.environmentName"
-          value: {{ .Values.name | quote }}
         - name: "global.host"
           value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
