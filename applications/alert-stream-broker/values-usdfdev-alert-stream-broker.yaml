@@ -79,31 +79,31 @@ alert-stream-broker:
 
     # The actual community broker users
     - username: "alerce-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0"]
       groups: ["alerce-idfint"]
 
     - username: "ampel-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0"]
       groups: ["ampel-idfint"]
 
     - username: "antares-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0"]
       groups: ["antares-idfint"]
 
     - username: "babamul-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0"]
       groups: ["babamul-idfint"]
 
     - username: "fink-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0"]
       groups: ["fink-idfint"]
 
     - username: "lasair-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0"]
       groups: ["lasair-idfint"]
 
     - username: "pittgoogle-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0"]
       groups: ["pittgoogle-idfint"]
 
   testTopicName: alert-stream-test
