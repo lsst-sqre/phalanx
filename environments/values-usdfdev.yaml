@@ -18,6 +18,7 @@ applications:
   datalinker: true
   exposurelog: true
   exposure-checker: true
+  fov-quicklook: true
   grafana: true
   rubin-rag: true
   jira-data-proxy: true
