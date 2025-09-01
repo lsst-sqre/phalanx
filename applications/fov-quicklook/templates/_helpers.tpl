@@ -1,26 +1,51 @@
-{{/*
-Create chart name and version as used by the chart label.
-*/}}
-{{- define "fov-quicklook.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- define "fov-quicklook.env.s3_tile" -}}
+- name: QUICKLOOK_s3_tile
+  value: {{ .Values.s3_tile | toJson | quote }}
+- name: QUICKLOOK_s3_tile__access_key
+  valueFrom:
+    secretKeyRef:
+      name: fov-quicklook
+      key: s3_repository_access_key
+- name: QUICKLOOK_s3_tile__secret_key
+  valueFrom:
+    secretKeyRef:
+      name: fov-quicklook
+      key: s3_repository_secret_key
 {{- end }}
 
-{{/*
-Common labels
-*/}}
-{{- define "fov-quicklook.labels" -}}
-helm.sh/chart: {{ include "fov-quicklook.chart" . }}
-{{ include "fov-quicklook.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- define "fov-quicklook.env.db" -}}
+- name: DB_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: fov-quicklook
+      key: db_password
+- name: QUICKLOOK_db_url
+  value: postgresql://quicklook:$(DB_PASSWORD)@fov-quicklook-db:5432/quicklook
 {{- end }}
 
-{{/*
-Selector labels
-*/}}
-{{- define "fov-quicklook.selectorLabels" -}}
-app.kubernetes.io/name: "fov-quicklook"
-app.kubernetes.io/instance: {{ .Release.Name }}
+{{- define "fov-quicklook.env.log-level" -}}
+- name: QUICKLOOK_log_level
+  value: {{ .Values.log_level | quote }}
+{{- end }}
+
+
+{{- define "quicklook.ingress.spec" -}}
+rules:
+  - host: {{ .Values.global.host | quote }}
+    http:
+      paths:
+        - path: {{ .Values.config.pathPrefix }}
+          pathType: Prefix
+          backend:
+            service:
+              name: fov-quicklook-frontend
+              port:
+                number: 9500
+{{- end -}}
+
+{{- define "fov-quicklook.butler-settings.env" -}}
+{{- range .Values.butler_settings.envs }}
+- name: {{ .name }}
+  value: {{ .value | quote }}
+{{- end }}
 {{- end }}
