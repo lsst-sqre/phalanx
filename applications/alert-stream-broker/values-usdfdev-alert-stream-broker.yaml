@@ -79,31 +79,31 @@ alert-stream-broker:
 
     # The actual community broker users
     - username: "alerce-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-mock-data-challenge"]
       groups: ["alerce-idfint"]
 
     - username: "ampel-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-mock-data-challenge"]
       groups: ["ampel-idfint"]
 
     - username: "antares-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-mock-data-challenge"]
       groups: ["antares-idfint"]
 
     - username: "babamul-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-mock-data-challenge"]
       groups: ["babamul-idfint"]
 
     - username: "fink-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-mock-data-challenge"]
       groups: ["fink-idfint"]
 
     - username: "lasair-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-mock-data-challenge"]
       groups: ["lasair-idfint"]
 
     - username: "pittgoogle-idfint"
-      readonlyTopics: ["alerts-simulated, lsst-alerts-v9.0"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-mock-data-challenge"]
       groups: ["pittgoogle-idfint"]
 
   testTopicName: alert-stream-test
@@ -129,6 +129,12 @@ alert-stream-broker:
   lsstcamTopicReplicas74: 1
   lsstcamMaxBytesRetained74: "300000000000"
   lsstcamMaxMillisecondsRetained74: "2629740000"
+
+  lsstcamTopicNameMDC: lsst-alerts-mock-data-challenge
+  lsstcamTopicPartitionsMDC: 45
+  lsstcamTopicReplicasMDC: 1
+  lsstcamMaxBytesRetainedMDC: "300000000000"
+  lsstcamMaxMillisecondsRetainedMDC: "2629740000"
 
   # Compression set to snappy to balance alert packet compression speed and size.
   topicCompression: snappy
