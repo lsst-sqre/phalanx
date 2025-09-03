@@ -15,7 +15,7 @@ config:
   hipsUrl: "https://data-int.lsst.cloud/api/hips/v2/dp1/deep_coadd/band_r"
 
   image:
-    tag: "portal-2025.4.0-test1"
+    tag: "portal-2025.4.0-test2"
 
 redis:
   persistence:
