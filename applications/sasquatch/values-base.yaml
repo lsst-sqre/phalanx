@@ -57,6 +57,7 @@ strimzi-kafka:
         cpu: 4
   controller:
     enabled: true
+    backup: true
   broker:
     enabled: true
     name: "kafka-local-storage"
@@ -64,6 +65,7 @@ strimzi-kafka:
     storage:
       size: 1.5Ti
       storageClassName: localdrive
+    backup: true
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:

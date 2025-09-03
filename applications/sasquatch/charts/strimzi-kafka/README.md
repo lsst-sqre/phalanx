@@ -7,6 +7,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | broker.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for broker pod assignment |
+| broker.backup | bool | `false` | Whether to label the broker PVCs for backup by k8up, enabled on the summit and base environments |
 | broker.enabled | bool | `false` | Enable node pool for the kafka brokers |
 | broker.name | string | `"kafka"` | Node pool name |
 | broker.nodeIds | string | `"[0,1,2]"` | IDs to assign to the brokers |
@@ -36,6 +37,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
 | connect.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafka Connect |
 | controller.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for controller pod assignment |
+| controller.backup | bool | `false` | Whether to label the controller PVCs for backup by k8up, enabled on the summit and base environments |
 | controller.enabled | bool | `false` | Enable node pool for the kafka controllers |
 | controller.nodeIds | string | `"[3,4,5]"` | IDs to assign to the controllers |
 | controller.resources | object | `{"limits":{"cpu":"1","memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for the controllers |
