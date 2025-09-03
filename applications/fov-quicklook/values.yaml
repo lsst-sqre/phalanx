@@ -73,6 +73,11 @@ generator:
   workdir:
     # -- Work directory type for the generator
     medium: Memory
+    # -- Size limit for the shared memory work directory
+    sizeLimit: 32Gi
+  mergedDir:
+    # -- Size limit for the merged directory
+    sizeLimit: 32Gi
   # -- Number of replicas for the generator
   replicas: 9
 

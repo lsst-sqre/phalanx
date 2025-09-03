@@ -128,10 +128,24 @@
                 "",
                 "Memory"
               ]
+            },
+            "sizeLimit": {
+              "type": "string"
             }
           },
           "required": [
             "medium"
+          ]
+        },
+        "mergedDir": {
+          "type": "object",
+          "properties": {
+            "sizeLimit": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "sizeLimit"
           ]
         },
         "replicas": {
@@ -142,6 +156,7 @@
       "required": [
         "resources",
         "workdir",
+        "mergedDir",
         "replicas"
       ]
     },
