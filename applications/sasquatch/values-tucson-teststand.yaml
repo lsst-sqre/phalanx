@@ -3,6 +3,7 @@ strimzi-kafka:
     monitorLabel:
       lsst.io/monitor: "true"
   kafka:
+    version: 4.0.0
     config:
       auto.create.topics.enable: false
       log.cleaner.min.compaction.lag.ms: 108000000
@@ -90,6 +91,9 @@ customInfluxDBIngress:
 
 telegraf:
   enabled: true
+  kafkaVersion: "4.0.0"
+  image:
+    tag: 1.35.4-alpine
   kafkaConsumers:
     auxtel:
       enabled: true

@@ -66,6 +66,9 @@ data:
       consumer_fetch_default = {{ default "20MB" .value.consumer_fetch_default | quote }}
       max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
       compression_codec = {{ default 3 .value.compression_codec }}
+      {{- if .kafkaVersion }}
+      kafka_version = "{{ .kafkaVersion }}"
+      {{- end }}
 
     {{- if .value.repair }}
     [[inputs.kafka_consumer]]
