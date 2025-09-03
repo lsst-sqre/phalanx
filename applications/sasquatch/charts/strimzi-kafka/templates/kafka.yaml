@@ -56,6 +56,8 @@ metadata:
   annotations:
     strimzi.io/next-node-ids: {{ .Values.broker.nodeIds | quote }}
 spec:
+  jvmOptions:
+    {{- toYaml .Values.kafka.jvmOptions | nindent 6 }}
   replicas: {{ .Values.kafka.replicas }}
   roles:
     - broker
