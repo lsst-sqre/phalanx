@@ -77,6 +77,8 @@ spec:
       targetPort: 9500
 ---
 {{- if .Values.use_gafaelfawr }}
+# use_gafaelfawr: Controls whether to use the Gafaelfawr authentication system.
+# Set to true by default. Set to false only for local development clusters without Gafaelfawr.
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
@@ -92,6 +94,28 @@ template:
     name: fov-quicklook-frontend
   spec:
     {{- include "quicklook.ingress.spec" . | nindent 4 }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: fov-quicklook-frontend
+spec:
+  podSelector:
+    matchLabels:
+      app: fov-quicklook-frontend
+  policyTypes:
+    - "Ingress"
+  ingress:
+    # Allow inbound access from pods (in any namespace) labeled
+    # gafaelfawr.lsst.io/ingress: true.
+    - from:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              gafaelfawr.lsst.io/ingress: "true"
+      ports:
+        - protocol: "TCP"
+          port: 9500
 {{- else }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
