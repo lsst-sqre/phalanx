@@ -31,10 +31,12 @@ strimzi-kafka:
       enabled: true
   controller:
     enabled: true
+    backup: true
   broker:
     enabled: true
     storage:
       size: 500Gi
+    backup: true
 
 schema-registry:
   enabled: true
