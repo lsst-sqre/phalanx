@@ -669,12 +669,12 @@ Rubin Observatory's telemetry service
 | telegraf.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | telegraf.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
 | telegraf.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
+| telegraf.kafkaVersion | string | `nil` |  |
 | telegraf.nodeSelector | object | `{}` | Node labels for pod assignment |
 | telegraf.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | telegraf.podLabels | object | `{}` | Labels for the Telegraf pods |
 | telegraf.registry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema Registry URL |
 | telegraf.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
-| telegraf.supportedKafkaVersion | string | `nil` |  |
 | telegraf.tolerations | list | `[]` | Tolerations for pod assignment |
 | telegraf-oss.affinity | object | `{}` | Affinity for pod assignment |
 | telegraf-oss.args | list | `[]` | Arguments passed to the Telegraf agent on startup |
@@ -708,10 +708,10 @@ Rubin Observatory's telemetry service
 | telegraf-oss.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | telegraf-oss.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
 | telegraf-oss.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
+| telegraf-oss.kafkaVersion | string | `nil` |  |
 | telegraf-oss.nodeSelector | object | `{}` | Node labels for pod assignment |
 | telegraf-oss.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | telegraf-oss.podLabels | object | `{}` | Labels for the Telegraf pods |
 | telegraf-oss.registry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema Registry URL |
 | telegraf-oss.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
-| telegraf-oss.supportedKafkaVersion | string | `nil` |  |
 | telegraf-oss.tolerations | list | `[]` | Tolerations for pod assignment |

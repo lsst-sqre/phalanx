@@ -67,7 +67,7 @@ data:
       max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
       compression_codec = {{ default 3 .value.compression_codec }}
       {{- if .supportedKafkaVersion }}
-      kafka_version = "{{ .supportedKafkaVersion }}"
+      kafka_version = "{{ .kafkaVersion }}"
       {{- end }}
 
     {{- if .value.repair }}
