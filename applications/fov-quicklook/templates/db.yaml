@@ -16,6 +16,14 @@ spec:
         - name: init-permissions
           image: 'busybox'
           command: ['sh', '-c', 'chown 999:999 /var/lib/postgresql/data && mkdir -p /var/run/postgresql && chown 999:999 /var/run/postgresql']
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+              add:
+                - "CHOWN"
+            readOnlyRootFilesystem: true
           volumeMounts:
             - name: fov-quicklook-db
               mountPath: /var/lib/postgresql/data
