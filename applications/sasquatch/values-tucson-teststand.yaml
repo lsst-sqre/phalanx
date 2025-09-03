@@ -40,6 +40,13 @@ strimzi-kafka:
     enabled: true
     enableSaramaLogging: true
     showAllOffsets: false
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 2
+      limits:
+        memory: 1Gi
+        cpu: 4
   controller:
     enabled: true
     nodeIds: "[0,1,2]"
