@@ -3,6 +3,10 @@ strimzi-kafka:
     monitorLabel:
       lsst.io/monitor: "true"
   kafka:
+    jvmOptions:
+      javaSystemProperties:
+        - name: javax.net.debug
+          value: ssl
     version: 4.0.0
     config:
       auto.create.topics.enable: false
