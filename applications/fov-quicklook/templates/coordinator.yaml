@@ -32,6 +32,8 @@ spec:
             {{- include "fov-quicklook.butler-settings.env" . | nindent 12 }}
           volumeMounts:
             {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}
+            - name: tmp
+              mountPath: /tmp
           ports:
             - containerPort: 9501
           livenessProbe:
@@ -42,12 +44,20 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 3
           securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 1000
             runAsGroup: 1000
           resources: {{ toYaml .Values.coordinator.resources | nindent 12 }}
       volumes:
         {{- .Values.butler_settings.volumes | toYaml | nindent 8 }}
+        - name: tmp
+          emptyDir:
+            medium: Memory
 ---
 apiVersion: v1
 kind: Service

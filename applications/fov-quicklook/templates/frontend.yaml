@@ -35,6 +35,8 @@ spec:
               value: {{ .Values.context_menu_templates | toJson | quote }}
           volumeMounts:
             {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}
+            - name: tmp
+              mountPath: /tmp
           livenessProbe:
             httpGet:
               path: {{ .Values.config.pathPrefix }}/api/healthz
@@ -46,11 +48,19 @@ spec:
             - containerPort: 9500
           resources: {{ toYaml .Values.frontend.resources | nindent 12 }}
           securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 1000
             runAsGroup: 1000
       volumes:
         {{- .Values.butler_settings.volumes | toYaml | nindent 8 }}
+        - name: tmp
+          emptyDir:
+            medium: Memory
 ---
 apiVersion: v1
 kind: Service

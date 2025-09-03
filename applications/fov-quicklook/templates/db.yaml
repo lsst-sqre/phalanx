@@ -15,10 +15,12 @@ spec:
       initContainers:
         - name: init-permissions
           image: 'busybox'
-          command: ['sh', '-c', 'chown 999:999 /var/lib/postgresql/data']
+          command: ['sh', '-c', 'chown 999:999 /var/lib/postgresql/data && mkdir -p /var/run/postgresql && chown 999:999 /var/run/postgresql']
           volumeMounts:
             - name: fov-quicklook-db
               mountPath: /var/lib/postgresql/data
+            - name: postgresql-run
+              mountPath: /var/run/postgresql
       containers:
         - name: fov-quicklook-db
           image: 'postgres:16'
@@ -37,15 +39,25 @@ spec:
           volumeMounts:
             - name: fov-quicklook-db
               mountPath: /var/lib/postgresql/data
+            - name: postgresql-run
+              mountPath: /var/run/postgresql
           securityContext:
             runAsNonRoot: true
             runAsUser: 999
             runAsGroup: 999
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
           resources: {{ toYaml .Values.db.resources | nindent 12 }}
       volumes:
         - name: fov-quicklook-db
           persistentVolumeClaim:
             claimName: fov-quicklook-db
+        - name: postgresql-run
+          emptyDir:
+            medium: Memory
 ---
 apiVersion: v1
 kind: Service

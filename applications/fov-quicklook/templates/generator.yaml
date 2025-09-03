@@ -51,7 +51,14 @@ spec:
             - mountPath: /tmp/quicklook/merged
               name: merged-dir
             {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}
+            - name: tmp
+              mountPath: /tmp
           securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 1000
             runAsGroup: 1000
@@ -63,6 +70,9 @@ spec:
         - name: merged-dir
           emptyDir: {}
         {{- .Values.butler_settings.volumes | toYaml | nindent 8 }}
+        - name: tmp
+          emptyDir:
+            medium: Memory
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
