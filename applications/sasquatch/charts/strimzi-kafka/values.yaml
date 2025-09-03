@@ -120,6 +120,10 @@ controller:
     # @default -- None, use the default storage class
     storageClassName: ""
 
+  # -- Whether to label the controller PVCs for backup by k8up,
+  # enabled on the summit and base environments
+  backup: false
+
   # -- Affinity for controller pod assignment
   affinity:
     podAntiAffinity:
@@ -161,6 +165,10 @@ broker:
     # -- Storage class to use when requesting persistent volumes
     # @default -- None, use the default storage class
     storageClassName: ""
+
+  # -- Whether to label the broker PVCs for backup by k8up,
+  # enabled on the summit and base environments
+  backup: false
 
   # -- Affinity for broker pod assignment
   affinity:
