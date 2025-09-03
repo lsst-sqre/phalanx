@@ -67,8 +67,10 @@ spec:
         - name: shm
           emptyDir:
             medium: {{ .Values.generator.workdir.medium | quote }}
+            sizeLimit: {{ .Values.generator.workdir.sizeLimit | quote }}
         - name: merged-dir
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: {{ .Values.generator.mergedDir.sizeLimit | quote }}
         {{- .Values.butler_settings.volumes | toYaml | nindent 8 }}
         - name: tmp
           emptyDir:
