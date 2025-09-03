@@ -47,6 +47,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | cruiseControl.enabled | bool | `false` | Enable cruise control (required for broker migration and rebalancing) |
 | cruiseControl.maxReplicasPerBroker | int | `20000` | Maximum number of replicas per broker |
 | cruiseControl.metricsConfig.enabled | bool | `false` | Enable metrics generation |
+| jvmOptions | object | `{}` | Allow specification of JVM options for both controllers and brokers |
 | kafka.config."log.retention.minutes" | int | 4320 minutes (3 days) | Number of days for a topic's data to be retained |
 | kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |
 | kafka.config."offsets.retention.minutes" | int | 4320 minutes (3 days) | Number of minutes for a consumer group's offsets to be retained |
@@ -60,6 +61,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled |
 | kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled |
 | kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled |
+| kafka.metadataVersion | string | `nil` | Metadata version for Kafka to use |
 | kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
 | kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
 | kafka.replicas | int | `3` | Number of Kafka broker replicas to run |
