@@ -5,8 +5,8 @@ metadata:
   labels:
     {{- include "mpsky.labels" . | nindent 4 }}
   annotations:
-#    metallb.universe.tf/address-pool: sdf-services
-    loadBalancerIP: 172.24.5.245
+    metallb.io/address-pool: sdf-services
+    metallb.io/loadBalancerIPs: 172.24.5.145
 spec:
   type: "LoadBalancer"
   ports:
