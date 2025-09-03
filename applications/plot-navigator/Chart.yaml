@@ -4,7 +4,7 @@ description: Plot-navigator
 version: 1.0.0
 sources:
   - https://github.com/lsst-dm/plot-navigator
-appVersion: "0.1.1"
+appVersion: "v0.4"
 
 dependencies:
   - name: redis
