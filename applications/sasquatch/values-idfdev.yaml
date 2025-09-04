@@ -88,6 +88,7 @@ influxdb-enterprise:
 
 telegraf:
   enabled: true
+  kafkaVersion: "4.0.0"
   influxdb:
     urls:
       - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"

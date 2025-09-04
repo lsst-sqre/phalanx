@@ -184,7 +184,10 @@ kafkaConsumers:
     # @default -- 3
     compression_codec: 3
 
-kafkaVersion:
+
+# -- Set the minimal supported Kafka version for the Sarama Go client library.
+# @default -- null, use the Sarama library default.
+kafkaVersion: null
 
 influxdb:
   # -- URL of the InfluxDB v1 instance to write to

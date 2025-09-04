@@ -55,6 +55,7 @@ customInfluxDBIngress:
 
 telegraf:
   enabled: true
+  kafkaVersion: "4.0.0"
   kafkaConsumers:
     example:
       enabled: true
