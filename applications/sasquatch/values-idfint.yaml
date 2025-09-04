@@ -1,6 +1,6 @@
 strimzi-kafka:
   kafka:
-    version: "3.9.0"
+    version: "4.0.0"
     listeners:
       tls:
         enabled: true
@@ -55,6 +55,7 @@ customInfluxDBIngress:
 
 telegraf:
   enabled: true
+  kafkaVersion: "4.0.0"
   kafkaConsumers:
     example:
       enabled: true
@@ -109,6 +110,7 @@ chronograf:
 
 app-metrics:
   enabled: true
+  kafkaVersion: "4.0.0"
   apps:
     - gafaelfawr
     - mobu

@@ -1,6 +1,6 @@
 strimzi-kafka:
   kafka:
-    version: "3.9.0"
+    version: "4.0.0"
     listeners:
       tls:
         enabled: true
@@ -88,6 +88,7 @@ influxdb-enterprise:
 
 telegraf:
   enabled: true
+  kafkaVersion: "4.0.0"
   influxdb:
     urls:
       - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
@@ -147,6 +148,7 @@ chronograf:
 
 app-metrics:
   enabled: true
+  kafkaVersion: "4.0.0"
   apps:
     - gafaelfawr
     - mobu
