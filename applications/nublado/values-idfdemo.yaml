@@ -1,6 +1,7 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-demo-9e05.iam.gserviceaccount.com"
-  slackAlerts: true
+  sentry:
+    enabled: true
   config:
     logLevel: "DEBUG"
     fileserver:
@@ -23,7 +24,7 @@ controller:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.14.0"
+            tag: "8.15.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
