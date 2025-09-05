@@ -181,6 +181,10 @@ influxdb-enterprise-active:
     resources:
   data:
     replicas: 2
+    config:
+      cluster:
+        max-concurrent-queries: 300
+        query-timeout: "180s"
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
