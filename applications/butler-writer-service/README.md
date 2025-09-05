@@ -11,7 +11,6 @@ Write proxy for the Butler that buffers concurrent requests.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the pod |
-| datasetFilePath | string | `""` | Root path where output dataset files are written pending transfer back to the central repository. |
 | fullnameOverride | string | `""` |  |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
