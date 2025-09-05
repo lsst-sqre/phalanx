@@ -16,7 +16,20 @@ config:
   logProfile: "development"
   db:
     hostname: "postgres.postgres"
-    echo: true
+    echo: false
+  features:
+    API_V1: 0
+    API_V2: 1
+    WEBAPP_V1: 1
+    DAEMON_V1: 0
+    DAEMON_V2: 1
+    DAEMON_CAMPAIGNS: 1
+    DAEMON_NODES: 1
+    STORE_FSM: 1
+    ALLOW_TASK_UPSERT: 1
+    MOCK_BUTLER: 1
+    MOCK_BPS: 1
+
   fqdnUrl: https://usdf-cm-dev.slac.stanford.edu
   outputVolume:
     storageClassName: "sdf-data-rubin"
@@ -49,8 +62,8 @@ config:
     useNativeHttplib: "1"
 
 image:
-  tag: "0.5.0"
-  pullPolicy: IfNotPresent
+  tag: "tickets-DM-52527-start"
+  pullPolicy: Always
 
 daemon:
   security:
@@ -58,5 +71,5 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.5.0"
-    pullPolicy: IfNotPresent
+    tag: "tickets-DM-52527-start"
+    pullPolicy: Always
