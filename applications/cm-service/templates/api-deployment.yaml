@@ -31,6 +31,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Chart.Name }}-env
+            - configMapRef:
+                name: {{ .Chart.Name }}-features-env
           env:
             - name: BUTLER__MOCK
               value: "1"

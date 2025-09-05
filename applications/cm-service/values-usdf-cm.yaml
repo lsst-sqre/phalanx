@@ -15,6 +15,16 @@ config:
   db:
     hostname: "postgres.postgres"
     echo: false
+  features:
+    API_V1: 1
+    API_V2: 0
+    WEBAPP_V1: 1
+    DAEMON_V1: 1
+    DAEMON_V2: 0
+    DAEMON_CAMPAIGNS: 0
+    DAEMON_NODES: 0
+    STORE_FSM: 0
+    ALLOW_TASK_UPSERT: 0
   fqdnUrl: https://usdf-cm.slac.stanford.edu
   outputVolume:
     storageClassName: "sdf-data-rubin"
