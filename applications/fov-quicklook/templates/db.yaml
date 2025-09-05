@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fov-quicklook-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fov-quicklook-db
+  template:
+    metadata:
+      labels:
+        app: fov-quicklook-db
+    spec:
+      initContainers:
+        - name: init-permissions
+          image: 'busybox'
+          command: ['sh', '-c', 'chown 999:999 /var/lib/postgresql/data && mkdir -p /var/run/postgresql && chown 999:999 /var/run/postgresql']
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+              add:
+                - "CHOWN"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: fov-quicklook-db
+              mountPath: /var/lib/postgresql/data
+            - name: postgresql-run
+              mountPath: /var/run/postgresql
+      containers:
+        - name: fov-quicklook-db
+          image: 'postgres:16'
+          env:
+            - name: POSTGRES_USER
+              value: quicklook
+            - name: POSTGRES_DB
+              value: quicklook
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fov-quicklook
+                  key: db_password
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: fov-quicklook-db
+              mountPath: /var/lib/postgresql/data
+            - name: postgresql-run
+              mountPath: /var/run/postgresql
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 999
+            runAsGroup: 999
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          resources: {{ toYaml .Values.db.resources | nindent 12 }}
+      volumes:
+        - name: fov-quicklook-db
+          persistentVolumeClaim:
+            claimName: fov-quicklook-db
+        - name: postgresql-run
+          emptyDir:
+            medium: Memory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fov-quicklook-db
+spec:
+  selector:
+    app: fov-quicklook-db
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: postgres
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: fov-quicklook-db
+spec:
+  {{- if .Values.db_storage_class }}
+  storageClassName: {{ .Values.db_storage_class }}
+  {{- end }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: fov-quicklook-db-policy
+spec:
+  podSelector:
+    matchLabels:
+      app: fov-quicklook-db
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: fov-quicklook-coordinator
+        - podSelector:
+            matchLabels:
+              app: fov-quicklook-frontend
+      ports:
+        - protocol: TCP
+          port: 5432
