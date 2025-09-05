@@ -10,13 +10,24 @@ config:
     profiles:
       embargo:
         endpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
-      # embargo_old:
-      #   endpointUrl: "https://s3dfrgw.slac.stanford.edu"
   logLevel: "DEBUG"
   logProfile: "development"
   db:
     hostname: "postgres.postgres"
-    echo: true
+    echo: false
+  features:
+    API_V1: 0
+    API_V2: 1
+    WEBAPP_V1: 0
+    DAEMON_V1: 0
+    DAEMON_V2: 1
+    DAEMON_CAMPAIGNS: 1
+    DAEMON_NODES: 1
+    STORE_FSM: 1
+    ALLOW_TASK_UPSERT: 1
+    MOCK_BUTLER: 0
+    MOCK_BPS: 0
+
   fqdnUrl: https://usdf-cm-dev.slac.stanford.edu
   outputVolume:
     storageClassName: "sdf-data-rubin"
@@ -44,13 +55,14 @@ config:
   panda:
     url: "https://usdf-panda-server.slac.stanford.edu:8443/server/panda"
     monitorUrl: "https://usdf-panda-bigmon.slac.stanford.edu:8443/"
+    virtualOrganization: "Rubin.robot"
     behindLb: "1"
     verifyHost: "1"
     useNativeHttplib: "1"
 
 image:
-  tag: "0.5.0"
-  pullPolicy: IfNotPresent
+  tag: "0.6.0"
+  pullPolicy: Always
 
 daemon:
   security:
@@ -58,5 +70,5 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.5.0"
-    pullPolicy: IfNotPresent
+    tag: "0.6.0"
+    pullPolicy: Always

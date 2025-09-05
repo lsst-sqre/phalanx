@@ -51,6 +51,8 @@ spec:
             - configMapRef:
                 name: {{ .Chart.Name }}-env
             - configMapRef:
+                name: {{ .Chart.Name }}-features-env
+            - configMapRef:
                 name: {{ .Chart.Name }}-butler-env
             - configMapRef:
                 name: {{ .Chart.Name }}-htcondor-env
