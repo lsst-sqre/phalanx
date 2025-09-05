@@ -1,8 +1,8 @@
 config:
   logLevel: "DEBUG"
-  qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-int.slac.stanford.edu:4090/"
+  qservDatabaseUrl: "mysql+asyncmy://qsmaster@sdfqserv001.sdf.slac.stanford.edu:4090/"
   qservRestSendApiVersion: false
-  qservRestUrl: "https://qserv-int-https.slac.stanford.edu:4098/"
+  qservRestUrl: "https://sdfqserv001.sdf.slac.stanford.edu:4098/"
   qservRestUsername: "qsmaster"
 frontend:
   allowRootDebug: true
