@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 1
 
 config:
   logMonkeysToFile: false
@@ -23,10 +23,10 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
-    - name: "scaletestqserv"
-      count: 50
+    - name: "scale-test-cutouts"
+      count: 20
       user_spec:
-        username_prefix: "bot-mobu-scale-qserv"
+        username_prefix: "bot-mobu-scale-notebook"
       scopes:
         - "exec:notebook"
         - "exec:portal"
@@ -39,11 +39,10 @@ config:
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
           repo_ref: "main"
-          notebook_idle_time: 0
-          execution_idle_time: 0
-          idle_time: 0
+          delete_lab: false
+          notebook_idle_time: "5s"
           collection_rules:
             - type: "intersect_union_of"
               patterns:
-              - "dm_v_and_v/test_LVV-T2724_FE.ipynb"
+              - "cutout.ipynb"
         restart: true
