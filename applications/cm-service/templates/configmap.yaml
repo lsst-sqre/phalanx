@@ -60,8 +60,8 @@ data:
   PANDA__monitor_url: {{ .monitorUrl }}
   PANDA__virtual_organization: {{ .virtualOrganization }}
   PANDA__verify_host: {{ .verifyHost | quote }}
-  PANDA__behind_lb: {{ .behindLb |quote }}
-  PANDA__use_native_httplib: {{ .useNativeHttplib |quote }}
+  PANDA__behind_lb: {{ .behindLb | quote }}
+  PANDA__use_native_httplib: {{ .useNativeHttplib | quote }}
 {{- end}}
 ---
 apiVersion: v1
@@ -87,3 +87,14 @@ data:
       endpoint_url = {{ $v.endpointUrl }}
     {{/* BLANK LINE */}}
     {{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ .Chart.Name }}-features-env"
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+data:
+  {{- range $key, $val := .Values.config.features }}
+  FEATURE_{{ $key }}: {{ $val | quote }}
+  {{- end }}

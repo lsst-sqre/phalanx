@@ -29,6 +29,7 @@ Campaign Management for Rubin Data Release Production
 | config.db.secretKey | string | `"internalDatabasePassword"` | Key within db authn secret with db password |
 | config.db.secretName | string | `"cm-service"` | Name of a secret with db authn details |
 | config.db.username | string | `"cmservice"` | Name of the database user to use for the application |
+| config.features | object | `{}` | Enabled features as a mapping of feature to "1" (enabled) or "0" (disabled) |
 | config.fqdnUrl | string | `nil` | URL FQDN, used to write absolute URLs in notifications |
 | config.htcondor.collectorHost | string | `nil` | Name of an htcondor collector host |
 | config.htcondor.fsRemoteDir.storage | string | `"1Gi"` | Minimum storage requested in the condor fs-remote PVC |
