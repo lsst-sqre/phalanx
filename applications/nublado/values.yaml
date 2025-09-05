@@ -4,6 +4,10 @@ controller:
   # -- Affinity rules for the Nublado controller
   affinity: {}
 
+  # -- Sentry configuration
+  sentry:
+    enabled: false
+
   # -- If Google Artifact Registry is used as the image source, the Google
   # service account that has an IAM binding to the `nublado-controller`
   # Kubernetes service account and has the Artifact Registry reader role
@@ -883,6 +887,10 @@ global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
   baseUrl: null
+
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD Application
+  environmentName: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
