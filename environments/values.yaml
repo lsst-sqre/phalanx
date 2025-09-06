@@ -116,6 +116,9 @@ applications:
   # -- Enable the nvr-control application
   nvr-control: false
 
+  # -- Enable the repertoire application
+  repertoire: false
+
   # -- Enable the rubin-rag application
   rubin-rag: false
 
