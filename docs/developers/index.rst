@@ -43,6 +43,7 @@ Individual applications are documented in the :doc:`/applications/index` section
    deploy-from-a-branch
    switch-environment-to-branch
    resource-limits
+   add-repertoire
 
 .. toctree::
    :maxdepth: 2
