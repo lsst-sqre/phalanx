@@ -89,7 +89,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.6.0"
+      tag: "3.8.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -134,7 +134,7 @@ config:
   kafka:
 
     # -- Bootstrap Server
-    bootstrapServer: "sasquatch-dev-kafka-bootstrap.lsst.cloud:9094"
+    bootstrapServer: "sasquatch-kafka-bootstrap.sasquatch.svc:9093"
 
     # -- Schema Registry Configuration
     schemaRegistry:
@@ -245,7 +245,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "3.6.0"
+    tag: "3.8.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
