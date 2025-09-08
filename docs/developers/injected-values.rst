@@ -21,7 +21,7 @@ Always-injected values
 Injected values must be explicitly listed in the ``Application`` resource template for that application, and therefore a given application may not have any injected values.
 However, by convention and via :command:`phalanx application create`, Phalanx applications always get the following injected values, all of which provide information about the Phalanx environment in which the application is being deployed.
 
-``global.baseUrl``
+``global.baseUrl`` (deprecated)
     The base URL for applications deployed in this Phalanx environment.
     This always uses the ``https://`` schema.
     This value will be retired in favor of service discovery in the future and is therefore not mentioned in :file:`values.yaml` by default, although it is currently always injected.
@@ -34,6 +34,10 @@ However, by convention and via :command:`phalanx application create`, Phalanx ap
 ``global.host``
     The default hostname used by this Phalanx environment.
     This corresponds to the hostname in the public URLs for the services in this environment.
+
+``global.repertoireUrl``
+    The base URL to the Repertoire REST API for the local environment.
+    Repertoire_ is the data and service discovery service for Phalanx.
 
 ``global.vaultSecretsPath``
     The base path in Vault for secrets for this environment.

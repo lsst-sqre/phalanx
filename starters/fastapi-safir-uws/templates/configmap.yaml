@@ -16,3 +16,4 @@ data:
   <CHARTENVPREFIX>_SYNC_TIMEOUT: {{ .Values.config.syncTimeout | quote }}
   <CHARTENVPREFIX>_TIMEOUT: {{ .Values.config.timeout | quote }}
   <CHARTENVPREFIX>_WOBBLY_URL: "{{ .Values.global.baseUrl }}/wobbly"
+  REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}
