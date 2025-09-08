@@ -105,7 +105,7 @@ config:
   gcsBucket: "async-results.lsst.codes"
 
   # -- Base URL for results stored in GCS bucket
-  gcsBucketUrl: "https://tap-files.lsst.codes"
+  gcsBucketUrl: "https://storage.googleapis.com"
 
   # -- GCS bucket type (GCS or S3)
   gcsBucketType: "GCS"

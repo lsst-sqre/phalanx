@@ -26,7 +26,7 @@ IVOA TAP service
 | config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/DP1-v1.1.4-rc1/datalink-snippets.zip"` | Datalink payload URL |
 | config.gcsBucket | string | `"async-results.lsst.codes"` | Name of GCS bucket in which to store results |
 | config.gcsBucketType | string | `"GCS"` | GCS bucket type (GCS or S3) |
-| config.gcsBucketUrl | string | `"https://tap-files.lsst.codes"` | Base URL for results stored in GCS bucket |
+| config.gcsBucketUrl | string | `"https://storage.googleapis.com"` | Base URL for results stored in GCS bucket |
 | config.jvmMaxHeapSize | string | `"31G"` | Java heap size, which will set the maximum size of the heap. Otherwise Java would determine it based on how much memory is available and black maths. |
 | config.kafka | object | `{"auth":{"enabled":false},"bootstrapServer":"sasquatch-kafka-bootstrap.sasquatch.svc:9093","schemaRegistry":{"url":""},"topics":{"jobDelete":"lsst.tap.job-delete","jobRun":"lsst.tap.job-run","jobStatus":"lsst.tap.job-status"}}` | Kafka configuration |
 | config.kafka.auth | object | `{"enabled":false}` | Authentication configuration |
