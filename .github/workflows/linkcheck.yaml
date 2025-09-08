@@ -10,13 +10,6 @@
 
 name: Link Check
 
-env:
-  # Current supported Python version. For applications, there is generally no
-  # reason to support multiple Python versions, so all actions are run with
-  # this version. Quote the version to avoid interpretation as a floating
-  # point number.
-  PYTHON_VERSION: "3.13"
-
 "on":
   schedule:
     - cron: "0 12 * * 1"
@@ -37,7 +30,7 @@ jobs:
 
       - uses: actions/setup-python@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version-file: ".python-version"
 
       - uses: astral-sh/setup-uv@v6
 
