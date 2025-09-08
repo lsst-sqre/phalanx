@@ -22,7 +22,7 @@ config:
 image:
   # -- Tag of Portal image to use
   # @default -- The appVersion of the chart
-  tag: "FIREFLY-1791-erroneous-username-2"
+  tag: "FIREFLY-1791-erroneous-username-3"
 
 redis:
   persistence:
