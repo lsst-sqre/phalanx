@@ -28,10 +28,10 @@ IVOA TAP service
 | config.gcsBucketType | string | `"GCS"` | GCS bucket type (GCS or S3) |
 | config.gcsBucketUrl | string | `"https://tap-files.lsst.codes"` | Base URL for results stored in GCS bucket |
 | config.jvmMaxHeapSize | string | `"31G"` | Java heap size, which will set the maximum size of the heap. Otherwise Java would determine it based on how much memory is available and black maths. |
-| config.kafka | object | `{"auth":{"enabled":false},"bootstrapServer":"sasquatch-dev-kafka-bootstrap.lsst.cloud:9094","schemaRegistry":{"url":""},"topics":{"jobDelete":"lsst.tap.job-delete","jobRun":"lsst.tap.job-run","jobStatus":"lsst.tap.job-status"}}` | Kafka configuration |
+| config.kafka | object | `{"auth":{"enabled":false},"bootstrapServer":"sasquatch-kafka-bootstrap.sasquatch.svc:9093","schemaRegistry":{"url":""},"topics":{"jobDelete":"lsst.tap.job-delete","jobRun":"lsst.tap.job-run","jobStatus":"lsst.tap.job-status"}}` | Kafka configuration |
 | config.kafka.auth | object | `{"enabled":false}` | Authentication configuration |
 | config.kafka.auth.enabled | bool | `false` | Whether auth is enabled |
-| config.kafka.bootstrapServer | string | `"sasquatch-dev-kafka-bootstrap.lsst.cloud:9094"` | Bootstrap Server |
+| config.kafka.bootstrapServer | string | `"sasquatch-kafka-bootstrap.sasquatch.svc:9093"` | Bootstrap Server |
 | config.kafka.schemaRegistry | object | `{"url":""}` | Schema Registry Configuration |
 | config.kafka.schemaRegistry.url | string | `""` | URL |
 | config.kafka.topics | object | `{"jobDelete":"lsst.tap.job-delete","jobRun":"lsst.tap.job-run","jobStatus":"lsst.tap.job-status"}` | Kafka topics |
@@ -47,7 +47,7 @@ IVOA TAP service
 | config.qserv.host | string | `"mock-db:3306"` (the mock QServ) | QServ hostname:port to connect to |
 | config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.qserv.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
-| config.qserv.image.tag | string | `"3.6.0"` | Tag of TAP image to use |
+| config.qserv.image.tag | string | `"3.8.0"` | Tag of TAP image to use |
 | config.qserv.jdbcParams | string | `""` | Extra JDBC connection parameters |
 | config.qserv.passwordEnabled | bool | false | Whether the Qserv database is password protected |
 | config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
@@ -94,7 +94,7 @@ IVOA TAP service
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
 | uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
-| uws.image.tag | string | `"3.6.0"` | Tag of UWS database image to use |
+| uws.image.tag | string | `"3.8.0"` | Tag of UWS database image to use |
 | uws.nodeSelector | object | `{}` | Node selection rules for the UWS database pod |
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |
 | uws.resources | object | See `values.yaml` | Resource limits and requests for the UWS database pod |

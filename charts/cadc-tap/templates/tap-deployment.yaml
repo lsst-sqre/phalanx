@@ -72,8 +72,9 @@ spec:
                 -Dgcs_bucket_type={{ .Values.config.gcsBucketType }}
                 -Ddatabase={{ .Values.config.database }}
                  {{- if .Values.config.kafka.auth.enabled }}
-                -Dkafka.username=tap
-                -Dkafka.password=$KAFKA_PASSWORD
+                -Dkafka.ssl.truststore=/etc/cadc-tap/kafka/ca.crt
+                -Dkafka.ssl.keystore=/etc/cadc-tap/kafka/user.crt
+                -Dkafka.ssl.key=/etc/cadc-tap/kafka/user.key
                 -Dkafka.bootstrap.server={{ .Values.config.kafka.bootstrapServer }}
                 -Dkafka.query.topic={{ .Values.config.kafka.topics.jobRun }}
                 -Dkafka.status.topic={{ .Values.config.kafka.topics.jobStatus }}
@@ -86,13 +87,6 @@ spec:
                 -Durl.rewrite.enabled={{ .Values.config.urlRewrite.enabled | default true }}
                 -Durl.rewrite.rules="{{ .Values.config.urlRewrite.rules | default "ivoa.ObsCore:access_url" }}"
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
-            {{- if .Values.config.kafka.auth.enabled }}
-            - name: "KAFKA_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "cadc-tap"
-                  key: "kafka-password"
-            {{- end }}
             {{- if (and (eq .Values.config.backend "qserv") .Values.config.qserv.passwordEnabled) }}
             - name: "QSERV_DB_PASSWORD"
               valueFrom:
@@ -163,6 +157,20 @@ spec:
               mountPath: "/tmp"
             - name: "config-volume"
               mountPath: "/config"
+          {{- if .Values.config.kafka.auth.enabled }}
+            - name: "kafka-certs"
+              mountPath: "/etc/cadc-tap/kafka/ca.crt"
+              readOnly: true
+              subPath: "ssl.truststore.crt"
+            - name: "kafka-certs"
+              mountPath: "/etc/cadc-tap/kafka/user.crt"
+              readOnly: true
+              subPath: "ssl.keystore.crt"
+            - name: "kafka-certs"
+              mountPath: "/etc/cadc-tap/kafka/user.key"
+              readOnly: true
+              subPath: "ssl.keystore.key"
+          {{- end }}
           livenessProbe:
             failureThreshold: 3
             httpGet:
@@ -208,6 +216,11 @@ spec:
         - name: "config-volume"
           configMap:
             name: "cadc-tap-config"
+        {{- if .Values.config.kafka.auth.enabled }}
+        - name: "kafka-certs"
+          secret:
+            secretName: "cadc-tap-kafka-access"
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
