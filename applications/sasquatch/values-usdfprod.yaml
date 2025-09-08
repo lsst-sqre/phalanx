@@ -117,14 +117,6 @@ influxdb-enterprise-standby:
   data:
     replicas: 1
     affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                    - sdfk8sn005
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 1
@@ -147,12 +139,12 @@ influxdb-enterprise-standby:
       size: 100Ti
     resources:
       requests:
-        memory: 96Gi
+        memory: 192Gi
         # The InfluxDB Enterprise license is limited to 16 cpu, the
         # standby instance uses a 1 node x 16 cpu setup
         cpu: 16
       limits:
-        memory: 96Gi
+        memory: 192Gi
         cpu: 16
 
 influxdb-enterprise-active:
@@ -181,6 +173,10 @@ influxdb-enterprise-active:
     resources:
   data:
     replicas: 2
+    config:
+      cluster:
+        max-concurrent-queries: 300
+        query-timeout: "180s"
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
