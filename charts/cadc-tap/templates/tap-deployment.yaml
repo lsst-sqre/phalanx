@@ -79,7 +79,6 @@ spec:
                 -Dkafka.query.topic={{ .Values.config.kafka.topics.jobRun }}
                 -Dkafka.status.topic={{ .Values.config.kafka.topics.jobStatus }}
                 -Dkafka.delete.topic={{ .Values.config.kafka.topics.jobDelete }}
-                -Dschema.registry.url={{ .Values.config.kafka.schemaRegistry.url }}
                 {{- end }}
                 -Dbase_url={{ .Values.global.baseUrl }}
                 -Dpath_prefix=/api/{{ .Values.ingress.path }}

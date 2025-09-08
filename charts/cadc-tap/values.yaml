@@ -136,12 +136,6 @@ config:
     # -- Bootstrap Server
     bootstrapServer: "sasquatch-kafka-bootstrap.sasquatch.svc:9093"
 
-    # -- Schema Registry Configuration
-    schemaRegistry:
-
-      # -- URL
-      url: ""
-
     # -- Kafka topics
     topics:
 
