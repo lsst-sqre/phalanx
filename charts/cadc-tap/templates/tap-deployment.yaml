@@ -71,7 +71,7 @@ spec:
                 -Dgcs_bucket_url={{ .Values.config.gcsBucketUrl }}
                 -Dgcs_bucket_type={{ .Values.config.gcsBucketType }}
                 -Ddatabase={{ .Values.config.database }}
-                 {{- if .Values.config.kafka.auth.enabled }}
+                 {{- if .Values.config.kafka.enabled }}
                 -Dkafka.ssl.truststore=/etc/cadc-tap/kafka/ca.crt
                 -Dkafka.ssl.keystore=/etc/cadc-tap/kafka/user.crt
                 -Dkafka.ssl.key=/etc/cadc-tap/kafka/user.key
@@ -156,7 +156,7 @@ spec:
               mountPath: "/tmp"
             - name: "config-volume"
               mountPath: "/config"
-          {{- if .Values.config.kafka.auth.enabled }}
+          {{- if .Values.config.kafka.enabled }}
             - name: "kafka-certs"
               mountPath: "/etc/cadc-tap/kafka/ca.crt"
               readOnly: true
@@ -215,7 +215,7 @@ spec:
         - name: "config-volume"
           configMap:
             name: "cadc-tap-config"
-        {{- if .Values.config.kafka.auth.enabled }}
+        {{- if .Values.config.kafka.enabled }}
         - name: "kafka-certs"
           secret:
             secretName: "cadc-tap-kafka-access"
