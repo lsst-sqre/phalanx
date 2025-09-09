@@ -1,0 +1,314 @@
+{
+  "properties": {
+    "image": {
+      "$ref": "#/definitions/image_config"
+    },
+    "config": {
+      "$ref": "#/definitions/config"
+    },
+    "s3_tile": {
+      "$ref": "#/definitions/s3_config"
+    },
+    "use_vault": {
+      "type": "boolean"
+    },
+    "use_gafaelfawr": {
+      "type": "boolean"
+    },
+    "db_storage_class": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "default": null
+    },
+    "log_level": {
+      "type": "string",
+      "enum": [
+        "debug",
+        "info",
+        "warning",
+        "error",
+        "critical"
+      ],
+      "default": "info"
+    },
+    "debug": {
+      "$ref": "#/definitions/debug"
+    },
+    "butler_settings": {
+      "type": "object",
+      "properties": {
+        "envs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/envvar"
+          }
+        },
+        "volumes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "volume_mounts": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "data_repos": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "envs",
+        "volumes",
+        "volume_mounts",
+        "data_repos"
+      ],
+      "additionalProperties": false,
+      "default": {}
+    },
+    "admin_page": {
+      "type": "boolean",
+      "default": false
+    },
+    "global": {},
+    "coordinator": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      },
+      "required": [
+        "resources"
+      ]
+    },
+    "frontend": {
+      "type": "object",
+      "properties": {
+        "replicas": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      },
+      "required": [
+        "resources"
+      ]
+    },
+    "db": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      },
+      "required": [
+        "resources"
+      ]
+    },
+    "generator": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/definitions/resources"
+        },
+        "workdir": {
+          "type": "object",
+          "properties": {
+            "medium": {
+              "type": "string",
+              "enum": [
+                "",
+                "Memory"
+              ]
+            },
+            "sizeLimit": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "medium"
+          ]
+        },
+        "mergedDir": {
+          "type": "object",
+          "properties": {
+            "sizeLimit": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "sizeLimit"
+          ]
+        },
+        "replicas": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "resources",
+        "workdir",
+        "mergedDir",
+        "replicas"
+      ]
+    },
+    "context_menu_templates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/context_menu_template"
+      },
+      "default": []
+    }
+  },
+  "required": [
+    "image",
+    "use_vault",
+    "use_gafaelfawr",
+    "coordinator",
+    "frontend",
+    "db",
+    "generator",
+    "context_menu_templates"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "image_config": {
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        },
+        "pullPolicy": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "tag",
+        "pullPolicy"
+      ],
+      "additionalProperties": false
+    },
+    "config": {
+      "properties": {
+        "pathPrefix": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pathPrefix"
+      ],
+      "additionalProperties": false
+    },
+    "s3_config": {
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "bucket": {
+          "type": "string"
+        },
+        "secure": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "endpoint",
+        "bucket",
+        "secure"
+      ],
+      "additionalProperties": false
+    },
+    "resources": {
+      "type": "object",
+      "properties": {
+        "requests": {
+          "type": "object",
+          "properties": {
+            "cpu": {
+              "type": "string"
+            },
+            "memory": {
+              "type": "string"
+            }
+          }
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "cpu": {
+              "type": "string"
+            },
+            "memory": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "cpu",
+            "memory"
+          ]
+        }
+      }
+    },
+    "debug": {
+      "type": "object",
+      "properties": {
+        "jupyter": {
+          "type": "boolean"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "jupyter",
+        "username"
+      ]
+    },
+    "context_menu_template": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "template": {
+          "type": "string"
+        },
+        "is_url": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "template",
+        "is_url"
+      ]
+    },
+    "envvar": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ]
+    }
+  }
+}
