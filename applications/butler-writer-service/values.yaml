@@ -12,9 +12,6 @@ image:
 # @default -- None, must be set
 outputRepo: ""
 
-# -- Root path where output dataset files are written pending transfer back to the central repository.
-datasetFilePath: ""
-
 kafka:
   # -- Address of Kafka broker containing Prompt Processing output events, for consumption by the Butler writer service.
   # @default -- None, must be set
