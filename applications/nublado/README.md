@@ -40,6 +40,18 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fileserver.resources | object | See `values.yaml` | Resource requests and limits for user file servers |
 | controller.config.fileserver.tolerations | list | `[]` | Tolerations for user file server pods |
 | controller.config.fileserver.volumeMounts | list | `[]` | Volumes that should be made available via WebDAV |
+| controller.config.fsadmin.affinity | object | `{}` | Affinity rules for fsadmin pods |
+| controller.config.fsadmin.application | string | `"nublado-fileservers"` | Argo CD application in which to collect fsadmins |
+| controller.config.fsadmin.extraVolumeMounts | list | `[]` | Extra volumes that should be mounted to fsadmin |
+| controller.config.fsadmin.extraVolumes | list | `[]` | Extra volumes that should be made available to fsadmin |
+| controller.config.fsadmin.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for fsadmin image |
+| controller.config.fsadmin.image.repository | string | `"ghcr.io/lsst-sqre/nublado-fsadmin"` | fsadmin image to use |
+| controller.config.fsadmin.image.tag | string | `"8.13.1"` | Tag of fsadmin image to use |
+| controller.config.fsadmin.mountPrefix | string | `nil` | Mount prefix, to be prepended to mountpoints in order to collect them in one place |
+| controller.config.fsadmin.nodeSelector | object | `{}` | Node selector rules for fsadmin pods |
+| controller.config.fsadmin.resources | object | See `values.yaml` | Resource requests and limits for fsadmin |
+| controller.config.fsadmin.timeout | string | `"2m"` | Timeout to wait for Kubernetes to create/destroy fsadmin, in Safir `parse_timedelta` format |
+| controller.config.fsadmin.tolerations | list | `[]` | Tolerations for fsadmin pod |
 | controller.config.images.aliasTags | list | `[]` | Additional tags besides `recommendedTag` that should be recognized as aliases. |
 | controller.config.images.cycle | string | `nil` | Restrict images to this SAL cycle, if given. |
 | controller.config.images.numDailies | int | `3` | Number of most-recent dailies to prepull. |
@@ -149,7 +161,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/nublado-jupyterhub"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"8.12.0"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"8.13.1"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | See `values.yaml` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |
