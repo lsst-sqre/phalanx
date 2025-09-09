@@ -34,8 +34,8 @@ controller:
         - name: "home"
           source:
             type: nfs
-            serverPath: "/share1/home"
-            server: "10.32.121.98"
+            serverPath: "/home-share"
+            server: "10.235.176.36"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
