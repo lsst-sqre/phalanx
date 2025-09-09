@@ -224,10 +224,6 @@ butler_writer:
   # for consumption by the Butler writer service.
   # @default -- None, must be set
   kafka_topic: ""
-  # -- Root path where output dataset files will be written when transferring
-  # back to the central repository.
-  # @default -- None, must be set
-  output_file_path: ""
 
 # -- Override the base name for resources
 nameOverride: ""

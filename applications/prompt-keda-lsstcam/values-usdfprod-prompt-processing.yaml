@@ -122,7 +122,6 @@ prompt-keda:
     kafka_cluster: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
     kafka_username: butler-writer
     kafka_topic: butler-writer
-    output_file_path: "s3://embargo@rubin-summit-users/pp-transfer/"
 
   podAnnotations: {
     edu.stanford.slac.sdf.project/usdf-embargo: "true"
