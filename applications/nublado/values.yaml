@@ -137,10 +137,10 @@ controller:
       extraVolumeMounts: []
 
       image:
-        # -- File server image to use
+        # -- fsadmin image to use
         repository: "ghcr.io/lsst-sqre/nublado-fsadmin"
 
-        # -- Pull policy for file server image
+        # -- Pull policy for fsadmin image
         pullPolicy: "IfNotPresent"
 
         # -- Tag of fsadmin image to use
