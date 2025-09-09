@@ -64,6 +64,9 @@ These can be run repeatedly to reinstall Phalanx over an existing deployment.
    The setting to use is ``ingress-nginx.controller.service.loadBalancerIP``.
    This ensures that ingress-nginx will always request that address.
 
+   Conversely, if you are reinstalling a long-lived installation that has been absent a long time, remove that setting, because it is very likely some other installation will have claimed that IP address, and you will have to manually delete the service finalizer in order to be able to remove the primary ingress.
+   It will never complete and will stay stuck in ``Pending`` forever if the address requested is already assigned.
+
 #. If you are deploying on Google Cloud Platform, consider converting the dynamically-assigned IP address to a static IP.
    You can do this in the GCP console under :menuselection:`VPC Network -> IP addresses`.
 
