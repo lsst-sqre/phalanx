@@ -13,8 +13,7 @@ cadc-tap:
 
     kafka:
       bootstrapServer: "sasquatch-kafka-bootstrap.sasquatch.svc:9093"
-      auth:
-        enabled: true
+      enabled: true
 
     urlRewrite:
       enabled: true

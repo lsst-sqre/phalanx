@@ -1,3 +1,4 @@
+{{- if .Values.config.kafka.enabled }}
 apiVersion: access.strimzi.io/v1alpha1
 kind: KafkaAccess
 metadata:
@@ -14,3 +15,4 @@ spec:
     apiGroup: "kafka.strimzi.io"
     name: "tap-tls"
     namespace: "sasquatch"
+{{- end }}
