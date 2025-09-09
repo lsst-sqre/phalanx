@@ -75,7 +75,6 @@ spec:
                 -Dkafka.ssl.truststore=/etc/cadc-tap/kafka/ca.crt
                 -Dkafka.ssl.keystore=/etc/cadc-tap/kafka/user.crt
                 -Dkafka.ssl.key=/etc/cadc-tap/kafka/user.key
-                -Dkafka.bootstrap.server={{ .Values.config.kafka.bootstrapServer }}
                 -Dkafka.query.topic={{ .Values.config.kafka.topics.jobRun }}
                 -Dkafka.status.topic={{ .Values.config.kafka.topics.jobStatus }}
                 -Dkafka.delete.topic={{ .Values.config.kafka.topics.jobDelete }}
@@ -142,6 +141,13 @@ spec:
             {{- end }}
             - name: DATALINK_PAYLOAD_URL
               value: "{{ .Values.config.datalinkPayloadUrl }}"
+            {{- if .Values.config.kafka.enabled }}
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              valueFrom:
+                secretKeyRef:
+                  key: bootstrapServers
+                  name: cadc-tap-kafka-access
+            {{- end }}
           ports:
             - containerPort: 8080
           {{- with .Values.resources }}

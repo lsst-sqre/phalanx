@@ -15,7 +15,6 @@ cadc-tap:
     sentryTracesSampleRate: "0.1"
 
     kafka:
-      bootstrapServer: "sasquatch-kafka-bootstrap.sasquatch.svc:9093"
       enabled: true
 
     urlRewrite:

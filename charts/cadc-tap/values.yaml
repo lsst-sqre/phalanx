@@ -89,7 +89,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.8.0"
+      tag: "3.9.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -133,9 +133,6 @@ config:
   # -- Kafka configuration
   kafka:
 
-    # -- Bootstrap Server
-    bootstrapServer: "sasquatch-kafka-bootstrap.sasquatch.svc:9093"
-
     # -- Kafka topics
     topics:
 
@@ -148,11 +145,8 @@ config:
       # -- Job Delete topic
       jobDelete: "lsst.tap.job-delete"
 
-    # -- Authentication configuration
-    auth:
-
-      # -- Whether auth is enabled
-      enabled: false
+    # -- Whether kafka is enabled
+    enabled: false
 
   # -- Rules for renaming Columns
   urlRewrite:
@@ -239,7 +233,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "3.8.0"
+    tag: "3.9.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
