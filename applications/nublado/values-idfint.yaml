@@ -55,7 +55,7 @@ controller:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.13.1"
+            tag: "8.14.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -73,14 +73,29 @@ controller:
         node_pool: "user-lab-pool"
       sizes:
         - size: "small"
-          cpu: 1.0
-          memory: "4Gi"
+          resources:
+            limits:
+              cpu: 1.0
+              memory: "4Gi"
+            requests:
+              cpu: 0.25
+              memory: "1Gi"
         - size: "large"
-          cpu: 4.0
-          memory: "16Gi"
+          resources:
+            limits:
+              cpu: 4.0
+              memory: "16Gi"
+            requests:
+              cpu: 0.25
+              memory: "4Gi"
         - size: "huge"
-          cpu: 8.0
-          memory: "32Gi"
+          resources:
+            limits:
+              cpu: 8.0
+              memory: "32Gi"
+            requests:
+              cpu: 2.0
+              memory: "8Gi"
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
