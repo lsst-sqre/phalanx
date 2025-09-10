@@ -2,5 +2,5 @@ ingress-nginx:
   controller:
     config:
       error-log-level: "error"
-    # service:
-    #   loadBalancerIP: "34.72.37.126"
+    service:
+      loadBalancerIP: "34.9.165.74"
