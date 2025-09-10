@@ -106,7 +106,8 @@ config:
     OBS,
     SITCOM,
     SP,
-    BLOCK
+    BLOCK,
+    RDO
 
 ingress:
   # -- Additional annotations for the ingress rule
