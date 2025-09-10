@@ -21,6 +21,10 @@ config:
   # @default -- Set by Argo CD
   applications: []
 
+  # -- Datasets available in the Phalanx environment. This should be
+  # overridden by environments to list the datasets they provide.
+  availableDatasets: []
+
   # -- Base hostname of the Phalanx environment (do not set)
   # @default -- Set by Argo CD
   baseHostname: null
@@ -29,10 +33,33 @@ config:
   # @default -- Set by Argo CD
   butlerConfigs: {}
 
-  # -- List of datasets served by this environment. Each member of the list is
-  # a dictionary with key `name` (human-readable short name of dataset like
-  # `dp1`).
-  datasets: []
+  # -- Known datasets. Each member of the list is a dictionary with key
+  # `description`. Datasets are only shown if also listed in
+  # `availableDatasets`.
+  # @default -- See `values.yaml`
+  datasets:
+    dp02:
+      description: >-
+        Data Preview 0.2 contains the image and catalog products of the Rubin
+        Science Pipelines v23 processing of the DESC Data Challenge 2
+        simulation, which covered 300 square degrees of the wide-fast-deep
+        LSST survey region over 5 years.
+    dp03:
+      description: >-
+        Data Preview 0.3 contains the catalog products of a Solar System
+        Science Collaboration simulation of the results of SSO analysis of the
+        wide-fast-deep data from the LSST dataset.
+    dp1:
+      description: >-
+        Data Preview 1 contains image and catalog products from the Rubin
+        Science Pipelines v29 processing of observations obtained with the
+        LSST Commissioning Camera of seven ~1 square degree fields, over seven
+        weeks in late 2024.
+
+  # -- Dictionary of InfluxDB database names to connection information for
+  # that database, with keys `url`, `database`, `username`, `passwordKey`, and
+  # `schemaRegistry`. `passwordKey` must match an entry in `secrets.yaml`.
+  influxdbDatabases: {}
 
   # -- Logging level
   logLevel: "INFO"
@@ -57,6 +84,7 @@ config:
       - type: "internal"
         name: "gafaelfawr"
         template: "https://{{base_hostname}}/auth/api/v1"
+        openapi: "https://{{base_hostname}}/auth/openapi.json"
       - type: "ui"
         name: "tokens"
         template: "https://{{base_hostname}}/auth/tokens"
@@ -71,10 +99,12 @@ config:
       - type: "internal"
         name: "mobu"
         template: "https://{{base_hostname}}/mobu"
+        openapi: "https://{{base_hostname}}/mobu/openapi.json"
     noteburst:
       - type: "internal"
         name: "noteburst"
         template: "https://{{base_hostname}}/noteburst/v1"
+        openapi: "https://{{base_hostname}}/noteburst/openapi.json"
     nublado:
       - type: "ui"
         name: "nublado"
@@ -90,6 +120,7 @@ config:
       - type: "internal"
         name: "semaphore"
         template: "https://{{base_hostname}}/semaphore"
+        openapi: "https://{{base_hostname}}/semaphore/openapi.json"
     sia:
       - type: "data"
         name: "sia"
@@ -97,6 +128,7 @@ config:
           - "dp02"
           - "dp1"
         template: "https://{{base_hostname}}/api/sia/{{dataset}}"
+        openapi: "https://{{base_hostname}}/api/sia/openapi.json"
     ssotap:
       - type: "data"
         name: "tap"
@@ -117,10 +149,12 @@ config:
           - "dp02"
           - "dp1"
         template: "https://{{base_hostname}}/api/cutout"
+        openapi: "https://{{base_hostname}}/api/cutout/openapi.json"
     wobbly:
       - type: "internal"
         name: "wobbly"
         template: "https://{{base_hostname}}/wobbly"
+        openapi: "https://{{base_hostname}}/wobbly/openapi.json"
 
   # -- Whether to send Slack alerts for unexpected failures
   slackAlerts: false
@@ -141,8 +175,7 @@ config:
   # -- List of services that use subdomains instead of the main hostname. See
   # the [Repertoire documentation](https://repertoire.lsst.io/) for more
   # information.
-  useSubdomains:
-    - "nublado"
+  useSubdomains: []
 
 ingress:
   # -- Additional annotations for the ingress rule

@@ -62,6 +62,8 @@ config:
       - "g_developers"
     "read:image":
       - "g_users"
+    "read:sasquatch":
+      - "g_users"
     "read:tap":
       - "g_users"
     "write:files":

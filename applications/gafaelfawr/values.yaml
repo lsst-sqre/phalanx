@@ -284,12 +284,14 @@ config:
       Use the Notebook Aspect
     "exec:portal": >-
       Use the Portal Aspect
+    "exec:portal-admin": >-
+      Read access to the Portal admin page
     "read:alertdb": >-
       Retrieve alert packets and schemas from the alert archive database
     "read:image": >-
       Retrieve images from project datasets
-    "exec:portal-admin": >-
-      Read access to the Portal admin page
+    "read:sasquatch": >-
+      Retrieve Sasquatch InfluxDB connection credentials
     "read:tap": >-
       Execute SELECT queries in the TAP interface on project datasets
     "write:files": >-
