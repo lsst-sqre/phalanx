@@ -8,6 +8,9 @@ cadc-tap:
       host: "qserv-int.slac.stanford.edu:4090"
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
+      image:
+        tag: "tickets-DM-52477"
+        pullPolicy: "Always"
 
     kafka:
       enabled: true
