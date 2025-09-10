@@ -6,7 +6,7 @@ redis:
 config:
   logLevel: "DEBUG"
   slackAlerts: true
-
+  updateSchema: true
   github:
     clientId: "9dd2d9bdad89973c503a"
 
