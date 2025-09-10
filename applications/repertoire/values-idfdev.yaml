@@ -1,8 +1,8 @@
 config:
-  datasets:
-    - name: "dp02"
-    - name: "dp03"
-    - name: "dp1"
+  availableDatasets:
+    - "dp02"
+    - "dp03"
+    - "dp1"
   influxdbDatabases:
     idfdev_efd:
       url: "https://data-dev.lsst.cloud/influxdb/"

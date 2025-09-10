@@ -14,9 +14,10 @@ Service discovery
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the repertoire deployment pod |
 | config.applications | list | Set by Argo CD | List of applications deployed in this Phalanx environment (do not set) |
+| config.availableDatasets | list | `[]` | Datasets available in the Phalanx environment. This should be overridden by environments to list the datasets they provide. |
 | config.baseHostname | string | Set by Argo CD | Base hostname of the Phalanx environment (do not set) |
 | config.butlerConfigs | object | Set by Argo CD | Butler configuration mapping (do not set) |
-| config.datasets | list | `[]` | List of datasets served by this environment. Each member of the list is a dictionary with key `name` (human-readable short name of dataset like `dp1`). |
+| config.datasets | object | See `values.yaml` | Known datasets. Each member of the list is a dictionary with key `description`. Datasets are only shown if also listed in `availableDatasets`. |
 | config.influxdbDatabases | object | `{}` | Dictionary of InfluxDB database names to connection information for that database, with keys `url`, `database`, `username`, `passwordKey`, and `schemaRegistry`. `passwordKey` must match an entry in `secrets.yaml`. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
