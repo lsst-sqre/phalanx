@@ -1,0 +1,30 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "repertoire-influxdb"
+  labels:
+    {{- include "repertoire.labels" . | nindent 4 }}
+config:
+  scopes:
+    all:
+      - "read:sasquatch"
+  service: "repertoire"
+template:
+  metadata:
+    name: "repertoire-influxdb"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.config.pathPrefix }}/discovery/influxdb"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "repertoire"
+                  port:
+                    number: 8080

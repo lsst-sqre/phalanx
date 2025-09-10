@@ -34,6 +34,11 @@ config:
   # `dp1`).
   datasets: []
 
+  # -- Dictionary of InfluxDB database names to connection information for
+  # that database, with keys `url`, `database`, `username`, `passwordKey`, and
+  # `schemaRegistry`. `passwordKey` must match an entry in `secrets.yaml`.
+  influxdbDatabases: {}
+
   # -- Logging level
   logLevel: "INFO"
 
@@ -141,8 +146,7 @@ config:
   # -- List of services that use subdomains instead of the main hostname. See
   # the [Repertoire documentation](https://repertoire.lsst.io/) for more
   # information.
-  useSubdomains:
-    - "nublado"
+  useSubdomains: []
 
 ingress:
   # -- Additional annotations for the ingress rule
