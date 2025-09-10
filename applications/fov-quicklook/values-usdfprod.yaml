@@ -3,9 +3,6 @@ frontend:
 admin_page: true
 db_storage_class: wekafs--sdf-k8s01
 log_level: warning
-debug:
-  jupyter: true
-  username: koike
 butler_settings:
   envs:
     - name: DAF_BUTLER_REPOSITORY_INDEX
