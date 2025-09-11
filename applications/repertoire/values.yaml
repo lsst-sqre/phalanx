@@ -192,7 +192,13 @@ podAnnotations: {}
 
 # -- Resource limits and requests for the repertoire deployment pod
 # @default -- See `values.yaml`
-resources: {}
+resources:
+  limits:
+    cpu: "1"
+    memory: "100Mi"
+  requests:
+    cpu: "10m"
+    memory: "50Mi"
 
 # -- Tolerations for the repertoire deployment pod
 tolerations: []
