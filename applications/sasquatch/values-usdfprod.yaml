@@ -143,12 +143,12 @@ influxdb-enterprise-standby:
       size: 100Ti
     resources:
       requests:
-        memory: 192Gi
+        memory: 128Gi
         # The InfluxDB Enterprise license is limited to 16 cpu, the
         # standby instance uses a 1 node x 16 cpu setup
         cpu: 16
       limits:
-        memory: 192Gi
+        memory: 128Gi
         cpu: 16
 
 influxdb-enterprise-active:
