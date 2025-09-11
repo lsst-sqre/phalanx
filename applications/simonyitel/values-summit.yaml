@@ -198,10 +198,10 @@ lasertracker1:
   resources:
     limits:
       cpu: 200m
-      memory: 360Mi
+      memory: 512Mi
     requests:
-      cpu: 20m
-      memory: 120Mi
+      cpu: 45m
+      memory: 256Mi
 
 mtaircompressor1:
   enabled: true
@@ -213,10 +213,10 @@ mtaircompressor1:
   resources:
     limits:
       cpu: 100m
-      memory: 300Mi
+      memory: 360Mi
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 16m
+      memory: 180Mi
 
 mtaircompressor2:
   enabled: true
@@ -228,10 +228,10 @@ mtaircompressor2:
   resources:
     limits:
       cpu: 100m
-      memory: 300Mi
+      memory: 360Mi
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 13m
+      memory: 180Mi
 
 mtaos:
   image:
@@ -286,10 +286,10 @@ mtcamhexapod:
   resources:
     limits:
       cpu: 500m
-      memory: 768Mi
+      memory: 900Mi
     requests:
-      cpu: 50m
-      memory: 300Mi
+      cpu: 120m
+      memory: 450Mi
 
 mtcamhexapod-sim:
   enabled: false
@@ -315,10 +315,10 @@ mtdome:
   resources:
     limits:
       cpu: 900m
-      memory: 300Mi
+      memory: 320Mi
     requests:
       cpu: 90m
-      memory: 100Mi
+      memory: 160Mi
 
 mtdome-sim:
   enabled: false
@@ -342,10 +342,10 @@ mtdometrajectory:
   resources:
     limits:
       cpu: 250m
-      memory: 400Mi
+      memory: 560Mi
     requests:
-      cpu: 25m
-      memory: 115Mi
+      cpu: 55m
+      memory: 280Mi
 
 mtheaderservice:
   enabled: true
@@ -364,10 +364,10 @@ mtheaderservice:
   resources:
     limits:
       cpu: 2000m
-      memory: 3000Mi
+      memory: 3Gi
     requests:
       cpu: 200m
-      memory: 1000Mi
+      memory: 1Gi
 
 mtm1m3-sim:
   enabled: false
@@ -394,7 +394,7 @@ mtm2:
       cpu: 850m
       memory: 1500Mi
     requests:
-      cpu: 85m
+      cpu: 280m
       memory: 420Mi
 
 mtm2-sim:
@@ -429,10 +429,10 @@ mtm2hexapod:
   resources:
     limits:
       cpu: 400m
-      memory: 768Mi
+      memory: 1400Mi
     requests:
-      cpu: 40m
-      memory: 300Mi
+      cpu: 120m
+      memory: 700Mi
 
 mtm2hexapod-sim:
   enabled: false
@@ -457,11 +457,11 @@ mtmount:
     pullPolicy: Always
   resources:
     limits:
-      cpu: "1"
+      cpu: 1
       memory: 1000Mi
     requests:
-      cpu: 250m
-      memory: 300Mi
+      cpu: 280m
+      memory: 425Mi
 
 mtmount-ccw-only:
   enabled: false
@@ -512,7 +512,7 @@ mtoods:
       cpu: 1000m
       memory: 2100Mi
     requests:
-      cpu: 10m
+      cpu: 200m
       memory: 700Mi
   configfile:
     path: /etc
@@ -582,10 +582,10 @@ mtrotator:
   resources:
     limits:
       cpu: 1
-      memory: 600Mi
+      memory: 900Mi
     requests:
-      cpu: 200m
-      memory: 150Mi
+      cpu: 280m
+      memory: 300Mi
 
 mtrotator-sim:
   enabled: false
