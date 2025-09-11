@@ -7,7 +7,7 @@ ataos:
       cpu: 450m
       memory: 1024Mi
     requests:
-      cpu: 45m
+      cpu: 80m
       memory: 512Mi
 
 atbuilding:
@@ -18,10 +18,10 @@ atbuilding:
   resources:
     limits:
       cpu: 120m
-      memory: 300Mi
+      memory: 350Mi
     requests:
       cpu: 12m
-      memory: 100Mi
+      memory: 170Mi
 
 atdome:
   enabled: true
@@ -31,10 +31,10 @@ atdome:
   resources:
     limits:
       cpu: 170m
-      memory: 300Mi
+      memory: 512Mi
     requests:
       cpu: 17m
-      memory: 100Mi
+      memory: 256Mi
 
 atdometrajectory:
   image:
@@ -64,10 +64,10 @@ atheaderservice:
   resources:
     limits:
       cpu: 800m
-      memory: 2000Mi
+      memory: 2.4Gi
     requests:
       cpu: 80m
-      memory: 700Mi
+      memory: 1.2Gi
 
 athexapod:
   enabled: true
@@ -77,10 +77,10 @@ athexapod:
   resources:
     limits:
       cpu: 90m
-      memory: 300Mi
+      memory: 350Mi
     requests:
       cpu: 9m
-      memory: 95Mi
+      memory: 170Mi
 
 atmcs:
   enabled: true
@@ -90,10 +90,10 @@ atmcs:
   resources:
     limits:
       cpu: 600m
-      memory: 1200Mi
+      memory: 600Mi
     requests:
       cpu: 60m
-      memory: 400Mi
+      memory: 200Mi
 
 atoods:
   image:
@@ -128,9 +128,10 @@ atoods:
     serverPath: /auxtel
   resources:
     limits:
-      memory: 2000Mi
+      memory: 2Gi
     requests:
-      memory: 500Mi
+      cpu: 14m
+      memory: 1Gi
   configfile:
     path: /etc
     filename: atoods.yaml
@@ -180,11 +181,11 @@ atpneumatics:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 120m
-      memory: 300Mi
+      cpu: 200m
+      memory: 320Mi
     requests:
-      cpu: 12m
-      memory: 90Mi
+      cpu: 20m
+      memory: 160Mi
 
 atptg:
   image:
@@ -199,7 +200,7 @@ atptg:
       cpu: 900m
     requests:
       cpu: 90m
-      memory: 265Mi
+      memory: 512Mi
 
 atspectrograph:
   enabled: true
@@ -208,11 +209,11 @@ atspectrograph:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 120m
-      memory: 300Mi
+      cpu: 150m
+      memory: 512Mi
     requests:
-      cpu: 12m
-      memory: 95Mi
+      cpu: 15m
+      memory: 256Mi
 
 pmd1:
   enabled: true
@@ -224,7 +225,7 @@ pmd1:
   resources:
     limits:
       cpu: 100m
-      memory: 300Mi
+      memory: 350Mi
     requests:
-      cpu: 10m
-      memory: 95Mi
+      cpu: 15m
+      memory: 170Mi
