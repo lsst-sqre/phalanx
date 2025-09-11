@@ -7,4 +7,5 @@ strimzi-kafka-operator:
   watchNamespaces:
     - "kafka"
     - "prompt-kafka"
+    - "s3-file-notifications"
   logLevel: "INFO"
