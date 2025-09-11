@@ -14,12 +14,12 @@ auxtel-ess202-sim:
   # -- Enable the ESS:202 simulator CSC
   enabled: false
 
-auxtel-ess203:
-  # -- Enable the ESS:203 CSC
+auxtel-ess308:
+  # -- Enable the ESS:308 CSC
   enabled: false
 
-auxtel-ess203-sim:
-  # -- Enable the ESS:203 simulator CSC
+auxtel-ess308-sim:
+  # -- Enable the ESS:308 simulator CSC
   enabled: false
 
 auxtel-ess204:
@@ -238,20 +238,20 @@ ringss-ess304-sim:
   # -- Enable the ESS:304 simulator CSC
   enabled: false
 
-tma-ess001:
-  # -- Enable the ESS:1 CSC
+tma-ess121:
+  # -- Enable the ESS:121 CSC
   enabled: false
 
-tma-ess001-sim:
-  # -- Enable the ESS:1 simulator CSC
+tma-ess121-sim:
+  # -- Enable the ESS:121 simulator CSC
   enabled: false
 
-tma-ess002:
-  # -- Enable the ESS:2 CSC
+tma-ess122:
+  # -- Enable the ESS:122 CSC
   enabled: false
 
-tma-ess002-sim:
-  # -- Enable the ESS:2 simulator CSC
+tma-ess122-sim:
+  # -- Enable the ESS:122 simulator CSC
   enabled: false
 
 tma-ess104:

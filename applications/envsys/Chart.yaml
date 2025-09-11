@@ -27,14 +27,14 @@ dependencies:
   condition: auxtel-ess202-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: auxtel-ess203
+  alias: auxtel-ess308
   version: 1.0.0
-  condition: auxtel-ess203.enabled
+  condition: auxtel-ess308.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: auxtel-ess203-sim
+  alias: auxtel-ess308-sim
   version: 1.0.0
-  condition: auxtel-ess203-sim.enabled
+  condition: auxtel-ess308-sim.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: auxtel-ess204
@@ -312,24 +312,24 @@ dependencies:
   condition: ringss-ess304-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: tma-ess001
+  alias: tma-ess121
   version: 1.0.0
-  condition: tma-ess001.enabled
+  condition: tma-ess121.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: tma-ess001-sim
+  alias: tma-ess121-sim
   version: 1.0.0
-  condition: tma-ess001-sim.enabled
+  condition: tma-ess121-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: tma-ess002
+  alias: tma-ess122
   version: 1.0.0
-  condition: tma-ess002.enabled
+  condition: tma-ess122.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: tma-ess002-sim
+  alias: tma-ess122-sim
   version: 1.0.0
-  condition: tma-ess002-sim.enabled
+  condition: tma-ess122-sim.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: tma-ess104

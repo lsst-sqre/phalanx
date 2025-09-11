@@ -30,14 +30,14 @@ auxtel-ess202-sim:
       cpu: 190m
       memory: 320Mi
 
-auxtel-ess203-sim:
+auxtel-ess308-sim:
   enabled: true
-  classifier: ess203
+  classifier: ess308
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 203 --simulate
+    RUN_ARG: 308 --simulate
   resources:
     requests:
       cpu: 19m
@@ -479,14 +479,14 @@ ringss-ess304-sim:
       cpu: 190m
       memory: 360Mi
 
-tma-ess001-sim:
+tma-ess121-sim:
   enabled: true
-  classifier: ess1
+  classifier: ess121
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 1 --simulate
+    RUN_ARG: 121 --simulate
   resources:
     requests:
       cpu: 19m
@@ -495,14 +495,14 @@ tma-ess001-sim:
       cpu: 190m
       memory: 480Mi
 
-tma-ess002-sim:
+tma-ess122-sim:
   enabled: true
-  classifier: ess2
+  classifier: ess122
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 2 --simulate
+    RUN_ARG: 122 --simulate
   resources:
     requests:
       cpu: 19m
