@@ -84,8 +84,8 @@ spec:
               value: "{{ .Values.lfa.s3EndpointUrl }}"
             - name: "KAFKA_BOOTSTRAP"
               value: "{{ .Values.kafka.bootstrap }}"
-            - name: KAFKA_CLUSTER
-              value: "{{ .Values.kafka.sasquatchAddress }}"
+            - name: "KAFKA_CLUSTER"
+              value: "{{ .Values.kafka.CLUSTER }}"
             - name: "KAFKA_USERNAME"
               value: "{{ .Values.kafka.username }}"
             - name: "KAFKA_PASSWORD"
