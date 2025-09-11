@@ -86,6 +86,7 @@ spec:
       - name: external
         port: 9094
         type: loadbalancer
+        tls: false
         configuration:
           bootstrap:
             {{- if .Values.kafka.externalListener.bootstrap.loadBalancerIP }}
