@@ -1,0 +1,38 @@
+{{- if (index .Values "applications" "s3-file-notifications") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "s3-file-notifications"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "s3-file-notifications"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "s3-file-notifications"
+    server: "https://kubernetes.default.svc"
+  project: "prompt"
+  source:
+    path: "applications/s3-file-notifications"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ or (index .Values "revisions" "s3-file-notifications") .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.repertoireUrl"
+          value: "https://{{ .Values.fqdn }}/repertoire"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

@@ -16,3 +16,4 @@ Argo CD project: ``prompt``
    prompt-keda-lsstcam/index
    prompt-kafka/index
    prompt-redis/index
+   s3-file-notifications/index
