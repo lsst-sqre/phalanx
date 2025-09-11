@@ -241,7 +241,7 @@ tunablelaser:
   resources:
     limits:
       cpu: 120m
-      memory: 300Mi
+      memory: 350Mi
     requests:
       cpu: 15m
-      memory: 100Mi
+      memory: 170Mi
