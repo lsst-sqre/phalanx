@@ -10,10 +10,10 @@ Deployment for the Environmental Awareness Systems CSCs
 | auxtel-ess201.enabled | bool | `false` | Enable the ESS:201 CSC |
 | auxtel-ess202-sim.enabled | bool | `false` | Enable the ESS:202 simulator CSC |
 | auxtel-ess202.enabled | bool | `false` | Enable the ESS:202 CSC |
-| auxtel-ess203-sim.enabled | bool | `false` | Enable the ESS:203 simulator CSC |
-| auxtel-ess203.enabled | bool | `false` | Enable the ESS:203 CSC |
 | auxtel-ess204-sim.enabled | bool | `false` | Enable the ESS:204 simulator CSC |
 | auxtel-ess204.enabled | bool | `false` | Enable the ESS:204 CSC |
+| auxtel-ess308-sim.enabled | bool | `false` | Enable the ESS:308 simulator CSC |
+| auxtel-ess308.enabled | bool | `false` | Enable the ESS:308 CSC |
 | calibhill-ess301-sim.enabled | bool | `false` | Enable the ESS:301 simulator CSC |
 | calibhill-ess301.enabled | bool | `false` | Enable the ESS:301 CSC |
 | camera-ess111-sim.enabled | bool | `false` | Enable the ESS:111 simulator CSC |
@@ -76,14 +76,14 @@ Deployment for the Environmental Awareness Systems CSCs
 | mtdome-ess120.enabled | bool | `false` | Enable the ESS:120 CSC |
 | ringss-ess304-sim.enabled | bool | `false` | Enable the ESS:304 simulator CSC |
 | ringss-ess304.enabled | bool | `false` | Enable the ESS:304 CSC |
-| tma-ess001-sim.enabled | bool | `false` | Enable the ESS:1 simulator CSC |
-| tma-ess001.enabled | bool | `false` | Enable the ESS:1 CSC |
-| tma-ess002-sim.enabled | bool | `false` | Enable the ESS:2 simulator CSC |
-| tma-ess002.enabled | bool | `false` | Enable the ESS:2 CSC |
 | tma-ess104-sim.enabled | bool | `false` | Enable the ESS:104 simulator CSC |
 | tma-ess104.enabled | bool | `false` | Enable the ESS:104 CSC |
 | tma-ess105-sim.enabled | bool | `false` | Enable the ESS:105 simulator CSC |
 | tma-ess105.enabled | bool | `false` | Enable the ESS:105 CSC |
 | tma-ess110-sim.enabled | bool | `false` | Enable the ESS:110 simulator CSC |
 | tma-ess110.enabled | bool | `false` | Enable the ESS:110 CSC |
+| tma-ess121-sim.enabled | bool | `false` | Enable the ESS:121 simulator CSC |
+| tma-ess121.enabled | bool | `false` | Enable the ESS:121 CSC |
+| tma-ess122-sim.enabled | bool | `false` | Enable the ESS:122 simulator CSC |
+| tma-ess122.enabled | bool | `false` | Enable the ESS:122 CSC |
 | weatherforecast.enabled | bool | `false` | Enable the WeatherForecast CSC |
