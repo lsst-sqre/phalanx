@@ -20,6 +20,7 @@ applications:
   mobu: true
   onepassword-connect: true
   ook: true
+  repertoire: true
   sasquatch: true
   squareone: true
   strimzi: true

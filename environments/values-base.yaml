@@ -29,6 +29,7 @@ applications:
   obssys: true
   portal: true
   rapid-analysis: true
+  repertoire: true
   rubintv: true
   sasquatch: true
   simonyitel: true
