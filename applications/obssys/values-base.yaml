@@ -133,7 +133,7 @@ mtqueue:
       cpu: 2500m
       memory: 10Gi
     requests:
-      cpu: 500m
+      cpu: 1000m
       memory: 430Mi
 
 mtscheduler:
@@ -170,10 +170,10 @@ mtscheduler:
   resources:
     limits:
       cpu: 2700m
-      memory: 7000Mi
+      memory: 7Gi
     requests:
       cpu: 270m
-      memory: 2100Mi
+      memory: 3.5Gi
 
 ocsqueue:
   classifier: scriptqueue3
@@ -216,7 +216,7 @@ ocsqueue:
       memory: 10Gi
     requests:
       cpu: 500m
-      memory: 430Mi
+      memory: 750Mi
 
 ocsscheduler:
   classifier: scheduler3
@@ -264,7 +264,7 @@ watcher:
   resources:
     limits:
       cpu: 2400m
-      memory: 1500Mi
+      memory: 2Gi
     requests:
       cpu: 240m
-      memory: 445Mi
+      memory: 1Gi
