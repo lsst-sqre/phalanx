@@ -42,6 +42,7 @@ strimzi-kafka:
     showAllOffsets: false
   controller:
     enabled: true
+    nodeIds: "[0,1,2]"
     storage:
       storageClassName: "rook-ceph-block"
   broker:
