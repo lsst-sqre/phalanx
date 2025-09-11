@@ -15,20 +15,20 @@ strimzi-kafka:
         enabled: true
       external:
         enabled: true
-        externalListener:
-          bootstrap:
-            annotations:
-              metallb.io/address-pool: sdf-rubin-ingest
-          brokers:
-            - broker: 0
-              annotations:
-                metallb.io/address-pool: sdf-rubin-ingest
-            - broker: 1
-              annotations:
-                metallb.io/address-pool: sdf-rubin-ingest
-            - broker: 2
-              annotations:
-                metallb.io/address-pool: sdf-rubin-ingest
+    externalListener:
+      bootstrap:
+        annotations:
+          metallb.io/address-pool: sdf-rubin-ingest
+      brokers:
+        - broker: 0
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
+        - broker: 1
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
+        - broker: 2
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
     storage:
       size: 100Gi
       storageClassName: wekafs--sdf-k8s01
