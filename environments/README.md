@@ -67,6 +67,7 @@
 | applications.rubin-too-producer | bool | `false` | Enable the rubin-too-producer application |
 | applications.rubintv | bool | `false` | Enable the rubintv application |
 | applications.rubintv-dev | bool | `false` | Enable the rubintv-dev application |
+| applications.s3-file-notifications | bool | `false` | Enable the s3-file-notifications application |
 | applications.s3proxy | bool | `false` | Enable the s3proxy application |
 | applications.sasquatch | bool | `false` | Enable the sasquatch application |
 | applications.sasquatch-backpack | bool | `false` | Enable the sasquatch-backpack application |

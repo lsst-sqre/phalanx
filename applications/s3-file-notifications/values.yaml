@@ -1,0 +1,25 @@
+# Default values for Prompt Kafka.
+
+# Override strimzi-kafka subchart configuration.
+strimzi-kafka:
+  kafka:
+    listeners:
+      noauth:
+        # -- Whether internal no authentication listener is enabled
+        enabled: true
+
+      tls:
+        # -- Whether internal TLS listener is enabled
+        enabled: false
+
+      plain:
+        # -- Whether internal plaintext listener is enabled
+        enabled: false
+
+      external:
+        # -- Whether external listener is enabled
+        enabled: false
+
+kafdrop:
+  # -- Whether Kafdrop is enabled
+  enabled: true
