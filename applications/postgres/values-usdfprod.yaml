@@ -10,9 +10,6 @@ gafaelfawr_db:
 timessquare_db:
   user: "timessquare"
   db: "timessquare"
-grafana_db:
-  user: 'grafana'
-  db: 'grafana'
 
 postgresVolumeSize: "10Gi"
 postgresStorageClass: "wekafs--sdf-k8s01"

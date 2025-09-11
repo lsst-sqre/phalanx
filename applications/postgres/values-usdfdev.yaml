@@ -7,9 +7,6 @@ nublado3_db:
 gafaelfawr_db:
   user: 'gafaelfawr'
   db: 'gafaelfawr'
-grafana_db:
-  user: 'grafana'
-  db: 'grafana'
 timessquare_db:
   user: "timessquare"
   db: "timessquare"

@@ -19,7 +19,7 @@ applications:
   exposurelog: true
   exposure-checker: true
   fov-quicklook: true
-  grafana: true
+  grafana: false
   rubin-rag: true
   jira-data-proxy: true
   livetap: true
