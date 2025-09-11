@@ -36,11 +36,11 @@ podAnnotations:
 # @default -- See `values.yaml`
 resources:
   limits:
-    cpu: "4"
-    memory: "8Gi"
+    cpu: "8"
+    memory: "16Gi"
   requests:
-    cpu: "2"
-    memory: "2Gi"
+    cpu: "4"
+    memory: "4Gi"
 
 # -- Tolerations for the eups-distributor deployment pod
 tolerations: []
