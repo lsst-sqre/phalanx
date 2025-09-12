@@ -600,6 +600,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.cruiseControl.enabled | bool | `false` | Enable cruise control (required for broker migration and rebalancing) |
 | strimzi-kafka.cruiseControl.maxReplicasPerBroker | int | `20000` | Maximum number of replicas per broker |
 | strimzi-kafka.cruiseControl.metricsConfig.enabled | bool | `false` | Enable metrics generation |
+| strimzi-kafka.jvmOptions | object | `{}` | Allow specification of JVM options for both controllers and brokers |
 | strimzi-kafka.kafka.config."log.retention.minutes" | int | 4320 minutes (3 days) | Number of days for a topic's data to be retained |
 | strimzi-kafka.kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |
 | strimzi-kafka.kafka.config."offsets.retention.minutes" | int | 4320 minutes (3 days) | Number of minutes for a consumer group's offsets to be retained |
@@ -613,6 +614,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled |
 | strimzi-kafka.kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled |
 | strimzi-kafka.kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled |
+| strimzi-kafka.kafka.metadataVersion | string | `nil` | Metadata version for Kafka to use |
 | strimzi-kafka.kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
 | strimzi-kafka.kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
 | strimzi-kafka.kafka.replicas | int | `3` | Number of Kafka broker replicas to run |
