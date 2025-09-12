@@ -10,19 +10,21 @@ spec:
   authorization:
     type: simple
     acls:
-      # Allow read and describe on the source topic
+      # Allow read and describe on the source topics
+      {{- range $idx, $topic := .Values.ingester.kafka.topic }}
       - resource:
           type: topic
-          name: {{ .Values.ingester.kafka.topic }}
+          name: {{ $topic }}
           patternType: literal
         operation: Read
         type: allow
       - resource:
           type: topic
-          name: {{ .Values.ingester.kafka.topic }}
+          name: {{ $topic }}
           patternType: literal
         operation: Describe
         type: allow
+      {{- end }}
 
       # Allow all on the __consumer_offsets topic
       - resource:
