@@ -20,8 +20,9 @@ spec:
     spec:
       serviceAccountName: eups-distributor
       volumes:
-        - name: "cache"
-          emptyDir: {}
+        - name: gke-gcsfuse-cache
+          persistentVolumeClaim:
+            claimName: eups-cache-pvc
         - name: "eups"
           csi:
             driver: gcsfuse.csi.storage.gke.io
@@ -69,6 +70,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       securityContext:
+        fsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
