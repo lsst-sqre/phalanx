@@ -23,7 +23,7 @@ A subchart to deploy the Kafdrop UI.
 | ingress.path | string | `"/kafdrop-s3"` | Ingress path |
 | jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
 | jvm.opts | string | `""` | JVM options |
-| kafdrop.broker | string | `"s3-file-notifications-bootstrap:9092"` | Kafka service with port. |
+| kafdrop.broker | string | `"s3-file-notifications-kafka-external-bootstrap:9094"` | Kafka service with port. |
 | kafka.broker | string | `""` | Bootstrap list of Kafka host/port pairs |
 | nodeSelector | object | `{}` | Node selector configuration |
 | podAnnotations | object | `{}` | Pod annotations |

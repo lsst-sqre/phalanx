@@ -19,7 +19,7 @@ kafka:
 
 kafdrop:
   # --  Kafka service with port.
-  broker: "s3-file-notifications-bootstrap:9092"
+  broker: "s3-file-notifications-kafka-external-bootstrap:9094"
 
 jvm:
   # -- JVM options
