@@ -31,7 +31,7 @@ Kafka Cluster to receive S3 File Notifications
 | kafdrop.replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
 | kafdrop.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafdrop |
 | kafdrop.server.port | int | `9000` | The web server port to listen on |
-| kafdrop.server.servlet.contextPath | string | `"/kafdrop"` | The context path to serve requests on |
+| kafdrop.server.servlet.contextPath | string | `"/kafdrop-s3"` | The context path to serve requests on |
 | kafdrop.service.annotations | object | `{}` | Additional annotations to add to the service |
 | kafdrop.service.port | int | `9000` | Service port |
 | kafdrop.tolerations | list | `[]` | Tolerations configuration |

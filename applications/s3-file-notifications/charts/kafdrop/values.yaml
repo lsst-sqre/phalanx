@@ -35,7 +35,7 @@ jmx:
 server:
   servlet:
     # -- The context path to serve requests on
-    contextPath: /kafdrop
+    contextPath: /kafdrop-s3
 
   # -- The web server port to listen on
   port: 9000
