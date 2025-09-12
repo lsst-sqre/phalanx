@@ -47,6 +47,17 @@ spec:
           env:
             - name: EXTERNAL_INSTANCE_URL
               value: {{ .Values.global.baseUrl | quote }}
+            {{- if .Values.controller.sentry.enabled }}
+            - name: "SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: "nublado-secret"
+                  key: "controller.sentryDsn"
+            - name: "SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.environmentName }}
+            - name: "SENTRY_RELEASE"
+              value: {{ .Values.controller.image.tag | default .Chart.AppVersion }}
+            {{- end }}
             {{- if .Values.controller.config.metrics.enabled }}
             - name: "KAFKA_BOOTSTRAP_SERVERS"
               valueFrom:
