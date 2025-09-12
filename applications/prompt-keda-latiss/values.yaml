@@ -78,7 +78,7 @@ prompt-keda:
 
   # -- The URI to the MPSky ephemerides service.
   # Empty value is allowed, but its handling is undefined.
-  mpSky_service: ""
+  mpSky_service: http://172.24.5.145/ephemerides/
 
   # -- The URI where IERS data has been pre-downloaded and cached for use by Prompt Processing.
   # If empty, Prompt Processing does not try to update IERS data.
