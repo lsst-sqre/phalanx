@@ -24,7 +24,7 @@ config:
       - "read:tap"
   autostart:
     - name: "scaletestqserv"
-      count: 100
+      count: 50
       user_spec:
         username_prefix: "bot-mobu-scale-qserv"
       scopes:
@@ -45,5 +45,5 @@ config:
           collection_rules:
             - type: "intersect_union_of"
               patterns:
-              - "dm_v_and_v/test_DMS-REQ-0356.ipynb"
+              - "dm_v_and_v/test_LVV-T2724_FE.ipynb"
         restart: true
