@@ -148,7 +148,7 @@ alert-database:
   ingester:
     # The image can use either a tag or a digest to determine which is being used.
     image:
-      tag: v3.2.0
+      tag: tickets-DM-52309
 
     logLevel: verbose
 
