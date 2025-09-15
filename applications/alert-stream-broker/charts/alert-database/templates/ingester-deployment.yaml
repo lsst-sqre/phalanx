@@ -34,7 +34,7 @@ spec:
           command:
             - "alertdb-ingester"
             - "--kafka-host={{ .Values.ingester.kafka.cluster }}-kafka-bootstrap:{{ .Values.ingester.kafka.port }}"
-            - "--kafka-topic={{ .Values.ingester.kafka.topic }}"
+            - "--kafka-topics={{ range $i, $topic := .Values.ingester.kafka.topic }}{{if $i}},{{end}}{{$topic}}{{end}}"
             - "--tls-client-key-location=/etc/kafka-client-secret/user.key"
             - "--tls-client-crt-location=/etc/kafka-client-secret/user.crt"
             - "--tls-server-ca-crt-location=/etc/kafka-server-ca-cert/ca.crt"

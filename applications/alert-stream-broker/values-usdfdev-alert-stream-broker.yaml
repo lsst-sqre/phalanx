@@ -148,7 +148,7 @@ alert-database:
   ingester:
     # The image can use either a tag or a digest to determine which is being used.
     image:
-      tag: v3.1.0
+      tag: v3.2.0
 
     logLevel: verbose
 
@@ -159,7 +159,9 @@ alert-database:
     kafka:
       cluster: alert-broker
       port: 9092
-      topic: lsst-alerts-v7.4
+      topic:
+        - lsst-alerts-v9.0
+        - lsst-alerts-v7.4
 
   server:
     serviceAccountName: alert-database-reader
