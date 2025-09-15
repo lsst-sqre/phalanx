@@ -161,6 +161,14 @@ metadata:
 spec:
   kafka:
     version: {{ .Values.kafka.version | quote }}
+    {{- if .Values.kafka.metadataVersion }}
+    metadataVersion: {{ .Values.kafka.metadataVersion | quote }}
+    {{- end}}
+    {{-  if .Values.kafka.jvmOptions }}
+    jvmOptions:
+    {{- toYaml .Values.kafka.jvmOptions | nindent 6 }}
+    {{- end }}
+
     listeners:
     {{- if .Values.kafka.listeners.plain.enabled }}
       # internal listener without tls encryption and with scram-sha-512 authentication

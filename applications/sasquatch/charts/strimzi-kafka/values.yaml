@@ -13,6 +13,10 @@ kafka:
   # -- Version of Kafka to deploy
   version: "3.8.0"
 
+  # -- The KRaft metadata version used by the Kafka cluster.
+  # If the property is not set, it defaults to the metadata version that corresponds to the version property.
+  metadataVersion: null
+
   # -- Number of Kafka broker replicas to run
   replicas: 3
 
@@ -104,6 +108,9 @@ kafka:
     #     host: broker-1.example
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
+
+# -- Allow specification of JVM options for both controllers and brokers
+jvmOptions: {}
 
 controller:
   # -- Enable node pool for the kafka controllers
