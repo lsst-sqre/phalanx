@@ -14,7 +14,7 @@ kafka:
   version: "3.8.0"
 
   # -- The KRaft metadata version used by the Kafka cluster.
-  # @default: null --  If the property is not set, it defaults to the metadata version that corresponds to the version property.
+  # If the property is not set, it defaults to the metadata version that corresponds to the version property.
   metadataVersion: null
 
   # -- Number of Kafka broker replicas to run
