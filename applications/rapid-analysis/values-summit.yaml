@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-sitcom/rubintv_production
-  tag: tickets-DM-52030
+  tag: tickets-DM-52318
   pullPolicy: Always
 location: SUMMIT
 siteTag: summit
@@ -360,6 +360,10 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
+- name: LSSTCam/runMetadataServerGuiders.py
+  mounts:
+  - lsstcam-data
+  - project-shared
 - name: LSSTCam/runMetadataServerRaPerformance.py
   mounts:
   - lsstcam-data
@@ -445,6 +449,17 @@ scripts:
     limits:
       cpu: 1
       memory: 6G
+- name: LSSTCam/runGuiderAnalysis.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
 ##
 ## LATISS StatefulSets
 ##
