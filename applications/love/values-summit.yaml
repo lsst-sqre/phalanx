@@ -62,7 +62,7 @@ love-manager:
     frontend:
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 9
+        revision: 15
         pullPolicy: Always
       env:
         SERVER_URL: summit-lsp.lsst.codes
