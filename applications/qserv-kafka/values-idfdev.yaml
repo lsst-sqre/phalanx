@@ -6,5 +6,17 @@ config:
   qservRestSendApiVersion: false
   qservRestUrl: "https://qserv-int-https.slac.stanford.edu:4098/"
   qservRestUsername: "qsmaster"
+
+image:
+  pullPolicy: "Always"
+  tag: "tickets-DM-52401"
+
 resultWorker:
   allowRootDebug: true
+  resources:
+    limits:
+      cpu: "1"
+      memory: "500Mi"
+    requests:
+      cpu: "1"
+      memory: "145Mi"
