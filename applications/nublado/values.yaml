@@ -4,6 +4,13 @@ controller:
   # -- Affinity rules for the Nublado controller
   affinity: {}
 
+  sentry:
+    # -- Whether to report errors to Sentry. If Sentry is
+    # enabled, you should set controller.slackAlerts to
+    # false so that uncaught exceptions make it to the Sentry
+    # handler.
+    enabled: false
+
   # -- If Google Artifact Registry is used as the image source, the Google
   # service account that has an IAM binding to the `nublado-controller`
   # Kubernetes service account and has the Artifact Registry reader role
@@ -144,7 +151,7 @@ controller:
         pullPolicy: "IfNotPresent"
 
         # -- Tag of fsadmin image to use
-        tag: "8.14.0"
+        tag: "8.15.0"
 
       # -- Mount prefix, to be prepended to mountpoints in order to
       # collect them in one place
@@ -554,7 +561,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.14.0"
+      tag: "8.15.0"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
@@ -942,6 +949,10 @@ global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
   baseUrl: null
+
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD Application
+  environmentName: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
