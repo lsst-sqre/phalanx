@@ -27,7 +27,7 @@ prompt-keda:
   iers_cache: s3://rubin-pp-dev-users/iers-cache.zip
 
   imageNotifications:
-    kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
+    kafkaClusterAddress: s3-file-notifications-kafka-external-bootstrap.s3-file-notifications:9094
     topic: prompt-processing-dev
 
   apdb:
