@@ -40,6 +40,9 @@ config:
       - github:
           organization: "lsst"
           team: "simulations"
+      - github:
+          organization: "lsst"
+          team: "cst"
     "read:checkerboard":
       - github:
           organization: "lsst-sqre"
