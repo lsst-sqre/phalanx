@@ -1,5 +1,3 @@
-csc_shared:
-  secretsOnly: true
 uws-api-server:
   targetCluster: "tucson-teststand"
   hostname: tucson-teststand.lsst.codes
@@ -9,8 +7,11 @@ uws-api-server:
   ttlSecondsAfterFinished: 3600
   butlerPg:
     secretName: uws
-    containerPath: /home/lsst/.lsst
+    containerPath: &cp /home/lsst/.lsst
     dbUser: oods
+  s3ButlerStorage:
+    endpointURL: https://s3-butler.tu.lsst.org
+    containerPath: *cp
   workingVolume:
     name: job-files
     server: nfs-scratch.tu.lsst.org
@@ -33,49 +34,42 @@ uws-api-server:
     exportPath: "/jhome"
     subPath: ""
     readOnly: false
-  - name: repo-latiss
-    server: nfs-auxtel.tu.lsst.org
-    claimName: repo-latiss-pvc
-    mountPath: "/repo/LATISS"
-    exportPath: "/auxtel/repo/LATISS"
-    subPath: ""
-    readOnly: false
-  - name: repo-comcam
-    server: comcam-archiver.tu.lsst.org
-    claimName: repo-comcam-pvc
-    mountPath: "/repo/LSSTComCam"
-    exportPath: "/repo/LSSTComCam"
-    subPath: ""
-    readOnly: false
-  - name: data-auxtel
-    server: nfs-auxtel.tu.lsst.org
-    claimName: data-auxtel-pvc
-    mountPath: "/data/lsstdata/TTS/auxtel"
-    exportPath: "/auxtel/lsstdata/TTS/auxtel"
-    subPath: ""
-    readOnly: true
-  - name: data-comcam
-    server: comcam-archiver.tu.lsst.org
-    claimName: data-comcam-pvc
-    mountPath: "/data/lsstdata/TTS/comcam"
-    exportPath: "/lsstdata/TTS/comcam"
-    subPath: ""
-    readOnly: true
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi
 
 atocps:
-  enabled: false
+  enabled: true
   classifier: ocps1
   image:
     repository: ts-dockerhub.lsst.org/dmocps
     pullPolicy: Always
   env:
     RUN_ARG: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi
 
 ccocps:
-  enabled: false
+  enabled: true
   classifier: ocps2
   image:
     repository: ts-dockerhub.lsst.org/dmocps
     pullPolicy: Always
   env:
     RUN_ARG: 2
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi

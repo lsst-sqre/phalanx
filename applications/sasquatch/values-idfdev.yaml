@@ -1,5 +1,13 @@
 strimzi-kafka:
   kafka:
+    version: "4.0.0"
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
     externalListener:
       tls:
         enabled: true
@@ -16,49 +24,32 @@ strimzi-kafka:
         - broker: 2
           loadBalancerIP: "34.172.163.125"
           host: sasquatch-dev-kafka-2.lsst.cloud
-    resources:
-      requests:
-        memory: 16Gi
-        cpu: 2
-      limits:
-        memory: 16Gi
-        cpu: 2
   users:
     replicator:
       enabled: true
     telegraf:
       enabled: true
-  kraft:
+  controller:
     enabled: true
-  kafkaController:
+    backup: true
+  broker:
     enabled: true
-    resources:
-      requests:
-        memory: 16Gi
-        cpu: "2"
-      limits:
-        memory: 16Gi
-        cpu: "2"
+    storage:
+      size: 500Gi
+    backup: true
 
-  registry:
-    ingress:
-      enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /$2
-      hostname: data-dev.lsst.cloud
-      path: /schema-registry(/|$)(.*)
+schema-registry:
+  enabled: true
+
+schema-registry-remote:
+  enabled: true
+  topic:
+    name: registry-schemas-remote
 
 influxdb:
   ingress:
     enabled: false
     hostname: data-dev.lsst.cloud
-  resources:
-    requests:
-      memory: 16Gi
-      cpu: 2
-    limits:
-      memory: 16Gi
-      cpu: 2
 
 customInfluxDBIngress:
   enabled: true
@@ -82,13 +73,6 @@ influxdb-enterprise:
       secret:
         name: sasquatch
         key: influxdb-enterprise-shared-secret
-    resources:
-      requests:
-        memory: 2Gi
-        cpu: 1
-      limits:
-        memory: 4Gi
-        cpu: 2
   data:
     replicas: 2
     config:
@@ -101,16 +85,10 @@ influxdb-enterprise:
       enabled: true
       accessMode: ReadWriteOnce
       size: 1Ti
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: 2
-      limits:
-        memory: 16Gi
-        cpu: 4
 
 telegraf:
   enabled: true
+  kafkaVersion: "4.0.0"
   influxdb:
     urls:
       - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
@@ -126,6 +104,14 @@ telegraf:
       timestamp_field: "timestamp"
       topicRegexps: |
         [ "lsst.example" ]
+    backpack:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.backpack"
+      timestamp_format: "unix"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.backpack" ]
 
 kafdrop:
   cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=true --topic.createEnabled=true"
@@ -142,6 +128,7 @@ rest-proxy:
     topicPrefixes:
       - lsst.example
       - lsst.tap
+      - lsst.backpack
 
 chronograf:
   ingress:
@@ -161,11 +148,13 @@ chronograf:
 
 app-metrics:
   enabled: true
+  kafkaVersion: "4.0.0"
   apps:
     - gafaelfawr
     - mobu
     - noteburst
     - nublado
+    - qservkafka
     - sia
     - wobbly
 
@@ -187,5 +176,21 @@ backup:
       enabled: true
       retentionDays: 3
 
+backpack:
+  enabled: true
+
 tap:
   enabled: true
+
+# Send alerts to squadcast
+kapacitor:
+  enabled: true
+  squadcast:
+    enabled: true
+
+grafana:
+  enabled: true
+  influxdb:
+    databases:
+      - lsst.square.metrics
+      - lsst.example

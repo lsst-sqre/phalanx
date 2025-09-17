@@ -48,7 +48,7 @@ data:
       sasl_password = "$TELEGRAF_PASSWORD"
       sasl_username = "telegraf"
       data_format = "avro"
-      avro_schema_registry = "http://sasquatch-schema-registry.sasquatch:8081"
+      avro_schema_registry = {{ default "http://sasquatch-schema-registry.sasquatch:8081" .registryUrl | quote }}
       avro_timestamp = {{ default "private_efdStamp" .value.timestamp_field | quote }}
       avro_timestamp_format = {{ default "unix" .value.timestamp_format | quote }}
       avro_union_mode = {{ default "nullable" .value.union_mode | quote }}
@@ -66,6 +66,9 @@ data:
       consumer_fetch_default = {{ default "20MB" .value.consumer_fetch_default | quote }}
       max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
       compression_codec = {{ default 3 .value.compression_codec }}
+      {{- if .kafkaVersion }}
+      kafka_version = "{{ .kafkaVersion }}"
+      {{- end }}
 
     {{- if .value.repair }}
     [[inputs.kafka_consumer]]
@@ -77,7 +80,7 @@ data:
       sasl_password = "$TELEGRAF_PASSWORD"
       sasl_username = "telegraf"
       data_format = "avro"
-      avro_schema_registry = "http://sasquatch-schema-registry.sasquatch:8081"
+      avro_schema_registry = {{ default "http://sasquatch-schema-registry.sasquatch:8081" .registryUrl | quote }}
       avro_timestamp = {{ default "private_efdStamp" .value.timestamp_field | quote }}
       avro_timestamp_format = {{ default "unix" .value.timestamp_format | quote }}
       avro_union_mode = {{ default "nullable" .value.union_mode | quote }}

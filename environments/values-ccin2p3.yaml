@@ -3,7 +3,6 @@ fqdn: data-dev.lsst.eu
 vaultPathPrefix: secret/phalanx/ccin2p3
 
 applications:
-  datalinker: true
   nublado: true
   portal: true
   postgres: true
@@ -11,3 +10,7 @@ applications:
   squareone: true
   tap: true
   mobu: false
+
+  # datalinker disabled because it requires the Butler server, which is not
+  # enabled or configured.
+  datalinker: false

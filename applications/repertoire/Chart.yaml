@@ -1,0 +1,15 @@
+apiVersion: v2
+type: application
+name: repertoire
+version: 1.0.0
+description: Service discovery
+home: "https://repertoire.lsst.io/"
+sources:
+  - "https://github.com/lsst-sqre/repertoire"
+appVersion: 0.2.0
+
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-250"
+      title: "Discovery services for the Rubin Science Platform"
+      url: "https://dmtn-250.lsst.io/"

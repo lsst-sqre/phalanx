@@ -5,11 +5,16 @@ metadata:
   labels:
     {{- include "application.labels" . | nindent 4 }}
 data:
+  AWS_CONFIG_FILE: /etc/aws/config
+  AWS_SHARED_CREDENTIALS_FILE: /etc/aws/credentials
+  AWS_ENDPOINT_URL_S3: {{ .Values.config.aws.defaultS3EndpointUrl }}
   ASGI__PREFIX: {{ .Values.config.pathPrefix | quote }}
-  {{- with .Values.config.db }}
+  ASGI__FQDN: {{ .Values.config.fqdnUrl | quote }}
+  BPS__ARTIFACT_PATH: {{ .Values.config.outputVolume.mountPath }}
+{{- with .Values.config.db }}
   DB__URL: "postgresql://{{ .username }}@{{ .hostname }}:{{ .port }}/{{ .name }}"
   DB__ECHO: {{ .echo | quote }}
-  {{- end }}
+{{- end }}
   LOGGING__PROFILE: {{ .Values.config.logProfile | quote }}
   LOGGING__LEVEL: {{ .Values.config.logLevel | quote }}
 ---
@@ -20,9 +25,9 @@ metadata:
   labels:
     {{- include "application.labels" . | nindent 4 }}
 data:
-  {{- with .Values.config.butler}}
+{{- with .Values.config.butler }}
   DAF_BUTLER_REPOSITORIES: {{ toJson .repositories | quote }}
-  {{- end }}
+{{- end }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -31,14 +36,17 @@ metadata:
   labels:
     {{- include "application.labels" . | nindent 4 }}
 data:
+{{- with .Values.config.htcondor }}
   DAEMON__allocate_resources: "1"
-  HTCONDOR__schedd_host: {{ .Values.config.htcondor.scheddHost }}
-  HTCONDOR__collector_host: {{ .Values.config.htcondor.collectorHost }}
+  SLURM__DURATION: {{ .sbatchDuration }}
+  HTCONDOR__schedd_host: {{ .scheddHost }}
+  HTCONDOR__collector_host: {{ .collectorHost }}
   HTCONDOR__condor_home: /opt/htcondor
   HTCONDOR__condor_submit_bin: /opt/htcondor/bin/condor_submit
   HTCONDOR__condor_q_bin: /opt/htcondor/bin/condor_q
-  HTCONDOR__working_directory: /sdf/group/rubin/{{ .Values.config.outputVolume.subPath }}
+  HTCONDOR__working_directory: /sdf/group/rubin/{{ $.Values.config.outputVolume.subPath }}
   HTCONDOR__fs_remote_dir: /sdf/group/rubin/services/htcondor/shared
+{{- end}}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -47,9 +55,35 @@ metadata:
   labels:
     {{- include "application.labels" . | nindent 4 }}
 data:
-  PANDA__tls_url: {{ .Values.config.panda.url }}
-  PANDA__monitor_url: {{ .Values.config.panda.monitor_url }}
-  PANDA__virtual_organization: {{ .Values.config.panda.virtual_organization }}
-  PANDA__verify_host: {{ .Values.config.panda.verify_host | quote }}
-  PANDA__behind_lb: {{ .Values.config.panda.behind_lb |quote }}
-  PANDA__use_native_httplib: {{ .Values.config.panda.use_native_httplib |quote }}
+{{- with .Values.config.panda }}
+  PANDA__tls_url: {{ .url }}
+  PANDA__monitor_url: {{ .monitorUrl }}
+  PANDA__virtual_organization: {{ .virtualOrganization }}
+  PANDA__verify_host: {{ .verifyHost | quote }}
+  PANDA__behind_lb: {{ .behindLb |quote }}
+  PANDA__use_native_httplib: {{ .useNativeHttplib |quote }}
+{{- end}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ .Chart.Name }}-aws-config"
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+data:
+  config: |
+    [default]
+    credential_source = Environment
+    output = json
+    {{/* BLANK LINE */}}
+    {{- range $profile, $v := .Values.config.aws.profiles }}
+    [profile {{ $profile }}]
+    request_checksum_calculation = when_required
+    response_checksum_validation = when_required
+    services = {{ $profile }}-s3
+    {{/* BLANK LINE */}}
+    [services {{ $profile }}-s3]
+    s3 =
+      endpoint_url = {{ $v.endpointUrl }}
+    {{/* BLANK LINE */}}
+    {{- end }}

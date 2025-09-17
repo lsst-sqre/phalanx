@@ -13,8 +13,10 @@ spec:
       {{- include "hips.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        # Force the pod to restart when the config map is updated.
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -22,13 +24,6 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          env:
-            - name: "CRAWLSPACE_PROJECT"
-              value: {{ required "config.gcsProject must be set" .Values.config.gcsProject | quote }}
-            - name: "CRAWLSPACE_BUCKET"
-              value: {{ required "config.gcsBucket must be set" .Values.config.gcsBucket | quote }}
-            - name: "SAFIR_LOG_LEVEL"
-              value: {{ .Values.config.logLevel | quote }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -47,6 +42,14 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "config"
+              mountPath: "/etc/crawlspace"
+              readOnly: true
+      volumes:
+        - name: "config"
+          configMap:
+            name: "crawlspace"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

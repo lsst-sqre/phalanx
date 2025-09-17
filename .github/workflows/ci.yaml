@@ -1,11 +1,14 @@
 name: CI
 
 env:
-  # Current supported Python version. For applications, there is generally no
-  # reason to support multiple Python versions, so all actions are run with
-  # this version. Quote the version to avoid interpretation as a floating
-  # point number.
-  PYTHON_VERSION: "3.13"
+  # Version of Argo CD to use for the installer.
+  ARGO_CD_VERSION: "3.0.6"
+
+  # Version of helm-docs to use for linting.
+  HELM_DOCS_VERSION: "1.14.2"
+
+  # Version of Vault client to use for the installer.
+  VAULT_VERSION: "1.19.5"
 
 "on":
   merge_group: {}
@@ -16,25 +19,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - name: Set up go
-        uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: '>=1.22'
 
       - name: Install helm-docs
-        run: go install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.13.1
+        run: >
+          go install github.com/norwoodj/helm-docs/cmd/helm-docs@v${{ env.HELM_DOCS_VERSION }}
         env:
           GOBIN: /usr/local/bin/
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version-file: ".python-version"
 
-      - name: Run pre-commit
-        uses: pre-commit/action@v3.0.1
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Run linters
+        run: uv run --only-group=tox tox run -e lint
 
   test:
     runs-on: ubuntu-latest
@@ -43,25 +47,25 @@ jobs:
     strategy:
       matrix:
         python:
-          - "3.12"
           - "3.13"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: lsst-sqre/run-tox@v1
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
-          tox-envs: "typing,py,coverage-report"
-          tox-requirements: requirements/tox.txt
-          cache-key-prefix: test
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Run Python tests
+        run: uv run --only-group=tox tox run -e typing,py,coverage-report
 
   helm:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -76,91 +80,160 @@ jobs:
       - name: Run helm unittest
         run: helm unittest {applications,charts}/*/tests/..
 
-      - uses: lsst-sqre/run-tox@v1
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          tox-envs: phalanx-lint-change
-          tox-requirements: requirements/tox.txt
-          cache-key-prefix: helm
+      - name: Run helm unittest for sub-charts
+        run: helm unittest applications/*/charts/*/tests/..
 
-  # The minikube job always runs, but it quickly does nothing if no files that
-  # would affect minikube were changed. This unfortunately requires a lot of
-  # if conditionals on all the steps of the job, but we need the job to run so
-  # that we can make it mandatory before merging, which in turn allows us to
-  # use merge queues.
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: ".python-version"
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Run Phalanx Helm linter
+        run: uv run --only-group=tox tox run -e phalanx-lint-change
+
+  changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    permissions:
+      pull-requests: read
+    outputs:
+      docs: ${{ steps.filter.outputs.docs }}
+      docs-specific: ${{ steps.filter.outputs.docs-specific }}
+      minikube: ${{ steps.filter.outputs.minikube }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            docs:
+              - ".github/workflows/docs.yaml"
+              - "docs/**"
+              - "applications/*/Chart.yaml"
+              - "applications/*/values.yaml"
+              - "applications/argocd/values-*.yaml"
+              - "applications/gafaelfawr/values-*.yaml"
+              - "environments/values-*.yaml"
+              - "requirements/*.txt"
+              - "src/phalanx/**"
+            docs-specific:
+              - "docs/**"
+            minikube:
+              - ".github/workflows/ci.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/Chart.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/templates/**"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values-minikube.yaml"
+              - "environments/templates/applications/infrastructure/*"
+              - "environments/values-minikube.yaml"
+              - "src/phalanx/**"
+              - "uv.lock"
+
   minikube:
     name: Test deploy
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: [helm]
+
+    needs: [test, helm, changes]
+    if: >-
+      (needs.changes.outputs.minikube == 'true')
+      || (github.event_name == 'workflow_dispatch')
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - name: Filter paths
-        uses: dorny/paths-filter@v3
-        id: filter
+      - uses: actions/setup-python@v6
         with:
-          filters: |
-            minikube:
-              - ".github/workflows/ci.yaml"
-              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/Chart.yaml"
-              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/templates/**"
-              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values.yaml"
-              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values-minikube.yaml"
-              - "environments/Chart.yaml"
-              - "environments/templates/applications/infrastructure/*"
-              - "environments/values-minikube.yaml"
-              - "src/phalanx/**"
+          python-version-file: ".python-version"
+
+      - uses: astral-sh/setup-uv@v6
 
       - name: Download installer dependencies
-        if: steps.filter.outputs.minikube == 'true'
         run: |
-          curl -sSL -o /tmp/vault.zip https://releases.hashicorp.com/vault/1.18.3/vault_1.18.3_linux_amd64.zip
+          curl -sSL -o /tmp/vault.zip https://releases.hashicorp.com/vault/${{ env.VAULT_VERSION }}/vault_${{ env.VAULT_VERSION }}_linux_amd64.zip
           unzip /tmp/vault.zip
           sudo mv vault /usr/local/bin/vault
           sudo chmod +x /usr/local/bin/vault
-          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.13.3/argocd-linux-amd64
+          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v${{ env.ARGO_CD_VERSION }}/argocd-linux-amd64
           sudo chmod +x /usr/local/bin/argocd
           sudo apt-get install socat
 
-      - name: Setup Minikube
-        if: steps.filter.outputs.minikube == 'true'
-        uses: medyagh/setup-minikube@latest
+      - uses: medyagh/setup-minikube@latest
         with:
           cpus: max
           memory: 5500m  # Linux virtual machines have 7GB of RAM
 
       - name: Test interaction with the cluster
-        if: steps.filter.outputs.minikube == 'true'
         run: kubectl get nodes
 
-      - uses: lsst-sqre/run-tox@v1
-        if: steps.filter.outputs.minikube == 'true'
-        timeout-minutes: 15
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          tox-envs: install
-          tox-requirements: requirements/tox.txt
-          tox-posargs: >-
-            --force-noninteractive
-            --vault-role-id=${{ secrets.MINIKUBE_VAULT_ROLE_ID }}
-            --vault-secret-id=${{ secrets.MINIKUBE_VAULT_SECRET_ID }}
-            minikube
-          cache-key-prefix: test
+      - name: Run Phalanx installer
+        run: >
+          uv run --only-group=tox tox run -e install --
+          --force-noninteractive
+          --vault-role-id=${{ secrets.MINIKUBE_VAULT_ROLE_ID }}
+          --vault-secret-id=${{ secrets.MINIKUBE_VAULT_SECRET_ID }}
+          minikube
 
       - name: Get final list of resources
-        if: steps.filter.outputs.minikube == 'true'
         run: |
           kubectl get all -A
           kubectl get ingress -A
 
       - name: Wait for all applications to be healthy
         timeout-minutes: 15
-        if: steps.filter.outputs.minikube == 'true'
         run: |
           argocd app wait -l "argocd.argoproj.io/instance=science-platform" \
             --port-forward \
             --port-forward-namespace argocd \
             --timeout 300
+
+  docs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    needs: changes
+    if: >-
+      (needs.changes.outputs.docs == 'true')
+      || (github.event_name == 'workflow_dispatch')
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # Ensure the documentation gets the right version.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: ".python-version"
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Install graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz
+
+      - name: Build documentation
+        run: uv run --only-group=tox tox run -e docs
+
+      # Upload docs:
+      # - on pushes to main if *any* documentation content might have changed
+      # - on workflow dispatches if any documentation content might have changed
+      # - on pushes to tickets/ branches if docs/ directory content changed
+      - name: Upload to LSST the Docs
+        uses: lsst-sqre/ltd-upload@v1
+        with:
+          project: "phalanx"
+          dir: "docs/_build/html"
+          username: ${{ secrets.LTD_USERNAME }}
+          password: ${{ secrets.LTD_PASSWORD }}
+        if: >-
+          (github.event_name == 'push' && github.ref_name == 'main')
+          || (github.event_name == 'workflow_dispatch')
+          || (github.event_name == 'pull_request'
+              && startsWith(github.head_ref, 'tickets/')
+              && needs.changes.outputs.docs-specific == 'true')

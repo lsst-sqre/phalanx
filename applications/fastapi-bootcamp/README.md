@@ -15,7 +15,6 @@ FastAPI demonstration application for bootcamp
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/fastapi-bootcamp"` | URL path prefix |
 | config.slackAlerts | bool | `true` | Whether to send alerts and status to Slack. |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the fastapi-bootcamp image |

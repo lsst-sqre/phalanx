@@ -28,7 +28,7 @@ spec:
       {{- end }}
       automountServiceAccountToken: false
       containers:
-        - name: "db-worker"
+        - name: "vo-cutouts-db-worker"
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

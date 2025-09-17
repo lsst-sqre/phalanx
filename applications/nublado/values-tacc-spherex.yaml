@@ -6,6 +6,7 @@ controller:
         registry: "registry.hub.docker.com"
         repository: "lsstsqre/spherex-lab"
     lab:
+      defaultSize: "small"
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
@@ -20,14 +21,29 @@ controller:
               volumeName: "home"
       sizes:
         - size: small
-          cpu: 1.0
-          memory: 2Gi
+          resources:
+            limits:
+              cpu: 1.0
+              memory: 2Gi
+            requests:
+              cpu: 0.25
+              memory: 0.5Gi
         - size: medium
-          cpu: 2.0
-          memory: 4Gi
+          resources:
+            limits:
+              cpu: 2.0
+              memory: 4Gi
+            requests:
+              cpu: 0.5
+              memory: 1Gi
         - size: large
-          cpu: 4.0
-          memory: 8Gi
+          resources:
+            limits:
+              cpu: 4.0
+              memory: 8Gi
+            requests:
+              cpu: 1
+              memory: 2Gi
       volumes:
         - name: "home"
           source:

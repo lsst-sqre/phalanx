@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/rubintv-dev"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "rubintv-dev") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

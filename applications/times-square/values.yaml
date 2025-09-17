@@ -141,7 +141,7 @@ config:
   githubOrgs: "lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"
 
   # -- Timeout for GitHub check runs in seconds
-  githubCheckRunTimeout: "900" # 15 minutes
+  githubCheckRunTimeout: "3600" # 1 hour
 
   # -- Default execution timeout for notebooks in seconds
   defaultExecutionTimeout: "300" # 5 minutes
@@ -149,11 +149,8 @@ config:
   # Sentry tracing sample rate
   sentryTracesSampleRate: 0.0
 
-  worker:
-    # -- Enable liveness checks for the arq queue
-    enableLivenessCheck: true
-
   htmlKeyMigration:
+    # -- Whether to run the HTML key migration job as a pre-install/upgrade hook
     enabled: false
 
     # -- Whether to run the HTML key migration job as a dry-run only
@@ -161,6 +158,20 @@ config:
 
     # -- The name of the page to migrate, if set
     page: ""
+
+  nbstripoutMigration:
+    # -- Whether to run the nbstripout migration job as a pre-install/upgrade hook
+    enabled: false
+
+    # -- Whether to run the job on demand or as a hook (default)
+    onDemand: false
+
+    # -- Whether to run the nbstripout migration job as a dry-run only
+    dryRun: false
+
+  worker:
+    # -- Enable liveness checks for the arq queue
+    enableLivenessCheck: true
 
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
@@ -172,23 +183,23 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.7"
+    tag: "1.37.9"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
 
-    # -- Resource requests and limits for Cloud SQL pod
-    # @default -- See `values.yaml`
-    resources:
-      limits:
-        cpu: "1"
-        memory: "4Gi"
-      requests:
-        cpu: "1m"
-        memory: "512Mi"
-
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   instanceConnectionName: ""
+
+  # -- Resource requests and limits for Cloud SQL pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "30Mi"
+    requests:
+      cpu: "1m"
+      memory: "15Mi"
 
   # -- The Google service account that has an IAM binding to the `times-square`
   # Kubernetes service accounts and has the `cloudsql.client` role

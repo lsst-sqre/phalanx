@@ -1,0 +1,23 @@
+# -- The overall namespace for the application.
+namespace: nightlydigest
+image:
+  # -- The Nightlydigest backend image to use.
+  repository: lsstts/nightlydigest-backend
+  # -- (int) The cycle revision to add to the image tag.
+  tag:
+  # -- The pull policy on the Nightlydigest backend image.
+  pullPolicy: IfNotPresent
+# -- List of Kubernetes environment variable specifiers.
+env: []
+# -- List of environment variables that should come from secrets.
+envSecrets: []
+# -- This allows for the specification of pod annotations.
+annotations: {}
+# -- Resource specifications applied to the pod.
+resources: {}
+# -- Node selection rules applied to the pod.
+nodeSelector: {}
+# -- Toleration specifications applied to the pod.
+tolerations: []
+# -- Affinity rules applied to the pod.
+affinity: {}

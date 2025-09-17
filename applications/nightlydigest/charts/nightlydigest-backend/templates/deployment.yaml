@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nightlydigest-backend.name" . }}
+  labels:
+    {{- include "nightlydigest-backend.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "nightlydigest-backend.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.annotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "nightlydigest-backend.selectorLabels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+        - name: "pull-secret"
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- range $env := .Values.envSecrets }}
+            - name: {{ $env.name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $env.secretName }}
+                  key: {{ $env.secretKey }}
+            {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

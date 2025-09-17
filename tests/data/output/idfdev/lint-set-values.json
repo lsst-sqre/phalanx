@@ -1,7 +1,8 @@
 [
-  "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres",
   "global.host=data-dev.lsst.cloud",
   "global.baseUrl=https://data-dev.lsst.cloud",
+  "global.environmentName=idfdev",
+  "global.repertoireUrl=https://data-dev.lsst.cloud/repertoire",
   "global.vaultSecretsPath=secret/phalanx/idfdev",
   "global.gcpProjectId=science-platform-dev-7696",
   "global.gcpRegion=us-central1"

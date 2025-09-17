@@ -12,17 +12,16 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Intended Audience :: Developers",
     "Operating System :: POSIX",
     "Private :: Do Not Upload",
     "Typing :: Typed",
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 dependencies = [
     "bcrypt",
-    "click",
+    "click!=8.2.0",
     "cryptography",
     "GitPython",
     "hvac",
@@ -44,6 +43,34 @@ Source = "https://github.com/lsst-sqre/phalanx"
 [build-system]
 requires = ["setuptools>=61", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = [
+    "coverage[toml]",
+    "pytest",
+    "pytest-cov",
+    "pytest-sugar",
+]
+docs = [
+    "autodoc-pydantic",
+    "documenteer[guide]>=2",
+    "sphinx-click",
+    "sphinx-diagrams",
+    "sphinx-jinja",
+]
+lint = [
+    "pre-commit",
+    "pre-commit-uv",
+    "ruff>=0.9",
+]
+tox = [
+    "tox>=4.24",
+    "tox-uv>=1.25",
+]
+typing = [
+    "mypy",
+    "types-PyYAML",
+]
 
 [tool.black]
 line-length = 79

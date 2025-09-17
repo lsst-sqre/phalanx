@@ -39,7 +39,6 @@ Deployment for the Environmental Awareness Systems CSCs
 | epm-generator-ess305.enabled | bool | `false` | Enable the ESS:305 CSC |
 | epm-generator-ess306-sim.enabled | bool | `false` | Enable the ESS:303 simulator CSC |
 | epm-generator-ess306.enabled | bool | `false` | Enable the ESS:306 CSC |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.controlSystem.appNamespace | string | Set by ArgoCD | Application namespace for the control system deployment |
 | global.controlSystem.imageTag | string | Set by ArgoCD | Image tag for the control system deployment |
 | global.controlSystem.kafkaBrokerAddress | string | Set by ArgoCD | Kafka broker address for the control system deployment |
@@ -53,6 +52,14 @@ Deployment for the Environmental Awareness Systems CSCs
 | hvac.enabled | bool | `false` | Enable the HVAC CSC |
 | m1m3-ess113-sim.enabled | bool | `false` | Enable the ESS:113 simulator CSC |
 | m1m3-ess113.enabled | bool | `false` | Enable the ESS:113 CSC |
+| m1m3-ess114-sim.enabled | bool | `false` | Enable the ESS:114 simulator CSC |
+| m1m3-ess114.enabled | bool | `false` | Enable the ESS:114 CSC |
+| m1m3-ess115-sim.enabled | bool | `false` | Enable the ESS:115 simulator CSC |
+| m1m3-ess115.enabled | bool | `false` | Enable the ESS:115 CSC |
+| m1m3-ess116-sim.enabled | bool | `false` | Enable the ESS:116 simulator CSC |
+| m1m3-ess116.enabled | bool | `false` | Enable the ESS:116 CSC |
+| m1m3-ess117-sim.enabled | bool | `false` | Enable the ESS:117 simulator CSC |
+| m1m3-ess117.enabled | bool | `false` | Enable the ESS:117 CSC |
 | m2-ess106-sim.enabled | bool | `false` | Enable the ESS:106 simulator CSC |
 | m2-ess106.enabled | bool | `false` | Enable the ESS:106 CSC |
 | m2-ess112-sim.enabled | bool | `false` | Enable the ESS:112 simulator CSC |
@@ -61,10 +68,18 @@ Deployment for the Environmental Awareness Systems CSCs
 | mtdome-ess107.enabled | bool | `false` | Enable the ESS:107 CSC |
 | mtdome-ess108-sim.enabled | bool | `false` | Enable the ESS:108 simulator CSC |
 | mtdome-ess108.enabled | bool | `false` | Enable the ESS:108 CSC |
+| mtdome-ess118-sim.enabled | bool | `false` | Enable the ESS:118 simulator CSC |
+| mtdome-ess118.enabled | bool | `false` | Enable the ESS:118 CSC |
+| mtdome-ess119-sim.enabled | bool | `false` | Enable the ESS:119 simulator CSC |
+| mtdome-ess119.enabled | bool | `false` | Enable the ESS:119 CSC |
+| mtdome-ess120-sim.enabled | bool | `false` | Enable the ESS:120 simulator CSC |
+| mtdome-ess120.enabled | bool | `false` | Enable the ESS:120 CSC |
 | ringss-ess304-sim.enabled | bool | `false` | Enable the ESS:304 simulator CSC |
 | ringss-ess304.enabled | bool | `false` | Enable the ESS:304 CSC |
 | tma-ess001-sim.enabled | bool | `false` | Enable the ESS:1 simulator CSC |
 | tma-ess001.enabled | bool | `false` | Enable the ESS:1 CSC |
+| tma-ess002-sim.enabled | bool | `false` | Enable the ESS:2 simulator CSC |
+| tma-ess002.enabled | bool | `false` | Enable the ESS:2 CSC |
 | tma-ess104-sim.enabled | bool | `false` | Enable the ESS:104 simulator CSC |
 | tma-ess104.enabled | bool | `false` | Enable the ESS:104 CSC |
 | tma-ess105-sim.enabled | bool | `false` | Enable the ESS:105 simulator CSC |

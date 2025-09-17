@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "datalinker.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     anonymous: true
 template:
@@ -27,3 +26,12 @@ template:
                   name: "datalinker"
                   port:
                     number: 8080
+            {{- range $dataset, $url := .Values.config.hipsDatasets }}
+            - path: "{{ $.Values.config.hipsV2PathPrefix }}/{{ $dataset }}/list"
+              pathType: "Exact"
+              backend:
+                service:
+                  name: "datalinker"
+                  port:
+                    number: 8080
+            {{- end }}

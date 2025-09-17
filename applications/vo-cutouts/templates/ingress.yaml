@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "vo-cutouts.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
+  authType: "basic"
   scopes:
     all:
       - "read:image"

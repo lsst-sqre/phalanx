@@ -1,0 +1,112 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "butler-writer-service.fullname" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "butler-writer-service.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "butler-writer-service.selectorLabels" . | nindent 8 }}
+    spec:
+      initContainers:
+        - name: init-db-auth
+          # Make a copy of the read-only secret that's owned by lsst
+          # lsst account is created by main image with id 1000
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command:
+            [
+            "sh",
+            "-c",
+            "cp -L /app/db-auth-mount/db-auth.yaml /app/dbauth/ && chown 1000:1000 /app/dbauth/db-auth.yaml && chmod u=r,go-rwx /app/dbauth/db-auth.yaml",
+            ]
+          volumeMounts:
+            - mountPath: /app/db-auth-mount
+              name: db-auth-mount
+              readOnly: true
+            - mountPath: /app/dbauth
+              name: db-auth-credentials-file
+      containers:
+        - name: butler-writer
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          env:
+            - name: BUTLER_REPOSITORY
+              value: {{ .Values.outputRepo }}
+            - name: KAFKA_CLUSTER
+              value: {{ .Values.kafka.clusterAddress }}
+            - name: KAFKA_TOPIC
+              value: {{ .Values.kafka.topic }}
+            - name: KAFKA_USERNAME
+              value: {{ .Values.kafka.username }}
+            - name: KAFKA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "butler-writer-service.fullname" . }}-secret
+                  key: butler-writer-password
+            - name: S3_ENDPOINT_URL
+              value: {{ .Values.s3.endpointUrl }}
+            - name: AWS_SHARED_CREDENTIALS_FILE
+              value: /app/s3/credentials
+            {{- with .Values.s3.aws_profile }}
+            - name: AWS_PROFILE
+              value: {{ . }}
+            {{- end }}
+            {{- with .Values.s3.checksum }}
+            - name: AWS_REQUEST_CHECKSUM_CALCULATION
+              value: {{ . }}
+            {{- end }}
+            - name: LSST_DB_AUTH
+              value: /app/lsst-credentials/db-auth.yaml
+          volumeMounts:
+            # /app is defined in Dockerfile
+            - mountPath: /app/lsst-credentials
+              name: db-auth-credentials-file
+              readOnly: true
+            - mountPath: /app/s3/
+              name: s3-credentials-file
+          resources:
+            requests:
+              cpu: {{ .Values.resources.cpuRequest | toString | quote}}
+              memory: {{ .Values.resources.memoryRequest }}
+            limits:
+              cpu: {{ .Values.resources.cpuLimit | toString | quote}}
+              memory: {{ .Values.resources.memoryLimit }}
+      volumes:
+        - name: db-auth-mount
+          # Temporary mount for db-auth.yaml; cannot be read directly because it's owned by root
+          secret:
+            secretName: {{ template "butler-writer-service.fullname" . }}-secret
+            defaultMode: 256
+            items:
+              - key: db-auth_file
+                path: db-auth.yaml
+        - name: db-auth-credentials-file
+          emptyDir:
+            sizeLimit: 10Ki # Just a text file!
+        - name: s3-credentials-file
+          secret:
+            secretName: {{ template "butler-writer-service.fullname" . }}-secret
+            items:
+              - key: s3_credentials_file
+                path: credentials
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 10 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 10 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 10 }}
+      {{- end }}

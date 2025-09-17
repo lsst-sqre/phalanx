@@ -13,13 +13,24 @@ image:
   pullPolicy: "IfNotPresent"
 
   # -- Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: null
 
 ingress:
   # -- Additional annotations for the ingresses
   annotations: {}
 
 config:
+  # -- Default dataset for legacy /api/hips endpoints (optional)
+  # If not set it will use hips_base_url
+  hipsDefaultDataset: null
+
+  # -- HiPS dataset configurations mapping dataset names to their base URLs
+  hipsDatasets: {}
+
+  # -- URL path prefix for the HiPS v2 API (must match the configuration of the
+  # hips service)
+  hipsV2PathPrefix: "/api/hips/v2"
+
   # -- URL path prefix for the HiPS API (must match the configuration of the
   # hips service)
   hipsPathPrefix: "/api/hips"
@@ -55,10 +66,10 @@ nodeSelector: {}
 resources:
   limits:
     cpu: "1"
-    memory: "500Mi"
+    memory: "300Mi"
   requests:
     cpu: "50m"
-    memory: "200Mi"
+    memory: "125Mi"
 
 # -- Tolerations for the datalinker deployment pod
 tolerations: []
@@ -68,16 +79,16 @@ tolerations: []
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
-  baseUrl: ""
+  baseUrl: null
 
   # -- Butler repositories accessible via Butler server
   # @default -- Set by Argo CD
-  butlerServerRepositories: ""
+  butlerServerRepositories: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
-  host: ""
+  host: null
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
-  vaultSecretsPath: ""
+  vaultSecretsPath: null

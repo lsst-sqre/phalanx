@@ -51,10 +51,10 @@ ingress:
 resources:
   limits:
     cpu: "1"
-    memory: "128Mi"
+    memory: "512Mi"
   requests:
     cpu: "2m"
-    memory: "50Mi"
+    memory: "75Mi"
 
 autoscaling:
   enabled: false
@@ -90,14 +90,10 @@ config:
 # Global parameters will be set by parameters injected by Argo CD and should
 # not be set in the individual environment values files.
 global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD Application
-  baseUrl: ""
-
   # -- Host name for ingress
   # @default -- Set by Argo CD Application
-  host: ""
+  host: null
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD Application
-  vaultSecretsPathPrefix: ""
+  vaultSecretsPathPrefix: null

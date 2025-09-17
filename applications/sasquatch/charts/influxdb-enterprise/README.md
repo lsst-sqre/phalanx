@@ -10,7 +10,7 @@ Run InfluxDB Enterprise on Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
+| bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `influxdb-user` and `influxdb-password`. |
 | bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
 | data.affinity | object | See `values.yaml` | Affinity rules for data pods |
@@ -46,7 +46,7 @@ Run InfluxDB Enterprise on Kubernetes
 | data.podSecurityContext | object | `{}` | Pod security context for data pods |
 | data.preruncmds | list | `[]` | Commands to run in data pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | data.replicas | int | `1` | Number of data replicas to run |
-| data.resources | object | `{}` | Kubernetes resources and limits for the meta container |
+| data.resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Kubernetes resources and limits for the meta container |
 | data.securityContext | object | `{}` | Security context for meta pods |
 | data.service.annotations | object | `{}` | Extra annotations for the data service |
 | data.service.externalIPs | list | Do not allocate external IPs | External IPs for the data service |
@@ -84,7 +84,7 @@ Run InfluxDB Enterprise on Kubernetes
 | meta.podSecurityContext | object | `{}` | Pod security context for meta pods |
 | meta.preruncmds | list | `[]` | Commands to run in meta pods before InfluxDB is started. Each list entry should have a _cmd_ key with the command to run and an optional _description_ key describing that command |
 | meta.replicas | int | `3` | Number of meta pods to run |
-| meta.resources | object | `{}` | Kubernetes resources and limits for the meta container |
+| meta.resources | object | `{"limits":{"cpu":1,"memory":"1Gi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | Kubernetes resources and limits for the meta container |
 | meta.securityContext | object | `{}` | Security context for meta pods |
 | meta.service.annotations | object | `{}` | Extra annotations for the meta service |
 | meta.service.externalIPs | list | Do not allocate external IPs | External IPs for the meta service |

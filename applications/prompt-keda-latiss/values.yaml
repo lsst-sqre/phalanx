@@ -35,19 +35,23 @@ prompt-keda:
     skymap: latiss_v1
     # -- Number of arcseconds to pad the spatial region in preloading.
     preloadPadding: 30
-    # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
+    # -- URI to the shared repo used for pipeline inputs and outputs.
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
-    calibRepo: ""
+    centralRepo: ""
+    # -- Optional URI to a separate repo used for pipeline inputs.
+    # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
+    # @default -- Matches `centralRepo`
+    readRepo: ""
+    # -- The average time to wait (in seconds) before retrying a failed connection to the shared repo.
+    repoWait: 30
+    # -- YAML-formatted list of regex patterns to specify the dataset types to export.
+    exportTypes: "- .*"
 
   cache:
     # -- The default number of datasets of each type to keep.
     # The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache.
     baseSize: 3
-    # -- A factor by which to multiply `baseSize` for refcat datasets.
-    refcatsPerImage: 4
-    # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
-    patchesPerImage: 6
 
   s3:
     # -- Bucket containing the incoming raw images
@@ -55,8 +59,14 @@ prompt-keda:
     imageBucket: ""
     # @default -- None, must be set
     endpointUrl: ""
-    # -- If set, get S3 credentials from this application's Vault secret.
-    auth_env: true
+    # -- If set, define environment variables with S3 credentials from this application's Vault secret.
+    auth_env: false
+    # -- If set, get a S3 credential file from this application's Vault secret.
+    # Must be true if `aws_profile` is set.
+    cred_file_auth: true
+    # -- If set, specify a S3 credential profile and `cred_file_auth` must be true.
+    # If empty and `auth_env`=`false`, the `default` profile is used.
+    aws_profile: ""
     # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
     disableBucketValidation: '0'
     # -- If set, configure S3 checksum options.
@@ -69,6 +79,10 @@ prompt-keda:
   # -- The URI to the MPSky ephemerides service.
   # Empty value is allowed, but its handling is undefined.
   mpSky_service: ""
+
+  # -- The URI where IERS data has been pre-downloaded and cached for use by Prompt Processing.
+  # If empty, Prompt Processing does not try to update IERS data.
+  iers_cache: ""
 
   imageNotifications:
     # -- Hostname and port of the Kafka provider
@@ -98,11 +112,15 @@ prompt-keda:
 
   registry:
     # -- If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted.
+    # If `instrument.readRepo` is also set, the secret must contain a `read_repo_file` key.
     centralRepoFile: false
 
   # -- Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level).
   # @default -- log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING.
-  logLevel: "timer.lsst.activator=DEBUG timer.lsst.daf.butler=DEBUG lsst.associateApdb=VERBOSE lsst.computeReliability=VERBOSE lsst.daf.butler=VERBOSE"
+  logLevel: >-
+    timer.lsst.activator=DEBUG timer.lsst.daf.butler=DEBUG
+    lsst.associateApdb=VERBOSE lsst.loadDiaCatalogs=VERBOSE lsst.computeReliability=VERBOSE
+    lsst.daf.butler=VERBOSE
 
   sasquatch:
     # -- Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload.
@@ -115,34 +133,40 @@ prompt-keda:
     # Leave unset to attempt anonymous access.
     auth_env: true
 
+  sattle:
+    # -- Base URI of the sattle service.  Leave blank if not used.
+    uri_base: ""
+
   keda:
-    # Minimum number of replicas to start with.
+    # -- Minimum number of replicas to start with.
     minReplicaCount: 3
-    # Maximum number of replicas to scale to.
+    # -- Maximum number of replicas to scale to.
     maxReplicaCount: 30
-    # Scaling algorithm
+    # -- Scaling algorithm
     scalingStrategy: eager
-    # Polling interval for Keda to poll scalar for scaling determination.
+    # -- Polling interval for Keda to poll scalar for scaling determination.
     pollingInterval: 2
-    # How many completed jobs should be kept available in Kubernetes.
+    # -- How many completed jobs should be kept available in Kubernetes.
     successfulJobsHistoryLimit: 5
-    # How many failed jobs should be kept available in Kubernetes.
+    # -- How many failed jobs should be kept available in Kubernetes.
     failedJobsHistoryLimit: 5
 
     redisStreams:
-      # Address of Redis Streams Cluster
+      # -- Address of Redis Streams Cluster
       host: prompt-redis.prompt-redis
-      # Name of Redis Stream
+      # -- Name of Redis Stream
       streamName: instrument:latiss
-      # Redis Consumer Group name
+      # -- Redis Consumer Group name
       consumerGroup: latiss_consumer_group
-      # Time to wait for fanned out messages before spawning new pod.
+      # -- The time to wait (in seconds) before retrying a stream connection failure.
+      retry: 30
+      # -- Time to wait for fanned out messages before spawning new pod.
       msgListenTimeout: 900
-      # Lag count at which scaler triggers
+      # -- Lag count at which scaler triggers
       activationLagCount: "1"
-      #  Number of lagging entries in the consumer group, alternative to pendingEntriesCount scaler trigger
+      # -- Number of lagging entries in the consumer group, alternative to pendingEntriesCount scaler trigger
       lagCount: "1"
-      # Number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
+      # -- Number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
       pendingEntriesCount: "1"
       # -- Maximum message age to process, in seconds.
       expiration: 3600
@@ -181,6 +205,24 @@ prompt-keda:
     # @default -- See the `values.yaml` file.
     podAnnotations: {}
 
+  butler_writer:
+    # -- If false, pipeline outputs will be written directly to the central repo.
+    # If true, a Kafka message will be sent to a service to aggregate these writes instead.
+    # The init job writes directly to the central repo regardless of this setting.
+    enabled: false
+    # -- Address of Kafka broker where prompt processing output events will be
+    # written, for consumption by the Butler writer service.
+    # @default -- None, must be set
+    kafka_cluster: ""
+    # -- Username for Kafka broker where prompt processing output events will be
+    # written, for consumption by the Butler writer service.
+    # @default -- None, must be set
+    kafka_username: ""
+    # -- Kafka topic that prompt processing output events will be written to,
+    # for consumption by the Butler writer service.
+    # @default -- None, must be set
+    kafka_topic: ""
+
   # -- Override the base name for resources
   nameOverride: ""
 
@@ -191,6 +233,8 @@ prompt-keda:
     # -- Whether or not pipeline outputs should be exported to the central repo.
     # This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination.
     exportOutputs: true
+    # -- Whether `dax_apdb` should run in debug mode and log metrics.
+    monitorDaxApdb: false
 
 
   # -- Kubernetes resource requests and limits

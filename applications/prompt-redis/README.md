@@ -6,7 +6,6 @@ Redis cluster for prompt processing
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | redis.affinity | object | `{}` | Affinity rules for the persistent Redis pod |

@@ -1,0 +1,82 @@
+# Default values for google-cloud-observability.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
+
+# -- Config for kube-state-metrics chart:
+# [values](https://artifacthub.io/packages/helm/prometheus-community/kube-state-metrics/?modal=values)
+# @default -- See `values.yaml`
+kube-state-metrics:
+
+  # -- See the [resource recommendation
+  # docs](https://github.com/kubernetes/kube-state-metrics?tab=readme-ov-file#resource-recommendation)
+  # resources:
+  requests:
+    memory: "250Mi"
+    cpu: "0.1"
+  limits:
+    memory: "750Mi"
+    cpu: "1"
+
+  # -- The specific collectors to enable.
+  #
+  # We try to use the [Managed Kube State
+  # Metrics](https://cloud.google.com/stackdriver/docs/managed-prometheus/exporters/kube_state_metrics#gke-managed-exporter)
+  # if we can, but it doesn't provide the
+  # `kube_pod_container_status_last_terminated_reason`, which is... the most
+  # important one for alerting on OOM kills. So we want to enable only the
+  # collector that provides that
+  # metric.
+  # collectors:
+  #   - pods
+
+  # -- The specific metrics to collect.
+  # This should include at least the [metrics that would be collected from the
+  # Google-managed
+  # kube-state-metrics](https://cloud.google.com/kubernetes-engine/docs/how-to/kube-state-metrics),
+  # since we disable that managed integration.
+  metricAllowlist:
+    # The managed kube-state-metrics does not include all of these,
+    # kube_pod_container_status_last_terminated_reason and
+    # kube_pod_container_status_restarts_total being the most important ones
+    # because they provide a way to alert on OOM kills.
+    - "kube_pod_container_status_.*"
+    - "kube_pod_status_.*"
+    - "kube_pod_init_container_status_.*"
+    - "kube_job_status_.*"
+    - "kube_cronjob_status_.*"
+
+    # These are the other metrics that the managed integration would provide
+    - "kube_persistentvolume_capacity_bytes"
+    - "kube_persistentvolume_claim_ref"
+    - "kube_persistentvolume_info"
+    - "kube_persistentvolume_status_phase"
+    - "kube_persistentvolumeclaim_info"
+    - "kube_persistentvolumeclaim_resource_requests_storage_bytes"
+    - "kube_persistentvolumeclaim_status_phase"
+    - "kube_deployment_spec_replicas"
+    - "kube_deployment_status_replicas_available"
+    - "kube_deployment_status_replicas_updated"
+    - "kube_statefulset_replicas"
+    - "kube_statefulset_status_replicas_ready"
+    - "kube_statefulset_status_replicas_updated"
+    - "kube_daemonset_status_desired_number_scheduled"
+    - "kube_daemonset_status_number_misscheduled"
+    - "kube_daemonset_status_number_ready"
+    - "kube_daemonset_status_updated_number_scheduled"
+    - "kube_horizontalpodautoscaler_spec_max_replicas"
+    - "kube_horizontalpodautoscaler_spec_min_replicas"
+    - "kube_horizontalpodautoscaler_spec_target_metric"
+    - "kube_horizontalpodautoscaler_status_condition"
+    - "kube_horizontalpodautoscaler_status_current_replicas"
+    - "kube_horizontalpodautoscaler_status_desired_replicas"

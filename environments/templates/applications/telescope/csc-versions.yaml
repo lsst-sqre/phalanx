@@ -1,0 +1,36 @@
+{{- if (index .Values "applications" "csc-versions") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "csc-versions"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "csc-versions"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "csc-versions"
+    server: "https://kubernetes.default.svc"
+  project: "telescope"
+  source:
+    path: "applications/csc-versions"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ or (index .Values "revisions" "csc-versions") .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

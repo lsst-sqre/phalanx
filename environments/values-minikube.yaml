@@ -13,3 +13,4 @@ vaultPathPrefix: "secret/phalanx/minikube"
 applications:
   mobu: true
   postgres: true
+  repertoire: true

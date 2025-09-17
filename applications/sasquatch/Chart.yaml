@@ -13,9 +13,6 @@ appVersion: 0.1.0
 dependencies:
   - name: strimzi-kafka
     version: 1.0.0
-  - name: strimzi-registry-operator
-    version: 2.1.0
-    repository: https://lsst-sqre.github.io/charts/
   - name: influxdb
     alias: influxdb
     condition: influxdb.enabled
@@ -36,16 +33,23 @@ dependencies:
     alias: kafka-connect-manager
     condition: kafka-connect-manager.enabled
     version: 1.0.0
+  - name: kapacitor
+    alias: kapacitor
+    condition: kapacitor.enabled
+    version: 1.0.0
   - name: chronograf
     condition: chronograf.enabled
     version: 1.2.6
     repository: https://helm.influxdata.com/
-  - name: kapacitor
-    condition: kapacitor.enabled
-    version: 1.4.7
-    repository: https://helm.influxdata.com/
   - name: kafdrop
     condition: kafdrop.enabled
+    version: 1.0.0
+  - name: schema-registry
+    condition: registry.enabled
+    version: 1.0.0
+  - name: schema-registry
+    alias: schema-registry-remote
+    condition: schema-registry-remote.enabled
     version: 1.0.0
   - name: telegraf
     condition: telegraf.enabled
@@ -72,6 +76,9 @@ dependencies:
   - name: obsenv
     condition: obsenv.enabled
     version: 1.0.0
+  - name: scimma
+    condition: scimma.enabled
+    version: 1.0.0
   - name: backpack
     condition: backpack.enabled
     version: 1.0.0
@@ -86,6 +93,12 @@ dependencies:
     version: 1.0.0
   - name: consdb
     condition: consdb.enabled
+    version: 1.0.0
+  - name: data-transfer-monitoring
+    condition: data-transfer-monitoring.enabled
+    version: 1.0.0
+  - name: grafana
+    condition: grafana.enabled
     version: 1.0.0
 
 annotations:

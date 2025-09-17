@@ -14,6 +14,10 @@ config:
     clientId: "c4a5727c5788cc2d346e"
 
   groupMapping:
+    "admin:userinfo":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
     "exec:admin":
       - github:
           organization: "lsp-uk"
@@ -27,6 +31,10 @@ config:
           organization: "lsp-uk"
           team: "dev"
     "exec:portal":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+    "exec:portal-admin":
       - github:
           organization: "lsp-uk"
           team: "dev"

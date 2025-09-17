@@ -20,14 +20,43 @@ prompt-keda:
       preprocessing: |-
         - survey: SURVEY
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml']
-    calibRepo: s3://rubin-pp-dev-users/central_repo_2
+    centralRepo: s3://rubin-pp-dev-users/central_repo_2
+    repoWait: 5
+    exportTypes: |-
+      - ".*_(config|metadata|log)"
+      - "packages"
+      - "regionTimeInfo"
+      - "template_detector"
+      - "preliminary_visit_image"
+      - "preliminary_visit_image_background"
+      - "difference_image"
+      - "single_visit_star_footprints"
+      - "dia_source_unfiltered"
+      - "dia_source_detector"
+      - "difference_kernel"
+      - "dia_source_apdb"
+      - "dia_forced_source_apdb"
+      - "dia_object_apdb"
+      - "ss_source_direct_detector"
+      - "ss_object_direct_unassociated"
+      - "ss_object_unassociated_detector"
+      - "ss_source_detector"
+      - "marginal_new_dia_source"
+      - "new_dia_source"
+      - "preloaded_dia_forced_source"
+      - "preloaded_dia_object"
+      - "preloaded_dia_source"
+      - "preloaded_ss_object"
 
   s3:
     imageBucket: rubin-pp-dev
     endpointUrl: https://s3dfrgw.slac.stanford.edu
+    aws_profile: prompt-processing-dev
+
+  iers_cache: s3://rubin-pp-dev-users/iers-cache.zip
 
   imageNotifications:
-    kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
+    kafkaClusterAddress: s3-file-notifications-kafka-external-bootstrap.s3-file-notifications:9094
     topic: prompt-processing-dev
 
   apdb:

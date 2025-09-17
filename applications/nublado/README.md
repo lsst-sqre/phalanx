@@ -16,8 +16,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.resources | object | See `values.yaml` | Resource requests and limits for Cloud SQL pod |
-| cloudsql.image.tag | string | `"1.37.7"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.9"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.nodeSelector | object | `{}` | Node selection rules for the Cloud SQL Auth Proxy pod |
 | cloudsql.podAnnotations | object | `{}` | Annotations for the Cloud SQL Auth Proxy pod |
@@ -27,19 +26,32 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.affinity | object | `{}` | Affinity rules for the Nublado controller |
 | controller.config.fileserver.affinity | object | `{}` | Affinity rules for user file server pods |
 | controller.config.fileserver.application | string | `"nublado-fileservers"` | Argo CD application in which to collect user file servers |
-| controller.config.fileserver.creationTimeout | string | `"2m"` | Timeout to wait for Kubernetes to create file servers, in Safir `parse_timedelta` format |
-| controller.config.fileserver.deleteTimeout | string | `"1m"` | Timeout for deleting a user's file server from Kubernetes, in Safir `parse_timedelta` format |
+| controller.config.fileserver.creationTimeout | string | `"3m"` | Timeout to wait for Kubernetes to create file servers, in Safir `parse_timedelta` format |
+| controller.config.fileserver.deleteTimeout | string | `"2m"` | Timeout for deleting a user's file server from Kubernetes, in Safir `parse_timedelta` format |
 | controller.config.fileserver.enabled | bool | `false` | Enable user file servers |
-| controller.config.fileserver.idleTimeout | string | `"1h"` | Timeout for idle user fileservers, in Safir `parse_timedelta` format |
+| controller.config.fileserver.idleTimeout | string | `"1d"` | Timeout for idle user fileservers, in Safir `parse_timedelta` format |
 | controller.config.fileserver.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for file server image |
 | controller.config.fileserver.image.repository | string | `"ghcr.io/lsst-sqre/worblehat"` | File server image to use |
 | controller.config.fileserver.image.tag | string | `"0.1.0"` | Tag of file server image to use |
 | controller.config.fileserver.namespace | string | `"fileservers"` | Namespace for user file servers |
 | controller.config.fileserver.nodeSelector | object | `{}` | Node selector rules for user file server pods |
 | controller.config.fileserver.pathPrefix | string | `"/files"` | Path prefix for user file servers |
+| controller.config.fileserver.reconcileInterval | string | `"1h"` | How frequently to reconcile file server state against Kubernetes to catch deletions from outside Nublado, in Safir `parse_timedelta` format |
 | controller.config.fileserver.resources | object | See `values.yaml` | Resource requests and limits for user file servers |
 | controller.config.fileserver.tolerations | list | `[]` | Tolerations for user file server pods |
 | controller.config.fileserver.volumeMounts | list | `[]` | Volumes that should be made available via WebDAV |
+| controller.config.fsadmin.affinity | object | `{}` | Affinity rules for fsadmin pods |
+| controller.config.fsadmin.application | string | `"nublado-fileservers"` | Argo CD application in which to collect fsadmins |
+| controller.config.fsadmin.extraVolumeMounts | list | `[]` | Extra volumes that should be mounted to fsadmin |
+| controller.config.fsadmin.extraVolumes | list | `[]` | Extra volumes that should be made available to fsadmin |
+| controller.config.fsadmin.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for fsadmin image |
+| controller.config.fsadmin.image.repository | string | `"ghcr.io/lsst-sqre/nublado-fsadmin"` | fsadmin image to use |
+| controller.config.fsadmin.image.tag | string | `"8.15.0"` | Tag of fsadmin image to use |
+| controller.config.fsadmin.mountPrefix | string | `nil` | Mount prefix, to be prepended to mountpoints in order to collect them in one place |
+| controller.config.fsadmin.nodeSelector | object | `{}` | Node selector rules for fsadmin pods |
+| controller.config.fsadmin.resources | object | See `values.yaml` | Resource requests and limits for fsadmin |
+| controller.config.fsadmin.timeout | string | `"2m"` | Timeout to wait for Kubernetes to create/destroy fsadmin, in Safir `parse_timedelta` format |
+| controller.config.fsadmin.tolerations | list | `[]` | Tolerations for fsadmin pod |
 | controller.config.images.aliasTags | list | `[]` | Additional tags besides `recommendedTag` that should be recognized as aliases. |
 | controller.config.images.cycle | string | `nil` | Restrict images to this SAL cycle, if given. |
 | controller.config.images.numDailies | int | `3` | Number of most-recent dailies to prepull. |
@@ -47,10 +59,12 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.images.numWeeklies | int | `2` | Number of most-recent weeklies to prepull. |
 | controller.config.images.pin | list | `[]` | List of additional image tags to prepull. Listing the image tagged as recommended here is recommended when using a Docker image source to ensure its name can be expanded properly in the menu. |
 | controller.config.images.recommendedTag | string | `"recommended"` | Tag marking the recommended image (shown first in the menu) |
+| controller.config.images.refreshInterval | string | `"5m"` | How frequently to refresh the list of available images and compare it to the cached images on nodes to prepull new images, in Safir `parse_timedelta` format. Newly-available images will not appear in the menu for up to this interval. |
 | controller.config.images.source | object | None, must be specified | Source for prepulled images. For Docker, set `type` to `docker`, `registry` to the hostname and `repository` to the name of the repository. For Google Artifact Repository, set `type` to `google`, `location` to the region, `projectId` to the Google project, `repository` to the name of the repository, and `image` to the name of the image. |
 | controller.config.lab.activityInterval | string | `"1h"` | How frequently the lab should report activity to JupyterHub in Safir `parse_timedelta` format |
 | controller.config.lab.affinity | object | `{}` | Affinity rules for user lab pods |
 | controller.config.lab.application | string | `"nublado-users"` | Argo CD application in which to collect user lab objects |
+| controller.config.lab.defaultSize | string | `"large"` | Default size selected on the spawner form. This must be either `null` or the name of one of the sizes listed in `sizes`. If `null`, the first listed size will be the default. |
 | controller.config.lab.deleteTimeout | string | `"1m"` | Timeout for deleting a user's lab resources from Kubernetes in Safir `parse_timedelta` format |
 | controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab |
 | controller.config.lab.extraAnnotations | object | `{}` | Extra annotations to add to user lab pods |
@@ -66,6 +80,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.nss.baseGroup | string | See `values.yaml` | Base `/etc/group` file for lab containers |
 | controller.config.lab.nss.basePasswd | string | See `values.yaml` | Base `/etc/passwd` file for lab containers |
 | controller.config.lab.pullSecret | string | Do not use a pull secret | Pull secret to use for labs. Set to the string `pull-secret` to use the normal pull secret from Vault. |
+| controller.config.lab.reconcileInterval | string | `"5m"` | How frequently to reconcile lab state against Kubernetes to catch deletions from outside Nublado, in Safir `parse_timedelta` format. If a lab is deleted by a node replacement or upgrade, or manually with `kubectl`, that deletion will not be noticed, and the user will not be able to spawn a new lab, for up to this interval. |
 | controller.config.lab.runtimeMountsDir | string | `"/opt/lsst/software/jupyterlab"` | Directory in the lab under which runtime information such as tokens, environment variables, and container information will be mounted |
 | controller.config.lab.secrets | list | `[]` | Secrets to set in the user pods. Each should have a `secretKey` key pointing to a secret in the same namespace as the controller (generally `nublado-secret`) and `secretRef` pointing to a field in that key. |
 | controller.config.lab.sizes | list | See `values.yaml` | Available lab sizes. Sizes must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI suffixes for memory are supported. Sizes will be shown in the order defined here, and the first defined size will be the default. |
@@ -89,28 +104,43 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.nodeSelector | object | `{}` | Node selector rules for the Nublado controller |
 | controller.podAnnotations | object | `{}` | Annotations for the Nublado controller |
 | controller.resources | object | See `values.yaml` | Resource limits and requests for the Nublado controller |
+| controller.sentry.enabled | bool | `false` | Whether to report errors to Sentry. If Sentry is enabled, you should set controller.slackAlerts to false so that uncaught exceptions make it to the Sentry handler. |
 | controller.slackAlerts | bool | `false` | Whether to enable Slack alerts. If set to true, `slack_webhook` must be set in the corresponding Nublado Vault secret. |
 | controller.tolerations | list | `[]` | Tolerations for the Nublado controller |
-| cronjob.affinity | object | `{}` | Affinity rules for the tutorials cronjob. |
-| cronjob.enabled | bool | `false` | Enable tutorials refresh? |
-| cronjob.gitBranch | string | `"main"` | Branch of repository to clone |
-| cronjob.gitSource | string | `"https://github.com/lsst/tutorial-notebooks"` | Source for repository to clone |
-| cronjob.gitTarget | string | `"/project/cst_repos/tutorial-notebooks"` | Target where repository should land |
+| cronjob.affinity | object | `{}` | Affinity rules for the cloning cronjob(s). |
+| cronjob.artifacts.enabled | bool | `false` | Clone the artifacts? |
+| cronjob.artifacts.gid | int | `1000` | GID for the cloning cronjob(s) |
+| cronjob.artifacts.gitBranch | string | `"main"` | Branch of repository to clone |
+| cronjob.artifacts.gitSource | string | `"https://github.com/lsst/tutorial-notebooks-data"` | Source for Tutorials binary artifact repository to clone |
+| cronjob.artifacts.gitTarget | string | `"/rubin/cst_repos/tutorial-notebooks-data"` | Target where Tutorial artifacts repository should land |
+| cronjob.artifacts.schedule | string | `"43 * * * *"` | Schedule for the cloning cronjob(s). |
+| cronjob.artifacts.targetVolume | object | See `values.yaml` | Repository volume definition |
+| cronjob.artifacts.targetVolume.mountPath | string | `"/rubin"` | Where volume will be mounted in the container |
+| cronjob.artifacts.targetVolume.volumeName | string | None, must be set for each environment | Name of volume to mount (from controller.lab.config.volumes) |
+| cronjob.artifacts.targetVolumePath | string | `"/rubin"` | Where repository volume should be mounted |
+| cronjob.artifacts.uid | int | `1000` | UID for the cloning cronjob(s) |
 | cronjob.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the repo cloner image |
 | cronjob.image.repository | string | `"ghcr.io/lsst-sqre/repo-cloner"` | Repository cloner image to use |
 | cronjob.image.tag | string | `"0.1.0"` | Tag of repo cloner image to use |
-| cronjob.resources | object | See `values.yaml` | Resource limits and requests for the tutorials cronjob |
-| cronjob.schedule | string | `"43 * * * *"` | Schedule for the tutorials cronjob. |
-| cronjob.targetVolume | object | See `values.yaml` | Repository volume definition |
-| cronjob.targetVolume.mountPath | string | `"/project"` | Where volume will be mounted in the container |
-| cronjob.targetVolume.path | string | `"/project-share"` | Path on NetApp server |
-| cronjob.targetVolume.server | string | `nil` | IP address of NetApp server (different per environment) |
-| cronjob.targetVolumePath | string | `"/project"` | Where repository volume should be mounted |
-| cronjob.tolerations | list | `[]` | Tolerations for the tutorials cronjob. |
+| cronjob.resources | object | See `values.yaml` | Resource limits and requests for the cloning cronjob(s) |
+| cronjob.tolerations | list | `[]` | Tolerations for the cloning cronjob(s). |
+| cronjob.tutorials.enabled | bool | `false` | Clone the notebooks? |
+| cronjob.tutorials.gid | int | `1000` | GID for the cloning cronjob(s) |
+| cronjob.tutorials.gitBranch | string | `"main"` | Branch of repository to clone |
+| cronjob.tutorials.gitSource | string | `"https://github.com/lsst/tutorial-notebooks"` | Source for Tutorials repository to clone |
+| cronjob.tutorials.gitTarget | string | `"/rubin/cst_repos/tutorial-notebooks"` | Target where Tutorials repository should land |
+| cronjob.tutorials.schedule | string | `"42 * * * *"` | Schedule for the cloning cronjob(s). |
+| cronjob.tutorials.targetVolume | object | See `values.yaml` | Repository volume definition |
+| cronjob.tutorials.targetVolume.mountPath | string | `"/rubin"` | Where volume will be mounted in the container |
+| cronjob.tutorials.targetVolume.volumeName | string | None, must be set for each environment | Name of volume to mount (from controller.lab.config.volumes) |
+| cronjob.tutorials.targetVolumePath | string | `"/rubin"` | Where repository volume should be mounted |
+| cronjob.tutorials.uid | int | `1000` | UID for the cloning cronjob(s) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | hub.internalDatabase | bool | `false` | Whether to use the cluster-internal PostgreSQL server instead of an external server. This is not used directly by the Nublado chart, but controls how the database password is managed. |
+| hub.landingPage | string | `"/lab"` | Default spawn page.  Usually '/lab', but can be overridden in order to specify a custom landing page. |
 | hub.minimumTokenLifetime | string | `jupyterhub.cull.maxAge` if lab culling is enabled, else none | Minimum remaining token lifetime when spawning a lab. The token cannot be renewed, so it should ideally live as long as the lab does. If the token has less remaining lifetime, the user will be redirected to reauthenticate before spawning a lab. |
 | hub.resources | object | See `values.yaml` | Resource limits and requests for the Hub |
 | hub.timeout.startup | int | `90` | Timeout for JupyterLab to start in seconds. Currently this sometimes takes over 60 seconds for reasons we don't understand. |
@@ -133,17 +163,37 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/nublado-jupyterhub"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"8.8.0"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"8.15.0"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | See `values.yaml` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |
 | jupyterhub.ingress.enabled | bool | `false` | Whether to enable the default ingress. Should always be disabled since we install our own `GafaelfawrIngress` to avoid repeating the global hostname and manually configuring authentication |
 | jupyterhub.prePuller.continuous.enabled | bool | `false` | Whether to run the JupyterHub continuous prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.prePuller.hook.enabled | bool | `false` | Whether to run the JupyterHub hook prepuller (the Nublado controller does its own prepulling) |
+| jupyterhub.proxy.chp.extraCommandLineFlags | list | `["--keep-alive-timeout=61000"]` | Extra CLI options to pass to the proxy. The most up-to-date list is [here](https://github.com/jupyterhub/configurable-http-proxy/blob/main/bin/configurable-http-proxy) (not the docs, unfortunately) |
 | jupyterhub.proxy.chp.networkPolicy.interNamespaceAccessLabels | string | `"accept"` | Enable access to the proxy from other namespaces, since we put each user's lab environment in its own namespace |
 | jupyterhub.proxy.chp.resources | object | See `values.yaml` | Resource limits and requests for proxy pod |
 | jupyterhub.proxy.service.type | string | `"ClusterIP"` | Only expose the proxy to the cluster, overriding the default of exposing the proxy directly to the Internet |
 | jupyterhub.scheduling.userPlaceholder.enabled | bool | `false` | Whether to spawn placeholder pods representing fake users to force autoscaling in advance of running out of resources |
 | jupyterhub.scheduling.userScheduler.enabled | bool | `false` | Whether the user scheduler should be enabled |
 | proxy.ingress.annotations | object | See `values.yaml` | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |
+| purger.affinity | object | `{}` | Affinity rules for purger |
+| purger.config.dryRun | bool | `false` | Report only; do not purge |
+| purger.config.logging.addTimestamps | bool | `false` | Add timestamps to log lines |
+| purger.config.logging.log_level | string | `"info"` | Level at which to log |
+| purger.config.logging.profile | string | `"production"` | "production" (JSON logs) or "development" (human-friendly) |
+| purger.config.policyFile | string | `"/etc/purger/policy.yaml"` | File holding purge policy |
+| purger.enabled | bool | `false` | Purge scratch space? |
+| purger.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the purger image |
+| purger.image.repository | string | `"ghcr.io/lsst-sqre/nublado-purger"` | purger image to use |
+| purger.image.tag | string | The appVersion of the chart | Tag of purger image to use |
+| purger.nodeSelector | object | `{}` | Node selector rules for purger |
+| purger.podAnnotations | object | `{}` | Annotations for the purger pod |
+| purger.policy.directories[0].intervals | object | see `values.yaml`; each environment must set its own values. | If any of these times are older than specified, remove the file.  Zero means "never remove". |
+| purger.policy.directories[0].path | string | `"/scratch"` |  |
+| purger.policy.directories[0].threshold | string | `"1GiB"` | Files this large or larger will be subject to the "large" interval set |
+| purger.resources | object | See `values.yaml` | Resource limits and requests for the filesystem purger |
+| purger.schedule | string | `"05 03 * * *"` | Crontab entry for when to run. |
+| purger.tolerations | list | `[]` | Tolerations for purger |
+| purger.volumeName | string | None, must be set for each environment | Name of volume to purge (from controller.lab.config.volumes) |
 | secrets.templateSecrets | bool | `true` | Whether to use the new secrets management mechanism. If enabled, the Vault nublado secret will be split into a nublado secret for JupyterHub and a nublado-lab-secret secret used as a source for secret values for the user's lab. |

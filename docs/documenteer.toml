@@ -65,6 +65,7 @@ ignore = [
     "^https://roundtable-dev.lsst.cloud",
     "^https://roundtable.lsst.cloud",
     "^https://rsp.lsst.ac.uk",
+    "^https://rsp-test.lsst.ac.uk",
     "^https://summit-lsp.lsst.codes",
     "^https://tacc-spherex.lsst.cloud",
     "^https://tucson-teststand.lsst.codes",
@@ -85,4 +86,6 @@ ignore = [
     "^https://rubinobs.atlassian.net/",
     "^https://github.com/orgs/",
     "^https://console.cloud.google.com/",
+    # StackOverflow doesn't seem to like link checkers.
+    "^https://stackoverflow.com/questions/",
 ]

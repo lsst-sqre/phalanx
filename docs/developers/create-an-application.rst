@@ -13,11 +13,18 @@ Write the application
 Rubin-developed applications for the Rubin Science Platform should be written in Python unless there's some reason (such as using code developed elsewhere) that forces choice of a different language.
 For the common case of a web application (one that exposes an API via HTTP), we recommend using the `FastAPI framework <https://fastapi.tiangolo.com/>`__.
 
-The easiest way to start a new FastAPI_ application written in Python and intended for the Rubin Science Platform is to create a new project using sqrbot-jr.
-On the LSSTC Slack, send the message ``create project`` to ``@sqrbot-jr``.
+The easiest way to start a new FastAPI_ application written in Python and intended for the Rubin Science Platform is to create a new project using `SQuaRE Bot`_.
+On the Rubin Observatory internal project Slack, run the following command:
+
+.. code-block:: text
+   :caption: rubin-obs.slack.com
+
+   /msg @Squarebot create project
+
 Select ``FastAPI application (Safir)`` from the list of project types.
 This will create a new GitHub repository with the basic framework of a FastAPI_ application that will work well inside the Rubin Science Platform.
 The template uses Safir_ to simplify and regularize many parts of your FastAPI_ application, from logging to database handling.
+For more information, see `the Safir documentation <https://safir.lsst.io/user-guide/set-up-from-template.html>`__.
 
 Any Python application destined for the RSP must regularly update its dependencies to pick up any security fixes and make new releases with those updated dependencies.
 If you use the template as described above, GitHub Actions CI will warn you when application dependencies are out of date.

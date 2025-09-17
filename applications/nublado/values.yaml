@@ -4,6 +4,13 @@ controller:
   # -- Affinity rules for the Nublado controller
   affinity: {}
 
+  sentry:
+    # -- Whether to report errors to Sentry. If Sentry is
+    # enabled, you should set controller.slackAlerts to
+    # false so that uncaught exceptions make it to the Sentry
+    # handler.
+    enabled: false
+
   # -- If Google Artifact Registry is used as the image source, the Google
   # service account that has an IAM binding to the `nublado-controller`
   # Kubernetes service account and has the Artifact Registry reader role
@@ -68,15 +75,15 @@ controller:
 
       # -- Timeout to wait for Kubernetes to create file servers, in Safir
       # `parse_timedelta` format
-      creationTimeout: 2m
+      creationTimeout: 3m
 
       # -- Timeout for deleting a user's file server from Kubernetes, in Safir
       # `parse_timedelta` format
-      deleteTimeout: 1m
+      deleteTimeout: 2m
 
       # -- Timeout for idle user fileservers, in Safir `parse_timedelta`
       # format
-      idleTimeout: 1h
+      idleTimeout: 1d
 
       image:
         # -- File server image to use
@@ -96,6 +103,11 @@ controller:
 
       # -- Path prefix for user file servers
       pathPrefix: "/files"
+
+      # -- How frequently to reconcile file server state against Kubernetes to
+      # catch deletions from outside Nublado, in Safir `parse_timedelta`
+      # format
+      reconcileInterval: "1h"
 
       # -- Resource requests and limits for user file servers
       # @default -- See `values.yaml`
@@ -117,7 +129,62 @@ controller:
       #   readOnly: true
       #   volumeName: "project"
 
+
+    fsadmin:
+      # -- Affinity rules for fsadmin pods
+      affinity: {}
+
+      # -- Argo CD application in which to collect fsadmins
+      application: "nublado-fileservers"
+
+      # -- Extra volumes that should be made available to fsadmin
+      extraVolumes: []
+
+      # -- Extra volumes that should be mounted to fsadmin
+      extraVolumeMounts: []
+
+      image:
+        # -- fsadmin image to use
+        repository: "ghcr.io/lsst-sqre/nublado-fsadmin"
+
+        # -- Pull policy for fsadmin image
+        pullPolicy: "IfNotPresent"
+
+        # -- Tag of fsadmin image to use
+        tag: "8.15.0"
+
+      # -- Mount prefix, to be prepended to mountpoints in order to
+      # collect them in one place
+      mountPrefix: null
+
+      # -- Node selector rules for fsadmin pods
+      nodeSelector: {}
+
+      # -- Resource requests and limits for fsadmin
+      # @default -- See `values.yaml`
+      resources:
+        requests:
+          cpu: 0.1
+          memory: "250Mi"
+        limits:
+          cpu: 1
+          memory: "10Gi"
+
+      # -- Timeout to wait for Kubernetes to create/destroy fsadmin, in Safir
+      # `parse_timedelta` format
+      timeout: 2m
+
+      # -- Tolerations for fsadmin pod
+      tolerations: []
+
+
     images:
+      # -- How frequently to refresh the list of available images and compare
+      # it to the cached images on nodes to prepull new images, in Safir
+      # `parse_timedelta` format. Newly-available images will not appear in
+      # the menu for up to this interval.
+      refreshInterval: "5m"
+
       # -- Source for prepulled images. For Docker, set `type` to `docker`,
       # `registry` to the hostname and `repository` to the name of the
       # repository. For Google Artifact Repository, set `type` to `google`,
@@ -162,6 +229,11 @@ controller:
       # -- Argo CD application in which to collect user lab objects
       application: "nublado-users"
 
+      # -- Default size selected on the spawner form. This must be either
+      # `null` or the name of one of the sizes listed in `sizes`. If `null`,
+      # the first listed size will be the default.
+      defaultSize: "large"
+
       # -- Timeout for deleting a user's lab resources from Kubernetes in
       # Safir `parse_timedelta` format
       deleteTimeout: 1m
@@ -170,13 +242,10 @@ controller:
       # @default -- See `values.yaml`
       env:
         API_ROUTE: "/api"
+        ARROW_DEFAULT_MEMORY_POOL: "jemalloc"  # Arrow >17 memory leak hack
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
-        CULL_KERNEL_IDLE_TIMEOUT: "432000"  # 5 days
-        CULL_KERNEL_CONNECTED: "True"
-        CULL_KERNEL_INTERVAL: "300"  # 5 minutes
         FIREFLY_ROUTE: "/portal/app"
         HUB_ROUTE: "/nb/hub"
-        NO_ACTIVITY_TIMEOUT: "432000"  # 5 days
         RSP_SITE_TYPE: "science"
         TAP_ROUTE: "/api/tap"
         TUTORIAL_NOTEBOOKS_URL: "https://github.com/lsst/tutorial-notebooks@main"
@@ -258,65 +327,78 @@ controller:
         # @default -- See `values.yaml`
         basePasswd: |
           root:x:0:0:root:/root:/bin/bash
-          bin:x:1:1:bin:/bin:/sbin/nologin
-          daemon:x:2:2:daemon:/sbin:/sbin/nologin
-          adm:x:3:4:adm:/var/adm:/sbin/nologin
-          lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
-          sync:x:5:0:sync:/sbin:/bin/sync
-          shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
-          halt:x:7:0:halt:/sbin:/sbin/halt
-          mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
-          operator:x:11:0:operator:/root:/sbin/nologin
-          games:x:12:100:games:/usr/games:/sbin/nologin
-          ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
-          tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
-          dbus:x:81:81:System message bus:/:/sbin/nologin
-          nobody:x:99:99:Nobody:/:/sbin/nologin
-          systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
-          lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
+          daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+          bin:x:2:2:bin:/bin:/usr/sbin/nologin
+          sys:x:3:3:sys:/dev:/usr/sbin/nologin
+          sync:x:4:65534:sync:/bin:/bin/sync
+          games:x:5:60:games:/usr/games:/usr/sbin/nologin
+          man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+          lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+          mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+          news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+          uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+          proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+          www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+          backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+          list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+          irc:x:39:39:ircd:/run/ircd:/usr/sbin/nologin
+          _apt:x:42:65534::/nonexistent:/usr/sbin/nologin
+          nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
 
         # -- Base `/etc/group` file for lab containers
         # @default -- See `values.yaml`
         baseGroup: |
           root:x:0:
-          bin:x:1:
-          daemon:x:2:
+          daemon:x:1:
+          bin:x:2:
           sys:x:3:
           adm:x:4:
           tty:x:5:
           disk:x:6:
           lp:x:7:
-          mem:x:8:
-          kmem:x:9:
-          wheel:x:10:
-          cdrom:x:11:
-          mail:x:12:
-          man:x:15:
-          dialout:x:18:
-          floppy:x:19:
-          games:x:20:
-          utmp:x:22:
-          tape:x:33:
-          utempter:x:35:
-          video:x:39:
-          ftp:x:50:
-          lock:x:54:
-          tss:x:59:
-          audio:x:63:
-          dbus:x:81:
-          screen:x:84:
-          nobody:x:99:
+          mail:x:8:
+          news:x:9:
+          uucp:x:10:
+          man:x:12:
+          proxy:x:13:
+          kmem:x:15:
+          dialout:x:20:
+          fax:x:21:
+          voice:x:22:
+          cdrom:x:24:
+          floppy:x:25:
+          tape:x:26:
+          sudo:x:27:
+          audio:x:29:
+          dip:x:30:
+          www-data:x:33:
+          backup:x:34:
+          operator:x:37:
+          list:x:38:
+          irc:x:39:
+          src:x:40:
+          shadow:x:42:
+          utmp:x:43:
+          video:x:44:
+          sasl:x:45:
+          plugdev:x:46:
+          staff:x:50:
+          games:x:60:
           users:x:100:
-          systemd-journal:x:190:
-          systemd-network:x:192:
-          cgred:x:997:
-          ssh_keys:x:998:
-          input:x:999:
+          _ssh:x:101:
+          nogroup:x:65534:
 
       # -- Pull secret to use for labs. Set to the string `pull-secret` to use
       # the normal pull secret from Vault.
       # @default -- Do not use a pull secret
       pullSecret: null
+
+      # -- How frequently to reconcile lab state against Kubernetes to catch
+      # deletions from outside Nublado, in Safir `parse_timedelta` format. If
+      # a lab is deleted by a node replacement or upgrade, or manually with
+      # `kubectl`, that deletion will not be noticed, and the user will not be
+      # able to spawn a new lab, for up to this interval.
+      reconcileInterval: "5m"
 
       # -- Directory in the lab under which runtime information such as
       # tokens, environment variables, and container information will be
@@ -338,14 +420,21 @@ controller:
       # @default -- See `values.yaml`
       sizes:
         - size: "small"
-          cpu: 1.0
-          memory: "4Gi"
-        - size: "medium"
-          cpu: 2.0
-          memory: "8Gi"
+          resources:
+            limits:
+              cpu: 1.0
+              memory: "4Gi"
+            requests:
+              cpu: 0.25
+              memory: "0.75Gi"
         - size: "large"
-          cpu: 4.0
-          memory: "16Gi"
+          resources:
+            limits:
+              cpu: 4.0
+              memory: "16Gi"
+            requests:
+              cpu: 1.0
+              memory: "4Gi"
 
       # -- How long to wait for Kubernetes to spawn a lab in seconds. This
       # should generally be shorter than the spawn timeout set in JupyterHub.
@@ -406,6 +495,10 @@ hub:
   # external server. This is not used directly by the Nublado chart, but
   # controls how the database password is managed.
   internalDatabase: false
+
+  # -- Default spawn page.  Usually '/lab', but can be overridden in order
+  # to specify a custom landing page.
+  landingPage: "/lab"
 
   # -- Minimum remaining token lifetime when spawning a lab. The token cannot
   # be renewed, so it should ideally live as long as the lab does. If the
@@ -468,7 +561,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.8.0"
+      tag: "8.15.0"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
@@ -579,15 +672,24 @@ jupyterhub:
         # each user's lab environment in its own namespace
         interNamespaceAccessLabels: "accept"
 
+      # -- Extra CLI options to pass to the proxy. The most up-to-date list is
+      # [here](https://github.com/jupyterhub/configurable-http-proxy/blob/main/bin/configurable-http-proxy)
+      # (not the docs, unfortunately)
+      extraCommandLineFlags:
+        # Keepalive timeout, in milliseconds. This should be longer than any
+        # keepalive timeouts on any downstream proxies. The keepalive timeout
+        # for ingress-nginx connections is 60s.
+        - --keep-alive-timeout=61000
+
       # -- Resource limits and requests for proxy pod
       # @default -- See `values.yaml`
       resources:
         limits:
           cpu: "1"
-          memory: "400Mi"
+          memory: "3Gi"
         requests:
-          cpu: "5m"
-          memory: "30Mi"
+          cpu: "250m"
+          memory: "200Mi"
 
   scheduling:
     userScheduler:
@@ -611,21 +713,11 @@ cloudsql:
     # -- Cloud SQL Auth Proxy image to use
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
-    # -- Resource requests and limits for Cloud SQL pod
-    # @default -- See `values.yaml`
-    resources:
-      limits:
-        cpu: "50m"
-        memory: "64Mi"
-      requests:
-        cpu: "1m"
-        memory: "10Mi"
-
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.7"
+    tag: "1.37.9"
 
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
@@ -636,10 +728,10 @@ cloudsql:
   resources:
     limits:
       cpu: "100m"
-      memory: "20Mi"
+      memory: "30Mi"
     requests:
       cpu: "5m"
-      memory: "7Mi"
+      memory: "15Mi"
 
   # -- Annotations for the Cloud SQL Auth Proxy pod
   podAnnotations: {}
@@ -675,33 +767,155 @@ secrets:
   # user's lab.
   templateSecrets: true
 
-# If we're installing tutorials at a given site, this cronjob controls
-# their refresh.
-cronjob:
-  # -- Enable tutorials refresh?
+# Configuration for the scratch purger
+purger:
+  # -- Purge scratch space?
   enabled: false
 
-  # -- Source for repository to clone
-  gitSource: "https://github.com/lsst/tutorial-notebooks"
+  # -- Affinity rules for purger
+  affinity: {}
 
-  # -- Target where repository should land
-  gitTarget: "/project/cst_repos/tutorial-notebooks"
+  # -- Node selector rules for purger
+  nodeSelector: {}
 
-  # -- Branch of repository to clone
-  gitBranch: "main"
+  # -- Annotations for the purger pod
+  podAnnotations: {}
 
-  # -- Where repository volume should be mounted
-  targetVolumePath: "/project"
+  # -- Tolerations for purger
+  tolerations: []
 
-  # -- Repository volume definition
+  # -- Resource limits and requests for the filesystem purger
   # @default -- See `values.yaml`
-  targetVolume:
-    # -- Where volume will be mounted in the container
-    mountPath: "/project"   # Conventional
-    # -- IP address of NetApp server (different per environment)
-    server: null            # This must be changed
-    # -- Path on NetApp server
-    path: "/project-share"  # Assigned by Terraform
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "0.05"
+      memory: "120Mi"
+
+  image:
+    # -- purger image to use
+    repository: "ghcr.io/lsst-sqre/nublado-purger"
+
+    # -- Pull policy for the purger image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of purger image to use
+    # @default -- The appVersion of the chart
+    tag: null
+
+  # -- Crontab entry for when to run.
+  schedule: "05 03 * * *"
+
+  config:
+    # -- File holding purge policy
+    policyFile: /etc/purger/policy.yaml
+    # -- Report only; do not purge
+    dryRun: false
+    logging:
+      # -- Level at which to log
+      log_level: info
+      # -- "production" (JSON logs) or "development" (human-friendly)
+      profile: production
+      # -- Add timestamps to log lines
+      addTimestamps: false
+
+  policy:
+    directories:
+      - path: /scratch
+        # -- Files this large or larger will be subject to the "large" interval set
+        threshold: 1GiB
+        # -- If any of these times are older than specified, remove the file.  Zero means "never remove".
+        # @default -- see `values.yaml`; each environment must set its own values.
+        intervals:
+          large:
+            accessInterval: 0
+            modificationInterval: 0
+            creationInterval: 0
+          small:
+            accessInterval: 0
+            modificationInterval: 0
+            creationInterval: 0
+  # -- Name of volume to purge (from controller.lab.config.volumes)
+  # @default -- None, must be set for each environment
+  volumeName: null
+
+
+# If we're installing tutorials and artifacts at a given site, this cronjob
+# controls their refresh.
+cronjob:
+  # For tutorials notebooks
+  tutorials:
+    # -- Clone the notebooks?
+    enabled: false
+
+    # -- Source for Tutorials repository to clone
+    gitSource: "https://github.com/lsst/tutorial-notebooks"
+
+    # -- Target where Tutorials repository should land
+    gitTarget: "/rubin/cst_repos/tutorial-notebooks"
+
+    # -- Branch of repository to clone
+    gitBranch: "main"
+
+    # -- Where repository volume should be mounted
+    targetVolumePath: "/rubin"
+
+    # -- Repository volume definition
+    # @default -- See `values.yaml`
+    targetVolume:
+      # -- Name of volume to mount (from controller.lab.config.volumes)
+      # @default -- None, must be set for each environment
+      volumeName: null
+
+      # -- Where volume will be mounted in the container
+      mountPath: "/rubin"   # Conventional
+
+    # -- Schedule for the cloning cronjob(s).
+    schedule: "42 * * * *"
+
+    # -- UID for the cloning cronjob(s)
+    uid: 1000
+
+    # -- GID for the cloning cronjob(s)
+    gid: 1000
+
+  artifacts:
+    # -- Clone the artifacts?
+    enabled: false
+
+    # -- Source for Tutorials binary artifact repository to clone
+    gitSource: "https://github.com/lsst/tutorial-notebooks-data"
+
+    # -- Target where Tutorial artifacts repository should land
+    gitTarget: "/rubin/cst_repos/tutorial-notebooks-data"
+
+    # -- Branch of repository to clone
+    gitBranch: "main"
+
+    # -- Where repository volume should be mounted
+    targetVolumePath: "/rubin"
+
+    # -- Repository volume definition
+    # @default -- See `values.yaml`
+    targetVolume:
+      # -- Name of volume to mount (from controller.lab.config.volumes)
+      # @default -- None, must be set for each environment
+      volumeName: null
+
+      # -- Where volume will be mounted in the container
+      mountPath: "/rubin"   # Conventional
+
+    # -- Schedule for the cloning cronjob(s).
+    schedule: "43 * * * *"
+
+    # -- UID for the cloning cronjob(s)
+    uid: 1000
+
+    # -- GID for the cloning cronjob(s)
+    gid: 1000
+
 
   image:
     # -- Repository cloner image to use
@@ -713,7 +927,7 @@ cronjob:
     # -- Tag of repo cloner image to use
     tag: "0.1.0"
 
-  # -- Resource limits and requests for the tutorials cronjob
+  # -- Resource limits and requests for the cloning cronjob(s)
   # @default -- See `values.yaml`
   resources:
     limits:
@@ -723,12 +937,10 @@ cronjob:
       cpu: "50m"
       memory: "50Mi"
 
-  # -- Tolerations for the tutorials cronjob.
+  # -- Tolerations for the cloning cronjob(s).
   tolerations: []
-  # -- Affinity rules for the tutorials cronjob.
+  # -- Affinity rules for the cloning cronjob(s).
   affinity: {}
-  # -- Schedule for the tutorials cronjob.
-  schedule: "43 * * * *"
 
 
 # The following will be set by parameters injected by Argo CD and should not
@@ -737,6 +949,10 @@ global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
   baseUrl: null
+
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD Application
+  environmentName: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD

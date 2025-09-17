@@ -5,23 +5,35 @@
 ---
 internalDB: true
 config:
+  aws:
+    defaultS3EndpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
+    profiles:
+      embargo:
+        endpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
   logLevel: "INFO"
-  logProfile: "development"
+  logProfile: "production"
   db:
     hostname: "postgres.postgres"
-    echo: true
+    echo: false
+  fqdnUrl: https://usdf-cm.slac.stanford.edu
   outputVolume:
     storageClassName: "sdf-data-rubin"
     subPath: "shared/campaigns/users/usdf-cm"
     mountPath: "/sdf/group/rubin/shared/campaigns/users/usdf-cm"
   butler:
+    dbAuth:
+      secretName: "cm-service"
+      secretKey: "butler-authn"
     storageClassName: "sdf-data-rubin"
     subPath: "repo/main"
     mountPath: "/sdf/group/rubin/repo/main"
     repositories:
       "/repo/main": "/sdf/group/rubin/repo/main/butler.yaml"
       "/repo/main+sasquatch_dev": "/sdf/group/rubin/repo/main/butler+sasquatch_dev.yaml"
+      "/repo/embargo": "s3://embargo@rubin-summit-users/butler.yaml"
+      "/repo/embargo+sasquatch_dev": "s3://embargo@rubin-summit-users/butler+sasquatch_dev.yaml"
   htcondor:
+    sbatchDuration: "2-0:0:0"
     scheddHost: sdfiana012.sdf.slac.stanford.edu
     collectorHost: sdfiana012.sdf.slac.stanford.edu
     fsRemoteDir:
@@ -30,11 +42,14 @@ config:
       mountPath: "/sdf/group/rubin/services/htcondor/shared"
 
 image:
-  tag: "0.3.0"
+  tag: "0.5.0"
   pullPolicy: IfNotPresent
 
 daemon:
+  security:
+    uid: 17951
+    gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.3.0"
+    tag: "0.5.0"
     pullPolicy: IfNotPresent

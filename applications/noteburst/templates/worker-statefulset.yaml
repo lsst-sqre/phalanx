@@ -1,0 +1,147 @@
+# This is a StatefulSet instead of a deployment so that every replica can have
+# a consistent identifier (the StatefulSet index) to use to reserve an RSP
+# identity. If a worker shuts down uncleanly, a Nublado lab could remain
+# running when the worker starts up again. Having this consistent ID lets us
+# confidently shut the lab down upon restart without the fear that the lab is
+# being used by some other replica.
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "noteburst.fullname" . }}-worker
+  labels:
+    {{- include "noteburst.labels" . | nindent 4 }}
+    app.kubernetes.io/component: "worker"
+    app.kubernetes.io/part-of: "noteburst"
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.config.worker.workerCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "noteburst.selectorLabels" . | nindent 6 }}
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/worker-configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "noteburst.selectorLabels" . | nindent 8 }}
+        noteburst-redis-client: "true"
+        app.kubernetes.io/component: "worker"
+        app.kubernetes.io/part-of: "noteburst"
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "noteburst.serviceAccountName" . }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["arq"]
+          args: ["noteburst.worker.main.WorkerSettings"]
+          resources:
+            {{- toYaml .Values.resources.noteburstWorker | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "noteburst.fullname" . }}-worker
+          env:
+            - name: "NOTEBURST_IDENTITY_INDEX"
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['apps.kubernetes.io/pod-index']
+            - name: "NOTEBURST_GAFAELFAWR_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "noteburst.fullname" . }}-gafaelfawr-token
+                  key: "token"
+            - name: "NOTEBURST_SLACK_WEBHOOK_URL"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "noteburst.fullname" . }}
+                  key: "NOTEBURST_SLACK_WEBHOOK_URL"
+            - name: "NOTEBURST_WORKER_IDENTITIES_PATH"
+              value: "/etc/noteburst/identities.yaml"
+            {{- if .Values.config.sentry.enabled }}
+            - name: "SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "noteburst.fullname" . }}
+                  key: "sentry-dsn"
+            - name: "SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.environmentName | quote }}
+            - name: "SENTRY_RELEASE"
+              value: {{ .Values.image.tag | default .Chart.AppVersion }}
+            {{- end }}
+            {{- if .Values.config.metrics.enabled }}
+            - name: "KAFKA_BOOTSTRAP_SERVERS"
+              valueFrom:
+                secretKeyRef:
+                  name: "noteburst-kafka"
+                  key: "bootstrapServers"
+            - name: "KAFKA_SECURITY_PROTOCOL"
+              valueFrom:
+                secretKeyRef:
+                  name: "noteburst-kafka"
+                  key: "securityProtocol"
+            - name: "KAFKA_CLIENT_CERT_PATH"
+              value: "/etc/noteburst-kafka/user.crt"
+            - name: "KAFKA_CLIENT_KEY_PATH"
+              value: "/etc/noteburst-kafka/user.key"
+            - name: "KAFKA_CLUSTER_CA_PATH"
+              value: "/etc/noteburst-kafka/ca.crt"
+            {{- end }}
+          volumeMounts:
+            - name: "identities"
+              mountPath: "/etc/noteburst"
+              readOnly: true
+            {{- if .Values.config.metrics.enabled }}
+            - name: "kafka"
+              mountPath: "/etc/noteburst-kafka/ca.crt"
+              readOnly: true
+              subPath: "ssl.truststore.crt"
+            - name: "kafka"
+              mountPath: "/etc/noteburst-kafka/user.crt"
+              readOnly: true
+              subPath: "ssl.keystore.crt"
+            - name: "kafka"
+              mountPath: "/etc/noteburst-kafka/user.key"
+              readOnly: true
+              subPath: "ssl.keystore.key"
+            {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+      volumes:
+        - name: "identities"
+          configMap:
+            name: {{ include "noteburst.fullname" . }}-worker-identities
+        {{- if .Values.config.metrics.enabled }}
+        - name: "kafka"
+          secret:
+            secretName: "noteburst-kafka"
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

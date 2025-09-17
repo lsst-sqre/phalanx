@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/qserv-kafka"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "qserv-kafka") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

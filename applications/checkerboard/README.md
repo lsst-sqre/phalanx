@@ -16,7 +16,6 @@ Identity mapping service
 | config.profile | string | `"production"` | application Safir profile ("production" or "development") |
 | config.slackProfileField | string | `"GitHub username"` | name of Slack profile field for GitHub username (case-sensitive) |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the checkerboard image |

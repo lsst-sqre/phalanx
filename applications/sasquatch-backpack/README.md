@@ -18,7 +18,7 @@ Collection of APIs that feed into Sasquatch
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/sasquatch-backpack"` | URL path prefix |
 | config.sasquatchRestProxyUrl | string | `""` | Sasquatch REST Proxy URL |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| config.sasquatchSchemaRegistryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Sasquatch schema registry URL |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"Always"` | Pull policy for the sasquatch-backpack image |

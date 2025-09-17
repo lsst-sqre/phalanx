@@ -1,34 +1,16 @@
 # Default values for Sasquatch.
 
 # Override strimzi-kafka subchart configuration.
-strimzi-kafka:
-  kafka:
-    listeners:
-      tls:
-        # -- Whether internal TLS listener is enabled
-        enabled: true
+strimzi-kafka: {}
 
-      plain:
-        # -- Whether internal plaintext listener is enabled
-        enabled: true
+schema-registry:
+  # -- Whether to enable the schema-registry subchart
+  enabled: false
 
-      external:
-        # -- Whether external listener is enabled
-        enabled: true
-
-  connect:
-    # -- Whether Kafka Connect is enabled
-    enabled: true
-
-strimzi-registry-operator:
-  # -- Name of the Strimzi Kafka cluster
-  clusterName: sasquatch
-
-  # -- Namespace where the Strimzi Kafka cluster is deployed
-  clusterNamespace: sasquatch
-
-  # -- Namespace where the strimzi-registry-operator is deployed
-  operatorNamespace: sasquatch
+schema-registry-remote:
+  # -- Whether to enable schema-registry-remote, an instance
+  # of the schema-registry for remote topics
+  enabled: false
 
 influxdb:
   # -- Whether InfluxDB is enabled
@@ -40,7 +22,7 @@ influxdb:
 
   livenessProbe:
     # -- Liveness probe initial delay in seconds
-    initialDelaySeconds: 90
+    initialDelaySeconds: 180
 
   persistence:
     # -- Whether to use persistent volume claims. By default, `storageClass`
@@ -158,11 +140,11 @@ influxdb:
   # @default -- See `values.yaml`
   resources:
     requests:
-      memory: 96Gi
-      cpu: 8
+      memory: 4Gi
+      cpu: 1
     limits:
-      memory: 96Gi
-      cpu: 8
+      memory: 8Gi
+      cpu: 2
 
 customInfluxDBIngress:
   # -- Whether to enable the custom ingress for InfluxDB OSS
@@ -192,7 +174,7 @@ influxdb-enterprise-standby:
 influxdb-enterprise-active:
   # -- Whether to enable influxdb-enterprise-active
   enabled: false
-
+  #
 kafka-connect-manager:
   # -- Whether to enable the Kafka Connect Manager
   enabled: false
@@ -214,7 +196,7 @@ chronograf:
     repository: "quay.io/influxdb/chronograf"
 
     # -- Docker tag to use for Chronograf
-    tag: 1.10.6
+    tag: 1.10.8
 
   updateStrategy:
     # -- Deployment strategy, use recreate with persistence enabled
@@ -260,11 +242,11 @@ chronograf:
   # @default -- See `values.yaml`
   resources:
     requests:
-      memory: 4Gi
+      memory: 2Gi
       cpu: 1
     limits:
-      memory: 64Gi
-      cpu: 4
+      memory: 4Gi
+      cpu: 2
 
 kapacitor:
   # -- Whether to enable Kapacitor
@@ -272,10 +254,11 @@ kapacitor:
 
   image:
     # -- Docker image to use for Kapacitor
-    repository: kapacitor
-
+    repository: docker.io/library/kapacitor
     # -- Tag to use for Kapacitor
-    tag: 1.7.6
+    tag: 1.8.0
+    # -- Pull policy for Kapacitor
+    pullPolicy: "IfNotPresent"
 
   strategy:
     # -- Deployment strategy, use recreate with persistence enabled
@@ -284,12 +267,16 @@ kapacitor:
   persistence:
     # -- Whether to enable Kapacitor data persistence
     enabled: true
-
     # -- Size of storage to request if enabled
     size: 100Gi
 
   # -- InfluxDB connection URL
   influxURL: http://sasquatch-influxdb.sasquatch:8086
+
+  # -- Enable Squadcast alerts
+  # @default -- False. If set to true, you need to create the URL as a secret
+  squadcast:
+    enabled: false
 
   # -- Use `influxdb-user` and `influxdb-password` keys from this secret
   existingSecret: sasquatch
@@ -307,8 +294,8 @@ kapacitor:
       memory: 1Gi
       cpu: 1
     limits:
-      memory: 16Gi
-      cpu: 4
+      memory: 2Gi
+      cpu: 2
 
 kafdrop:
   # -- Whether to enable the kafdrop subchart
@@ -350,18 +337,13 @@ consdb:
   # -- Whether to enable the consdb subchart
   enabled: false
 
-global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: ""
+scimma:
+  # -- Whether to enable the scimma subchart
+  enabled: false
 
-  # -- Host name for ingress
-  # @default -- Set by Argo CD
-  host: ""
-
-  # -- Base path for Vault secrets
-  # @default -- Set by Argo CD
-  vaultSecretsPath: ""
+data-transfer-monitoring:
+  # -- Whether to enable the data-transfer-monitoring subchart
+  enabled: false
 
 app-metrics:
   # -- Enable the app-metrics subchart with topic, user, and telegraf
@@ -370,3 +352,16 @@ app-metrics:
 
   # -- The apps to create configuration for.
   apps: []
+
+grafana:
+  # -- Whether to enable the grafana subchart
+  enabled: false
+
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

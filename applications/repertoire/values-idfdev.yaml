@@ -1,0 +1,15 @@
+config:
+  availableDatasets:
+    - "dp02"
+    - "dp03"
+    - "dp1"
+  influxdbDatabases:
+    idfdev_efd:
+      url: "https://data-dev.lsst.cloud/influxdb/"
+      database: "efd"
+      username: "efdreader"
+      passwordKey: "idfdev_efd-password"
+      schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
+  slackAlerts: true
+  useSubdomains:
+    - "nublado"

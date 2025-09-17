@@ -6,7 +6,7 @@ argo-cd:
       - name: "HTTPS_PROXY"
         value: "http://squid.slac.stanford.edu:3128"
       - name: "NO_PROXY"
-        value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server,.stanford.edu,.slac.stanford.edu"
+        value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server,.stanford.edu,.slac.stanford.edu,.sdf.slac.stanford.edu"
 
   configs:
     cm:
@@ -32,6 +32,7 @@ argo-cd:
         g, ebellm@slac.stanford.edu, role:admin
         g, hchiang2@slac.stanford.edu, role:admin
         g, afausti@slac.stanford.edu, role:admin
+        g, elhoward@slac.stanford.edu, role:admin
       scopes: "[email]"
 
   server:

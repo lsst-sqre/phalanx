@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: sasquatch-backup
+  name: sasquatch-backup-artifacts
 spec:
   accessModes:
     - ReadWriteOnce

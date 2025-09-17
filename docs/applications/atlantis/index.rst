@@ -4,7 +4,7 @@
 atlantis — GitHub-based terraform workflows
 ###########################################
 
-This application provides an [Atlantis](https://runatlantis.io) instance for managing Terraform through GitHub pull requests.
+This application provides an [Atlantis](https://www.runatlantis.io) instance for managing Terraform through GitHub pull requests.
 
 .. jinja:: atlantis
    :file: applications/_summary.rst.jinja

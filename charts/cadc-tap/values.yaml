@@ -71,7 +71,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "1.21.1"
+      tag: "1.23.3"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -89,7 +89,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "2.13.1"
+      tag: "3.9.2"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -99,16 +99,19 @@ config:
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
   # -- Datalink payload URL
-  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/w.2025.16/datalink-snippets.zip"
+  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/DP1-v1.1.4-rc1/datalink-snippets.zip"
 
   # -- Name of GCS bucket in which to store results
   gcsBucket: "async-results.lsst.codes"
 
   # -- Base URL for results stored in GCS bucket
-  gcsBucketUrl: "https://tap-files.lsst.codes"
+  gcsBucketUrl: "https://storage.googleapis.com"
 
   # -- GCS bucket type (GCS or S3)
   gcsBucketType: "GCS"
+
+  # -- Data Database name
+  database: "dp02"
 
   # -- Java heap size, which will set the maximum size of the heap. Otherwise
   # Java would determine it based on how much memory is available and black
@@ -126,6 +129,33 @@ config:
 
   # -- Whether Sentry is enabled in this environment
   sentryEnabled: false
+
+  # -- Kafka configuration
+  kafka:
+
+    # -- Kafka topics
+    topics:
+
+      # -- Job Run topic
+      jobRun: "lsst.tap.job-run"
+
+      # -- Job Status topic
+      jobStatus: "lsst.tap.job-status"
+
+      # -- Job Delete topic
+      jobDelete: "lsst.tap.job-delete"
+
+    # -- Whether kafka is enabled
+    enabled: false
+
+  # -- Rules for renaming Columns
+  urlRewrite:
+
+    # -- Whether it is enabled
+    enabled: true
+
+    # -- String with a comma-separated list of schema.table:column rules
+    rules: "ivoa.ObsCore:access_url"
 
 mockdb:
   # -- Spin up a container to pretend to be the database.
@@ -170,7 +200,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "w.2025.16"
+    tag: "DP1-v1.1.4-rc1"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
@@ -203,7 +233,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "2.13.1"
+    tag: "3.9.2"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
@@ -237,7 +267,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.7"
+    tag: "1.37.9"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -259,10 +289,10 @@ cloudsql:
   resources:
     limits:
       cpu: "100m"
-      memory: "20Mi"
+      memory: "30Mi"
     requests:
       cpu: "5m"
-      memory: "7Mi"
+      memory: "15Mi"
 
 # -- The service account will allways be created when cloudsql.enabled is set to true
 # In this case the serviceAccount configuration here is required
@@ -282,12 +312,12 @@ serviceAccount:
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
-  baseUrl: ""
+  baseUrl: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
-  host: ""
+  host: null
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
-  vaultSecretsPath: ""
+  vaultSecretsPath: null

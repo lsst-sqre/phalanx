@@ -30,8 +30,8 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | config.worker.identities | list | `[]` | Science Platform user identities that workers can acquire. Each item is an object with username and uuid keys |
 | config.worker.imageReference | string | `""` | Nublado image reference, applicable when imageSelector is "reference" |
 | config.worker.imageSelector | string | `"recommended"` | Nublado image stream to select: "recommended", "weekly" or "reference" |
-| config.worker.jobTimeout | int | `300` | The default notebook execution timeout, in seconds. |
-| config.worker.keepAlive | string | `"normal"` | Worker keep alive mode: "normal", "fast", "disabled" |
+| config.worker.jobTimeout | int | `300` | The maximum allowed notebook execution time, in seconds. |
+| config.worker.keepAlive | string | `"hourly"` | Worker keep alive mode: "normal", "fast", "hourly", "daily", "disabled" |
 | config.worker.maxConcurrentJobs | int | `1` | Max number of concurrent notebook executions per worker |
 | config.worker.tokenLifetime | string | `"2419200"` | Worker token lifetime, in seconds. |
 | config.worker.tokenScopes | string | `"exec:notebook,read:image,read:tap,read:alertdb"` | Nublado2 worker account's token scopes as a comma-separated list. |
@@ -49,6 +49,9 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | ingress.path | string | `"/noteburst"` | Path prefix where noteburst is hosted |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` |  |
+| periodicMetrics | object | `{"resources":{"limits":{"cpu":"250m","memory":"512Mi"},"requests":{"cpu":"2m","memory":"128Mi"}},"schedule":"* * * * *"}` | Config for the CronJob that publishes metrics periodically |
+| periodicMetrics.resources | object | `{"limits":{"cpu":"250m","memory":"512Mi"},"requests":{"cpu":"2m","memory":"128Mi"}}` | Resources for the periodic metrics cron job |
+| periodicMetrics.schedule | string | `"* * * * *"` | Cron schedule string for publishing periodic metrics (in UTC) |
 | podAnnotations | object | `{}` | Annotations for API and worker pods |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
 | redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |

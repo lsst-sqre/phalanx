@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rubin-too-producer.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "rubin-too-producer.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "rubin-too-producer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "rubin-too-producer.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: producer-config
+      {{- if .Values.nfsMountpoint }}
+      {{- range $values := .Values.nfsMountpoint }}
+        - name: {{ $values.name }}
+          nfs:
+            path: {{ $values.serverPath }}
+            readOnly: {{ $values.readOnly }}
+            server: {{ $values.server }}
+      {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          {{- if or $.Values.env $.Values.envSecrets }}
+          {{- range $env_var, $env_value := $.Values.env }}
+            - name: {{ $env_var }}
+              value: {{ $env_value | quote }}
+          {{- end }}
+          {{- range $env := $.Values.envSecrets }}
+            - name: {{ $env.name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.namespace }}
+                  key: {{ $env.secretKey }}
+          {{- end }}
+          {{- end }}
+          volumeMounts:
+           - name: config-volume
+             mountPath: {{ .Values.configMountPath }}
+             subPath: config.yaml
+          {{- if .Values.nfsMountpoint }}
+          {{- range $values := .Values.nfsMountpoint }}
+            - name: {{ $values.name }}
+              mountPath: {{ $values.containerPath }}
+              readOnly: {{ $values.readOnly }}
+          {{- end}}
+          {{- end}}
+          {{- with $.Values.resources }}
+          resources:
+            {{- toYaml $.Values.resources | nindent 12 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

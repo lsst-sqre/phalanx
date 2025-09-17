@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "datalinker"
+  labels:
+    {{- include "datalinker.labels" . | nindent 4 }}
+data:
+  config.yaml: |
+    cutoutSyncUrl: "{{ .Values.global.baseUrl }}/api/cutout/sync"
+    hipsBaseUrl: "{{ .Values.global.baseUrl }}/api/hips"
+    {{- if .Values.config.tapMetadataUrl }}
+    tapMetadataDir: "/tmp/tap-metadata"
+    tapMetadataUrl: {{ .Values.config.tapMetadataUrl | quote }}
+    {{- end }}
+    {{- .Values.config | toYaml | nindent 4 }}

@@ -15,45 +15,46 @@ alert-stream-broker:
     externalListener:
       tls:
         enabled: false
+
       bootstrap:
         host: usdf-alert-stream-dev.lsst.cloud
         ip: "134.79.23.185"
         annotations:
-          metallb.universe.tf/address-pool: 'sdf-dmz'
+          metallb.io/address-pool: 'sdf-dmz'
       brokers:
         - host: usdf-alert-stream-dev-broker-0.lsst.cloud
           ip: "134.79.23.214"
           broker: 6
           annotations:
-            metallb.universe.tf/address-pool: 'sdf-dmz'
+            metallb.io/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-1.lsst.cloud
           ip: "134.79.23.216"
           broker: 7
           annotations:
-            metallb.universe.tf/address-pool: 'sdf-dmz'
+            metallb.io/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-2.lsst.cloud
           ip: "134.79.23.218"
           broker: 8
           annotations:
-            metallb.universe.tf/address-pool: 'sdf-dmz'
+            metallb.io/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-3.lsst.cloud
           ip: "134.79.23.220"
           broker: 9
           annotations:
-            metallb.universe.tf/address-pool: 'sdf-dmz'
+            metallb.io/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-4.lsst.cloud
           ip: "134.79.23.217"
           broker: 10
           annotations:
-            metallb.universe.tf/address-pool: 'sdf-dmz'
+            metallb.io/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-5.lsst.cloud
           ip: "134.79.23.219"
           broker: 11
           annotations:
-            metallb.universe.tf/address-pool: 'sdf-dmz'
+            metallb.io/address-pool: 'sdf-dmz'
 
     storage:
-      size: 2500Gi
+      size: 35Ti
       storageClassName: wekafs--sdf-k8s01
 
   kafkaExporter:
@@ -78,31 +79,31 @@ alert-stream-broker:
 
     # The actual community broker users
     - username: "alerce-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
       groups: ["alerce-idfint"]
 
     - username: "ampel-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
       groups: ["ampel-idfint"]
 
     - username: "antares-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
       groups: ["antares-idfint"]
 
     - username: "babamul-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
       groups: ["babamul-idfint"]
 
     - username: "fink-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
       groups: ["fink-idfint"]
 
     - username: "lasair-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
       groups: ["lasair-idfint"]
 
     - username: "pittgoogle-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
       groups: ["pittgoogle-idfint"]
 
   testTopicName: alert-stream-test
@@ -113,22 +114,27 @@ alert-stream-broker:
   simulatedTopicPartitions: 45
   simulatedTopicReplicas: 1
 
-  devTopicName: dev-topic
-  devTopicPartitions: 10
-  devTopicReplicas: 1
-
   latissTopicName: latiss-alerts
   latissTopicPartitions: 45
   latissTopicReplicas: 1
 
-  comcamTopicName: lsstcomcam-alerts
-  comcamTopicPartitions: 45
-  comcamTopicReplicas: 1
+  lsstcamTopicName90: lsst-alerts-v9.0
+  lsstcamTopicPartitions90: 45
+  lsstcamTopicReplicas90: 1
+  lsstcamMaxBytesRetained90: "755000000000"
+  lsstcamMaxMillisecondsRetained90: "2629740000"
 
-  lsstcamTopicName: lsst-alerts-v7.4
-  lsstcamTopicPartitions: 45
-  lsstcamTopicReplicas: 1
-  lsstcamMaxBytesRetained: "300000000000"
+  lsstcamTopicName74: lsst-alerts-v7.4
+  lsstcamTopicPartitions74: 45
+  lsstcamTopicReplicas74: 1
+  lsstcamMaxBytesRetained74: "300000000000"
+  lsstcamMaxMillisecondsRetained74: "2629740000"
+
+  lsstcamTopicNameMDC: alerts-mock-data-challenge
+  lsstcamTopicPartitionsMDC: 45
+  lsstcamTopicReplicasMDC: 1
+  lsstcamMaxBytesRetainedMDC: "300000000000"
+  lsstcamMaxMillisecondsRetainedMDC: "2629740000"
 
   # Compression set to snappy to balance alert packet compression speed and size.
   topicCompression: snappy
@@ -140,8 +146,9 @@ alert-stream-schema-registry:
 
 alert-database:
   ingester:
+    # The image can use either a tag or a digest to determine which is being used.
     image:
-      tag: v2.0.2
+      tag: v3.2.0
 
     logLevel: verbose
 
@@ -152,7 +159,9 @@ alert-database:
     kafka:
       cluster: alert-broker
       port: 9092
-      topic: lsst-alerts-v7.4
+      topic:
+        - lsst-alerts-v9.0
+        - lsst-alerts-v7.4
 
   server:
     serviceAccountName: alert-database-reader

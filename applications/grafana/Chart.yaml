@@ -1,0 +1,12 @@
+apiVersion: v2
+description: Grafana observability visualization tooling
+name: grafana
+type: application
+version: 1.0.0
+dependencies:
+  - name: "grafana-operator"
+    repository: "oci://ghcr.io/grafana/helm-charts"
+    # You can't query versions from OCI repos, so look on GitHub to find
+    # versions:
+    # https://github.com/grafana/grafana-operator/releases
+    version: "v5.19.4"

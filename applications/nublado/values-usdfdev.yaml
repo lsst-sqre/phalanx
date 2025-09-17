@@ -7,7 +7,7 @@ controller:
         registry: "docker-registry.slac.stanford.edu"
         repository: "lsstsqre/sciplat-lab"
       pin:
-        - "w_2025_09"
+        - "r29.1.1"
     lab:
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
@@ -15,6 +15,7 @@ controller:
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
         DAX_APDB_INDEX_URI: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
         HUB_ROUTE: "/nb/hub"
+        HOMEDIR_SCHEMA: "initialThenUsername"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "rubin"
         RSP_SITE_TYPE: "staff"
@@ -33,40 +34,46 @@ controller:
         # Add rubin_users group (there is not yet a simpler way to do this).
         baseGroup: |
           root:x:0:
-          bin:x:1:
-          daemon:x:2:
+          daemon:x:1:
+          bin:x:2:
           sys:x:3:
           adm:x:4:
           tty:x:5:
           disk:x:6:
           lp:x:7:
-          mem:x:8:
-          kmem:x:9:
-          wheel:x:10:
-          cdrom:x:11:
-          mail:x:12:
-          man:x:15:
-          dialout:x:18:
-          floppy:x:19:
-          games:x:20:
-          utmp:x:22:
-          tape:x:33:
-          utempter:x:35:
-          video:x:39:
-          ftp:x:50:
-          lock:x:54:
-          tss:x:59:
-          audio:x:63:
-          dbus:x:81:
-          screen:x:84:
-          nobody:x:99:
+          mail:x:8:
+          news:x:9:
+          uucp:x:10:
+          man:x:12:
+          proxy:x:13:
+          kmem:x:15:
+          dialout:x:20:
+          fax:x:21:
+          voice:x:22:
+          cdrom:x:24:
+          floppy:x:25:
+          tape:x:26:
+          sudo:x:27:
+          audio:x:29:
+          dip:x:30:
+          www-data:x:33:
+          backup:x:34:
+          operator:x:37:
+          list:x:38:
+          irc:x:39:
+          src:x:40:
+          shadow:x:42:
+          utmp:x:43:
+          video:x:44:
+          sasl:x:45:
+          plugdev:x:46:
+          staff:x:50:
+          games:x:60:
           users:x:100:
-          systemd-journal:x:190:
-          systemd-network:x:192:
-          cgred:x:997:
-          ssh_keys:x:998:
-          input:x:999:
+          _ssh:x:101:
           rubin_users:x:4085:
+          nogroup:x:65534:
+
       pullSecret: "pull-secret"
       secrets:
         - secretName: "nublado-lab-secret"

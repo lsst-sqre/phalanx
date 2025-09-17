@@ -1,0 +1,7 @@
+image:
+  pullPolicy: Always
+ingress:
+  # -- Additional annotations for the ingress rule
+  hostname: "eups.lsst.cloud"
+config:
+  serviceAccountReadonly: eups-distributor@roundtable-prod-f6fd.iam.gserviceaccount.com

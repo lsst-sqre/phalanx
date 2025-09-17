@@ -76,7 +76,7 @@ manager:
       # -- The expiration time for the redis service
       REDIS_CONFIG_EXPIRY: 5
       # -- The connection capacity for the redis service
-      REDIS_CONFIG_CAPACITY: 5000
+      REDIS_CONFIG_CAPACITY: 100
       # -- The SMTP user for the LOVE manager frontend
       SMTP_USER: loveapplication
       # -- The mail address to forward the nightly report to
@@ -199,7 +199,7 @@ manager:
         # -- The expiration time for the redis service
         REDIS_CONFIG_EXPIRY: 5
         # -- The connection capacity for the redis service
-        REDIS_CONFIG_CAPACITY: 5000
+        REDIS_CONFIG_CAPACITY: 100
       envSecrets:
         # -- The LOVE manager producers secret secret key name
         SECRET_KEY: manager-secret-key
@@ -260,7 +260,7 @@ redis:
     # -- The redis image to use
     repository: redis
     # -- The tag to use for the redis image
-    tag: 7.4.3
+    tag: 8.2.1
     # -- The pull policy for the redis image
     pullPolicy: IfNotPresent
   envSecrets:

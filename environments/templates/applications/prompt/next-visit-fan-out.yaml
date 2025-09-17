@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/next-visit-fan-out"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "next-visit-fan-out") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

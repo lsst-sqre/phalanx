@@ -6,6 +6,26 @@ internalDB: false
 
 config:
 
+  aws:
+
+    # -- Named profiles to include in service's AWS config file
+    profiles: {}
+
+    # -- URL to use as an S3 (Object Store) Endpoint
+    defaultS3EndpointUrl: null
+
+    # -- Name of a secret with AWS authn details
+    secretName: "cm-service"
+
+    # -- Key within the AWS secret with the contents of an AWS credentials file
+    credentialsFileSecretKey: "aws-credentials-file"
+
+    # -- Key within the AWS secret with the ACCESS_KEY_ID for the default profile
+    defaultAccessKeyIdSecretKey: "aws-access-key-id"
+
+    # -- Key within the AWS secret with the SECRET_ACCESS_KEY for the default profile
+    defaultSecretAccessKeySecretKey: "aws-secret-access-key"
+
   db:
     # -- Name of the database host
     hostname: ""
@@ -23,10 +43,10 @@ config:
     port: 5432
 
     # -- Name of a secret with db authn details
-    secret_name: "cm-service"
+    secretName: "cm-service"
 
     # -- Key within db authn secret with db password
-    secret_key: "internalDatabasePassword"
+    secretKey: "internalDatabasePassword"
 
   # -- Logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`, or `CRITICAL`)
   logLevel: "INFO"
@@ -35,6 +55,9 @@ config:
   logProfile: "production"
 
   outputVolume:
+    # -- If specified, full path to the output volume mount target
+    mountPath: null
+
     # -- If specified, name of storage class requested in service output area PVC
     storageClassName: null
 
@@ -46,6 +69,9 @@ config:
 
   # -- URL path prefix
   pathPrefix: "/cm-service"
+
+  # -- URL FQDN, used to write absolute URLs in notifications
+  fqdnUrl: null
 
   butler:
 
@@ -74,6 +100,9 @@ config:
     # -- Name of an htcondor collector host
     collectorHost: null
 
+    # -- Max Duration of an HTCondor Glidein, in SBATCH terms ("days-hours:minutes:seconds")
+    sbatchDuration: "0-1:0:0"
+
     # -- If specified, name of an htcondor schedd host
     scheddHost: null
 
@@ -93,19 +122,19 @@ config:
     url: null
 
     # -- URL of a panda monitor host
-    monitor_url: null
+    monitorUrl: null
 
     # -- PanDA host TLS verification
-    verify_host: "1"
+    verifyHost: "1"
 
     # -- PanDA host behind load balancer
-    behind_lb: "0"
+    behindLb: "0"
 
     # -- PanDA Use Native HTTPLib instead of Curl
-    use_native_httplib: "1"
+    useNativeHttplib: "1"
 
     # -- PanDA Virtual Organization Name for oidc
-    virtual_organization: Rubin
+    virtualOrganization: Rubin
 
     # -- Name of Secret with PanDA secrets
     secretName: "cm-service"
@@ -115,6 +144,14 @@ config:
 
     # -- Secret key for PanDA refresh-token value
     refreshTokenSecretKey: "panda-refresh-token"
+
+  slack:
+
+    # -- Name of Secret with Slack secrets
+    secretName: "cm-service"
+
+    # -- Secret key for Slack webhook URL
+    webhookUrlSecretKey: "slack-webhook-url"
 
 image:
   # -- Image to use for frontend containers
@@ -215,10 +252,6 @@ daemon:
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: null
-
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null

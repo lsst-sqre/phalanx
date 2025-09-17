@@ -23,7 +23,6 @@ Semaphore is the user notification and messaging service for the Rubin Science P
 | config.phalanx_env | string | `""` | Name of the Phalanx environment where the application is installed TODO can this be set by a global? |
 | config.profile | string | `"production"` |  |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| global.baseUrl | string | Set by Argo CD Application | Base URL for the environment |
 | global.host | string | Set by Argo CD Application | Host name for ingress |
 | global.vaultSecretsPathPrefix | string | Set by Argo CD Application | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |

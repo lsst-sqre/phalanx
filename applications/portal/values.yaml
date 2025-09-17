@@ -57,6 +57,9 @@ securityContext:
   fsGroup: 91
 
 config:
+  # -- If not null, display this alert to all users in a banner
+  alertMessage: null
+
   # -- Set to `TRUE` to enable service debugging
   debug: "FALSE"
 
@@ -67,6 +70,9 @@ config:
   # @default -- `/api/hips/images/color_gri` in the local Science Platform
   hipsUrl: ""
 
+  # -- Whether to show information about the logged-in user
+  showUserInfo: "true"
+
   # -- Search path for FITS files
   visualizeFitsSearchPath: "/datasets"
 
@@ -75,6 +81,9 @@ config:
 
   # -- Endpoint under `/api/` for the live TAP service on the instance, if present
   livetap: ""
+
+  # -- Maximum number of recent TAP queries to show in history
+  tapHistoryLimit: "1000"
 
   # @default -- See documentation at `https://phalanx.lsst.io/applications/portal/volumes.html`
   volumes:
@@ -139,12 +148,12 @@ redis:
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
-  baseUrl: ""
+  baseUrl: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
-  host: ""
+  host: null
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
-  vaultSecretsPath: ""
+  vaultSecretsPath: null

@@ -196,6 +196,16 @@ class EnvironmentBaseConfig(BaseModel):
         ),
     )
 
+    revisions: dict[str, str] = Field(
+        {},
+        title="Revision overrides for applications",
+        description=(
+            "Mapping of application names to non-main revisions for the"
+            " environment. In that environment, the app-of-apps will point"
+            " these applications at the given revisions instead of at main."
+        ),
+    )
+
     butler_server_repositories: dict[str, AnyUrl] | None = Field(
         None,
         title="Butler repositories accessible via Butler server",

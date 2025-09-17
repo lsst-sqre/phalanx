@@ -1,10 +1,18 @@
 strimzi-kafka:
   kafka:
+    version: "3.9.0"
     config:
       # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
       replica.lag.time.max.ms: 120000
       log.retention.minutes: 10080
       offsets.retention.minutes: 10080
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
     externalListener:
       tls:
         enabled: true
@@ -12,22 +20,15 @@ strimzi-kafka:
         annotations:
           metallb.universe.tf/address-pool: sdf-rubin-ingest
       brokers:
-        - broker: 6
+        - broker: 0
           annotations:
             metallb.universe.tf/address-pool: sdf-rubin-ingest
-        - broker: 7
+        - broker: 1
           annotations:
             metallb.universe.tf/address-pool: sdf-rubin-ingest
-        - broker: 8
+        - broker: 2
           annotations:
             metallb.universe.tf/address-pool: sdf-rubin-ingest
-
-  connect:
-    enabled: true
-    config:
-      # -- Increase the request timeout for Kafka Connect to 120 seconds
-      request.timeout.ms: 120000
-
   mirrormaker2:
     enabled: true
     source:
@@ -45,23 +46,15 @@ strimzi-kafka:
       enabled: true
     telegraf:
       enabled: true
-  kraft:
+  controller:
     enabled: true
-  kafkaController:
+  broker:
     enabled: true
-  cruiseControl:
-    enabled: true
-  brokerStorage:
-    enabled: true
-    migration:
-      enabled: false
-      rebalance: false
-      brokers:
-        - 3
-        - 4
-        - 5
-    size: 1.5Ti
-    storageClassName: zfs--rubin-efd
+    name: kafka
+    nodeIds: "[0,1,2]"
+    storage:
+      size: 5Ti
+      storageClassName: zfs--rubin-efd
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -70,9 +63,9 @@ strimzi-kafka:
                 - key: kubernetes.io/hostname
                   operator: In
                   values:
-                    - sdfk8sn004
-                    - sdfk8sn003
-                    - sdfk8sn007
+                    - sdfk8so001
+                    - sdfk8so005
+                    - sdfk8so006
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
@@ -82,52 +75,21 @@ strimzi-kafka:
                   values:
                     - sasquatch
             topologyKey: kubernetes.io/hostname
+    resources:
+      requests:
+        cpu: 8
+        memory: 64Gi
+      limits:
+        cpu: 8
+        memory: 64Gi
+  cruiseControl:
+    enabled: true
+
+schema-registry:
+  enabled: true
 
 influxdb:
   enabled: false
-
-influxdb-enterprise:
-  enabled: true
-  meta:
-    service:
-      type: LoadBalancer
-      annotations:
-        metallb.universe.tf/address-pool: sdf-services
-    ingress:
-      enabled: true
-      hostname: usdf-rsp.slac.stanford.edu
-    persistence:
-      # -- Enable InfluxDB Enterprise meta pod persistence
-      enabled: true
-      accessMode: ReadWriteOnce
-      size: 16Gi
-    # -- InfluxDB Enterprise meta pod resources
-    resources:
-      requests:
-        memory: 2Gi
-        cpu: 2
-      limits:
-        memory: 4Gi
-        cpu: 4
-  data:
-    replicas: 2
-    ingress:
-      enabled: true
-      hostname: usdf-rsp.slac.stanford.edu
-    # -- Enable InfluxDB Enterprise data pod persistence
-    persistence:
-      enabled: true
-      accessMode: ReadWriteOnce
-      storageClass: zfs--rubin-efd
-      size: 30Ti
-    # -- InfluxDB Enterprise data pod resources
-    resources:
-      requests:
-        memory: 192Gi
-        cpu: 8
-      limits:
-        memory: 192Gi
-        cpu: 8
 
 influxdb-enterprise-standby:
   enabled: true
@@ -152,24 +114,13 @@ influxdb-enterprise-standby:
       secret:
         name: sasquatch
         key: influxdb-enterprise-standby-shared-secret
-    resources:
-      requests:
-        memory: 2Gi
-        cpu: 2
-      limits:
-        memory: 4Gi
-        cpu: 4
   data:
     replicas: 1
+    config:
+      cluster:
+        max-concurrent-queries: 150
+        query-timeout: "90s"
     affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                    - sdfk8sn005
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 1
@@ -192,10 +143,12 @@ influxdb-enterprise-standby:
       size: 100Ti
     resources:
       requests:
-        memory: 96Gi
+        memory: 128Gi
+        # The InfluxDB Enterprise license is limited to 16 cpu, the
+        # standby instance uses a 1 node x 16 cpu setup
         cpu: 16
       limits:
-        memory: 96Gi
+        memory: 128Gi
         cpu: 16
 
 influxdb-enterprise-active:
@@ -212,7 +165,7 @@ influxdb-enterprise-active:
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
-      path: "/influxdb-enterprise-active-meta(/|$)(.*)"
+      path: "/influxdb-enterprise-meta(/|$)(.*)"
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
@@ -222,14 +175,12 @@ influxdb-enterprise-active:
         name: sasquatch
         key: influxdb-enterprise-active-shared-secret
     resources:
-      requests:
-        memory: 8Gi
-        cpu: 4
-      limits:
-        memory: 8Gi
-        cpu: 4
   data:
     replicas: 2
+    config:
+      cluster:
+        max-concurrent-queries: 300
+        query-timeout: "180s"
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -254,7 +205,7 @@ influxdb-enterprise-active:
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
-      path: "/influxdb-enterprise-active-data(/|$)(.*)"
+      path: "/influxdb-enterprise-data(/|$)(.*)"
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
@@ -263,18 +214,21 @@ influxdb-enterprise-active:
     resources:
       requests:
         memory: 192Gi
+        # The InfluxDB Enterprise license is limited to 16 cpu, the
+        # active instance uses a 2 node x 8 cpu setup
         cpu: 8
       limits:
         memory: 192Gi
         cpu: 8
 
-
 telegraf:
   enabled: true
   influxdb:
     urls:
-      - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
+      - "http://sasquatch-influxdb-enterprise-standby-data.sasquatch:8086"
       - "http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086"
+  registry:
+    url: "https://usdf-rsp-int.slac.stanford.edu/schema-registry-remote"
   kafkaConsumers:
     # Sasquatch backpack connector
     backpack:
@@ -283,7 +237,6 @@ telegraf:
       timestamp_field: "timestamp"
       topicRegexps: |
         [ "lsst.backpack" ]
-      debug: true
     # CSC connectors
     maintel:
       enabled: true
@@ -292,7 +245,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
-      debug: true
     mtmount:
       enabled: true
       repair: false
@@ -300,7 +252,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
-      debug: true
     comcam:
       enabled: true
       repair: false
@@ -308,24 +259,27 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
-      debug: true
     envsys:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
-         [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.EAS", "lsst.sal.ESS", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
-      debug: true
+        [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.EAS", "lsst.sal.ESS", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
     m1m3:
       enabled: true
-      repair: false
-      metric_batch_size: 2000
+      metric_batch_size: 1500
+      max_undelivered_messages: 4000
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
-        [ "lsst.sal.MTM1M3" ]
-      debug: true
+        [ "lsst.sal.MTM1M3([^T].*)" ]
+    m1m3ts:
+      enabled: true
+      metric_batch_size: 1500
+      max_undelivered_messages: 4000
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3TS" ]
     m2:
       enabled: true
       repair: false
@@ -333,7 +287,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
-      debug: true
     obssys:
       enabled: true
       repair: false
@@ -341,7 +294,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
-      debug: true
     ocps:
       enabled: true
       repair: false
@@ -349,7 +301,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.OCPS" ]
-      debug: true
     pmd:
       enabled: true
       repair: false
@@ -357,15 +308,13 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.PMD" ]
-      debug: true
     calsys:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
-        [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
-      debug: true
+        [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.MTReflector", "lsst.sal.TunableLaser" ]
     mtaircompressor:
       enabled: true
       repair: false
@@ -373,7 +322,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTAirCompressor" ]
-      debug: true
     genericcamera:
       enabled: true
       repair: false
@@ -381,7 +329,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
-      debug: true
     gis:
       enabled: true
       repair: false
@@ -389,7 +336,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.GIS" ]
-      debug: true
     mtvms:
       enabled: true
       repair: false
@@ -397,7 +343,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTVMS" ]
-      debug: true
     lsstcam:
       enabled: true
       repair: false
@@ -407,7 +352,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
-      debug: true
     auxtel:
       enabled: true
       repair: false
@@ -415,7 +359,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
-      debug: true
     latiss:
       enabled: true
       repair: false
@@ -423,7 +366,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
-      debug: true
     test:
       enabled: true
       repair: false
@@ -431,7 +373,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.Test" ]
-      debug: true
     lasertracker:
       enabled: true
       repair: false
@@ -439,7 +380,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.LaserTracker" ]
-      debug: true
     # CCS connectors (experimental) data is being written on separate databases for now
     atcamera:
       enabled: true
@@ -450,7 +390,6 @@ telegraf:
         [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source" ]
       topicRegexps: |
         [ "lsst.ATCamera" ]
-      debug: true
     cccamera:
       enabled: true
       database: "lsst.CCCamera"
@@ -460,7 +399,6 @@ telegraf:
         [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source" ]
       topicRegexps: |
         [ "lsst.CCCamera" ]
-      debug: true
     mtcamera:
       enabled: true
       database: "lsst.MTCamera"
@@ -470,7 +408,6 @@ telegraf:
         [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
       topicRegexps: |
         [ "lsst.MTCamera" ]
-      debug: true
     obsenv:
       enabled: true
       database: "lsst.obsenv"
@@ -478,7 +415,6 @@ telegraf:
       timestamp_field: "timestamp"
       topicRegexps: |
         [ "lsst.obsenv" ]
-      debug: true
     cp:
       enabled: true
       database: "lsst.cp"
@@ -488,7 +424,6 @@ telegraf:
         [ "lsst.cp" ]
       tags: |
         [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "exposure", "patch", "visit", "run", "pipeline" ]
-      debug: true
 
 kafdrop:
   ingress:
@@ -513,16 +448,24 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://usdf-rsp.slac.stanford.edu/
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/usdfprod.json
+  resources:
+    requests:
+      memory: 16Gi
+      cpu: 1
+    limits:
+      memory: 64Gi
+      cpu: 4
 
 kapacitor:
-  influxURL: http://sasquatch-influxdb-enterprise-data.sasquatch:8086
+  influxURL: http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086
 
 app-metrics:
   enabled: true
   apps:
+    - gafaelfawr
     - noteburst
   influxdb:
-    url: http://sasquatch-influxdb-enterprise-data.sasquatch:8086
+    url: http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086
 
 backup:
   enabled: true
@@ -543,4 +486,7 @@ prompt-processing:
   enabled: true
 
 consdb:
+  enabled: true
+
+data-transfer-monitoring:
   enabled: true

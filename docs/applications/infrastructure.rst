@@ -11,10 +11,9 @@ Argo CD project: ``infrastructure``
    :maxdepth: 1
 
    argocd/index
-   atlantis/index
    cert-manager/index
    ingress-nginx/index
    gafaelfawr/index
-   keda/index
    mobu/index
+   repertoire/index
    vault-secrets-operator/index

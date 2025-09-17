@@ -77,6 +77,11 @@ mtaos:
     readOnly: false
     server: nfs-scratch.ls.lsst.org
     serverPath: /scratch
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.ls.lsst.org
+    serverPath: /obs-env
   resources:
     limits:
       cpu: 1000m
@@ -155,6 +160,7 @@ mtheaderservice-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/headerservice
+    revision: 2
     pullPolicy: Always
   env:
     URL_SPEC: --lfa_mode s3 --s3instance ls
@@ -363,6 +369,7 @@ mtvms-m1m3-sim:
   resources:
     limits:
       cpu: 250m
+      memory: 180Mi
     requests:
       cpu: 25m
-      memory: 20Mi
+      memory: 60Mi

@@ -20,7 +20,8 @@ butlerServerRepositories: {}
 # -- URL of the repository for all applications
 repoUrl: https://github.com/lsst-sqre/phalanx.git
 
-# -- Revision of repository to use for all applications
+# -- Revision of repository to use for all applications unless overridden by
+# branches below
 targetRevision: "main"
 
 # -- URL of Vault server for this environment
@@ -50,6 +51,9 @@ applications:
   # -- Enable the butler application
   butler: false
 
+  # -- Enable the Butler writer application
+  butler-writer-service: false
+
   # -- Enable the calsys control system application
   calsys: false
 
@@ -69,11 +73,17 @@ applications:
   # -- Enable the control-system-test application
   control-system-test: false
 
+  # -- Enable the csc-versions application
+  csc-versions: false
+
   # -- Eanble the datalinker application
   datalinker: false
 
   # -- Enable the envsys control system application
   envsys: false
+
+  # -- Enable the eups-distributor application
+  eups-distributor: false
 
   # -- Enable the exposurelog application
   exposurelog: false
@@ -84,15 +94,20 @@ applications:
   # -- Enable the fastapi-bootcamp application
   fastapi-bootcamp: false
 
-  # -- Enable the filestore-backup application
-  filestore-backup: false
-
   # -- Enable the flink application
   flink: false
+  # -- Switch to enable the fov-quicklook application in specific environments (off by default)
+  fov-quicklook: false
 
   # -- Enable the Gafaelfawr application. This is required by Phalanx since
   # most other applications use `GafaelfawrIngress`
   gafaelfawr: true
+
+  # -- Enable the google-cloud-observability application
+  google-cloud-observability: false
+
+  # -- Enable the grafana application
+  grafana: false
 
   # -- Enable the hoverdrive application
   hoverdrive: false
@@ -102,6 +117,9 @@ applications:
 
   # -- Enable the nvr-control application
   nvr-control: false
+
+  # -- Enable the repertoire application
+  repertoire: false
 
   # -- Enable the rubin-rag application
   rubin-rag: false
@@ -136,8 +154,8 @@ applications:
   # -- Enable the mobu application
   mobu: false
 
-  # -- Enable the monitoring application
-  monitoring: false
+  # -- Enable the mpsky application
+  mpsky: false
 
   # -- Enable the narrativelog application
   narrativelog: false
@@ -192,15 +210,6 @@ applications:
   # -- Enable the prompt-keda-lsstcam application
   prompt-keda-lsstcam: false
 
-  # -- Enable the prompt-keda-lsstcamimsim application
-  prompt-keda-lsstcamimsim: false
-
-  # -- Enable the prompt-keda-lsstcomcam application
-  prompt-keda-lsstcomcam: false
-
-  # -- Enable the prompt-keda-lsstcomcamsim application
-  prompt-keda-lsstcomcamsim: false
-
   # -- Enable the prompt-redis application
   prompt-redis: false
 
@@ -209,6 +218,9 @@ applications:
 
   # -- Enable the rubintv-dev application
   rubintv-dev: false
+
+  # -- Enable the rubin-too-producer application
+  rubin-too-producer: false
 
   # -- Enable the s3proxy application
   s3proxy: false
@@ -222,41 +234,20 @@ applications:
   # -- Enable the schedview-snapshot application
   schedview-snapshot: false
 
+  # -- Enable the schedview-static-pages application
+  schedview-static-pages: false
+
   # -- Enable the sia over butler application
   sia: false
 
   # -- Enable the simonyitel control system application
   simonyitel: false
 
-  # -- Enable the sqrbot-sr application
-  sqrbot-sr: false
-
   # -- Enable the ssotap application
   ssotap: false
 
   # -- Enable the production-tools application
   production-tools: false
-
-  # -- Enable the prompt-proto-service-hsc application
-  prompt-proto-service-hsc: false
-
-  # -- Enable the prompt-proto-service-hsc-gpu application
-  prompt-proto-service-hsc-gpu: false
-
-  # -- Enable the prompt-proto-service-latiss application
-  prompt-proto-service-latiss: false
-
-  # -- Enable the prompt-proto-service-lsstcam application
-  prompt-proto-service-lsstcam: false
-
-  # -- Enable the prompt-proto-service-lsstcamimsim application
-  prompt-proto-service-lsstcamimsim: false
-
-  # -- Enable the prompt-proto-service-lsstcomcam application
-  prompt-proto-service-lsstcomcam: false
-
-  # -- Enable the prompt-proto-service-lsstcomcamsim application
-  prompt-proto-service-lsstcomcamsim: false
 
   # -- Enable the semaphore application
   semaphore: false
@@ -273,17 +264,14 @@ applications:
   # -- Enable the strimzi-access-operator application
   strimzi-access-operator: false
 
+  # -- Enable the strimzi-registry-operator application
+  strimzi-registry-operator: false
+
   # -- Enable the tap application
   tap: false
 
   # -- Enable the tasso application
   tasso: false
-
-  # -- Enable the telegraf application
-  telegraf: false
-
-  # -- Enable the telegraf-ds application
-  telegraf-ds: false
 
   # -- Enable the templatebot application
   templatebot: false
@@ -314,7 +302,11 @@ applications:
   # running any Safir-based UWS services
   wobbly: false
 
-# -- Add labels for application namespaces.
+# -- Mapping of applications to branches to run some applications from
+# revisions other than main
+revisions: {}
+
+# -- Add labels for application namespaces
 namespaceLabels: {}
 
 # The following settings are used for the control system

@@ -17,14 +17,17 @@ prompt-keda:
       preprocessing: |-
         - survey: SURVEY
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/HSC/Preprocessing.yaml']
-    calibRepo: s3://rubin-pp-dev-users/central_repo_2
+    centralRepo: s3://rubin-pp-dev-users/central_repo_2
 
   s3:
     imageBucket: rubin-pp-dev
     endpointUrl: https://s3dfrgw.slac.stanford.edu
+    aws_profile: prompt-processing-dev
+
+  iers_cache: s3://rubin-pp-dev-users/iers-cache.zip
 
   imageNotifications:
-    kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
+    kafkaClusterAddress: s3-file-notifications-kafka-external-bootstrap.s3-file-notifications:9094
     topic: prompt-processing-dev
 
   apdb:

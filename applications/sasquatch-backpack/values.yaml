@@ -32,6 +32,9 @@ config:
   # -- Backpack Redis URL
   backpackRedisUrl: "redis://sasquatch-backpack-redis.sasquatch-backpack:6379/0"
 
+  # -- Sasquatch schema registry URL
+  sasquatchSchemaRegistryUrl: "http://sasquatch-schema-registry.sasquatch:8081"
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
@@ -57,21 +60,6 @@ resources:
 
 # -- Tolerations for the sasquatch-backpack deployment pod
 tolerations: []
-
-# The following will be set by parameters injected by Argo CD and should not
-# be set in the individual environment values files.
-global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: null
-
-  # -- Host name for ingress
-  # @default -- Set by Argo CD
-  host: null
-
-  # -- Base path for Vault secrets
-  # @default -- Set by Argo CD
-  vaultSecretsPath: null
 
 redis:
   persistence:
@@ -110,3 +98,14 @@ redis:
 
   # -- Affinity rules for the Redis pod
   affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

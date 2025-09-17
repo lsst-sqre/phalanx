@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/giftless"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "giftless") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

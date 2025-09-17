@@ -7,12 +7,11 @@ Tool for github terraform workflows: https://runatlantis.io
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the atlantis deployment pod |
-| config.repoAllowList | list | `[]` | The GitHub repos that atlantis will accept webooks from: [docs](https://www.runatlantis.io/docs/server-configuration.html#repo-allowlist) |
 | config.repoConfig | object | See `values.yaml` | Content for the [server-side repo config](https://www.runatlantis.io/docs/server-side-repo-config.html) file |
 | config.serverConfig | object | See `values.yaml` | Content for the [server config](https://www.runatlantis.io/docs/server-configuration.html) file. Note the format of the keys (kebab-case) |
 | config.serverConfig.automerge | bool | `false` | Whether to automatically merge PRs after plans have been applied (see [docs](https://www.runatlantis.io/docs/automerging.html)) |
 | config.serverConfig.log-level | string | `"info"` | One of: debug, info, warn, or error. |
-| config.serverConfig.repo-allowlist | list | `[]` | The GitHub repos that atlantis will accept webooks from: [docs](https://www.runatlantis.io/docs/server-configuration.html#repo-allowlist) |
+| config.serverConfig.repo-allowlist | string | `""` | Specification of GitHub repos that Atlantis will accept webooks from: [docs](https://www.runatlantis.io/docs/server-configuration.html#repo-allowlist) |
 | config.serverConfig.web-basic-auth | bool | `false` | We're delegating auth for the web UI to gafaelfawr |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |

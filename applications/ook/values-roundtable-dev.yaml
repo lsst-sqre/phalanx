@@ -6,7 +6,8 @@ config:
   databaseUrl: "postgresql://ook@localhost/ook"
   algolia:
     documentIndex: "ook_documents_test"
-  updateSchema: false
+  updateSchema: true
+  migrateCountryCodes: true
 
 audit:
   enabled: false

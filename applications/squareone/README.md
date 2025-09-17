@@ -17,16 +17,11 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| config.apiAspectPageMdx | string | See `values.yaml` | MDX content for the `/api-aspect` page |
 | config.appLinks | list | `[{"href":"/argo-cd/","internal":false,"label":"Argo CD"}]` | App menu items |
 | config.coManageRegistryUrl | string | `nil` | URL to the COmanage registry, if the environment uses COmanage for identity. @default null disables the COmanage integration |
 | config.docsBaseUrl | string | `"https://rsp.lsst.io"` | Base URL for user documentation (excludes trailing slash) |
-| config.docsPageMdx | string | See `values.yaml` | MDX content for the `/docs` page |
-| config.emailVerifiedPageMdx | string | See `values.yaml` | MDX content for the `/enrollment/thanks-for-verifying` page |
 | config.enableAppsMenu | bool | `false` | Enable the App menu |
 | config.enableSentry | bool | See `values.yaml` | Enable Sentry |
-| config.pendingApprovalPageMdx | string | See `values.yaml` | MDX content for the `/enrollment/pending-approval` page |
-| config.pendingVerificationPageMdx | string | See `values.yaml` | MDX content for the `/enrollment/pending-confirmation` |
 | config.plausibleDomain | string | `nil` | Plausible tracking domain. For example, `data.lsst.cloud`. @default null disables Plausible tracking |
 | config.semaphoreUrl | string | `nil` | URL to the Semaphore (user notifications) API service. @default null disables the Semaphore integration |
 | config.sentryDebug | bool | See `values.yaml` | Sentry debug mode |
@@ -34,11 +29,10 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | config.sentryReplaysOnErrorSampleRate | int | See `values.yaml` | Sentry error replays sample rate |
 | config.sentryReplaysSessionSampleRate | int | See `values.yaml` | Sentry replays sample rate |
 | config.sentryTracesSampleRate | int | See `values.yaml` | Sentry traces sample rate |
+| config.showPreview | bool | `true` | Show a "preview" badge in the homepage |
 | config.siteDescription | string | `"Access Rubin Observatory Legacy Survey of Space and Time data.\n"` | Site description, used in meta tags |
 | config.siteName | string | `"Rubin Science Platform"` | Name of the site, used in the title and meta tags. |
-| config.supportPageMdx | string | See `values.yaml` | MDX content for the `/support` page |
 | config.timesSquareUrl | string | `nil` | URL to the Times Square (parameterized notebooks) API service. @default null disables the Times Square integration |
-| config.verifyEmailPageMdx | string | See `values.yaml` | MDX content for the `/enrollment/thanks-for-signing-up` page |
 | fullnameOverride | string | `""` | Overrides the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD Application | Base URL for the environment |
 | global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |

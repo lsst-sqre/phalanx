@@ -6,8 +6,8 @@ This applies only to Science Platform environments that use GitHub for authentic
 
 When the user is sent to GitHub to perform an OAuth 2.0 authentication, they are told what information about their account the application is requesting, and are prompted for which organizational information to release.
 Since we're using GitHub for group information, all organizations that should contribute to group information (via team membership) must have their data released.
-GitHub supports two ways of doing this: make the organization membership public, or grant the OAuth App access to that organization's data explicitly.
 
+GitHub supports two ways of doing this: make the organization membership public, or grant the OAuth App access to that organization's data explicitly.
 GitHub allows the user to do the latter in the authorization screen during OAuth 2.0 authentication.
 
 .. figure:: github-oauth.png

@@ -1,7 +1,0 @@
-config:
-  instance: "fshare-instance-dev"
-  backup:
-    debug: true
-  purge:
-    debug: true
-    keep: 3

@@ -170,11 +170,11 @@ earthquake-ess302:
     RUN_ARG: 302
   resources:
     requests:
-      cpu: 10m
-      memory: 500Mi
+      cpu: 50m
+      memory: 150Mi
     limits:
-      cpu: 100m
-      memory: 1500Mi
+      cpu: 500m
+      memory: 500Mi
 
 eas:
   enabled: true
@@ -184,10 +184,10 @@ eas:
   resources:
     requests:
       cpu: 150m
-      memory: 125Mi
+      memory: 300Mi
     limits:
       cpu: 750m
-      memory: 375Mi
+      memory: "2Gi"
 
 epm-ess303:
   enabled: true
@@ -268,6 +268,70 @@ m1m3-ess113:
       cpu: 190m
       memory: 900Mi
 
+m1m3-ess114:
+  enabled: true
+  classifier: ess114
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 114
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+m1m3-ess115:
+  enabled: true
+  classifier: ess115
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 115
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+m1m3-ess116:
+  enabled: true
+  classifier: ess116
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 116
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+m1m3-ess117:
+  enabled: true
+  classifier: ess117
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 117
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
 m2-ess106:
   enabled: true
   classifier: ess106
@@ -332,6 +396,54 @@ mtdome-ess108:
       cpu: 190m
       memory: 900Mi
 
+mtdome-ess118:
+  enabled: true
+  classifier: ess118
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 118
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+mtdome-ess119:
+  enabled: true
+  classifier: ess119
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 119
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+mtdome-ess120:
+  enabled: true
+  classifier: ess120
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 120
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
 ringss-ess304:
   enabled: true
   classifier: ess304
@@ -360,6 +472,22 @@ tma-ess001:
     pullPolicy: Always
   env:
     RUN_ARG: 1
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+tma-ess002:
+  enabled: true
+  classifier: ess2
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 2
   resources:
     requests:
       cpu: 19m

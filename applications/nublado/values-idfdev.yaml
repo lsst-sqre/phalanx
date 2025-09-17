@@ -1,6 +1,7 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
-  slackAlerts: true
+  sentry:
+    enabled: true
   config:
     dropdownMenu:
       release:
@@ -13,6 +14,8 @@ controller:
         cutoffVersion: "28.0.0"
       experimental:
         age: "3w"
+    fsadmin:
+      mountPrefix: "/mnt/user-filesystems"
     logLevel: "DEBUG"
     fileserver:
       enabled: true
@@ -34,33 +37,32 @@ controller:
         image: "sciplat-lab"
     lab:
       env:
-        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
-        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         DAF_BUTLER_REPOSITORY_INDEX: "https://data-dev.lsst.cloud/api/butler/configs/idf-repositories.yaml"
-        GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
-        S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
+        RUBIN_DIR: "/rubin"
+        SCRATCH_PATH: "/deleted-sundays"
         TMPDIR: "/tmp"
-        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/project/cst_repos/tutorial-notebooks"
+        TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
+        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.8.2"
+            tag: "8.15.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
+        - name: "landingpage"
+          image:
+            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/rsp-landing-page-provisioner"
+            tag: "0.9.3"
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+            - containerPath: "/rubin"
+              volumeName: "rubin"
       nodeSelector:
         node_pool: "user-lab-pool"
-      secrets:
-        - secretName: "nublado-lab-secret"
-          secretKey: "aws-credentials.ini"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-gcs-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-hmac-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "postgres-credentials.txt"
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
@@ -68,31 +70,36 @@ controller:
       volumes:
         - name: "home"
           source:
-            serverPath: "/home-share"
+            serverPath: "/home-tiered-share"
             server: "10.234.16.4"
             type: "nfs"
-        - name: "project"
+        - name: "rubin"
           source:
-            serverPath: "/project-share"
+            serverPath: "/home-tiered-share/_reloc/rubin"
             server: "10.234.16.4"
             type: "nfs"
-        - name: "scratch"
+        - name: "deleted-sundays"
           source:
-            serverPath: "/scratch-share"
+            serverPath: "/home-tiered-share/_reloc/deleted-sundays"
             server: "10.234.16.4"
             type: "nfs"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
-        - containerPath: "/project"
-          volumeName: "project"
-        - containerPath: "/scratch"
-          volumeName: "scratch"
+        - containerPath: "/rubin"
+          volumeName: "rubin"
+        - containerPath: "/deleted-sundays"
+          volumeName: "deleted-sundays"
     metrics:
       enabled: true
 hub:
   useSubdomains: true
+  landingPage: "/lab/tree/notebooks/tutorials/welcome.md"
+
 jupyterhub:
+  cull:
+    timeout: 43200  # 12 hours
+    maxAge: 86400   # 1 day
   hub:
     config:
       JupyterHub:
@@ -102,13 +109,44 @@ jupyterhub:
     db:
       upgrade: true
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
+  proxy:
+    chp:
+      image:
+        tag: "5.0.1"
+
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
   serviceAccount: "nublado@science-platform-dev-7696.iam.gserviceaccount.com"
-cronjob:
+purger:
   enabled: true
-  targetVolume:
-    mountPath: "/project"
-    server: "10.234.16.4"
-    path: "/project-share"
+  volumeName: "deleted-sundays"
+  schedule: "19 05 * * 0"  # Sunday morning, 12:19 AM (UTC-5)
+  policy:
+    directories:
+      - path: /purge
+        threshold: 1GiB
+        # This is the case where we just purge everything once a week.
+        # Set the threshold to 1 second: yeah, *everything*
+        intervals:
+          large:
+            accessInterval: 1s
+            modificationInterval: 1s
+            creationInterval: 1s
+          small:
+            accessInterval: 1s
+            modificationInterval: 1s
+            creationInterval: 1s
+cronjob:
+  tutorials:
+    enabled: true
+    gitTarget: "/rubin/cst_repos/tutorial-notebooks"
+    targetVolume:
+      mountPath: "/rubin"
+      volumeName: "rubin"
+  artifacts:
+    enabled: true
+    gitTarget: "/rubin/cst_repos/tutorial-notebooks-data"
+    targetVolume:
+      mountPath: "/rubin"
+      volumeName: "rubin"

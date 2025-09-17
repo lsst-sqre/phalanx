@@ -3,9 +3,20 @@ cadc-tap:
     image:
       repository: "lsstsqre/tap-schema-idfprod-tap"
 
+  replicaCount: 4
+
   config:
     qserv:
-      host: "10.140.1.211:4040"
+      host: "qserv-prod.slac.stanford.edu:4040"
+      jdbcParams: "?enabledTLSProtocols=TLSv1.3"
+      passwordEnabled: true
+
+    kafka:
+      enabled: true
+
+    urlRewrite:
+      enabled: true
+      rules: "ivoa.ObsCore:access_url, dp02_dc2_catalogs.ObsCore:access_url, dp1.ObsCore:access_url"
 
   cloudsql:
     enabled: true

@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/plot-navigator"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "plot-navigator") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

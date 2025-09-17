@@ -1,2 +1,30 @@
 config:
   slackAlerts: true
+  hipsDefaultDataset: "dp1"
+  hipsDatasets:
+    dp02:
+      url: "https://data-dev.lsst.cloud/api/hips/v2/dp02"
+      paths:
+        - "images/color_gri"
+        - "images/color_riz"
+        - "images/band_u"
+        - "images/band_g"
+        - "images/band_r"
+        - "images/band_i"
+        - "images/band_z"
+        - "images/band_y"
+        - "images/2MASS/Color"
+    dp1:
+      url: "https://data-dev.lsst.cloud/api/hips/v2/dp1"
+      paths:
+        - "deep_coadd/color_ugri"
+        - "deep_coadd/color_gri"
+        - "deep_coadd/color_izy"
+        - "deep_coadd/color_riz"
+        - "deep_coadd/color_ugr"
+        - "deep_coadd/band_u"
+        - "deep_coadd/band_g"
+        - "deep_coadd/band_r"
+        - "deep_coadd/band_i"
+        - "deep_coadd/band_z"
+        - "deep_coadd/band_y"

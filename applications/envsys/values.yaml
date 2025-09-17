@@ -142,6 +142,38 @@ m1m3-ess113-sim:
   # -- Enable the ESS:113 simulator CSC
   enabled: false
 
+m1m3-ess114:
+  # -- Enable the ESS:114 CSC
+  enabled: false
+
+m1m3-ess114-sim:
+  # -- Enable the ESS:114 simulator CSC
+  enabled: false
+
+m1m3-ess115:
+  # -- Enable the ESS:115 CSC
+  enabled: false
+
+m1m3-ess115-sim:
+  # -- Enable the ESS:115 simulator CSC
+  enabled: false
+
+m1m3-ess116:
+  # -- Enable the ESS:116 CSC
+  enabled: false
+
+m1m3-ess116-sim:
+  # -- Enable the ESS:116 simulator CSC
+  enabled: false
+
+m1m3-ess117:
+  # -- Enable the ESS:117 CSC
+  enabled: false
+
+m1m3-ess117-sim:
+  # -- Enable the ESS:117 simulator CSC
+  enabled: false
+
 m2-ess106:
   # -- Enable the ESS:106 CSC
   enabled: false
@@ -174,6 +206,30 @@ mtdome-ess108-sim:
   # -- Enable the ESS:108 simulator CSC
   enabled: false
 
+mtdome-ess118:
+  # -- Enable the ESS:118 CSC
+  enabled: false
+
+mtdome-ess118-sim:
+  # -- Enable the ESS:118 simulator CSC
+  enabled: false
+
+mtdome-ess119:
+  # -- Enable the ESS:119 CSC
+  enabled: false
+
+mtdome-ess119-sim:
+  # -- Enable the ESS:119 simulator CSC
+  enabled: false
+
+mtdome-ess120:
+  # -- Enable the ESS:120 CSC
+  enabled: false
+
+mtdome-ess120-sim:
+  # -- Enable the ESS:120 simulator CSC
+  enabled: false
+
 ringss-ess304:
   # -- Enable the ESS:304 CSC
   enabled: false
@@ -188,6 +244,14 @@ tma-ess001:
 
 tma-ess001-sim:
   # -- Enable the ESS:1 simulator CSC
+  enabled: false
+
+tma-ess002:
+  # -- Enable the ESS:2 CSC
+  enabled: false
+
+tma-ess002-sim:
+  # -- Enable the ESS:2 simulator CSC
   enabled: false
 
 tma-ess104:
@@ -221,10 +285,6 @@ weatherforecast:
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: ""
-
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: ""

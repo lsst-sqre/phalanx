@@ -11,6 +11,7 @@ data:
     environmentName: {{ .Values.global.environmentName | quote }}
     siteDescription: {{ .Values.config.siteDescription | quote }}
     docsBaseUrl: {{ .Values.config.docsBaseUrl | quote }}
+    showPreview: {{ .Values.config.showPreview }}
     {{- if .Values.config.semaphoreUrl }}
     semaphoreUrl: {{ .Values.config.semaphoreUrl | quote }}
     {{- end}}
@@ -23,13 +24,6 @@ data:
     {{- if .Values.config.plausibleDomain }}
     plausibleDomain: {{ .Values.config.plausibleDomain | quote }}
     {{- end}}
-    apiAspectPageMdx: {{ .Values.config.apiAspectPageMdx | quote }}
-    docsPageMdx: {{ .Values.config.docsPageMdx | quote }}
-    supportPageMdx: {{ .Values.config.supportPageMdx | quote }}
-    verifyEmailPageMdx: {{ .Values.config.verifyEmailPageMdx | quote }}
-    emailVerifiedPageMdx: {{ .Values.config.emailVerifiedPageMdx | quote }}
-    pendingApprovalPageMdx: {{ .Values.config.pendingApprovalPageMdx | quote }}
-    pendingVerificationPageMdx: {{ .Values.config.pendingVerificationPageMdx | quote }}
     {{- if .Values.config.sentryDsn }}
     sentryDsn: {{ .Values.config.sentryDsn | quote }}
     {{- end}}
@@ -40,3 +34,4 @@ data:
     enableAppsMenu: {{ .Values.config.enableAppsMenu }}
     appLinks:
       {{- toYaml .Values.config.appLinks | nindent 6 }}
+    mdxDir: "/etc/squareone/mdx-content"

@@ -11,31 +11,34 @@ Replicates data from the APDB to the PPDB
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the ppdb-replication deployment pod |
-| config.additionalS3ProfileName | string | `nil` | Additional S3 profile name |
-| config.additionalS3ProfileUrl | string | `nil` | Additional S3 profile URL |
+| config.additionalS3ProfileName | string | `"embargo"` | S3 profile name for additional S3 profile |
+| config.additionalS3ProfileUrl | string | `"https://sdfembs3.sdf.slac.stanford.edu"` | S3 profile URL for additional S3 profile |
 | config.apdbConfig | string | `nil` | APDB config file resource |
-| config.apdbIndexUri | string | `nil` | APDB index URI |
-| config.checkInterval | string | `nil` | Time to wait before checking for new chunks, if no chunk appears |
+| config.apdbIndexUri | string | `"/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"` | APDB index URI |
+| config.batchSize | int | `1000` | Size of record batches when writing parquet files |
+| config.checkInterval | int | `30` | Time to wait before checking for new chunks, if no chunk appears |
+| config.dataset | string | `nil` | Target BigQuery dataset |
 | config.disableBucketValidation | int | `1` | Disable bucket validation in LSST S3 tools |
+| config.gcsBucket | string | `nil` | GCS bucket name |
+| config.gcsPrefix | string | `nil` | GCS bucket prefix |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
-| config.maxWaitTime | string | `nil` | Maximum time to wait before replicating a chunk after next chunk appears |
-| config.minWaitTime | string | `nil` | Minimum time to wait before replicating a chunk after next chunk appears |
+| config.maxWaitTime | int | `3600` | Maximum time to wait before replicating a chunk after next chunk appears |
+| config.minWaitTime | int | `60` | Minimum time to wait before replicating a chunk after next chunk appears |
 | config.monLogger | string | `"lsst.dax.ppdb.monitor"` | Name of logger for monitoring |
 | config.monRules | string | `nil` | Comma-separated list of monitoring filter rules |
 | config.pathPrefix | string | `"/ppdb-replication"` | URL path prefix |
-| config.persistentVolumeClaims | list | `[]` | Persistent volume claims |
 | config.ppdbConfig | string | `nil` | PPDB config file resource |
-| config.s3EndpointUrl | string | `nil` | S3 endpoint URL |
+| config.s3EndpointUrl | string | `"https://s3dfrgw.slac.stanford.edu"` | S3 endpoint URL |
+| config.stagingDirectory | string | `nil` | Staging directory for replicated data |
 | config.updateExisting | bool | `false` | Allow updates to already replicated data |
-| config.volumeMounts | list | `[]` | Volume mounts |
-| config.volumes | list | `[]` | Volumes specific to the environment |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| config.uploadInterval | int | `0` | Time to wait between uploader file uploads |
+| config.waitInterval | int | `300` | Time to wait between uploader file scans |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"Always"` | Pull policy for the ppdb-replication image |
 | image.repository | string | `"ghcr.io/lsst/ppdb-replication"` | Image to use in the ppdb-replication deployment |
-| image.tag | string | The appVersion of the chart | Tag of image to use |
+| image.tag | string | The appVersion of the chart | Tag of dax_ppdb image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the ppdb-replication deployment pod |
 | podAnnotations | object | `{}` | Annotations for the ppdb-replication deployment pod |

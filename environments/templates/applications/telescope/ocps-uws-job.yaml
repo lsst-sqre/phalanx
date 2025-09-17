@@ -14,5 +14,5 @@ spec:
   source:
     path: "applications/ocps-uws-job"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "ocps-uws-job") .Values.targetRevision | quote }}
 {{- end -}}

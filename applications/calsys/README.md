@@ -18,7 +18,6 @@ Deployment for the Calibration System CSCs
 | electrometer201-sim.enabled | bool | `false` | Enable the Electrometer:201 simulator CSC |
 | electrometer201.enabled | bool | `false` | Enable the Electrometer:201 CSC |
 | gcheaderservice1.enabled | bool | `false` | Enable the GCHeaderService:1 CSC |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.controlSystem.appNamespace | string | Set by ArgoCD | Application namespace for the control system deployment |
 | global.controlSystem.imageTag | string | Set by ArgoCD | Image tag for the control system deployment |
 | global.controlSystem.kafkaBrokerAddress | string | Set by ArgoCD | Kafka broker address for the control system deployment |
@@ -39,6 +38,8 @@ Deployment for the Calibration System CSCs
 | linearstage103.enabled | bool | `false` | Enable the LinearStage:103 CSC |
 | linearstage104-sim.enabled | bool | `false` | Enable the LinearStage:104 simulator CSC |
 | linearstage104.enabled | bool | `false` | Enable the LinearStage:104 CSC |
+| mtreflector-sim.enabled | bool | `false` | Enabled the MTReflector simulator CSC |
+| mtreflector.enabled | bool | `false` | Enabled the MTReflector CSC |
 | simulation-gencam.enabled | bool | `false` | Enabled the GenericCamera:1 CSC |
 | tunablelaser-sim.enabled | bool | `false` | Enabled the TunableLaser:0 simulator CSC |
 | tunablelaser.enabled | bool | `false` | Enabled the TunableLaser:0 CSC |

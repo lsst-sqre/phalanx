@@ -7,19 +7,19 @@
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
-  baseUrl: ""
-
-  # -- Host name for ingress
-  # @default -- Set by Argo CD
-  host: ""
-
-  # -- Base path for Vault secrets
-  # @default -- Set by Argo CD
-  vaultSecretsPath: ""
+  baseUrl: null
 
   # -- Name of the Phalanx environment
   # @default -- Set by Argo CD Application
-  environmentName: ""
+  environmentName: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
 
 # -- Number of API pods to run
 replicaCount: 1
@@ -92,6 +92,20 @@ resources:
       cpu: "2m"
       memory: "256Mi"
 
+# -- Config for the CronJob that publishes metrics periodically
+periodicMetrics:
+  # -- Cron schedule string for publishing periodic metrics (in UTC)
+  schedule: "* * * * *"
+
+  # -- Resources for the periodic metrics cron job
+  resources:
+    limits:
+      cpu: "250m"
+      memory: "512Mi"
+    requests:
+      cpu: "2m"
+      memory: "128Mi"
+
 autoscaling:
   enabled: false
   minReplicas: 1
@@ -152,7 +166,7 @@ config:
     # -- Number of workers to run
     workerCount: 1
 
-    # -- The default notebook execution timeout, in seconds.
+    # -- The maximum allowed notebook execution time, in seconds.
     jobTimeout: 300
 
     # -- Max number of concurrent notebook executions per worker
@@ -170,8 +184,8 @@ config:
     # -- Nublado image reference, applicable when imageSelector is "reference"
     imageReference: ""
 
-    # -- Worker keep alive mode: "normal", "fast", "disabled"
-    keepAlive: "normal"
+    # -- Worker keep alive mode: "normal", "fast", "hourly", "daily", "disabled"
+    keepAlive: "hourly"
 
 redis:
   persistence:

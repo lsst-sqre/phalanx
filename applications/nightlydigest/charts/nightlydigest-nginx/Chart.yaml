@@ -1,0 +1,4 @@
+apiVersion: v2
+name: nightlydigest-nginx
+description: Helm chart for the Nightlydigest Nginx server.
+version: 1.0.0

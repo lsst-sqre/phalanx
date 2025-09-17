@@ -50,11 +50,19 @@ spec:
                 secretKeyRef:
                   key: kafka_pp_sasl_username
                   name: {{ template "next-visit-fan-out.fullname" . }}-secret
+            {{- if .Values.kafka.summitSasquatchAuth }}
+            - name: SASL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: kafka_pp_sasl_password_summit
+                  name: {{ template "next-visit-fan-out.fullname" . }}-secret
+            {{- else }}
             - name: SASL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: kafka_pp_sasl_password
                   name: {{ template "next-visit-fan-out.fullname" . }}-secret
+            {{- end }}
             - name: DEBUG_LOGS
               value: {{ ternary "true" "false" .Values.debug | quote }}
             - name: SUPPORTED_INSTRUMENTS
@@ -77,7 +85,6 @@ spec:
           - name: instrument-config
             mountPath: /etc/config
             readOnly: true
-
       volumes:
         - name: kafka-sasl-prompt-prompt-processing
           secret:

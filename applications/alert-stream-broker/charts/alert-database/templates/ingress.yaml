@@ -6,7 +6,6 @@ metadata:
   labels:
     {{- include "alertDatabase.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
       - "read:alertdb"

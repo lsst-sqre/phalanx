@@ -1,0 +1,16 @@
+{{- if .Values.cruiseControl.metricsConfig.enabled }}
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: kafka-cruise-control-metrics
+  labels:
+    app: sasquatch-cruise-control-metrics
+data:
+  kafka-cruise-control-metrics-config.yml: |
+    # See https://github.com/prometheus/jmx_exporter for more info about JMX Prometheus Exporter metrics
+    lowercaseOutputName: true
+    rules:
+    - pattern: kafka.cruisecontrol<name=(.+)><>(\w+)
+      name: kafka_cruisecontrol_$1_$2
+      type: GAUGE
+{{- end }}

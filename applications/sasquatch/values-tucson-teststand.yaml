@@ -3,8 +3,21 @@ strimzi-kafka:
     monitorLabel:
       lsst.io/monitor: "true"
   kafka:
-    storage:
-      storageClassName: rook-ceph-block
+    version: 3.9.1
+    metadataVersion: "3.8-IV0"
+    config:
+      auto.create.topics.enable: false
+      log.cleaner.min.compaction.lag.ms: 108000000
+      log.message.timestamp.type: LogAppendTime
+      log.retention.hours: 30
+      log.retention.ms: 108000000
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
     externalListener:
       tls:
         enabled: true
@@ -12,55 +25,67 @@ strimzi-kafka:
         loadBalancerIP: "140.252.146.59"
         host: sasquatch-tts-kafka-bootstrap.lsst.codes
       brokers:
-        - broker: 0
-          loadBalancerIP: "140.252.146.46"
+        - broker: 3
+          loadBalancerIP: "140.252.147.202"
           host: sasquatch-tts-kafka-0.lsst.codes
-        - broker: 1
-          loadBalancerIP: "140.252.146.58"
+        - broker: 4
+          loadBalancerIP: "140.252.147.203"
           host: sasquatch-tts-kafka-1.lsst.codes
-        - broker: 2
-          loadBalancerIP: "140.252.146.47"
+        - broker: 5
+          loadBalancerIP: "140.252.147.204"
           host: sasquatch-tts-kafka-2.lsst.codes
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: 1
-      limits:
-        memory: 8Gi
-        cpu: 1
     metricsConfig:
       enabled: true
+    storage:
+      storageClassName: "rook-ceph-block"
   kafkaExporter:
     enabled: true
     enableSaramaLogging: true
+    showAllOffsets: false
     resources:
       requests:
-        cpu: 200m
-        memory: 64Mi
+        memory: 512Mi
+        cpu: 2
       limits:
-        cpu: 500m
-        memory: 128Mi
+        memory: 1Gi
+        cpu: 4
+  controller:
+    enabled: true
+    nodeIds: "[0,1,2]"
+    storage:
+      storageClassName: "rook-ceph-block"
+  broker:
+    enabled: true
+    name: "kafka"
+    nodeIds: "[3,4,5]"
+    storage:
+      size: 500Gi
+      storageClassName: "rook-ceph-block"
+    resources:
+      requests:
+        memory: 64Gi
+        cpu: 16
+      limits:
+        memory: 64Gi
+        cpu: 16
   users:
+    replicator:
+      enabled: true
     telegraf:
       enabled: true
-  registry:
-    ingress:
+  cruiseControl:
+    enabled: true
+    metricsConfig:
       enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /$2
-      hostname: tucson-teststand.lsst.codes
-      path: /schema-registry(/|$)(.*)
-  kraft:
+
+schema-registry:
+  enabled: true
+  ingress:
     enabled: true
-  kafkaController:
-    enabled: true
-    resources:
-      requests:
-        memory: 16Gi
-        cpu: "2"
-      limits:
-        memory: 16Gi
-        cpu: "2"
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    hostname: tucson-teststand.lsst.codes
+    path: /schema-registry(/|$)(.*)
 
 influxdb:
   persistence:
@@ -68,6 +93,13 @@ influxdb:
   ingress:
     enabled: false
     hostname: tucson-teststand.lsst.codes
+  resources:
+    requests:
+      memory: 64Gi
+      cpu: 8
+    limits:
+      memory: 64Gi
+      cpu: 8
 
 customInfluxDBIngress:
   enabled: true
@@ -75,6 +107,9 @@ customInfluxDBIngress:
 
 telegraf:
   enabled: true
+  kafkaVersion: "4.0.0"
+  image:
+    tag: 1.35.4-alpine
   kafkaConsumers:
     auxtel:
       enabled: true
@@ -112,7 +147,55 @@ telegraf:
       enabled: true
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.MTM1M3" ]
+        [ "lsst.sal.MTM1M3.ackcmd", "lsst.sal.MTM1M3.logevent*", "lsst.sal.MTM1M3.command*" ]
+      debug: true
+    m1m3-tel1:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3.accelerometerData", "lsst.sal.MTM1M3.appliedCylinderForces", "lsst.sal.MTM1M3.appliedForces", "lsst.sal.MTM1M3.gyroData", "lsst.sal.MTM1M3.hardpointActuatorData", "lsst.sal.MTM1M3.hardpointMonitorData" ]
+      debug: true
+      resources:
+        limits:
+          cpu: "6"
+          memory: "2Gi"
+        requests:
+          cpu: "4"
+          memory: "2Gi"
+    m1m3-tel2:
+      enabled: true
+      database: "efd"
+      metric_batch_size: 750
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3.forceActuatorData", "lsst.sal.MTM1M3.outerLoopData", "lsst.sal.MTM1M3.imsData", "lsst.sal.MTM1M3.inclinometerData", "lsst.sal.MTM1M3.powerSupplyData" ]
+      debug: true
+      resources:
+        limits:
+          cpu: "6"
+          memory: "8Gi"
+        requests:
+          cpu: "4"
+          memory: "8Gi"
+    m1m3-tel3:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3.appliedAccelerationForces", "lsst.sal.MTM1M3.appliedAzimuthForces", "lsst.sal.MTM1M3.appliedBalanceForces", "lsst.sal.MTM1M3.appliedElevationForces", "lsst.sal.MTM1M3.appliedThermalForces", "lsst.sal.MTM1M3.appliedVelocityForces", "lsst.sal.MTM1M3.forceActuatorPressure", "lsst.sal.MTM1M3.pidData" ]
+      debug: true
+      resources:
+        limits:
+          cpu: "5"
+          memory: "2Gi"
+        requests:
+          cpu: "4"
+          memory: "2Gi"
+    m1m3ts:
+      enabled: true
+      metric_batch_size: 1500
+      max_undelivered_messages: 4000
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3TS" ]
       debug: true
     m2:
       enabled: true
@@ -168,6 +251,13 @@ telegraf:
       topicRegexps: |
         [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
       debug: true
+    mtvms:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTVMS" ]
+      debug: true
     obsenv:
       enabled: true
       database: "lsst.obsenv"
@@ -179,10 +269,10 @@ telegraf:
   resources:
     limits:
       cpu: "2"
-      memory: "2Gi"
+      memory: "8Gi"
     requests:
-      cpu: "1"
-      memory: "1Gi"
+      cpu: "2"
+      memory: "8Gi"
 
 kafdrop:
   ingress:
@@ -238,8 +328,11 @@ backup:
 obsenv:
   enabled: true
 
-control-system:
-  enabled: true
-
 consdb:
   enabled: true
+
+control-system:
+  enabled: true
+  topics:
+    - lsst.s3.raw.latiss
+    - lsst.s3.raw.comcam

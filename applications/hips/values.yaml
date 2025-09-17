@@ -10,10 +10,20 @@ config:
   # @default -- None, must be set
   gcsProject: ""
 
-  # -- Name of Google Cloud Storage bucket holding the HiPS files
+  # -- A mapping of bucket keys to GCS buckets.
+  # /api/hips/v2/<bucket-key>/some/file will serve the file
+  # <objectPrefix>/some/file from the corresponding bucket.
   # @default -- None, must be set
-  gcsBucket: ""
+  buckets: null
+    # dp02:
+    #   bucketName: somebucket
+    # dp1:
+    #   bucketName: somebucket
+    #   objectPrefix: someprefix
 
+  # -- The key of bucket in the 'buckets' dict to serve from the v1 endpoint
+  # (/api/hips)
+  defaultBucketKey: null
   # -- Choose from the text form of Python logging levels
   logLevel: "INFO"
 
@@ -75,10 +85,6 @@ affinity: {}
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: ""
-
   # -- Host name for ingress
   # @default -- Set by Argo CD
-  host: ""
+  host: null

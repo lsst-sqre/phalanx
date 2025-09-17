@@ -1,0 +1,20 @@
+{{- $args := list
+  (printf "--log-level=%s" .Values.config.logLevel)
+  "export-chunks"
+  .Values.config.apdbConfig
+  .Values.config.ppdbConfig
+  (printf "--directory=%s" .Values.config.stagingDirectory)
+  "--compression=snappy"
+  (printf "--batch-size=%d" (int .Values.config.batchSize))
+  (printf "--min-wait-time=%d" (int .Values.config.minWaitTime))
+  (printf "--max-wait-time=%d" (int .Values.config.maxWaitTime))
+  (printf "--check-interval=%d" (int .Values.config.checkInterval))
+}}
+{{- include "ppdb-replication.deployment" (dict
+  "Chart" .Chart
+  "Values" .Values
+  "Release" .Release
+  "Template" .Template
+  "containerSuffix" "export-chunks"
+  "containerArgs" $args
+) }}

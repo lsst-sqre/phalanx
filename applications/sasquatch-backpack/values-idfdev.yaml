@@ -1,0 +1,2 @@
+config:
+  sasquatchRestProxyUrl: "https://data-dev.lsst.cloud/sasquatch-rest-proxy"

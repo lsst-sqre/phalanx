@@ -15,11 +15,13 @@ applications:
   calsys: true
   consdb: true
   control-system-test: true
+  csc-versions: true
   envsys: true
   exposurelog: true
   love: true
   mobu: true
   narrativelog: true
+  nightlydigest: true
   nightreport: true
   nublado: true
   nvr-control: true
@@ -27,16 +29,20 @@ applications:
   obssys: true
   portal: true
   rapid-analysis: true
+  repertoire: true
   rubintv: true
   sasquatch: true
   simonyitel: true
   squareone: true
   strimzi: true
-  telegraf: true
-  telegraf-ds: true
+  strimzi-access-operator: true
+  strimzi-registry-operator: true
   uws: true
 
 controlSystem:
   imageTag: "c0041"
   siteTag: "base"
   s3EndpointUrl: "https://s3.ls.lsst.org"
+
+revisions:
+  strimzi: strimzi-0.45.0

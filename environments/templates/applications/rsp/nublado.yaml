@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/nublado"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "nublado") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"
@@ -28,6 +28,8 @@ spec:
           value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"

@@ -5,10 +5,10 @@ ataos:
   resources:
     limits:
       cpu: 450m
-      memory: 600Mi
+      memory: 1024Mi
     requests:
       cpu: 45m
-      memory: 200Mi
+      memory: 512Mi
 
 atbuilding:
   enabled: true
@@ -43,10 +43,10 @@ atdometrajectory:
   resources:
     limits:
       cpu: 350m
-      memory: 300Mi
+      memory: 768Mi
     requests:
       cpu: 35m
-      memory: 100Mi
+      memory: 256Mi
 
 atheaderservice:
   image:
@@ -85,7 +85,7 @@ athexapod:
 atmcs:
   enabled: true
   image:
-    repository: ts-dockerhub.lsst.org/atmcs_sim
+    repository: ts-dockerhub.lsst.org/atmcs
     pullPolicy: Always
   resources:
     limits:
@@ -176,7 +176,7 @@ atoods:
 atpneumatics:
   enabled: true
   image:
-    repository: ts-dockerhub.lsst.org/at_pneumatics_sim
+    repository: ts-dockerhub.lsst.org/at_pneumatics
     pullPolicy: Always
   resources:
     limits:

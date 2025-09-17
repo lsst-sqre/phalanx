@@ -1,0 +1,20 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: "lsst.scimma.too.alert"
+  labels:
+    strimzi.io/cluster: {{ $.Values.cluster.name }}
+spec:
+  partitions: 1
+  replicas: 3
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: "lsst.scimma.too.alert.test"
+  labels:
+    strimzi.io/cluster: {{ $.Values.cluster.name }}
+spec:
+  partitions: 1
+  replicas: 3

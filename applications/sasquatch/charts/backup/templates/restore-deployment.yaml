@@ -28,7 +28,7 @@ spec:
       volumes:
       - name: backup
         persistentVolumeClaim:
-          claimName: sasquatch-backup
+          claimName: sasquatch-backup-artifacts
       containers:
       - name: sasquatch-backup
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

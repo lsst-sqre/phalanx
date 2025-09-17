@@ -256,6 +256,11 @@ mtaos:
     readOnly: false
     server: nfs-scratch.cp.lsst.org
     serverPath: /scratch
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obs-env.cp.lsst.org
+    serverPath: /obs-env
   resources:
     limits:
       cpu: 5000m
@@ -272,10 +277,16 @@ mtcamhexapod:
     pullPolicy: Always
   env:
     RUN_ARG: 1
+  nfsMountpoint:
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obs-env.cp.lsst.org
+    serverPath: /obs-env
   resources:
     limits:
       cpu: 500m
-      memory: 900Mi
+      memory: 768Mi
     requests:
       cpu: 50m
       memory: 300Mi
@@ -340,7 +351,6 @@ mtheaderservice:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/headerservice
-    revision: 2
     pullPolicy: Always
   env:
     URL_SPEC: --lfa_mode s3 --s3instance cp
@@ -410,13 +420,19 @@ mtm2hexapod:
     pullPolicy: Always
   env:
     RUN_ARG: 2
+  nfsMountpoint:
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obs-env.cp.lsst.org
+    serverPath: /obs-env
   resources:
     limits:
       cpu: 400m
-      memory: 400Mi
+      memory: 768Mi
     requests:
       cpu: 40m
-      memory: 125Mi
+      memory: 300Mi
 
 mtm2hexapod-sim:
   enabled: false
@@ -441,10 +457,10 @@ mtmount:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 500m
+      cpu: "1"
       memory: 1000Mi
     requests:
-      cpu: 50m
+      cpu: 250m
       memory: 300Mi
 
 mtmount-ccw-only:
@@ -494,10 +510,10 @@ mtoods:
   resources:
     limits:
       cpu: 1000m
-      memory: 700Mi
+      memory: 2100Mi
     requests:
       cpu: 10m
-      memory: 345Mi
+      memory: 700Mi
   configfile:
     path: /etc
     filename: mtoods.yaml

@@ -1,12 +1,19 @@
 strimzi-kafka:
   kafka:
+    version: "3.9.0"
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
     externalListener:
       tls:
         enabled: true
       bootstrap:
         loadBalancerIP: "34.55.132.0"
         host: sasquatch-kafka-bootstrap.lsst.cloud
-
       brokers:
         - broker: 3
           loadBalancerIP: "34.122.37.250"
@@ -20,38 +27,20 @@ strimzi-kafka:
   users:
     telegraf:
       enabled: true
-  kraft:
+  controller:
     enabled: true
-  kafkaController:
+  broker:
     enabled: true
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: "1"
-      limits:
-        memory: 8Gi
-        cpu: "1"
-  registry:
-    ingress:
-      enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /$2
-      hostname: data.lsst.cloud
-      path: /schema-registry(/|$)(.*)
-  connect:
-    enabled: false
+    storage:
+      size: 500Gi
+
+schema-registry:
+  enabled: true
 
 influxdb:
   ingress:
     enabled: false
     hostname: data.lsst.cloud
-  resources:
-    requests:
-      memory: 8Gi
-      cpu: 1
-    limits:
-      memory: 8Gi
-      cpu: 1
 
 customInfluxDBIngress:
   enabled: true
@@ -99,6 +88,8 @@ app-metrics:
     - mobu
     - noteburst
     - nublado
+    - qservkafka
+    - sia
     - wobbly
 
 backup:
@@ -109,10 +100,13 @@ backup:
   backupItems:
     - name: "chronograf"
       enabled: true
-      retentionDays: 3
+      retentionDays: 7
     - name: "kapacitor"
       enabled: true
-      retentionDays: 3
+      retentionDays: 7
     - name: "influxdb-oss-full"
       enabled: true
       retentionDays: 3
+
+tap:
+  enabled: true

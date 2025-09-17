@@ -1,0 +1,39 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ include "nightlydigest-nginx.name" . }}-ingress
+  labels:
+    {{- include "nightlydigest-nginx.labels" . | nindent 4 }}
+config:
+  loginRedirect: true
+  scopes:
+    all:
+      - "read:image"
+  delegate:
+    useAuthorization: true
+    internal:
+      service: {{ include "nightlydigest-nginx.name" . }}
+      scopes:
+        - "exec:internal-tools"
+        - "read:image"
+  service: {{ include "nightlydigest-nginx.name" . }}
+template:
+  metadata:
+    name: {{ include "nightlydigest-nginx.name" . }}-ingress
+    namespace: {{ $.Values.global.controlSystemAppNamespace }}
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ .Values.global.host }}
+        http:
+          paths:
+            - path: {{ .Values.ingress.httpPath }}
+              pathType: {{ default "Prefix" .Values.ingress.pathType }}
+              backend:
+                service:
+                  name: {{ include "nightlydigest-nginx.name" . }}-service
+                  port:
+                    number: {{ .Values.ports.container }}

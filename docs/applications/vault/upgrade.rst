@@ -25,7 +25,7 @@ It's good practice to check if Vault itself has an update each time the Vault He
 
 To upgrade Vault itself, first change the pinned version in the ``dependencies.version`` setting for Vault in `applications/vault/Chart.yaml <https://github.com/lsst-sqre/phalanx/blob/main/applications/vault/Chart.yaml>`__.
 
-Then, after that change is merged and you have synced Argo CD to apply the changes in Kubernetes, follow the `Vault upgrade instructions <https://developer.hashicorp.com/vault/docs/platform/k8s/helm/run#upgrading-vault-servers>`__.
+Then, after that change is merged and you have synced Argo CD to apply the changes in Kubernetes, follow the `Vault upgrade instructions <https://developer.hashicorp.com/vault/docs/deploy/kubernetes/helm/run#upgrading-vault-on-kubernetes>`__.
 You can skip the ``helm upgrade`` step, since Argo CD has already made the equivalent change.
 Where those instructions say to delete a pod, deleting it through Argo CD works correctly.
 You don't need to resort to ``kubectl``.

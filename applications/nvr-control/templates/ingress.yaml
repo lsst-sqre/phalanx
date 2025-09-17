@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "nvr-control.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl }}
   loginRedirect: true
   scopes:
     all:

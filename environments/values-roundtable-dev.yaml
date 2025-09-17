@@ -11,21 +11,21 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/roundtable-dev"
 
 applications:
-  atlantis: true
+  atlantis: false
+  eups-distributor: true
   giftless: true
+  google-cloud-observability: true
   jira-data-proxy: true
   mobu: true
-  monitoring: true
   onepassword-connect: true
   ook: true
+  repertoire: true
   sasquatch: true
   squarebot: true
-  sqrbot-sr: false
   squareone: true
   strimzi: true
   strimzi-access-operator: true
-  telegraf: true
-  telegraf-ds: true
+  strimzi-registry-operator: true
   templatebot: true
   unfurlbot: true
   vault: true

@@ -60,11 +60,11 @@ atqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 5000m
-      memory: 10Gi
+      cpu: 5
+      memory: 48Gi
     requests:
-      cpu: 1000m
-      memory: 580Mi
+      cpu: 3
+      memory: 4Gi
 
 atscheduler:
   classifier: scheduler2
@@ -83,8 +83,8 @@ atscheduler:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
-    server: nfs-scratch.cp.lsst.org
-    serverPath: /scratch/scheduler
+    server: nfs-project.cp.lsst.org
+    serverPath: /project/scheduler
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
@@ -197,8 +197,8 @@ mtscheduler:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
-    server: nfs-scratch.cp.lsst.org
-    serverPath: /scratch/scheduler
+    server: nfs-project.cp.lsst.org
+    serverPath: /project/scheduler
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
@@ -290,8 +290,8 @@ ocsscheduler:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
-    server: nfs-scratch.cp.lsst.org
-    serverPath: /scratch/scheduler
+    server: nfs-project.cp.lsst.org
+    serverPath: /project/scheduler
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true

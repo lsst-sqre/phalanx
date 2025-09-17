@@ -23,9 +23,14 @@ globalAppConfig:
   noteburst:
     influxTags:
       - "username"
+      - "queue"
   nublado:
     influxTags:
       - "username"
+  qservkafka:
+    influxTags:
+      - "username"
+      - "queue"
   sia:
     influxTags:
       - "username"
@@ -99,6 +104,10 @@ envFromSecret: ""
 # -- Run Telegraf in debug mode.
 # @default -- false
 debug: false
+
+# -- Set the minimal supported Kafka version for the Sarama Go client library.
+# @default -- null, use the Sarama library default.
+kafkaVersion: null
 
 influxdb:
   # -- URL of the InfluxDB v1 instance to write to

@@ -1,0 +1,129 @@
+{{ if .Values.cronjob.tutorials.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tutorials
+spec:
+  schedule: {{ .Values.cronjob.tutorials.schedule | quote }}
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          {{- with .Values.cronjob.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          containers:
+          - name: tutorial
+            image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
+            {{- with .Values.cronjob.resources }}
+            resources:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            command: [ "/entrypoint.sh" ]
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              runAsUser: {{ .Values.cronjob.tutorials.uid }}
+              runAsGroup: {{ .Values.cronjob.tutorials.gid }}
+              capabilities:
+                drop:
+                - all
+            env:
+            - name: "GIT_SRC"
+              value: {{ .Values.cronjob.tutorials.gitSource | quote }}
+            - name: "GIT_TARGET"
+              value: {{ .Values.cronjob.tutorials.gitTarget | quote }}
+            - name: "GIT_BRANCH"
+              value: {{ .Values.cronjob.tutorials.gitBranch | quote }}
+            volumeMounts:
+            - mountPath: {{ .Values.cronjob.tutorials.targetVolume.mountPath | quote }}
+              name: {{ .Values.cronjob.tutorials.targetVolume.volumeName | quote }}
+          # We need to extend this for PVCs too
+          volumes:
+          {{- range .Values.controller.config.lab.volumes }}
+          - name: {{ .name | quote }}
+          {{- if eq .source.type "nfs" }}
+            nfs:
+              server: {{ .source.server | quote }}
+              path: {{ .source.serverPath | quote }}
+          {{- else if eq .source.type "hostPath" }}
+            hostPath:
+              path: {{ .source.path | quote }}
+          {{- end }}
+          {{- end }}
+{{- end }}
+{{ if .Values.cronjob.artifacts.enabled }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: artifacts
+spec:
+  schedule: {{ .Values.cronjob.artifacts.schedule | quote }}
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          {{- with .Values.cronjob.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          containers:
+          - name: artifacts
+            image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
+            {{- with .Values.cronjob.resources }}
+            resources:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            command: [ "/entrypoint.sh" ]
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              runAsUser: {{ .Values.cronjob.artifacts.uid }}
+              runAsGroup: {{ .Values.cronjob.artifacts.gid }}
+              capabilities:
+                drop:
+                - all
+            env:
+            - name: "GIT_SRC"
+              value: {{ .Values.cronjob.artifacts.gitSource | quote }}
+            - name: "GIT_TARGET"
+              value: {{ .Values.cronjob.artifacts.gitTarget | quote }}
+            - name: "GIT_BRANCH"
+              value: {{ .Values.cronjob.artifacts.gitBranch | quote }}
+            volumeMounts:
+            - mountPath: {{ .Values.cronjob.artifacts.targetVolume.mountPath | quote }}
+              name: {{ .Values.cronjob.artifacts.targetVolume.volumeName | quote }}
+          # We need to extend this for PVCs too
+          volumes:
+          {{- range .Values.controller.config.lab.volumes }}
+          - name: {{ .name | quote }}
+          {{- if eq .source.type "nfs" }}
+            nfs:
+              server: {{ .source.server | quote }}
+              path: {{ .source.serverPath | quote }}
+          {{- else if eq .source.type "hostPath" }}
+            hostPath:
+              path: {{ .source.path | quote }}
+          {{- end }}
+          {{- end }}
+{{- end }}

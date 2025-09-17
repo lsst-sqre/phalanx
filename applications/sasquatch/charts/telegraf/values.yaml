@@ -184,10 +184,19 @@ kafkaConsumers:
     # @default -- 3
     compression_codec: 3
 
+
+# -- Set the minimal supported Kafka version for the Sarama Go client library.
+# @default -- null, use the Sarama library default.
+kafkaVersion: null
+
 influxdb:
   # -- URL of the InfluxDB v1 instance to write to
   urls:
     - "http://sasquatch-influxdb.sasquatch:8086"
+
+registry:
+  # -- Schema Registry URL
+  url: "http://sasquatch-schema-registry.sasquatch:8081"
 
 # -- Kubernetes resources requests and limits
 # @default -- See `values.yaml`

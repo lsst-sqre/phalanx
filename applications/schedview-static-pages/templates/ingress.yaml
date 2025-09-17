@@ -1,0 +1,31 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "schedview-static-pages"
+  labels:
+    {{- include "schedview-static-pages.labels" . | nindent 4 }}
+config:
+  loginRedirect: true
+  scopes:
+    all:
+      - "read:image"
+  service: "schedview-static-pages"
+template:
+  metadata:
+    name: "schedview-static-pages"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/schedview-static-pages"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "schedview-static-pages"
+                  port:
+                    number: 8080

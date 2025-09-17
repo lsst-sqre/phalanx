@@ -1,0 +1,70 @@
+nightlydigest-nginx:
+  image:
+    repository: nginx
+    tag: 1.25.1
+    pullPolicy: Always
+  ingress:
+    httpPath: /nightlydigest
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  initContainers:
+    frontend:
+      image:
+        repository: ts-dockerhub.lsst.org/nightlydigest-frontend
+        tag: c0041
+        pullPolicy: Always
+  staticStore:
+    name: nightlydigest-nginx-static
+    storageClass: rook-ceph-block
+    accessMode: ReadWriteOnce
+    claimSize: 2Gi
+  resources:
+    requests:
+      cpu: 50m
+      memory: 70Mi
+    limits:
+      cpu: 500m
+      memory: 300Mi
+  nginxConfig: |
+    server {
+      listen 80;
+      server_name localhost;
+      location /nightlydigest {
+        root /usr/src;
+        try_files $uri$args $uri$args/ $uri/ /nightlydigest/index.html;
+      }
+
+      location /nightlydigest/api/ {
+        proxy_pass http://nightlydigest-backend-service:8080/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Authorization $http_authorization;
+        proxy_redirect off;
+      }
+    }
+
+nightlydigest-backend:
+  image:
+    repository: ts-dockerhub.lsst.org/nightlydigest-backend
+    tag: c0041
+    pullPolicy: Always
+  env:
+    - name: JIRA_API_HOSTNAME
+      value: rubinobs.atlassian.net
+    - name: EXTERNAL_INSTANCE_URL
+      value: https://base-lsp.lsst.codes
+  envSecrets:
+    - name: JIRA_API_TOKEN
+      secretName: nightlydigest
+      secretKey: jira-api-token
+  resources:
+    requests:
+      cpu: 150m
+      memory: 200Mi
+    limits:
+      cpu: 1000m
+      memory: 1500Mi

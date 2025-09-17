@@ -1,6 +1,6 @@
 strimzi-kafka:
   kafka:
-    replicas: 3
+    version: "3.9.0"
     listeners:
       plain:
         enabled: false
@@ -8,18 +8,14 @@ strimzi-kafka:
         enabled: true
       external:
         enabled: false
+  controller:
+    enabled: true
+  broker:
+    enabled: true
     storage:
       size: 100Gi
       storageClassName: "premium-rwo"
     affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: "roundtable.lsst.cloud/pool"
-                  operator: In
-                  values:
-                    - "kafka"
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
@@ -29,38 +25,13 @@ strimzi-kafka:
                   values:
                     - "sasquatch"
             topologyKey: "kubernetes.io/hostname"
-    tolerations:
-      - key: dedicated
-        operator: Equal
-        value: "kafka"
-        effect: NoExecute
-    resources:
-      requests:
-        memory: 16Gi
-        cpu: 2
-      limits:
-        memory: 16Gi
-        cpu: 2
-  kraft:
-    enabled: true
-  kafkaController:
-    enabled: true
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: "2"
-      limits:
-        memory: 8Gi
-        cpu: "2"
-  users:
-    telegraf:
-      enabled: false
-
   connect:
     enabled: false
-
   mirrormaker2:
     enabled: false
+
+schema-registry:
+  enabled: true
 
 influxdb:
   enabled: false

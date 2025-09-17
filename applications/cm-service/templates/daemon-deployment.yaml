@@ -65,13 +65,30 @@ spec:
             - name: DB__PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.config.db.secret_name }}
-                  key: {{ .Values.config.db.secret_key }}
+                  name: {{ .Values.config.db.secretName }}
+                  key: {{ .Values.config.db.secretKey }}
             - name: PANDA__REFRESH_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.config.panda.secretName }}
                   key: {{ .Values.config.panda.refreshTokenSecretKey }}
+            - name: NOTIFICATIONS__SLACK_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.config.slack.secretName }}
+                  key: {{ .Values.config.slack.webhookUrlSecretKey }}
+# {{- with .Values.config.aws }}
+#             - name: AWS_ACCESS_KEY_ID
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: {{ .secretName }}
+#                   key: {{ .defaultAccessKeyIdSecretKey }}
+#             - name: AWS_SECRET_ACCESS_KEY
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: {{ .secretName }}
+#                   key: {{ .defaultSecretAccessKeySecretKey }}
+# {{- end }}
           resources:
             {{- toYaml .Values.daemon.resources | nindent 12 }}
           securityContext:
@@ -81,24 +98,46 @@ spec:
                 - "all"
             readOnlyRootFilesystem: true
           volumeMounts:
-            {{- with .Values.config.outputVolume }}
-            - mountPath: {{ .mountPath }}
-              name: output-volume
+            - name: tmp-volume
+              mountPath: "/tmp"
+            - name: aws-config-volume
+              mountPath: /etc/aws/config
+              subPath: config
+              readOnly: true
+            - name: aws-credentials-volume
+              mountPath: /etc/aws/credentials
+              subPath: credentials
+              readOnly: true
+{{- with .Values.config.outputVolume }}
+            - name: output-volume
+              mountPath: {{ .mountPath }}
               subPath: {{ .subPath }}
-            {{- end }}
-            {{- with .Values.config.butler }}
-            - mountPath: {{ .mountPath }}
-              name: butler-repo-volume
+{{- end }}
+{{- with .Values.config.butler }}
+            - name: butler-repo-volume
+              mountPath: {{ .mountPath }}
               subPath: {{ .subPath }}
-            {{- end }}
-            - mountPath: "/tmp"
-              name: "tmp-volume"
-            {{- with .Values.config.htcondor.fsRemoteDir }}
-            - mountPath: {{ .mountPath }}
-              name: condor-remote-volume
+{{- end }}
+{{- with .Values.config.htcondor.fsRemoteDir }}
+            - name: condor-remote-volume
+              mountPath: {{ .mountPath }}
               subPath: {{ .subPath }}
-            {{- end }}
+{{- end }}
       volumes:
+        - name: aws-config-volume
+          configMap:
+            name: "{{ .Chart.Name }}-aws-config"
+            items:
+              -
+                key: config
+                path: config
+        - name: aws-credentials-volume
+          secret:
+            secretName: {{ .Values.config.aws.secretName }}
+            items:
+              -
+                key: {{ .Values.config.aws.credentialsFileSecretKey }}
+                path: credentials
         - name: output-volume
           persistentVolumeClaim:
             claimName: {{ .Chart.Name }}-output

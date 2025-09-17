@@ -1,0 +1,27 @@
+{{- if .Values.resultWorker.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: "qserv-kafka-worker"
+  labels:
+    {{- include "qserv-kafka.labels" . | nindent 4 }}
+spec:
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 900
+  maxReplicas: {{ .Values.resultWorker.autoscaling.maxReplicas }}
+  minReplicas: {{ .Values.resultWorker.autoscaling.minReplicas }}
+  metrics:
+    {{- if .Values.resultWorker.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: "cpu"
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.resultWorker.autoscaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+  scaleTargetRef:
+    apiVersion: "apps/v1"
+    kind: "Deployment"
+    name: "qserv-kafka-worker"
+{{- end }}

@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "jira-data-proxy.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   loginRedirect: false # endpoint is for API use only
   scopes:
     all:

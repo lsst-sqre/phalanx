@@ -419,7 +419,7 @@ class MockVaultClient:
         return {"data": {"role_id": self._approles[role_name].role_id}}
 
     def read_secret(
-        self, path: str, raise_on_deleted_version: bool | None = None
+        self, path: str, *, raise_on_deleted_version: bool | None = None
     ) -> dict[str, Any]:
         """Read a secret from Vault.
 

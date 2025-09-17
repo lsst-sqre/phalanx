@@ -1,4 +1,4 @@
-{{- if .Values.kafkaController.enabled }}
+{{- if .Values.controller.enabled }}
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaNodePool
 metadata:
@@ -6,7 +6,7 @@ metadata:
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
   annotations:
-    strimzi.io/next-node-ids: "[3,4,5]"
+    strimzi.io/next-node-ids: {{ .Values.controller.nodeIds | quote }}
 spec:
   replicas: {{ .Values.kafka.replicas }}
   roles:
@@ -16,26 +16,45 @@ spec:
     volumes:
     - id: 0
       type: persistent-claim
-      size: {{ .Values.kafkaController.storage.size }}
-      {{- if .Values.kafkaController.storage.storageClassName }}
-      class: {{ .Values.kafkaController.storage.storageClassName }}
+      size: {{ .Values.controller.storage.size }}
+      {{- if .Values.controller.storage.storageClassName }}
+      class: {{ .Values.controller.storage.storageClassName }}
       {{- end}}
       deleteClaim: false
-  {{- with .Values.kafkaController.resources }}
+  template:
+    persistentVolumeClaim:
+      metadata:
+        annotations:
+          argocd.argoproj.io/compare-options: IgnoreExtraneous
+          argocd.argoproj.io/sync-options: Prune=false
+        {{- if .Values.controller.backup }}
+        labels:
+          k8up.io/backup-target: "true"
+        {{- end }}
+    pod:
+      {{- with .Values.controller.affinity }}
+      affinity:
+        {{- toYaml . | nindent 10 }}
+      {{- end }}
+      {{- with .Values.controller.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 10 }}
+      {{- end}}
+  {{- with .Values.controller.resources }}
   resources:
     {{- toYaml . | nindent 6 }}
   {{- end }}
 {{- end }}
-{{- if not .Values.brokerStorage.enabled }}
+{{- if .Values.broker.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaNodePool
 metadata:
-  name: kafka
+  name: {{ .Values.broker.name }}
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
   annotations:
-    strimzi.io/next-node-ids: "[0,1,2]"
+    strimzi.io/next-node-ids: {{ .Values.broker.nodeIds | quote }}
 spec:
   replicas: {{ .Values.kafka.replicas }}
   roles:
@@ -45,26 +64,45 @@ spec:
     volumes:
     - id: 0
       type: persistent-claim
-      size: {{ .Values.kafka.storage.size }}
-      {{- if .Values.kafka.storage.storageClassName }}
-      class: {{ .Values.kafka.storage.storageClassName }}
+      size: {{ .Values.broker.storage.size }}
+      {{- if .Values.broker.storage.storageClassName }}
+      class: {{ .Values.broker.storage.storageClassName }}
       {{- end}}
       deleteClaim: false
-  {{- with .Values.kafka.resources }}
+  template:
+    persistentVolumeClaim:
+      metadata:
+        annotations:
+          argocd.argoproj.io/compare-options: IgnoreExtraneous
+          argocd.argoproj.io/sync-options: Prune=false
+        {{- if .Values.broker.backup }}
+        labels:
+          k8up.io/backup-target: "true"
+        {{- end }}
+    pod:
+      {{- with .Values.broker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 10 }}
+      {{- end }}
+      {{- with .Values.broker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 10 }}
+      {{- end}}
+  {{- with .Values.broker.resources }}
   resources:
     {{- toYaml . | nindent 6 }}
   {{- end }}
 {{- end }}
-{{- if or .Values.brokerStorage.enabled .Values.brokerStorage.migration.enabled }}
+{{- if .Values.brokerMigration.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaNodePool
 metadata:
-  name: kafka-local-storage
+  name: {{ .Values.brokerMigration.name }}
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
   annotations:
-    strimzi.io/next-node-ids: "[6,7,8]"
+    strimzi.io/next-node-ids: {{ .Values.brokerMigration.nodeIds | quote}}
 spec:
   replicas: {{ .Values.kafka.replicas }}
   roles:
@@ -74,39 +112,40 @@ spec:
     volumes:
     - id: 0
       type: persistent-claim
-      size: {{ .Values.brokerStorage.size }}
-      {{- if .Values.brokerStorage.storageClassName }}
-      class: {{ .Values.brokerStorage.storageClassName }}
+      size: {{ .Values.brokerMigration.storage.size }}
+      {{- if .Values.brokerMigration.storage.storageClassName }}
+      class: {{ .Values.brokerMigration.storage.storageClassName }}
       {{- end}}
       deleteClaim: false
   template:
     pod:
-      {{- with .Values.brokerStorage.affinity }}
+      {{- with .Values.brokerMigration.affinity }}
       affinity:
         {{- toYaml . | nindent 10 }}
       {{- end }}
-      {{- with .Values.brokerStorage.tolerations }}
+      {{- with .Values.brokerMigration.tolerations }}
       tolerations:
         {{- toYaml . | nindent 10 }}
       {{- end}}
-  {{- with .Values.kafka.resources }}
+  {{- with .Values.brokerMigration.resources }}
   resources:
     {{- toYaml . | nindent 6 }}
   {{- end }}
 {{- end }}
-{{- if and .Values.brokerStorage.migration.enabled .Values.brokerStorage.migration.rebalance }}
+
+{{- if and .Values.brokerMigration.enabled .Values.brokerMigration.rebalance.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaRebalance
 metadata:
-  name: broker-migration
+  name: rebalance
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
   annotations:
     strimzi.io/rebalance-auto-approval: "true"
 spec:
   mode: remove-brokers
-  {{- with .Values.brokerStorage.migration.brokers }}
+  {{- with .Values.brokerMigration.rebalance.avoidBrokers }}
   brokers:
     {{- toYaml . | nindent 6 }}
   {{- end }}
@@ -117,31 +156,21 @@ kind: Kafka
 metadata:
   name: {{ .Values.cluster.name }}
   annotations:
-    {{- if .Values.kraft.enabled }}
     strimzi.io/kraft: enabled
-    {{- end }}
     strimzi.io/node-pools: enabled
 spec:
   kafka:
-    template:
-      persistentVolumeClaim:
-        metadata:
-          annotations:
-            argocd.argoproj.io/compare-options: IgnoreExtraneous
-            argocd.argoproj.io/sync-options: Prune=false
-      pod:
-        {{- with .Values.kafka.affinity }}
-        affinity:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
-        {{- with .Values.kafka.tolerations }}
-        tolerations:
-          {{- toYaml . | nindent 10 }}
-        {{- end}}
     version: {{ .Values.kafka.version | quote }}
-    replicas: {{ .Values.kafka.replicas }}
+    {{- if .Values.kafka.metadataVersion }}
+    metadataVersion: {{ .Values.kafka.metadataVersion | quote }}
+    {{- end}}
+    {{-  if .Values.kafka.jvmOptions }}
+    jvmOptions:
+    {{- toYaml .Values.kafka.jvmOptions | nindent 6 }}
+    {{- end }}
+
     listeners:
-      {{- if .Values.kafka.listeners.plain.enabled }}
+    {{- if .Values.kafka.listeners.plain.enabled }}
       # internal listener without tls encryption and with scram-sha-512 authentication
       # used by clients inside the Kubernetes cluster
       - name: plain
@@ -150,8 +179,9 @@ spec:
         tls: false
         authentication:
           type: scram-sha-512
-      {{- end }}
-      {{- if .Values.kafka.listeners.tls.enabled }}
+    {{- end }}
+
+    {{- if .Values.kafka.listeners.tls.enabled }}
       # internal listener with tls encryption and mutual tls authentication
       # used by the schema registry and kafka connect clients
       - name: tls
@@ -160,8 +190,8 @@ spec:
         tls: true
         authentication:
           type: tls
-      {{- end }}
-      {{- if .Values.kafka.listeners.external.enabled }}
+    {{- end }}
+    {{- if .Values.kafka.listeners.external.enabled }}
       # external listener of type loadbalancer with tls encryption and scram-sha-512
       # authentication used by clients outside the Kubernetes cluster
       - name: external
@@ -183,7 +213,7 @@ spec:
             {{- end }}
           {{- if .Values.kafka.externalListener.brokers }}
           brokers:
-            {{- range $broker := .Values.kafka.externalListener.brokers }}
+          {{- range $broker := .Values.kafka.externalListener.brokers }}
             - broker: {{ $broker.broker }}
               loadBalancerIP: {{ $broker.loadBalancerIP }}
               advertisedHost: {{ $broker.host }}
@@ -192,7 +222,7 @@ spec:
                 {{- range $key, $value  := $broker.annotations }}
                 {{ $key }}: {{ $value }}
                 {{- end}}
-            {{- end }}
+          {{- end }}
           {{- end }}
           {{- if and (.Values.kafka.externalListener.tls.enabled) (.Values.kafka.externalListener.bootstrap.host) }}
           brokerCertChainAndKey:
@@ -200,16 +230,15 @@ spec:
             certificate: tls.crt
             key: tls.key
           {{- end }}
-      {{- end }}
-
+    {{- end }}
     authorization:
       type: simple
-{{- if .Values.superusers }}
+      {{- if .Values.superusers }}
       superUsers:
-{{- range .Values.superusers }}
+        {{- range .Values.superusers }}
         - {{ . }}
-{{- end }}
-{{- end }}
+        {{- end }}
+      {{- end }}
     config:
       offsets.topic.replication.factor:  {{ .Values.kafka.replicas }}
       transaction.state.log.replication.factor:  {{ .Values.kafka.replicas }}
@@ -227,20 +256,6 @@ spec:
           name: kafka-metrics
           key: kafka-metrics-config.yml
     {{- end }}
-    storage:
-      type: jbod
-      volumes:
-        # Note that storage is configured per replica. If there are 3 replicas,
-        # and 2 volumes in this array, each replica will get 2
-        # PersistentVolumeClaims for the configured size, for a total of 6
-        # volumes.
-      - id: 0
-        type: persistent-claim
-        size: {{ .Values.kafka.storage.size }}
-        {{- if .Values.kafka.storage.storageClassName }}
-        class: {{ .Values.kafka.storage.storageClassName }}
-        {{- end}}
-        deleteClaim: false
   entityOperator:
     topicOperator: {}
     userOperator: {}
@@ -269,5 +284,15 @@ spec:
     {{- end }}
   {{- end }}
   {{ if .Values.cruiseControl.enabled }}
-  cruiseControl: {}
+  cruiseControl:
+    config:
+      max.replicas.per.broker: {{ .Values.cruiseControl.maxReplicasPerBroker }}
+    {{- if .Values.cruiseControl.metricsConfig.enabled }}
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-cruise-control-metrics
+          key: kafka-cruise-control-metrics-config.yml
+    {{- end }}
   {{- end }}

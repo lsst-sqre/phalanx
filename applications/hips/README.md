@@ -15,11 +15,11 @@ HiPS tile server backed by Google Cloud Storage
 | autoscaling.maxReplicas | int | `100` | Maximum number of hips deployment pods |
 | autoscaling.minReplicas | int | `1` | Minimum number of hips deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of hips deployment pods |
-| config.gcsBucket | string | None, must be set | Name of Google Cloud Storage bucket holding the HiPS files |
+| config.buckets | string | None, must be set | A mapping of bucket keys to GCS buckets. /api/hips/v2/<bucket-key>/some/file will serve the file <objectPrefix>/some/file from the corresponding bucket. |
+| config.defaultBucketKey | string | `nil` | The key of bucket in the 'buckets' dict to serve from the v1 endpoint (/api/hips) |
 | config.gcsProject | string | None, must be set | Google Cloud project in which the underlying storage is located |
 | config.logLevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `hips` Kubernetes service account and has access to the storage bucket |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the hips image |
 | image.repository | string | `"ghcr.io/lsst-sqre/crawlspace"` | Image to use in the hips deployment |

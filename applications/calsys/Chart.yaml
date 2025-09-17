@@ -122,6 +122,16 @@ dependencies:
   condition: linearstage104-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: mtreflector
+  version: 1.0.0
+  condition: mtreflector.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: mtreflector-sim
+  version: 1.0.0
+  condition: mtreflector-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: simulation-gencam
   version: 1.0.0
   condition: simulation-gencam.enabled

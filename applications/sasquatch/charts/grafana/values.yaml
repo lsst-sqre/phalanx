@@ -1,0 +1,7 @@
+## Default values.yaml for the Grafana subchart
+
+influxdb:
+  # -- URL for the InfluxDB instance used by Grafana.
+  url: "http://sasquatch-influxdb.sasquatch:8086"
+  # -- Databases in InfluxDB exposed to Grafana.
+  databases: []

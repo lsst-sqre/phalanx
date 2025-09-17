@@ -1,0 +1,10 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: "qserv-kafka-token"
+  labels:
+    {{- include "qserv-kafka.labels" . | nindent 4 }}
+spec:
+  service: "bot-qserv-kafka"
+  scopes:
+    - "admin:userinfo"

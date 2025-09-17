@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/cert-manager"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "cert-manager") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.vaultSecretsPath"

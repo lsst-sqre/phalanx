@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "plot-navigator.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   loginRedirect: true
   scopes:
     all:
@@ -48,7 +47,7 @@ template:
               name: "production-tools"
               port:
                 number: 8080
-        - path: "/plot-navigator/images"
+        - path: "/plot-navigator/images/uuid"
           pathType: "Prefix"
           backend:
             service:

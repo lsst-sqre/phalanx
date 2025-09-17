@@ -16,8 +16,8 @@ vaultPathPrefix: "secret/phalanx/idfint"
 applications:
   butler: true
   datalinker: true
-  filestore-backup: true
   ghostwriter: true
+  google-cloud-observability: true
   hips: true
   hoverdrive: true
   mobu: true
@@ -25,6 +25,7 @@ applications:
   nublado: true
   portal: true
   qserv-kafka: true
+  repertoire: true
   rubin-rag: true
   sasquatch: true
   sia: true
@@ -34,9 +35,8 @@ applications:
   squareone: true
   strimzi: true
   strimzi-access-operator: true
+  strimzi-registry-operator: true
   tap: true
-  telegraf: true
-  telegraf-ds: true
   times-square: true
   vo-cutouts: true
   wobbly: true

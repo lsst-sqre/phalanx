@@ -8,13 +8,6 @@ strimzi-kafka:
       policy:
         separator: "."
         class: "org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
-    resources:
-      requests:
-        cpu: 2
-        memory: 4Gi
-      limits:
-        cpu: 4
-        memory: 8Gi
   cluster:
     monitorLabel:
       lsst.io/monitor: "true"
@@ -25,11 +18,12 @@ strimzi-kafka:
       log.message.timestamp.type: LogAppendTime
       log.retention.hours: 30
       log.retention.ms: 108000000
-    storage:
-      storageClassName: rook-ceph-block
-      size: 1Ti
     listeners:
+      tls:
+        enabled: true
       plain:
+        enabled: true
+      external:
         enabled: true
     externalListener:
       tls:
@@ -47,13 +41,6 @@ strimzi-kafka:
         - broker: 8
           loadBalancerIP: "139.229.151.174"
           host: sasquatch-base-kafka-2.lsst.codes
-    resources:
-      requests:
-        memory: 128Gi
-        cpu: 32
-      limits:
-        memory: 128Gi
-        cpu: 32
     metricsConfig:
       enabled: true
   kafkaExporter:
@@ -63,51 +50,22 @@ strimzi-kafka:
     showAllOffsets: false
     resources:
       requests:
-        cpu: "3"
         memory: 512Mi
+        cpu: 2
       limits:
-        cpu: "8"
         memory: 1Gi
-  kraft:
+        cpu: 4
+  controller:
     enabled: true
-  kafkaController:
+    backup: true
+  broker:
     enabled: true
-    resources:
-      requests:
-        memory: 8Gi
-        cpu: "2"
-      limits:
-        memory: 8Gi
-        cpu: "2"
-  users:
-    replicator:
-      enabled: true
-    telegraf:
-      enabled: true
-  registry:
-    ingress:
-      enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /$2
-      hostname: base-lsp.lsst.codes
-      path: /schema-registry(/|$)(.*)
-  connect:
-    config:
-      key.converter: org.apache.kafka.connect.json.JsonConverter
-      key.converter.schemas.enable: false
-  cruiseControl:
-    enabled: true
-  brokerStorage:
-    enabled: true
-    migration:
-      enabled: false
-      rebalance: false
-      brokers:
-        - 0
-        - 1
-        - 2
-    size: 1.5Ti
-    storageClassName: localdrive
+    name: "kafka-local-storage"
+    nodeIds: "[6,7,8]"
+    storage:
+      size: 1.5Ti
+      storageClassName: localdrive
+    backup: true
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -122,6 +80,36 @@ strimzi-kafka:
         operator: "Equal"
         value: "true"
         effect: "NoSchedule"
+    resources:
+      requests:
+        memory: 128Gi
+        cpu: 32
+      limits:
+        memory: 128Gi
+        cpu: 32
+  users:
+    replicator:
+      enabled: true
+    telegraf:
+      enabled: true
+  connect:
+    enabled: true
+    config:
+      key.converter: org.apache.kafka.connect.json.JsonConverter
+      key.converter.schemas.enable: false
+  cruiseControl:
+    enabled: true
+    metricsConfig:
+      enabled: true
+
+schema-registry:
+  enabled: true
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    hostname: base-lsp.lsst.codes
+    path: /schema-registry(/|$)(.*)
 
 influxdb:
   ingress:
@@ -149,87 +137,110 @@ telegraf:
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
-      debug: true
     maintel:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
-      debug: true
     mtmount:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
-      debug: true
     envsys:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
-      debug: true
     latiss:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
-      debug: true
     m1m3:
       enabled: true
-      metric_batch_size: 2500
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.MTM1M3" ]
-      debug: true
+        [ "lsst.sal.MTM1M3.ackcmd", "lsst.sal.MTM1M3.logevent*", "lsst.sal.MTM1M3.command*" ]
+    m1m3-tel1:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3.accelerometerData", "lsst.sal.MTM1M3.appliedCylinderForces", "lsst.sal.MTM1M3.appliedForces", "lsst.sal.MTM1M3.gyroData", "lsst.sal.MTM1M3.hardpointActuatorData", "lsst.sal.MTM1M3.hardpointMonitorData" ]
       resources:
         limits:
-          cpu: "2"
+          cpu: "6"
+          memory: "2Gi"
+        requests:
+          cpu: "4"
+          memory: "2Gi"
+    m1m3-tel2:
+      enabled: true
+      database: "efd"
+      metric_batch_size: 750
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3.forceActuatorData", "lsst.sal.MTM1M3.outerLoopData", "lsst.sal.MTM1M3.imsData", "lsst.sal.MTM1M3.inclinometerData", "lsst.sal.MTM1M3.powerSupplyData" ]
+      resources:
+        limits:
+          cpu: "6"
           memory: "8Gi"
         requests:
-          cpu: "1"
+          cpu: "4"
           memory: "8Gi"
+    m1m3-tel3:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3.appliedAccelerationForces", "lsst.sal.MTM1M3.appliedAzimuthForces", "lsst.sal.MTM1M3.appliedBalanceForces", "lsst.sal.MTM1M3.appliedElevationForces", "lsst.sal.MTM1M3.appliedThermalForces", "lsst.sal.MTM1M3.appliedVelocityForces", "lsst.sal.MTM1M3.forceActuatorPressure", "lsst.sal.MTM1M3.pidData" ]
+      resources:
+        limits:
+          cpu: "5"
+          memory: "2Gi"
+        requests:
+          cpu: "4"
+          memory: "2Gi"
+    m1m3ts:
+      enabled: true
+      metric_batch_size: 1500
+      max_undelivered_messages: 4000
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3TS" ]
     m2:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
-      debug: true
     obssys:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
-      debug: true
     ocps:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.OCPS" ]
-      debug: true
     test:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.Test" ]
-      debug: true
     mtaircompressor:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTAirCompressor" ]
-      debug: true
     lasertracker:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.LaserTracker" ]
-      debug: true
     genericcamera:
       enabled: true
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
-      debug: true
     lsstcam:
       enabled: true
       metric_batch_size: 250
@@ -237,20 +248,17 @@ telegraf:
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
-      debug: true
     calsys:
       enabled: true
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
-      debug: true
+        [ "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.MTReflector", "lsst.sal.TunableLaser" ]
     mtvms:
       enabled: true
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTVMS" ]
-      debug: true
     obsenv:
       enabled: true
       database: "lsst.obsenv"
@@ -258,7 +266,14 @@ telegraf:
       timestamp_field: "timestamp"
       topicRegexps: |
         [ "lsst.obsenv" ]
-      debug: true
+    scimma:
+      enabled: true
+      database: "lsst.scimma"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.scimma" ]
+      offset: oldest
   resources:
     limits:
       cpu: "2"
@@ -282,6 +297,7 @@ rest-proxy:
   kafka:
     topicPrefixes:
       - lsst.obsenv
+      - lsst.scimma
 
 chronograf:
   persistence:
@@ -319,6 +335,9 @@ backup:
       retentionDays: 7
 
 obsenv:
+  enabled: true
+
+scimma:
   enabled: true
 
 control-system:

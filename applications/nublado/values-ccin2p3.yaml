@@ -11,6 +11,7 @@ controller:
         registry: "registry.hub.docker.com"
         repository: "lsstsqre/sciplat-lab"
     lab:
+      defaultSize: "small"
       env:
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "lsstprod_ro"
@@ -39,14 +40,29 @@ controller:
           secretKey: "postgres-credentials.txt"
       sizes:
         - size: "small"
-          cpu: 2.0
-          memory: "8Gi"
+          resources:
+            limits:
+              cpu: 2.0
+              memory: "8Gi"
+            requests:
+              cpu: 0.5
+              memory: "2Gi"
         - size: "medium"
-          cpu: 4.0
-          memory: "16Gi"
+          resources:
+            limits:
+              cpu: 4.0
+              memory: "16Gi"
+            requests:
+              cpu: 1.0
+              memory: "4Gi"
         - size: "large"
-          cpu: 8.0
-          memory: "32Gi"
+          resources:
+            limits:
+              cpu: 8.0
+              memory: "32Gi"
+            requests:
+              cpu: 2.0
+              memory: "8Gi"
       volumes:
         - name: "home"
           source:

@@ -6,6 +6,18 @@ config:
   # -- Kafka consumer group ID
   consumerGroupId: "qserv"
 
+  # -- Kafka topic for query cancellation requests
+  jobCancelTopic: "lsst.tap.job-delete"
+
+  # -- Maximum batch size for query execution requests. This should generally
+  # be the same as `qservRestMaxConnections`.
+  jobRunBatchSize: 10
+
+  # -- Maximum size of a batch read from Kafka in bytes. Wide queries can be
+  # up to 500KiB in size, so this should be at least 500KiB * 10.
+  # @default -- 10MiB
+  jobRunMaxBytes: 10485760
+
   # -- Kafka topic for query execution requests
   jobRunTopic: "lsst.tap.job-run"
 
@@ -19,6 +31,41 @@ config:
   # human-friendly)
   logProfile: "production"
 
+  # -- Maximum number of arq jobs each worker can process simultaneously
+  maxWorkerJobs: 2
+
+  metrics:
+    # -- Whether to enable sending metrics
+    enabled: false
+
+    # -- Name under which to log metrics. Generally there is no reason to
+    # change this.
+    application: "qservkafka"
+
+    events:
+      # -- Topic prefix for events. It may sometimes be useful to change this
+      # in development environments.
+      topicPrefix: "lsst.square.metrics.events"
+
+    schemaManager:
+      # -- URL of the Confluent-compatible schema registry server
+      # @default -- Sasquatch in the local cluster
+      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
+
+      # -- Suffix to add to all registered subjects. This is sometimes useful
+      # for experimentation during development.
+      suffix: ""
+
+  # -- Extra database connections that may be opened in excess of the pool
+  # size to handle surges in load. This is used primarily by the frontend for
+  # jobs that complete immediately.
+  qservDatabaseOverflow: 20
+
+  # -- Database pool size. This is the number of MySQL connections that will
+  # be held open regardless of load. This should generally be set to the same
+  # as `maxWorkerJobs`.
+  qservDatabasePoolSize: 10
+
   # -- URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`)
   # @default -- None, must be set
   qservDatabaseUrl: null
@@ -27,15 +74,54 @@ config:
   # `parse_timedelta` format
   qservPollInterval: "1s"
 
+  # -- Maximum simultaneous connections to open to the REST API. This should
+  # be set to `jobRunBatchSize` plus some extra connections for the monitor
+  # and cancel jobs.
+  qservRestMaxConnections: 15
+
+  # -- Whether to send the expected API version in REST API calls to Qserv
+  qservRestSendApiVersion: true
+
+  # -- Timeout for REST API calls in Safir `parse_timedelta` format. This
+  # includes time spent waiting for a connection if the maximum number of
+  # connections has been reached.
+  qservRestTimeout: "30s"
+
   # -- URL to the Qserv REST API
   # @default -- None, must be set
   qservRestUrl: null
 
+  # -- Username for HTTP Basic Authentication for the Qserv REST API. If not
+  # null, the password will be assumed to be the same as the database
+  # password.
+  qservRestUsername: null
+
+  # -- How long to allow for user table upload before timing out in Safir
+  # `parse_timedelta` format.
+  qservUploadTimeout: "5m"
+
+  # -- How many times to retry after a Qserv API network failure
+  qservRetryCount: 3
+
+  # -- How long to wait between retries after a Qserv API network failure in
+  # Safir `parse_timedelta` format
+  qservRetryDelay: "1s"
+
+  # -- Size of the Redis connection pool. This should be set to
+  # `jobRunBatchSize` plus some extra connections for the monitor, cancel
+  # jobs.
+  redisMaxConnections: 15
+
   # -- How long to wait for result processing (retrieval and upload) before
   # timing out, in seconds. This doubles as the timeout forcibly terminating
-  # the pod.
+  # result worker pods.
   # @default -- 3600 (1 hour)
   resultTimeout: 3600
+
+  # -- Name of the TAP service for which this Qserv Kafka instance is managing
+  # queries. This must match the name of the TAP service for the corresponding
+  # query quota in the Gafaelfawr configuration.
+  tapService: "qserv"
 
 image:
   # -- Image to use in the qserv-kafka deployment
@@ -52,21 +138,39 @@ ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
 
-# -- Affinity rules for the qserv-kafka deployment pod
-affinity: {}
+frontend:
+  # -- Affinity rules for the qserv-kafka frontend pod
+  affinity: {}
 
-# -- Node selection rules for the qserv-kafka deployment pod
-nodeSelector: {}
+  debug:
+    # -- Set to true to allow containers to run as root and to create and mount
+    # a debug PVC. Useful ro run debug containers to diagnose issues such as
+    # memory leaks.
+    enabled: false
 
-# -- Annotations for the qserv-kafka deployment pod
-podAnnotations: {}
+    # Set to true to disable the [pymalloc
+    # allocator](https://bloomberg.github.io/memray/python_allocators.html#how-does-this-affect-memory-profiling).
+    # You may want to do this when debugging memory leaks.
+    disablePymalloc: false
 
-# -- Resource limits and requests for the qserv-kafka deployment pod
-# @default -- See `values.yaml`
-resources: {}
+  # -- Node selection rules for the qserv-kafka frontend pod
+  nodeSelector: {}
 
-# -- Tolerations for the qserv-kafka deployment pod
-tolerations: []
+  # -- Annotations for the qserv-kafka frontend pod
+  podAnnotations: {}
+
+  # -- Resource limits and requests for the qserv-kafka frontend pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "450Mi"
+    requests:
+      cpu: "100m"
+      memory: "145Mi"
+
+  # -- Tolerations for the qserv-kafka frontend pod
+  tolerations: []
 
 redis:
   config:
@@ -100,11 +204,71 @@ redis:
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "0.5"
-      memory: "10Mi"
+      cpu: "1"
+      memory: "100Mi"
     requests:
       cpu: "10m"
-      memory: "5Mi"
+      memory: "20Mi"
+
+resultWorker:
+  # -- Affinity rules for the qserv-kafka worker pods
+  affinity: {}
+
+  # -- Whether to allow containers to run as root. Set to true to allow use of
+  # debug containers to diagnose issues such as memory leaks.
+  allowRootDebug: false
+
+  autoscaling:
+    # -- Enable autoscaling of qserv-kafka result workers
+    enabled: true
+
+    # -- Minimum number of qserv-kafka worker pods
+    minReplicas: 1
+
+    # -- Maximum number of qserv-kafka worker pods. Each replica will open
+    # database connections up to the configured pool size and overflow limits,
+    # so make sure the combined connections are under the postgres connection
+    # limit.
+    maxReplicas: 10
+
+    # -- Target CPU utilization of qserv-kafka worker pods.
+    targetCPUUtilizationPercentage: 75
+
+  # -- Node selection rules for the qserv-kafka worker pods
+  nodeSelector: {}
+
+  # -- Annotations for the qserv-kafka worker pods
+  podAnnotations: {}
+
+  # -- Number of result worker pods to start if autoscaling is disabled
+  replicaCount: 1
+
+  # -- Resource limits and requests for the qserv-kafka worker pods
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "300Mi"
+    requests:
+      cpu: "1"
+      memory: "145Mi"
+
+  # -- Tolerations for the qserv-kafka worker pods
+  tolerations: []
+
+periodicMetrics:
+  # -- How often to run the periodic metrics job
+  schedule: "* * * * *"
+
+  # -- Resource limits and requests for the qserv-kafka periodic metrics pods
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "200m"
+      memory: "100Mi"
+    requests:
+      cpu: "100m"
+      memory: "50Mi"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

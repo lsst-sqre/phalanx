@@ -9,6 +9,13 @@ cadc-tap:
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
 
+    kafka:
+      enabled: true
+
+    urlRewrite:
+      enabled: true
+      rules: "ivoa.ObsCore:access_url, dp02_dc2_catalogs.ObsCore:access_url, dp1.ObsCore:access_url"
+
     gcsBucket: "rubin:rubin-qserv"
     gcsBucketUrl: "https://s3dfrgw.slac.stanford.edu"
     gcsBucketType: "S3"

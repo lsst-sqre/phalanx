@@ -1,6 +1,7 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-int-dc5d.iam.gserviceaccount.com"
-  slackAlerts: true
+  sentry:
+    enabled: true
   config:
     dropdownMenu:
       release:
@@ -13,6 +14,8 @@ controller:
         cutoffVersion: "28.0.0"
       experimental:
         age: "3w"
+    fsadmin:
+      mountPrefix: "/mnt/user-filesystems"
     fileserver:
       enabled: true
       nodeSelector:
@@ -33,11 +36,7 @@ controller:
         image: "sciplat-lab"
     lab:
       env:
-        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
-        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
-        GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         DAF_BUTLER_REPOSITORY_INDEX: "https://data-int.lsst.cloud/api/butler/configs/idf-repositories.yaml"
-        S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         IDDS_CONFIG: "/opt/lsst/software/jupyterlab/panda/idds.cfg.client.template"
         PANDA_AUTH: "oidc"
         PANDA_VERIFY_HOST: "off"
@@ -48,42 +47,56 @@ controller:
         PANDACACHE_URL: "https://usdf-panda-server.slac.stanford.edu:8443/server/panda"
         PANDAMON_URL: "https://usdf-panda-bigmon.slac.stanford.edu:8443/"
         PANDA_CONFIG_ROOT: "~"
-        CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
+        RUBIN_DIR: "/rubin"
+        SCRATCH_PATH: "/deleted-sundays"
         TMPDIR: "/tmp"
-        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/project/cst_repos/tutorial-notebooks"
+        TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
+        TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.8.2"
+            tag: "8.15.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
+        - name: "landingpage"
+          image:
+            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/rsp-landing-page-provisioner"
+            tag: "0.9.3"
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+            - containerPath: "/rubin"
+              volumeName: "rubin"
       nodeSelector:
         node_pool: "user-lab-pool"
-      secrets:
-        - secretName: "nublado-lab-secret"
-          secretKey: "aws-credentials.ini"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-gcs-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-hmac-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "postgres-credentials.txt"
       sizes:
-        - size: small
-          cpu: 1.0
-          memory: 4Gi
-        - size: medium
-          cpu: 2.0
-          memory: 8Gi
-        - size: large
-          cpu: 4.0
-          memory: 16Gi
-        - size: huge
-          cpu: 8.0
-          memory: 32Gi
+        - size: "small"
+          resources:
+            limits:
+              cpu: 1.0
+              memory: "4Gi"
+            requests:
+              cpu: 0.25
+              memory: "1Gi"
+        - size: "large"
+          resources:
+            limits:
+              cpu: 4.0
+              memory: "16Gi"
+            requests:
+              cpu: 0.25
+              memory: "4Gi"
+        - size: "huge"
+          resources:
+            limits:
+              cpu: 8.0
+              memory: "32Gi"
+            requests:
+              cpu: 2.0
+              memory: "8Gi"
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
@@ -94,28 +107,29 @@ controller:
             serverPath: "/home-share"
             server: "10.91.240.5"
             type: "nfs"
-        - name: "project"
+        - name: "rubin"
           source:
-            serverPath: "/share1/project"
-            server: "10.22.240.130"
+            serverPath: "/rubin-share"
+            server: "10.91.240.5"
             type: "nfs"
-        - name: "scratch"
+        - name: "deleted-sundays"
           source:
-            serverPath: "/share1/scratch"
-            server: "10.22.240.130"
+            serverPath: "/delete-weekly-share"
+            server: "10.91.240.5"
             type: "nfs"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
-        - containerPath: "/project"
-          volumeName: "project"
-        - containerPath: "/scratch"
-          volumeName: "scratch"
+        - containerPath: "/rubin"
+          volumeName: "rubin"
+        - containerPath: "/deleted-sundays"
+          volumeName: "deleted-sundays"
     metrics:
       enabled: true
 
 hub:
   useSubdomains: true
+  landingPage: "/lab/tree/notebooks/tutorials/welcome.md"
 
 jupyterhub:
   hub:
@@ -127,12 +141,45 @@ jupyterhub:
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
-cronjob:
+  proxy:
+    chp:
+      image:
+        tag: "5.0.1"
+
+purger:
   enabled: true
-  targetVolume:
-    mountPath: "/project"
-    server: "10.22.240.130"
-    path: "/share1/project"
+  schedule: "27 05 * * 0"  # Sunday morning, 12:27 AM (UTC-5)
+  volumeName: "deleted-sundays"
+  policy:
+    directories:
+      - path: /purge
+        threshold: 1GiB
+        # This is the case where we just purge everything once a week.
+        # Set the threshold to 1 second: yeah, *everything*
+        intervals:
+          large:
+            accessInterval: 1s
+            modificationInterval: 1s
+            creationInterval: 1s
+          small:
+            accessInterval: 1s
+            modificationInterval: 1s
+            creationInterval: 1s
+
+cronjob:
+  tutorials:
+    enabled: true
+    gitTarget: "/rubin/cst_repos/tutorial-notebooks"
+    targetVolume:
+      mountPath: "/rubin"
+      volumeName: "rubin"
+  artifacts:
+    enabled: true
+    gitTarget: "/rubin/cst_repos/tutorial-notebooks-data"
+    targetVolume:
+      mountPath: "/rubin"
+      volumeName: "rubin"
+
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"

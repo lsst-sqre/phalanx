@@ -1,4 +1,5 @@
-fqdn: k8s.slac.stanford.edu
+fqdn: "usdf-alert-stream-broker-dev.slac.stanford.edu"
+appOfAppsName: "science-platform"
 name: usdfdev-alert-stream-broker
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-alert-stream-broker-dev
@@ -6,8 +7,9 @@ vaultPathPrefix: secret/rubin/usdf-alert-stream-broker-dev
 applications:
   alert-stream-broker: true
   cert-manager: true
-  gafaelfawr: false
+  gafaelfawr: true
   ingress-nginx: false
+  postgres: true
   strimzi: true
   strimzi-access-operator: false
   vault-secrets-operator: false
