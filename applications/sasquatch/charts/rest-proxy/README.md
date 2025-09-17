@@ -13,7 +13,7 @@ A subchart to deploy Confluent REST proxy for Sasquatch.
 | affinity | object | `{}` | Affinity configuration |
 | configurationOverrides | object | See `values.yaml` | Kafka REST configuration options |
 | customEnv | object | `{}` | Kafka REST additional env variables |
-| heapOptions | string | `"-Xms512M -Xmx512M"` | Kafka REST proxy JVM Heap Option |
+| heapOptions | string | `"-Xms1024M -Xmx1024M"` | Kafka REST proxy JVM Heap Option |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository |
 | image.tag | string | `"8.0.0"` | Kafka REST proxy image tag |
