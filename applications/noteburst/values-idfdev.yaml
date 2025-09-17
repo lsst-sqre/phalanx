@@ -1,4 +1,5 @@
 image:
+  tag: tickets-DM-52301-sentry-nublado-client
   pullPolicy: Always
 
 config:
