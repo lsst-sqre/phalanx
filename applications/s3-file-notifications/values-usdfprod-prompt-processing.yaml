@@ -32,3 +32,8 @@ strimzi-kafka:
     storage:
       size: 1000Gi
       storageClassName: wekafs--sdf-k8s01
+
+kafdrop:
+  ingress:
+    enabled: true
+    hostname: usdfprod-prompt-processing.slac.stanford.edu
