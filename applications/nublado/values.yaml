@@ -5,10 +5,7 @@ controller:
   affinity: {}
 
   sentry:
-    # -- Whether to report errors to Sentry. If Sentry is
-    # enabled, you should set controller.slackAlerts to
-    # false so that uncaught exceptions make it to the Sentry
-    # handler.
+    # -- Whether to report errors to Sentry
     enabled: false
 
   # -- If Google Artifact Registry is used as the image source, the Google

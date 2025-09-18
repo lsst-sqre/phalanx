@@ -1,5 +1,6 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-int-dc5d.iam.gserviceaccount.com"
+  slackAlerts: true
   sentry:
     enabled: true
   config:

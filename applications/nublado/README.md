@@ -104,7 +104,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.nodeSelector | object | `{}` | Node selector rules for the Nublado controller |
 | controller.podAnnotations | object | `{}` | Annotations for the Nublado controller |
 | controller.resources | object | See `values.yaml` | Resource limits and requests for the Nublado controller |
-| controller.sentry.enabled | bool | `false` | Whether to report errors to Sentry. If Sentry is enabled, you should set controller.slackAlerts to false so that uncaught exceptions make it to the Sentry handler. |
+| controller.sentry.enabled | bool | `false` | Whether to report errors to Sentry |
 | controller.slackAlerts | bool | `false` | Whether to enable Slack alerts. If set to true, `slack_webhook` must be set in the corresponding Nublado Vault secret. |
 | controller.tolerations | list | `[]` | Tolerations for the Nublado controller |
 | cronjob.affinity | object | `{}` | Affinity rules for the cloning cronjob(s). |
