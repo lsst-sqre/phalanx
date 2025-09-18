@@ -16,6 +16,7 @@ Kafka environment for Prompt Processing
 | strimzi-kafka.kafka.listeners.noauth.enabled | bool | `true` | Whether internal no authentication listener is enabled |
 | strimzi-kafka.kafka.listeners.plain.enabled | bool | `true` | Whether internal plaintext listener is enabled |
 | strimzi-kafka.kafka.listeners.tls.enabled | bool | `true` | Whether internal TLS listener is enabled |
+| strimzi-kafka.kafka.version | string | `"3.9.0"` | Version of Kafka to deploy |
 | strimzi-registry-operator.clusterName | string | `"prompt-kafka"` | Name of the Strimzi Kafka cluster |
 | strimzi-registry-operator.clusterNamespace | string | `"prompt-kafka"` | Namespace where the Strimzi Kafka cluster is deployed |
 | strimzi-registry-operator.operatorNamespace | string | `"prompt-kafka"` | Namespace where the strimzi-registry-operator is deployed |
