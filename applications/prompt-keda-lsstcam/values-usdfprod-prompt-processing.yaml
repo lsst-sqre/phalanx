@@ -82,8 +82,8 @@ prompt-keda:
   iers_cache: s3://rubin-summit-users/iers-cache.zip
 
   imageNotifications:
-    kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
-    topic: rubin-summit-notification
+    kafkaClusterAddress: s3-file-notifications-kafka-external-bootstrap.s3-file-notifications:9094
+    topic: rubin-summit-notification-6
     # TODO: need to adjust this based on observed nextVisit lead time (depends on scheduler) and PP prep time
     # The shorter this is, the less capacity is wasted on canceled visits
     imageTimeout: 120
