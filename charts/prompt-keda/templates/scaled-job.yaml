@@ -25,13 +25,6 @@ spec:
           - name: {{ include "prompt-keda.fullname" . | trimPrefix "prompt-keda-" }}
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
             imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-            command:
-              - /bin/sh
-              - -c
-              - |
-                source /opt/lsst/software/stack/loadLSST.bash
-                setup lsst_distrib
-                python3 -m activator.activator
             env:
               - name: PLATFORM
                 value: keda
