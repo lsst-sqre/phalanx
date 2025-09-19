@@ -1,0 +1,13 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Kafka Cluster to receive S3 File Notifications
+name: s3-file-notifications
+type: application
+version: 1.0.0
+
+dependencies:
+  - name: strimzi-kafka
+    version: 1.0.0
+  - name: kafdrop
+    condition: kafdrop.enabled
+    version: 1.0.0

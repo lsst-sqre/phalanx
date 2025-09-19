@@ -1,0 +1,39 @@
+strimzi-kafka:
+  kraft:
+    enabled: true
+  kafkaController:
+    enabled: true
+  kafka:
+    version: "3.9.0"
+    config:
+      log.retention.minutes: 10080
+      offsets.retention.minutes: 10080
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
+    externalListener:
+      bootstrap:
+        annotations:
+          metallb.io/address-pool: sdf-rubin-ingest
+      brokers:
+        - broker: 3
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
+        - broker: 4
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
+        - broker: 5
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
+    storage:
+      size: 1000Gi
+      storageClassName: wekafs--sdf-k8s01
+
+kafdrop:
+  ingress:
+    enabled: true
+    hostname: usdfprod-prompt-processing.slac.stanford.edu

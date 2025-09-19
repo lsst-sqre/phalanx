@@ -14,5 +14,6 @@ applications:
   prompt-keda-latiss: false
   prompt-keda-lsstcam: true
   prompt-redis: true
+  s3-file-notifications: true
   strimzi: true
   vault-secrets-operator: false
