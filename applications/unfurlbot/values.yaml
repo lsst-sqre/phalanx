@@ -104,6 +104,7 @@ config:
     WMP,
     PREOPS,
     OBS,
+    OSW,
     SITCOM,
     SP,
     BLOCK,
