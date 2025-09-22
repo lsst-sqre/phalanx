@@ -1,4 +1,4 @@
-{{- if .Values.config.hips.datasets }}
+{{- if (and .Values.config.hips.datasets .Values.config.availableDatasets) }}
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrServiceToken
 metadata:
