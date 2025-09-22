@@ -60,15 +60,43 @@ config:
     # -- Known HiPS datasets. Each should be a mapping of a label to an object
     # containing the key `paths`, whose values are paths to the roots of HiPS
     # surveys relative to the result of processing `sourceTemplate`.
-    datasets: {}
+    # @default -- See `values.yaml`
+    datasets:
+      dp02:
+        paths:
+          - "images/color_gri"
+          - "images/color_riz"
+          - "images/band_u"
+          - "images/band_g"
+          - "images/band_r"
+          - "images/band_i"
+          - "images/band_z"
+          - "images/band_y"
+          - "images/2MASS/Color"
+      dp1:
+        paths:
+          - "deep_coadd/color_ugri"
+          - "deep_coadd/color_gri"
+          - "deep_coadd/color_izy"
+          - "deep_coadd/color_riz"
+          - "deep_coadd/color_ugr"
+          - "deep_coadd/band_u"
+          - "deep_coadd/band_g"
+          - "deep_coadd/band_r"
+          - "deep_coadd/band_i"
+          - "deep_coadd/band_z"
+          - "deep_coadd/band_y"
 
-    # -- If set, create a legacy HiPS list file at a separate route that does
-    # not include the dataset name. The value should be an object with two
-    # keys: `dataset`, which matches a label in `datasets`, and `pathPrefix`,
-    # which is the path prefix at which the legacy HiPS list is served.
-    legacy: null
+    legacy:
+      # -- If set, specifies the dataset that should be shown at the legacy
+      # HiPS list route that does not include the dataset name. If not set, no
+      # legacy HiPS list will be created.
+      dataset: null
 
-    # -- Path prefix at which the HiPS lists should be served.
+      # -- Path prefix at which the legacy HiPS list should be served
+      pathPrefix: "/api/hips"
+
+    # -- Path prefix at which the HiPS lists should be served
     pathPrefix: "/api/hips/v2"
 
     # -- Jinja template to construct the base URLs of the underlying HiPS
