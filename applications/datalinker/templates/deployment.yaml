@@ -41,11 +41,6 @@ spec:
             - name: "DATALINKER_TAP_METADATA_URL"
               value: {{ .Values.config.tapMetadataUrl | quote }}
             {{- end }}
-            - name: "DATALINKER_TOKEN"
-              valueFrom:
-                secretKeyRef:
-                  name: "datalinker-gafaelfawr-token"
-                  key: "token"
             - name: "DAF_BUTLER_REPOSITORIES"
               value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"

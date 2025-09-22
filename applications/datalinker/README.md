@@ -11,10 +11,6 @@ IVOA DataLink-based service and data discovery
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the datalinker deployment pod |
-| config.hipsDatasets | object | `{}` | HiPS dataset configurations mapping dataset names to their base URLs |
-| config.hipsDefaultDataset | string | `nil` | Default dataset for legacy /api/hips endpoints (optional) If not set it will use hips_base_url |
-| config.hipsPathPrefix | string | `"/api/hips"` | URL path prefix for the HiPS API (must match the configuration of the hips service) |
-| config.hipsV2PathPrefix | string | `"/api/hips/v2"` | URL path prefix for the HiPS v2 API (must match the configuration of the hips service) |
 | config.linksLifetime | string | `"1h"` | Lifetime of the `{links}` reply. Should be set to match the lifetime of links returned by the Butler server |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.pathPrefix | string | `"/api/datalink"` | URL path prefix for DataLink and related APIs |

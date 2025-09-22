@@ -1,15 +1,16 @@
+{{- if .Values.config.hips.datasets }}
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "datalinker-anonymous"
+  name: "repertoire-hips"
   labels:
-    {{- include "datalinker.labels" . | nindent 4 }}
+    {{- include "repertoire.labels" . | nindent 4 }}
 config:
   scopes:
     anonymous: true
 template:
   metadata:
-    name: "datalinker-anonymous"
+    name: "repertoire-hips"
     {{- with .Values.ingress.annotations }}
     annotations:
       {{- toYaml . | nindent 6 }}
@@ -19,19 +20,22 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: "{{ .Values.config.hipsPathPrefix }}/list"
+            {{- if .Values.config.hips.legacy }}
+            - path: "{{ .Values.config.hips.legacy.pathPrefix }}/list"
               pathType: "Exact"
               backend:
                 service:
-                  name: "datalinker"
-                  port:
-                    number: 8080
-            {{- range $dataset, $url := .Values.config.hipsDatasets }}
-            - path: "{{ $.Values.config.hipsV2PathPrefix }}/{{ $dataset }}/list"
-              pathType: "Exact"
-              backend:
-                service:
-                  name: "datalinker"
+                  name: "repertoire"
                   port:
                     number: 8080
             {{- end }}
+            {{- range $label, $value := .Values.config.hips.datasets }}
+            - path: "{{ $.Values.config.hips.pathPrefix }}/{{ $label }}/list"
+              pathType: "Exact"
+              backend:
+                service:
+                  name: "repertoire"
+                  port:
+                    number: 8080
+            {{- end }}
+{{- end }}

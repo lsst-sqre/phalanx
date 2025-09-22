@@ -56,6 +56,26 @@ config:
         LSST Commissioning Camera of seven ~1 square degree fields, over seven
         weeks in late 2024.
 
+  hips:
+    # -- Known HiPS datasets. Each should be a mapping of a label to an object
+    # containing the key `paths`, whose values are paths to the roots of HiPS
+    # surveys relative to the result of processing `sourceTemplate`.
+    datasets: {}
+
+    # -- If set, create a legacy HiPS list file at a separate route that does
+    # not include the dataset name. The value should be an object with two
+    # keys: `dataset`, which matches a label in `datasets`, and `pathPrefix`,
+    # which is the path prefix at which the legacy HiPS list is served.
+    legacy: null
+
+    # -- Path prefix at which the HiPS lists should be served.
+    pathPrefix: "/api/hips/v2"
+
+    # -- Jinja template to construct the base URLs of the underlying HiPS
+    # surveys, used to construct the HiPS list.
+    # @default -- See `values.yaml`
+    sourceTemplate: "https://{{base_hostname}}/api/hips/v2/{{dataset}}"
+
   # -- Dictionary of InfluxDB database names to connection information for
   # that database, with keys `url`, `database`, `username`, `passwordKey`, and
   # `schemaRegistry`. `passwordKey` must match an entry in `secrets.yaml`.
@@ -88,13 +108,6 @@ config:
       - type: "ui"
         name: "tokens"
         template: "https://{{base_hostname}}/auth/tokens"
-    hips:
-      - type: "data"
-        name: "hips"
-        datasets:
-          - "dp02"
-          - "dp1"
-        template: "https://{{base_hostname}}/api/hips/v2/{{dataset}}"
     mobu:
       - type: "internal"
         name: "mobu"

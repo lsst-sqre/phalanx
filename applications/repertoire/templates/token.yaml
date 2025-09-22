@@ -1,0 +1,12 @@
+{{- if .Values.config.hips.datasets }}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: "repertoire-token"
+  labels:
+    {{- include "repertoire.labels" . | nindent 4 }}
+spec:
+  service: "bot-repertoire"
+  scopes:
+    - "read:image"
+{{- end }}

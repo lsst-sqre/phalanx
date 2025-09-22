@@ -7,7 +7,6 @@ metadata:
 data:
   config.yaml: |
     cutoutSyncUrl: "{{ .Values.global.baseUrl }}/api/cutout/sync"
-    hipsBaseUrl: "{{ .Values.global.baseUrl }}/api/hips"
     {{- if .Values.config.tapMetadataUrl }}
     tapMetadataDir: "/tmp/tap-metadata"
     tapMetadataUrl: {{ .Values.config.tapMetadataUrl | quote }}

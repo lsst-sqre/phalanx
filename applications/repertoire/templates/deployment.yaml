@@ -33,6 +33,13 @@ spec:
                 secretKeyRef:
                   name: "repertoire"
                   key: "slack-webhook"
+            {{- if .Values.config.hips.datasets }}
+            - name: "REPERTOIRE_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "repertoire-token"
+                  key: "token"
+            {{- end }}
             # Uvicorn keepalive timeout, in seconds. This should be longer
             # than any keepalive timeouts on any downstream proxies. The
             # keepalive timeout for ingress-nginx connections is 60s.
