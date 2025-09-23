@@ -191,6 +191,10 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.data.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the data service |
 | influxdb-enterprise.data.service.nodePort | int | Do not allocate a node port | Node port for the data service |
 | influxdb-enterprise.data.service.type | string | `"ClusterIP"` | Service type for the data service |
+| influxdb-enterprise.data.startupProbe.enabled | bool | `false` | Whether to enable a startup probe to check if the data node is ready |
+| influxdb-enterprise.data.startupProbe.failureThreshold | int | `6` | Number of failures before the pod is restarted |
+| influxdb-enterprise.data.startupProbe.initialDelaySeconds | int | `60` | Number of seconds after the container has started before liveness/startup probes are initiated |
+| influxdb-enterprise.data.startupProbe.periodSeconds | int | `60` | How often (in seconds) to perform the probe |
 | influxdb-enterprise.data.tolerations | list | `[]` | Tolerations for data pods |
 | influxdb-enterprise.envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
 | influxdb-enterprise.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
@@ -279,6 +283,10 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.data.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the data service |
 | influxdb-enterprise-active.data.service.nodePort | int | Do not allocate a node port | Node port for the data service |
 | influxdb-enterprise-active.data.service.type | string | `"ClusterIP"` | Service type for the data service |
+| influxdb-enterprise-active.data.startupProbe.enabled | bool | `false` | Whether to enable a startup probe to check if the data node is ready |
+| influxdb-enterprise-active.data.startupProbe.failureThreshold | int | `6` | Number of failures before the pod is restarted |
+| influxdb-enterprise-active.data.startupProbe.initialDelaySeconds | int | `60` | Number of seconds after the container has started before liveness/startup probes are initiated |
+| influxdb-enterprise-active.data.startupProbe.periodSeconds | int | `60` | How often (in seconds) to perform the probe |
 | influxdb-enterprise-active.data.tolerations | list | `[]` | Tolerations for data pods |
 | influxdb-enterprise-active.envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
 | influxdb-enterprise-active.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
@@ -367,6 +375,10 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.data.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the data service |
 | influxdb-enterprise-standby.data.service.nodePort | int | Do not allocate a node port | Node port for the data service |
 | influxdb-enterprise-standby.data.service.type | string | `"ClusterIP"` | Service type for the data service |
+| influxdb-enterprise-standby.data.startupProbe.enabled | bool | `false` | Whether to enable a startup probe to check if the data node is ready |
+| influxdb-enterprise-standby.data.startupProbe.failureThreshold | int | `6` | Number of failures before the pod is restarted |
+| influxdb-enterprise-standby.data.startupProbe.initialDelaySeconds | int | `60` | Number of seconds after the container has started before liveness/startup probes are initiated |
+| influxdb-enterprise-standby.data.startupProbe.periodSeconds | int | `60` | How often (in seconds) to perform the probe |
 | influxdb-enterprise-standby.data.tolerations | list | `[]` | Tolerations for data pods |
 | influxdb-enterprise-standby.envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
 | influxdb-enterprise-standby.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |

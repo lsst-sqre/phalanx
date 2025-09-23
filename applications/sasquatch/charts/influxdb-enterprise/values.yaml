@@ -224,6 +224,20 @@ data:
   # -- Number of data replicas to run
   replicas: 1
 
+  startupProbe:
+    # -- Whether to enable a startup probe to check if the data node is ready
+    enabled: false
+
+    # -- Number of failures before the pod is restarted
+    failureThreshold: 6
+
+    # -- Number of seconds after the container has started before
+    # liveness/startup probes are initiated
+    initialDelaySeconds: 60
+
+    # -- How often (in seconds) to perform the probe
+    periodSeconds: 60
+
   # -- Node selection rules for data pods
   nodeSelector: {}
 
