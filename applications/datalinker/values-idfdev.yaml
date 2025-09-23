@@ -1,2 +1,3 @@
 config:
+  logLevel: "DEBUG"
   slackAlerts: true
