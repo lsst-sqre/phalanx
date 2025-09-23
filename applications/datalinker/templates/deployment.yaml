@@ -28,6 +28,8 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+            - name: "DAF_BUTLER_REPOSITORIES"
+              value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
             {{- if .Values.config.slackAlerts }}
             - name: "DATALINKER_SLACK_WEBHOOK"
               valueFrom:
@@ -35,14 +37,9 @@ spec:
                   name: "datalinker"
                   key: "slack-webhook"
             {{- end }}
-            {{- if .Values.config.tapMetadataUrl }}
-            - name: "DATALINKER_TAP_METADATA_DIR"
-              value: "/tmp/tap-metadata"
-            - name: "DATALINKER_TAP_METADATA_URL"
-              value: {{ .Values.config.tapMetadataUrl | quote }}
-            {{- end }}
-            - name: "DAF_BUTLER_REPOSITORIES"
-              value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
+          envFrom:
+            - configMapRef:
+                name: "datalinker"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -66,9 +63,6 @@ spec:
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"
-            - name: "config"
-              mountPath: "/etc/datalinker"
-              readOnly: true
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -85,6 +79,3 @@ spec:
       volumes:
         - name: "tmp"
           emptyDir: {}
-        - name: "config"
-          configMap:
-            name: "datalinker"
