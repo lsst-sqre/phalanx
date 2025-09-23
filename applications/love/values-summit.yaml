@@ -890,7 +890,7 @@ love-producer:
   - name: tmaess121
     csc: ESS:121
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: tma-ess122
+  - name: tmaess122
     csc: ESS:122
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess104
