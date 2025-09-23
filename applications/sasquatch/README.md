@@ -162,8 +162,6 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
 | influxdb-enterprise.data.config.logging.level | string | `"debug"` | Logging level |
 | influxdb-enterprise.data.env | object | `{}` | Additional environment variables to set in the meta container |
-| influxdb-enterprise.data.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for data images |
-| influxdb-enterprise.data.image.repository | string | `"influxdb"` | Docker repository for data images |
 | influxdb-enterprise.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
 | influxdb-enterprise.data.ingress.className | string | `"nginx"` | Ingress class name of the data service |
 | influxdb-enterprise.data.ingress.enabled | bool | `false` | Whether to enable an ingress for the data service |
@@ -192,7 +190,8 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.data.tolerations | list | `[]` | Tolerations for data pods |
 | influxdb-enterprise.envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
 | influxdb-enterprise.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| influxdb-enterprise.image.addsuffix | bool | `false` | Set to true to add a suffix for the type of image to the Docker tag (for example, `-meta`, making an image name of `influxdb:1.8.0-meta`) |
+| influxdb-enterprise.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for images |
+| influxdb-enterprise.image.repository | string | `"influxdb"` | Docker repository for InfluxDB Enterprise images |
 | influxdb-enterprise.image.tag | string | `appVersion` from `Chart.yaml` | Tagged version of the Docker image that you want to run |
 | influxdb-enterprise.imagePullSecrets | list | `[]` | List of pull secrets needed for images. If set, each object in the list should have one attribute, _name_, identifying the pull secret to use |
 | influxdb-enterprise.license.key | string | `""` | License key. You can put your license key here for testing this chart out, but we STRONGLY recommend using a license file stored in a secret when you ship to production. |
@@ -200,8 +199,6 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.license.secret.name | string | `"influxdb-enterprise-license"` | Name of the secret containing the license |
 | influxdb-enterprise.meta.affinity | object | See `values.yaml` | Affinity rules for meta pods |
 | influxdb-enterprise.meta.env | object | `{}` | Additional environment variables to set in the meta container |
-| influxdb-enterprise.meta.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for meta images |
-| influxdb-enterprise.meta.image.repository | string | `"influxdb"` | Docker repository for meta images |
 | influxdb-enterprise.meta.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the meta ingress |
 | influxdb-enterprise.meta.ingress.className | string | `"nginx"` | Ingress class name of the meta service |
 | influxdb-enterprise.meta.ingress.enabled | bool | `false` | Whether to enable an ingress for the meta service |
@@ -252,8 +249,6 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
 | influxdb-enterprise-active.data.config.logging.level | string | `"debug"` | Logging level |
 | influxdb-enterprise-active.data.env | object | `{}` | Additional environment variables to set in the meta container |
-| influxdb-enterprise-active.data.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for data images |
-| influxdb-enterprise-active.data.image.repository | string | `"influxdb"` | Docker repository for data images |
 | influxdb-enterprise-active.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
 | influxdb-enterprise-active.data.ingress.className | string | `"nginx"` | Ingress class name of the data service |
 | influxdb-enterprise-active.data.ingress.enabled | bool | `false` | Whether to enable an ingress for the data service |
@@ -282,7 +277,8 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.data.tolerations | list | `[]` | Tolerations for data pods |
 | influxdb-enterprise-active.envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
 | influxdb-enterprise-active.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| influxdb-enterprise-active.image.addsuffix | bool | `false` | Set to true to add a suffix for the type of image to the Docker tag (for example, `-meta`, making an image name of `influxdb:1.8.0-meta`) |
+| influxdb-enterprise-active.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for images |
+| influxdb-enterprise-active.image.repository | string | `"influxdb"` | Docker repository for InfluxDB Enterprise images |
 | influxdb-enterprise-active.image.tag | string | `appVersion` from `Chart.yaml` | Tagged version of the Docker image that you want to run |
 | influxdb-enterprise-active.imagePullSecrets | list | `[]` | List of pull secrets needed for images. If set, each object in the list should have one attribute, _name_, identifying the pull secret to use |
 | influxdb-enterprise-active.license.key | string | `""` | License key. You can put your license key here for testing this chart out, but we STRONGLY recommend using a license file stored in a secret when you ship to production. |
@@ -290,8 +286,6 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.license.secret.name | string | `"influxdb-enterprise-license"` | Name of the secret containing the license |
 | influxdb-enterprise-active.meta.affinity | object | See `values.yaml` | Affinity rules for meta pods |
 | influxdb-enterprise-active.meta.env | object | `{}` | Additional environment variables to set in the meta container |
-| influxdb-enterprise-active.meta.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for meta images |
-| influxdb-enterprise-active.meta.image.repository | string | `"influxdb"` | Docker repository for meta images |
 | influxdb-enterprise-active.meta.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the meta ingress |
 | influxdb-enterprise-active.meta.ingress.className | string | `"nginx"` | Ingress class name of the meta service |
 | influxdb-enterprise-active.meta.ingress.enabled | bool | `false` | Whether to enable an ingress for the meta service |
@@ -342,8 +336,6 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
 | influxdb-enterprise-standby.data.config.logging.level | string | `"debug"` | Logging level |
 | influxdb-enterprise-standby.data.env | object | `{}` | Additional environment variables to set in the meta container |
-| influxdb-enterprise-standby.data.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for data images |
-| influxdb-enterprise-standby.data.image.repository | string | `"influxdb"` | Docker repository for data images |
 | influxdb-enterprise-standby.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
 | influxdb-enterprise-standby.data.ingress.className | string | `"nginx"` | Ingress class name of the data service |
 | influxdb-enterprise-standby.data.ingress.enabled | bool | `false` | Whether to enable an ingress for the data service |
@@ -372,7 +364,8 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.data.tolerations | list | `[]` | Tolerations for data pods |
 | influxdb-enterprise-standby.envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
 | influxdb-enterprise-standby.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| influxdb-enterprise-standby.image.addsuffix | bool | `false` | Set to true to add a suffix for the type of image to the Docker tag (for example, `-meta`, making an image name of `influxdb:1.8.0-meta`) |
+| influxdb-enterprise-standby.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for images |
+| influxdb-enterprise-standby.image.repository | string | `"influxdb"` | Docker repository for InfluxDB Enterprise images |
 | influxdb-enterprise-standby.image.tag | string | `appVersion` from `Chart.yaml` | Tagged version of the Docker image that you want to run |
 | influxdb-enterprise-standby.imagePullSecrets | list | `[]` | List of pull secrets needed for images. If set, each object in the list should have one attribute, _name_, identifying the pull secret to use |
 | influxdb-enterprise-standby.license.key | string | `""` | License key. You can put your license key here for testing this chart out, but we STRONGLY recommend using a license file stored in a secret when you ship to production. |
@@ -380,8 +373,6 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.license.secret.name | string | `"influxdb-enterprise-license"` | Name of the secret containing the license |
 | influxdb-enterprise-standby.meta.affinity | object | See `values.yaml` | Affinity rules for meta pods |
 | influxdb-enterprise-standby.meta.env | object | `{}` | Additional environment variables to set in the meta container |
-| influxdb-enterprise-standby.meta.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for meta images |
-| influxdb-enterprise-standby.meta.image.repository | string | `"influxdb"` | Docker repository for meta images |
 | influxdb-enterprise-standby.meta.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the meta ingress |
 | influxdb-enterprise-standby.meta.ingress.className | string | `"nginx"` | Ingress class name of the meta service |
 | influxdb-enterprise-standby.meta.ingress.enabled | bool | `false` | Whether to enable an ingress for the meta service |
