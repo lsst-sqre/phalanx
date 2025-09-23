@@ -16,9 +16,9 @@ IVOA DataLink-based service and data discovery
 | config.pathPrefix | string | `"/api/datalink"` | URL path prefix for DataLink and related APIs |
 | config.slackAlerts | bool | `false` | Whether to send certain serious alerts to Slack. If `true`, the `slack-webhook` secret must also be set. |
 | config.tapMetadataUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"` | URL containing TAP schema metadata used to construct queries |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.butlerServerRepositories | string | Set by Argo CD | Butler repositories accessible via Butler server |
 | global.host | string | Set by Argo CD | Host name for ingress |
+| global.repertoireUrl | string | Set by Argo CD | Base URL for Repertoire discovery API |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the datalinker image |
 | image.repository | string | `"ghcr.io/lsst-sqre/datalinker"` | Image to use in the datalinker deployment |
