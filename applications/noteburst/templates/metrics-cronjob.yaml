@@ -48,8 +48,8 @@ spec:
                       key: "sentry-dsn"
                 - name: "SENTRY_ENVIRONMENT"
                   value: {{ .Values.global.environmentName | quote }}
-                - name: "SENTRY_RELEASE"
-                  value: {{ .Values.image.tag | default .Chart.AppVersion }}
+                - name: "SENTRY_TRACES_SAMPLE_RATE"
+                  value: {{ .Values.config.sentry.tracesSampleRate | quote }}
                 {{- end }}
                 {{- if .Values.config.metrics.enabled }}
                 - name: "KAFKA_BOOTSTRAP_SERVERS"
