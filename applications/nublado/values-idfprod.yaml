@@ -15,6 +15,8 @@ controller:
         cutoffVersion: "28.0.0"
       experimental:
         age: "3w"
+    fsadmin:
+      mountPrefix: "/mnt/user-filesystems"
     fileserver:
       enabled: true
       nodeSelector:
@@ -153,12 +155,14 @@ cronjob:
     targetVolume:
       mountPath: "/rubin"
       volumeName: "rubin"
+    gid: 2000005
   artifacts:
     enabled: true
     gitTarget: "/rubin/cst_repos/tutorial-notebooks-data"
     targetVolume:
       mountPath: "/rubin"
       volumeName: "rubin"
+    gid: 2000005
 
 cloudsql:
   enabled: true
