@@ -13,12 +13,12 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/idfdemo"
 
 applications:
-  # butler: true
   butler: false
   datalinker: true
   fastapi-bootcamp: true
   mobu: true
   nublado: true
+  portal: true
   squareone: true
   times-square: true
   vault-secrets-operator: true
