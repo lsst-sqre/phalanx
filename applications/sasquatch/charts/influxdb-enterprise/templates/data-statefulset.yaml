@@ -86,7 +86,8 @@ spec:
               containerPort: 25826
               protocol: UDP
           startupProbe:
-            failureThreshold: 6
+            failureThreshold: 15
+            initialDelaySeconds: 900
             periodSeconds: 60
             httpGet:
               path: /ping
