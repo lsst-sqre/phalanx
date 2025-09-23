@@ -118,6 +118,11 @@ influxdb-enterprise-standby:
         key: influxdb-enterprise-standby-shared-secret
   data:
     replicas: 1
+    startupProbe:
+      enabled: true
+      failureThreshold: 15
+      initialDelaySeconds: 900
+      periodSeconds: 60
     config:
       cluster:
         max-concurrent-queries: 150
@@ -179,6 +184,11 @@ influxdb-enterprise-active:
     resources:
   data:
     replicas: 2
+    startupProbe:
+      enabled: true
+      failureThreshold: 15
+      initialDelaySeconds: 900
+      periodSeconds: 60
     config:
       cluster:
         max-concurrent-queries: 300

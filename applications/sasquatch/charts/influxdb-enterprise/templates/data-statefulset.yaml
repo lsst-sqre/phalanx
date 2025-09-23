@@ -85,12 +85,15 @@ spec:
             - name: collectd
               containerPort: 25826
               protocol: UDP
+          {{- if .Values.data.startupProbe.enabled }}
           startupProbe:
-            failureThreshold: 6
-            periodSeconds: 60
+            failureThreshold: {{ .Values.data.startupProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.data.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.data.startupProbe.periodSeconds }}
             httpGet:
               path: /ping
               port: http
+          {{- end }}
           livenessProbe:
             failureThreshold: 6
             periodSeconds: 10
