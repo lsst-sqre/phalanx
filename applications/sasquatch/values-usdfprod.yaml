@@ -93,6 +93,8 @@ influxdb:
 
 influxdb-enterprise-standby:
   enabled: true
+  image:
+    tag: "1.12.2"
   license:
     secret:
       name: sasquatch
