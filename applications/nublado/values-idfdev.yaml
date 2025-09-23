@@ -145,9 +145,11 @@ cronjob:
     targetVolume:
       mountPath: "/rubin"
       volumeName: "rubin"
+    gid: 2000003
   artifacts:
     enabled: true
     gitTarget: "/rubin/cst_repos/tutorial-notebooks-data"
     targetVolume:
       mountPath: "/rubin"
       volumeName: "rubin"
+    gid: 2000003
