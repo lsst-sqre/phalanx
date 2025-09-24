@@ -4,9 +4,22 @@ controller:
   sentry:
     enabled: true
   config:
+    dropdownMenu:
+      release:
+        cutoffVersion: "27.0.0"
+      weekly:
+        number: 26
+      daily:
+        number: 12
+      releaseCandidate:
+        cutoffVersion: "28.0.0"
+      experimental:
+        age: "16w"
     logLevel: "DEBUG"
     fileserver:
       enabled: true
+      nodeSelector:
+        node-pool: "user-lab-pool"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -30,6 +43,8 @@ controller:
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
+      nodeSelector:
+        node-pool: "user-lab-pool"
       volumes:
         - name: "home"
           source:
