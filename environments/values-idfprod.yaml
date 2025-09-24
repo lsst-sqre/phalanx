@@ -29,10 +29,10 @@ applications:
   semaphore: true
   sia: true
   squareone: true
-  strimzi: true
+  ssotap: true
   strimzi-access-operator: true
   strimzi-registry-operator: true
-  ssotap: true
+  strimzi: true
   tap: true
   times-square: true
   vo-cutouts: true
