@@ -105,6 +105,9 @@ kafka-connect-manager:
       m2:
         enabled: false
         topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
+      obsloctap:
+        enabled: true
+        topicsRegex: ".*Scheduler"
       obssys:
         enabled: false
         topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
