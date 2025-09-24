@@ -3,6 +3,9 @@ config:
     - "dp02"
     - "dp03"
     - "dp1"
+  hips:
+    legacy:
+      dataset: "dp1"
   influxdbDatabases:
     idfdev_efd:
       url: "https://data-dev.lsst.cloud/influxdb/"

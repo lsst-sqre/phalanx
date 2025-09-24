@@ -56,6 +56,54 @@ config:
         LSST Commissioning Camera of seven ~1 square degree fields, over seven
         weeks in late 2024.
 
+  hips:
+    # -- Known HiPS datasets. Each should be a mapping of a label to an object
+    # containing the key `paths`, whose values are paths to the roots of HiPS
+    # surveys relative to the result of processing `sourceTemplate`.
+    # @default -- See `values.yaml`
+    datasets:
+      dp02:
+        paths:
+          - "images/color_gri"
+          - "images/color_riz"
+          - "images/band_u"
+          - "images/band_g"
+          - "images/band_r"
+          - "images/band_i"
+          - "images/band_z"
+          - "images/band_y"
+          - "images/2MASS/Color"
+      dp1:
+        paths:
+          - "deep_coadd/color_ugri"
+          - "deep_coadd/color_gri"
+          - "deep_coadd/color_izy"
+          - "deep_coadd/color_riz"
+          - "deep_coadd/color_ugr"
+          - "deep_coadd/band_u"
+          - "deep_coadd/band_g"
+          - "deep_coadd/band_r"
+          - "deep_coadd/band_i"
+          - "deep_coadd/band_z"
+          - "deep_coadd/band_y"
+
+    legacy:
+      # -- If set, specifies the dataset that should be shown at the legacy
+      # HiPS list route that does not include the dataset name. If not set, no
+      # legacy HiPS list will be created.
+      dataset: null
+
+      # -- Path prefix at which the legacy HiPS list should be served
+      pathPrefix: "/api/hips"
+
+    # -- Path prefix at which the HiPS lists should be served
+    pathPrefix: "/api/hips/v2"
+
+    # -- Jinja template to construct the base URLs of the underlying HiPS
+    # surveys, used to construct the HiPS list.
+    # @default -- See `values.yaml`
+    sourceTemplate: "https://{{base_hostname}}/api/hips/v2/{{dataset}}"
+
   # -- Dictionary of InfluxDB database names to connection information for
   # that database, with keys `url`, `database`, `username`, `passwordKey`, and
   # `schemaRegistry`. `passwordKey` must match an entry in `secrets.yaml`.
@@ -88,13 +136,6 @@ config:
       - type: "ui"
         name: "tokens"
         template: "https://{{base_hostname}}/auth/tokens"
-    hips:
-      - type: "data"
-        name: "hips"
-        datasets:
-          - "dp02"
-          - "dp1"
-        template: "https://{{base_hostname}}/api/hips/v2/{{dataset}}"
     mobu:
       - type: "internal"
         name: "mobu"
@@ -144,11 +185,18 @@ config:
         template: "https://{{base_hostname}}/api/tap"
     vo-cutouts:
       - type: "data"
-        name: "cutout"
+        name: "cutout-async"
         datasets:
           - "dp02"
           - "dp1"
         template: "https://{{base_hostname}}/api/cutout"
+        openapi: "https://{{base_hostname}}/api/cutout/openapi.json"
+      - type: "data"
+        name: "cutout-sync"
+        datasets:
+          - "dp02"
+          - "dp1"
+        template: "https://{{base_hostname}}/api/cutout/sync"
         openapi: "https://{{base_hostname}}/api/cutout/openapi.json"
     wobbly:
       - type: "internal"

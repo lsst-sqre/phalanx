@@ -13,6 +13,10 @@ env:
 "on":
   merge_group: {}
   pull_request: {}
+  push:
+    branches:
+      - "main"
+  workflow_dispatch: {}
 
 jobs:
   lint:
@@ -124,10 +128,10 @@ jobs:
               - "docs/**"
             minikube:
               - ".github/workflows/ci.yaml"
-              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/Chart.yaml"
-              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/templates/**"
-              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values.yaml"
-              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values-minikube.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/Chart.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/templates/**"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/values.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/values-minikube.yaml"
               - "environments/templates/applications/infrastructure/*"
               - "environments/values-minikube.yaml"
               - "src/phalanx/**"
@@ -140,7 +144,7 @@ jobs:
 
     needs: [test, helm, changes]
     if: >-
-      (needs.changes.outputs.minikube == 'true')
+      (needs.changes.outputs.minikube == 'true' && github.event_name != 'push')
       || (github.event_name == 'workflow_dispatch')
 
     steps:

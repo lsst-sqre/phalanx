@@ -26,19 +26,19 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
-          {{- if .Values.config.slackAlerts }}
           env:
+            {{- if .Values.config.slackAlerts }}
             - name: "<CHARTENVPREFIX>_SLACK_WEBHOOK"
               valueFrom:
                 secretKeyRef:
                   name: "<CHARTNAME>"
                   key: "slack-webhook"
+            {{- end }}
             # Uvicorn keepalive timeout, in seconds. This should be longer
             # than any keepalive timeouts on any downstream proxies. The
             # keepalive timeout for ingress-nginx connections is 60s.
             - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
               value: "61"
-          {{- end }}
           envFrom:
             - configMapRef:
                 name: "<CHARTNAME>"

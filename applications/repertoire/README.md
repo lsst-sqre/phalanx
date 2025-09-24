@@ -18,6 +18,11 @@ Service discovery
 | config.baseHostname | string | Set by Argo CD | Base hostname of the Phalanx environment (do not set) |
 | config.butlerConfigs | object | Set by Argo CD | Butler configuration mapping (do not set) |
 | config.datasets | object | See `values.yaml` | Known datasets. Each member of the list is a dictionary with key `description`. Datasets are only shown if also listed in `availableDatasets`. |
+| config.hips.datasets | object | See `values.yaml` | Known HiPS datasets. Each should be a mapping of a label to an object containing the key `paths`, whose values are paths to the roots of HiPS surveys relative to the result of processing `sourceTemplate`. |
+| config.hips.legacy.dataset | string | `nil` | If set, specifies the dataset that should be shown at the legacy HiPS list route that does not include the dataset name. If not set, no legacy HiPS list will be created. |
+| config.hips.legacy.pathPrefix | string | `"/api/hips"` | Path prefix at which the legacy HiPS list should be served |
+| config.hips.pathPrefix | string | `"/api/hips/v2"` | Path prefix at which the HiPS lists should be served |
+| config.hips.sourceTemplate | string | See `values.yaml` | Jinja template to construct the base URLs of the underlying HiPS surveys, used to construct the HiPS list. |
 | config.influxdbDatabases | object | `{}` | Dictionary of InfluxDB database names to connection information for that database, with keys `url`, `database`, `username`, `passwordKey`, and `schemaRegistry`. `passwordKey` must match an entry in `secrets.yaml`. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |

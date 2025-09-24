@@ -28,6 +28,8 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+            - name: "DAF_BUTLER_REPOSITORIES"
+              value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
             {{- if .Values.config.slackAlerts }}
             - name: "DATALINKER_SLACK_WEBHOOK"
               valueFrom:
@@ -35,21 +37,33 @@ spec:
                   name: "datalinker"
                   key: "slack-webhook"
             {{- end }}
-            {{- if .Values.config.tapMetadataUrl }}
-            - name: "DATALINKER_TAP_METADATA_DIR"
-              value: "/tmp/tap-metadata"
-            - name: "DATALINKER_TAP_METADATA_URL"
-              value: {{ .Values.config.tapMetadataUrl | quote }}
-            {{- end }}
-            - name: "DATALINKER_TOKEN"
-              valueFrom:
-                secretKeyRef:
-                  name: "datalinker-gafaelfawr-token"
-                  key: "token"
-            - name: "DAF_BUTLER_REPOSITORIES"
-              value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
+            # Uvicorn keepalive timeout, in seconds. This should be longer
+            # than any keepalive timeouts on any downstream proxies. The
+            # keepalive timeout for ingress-nginx connections is 60s.
+            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
+              value: "61"
+          envFrom:
+            - configMapRef:
+                name: "datalinker"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          lifecycle:
+            # Number of seconds k8s should wait before sending SIGTERM on
+            # graceful restarts/deployments/shutdowns. We need this because it
+            # takes ingress-nginx some time to configure itself to stop
+            # sending traffic to the pods scheduled for termination. If
+            # Uvicorn gets the SIGTERM and starts closing connections, we
+            # could end up with a TCP race condition if ingress-nginx still
+            # tries to send data over those connections.
+            #
+            # Note that terminationGracePeriodSeconds includes the time that
+            # is spent in the preStop hook. If you’re adding a preStop hook
+            # and your terminationGracePeriodSeconds is super fine-tuned, then
+            # you should update your terminationGracePeriodSeconds to add the
+            # amount of time you’ll be spending in your preStop hook.
+            preStop:
+              sleep:
+                seconds: 10
           ports:
             - name: "http"
               containerPort: 8080
@@ -71,9 +85,6 @@ spec:
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"
-            - name: "config"
-              mountPath: "/etc/datalinker"
-              readOnly: true
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -89,7 +100,5 @@ spec:
       {{- end }}
       volumes:
         - name: "tmp"
-          emptyDir: {}
-        - name: "config"
-          configMap:
-            name: "datalinker"
+          emptyDir:
+            medium: "Memory"
