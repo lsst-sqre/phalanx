@@ -24,6 +24,8 @@ spec:
       parameters:
         - name: "global.butlerServerRepositories"
           value: {{ .Values.butlerServerRepositories | toJson | b64enc }}
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
         - name: "global.host"
           value: {{ .Values.fqdn | quote }}
         - name: "global.repertoireUrl"
