@@ -144,8 +144,10 @@ jobs:
 
     needs: [test, helm, changes]
     if: >-
-      (needs.changes.outputs.minikube == 'true' && github.event_name != 'push')
-      || (github.event_name == 'workflow_dispatch')
+      (github.event_name == 'workflow_dispatch')
+      || (needs.changes.outputs.minikube == 'true'
+          && github.event_name != 'push'
+          && !startsWith(github.head_ref, 'dependabot/'))
 
     steps:
       - uses: actions/checkout@v5
