@@ -94,7 +94,7 @@ Rubin Observatory's telemetry service
 | kapacitor.squadcast | object | False. If set to true, you need to create the URL as a secret | Enable Squadcast alerts |
 | kapacitor.strategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
 | obsenv.enabled | bool | `false` | Whether to enable the obsenv subchart |
-| obsloctap.enabled | bool | `false` | Whether to enable the obsloctap subchart |
+| obsloctap.enabled | bool | `true` | Whether to enable the obsloctap subchart |
 | prompt-processing.enabled | bool | `false` | Whether to enable the prompt-processing subchart |
 | rest-proxy.enabled | bool | `false` | Whether to enable the REST proxy |
 | schema-registry-remote.enabled | bool | `false` | Whether to enable schema-registry-remote, an instance of the schema-registry for remote topics |

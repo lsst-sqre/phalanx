@@ -331,7 +331,7 @@ control-system:
 
 obsloctap:
   # -- Whether to enable the obsloctap subchart
-  enabled: false
+  enabled: true
 
 consdb:
   # -- Whether to enable the consdb subchart

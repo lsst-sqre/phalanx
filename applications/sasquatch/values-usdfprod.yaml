@@ -287,13 +287,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
-    obsloctap:
-      enabled: true
-      repair: false
-      database: "efd"
-      timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "lsst.sal.Scheduler" ]
     obssys:
       enabled: true
       repair: false
