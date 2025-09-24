@@ -73,7 +73,67 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "friends"
+    "exec:portal":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+    "exec:portal-admin":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "read:image":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+    "read:sasquatch":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+    "read:tap":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+    "write:files":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+    "write:sasquatch":
       - github:
           organization: "lsst-sqre"
           team: "square"
