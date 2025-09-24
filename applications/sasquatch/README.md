@@ -59,6 +59,7 @@ Rubin Observatory's telemetry service
 | influxdb.config.http.enabled | bool | `true` | Whether to enable the HTTP endpoints |
 | influxdb.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
 | influxdb.config.http.max-row-limit | int | `0` | Maximum number of rows the system can return from a non-chunked query (0 is unlimited) |
+| influxdb.config.logging.format | string | `"json"` | Format to use for log messages |
 | influxdb.config.logging.level | string | `"debug"` | Logging level |
 | influxdb.enabled | bool | `true` | Whether InfluxDB is enabled |
 | influxdb.image.tag | string | `"1.11.8"` | InfluxDB image tag |
@@ -160,6 +161,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.data.config.hintedHandoff.max-size | int | `107374182400` | Maximum size of the hinted-handoff queue in bytes |
 | influxdb-enterprise.data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | influxdb-enterprise.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
+| influxdb-enterprise.data.config.logging.format | string | `"json"` | Format to use for log messages |
 | influxdb-enterprise.data.config.logging.level | string | `"debug"` | Logging level |
 | influxdb-enterprise.data.env | object | `{}` | Additional environment variables to set in the meta container |
 | influxdb-enterprise.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
@@ -247,6 +249,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.data.config.hintedHandoff.max-size | int | `107374182400` | Maximum size of the hinted-handoff queue in bytes |
 | influxdb-enterprise-active.data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | influxdb-enterprise-active.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
+| influxdb-enterprise-active.data.config.logging.format | string | `"json"` | Format to use for log messages |
 | influxdb-enterprise-active.data.config.logging.level | string | `"debug"` | Logging level |
 | influxdb-enterprise-active.data.env | object | `{}` | Additional environment variables to set in the meta container |
 | influxdb-enterprise-active.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
@@ -334,6 +337,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.data.config.hintedHandoff.max-size | int | `107374182400` | Maximum size of the hinted-handoff queue in bytes |
 | influxdb-enterprise-standby.data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | influxdb-enterprise-standby.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
+| influxdb-enterprise-standby.data.config.logging.format | string | `"json"` | Format to use for log messages |
 | influxdb-enterprise-standby.data.config.logging.level | string | `"debug"` | Logging level |
 | influxdb-enterprise-standby.data.env | object | `{}` | Additional environment variables to set in the meta container |
 | influxdb-enterprise-standby.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |

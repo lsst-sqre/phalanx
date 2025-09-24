@@ -25,6 +25,7 @@ Run InfluxDB Enterprise on Kubernetes
 | data.config.hintedHandoff.max-size | int | `107374182400` | Maximum size of the hinted-handoff queue in bytes |
 | data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
+| data.config.logging.format | string | `"json"` | Format to use for log messages |
 | data.config.logging.level | string | `"debug"` | Logging level |
 | data.env | object | `{}` | Additional environment variables to set in the meta container |
 | data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |

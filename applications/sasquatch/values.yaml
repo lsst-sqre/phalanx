@@ -127,6 +127,8 @@ influxdb:
     logging:
       # -- Logging level
       level: "debug"
+      # -- Format to use for log messages
+      format: "json"
 
   initScripts:
     # -- Whether to enable the InfluxDB custom initialization script
