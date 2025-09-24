@@ -13,8 +13,8 @@ applications:
   ingress-nginx: false
 
   butler: true
-  consdb: true
   consdbtap: true
+  consdb: true
   datalinker: true
   exposurelog: true
   jira-data-proxy: true
@@ -28,14 +28,15 @@ applications:
   plot-navigator: true
   portal: true
   postgres: true
+  repertoire: true
   rubintv: true
   s3proxy: true
   sasquatch: true
   semaphore: true
-  ssotap: true
   squareone: true
-  strimzi: true
+  ssotap: true
   strimzi-access-operator: true
   strimzi-registry-operator: true
+  strimzi: true
   tap: true
   times-square: true

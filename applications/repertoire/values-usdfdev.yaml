@@ -1,0 +1,14 @@
+config:
+  availableDatasets:
+    - "dp02"
+    - "dp03"
+    - "dp1"
+  hips:
+    datasets: {}
+  influxdbDatabases:
+    usdfdev_efd:
+      url: "https://usdf-rsp-dev.slac.stanford.edu/influxdb/"
+      database: "efd"
+      username: "efdreader"
+      passwordKey: "usdfdev_efd-password"
+      schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
