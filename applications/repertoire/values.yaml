@@ -207,6 +207,10 @@ config:
         template: "https://{{base_hostname}}/wobbly"
         openapi: "https://{{base_hostname}}/wobbly/openapi.json"
 
+  sentry:
+    # -- Whether to enable the Sentry integration
+    enabled: false
+
   # -- Whether to send Slack alerts for unexpected failures
   slackAlerts: false
 
@@ -257,6 +261,10 @@ tolerations: []
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD
+  environmentName: null
+
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null
