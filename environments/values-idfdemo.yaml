@@ -20,5 +20,7 @@ applications:
   nublado: true
   portal: true
   squareone: true
+  ssotap: true
+  tap: true
   times-square: true
   vault-secrets-operator: true

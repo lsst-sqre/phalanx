@@ -1,0 +1,22 @@
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstsqre/tap-schema-idfint-tap"
+
+  config:
+    qserv:
+      host: "qserv-int.slac.stanford.edu:4090"
+      jdbcParams: "?enabledTLSProtocols=TLSv1.3"
+      passwordEnabled: true
+      image:
+        tag: "2.13.1"
+
+    urlRewrite:
+      enabled: true
+      rules: "ivoa.ObsCore:access_url, dp02_dc2_catalogs.ObsCore:access_url, dp1.ObsCore:access_url"
+
+  cloudsql:
+    enabled: true
+    instanceConnectionName: "science-platform-demo-9e05:us-central1:science-platform-demo-a4dbbf96"
+    serviceAccount: "tap-service@science-platform-demo-9e05.iam.gserviceaccount.com"
+    database: "tap"
