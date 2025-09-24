@@ -100,4 +100,5 @@ spec:
       {{- end }}
       volumes:
         - name: "tmp"
-          emptyDir: {}
+          emptyDir:
+            medium: "Memory"
