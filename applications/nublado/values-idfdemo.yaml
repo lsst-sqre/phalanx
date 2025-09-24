@@ -45,6 +45,11 @@ controller:
               volumeName: "home"
       nodeSelector:
         node-pool: "user-lab-pool"
+      tolerations:
+        - key: "kubernetes.io/arch"
+          operator: "Equal"
+          effect: "NoSchedule"
+          value: "arm64"
       volumes:
         - name: "home"
           source:
