@@ -35,11 +35,6 @@ spec:
                 secretKeyRef:
                   name: "<CHARTNAME>"
                   key: "redis-password"
-            # Uvicorn keepalive timeout, in seconds. This should be longer
-            # than any keepalive timeouts on any downstream proxies. The
-            # keepalive timeout for ingress-nginx connections is 60s.
-            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
-              value: "61"
             {{- if .Values.config.slackAlerts }}
             - name: "<CHARTENVPREFIX>_SLACK_WEBHOOK"
               valueFrom:
@@ -47,6 +42,11 @@ spec:
                   name: "<CHARTNAME>"
                   key: "slack-webhook"
             {{- end }}
+            # Uvicorn keepalive timeout, in seconds. This should be longer
+            # than any keepalive timeouts on any downstream proxies. The
+            # keepalive timeout for ingress-nginx connections is 60s.
+            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
+              value: "61"
           envFrom:
             - configMapRef:
                 name: "<CHARTNAME>"

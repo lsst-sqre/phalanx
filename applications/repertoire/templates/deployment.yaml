@@ -26,13 +26,14 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
-          {{- if .Values.config.slackAlerts }}
           env:
+            {{- if .Values.config.slackAlerts }}
             - name: "REPERTOIRE_SLACK_WEBHOOK"
               valueFrom:
                 secretKeyRef:
                   name: "repertoire"
                   key: "slack-webhook"
+            {{- end }}
             {{- if (and .Values.config.hips.datasets .Values.config.availableDatasets) }}
             - name: "REPERTOIRE_TOKEN"
               valueFrom:
@@ -45,7 +46,6 @@ spec:
             # keepalive timeout for ingress-nginx connections is 60s.
             - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
               value: "61"
-          {{- end }}
           envFrom:
             - configMapRef:
                 name: "repertoire"
