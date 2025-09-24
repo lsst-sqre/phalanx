@@ -166,15 +166,15 @@ Common environment variables
       name: "gafaelfawr-kafka"
       key: "securityProtocol"
 {{- end }}
-{{- if .Values.config.enableSentry }}
-- name: SENTRY_DSN
+{{- if .Values.config.sentry.enabled }}
+- name: "SENTRY_DSN"
   valueFrom:
     secretKeyRef:
       name: "gafaelfawr"
       key: "sentry-dsn"
-- name: SENTRY_RELEASE
-  value: {{ .Chart.Name }}@{{ .Chart.AppVersion }}
-- name: SENTRY_ENVIRONMENT
-  value: {{ .Values.global.host }}
+- name: "SENTRY_ENVIRONMENT"
+  value: {{ .Values.global.environmentName | quote }}
+- name: "SENTRY_TRACES_SAMPLE_RATE"
+  value: {{ .Values.config.sentry.tracesSampleRate | quote }}
 {{- end }}
 {{- end }}
