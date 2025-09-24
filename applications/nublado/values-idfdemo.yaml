@@ -19,7 +19,7 @@ controller:
     fileserver:
       enabled: true
       nodeSelector:
-        node_pool: "user-lab-pool"
+        cloud.google.com/gke-nodepool: "user-lab-pool"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -44,7 +44,7 @@ controller:
             - containerPath: "/home"
               volumeName: "home"
       nodeSelector:
-        node_pool: "user-lab-pool"
+        cloud.google.com/gke-nodepool: "user-lab-pool"
       tolerations:
         - key: "kubernetes.io/arch"
           operator: "Equal"
