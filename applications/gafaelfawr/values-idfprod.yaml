@@ -9,6 +9,9 @@ config:
   allowSubdomains: true
   slackAlerts: true
 
+  sentry:
+    enabled: true
+
   cilogon:
     clientId: "cilogon:/client_id/22adcdc145791f85b4d1edbf3157e21b"
     enrollmentUrl: "https://id.lsst.cloud/registry/co_petitions/start/coef:6"

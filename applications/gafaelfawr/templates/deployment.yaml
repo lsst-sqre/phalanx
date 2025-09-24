@@ -74,19 +74,12 @@ spec:
             - containerPort: 8080
               name: "http"
               protocol: "TCP"
-          {{- if (gt (int .Values.replicaCount) 1) }}
           readinessProbe:
             httpGet:
               path: "/health"
               port: "http"
             periodSeconds: 60
             timeoutSeconds: 10
-          {{- else }}
-          readinessProbe:
-            httpGet:
-              path: "/"
-              port: "http"
-          {{- end }}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
