@@ -388,6 +388,8 @@ data:
     logging:
       # -- Logging level
       level: "debug"
+      # -- Format to use for log messages
+      format: "json"
 
   podDisruptionBudget:
     # -- Minimum available pods to maintain
