@@ -490,3 +490,6 @@ consdb:
 
 data-transfer-monitoring:
   enabled: true
+
+obsloctap:
+  enabled: true
