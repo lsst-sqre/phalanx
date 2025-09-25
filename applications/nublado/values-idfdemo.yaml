@@ -30,26 +30,26 @@ controller:
         projectId: "rubin-shared-services-71ec"
         repository: "sciplat"
         image: "sciplat-lab"
-      # source:     
+      # source:
       #   type: "docker"
       #   registry: "ghcr.io"
       #   repository: "lsst-sqre/sciplat-lab"
       recommendedTag: "exp_w_2025_38_multi-arm64"
     lab:
-      env:
-        DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
-        TMPDIR: "/tmp"
       initContainers:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "tickets/DM-52583""
+            tag: "tickets-DM-52583"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
       nodeSelector:
         cloud.google.com/gke-nodepool: "user-lab-pool"
+      env:
+        DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
+        TMPDIR: "/tmp"
       tolerations:
         - key: "kubernetes.io/arch"
           operator: "Equal"
