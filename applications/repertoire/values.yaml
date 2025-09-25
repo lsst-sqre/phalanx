@@ -131,7 +131,10 @@ config:
     gafaelfawr:
       - type: "internal"
         name: "gafaelfawr"
-        template: "https://{{base_hostname}}/auth/api/v1"
+        template: "https://{{base_hostname}}/auth"
+        versions:
+          v1:
+            template: "https://{{base_hostname}}/auth/api/v1"
         openapi: "https://{{base_hostname}}/auth/openapi.json"
       - type: "ui"
         name: "logout"
@@ -147,7 +150,10 @@ config:
     noteburst:
       - type: "internal"
         name: "noteburst"
-        template: "https://{{base_hostname}}/noteburst/v1"
+        template: "https://{{base_hostname}}/noteburst"
+        versions:
+          v1:
+            template: "https://{{base_hostname}}/noteburst/v1"
         openapi: "https://{{base_hostname}}/noteburst/openapi.json"
     nublado:
       - type: "ui"
@@ -172,6 +178,10 @@ config:
           - "dp02"
           - "dp1"
         template: "https://{{base_hostname}}/api/sia/{{dataset}}"
+        versions:
+          sia-query-2.0:
+            template: "https://{{base_hostname}}/api/sia/{{dataset}}/query"
+            ivoaStandardId: "ivo://ivoa.net/std/SIA#query-2.0"
         openapi: "https://{{base_hostname}}/api/sia/openapi.json"
     ssotap:
       - type: "data"
@@ -188,24 +198,28 @@ config:
         template: "https://{{base_hostname}}/api/tap"
     vo-cutouts:
       - type: "data"
-        name: "cutout-async"
+        name: "cutout"
         datasets:
           - "dp02"
           - "dp1"
         template: "https://{{base_hostname}}/api/cutout"
-        openapi: "https://{{base_hostname}}/api/cutout/openapi.json"
-      - type: "data"
-        name: "cutout-sync"
-        datasets:
-          - "dp02"
-          - "dp1"
-        template: "https://{{base_hostname}}/api/cutout/sync"
+        versions:
+          soda-async-1.0:
+            template: "https://{{base_hostname}}/api/cutout/jobs"
+            ivoaStandardId: "ivo://ivoa.net/std/SODA#async-1.0"
+          soda-sync-1.0:
+            template: "https://{{base_hostname}}/api/cutout/sync"
+            ivoaStandardId: "ivo://ivoa.net/std/SODA#sync-1.0"
         openapi: "https://{{base_hostname}}/api/cutout/openapi.json"
     wobbly:
       - type: "internal"
         name: "wobbly"
         template: "https://{{base_hostname}}/wobbly"
         openapi: "https://{{base_hostname}}/wobbly/openapi.json"
+
+  sentry:
+    # -- Whether to enable the Sentry integration
+    enabled: false
 
   # -- Whether to send Slack alerts for unexpected failures
   slackAlerts: false
@@ -257,6 +271,10 @@ tolerations: []
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD
+  environmentName: null
+
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null
