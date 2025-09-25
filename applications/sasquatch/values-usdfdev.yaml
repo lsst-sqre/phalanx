@@ -80,6 +80,7 @@ kafka-connect-manager:
   influxdbSink:
     # Based on the kafka producers configuration for the BTS
     # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-base-teststand.yaml
+    excludedTopicsRegex: "lsst.dm.object"
     connectors:
       auxtel:
         enabled: false
