@@ -38,6 +38,8 @@ rubintv:
     scriptsLocation: /repos/rubintv_analysis_service/scripts
     script: rubintv_worker.py -a rubintv -p 8080 -l base
     env:
+    - name: SCRIPTS_LOCATION
+      value: "/repos/rubintv_analysis_service/scripts"
     - name: S3_ENDPOINT_URL
       value: *s3E
     - name: DAF_BUTLER_REPOSITORY_INDEX
