@@ -34,7 +34,7 @@ controller:
       #   type: "docker"
       #   registry: "ghcr.io"
       #   repository: "lsst-sqre/sciplat-lab"
-      recommendedTag: "exp_w_2025_38_multi-arm64"
+      recommendedTag: "exp_w_2025_38_multi-amd64"
     lab:
       initContainers:
         - name: "inithome"
