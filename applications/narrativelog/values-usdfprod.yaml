@@ -1,7 +1,7 @@
 config:
   site_id: usdfprod
 db:
-  host: usdf-summitdb-replica.slac.stanford.edu
+  host: usdf-summitdb-logical-replica-svc.sdf.slac.stanford.edu
   user: usdf
 ingress:
   auth:
