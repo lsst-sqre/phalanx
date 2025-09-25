@@ -19,7 +19,7 @@ controller:
     fileserver:
       enabled: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: "core-pool"
+        cloud.google.com/gke-nodepool: "core-pool-8ef7"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -53,15 +53,15 @@ controller:
             - containerPath: "/home"
               volumeName: "home"
       nodeSelector:
-        cloud.google.com/gke-nodepool: "core-pool"
+        cloud.google.com/gke-nodepool: "core-pool-8ef7"
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         TMPDIR: "/tmp"
-      tolerations:
-        - key: "kubernetes.io/arch"
-          operator: "Equal"
-          effect: "NoSchedule"
-          value: "arm64"
+       # tolerations:
+       #  - key: "kubernetes.io/arch"
+       #    operator: "Equal"
+       #    effect: "NoSchedule"
+       #    value: "arm64"
       volumes:
         - name: "home"
           source:
