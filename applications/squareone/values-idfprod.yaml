@@ -3,6 +3,9 @@ replicaCount: 3
 ingress:
   timesSquareScope: "exec:admin"
 
+image:
+  tag: "0.25.0" # hold back idfprod to test token UI in 0.26+
+
 config:
   siteName: "Rubin Science Platform"
   docsBaseUrl: "https://rsp.lsst.io"
