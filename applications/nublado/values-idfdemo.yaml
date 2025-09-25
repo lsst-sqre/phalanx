@@ -25,9 +25,15 @@ controller:
           volumeName: "home"
     images:
       source:
-        type: "docker"
-        registry: "ghcr.io"
-        repository: "lsst-sqre/sciplat-lab"
+        type: "google"
+        location: "us-central1"
+        projectId: "rubin-shared-services-71ec"
+        repository: "sciplat"
+        image: "sciplat-lab"
+      # source:     
+      #   type: "docker"
+      #   registry: "ghcr.io"
+      #   repository: "lsst-sqre/sciplat-lab"
       recommendedTag: "exp_w_2025_38_multi-arm64"
     lab:
       env:
@@ -37,7 +43,7 @@ controller:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "8.15.0"
+            tag: "tickets/DM-52583""
           privileged: true
           volumeMounts:
             - containerPath: "/home"
