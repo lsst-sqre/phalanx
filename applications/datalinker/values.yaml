@@ -38,7 +38,7 @@ config:
   slackAlerts: false
 
   # -- URL containing TAP schema metadata used to construct queries
-  tapMetadataUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"
+  tapMetadataUrl: "https://github.com/lsst/sdm_schemas/releases/download/DP1-v1.2.0/datalink-columns.zip"
 
 # -- Affinity rules for the datalinker deployment pod
 affinity: {}
