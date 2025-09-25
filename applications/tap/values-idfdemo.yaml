@@ -4,6 +4,7 @@ cadc-tap:
       repository: "lsstsqre/tap-schema-idfint-tap"
 
   config:
+    gcsBucketUrl: "https://tap-files.lsst.codes"
     qserv:
       host: "qserv-int.slac.stanford.edu:4090"
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"

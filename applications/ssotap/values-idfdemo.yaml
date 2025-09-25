@@ -2,6 +2,8 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfdev-sso"
+  config:
+    gcsBucketUrl: "https://tap-files.lsst.codes"
 
   cloudsql:
     enabled: true
