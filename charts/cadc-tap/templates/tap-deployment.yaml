@@ -25,6 +25,65 @@ spec:
       {{- else }}
       automountServiceAccountToken: false
       {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+      initContainers:
+        - name: "init-tomcat-dirs"
+          {{- if eq .Values.config.backend "pg" }}
+          image: "{{ .Values.config.pg.image.repository }}:{{ .Values.config.pg.image.tag }}"
+          {{- else }}
+          image: "{{ .Values.config.qserv.image.repository }}:{{ .Values.config.qserv.image.tag }}"
+          {{- end }}
+          command:
+            - "/bin/bash"
+            - "-c"
+            - |
+              set -e
+              mkdir -p /var/lib/tomcat/webapps /var/lib/tomcat/conf
+              mkdir -p /var/cache/tomcat/temp
+              cp -r /etc/tomcat/* /var/lib/tomcat/conf/
+              cp -v /opt/tomcat-wars/*.war /var/lib/tomcat/webapps/
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1001
+            runAsGroup: 1001
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: "tomcat-base"
+              mountPath: "/var/lib/tomcat"
+            - name: "tomcat-cache"
+              mountPath: "/var/cache/tomcat"
+        {{- if .Values.cloudsql.enabled }}
+        - name: "cloud-sql-proxy"
+          command:
+            - "/cloud_sql_proxy"
+            - "-ip_address_types=PRIVATE"
+            - "-log_debug_stdout=true"
+            - "-structured_logs=true"
+            - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
+          image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
+          imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
+          {{- with .Values.cloudsql.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          restartPolicy: "Always"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+        {{- end }}
       containers:
         - name: "tap-server"
           {{- if eq .Values.config.backend "pg" }}
@@ -35,6 +94,15 @@ spec:
           image: "{{ .Values.config.qserv.image.repository }}:{{ .Values.config.qserv.image.tag }}"
           imagePullPolicy: {{ .Values.config.qserv.image.pullPolicy | quote }}
           {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1001
+            runAsGroup: 1001
           env:
             - name: CATALINA_OPTS
               value: >-
@@ -85,6 +153,12 @@ spec:
                 -Durl.rewrite.enabled={{ .Values.config.urlRewrite.enabled | default true }}
                 -Durl.rewrite.rules="{{ .Values.config.urlRewrite.rules | default "ivoa.ObsCore:access_url" }}"
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
+            - name: "CATALINA_BASE"
+              value: "/var/lib/tomcat"
+            - name: "CATALINA_HOME"
+              value: "/usr/share/tomcat"
+            - name: "HOME"
+              value: "/home/tomcat"
             {{- if (and (eq .Values.config.backend "qserv") .Values.config.qserv.passwordEnabled) }}
             - name: "QSERV_DB_PASSWORD"
               valueFrom:
@@ -162,6 +236,17 @@ spec:
               mountPath: "/tmp"
             - name: "config-volume"
               mountPath: "/config"
+              readOnly: true
+            - name: "tomcat-base"
+              mountPath: "/var/lib/tomcat"
+            - name: "tomcat-logs"
+              mountPath: "/var/log/tomcat"
+            - name: "tomcat-home"
+              mountPath: "/home/tomcat"
+            - name: "tomcat-cache"
+              mountPath: "/var/cache/tomcat"
+            - name: "ca-trust"
+              mountPath: "/etc/pki/ca-trust/source/anchors"
           {{- if .Values.config.kafka.enabled }}
             - name: "kafka-certs"
               mountPath: "/etc/cadc-tap/kafka/ca.crt"
@@ -186,32 +271,6 @@ spec:
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
-      {{- if .Values.cloudsql.enabled }}
-      initContainers:
-        - name: "cloud-sql-proxy"
-          command:
-            - "/cloud_sql_proxy"
-            - "-ip_address_types=PRIVATE"
-            - "-log_debug_stdout=true"
-            - "-structured_logs=true"
-            - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
-          image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
-          imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
-          {{- with .Values.cloudsql.resources }}
-          resources:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          restartPolicy: "Always"
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - "all"
-            readOnlyRootFilesystem: true
-            runAsNonRoot: true
-            runAsUser: 65532
-            runAsGroup: 65532
-      {{- end }}
       volumes:
         - name: "google-creds"
           secret:
@@ -221,6 +280,16 @@ spec:
         - name: "config-volume"
           configMap:
             name: "cadc-tap-config"
+        - name: "tomcat-base"
+          emptyDir: {}
+        - name: "tomcat-logs"
+          emptyDir: {}
+        - name: "tomcat-home"
+          emptyDir: {}
+        - name: "tomcat-cache"
+          emptyDir: {}
+        - name: "ca-trust"
+          emptyDir: {}
         {{- if .Values.config.kafka.enabled }}
         - name: "kafka-certs"
           secret:
