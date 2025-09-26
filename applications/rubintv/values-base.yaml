@@ -31,7 +31,7 @@ rubintv:
     replicas: 1
     image:
       repository: ghcr.io/lsst-sitcom/rubintv_production
-      tag: tickets-DM-52563
+      tag: w_2025_38
       pullPolicy: Always
     uid: 73006
     gid: 73006
