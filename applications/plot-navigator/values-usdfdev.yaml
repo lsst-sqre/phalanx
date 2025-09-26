@@ -1,3 +1,6 @@
+image:
+  tag: SP-2630
+
 environment:
   BASE_URL: "/plot-navigator"
   REPO_URLS: '{"embargo": "unused", "/repo/main": "unused", "/repo/dc2": "unused", "/repo/dp1": "unused"}'
