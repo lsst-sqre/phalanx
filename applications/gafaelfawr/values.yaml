@@ -55,12 +55,6 @@ config:
   # @default -- None, must be set if neither `cloudsql.enabled` nor
   # `config.internalDatabase` are true
   databaseUrl: null
-
-  # -- Whether to send trace and telemetry information to Sentry. This traces
-  # every call and therefore should only be enabled in non-production
-  # environments.
-  enableSentry: false
-
   # -- HTML footer to add to any login error page (will be enclosed in a <p>
   # tag).
   errorFooter: null
@@ -82,6 +76,14 @@ config:
   # -- Whether to send certain serious alerts to Slack. If `true`, the
   # `slack-webhook` secret must also be set.
   slackAlerts: false
+
+  sentry:
+    # -- Set to true to enable the Sentry integration.
+    enabled: false
+
+    # -- The percentage of requests that should be traced. This
+    # should be a float between 0 and 1
+    tracesSampleRate: 0.0
 
   # -- Session lifetime. Use `w`, `d`, `h`, `m`, and `s` for time intervals.
   # For example, `1d6h23m` is one day, six hours, 23 minutes.
@@ -521,3 +523,7 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: null
+  #
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD Application
+  environmentName: null

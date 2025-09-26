@@ -15,6 +15,9 @@ redis:
 config:
   internalDatabase: true
 
+  sentry:
+    enabled: true
+
   oidcServer:
     enabled: true
 
