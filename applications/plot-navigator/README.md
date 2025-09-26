@@ -23,7 +23,7 @@ Plot-navigator
 | redis.config.secretKey | string | `"password"` | Key inside secret from which to get the Redis password (do not change) |
 | redis.config.secretName | string | `"redis-secret"` | Name of secret containing Redis password |
 | resources | object | see `values.yaml` | Resource limits and requests for the nodejs pod |
-| worker.resources.limits.cpu | string | `"1"` |  |
+| worker.resources.limits.cpu | string | `"2"` |  |
 | worker.resources.limits.memory | string | `"2048Mi"` |  |
-| worker.resources.requests.cpu | string | `"50m"` |  |
+| worker.resources.requests.cpu | string | `"1"` |  |
 | worker.resources.requests.memory | string | `"512Mi"` |  |
