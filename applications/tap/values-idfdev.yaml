@@ -9,6 +9,11 @@ cadc-tap:
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
 
+      image:
+        repository: "stvoutsin/lsst-tap-service"
+        pullPolicy: "Always"
+        tag: "readonly"
+
     kafka:
       enabled: true
 
