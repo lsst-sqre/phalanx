@@ -42,10 +42,10 @@ global:
 resources:
   limits:
     cpu: "2"
-    memory: "512Mi"
+    memory: "2048Mi"
   requests:
     cpu: "1"
-    memory: "256Mi"
+    memory: "1024Mi"
 
 worker:
   resources:
