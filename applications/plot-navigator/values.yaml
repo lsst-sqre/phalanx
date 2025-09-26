@@ -41,7 +41,7 @@ global:
 # @default -- see `values.yaml`
 resources:
   limits:
-    cpu: "2"
+    cpu: "4"
     memory: "2048Mi"
   requests:
     cpu: "1"
