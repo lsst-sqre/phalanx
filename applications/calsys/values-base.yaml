@@ -8,10 +8,10 @@ cbp-sim:
   resources:
     limits:
       cpu: 110m
-      memory: 300Mi
+      memory: 320Mi
     requests:
       cpu: 11m
-      memory: 100Mi
+      memory: 160Mi
 
 electrometer101-sim:
   enabled: true
@@ -29,10 +29,10 @@ electrometer101-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 330Mi
+      memory: 320Mi
     requests:
-      cpu: 10m
-      memory: 110Mi
+      cpu: 14m
+      memory: 160Mi
 
 electrometer102-sim:
   enabled: true
@@ -50,10 +50,10 @@ electrometer102-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 350Mi
+      memory: 320Mi
     requests:
-      cpu: 10m
-      memory: 115Mi
+      cpu: 15m
+      memory: 160Mi
 
 electrometer103-sim:
   enabled: true
@@ -71,10 +71,10 @@ electrometer103-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 350Mi
+      memory: 360Mi
     requests:
-      cpu: 10m
-      memory: 115Mi
+      cpu: 14m
+      memory: 180Mi
 
 electrometer201-sim:
   enabled: true
@@ -92,10 +92,10 @@ electrometer201-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 330Mi
+      memory: 320Mi
     requests:
-      cpu: 10m
-      memory: 110Mi
+      cpu: 14m
+      memory: 160Mi
 
 gcheaderservice1:
   enabled: true
@@ -118,7 +118,7 @@ gcheaderservice1:
       memory: 400Mi
     requests:
       cpu: 14m
-      memory: 130Mi
+      memory: 200Mi
 
 ledprojector-sim:
   enabled: true
@@ -130,10 +130,10 @@ ledprojector-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 330Mi
+      memory: 360Mi
     requests:
       cpu: 10m
-      memory: 110Mi
+      memory: 180Mi
 
 linearstage101-sim:
   enabled: true
@@ -145,10 +145,10 @@ linearstage101-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 330Mi
+      memory: 360Mi
     requests:
-      cpu: 10m
-      memory: 130Mi
+      cpu: 12m
+      memory: 180Mi
 
 linearstage102-sim:
   enabled: true
@@ -159,11 +159,11 @@ linearstage102-sim:
     RUN_ARG: 102 --simulate
   resources:
     limits:
-      cpu: 150m
-      memory: 330Mi
+      cpu: 120m
+      memory: 360Mi
     requests:
-      cpu: 15m
-      memory: 130Mi
+      cpu: 12m
+      memory: 180Mi
 
 linearstage103-sim:
   enabled: true
@@ -175,10 +175,10 @@ linearstage103-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 330Mi
+      memory: 400Mi
     requests:
-      cpu: 10m
-      memory: 130Mi
+      cpu: 12m
+      memory: 200Mi
 
 linearstage104-sim:
   enabled: true
@@ -190,10 +190,10 @@ linearstage104-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 330Mi
+      memory: 400Mi
     requests:
-      cpu: 10m
-      memory: 130Mi
+      cpu: 12m
+      memory: 200Mi
 
 mtreflector-sim:
   enabled: true
@@ -205,10 +205,10 @@ mtreflector-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 330Mi
+      memory: 320Mi
     requests:
-      cpu: 10m
-      memory: 130Mi
+      cpu: 13m
+      memory: 160Mi
 
 simulation-gencam:
   enabled: true
@@ -231,10 +231,10 @@ simulation-gencam:
   resources:
     limits:
       cpu: 120m
-      memory: 360Mi
+      memory: 400Mi
     requests:
-      cpu: 12m
-      memory: 120Mi
+      cpu: 20m
+      memory: 200Mi
 
 tunablelaser-sim:
   enabled: true

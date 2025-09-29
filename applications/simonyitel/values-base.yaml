@@ -19,10 +19,10 @@ lasertracker1-sim:
   resources:
     limits:
       cpu: 200m
-      memory: 360Mi
+      memory: 512Mi
     requests:
-      cpu: 20m
-      memory: 120Mi
+      cpu: 26m
+      memory: 256Mi
 
 mtaircompressor1-sim:
   enabled: true
@@ -34,10 +34,10 @@ mtaircompressor1-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 300Mi
+      memory: 320Mi
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 160Mi
 
 mtaircompressor2-sim:
   enabled: true
@@ -49,10 +49,10 @@ mtaircompressor2-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 300Mi
+      memory: 320Mi
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 160Mi
 
 mtaos:
   image:
@@ -85,10 +85,10 @@ mtaos:
   resources:
     limits:
       cpu: 1000m
-      memory: 1500Mi
+      memory: 1800Mi
     requests:
-      cpu: 30m
-      memory: 430Mi
+      cpu: 35m
+      memory: 900Mi
 
 mtcamhexapod-sim:
   enabled: true
@@ -101,10 +101,10 @@ mtcamhexapod-sim:
   resources:
     limits:
       cpu: 500m
-      memory: 400Mi
+      memory: 840Mi
     requests:
-      cpu: 50m
-      memory: 125Mi
+      cpu: 60m
+      memory: 420Mi
 
 mtdome-sim:
   enabled: true
@@ -116,10 +116,10 @@ mtdome-sim:
   resources:
     limits:
       cpu: 900m
-      memory: 300Mi
+      memory: 320Mi
     requests:
-      cpu: 90m
-      memory: 100Mi
+      cpu: 220m
+      memory: 160Mi
 
 mtdometrajectory:
   image:
@@ -128,10 +128,10 @@ mtdometrajectory:
   resources:
     limits:
       cpu: 250m
-      memory: 400Mi
+      memory: 512Mi
     requests:
       cpu: 25m
-      memory: 115Mi
+      memory: 256Mi
 
 mtheaderservice:
   enabled: true
@@ -160,7 +160,6 @@ mtheaderservice-sim:
   enabled: false
   image:
     repository: ts-dockerhub.lsst.org/headerservice
-    revision: 2
     pullPolicy: Always
   env:
     URL_SPEC: --lfa_mode s3 --s3instance ls
@@ -202,8 +201,8 @@ mtm1m3-sim:
     limits:
       cpu: 1000m
     requests:
-      cpu: 100m
-      memory: 1000Mi
+      cpu: 300m
+      memory: 300Mi
 
 mtm1m3ts-sim:
   enabled: true
@@ -215,7 +214,7 @@ mtm1m3ts-sim:
       cpu: 400m
     requests:
       cpu: 40m
-      memory: 32Mi
+      memory: 90Mi
 
 mtm2-sim:
   enabled: true
@@ -229,8 +228,8 @@ mtm2-sim:
       cpu: 850m
       memory: 1500Mi
     requests:
-      cpu: 85m
-      memory: 420Mi
+      cpu: 120m
+      memory: 500Mi
 
 mtm2hexapod-sim:
   enabled: true
@@ -243,10 +242,10 @@ mtm2hexapod-sim:
   resources:
     limits:
       cpu: 400m
-      memory: 400Mi
+      memory: 800Mi
     requests:
       cpu: 40m
-      memory: 125Mi
+      memory: 400Mi
 
 mtmount-sim:
   enabled: true
@@ -260,8 +259,8 @@ mtmount-sim:
       cpu: 500m
       memory: 1000Mi
     requests:
-      cpu: 50m
-      memory: 300Mi
+      cpu: 100m
+      memory: 512Mi
 
 mtoods:
   enabled: true
@@ -280,10 +279,10 @@ mtoods:
   resources:
     limits:
       cpu: 1000m
-      memory: 700Mi
+      memory: 1400Mi
     requests:
       cpu: 10m
-      memory: 345Mi
+      memory: 700Mi
   configfile:
     path: /etc
     filename: mtoods.yaml
@@ -356,8 +355,8 @@ mtrotator-sim:
       cpu: 400m
       memory: 600Mi
     requests:
-      cpu: 40m
-      memory: 150Mi
+      cpu: 60m
+      memory: 280Mi
 
 mtvms-m1m3-sim:
   enabled: true
