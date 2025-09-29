@@ -25,6 +25,11 @@ A subchart to deploy the Kafdrop UI for Sasquatch.
 | jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
 | jvm.opts | string | `""` | JVM options |
 | kafka.broker | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Bootstrap list of Kafka host/port pairs |
+| logging.kafdrop.config.level | string | `"WARN"` | Log level for Kafdrop config package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| logging.kafdrop.controller.level | string | `"INFO"` | Log level for Kafdrop controller package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| logging.kafdrop.level | string | `"INFO"` | Log level for Kafdrop package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| logging.kafdrop.service.level | string | `"INFO"` | Log level for Kafdrop service package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| logging.root.level | string | `"WARN"` | Log level for Kafdrop root logger (TRACE, DEBUG, INFO, WARN, ERROR) |
 | nodeSelector | object | `{}` | Node selector configuration |
 | podAnnotations | object | `{}` | Pod annotations |
 | replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
