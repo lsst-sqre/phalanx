@@ -12,7 +12,7 @@ strimzi-kafka:
     monitorLabel:
       lsst.io/monitor: "true"
   kafka:
-    version: 3.9.0
+    version: 3.9.1
     metadataVersion: "3.8-IV0"
     config:
       auto.create.topics.enable: false
