@@ -200,7 +200,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "DP1-v1.1.4-rc1"
+    tag: "DP1-v1.2.0"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
