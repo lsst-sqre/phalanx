@@ -28,7 +28,7 @@ rubintv:
       secretName: rubintv-secrets
       secretKey: ra-redis-password
     image:
-      tag: v2.6.8
+      tag: v2.6.9
       pullPolicy: Always
 
   workers:
