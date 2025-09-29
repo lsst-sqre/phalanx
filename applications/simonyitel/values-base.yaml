@@ -308,21 +308,22 @@ mtoods:
               collections:
                   - LSSTCam/raw/all
               collection_cleaner:
-                  - collection: LSSTCam/raw/all
-                    files_older_than:
-                        <<: *interval
-                        days: 5
-                  - collection: LSSTCam/raw/guider
-                    files_older_than:
-                        <<: *interval
-                        days: 5
-                  - collection: LSSTCam/quickLook
-                    files_older_than:
-                        <<: *interval
-                        days: 2
-              cleaning_interval:
-                  <<: *interval
-                  hours: 1
+                  collections_to_clean:
+                      - collection: LSSTCam/raw/all
+                        files_older_than:
+                            <<: *interval
+                            days: 5
+                      - collection: LSSTCam/raw/guider
+                        files_older_than:
+                            <<: *interval
+                            days: 5
+                      - collection: LSSTCam/quickLook
+                        files_older_than:
+                            <<: *interval
+                            days: 2
+                  cleaning_interval:
+                      <<: *interval
+                      hours: 1
 
 mtptg:
   image:

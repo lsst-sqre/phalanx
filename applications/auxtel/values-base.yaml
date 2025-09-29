@@ -157,17 +157,18 @@ atoods:
               collections:
                   - LATISS/raw/all
               collection_cleaner:
-                  - collection: LATISS/raw/all
-                    files_older_than:
-                        <<: *interval
-                        days: 20
-                  - collection: LATISS/quickLook
-                    files_older_than:
-                        <<: *interval
-                        days: 2
-              cleaning_interval:
-                  <<: *interval
-                  hours: 1
+                  collections_to_clean:
+                      - collection: LATISS/raw/all
+                        files_older_than:
+                            <<: *interval
+                            days: 20
+                      - collection: LATISS/quickLook
+                        files_older_than:
+                            <<: *interval
+                            days: 2
+                  cleaning_interval:
+                      <<: *interval
+                      hours: 1
 
 atpneumatics-sim:
   enabled: true
