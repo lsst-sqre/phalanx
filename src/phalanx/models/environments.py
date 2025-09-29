@@ -259,6 +259,19 @@ class EnvironmentBaseConfig(BaseModel):
         description="Prefix of Vault paths, including the KV v2 mount point",
     )
 
+    default_compute_class: str | None = Field(
+        None,
+        title="Default compute class",
+        description=(
+            "Whether to deploy workloads using Autopilot or Standard mode. If"
+            " this is null, the workloads will use the compute class that"
+            " corresponds to the cluster type. Here's an [example of setting"
+            " an Autopilot compute class]"
+            "(https://cloud.google.com/kubernetes-engine/docs/how-to/autopilot"
+            "-classes-standard-clusters#built-in-class)"
+        ),
+    )
+
     control_system: ControlSystemConfig | None = None
 
     @field_validator("onepassword", mode="before")
