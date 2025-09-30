@@ -11,6 +11,9 @@ cloudsql:
 config:
   slackAlerts: false
 
+  sentry:
+    enabled: true
+
   github:
     clientId: "083a615e03ca3dde9392"
 
