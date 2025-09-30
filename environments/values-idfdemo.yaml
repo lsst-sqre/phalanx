@@ -9,7 +9,7 @@ gcp:
   clusterName: "science-platform-demo"
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
-  vaultTitle: "Phalanx data-demo.lsst.cloud"
+  vaultTitle: "RSP demo.lsst.cloud"
 vaultPathPrefix: "secret/phalanx/idfdemo"
 
 applications:
