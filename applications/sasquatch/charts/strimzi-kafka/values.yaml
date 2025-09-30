@@ -11,7 +11,7 @@ cluster:
 
 kafka:
   # -- Version of Kafka to deploy
-  version: "3.8.0"
+  version: "4.0.0"
 
   # -- The KRaft metadata version used by the Kafka cluster.
   # If the property is not set, it defaults to the metadata version that corresponds to the version property.
