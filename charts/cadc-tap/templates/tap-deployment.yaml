@@ -46,6 +46,7 @@ spec:
               mkdir -p /var/cache/tomcat/temp
               cp -r /etc/tomcat/* /var/lib/tomcat/conf/
               cp -v /opt/tomcat-wars/*.war /var/lib/tomcat/webapps/
+              echo "org.apache.catalina.startup.VersionLoggerListener.level = OFF" >> /var/lib/tomcat/conf/logging.properties
           securityContext:
             runAsNonRoot: true
             runAsUser: 1001
