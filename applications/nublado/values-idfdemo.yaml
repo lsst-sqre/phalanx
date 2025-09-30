@@ -21,16 +21,16 @@ controller:
           volumeName: "home"
     images:
       recommendedTag: exp_w_2025_39_multi
-      # source:
-      #   type: "google"
-      #   location: "us-central1"
-      #   projectId: "rubin-shared-services-71ec"
-      #   repository: "sciplat"
-      #   image: "sciplat-lab"
       source:
-        type: "docker"
-        registry: "registry.hub.docker.com"
-        repository: "lsstsqre/sciplat-lab"
+        type: "google"
+        location: "us-central1"
+        projectId: "rubin-shared-services-71ec"
+        repository: "sciplat"
+        image: "sciplat-lab"
+      # source:
+      #   type: "docker"
+      #   registry: "registry.hub.docker.com"
+      #   repository: "lsstsqre/sciplat-lab"
     lab:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
@@ -46,8 +46,8 @@ controller:
       initContainers:
         - name: "inithome"
           image:
-            repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "tickets-dm-52583"
+            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
+            tag: "tickets-DM-52583"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
