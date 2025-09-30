@@ -4,13 +4,13 @@ controller:
   config:
     dropdownMenu:
       release:
-        cutoffVersion: "28.0.0"
+        number: 0
       weekly:
-        number: 26
+        number: 0
       daily:
-        number: 15
+        number: 0
       releaseCandidate:
-        cutoffVersion: "29.0.0"
+        number: 0
       experimental:
         age: "6w"
     logLevel: "DEBUG"
