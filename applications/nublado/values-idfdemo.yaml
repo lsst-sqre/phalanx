@@ -4,6 +4,17 @@ controller:
   sentry:
     enabled: true
   config:
+    dropdownMenu:
+      release:
+        cutoffVersion: "28.0.0"
+      weekly:
+        number: 26
+      daily:
+        number: 15
+      releaseCandidate:
+        cutoffVersion: "29.0.0"
+      experimental:
+        age: "6w"
     logLevel: "DEBUG"
     fileserver:
       enabled: true
@@ -11,16 +22,28 @@ controller:
         - containerPath: "/home"
           volumeName: "home"
     images:
+      recommendedTag: exp_w_2025_39_multi
+      # source:
+      #   type: "google"
+      #   location: "us-central1"
+      #   projectId: "rubin-shared-services-71ec"
+      #   repository: "sciplat"
+      #   image: "sciplat-lab"
       source:
-        type: "google"
-        location: "us-central1"
-        projectId: "rubin-shared-services-71ec"
-        repository: "sciplat"
-        image: "sciplat-lab"
+        type: "docker"
+        registry: "registry.hub.docker.com"
+        repository: "lsstsqre/sciplat-lab"
     lab:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         TMPDIR: "/tmp"
+      nodeSelector:
+        cloud.google.com/gke-nodepool: "user-lab-pool"
+      tolerations:
+        - key: "kubernetes.io/arch"
+          value: arm64
+          operator: "Equal"
+          effect: NoSchedule
       initContainers:
         - name: "inithome"
           image:
@@ -34,8 +57,8 @@ controller:
         - name: "home"
           source:
             type: nfs
-            serverPath: "/share1/home"
-            server: "10.32.121.98"
+            serverPath: "/home-share"
+            server: "10.235.176.36"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
