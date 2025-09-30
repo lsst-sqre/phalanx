@@ -18,13 +18,13 @@ controller:
   config:
     dropdownMenu:
       release:
-        number: 0
+        number: 1
       weekly:
         number: 1
       daily:
         number: 1
       releaseCandidate:
-        number: 0
+        number: 1
       experimental:
         age: "6w"
     logLevel: "DEBUG"
