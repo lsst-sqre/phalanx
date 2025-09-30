@@ -44,6 +44,7 @@ controller:
           value: arm64
           operator: "Equal"
           effect: NoSchedule
+      pullSecret: "pull-secret"
       initContainers:
         - name: "inithome"
           image:
