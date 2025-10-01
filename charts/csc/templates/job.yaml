@@ -21,6 +21,42 @@ spec:
       {{- end }}
     spec:
       containers:
+        {{- if .Values.obsenv }}
+        - name: obs-env-sidecar
+          image: ts-dockerhub.lsst.org/obs_env_sidecar
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          stdin: true
+          tty: true
+          volumeMounts:
+            - name: obsenv
+              mountPath: "/net/obs-env/auto_base_packages"
+          envFrom:
+          - configMapRef:
+              name: csc-env-config
+          env:
+            - name: OBS_ENV_KAFKA_SECURITY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.global.controlSystem.appNamespace }}
+                  key: ts-obsenv-password
+            - name: OBS_ENV_KAFKA_SECURITY_USERNAME
+              value: ts-obsenv
+          {{- if .Values.env }}
+          {{- range $env_var, $env_value := .Values.env }}
+            - name: {{ $env_var }}
+              value: {{ $env_value | quote }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.envSecrets }}
+          {{- range $env := .Values.envSecrets }}
+            - name: {{ $env.name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.global.controlSystem.appNamespace }}
+                  key: {{ $env.key }}
+          {{- end }}
+          {{- end }}
+        {{- end }}
         - name: {{ include "csc.class" . }}
           {{- $image := dict "repo" .Values.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" .Values.image.revision }}
           image: {{ include "helpers.makeImage" $image }}
@@ -69,6 +105,10 @@ spec:
             - name: configfile
               mountPath: {{ .Values.configfile.path }}/{{ .Values.configfile.filename }}
               subPath: {{ .Values.configfile.filename }}
+          {{- end }}
+          {{- if .Values.obsenv }}
+            - name: obsenv
+              mountPath: "/net/obs-env/auto_base_packages"
           {{- end }}
           {{- if .Values.secretFixup }}
             - name: {{ include "chart.name" $ }}-file-secrets
@@ -146,6 +186,10 @@ spec:
             items:
               - key: {{ .Values.configfile.filename }}
                 path: {{ .Values.configfile.filename }}
+      {{- end }}
+      {{- if .Values.obsenv}}
+        - name: obsenv
+          emptyDir: {}
       {{- end }}
       {{- if .Values.secretFixup }}
         - name: {{ include "chart.name" $ }}-file-secrets

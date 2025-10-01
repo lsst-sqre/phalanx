@@ -90,3 +90,5 @@ nodeSelector: {}
 tolerations: []
 # -- This specifies the scheduling constraints of the pod
 affinity: {}
+# -- Enable observing environment sidecar?
+obsenv: false
