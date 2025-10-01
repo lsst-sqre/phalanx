@@ -95,6 +95,7 @@ raocps:
   classifier: ocps101
   image:
     repository: ts-dockerhub.lsst.org/dmocps
+    revision: 0
     pullPolicy: Always
   env:
     RUN_ARG: 101

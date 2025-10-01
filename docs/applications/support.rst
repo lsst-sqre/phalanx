@@ -11,6 +11,7 @@ Argo CD project: ``support``
    :maxdepth: 1
 
    ghostwriter/index
+   keda/index
    postgres/index
    strimzi/index
    strimzi-access-operator/index

@@ -20,10 +20,12 @@ applications:
   mobu: true
   onepassword-connect: true
   ook: true
+  repertoire: true
   sasquatch: true
   squareone: true
   strimzi: true
   strimzi-access-operator: true
+  strimzi-registry-operator: true
   squarebot: true
   templatebot: true
   unfurlbot: true

@@ -14,13 +14,13 @@ prompt-keda:
       main: |-
         - survey: SURVEY
           pipelines:
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/dev/ApPipe.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/dev/SingleFrame.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/dev/Isr.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/dev/Isr-cal.yaml
       preprocessing: |-
         - survey: SURVEY
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing.yaml']
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/dev/Preprocessing.yaml']
     centralRepo: s3://rubin-pp-dev-users/central_repo_2
     repoWait: 5
 
@@ -31,12 +31,12 @@ prompt-keda:
 
   raw_microservice: http://embargo-butler-presence.autoingest.svc.cluster.local:8080/presence
 
-  mpSky_service: http://172.24.5.245/ephemerides/
+  mpSky_service: http://172.24.5.145/ephemerides/
 
   iers_cache: s3://rubin-pp-dev-users/iers-cache.zip
 
   imageNotifications:
-    kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
+    kafkaClusterAddress: s3-file-notifications-kafka-external-bootstrap.s3-file-notifications:9094
     topic: prompt-processing-dev
 
   apdb:
@@ -55,3 +55,9 @@ prompt-keda:
     redisStreams:
       # Dev processes very old images, set to ~20 years
       expiration: 600_000_000.0
+
+  butler_writer:
+    enabled: true
+    kafka_cluster: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
+    kafka_username: butler-writer
+    kafka_topic: butler-writer

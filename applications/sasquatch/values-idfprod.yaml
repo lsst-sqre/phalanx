@@ -1,6 +1,5 @@
 strimzi-kafka:
   kafka:
-    version: "3.9.0"
     listeners:
       tls:
         enabled: true
@@ -33,13 +32,9 @@ strimzi-kafka:
     enabled: true
     storage:
       size: 500Gi
-  registry:
-    ingress:
-      enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /$2
-      hostname: data.lsst.cloud
-      path: /schema-registry(/|$)(.*)
+
+schema-registry:
+  enabled: true
 
 influxdb:
   ingress:
@@ -87,12 +82,14 @@ chronograf:
 
 app-metrics:
   enabled: true
+  kafkaVersion: "4.0.0"
   apps:
     - gafaelfawr
     - mobu
     - noteburst
     - nublado
     - qservkafka
+    - sia
     - wobbly
 
 backup:

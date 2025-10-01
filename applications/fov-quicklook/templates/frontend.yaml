@@ -1,0 +1,127 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fov-quicklook-frontend
+spec:
+  replicas: {{ .Values.frontend.replicas }}
+  selector:
+    matchLabels:
+      app: fov-quicklook-frontend
+  template:
+    metadata:
+      labels:
+        app: fov-quicklook-frontend
+    spec:
+      containers:
+        - name: fov-quicklook-frontend
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command:
+            - sh
+            - -c
+            - |
+              exec python -m quicklook.frontend.api
+          env:
+            - name: QUICKLOOK_coordinator_base_url
+              value: http://fov-quicklook-coordinator:9501
+            - name: QUICKLOOK_frontend_app_prefix
+              value: {{ .Values.config.pathPrefix | quote }}
+            - name: QUICKLOOK_admin_page
+              value: {{ .Values.admin_page | quote }}
+            {{- include "fov-quicklook.env.db" . | nindent 12 }}
+            {{- include "fov-quicklook.env.log-level" . | nindent 12 }}
+            {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
+            {{- include "fov-quicklook.butler-settings.env" . | nindent 12 }}
+            - name: QUICKLOOK_context_menu_templates
+              value: {{ .Values.context_menu_templates | toJson | quote }}
+          volumeMounts:
+            {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}
+            - name: tmp
+              mountPath: /tmp
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.config.pathPrefix }}/api/healthz
+              port: 9500
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
+          ports:
+            - containerPort: 9500
+          resources: {{ toYaml .Values.frontend.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+      volumes:
+        {{- .Values.butler_settings.volumes | toYaml | nindent 8 }}
+        - name: tmp
+          emptyDir:
+            medium: Memory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fov-quicklook-frontend
+spec:
+  selector:
+    app: fov-quicklook-frontend
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 9500
+      targetPort: 9500
+---
+{{- if .Values.use_gafaelfawr }}
+# use_gafaelfawr: Controls whether to use the Gafaelfawr authentication system.
+# Set to true by default. Set to false only for local development clusters without Gafaelfawr.
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: fov-quicklook-frontend
+config:
+  scopes:
+    all:
+      - "read:image"
+  service: fov-quicklook-frontend
+  loginRedirect: true
+template:
+  metadata:
+    name: fov-quicklook-frontend
+  spec:
+    {{- include "quicklook.ingress.spec" . | nindent 4 }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: fov-quicklook-frontend
+spec:
+  podSelector:
+    matchLabels:
+      app: fov-quicklook-frontend
+  policyTypes:
+    - "Ingress"
+  ingress:
+    # Allow inbound access from pods (in any namespace) labeled
+    # gafaelfawr.lsst.io/ingress: true.
+    - from:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              gafaelfawr.lsst.io/ingress: "true"
+      ports:
+        - protocol: "TCP"
+          port: 9500
+{{- else }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fov-quicklook-frontend
+spec:
+  {{- include "quicklook.ingress.spec" . | nindent 2 }}
+{{- end }}
+

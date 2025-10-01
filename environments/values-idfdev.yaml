@@ -27,6 +27,7 @@ applications:
   noteburst: true
   nublado: true
   portal: true
+  repertoire: true
   qserv-kafka: true
   sasquatch: true
   sasquatch-backpack: true
@@ -36,6 +37,7 @@ applications:
   squareone: true
   strimzi: true
   strimzi-access-operator: true
+  strimzi-registry-operator: true
   tap: true
   times-square: true
   vault-secrets-operator: true

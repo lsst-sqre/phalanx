@@ -40,8 +40,30 @@ spec:
             - name: "KAFKA_CLUSTER_CA_PATH"
               value: "/etc/gafaelfawr-kafka/ca.crt"
             {{- end }}
+            # Uvicorn keepalive timeout, in seconds. This should be longer
+            # than any keepalive timeouts on any downstream proxies. The
+            # keepalive timeout for ingress-nginx connections is 60s.
+            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
+              value: "61"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          lifecycle:
+            # Number of seconds k8s should wait before sending SIGTERM on
+            # graceful restarts/deployments/shutdowns. We need this because it
+            # takes ingress-nginx some time to configure itself to stop
+            # sending traffic to the pods scheduled for termination. If
+            # Uvicorn gets the SIGTERM and starts closing connections, we
+            # could end up with a TCP race condition if ingress-nginx still
+            # tries to send data over those connections.
+            #
+            # Note that terminationGracePeriodSeconds includes the time that
+            # is spent in the preStop hook. If you’re adding a preStop hook
+            # and your terminationGracePeriodSeconds is super fine-tuned, then
+            # you should update your terminationGracePeriodSeconds to add the
+            # amount of time you’ll be spending in your preStop hook.
+            preStop:
+              sleep:
+                seconds: 10
           livenessProbe:
             httpGet:
               path: "/health"
@@ -52,19 +74,12 @@ spec:
             - containerPort: 8080
               name: "http"
               protocol: "TCP"
-          {{- if (gt (int .Values.replicaCount) 1) }}
           readinessProbe:
             httpGet:
               path: "/health"
               port: "http"
             periodSeconds: 60
             timeoutSeconds: 10
-          {{- else }}
-          readinessProbe:
-            httpGet:
-              path: "/"
-              port: "http"
-          {{- end }}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}

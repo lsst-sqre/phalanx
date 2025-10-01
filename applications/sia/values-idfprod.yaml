@@ -1,6 +1,8 @@
 replicaCount: 4
 
 config:
+  metrics:
+    enabled: true
 
   # Data (Butler) Collections
   butlerDataCollections:
@@ -16,3 +18,6 @@ config:
       butler_type: "REMOTE"
       repository: "https://data.lsst.cloud/api/butler/repo/dp1/butler.yaml"
       datalink_url: "https://data.lsst.cloud/api/datalink/links?ID=ivo%3A%2F%2Forg.rubinobs%2Flsst-dp1%3Frepo%3Ddp1%26id%3D{id}"
+
+  enableSentry: true
+  sentryTracesSampleRate: 0.1

@@ -1,12 +1,6 @@
 name: CI
 
 env:
-  # Current supported Python version. For applications, there is generally no
-  # reason to support multiple Python versions, so all actions are run with
-  # this version. Quote the version to avoid interpretation as a floating
-  # point number.
-  PYTHON_VERSION: "3.13"
-
   # Version of Argo CD to use for the installer.
   ARGO_CD_VERSION: "3.0.6"
 
@@ -19,15 +13,19 @@ env:
 "on":
   merge_group: {}
   pull_request: {}
+  push:
+    branches:
+      - "main"
+  workflow_dispatch: {}
 
 jobs:
   lint:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: '>=1.22'
 
@@ -37,9 +35,9 @@ jobs:
         env:
           GOBIN: /usr/local/bin/
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version-file: ".python-version"
 
       - uses: astral-sh/setup-uv@v6
 
@@ -53,13 +51,12 @@ jobs:
     strategy:
       matrix:
         python:
-          - "3.12"
           - "3.13"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
 
@@ -72,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -87,9 +84,12 @@ jobs:
       - name: Run helm unittest
         run: helm unittest {applications,charts}/*/tests/..
 
-      - uses: actions/setup-python@v5
+      - name: Run helm unittest for sub-charts
+        run: helm unittest applications/*/charts/*/tests/..
+
+      - uses: actions/setup-python@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version-file: ".python-version"
 
       - uses: astral-sh/setup-uv@v6
 
@@ -108,7 +108,7 @@ jobs:
       minikube: ${{ steps.filter.outputs.minikube }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: dorny/paths-filter@v3
         id: filter
@@ -128,10 +128,10 @@ jobs:
               - "docs/**"
             minikube:
               - ".github/workflows/ci.yaml"
-              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/Chart.yaml"
-              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/templates/**"
-              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values.yaml"
-              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values-minikube.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/Chart.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/templates/**"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/values.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/values-minikube.yaml"
               - "environments/templates/applications/infrastructure/*"
               - "environments/values-minikube.yaml"
               - "src/phalanx/**"
@@ -144,15 +144,17 @@ jobs:
 
     needs: [test, helm, changes]
     if: >-
-      (needs.changes.outputs.minikube == 'true')
-      || (github.event_name == 'workflow_dispatch')
+      (github.event_name == 'workflow_dispatch')
+      || (needs.changes.outputs.minikube == 'true'
+          && github.event_name != 'push'
+          && !startsWith(github.head_ref, 'dependabot/'))
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version-file: ".python-version"
 
       - uses: astral-sh/setup-uv@v6
 
@@ -205,14 +207,14 @@ jobs:
       || (github.event_name == 'workflow_dispatch')
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # Ensure the documentation gets the right version.
           fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version-file: ".python-version"
 
       - uses: astral-sh/setup-uv@v6
 

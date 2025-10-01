@@ -55,12 +55,6 @@ config:
   # @default -- None, must be set if neither `cloudsql.enabled` nor
   # `config.internalDatabase` are true
   databaseUrl: null
-
-  # -- Whether to send trace and telemetry information to Sentry. This traces
-  # every call and therefore should only be enabled in non-production
-  # environments.
-  enableSentry: false
-
   # -- HTML footer to add to any login error page (will be enclosed in a <p>
   # tag).
   errorFooter: null
@@ -82,6 +76,14 @@ config:
   # -- Whether to send certain serious alerts to Slack. If `true`, the
   # `slack-webhook` secret must also be set.
   slackAlerts: false
+
+  sentry:
+    # -- Set to true to enable the Sentry integration.
+    enabled: false
+
+    # -- The percentage of requests that should be traced. This
+    # should be a float between 0 and 1
+    tracesSampleRate: 0.0
 
   # -- Session lifetime. Use `w`, `d`, `h`, `m`, and `s` for time intervals.
   # For example, `1d6h23m` is one day, six hours, 23 minutes.
@@ -284,12 +286,14 @@ config:
       Use the Notebook Aspect
     "exec:portal": >-
       Use the Portal Aspect
+    "exec:portal-admin": >-
+      Read access to the Portal admin page
     "read:alertdb": >-
       Retrieve alert packets and schemas from the alert archive database
     "read:image": >-
       Retrieve images from project datasets
-    "exec:portal-admin": >-
-      Read access to the Portal admin page
+    "read:sasquatch": >-
+      Retrieve Sasquatch InfluxDB connection credentials
     "read:tap": >-
       Execute SELECT queries in the TAP interface on project datasets
     "write:files": >-
@@ -321,7 +325,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.8"
+    tag: "1.37.9"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -519,3 +523,7 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: null
+  #
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD Application
+  environmentName: null

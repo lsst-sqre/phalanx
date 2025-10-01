@@ -38,7 +38,7 @@ Common labels
 helm.sh/chart: {{ include "influxdb-enterprise.chart" . }}
 {{ include "influxdb-enterprise.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+app.kubernetes.io/version: {{ .Values.image.tag | default .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
@@ -61,16 +61,3 @@ Create the name of the service account
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
-
-{{- define "influxdb-enterprise.image" -}}
-{{- $dataTagName := (printf "%s-%s" .chart.AppVersion .podtype) -}}
-{{- if (.imageroot) }}
-{{- if (.imageroot.tag) -}}
-{{- $dataTagName = .imageroot.tag -}}
-{{- end -}}
-{{- if (.imageroot.addsuffix) -}}
-{{- $dataTagName = printf "%s-%s" $dataTagName .podtype -}}
-{{- end -}}
-{{- end }}
-image: "{{ .podvals.image.repository | default "influxdb" }}:{{ $dataTagName }}"
-{{- end }}

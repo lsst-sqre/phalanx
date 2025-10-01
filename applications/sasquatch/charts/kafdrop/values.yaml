@@ -54,6 +54,24 @@ existingSecret: ""
 # @default -- See `values.yaml`
 cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
 
+
+logging:
+  root:
+    # -- Log level for Kafdrop root logger (TRACE, DEBUG, INFO, WARN, ERROR)
+    level: WARN
+  kafdrop:
+    # -- Log level for Kafdrop package logger (TRACE, DEBUG, INFO, WARN, ERROR)
+    level: INFO
+    config:
+      # -- Log level for Kafdrop config package logger (TRACE, DEBUG, INFO, WARN, ERROR)
+      level: WARN
+    service:
+      # -- Log level for Kafdrop service package logger (TRACE, DEBUG, INFO, WARN, ERROR)
+      level: INFO
+    controller:
+      # -- Log level for Kafdrop controller package logger (TRACE, DEBUG, INFO, WARN, ERROR)
+      level: INFO
+
 service:
   # -- Additional annotations to add to the service
   annotations: {}

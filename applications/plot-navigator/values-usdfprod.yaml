@@ -62,6 +62,3 @@ productionTools:
     - name: sdf-data-rubin
       mountPath: /sdf/data/rubin
       readOnly: true
-
-image:
-  tag: v0.3

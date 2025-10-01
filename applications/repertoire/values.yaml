@@ -1,0 +1,284 @@
+# Default values for repertoire.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the repertoire deployment
+  repository: "ghcr.io/lsst-sqre/repertoire"
+
+  # -- Pull policy for the repertoire image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+config:
+  # -- List of applications deployed in this Phalanx environment (do not set)
+  # @default -- Set by Argo CD
+  applications: []
+
+  # -- Datasets available in the Phalanx environment. This should be
+  # overridden by environments to list the datasets they provide.
+  availableDatasets: []
+
+  # -- Base hostname of the Phalanx environment (do not set)
+  # @default -- Set by Argo CD
+  baseHostname: null
+
+  # -- Butler configuration mapping (do not set)
+  # @default -- Set by Argo CD
+  butlerConfigs: {}
+
+  # -- Known datasets. Each member of the list is a dictionary with key
+  # `description`. Datasets are only shown if also listed in
+  # `availableDatasets`.
+  # @default -- See `values.yaml`
+  datasets:
+    dp02:
+      description: >-
+        Data Preview 0.2 contains the image and catalog products of the Rubin
+        Science Pipelines v23 processing of the DESC Data Challenge 2
+        simulation, which covered 300 square degrees of the wide-fast-deep
+        LSST survey region over 5 years.
+    dp03:
+      description: >-
+        Data Preview 0.3 contains the catalog products of a Solar System
+        Science Collaboration simulation of the results of SSO analysis of the
+        wide-fast-deep data from the LSST dataset.
+    dp1:
+      description: >-
+        Data Preview 1 contains image and catalog products from the Rubin
+        Science Pipelines v29 processing of observations obtained with the
+        LSST Commissioning Camera of seven ~1 square degree fields, over seven
+        weeks in late 2024.
+
+  hips:
+    # -- Known HiPS datasets. Each should be a mapping of a label to an object
+    # containing the key `paths`, whose values are paths to the roots of HiPS
+    # surveys relative to the result of processing `sourceTemplate`.
+    # @default -- See `values.yaml`
+    datasets:
+      dp02:
+        paths:
+          - "images/color_gri"
+          - "images/color_riz"
+          - "images/band_u"
+          - "images/band_g"
+          - "images/band_r"
+          - "images/band_i"
+          - "images/band_z"
+          - "images/band_y"
+          - "images/2MASS/Color"
+      dp1:
+        paths:
+          - "deep_coadd/color_ugri"
+          - "deep_coadd/color_gri"
+          - "deep_coadd/color_izy"
+          - "deep_coadd/color_riz"
+          - "deep_coadd/color_ugr"
+          - "deep_coadd/band_u"
+          - "deep_coadd/band_g"
+          - "deep_coadd/band_r"
+          - "deep_coadd/band_i"
+          - "deep_coadd/band_z"
+          - "deep_coadd/band_y"
+
+    legacy:
+      # -- If set, specifies the dataset that should be shown at the legacy
+      # HiPS list route that does not include the dataset name. If not set, no
+      # legacy HiPS list will be created.
+      dataset: null
+
+      # -- Path prefix at which the legacy HiPS list should be served
+      pathPrefix: "/api/hips"
+
+    # -- Path prefix at which the HiPS lists should be served
+    pathPrefix: "/api/hips/v2"
+
+    # -- Jinja template to construct the base URLs of the underlying HiPS
+    # surveys, used to construct the HiPS list.
+    # @default -- See `values.yaml`
+    sourceTemplate: "https://{{base_hostname}}/api/hips/v2/{{dataset}}"
+
+  # -- Dictionary of InfluxDB database names to connection information for
+  # that database, with keys `url`, `database`, `username`, `passwordKey`, and
+  # `schemaRegistry`. `passwordKey` must match an entry in `secrets.yaml`.
+  influxdbDatabases: {}
+
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/repertoire"
+
+  # -- Rules for determining the expected URLs of deployed services that use
+  # the main hostname. See the [Repertoire
+  # documentation](https://repertoire.lsst.io/) for more information.
+  # @default -- See `values.yaml`
+  rules:
+    argocd:
+      - type: "ui"
+        name: "argocd"
+        template: "https://{{base_hostname}}/argo-cd"
+    gafaelfawr:
+      - type: "internal"
+        name: "gafaelfawr"
+        template: "https://{{base_hostname}}/auth"
+        versions:
+          v1:
+            template: "https://{{base_hostname}}/auth/api/v1"
+        openapi: "https://{{base_hostname}}/auth/openapi.json"
+      - type: "ui"
+        name: "logout"
+        template: "https://{{base_hostname}}/logout"
+      - type: "ui"
+        name: "tokens"
+        template: "https://{{base_hostname}}/auth/tokens"
+    mobu:
+      - type: "internal"
+        name: "mobu"
+        template: "https://{{base_hostname}}/mobu"
+        openapi: "https://{{base_hostname}}/mobu/openapi.json"
+    noteburst:
+      - type: "internal"
+        name: "noteburst"
+        template: "https://{{base_hostname}}/noteburst"
+        versions:
+          v1:
+            template: "https://{{base_hostname}}/noteburst/v1"
+        openapi: "https://{{base_hostname}}/noteburst/openapi.json"
+    nublado:
+      - type: "ui"
+        name: "nublado"
+        template: "https://{{base_hostname}}/nb"
+      - type: "ui"
+        name: "webdav"
+        template: "https://{{base_hostname}}/files"
+    portal:
+      - type: "ui"
+        name: "portal"
+        template: "https://{{base_hostname}}/portal/app/"
+    semaphore:
+      - type: "internal"
+        name: "semaphore"
+        template: "https://{{base_hostname}}/semaphore"
+        openapi: "https://{{base_hostname}}/semaphore/openapi.json"
+    sia:
+      - type: "data"
+        name: "sia"
+        datasets:
+          - "dp02"
+          - "dp1"
+        template: "https://{{base_hostname}}/api/sia/{{dataset}}"
+        versions:
+          sia-query-2.0:
+            template: "https://{{base_hostname}}/api/sia/{{dataset}}/query"
+            ivoaStandardId: "ivo://ivoa.net/std/SIA#query-2.0"
+        openapi: "https://{{base_hostname}}/api/sia/openapi.json"
+    ssotap:
+      - type: "data"
+        name: "tap"
+        datasets:
+          - "dp03"
+        template: "https://{{base_hostname}}/api/ssotap"
+    tap:
+      - type: "data"
+        name: "tap"
+        datasets:
+          - "dp02"
+          - "dp1"
+        template: "https://{{base_hostname}}/api/tap"
+    vo-cutouts:
+      - type: "data"
+        name: "cutout"
+        datasets:
+          - "dp02"
+          - "dp1"
+        template: "https://{{base_hostname}}/api/cutout"
+        versions:
+          soda-async-1.0:
+            template: "https://{{base_hostname}}/api/cutout/jobs"
+            ivoaStandardId: "ivo://ivoa.net/std/SODA#async-1.0"
+          soda-sync-1.0:
+            template: "https://{{base_hostname}}/api/cutout/sync"
+            ivoaStandardId: "ivo://ivoa.net/std/SODA#sync-1.0"
+        openapi: "https://{{base_hostname}}/api/cutout/openapi.json"
+    wobbly:
+      - type: "internal"
+        name: "wobbly"
+        template: "https://{{base_hostname}}/wobbly"
+        openapi: "https://{{base_hostname}}/wobbly/openapi.json"
+
+  sentry:
+    # -- Whether to enable the Sentry integration
+    enabled: false
+
+  # -- Whether to send Slack alerts for unexpected failures
+  slackAlerts: false
+
+  # -- Rules for determining the expected URLs of deployed services that use a
+  # subdomain. See the [Repertoire documentation](https://repertoire.lsst.io/)
+  # for more information.
+  # @default -- See `values.yaml`
+  subdomainRules:
+    nublado:
+      - type: "ui"
+        name: "nublado"
+        template: "https://nb.{{base_hostname}}/nb"
+      - type: "ui"
+        name: "webdav"
+        template: "https://{{base_hostname}}/files"
+
+  # -- List of services that use subdomains instead of the main hostname. See
+  # the [Repertoire documentation](https://repertoire.lsst.io/) for more
+  # information.
+  useSubdomains: []
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# -- Affinity rules for the repertoire deployment pod
+affinity: {}
+
+# -- Node selection rules for the repertoire deployment pod
+nodeSelector: {}
+
+# -- Annotations for the repertoire deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the repertoire deployment pod
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "100Mi"
+  requests:
+    cpu: "10m"
+    memory: "50Mi"
+
+# -- Tolerations for the repertoire deployment pod
+tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD
+  environmentName: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

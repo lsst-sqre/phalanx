@@ -10,7 +10,7 @@ fullnameOverride: ""
 ingester:
   image:
     repository: lsstdm/alert_database_ingester
-    tag: tickets-DM-44907
+    tag: v3.0.0
     imagePullPolicy: Always
 
   kafka:
@@ -53,7 +53,7 @@ ingester:
 server:
   image:
     repository: lsstdm/alert_database_server
-    tag: tickets-DM-44907
+    tag: v3.0.0
     imagePullPolicy: Always
 
   s3:

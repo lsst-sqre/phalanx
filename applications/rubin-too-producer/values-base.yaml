@@ -1,0 +1,46 @@
+image:
+  tag: main
+  pullPolicy: Always
+  # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled
+  nexus3: nexus3-docker
+configMountPath: /home/saluser/config.yaml
+imagePullSecrets:
+- name: pull-secret
+metadata:
+  name: rubin-too-producer
+  namespace: rubin-too-producer
+  labels:
+    app.kubernetes.io/name: rubin-too-producer
+envSecrets:
+- name: SCIMMA_USERNAME
+  secretKey: username
+- name: SCIMMA_PASSWD
+  secretKey: password
+myConfigFile: |
+  # Ignore alerts marked by the sender(s) as tests
+  allow-tests: True
+
+  # # Read alerts from .avro files
+  # input-type: "files"
+
+  # Read alerts from Kafka topic
+  input-type: "kafka"
+  input-options:
+    url: "kafka://sean.macbride-1251e6a1@kafka.scimma.org/rubin-too-dev.lvk-test-alerts"
+
+  # # Output to stdout (you can change to kafka or confluent_rest later)
+  # output-type: "stdout"
+  # output-options: {}
+
+  # Output to EFD testing topic (base_efd)
+  output-type: "confluent_rest"
+  output-options:
+    url: "https://base-lsp.lsst.codes/sasquatch-rest-proxy/topics/lsst.scimma.too_alert"
+
+  # Use the LVK gravitational wave filter for all topics (we'll simulate "all" for files)
+  filters:
+    group1.topicA: lvk_gw
+    igwn.gwalert: lvk_gw
+    ligo-demo-partners: lvk_gw
+    rubin-too-dev.lvk-test-alerts: lvk_gw
+    all: lvk_gw

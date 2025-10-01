@@ -27,17 +27,16 @@ applications:
   obssys: true
   portal: true
   rapid-analysis: true
+  repertoire: true
   rubintv: true
   sasquatch: true
   simonyitel: true
   squareone: true
   strimzi: true
+  strimzi-registry-operator: true
   uws: true
 
 controlSystem:
   imageTag: "c0041"
   siteTag: "tucson"
   s3EndpointUrl: "https://s3.tu.lsst.org"
-
-revisions:
-  strimzi: strimzi-0.45.0

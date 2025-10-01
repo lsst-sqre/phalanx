@@ -20,16 +20,8 @@ spec:
     spec:
       serviceAccountName: eups-distributor
       volumes:
-        - name: "cache"
+        - name: tmp
           emptyDir: {}
-        - name: "eups"
-          csi:
-            driver: gcsfuse.csi.storage.gke.io
-            volumeAttributes:
-              bucketName: eups-prod
-              mountOptions: "implicit-dirs,file-cache:max-size-mb:-1,file-cache:cache-file-for-range-read:true,metadata-cache:ttl-secs:-1,metadata-cache:stat-cache-max-size-mb:-1,metadata-cache:type-cache-max-size-mb:-1"
-              skipCSIBucketAccessCheck: "true"
-              gcsfuseMetadataPrefetchOnMount: "true"
 
       {{- with .Values.affinity }}
       affinity:
@@ -41,9 +33,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
-            - name: "eups"
-              mountPath: "/eups"
-              readOnly: true
+            - name: "tmp"
+              mountPath: "/tmp"
           ports:
             - name: "http"
               containerPort: 8080
@@ -69,6 +60,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       securityContext:
+        fsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000

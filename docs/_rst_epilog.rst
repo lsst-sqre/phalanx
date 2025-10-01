@@ -33,6 +33,7 @@
 .. _Pods:
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/
 .. _pre-commit: https://pre-commit.com
+.. _Repertoire: https://repertoire.lsst.io/
 .. _Roundtable: https://roundtable.lsst.io/
 .. _Ruff: https://docs.astral.sh/ruff/
 .. _Safir: https://safir.lsst.io/

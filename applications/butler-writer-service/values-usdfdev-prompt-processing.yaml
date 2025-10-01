@@ -1,0 +1,17 @@
+image:
+  pullPolicy: Always
+  # prompt_processing_butler_writer does not have a standard dev tag
+  # release should be good enough if we aren't testing a branch build
+  tag: 2.0.1
+
+outputRepo: s3://rubin-pp-dev-users/central_repo_2
+
+kafka:
+  clusterAddress: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
+  username: butler-writer
+  topic: butler-writer
+
+s3:
+  endpointUrl: https://s3dfrgw.slac.stanford.edu
+  # Needed because the profile is hardcoded into butler.yaml!
+  aws_profile: prompt-processing-dev

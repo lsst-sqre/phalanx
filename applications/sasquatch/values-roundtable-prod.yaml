@@ -1,6 +1,5 @@
 strimzi-kafka:
   kafka:
-    version: "3.9.0"
     listeners:
       plain:
         enabled: false
@@ -42,6 +41,9 @@ strimzi-kafka:
     enabled: false
   mirrormaker2:
     enabled: false
+
+schema-registry:
+  enabled: true
 
 influxdb:
   enabled: false

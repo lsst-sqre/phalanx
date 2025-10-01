@@ -7,7 +7,7 @@ ataos:
       cpu: 450m
       memory: 1024Mi
     requests:
-      cpu: 45m
+      cpu: 60m
       memory: 420Mi
 
 atbuilding-sim:
@@ -20,10 +20,10 @@ atbuilding-sim:
   resources:
     limits:
       cpu: 120m
-      memory: 300Mi
+      memory: 350Mi
     requests:
       cpu: 12m
-      memory: 100Mi
+      memory: 170Mi
 
 atdome-sim:
   enabled: true
@@ -35,10 +35,10 @@ atdome-sim:
   resources:
     limits:
       cpu: 170m
-      memory: 300Mi
+      memory: 320Mi
     requests:
       cpu: 17m
-      memory: 100Mi
+      memory: 160Mi
 
 atdometrajectory:
   image:
@@ -84,10 +84,10 @@ athexapod-sim:
   resources:
     limits:
       cpu: 90m
-      memory: 300Mi
+      memory: 320Mi
     requests:
-      cpu: 9m
-      memory: 95Mi
+      cpu: 10m
+      memory: 160Mi
 
 atmcs-sim:
   enabled: true
@@ -130,18 +130,18 @@ atoods:
       memory: 1000Mi
     requests:
       cpu: 40m
-      memory: 325Mi
+      memory: 480Mi
   configfile:
     path: /etc
     filename: atoods.yaml
     content: |
-      defaultInterval: &interval
+      default_interval: &interval
           days: 0
           hours: 0
           minutes: 0
           seconds: 0
 
-      ingester:
+      message_ingester:
           kafka:
               brokers:
                   - sasquatch-kafka-bootstrap.sasquatch:9092
@@ -150,26 +150,23 @@ atoods:
               group_id: ATOODS-S3
               max_messages: 250
 
-          butlers:
-              - butler:
-                  instrument: lsst.obs.lsst.Latiss
-                  class:
-                      import : lsst.ctrl.oods.messageAttendant
-                      name : MessageAttendant
-                  repoDirectory : s3://butler@rubinobs-butler-latiss
-                  s3profile: butler
-                  collections:
-                      - LATISS/raw/all
-                  cleanCollections:
+          butler:
+              instrument: lsst.obs.lsst.Latiss
+              repo_directory : s3://butler@rubinobs-butler-latiss
+              s3profile: butler
+              collections:
+                  - LATISS/raw/all
+              collection_cleaner:
+                  collections_to_clean:
                       - collection: LATISS/raw/all
-                        filesOlderThan:
+                        files_older_than:
                             <<: *interval
                             days: 20
                       - collection: LATISS/quickLook
-                        filesOlderThan:
+                        files_older_than:
                             <<: *interval
                             days: 2
-                  scanInterval:
+                  cleaning_interval:
                       <<: *interval
                       hours: 1
 
@@ -183,10 +180,10 @@ atpneumatics-sim:
   resources:
     limits:
       cpu: 120m
-      memory: 300Mi
+      memory: 350Mi
     requests:
       cpu: 12m
-      memory: 90Mi
+      memory: 170Mi
 
 atptg:
   image:
@@ -213,10 +210,10 @@ atspectrograph-sim:
   resources:
     limits:
       cpu: 120m
-      memory: 300Mi
+      memory: 400Mi
     requests:
       cpu: 12m
-      memory: 95Mi
+      memory: 200Mi
 
 hexapod-sim:
   enabled: true

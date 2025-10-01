@@ -15,11 +15,7 @@ cadc-tap:
     sentryTracesSampleRate: "0.1"
 
     kafka:
-      bootstrapServer: "sasquatch-int-kafka-bootstrap.lsst.cloud:9094"
-      schemaRegistry:
-        url: "https://data-int.lsst.cloud/schema-registry/"
-      auth:
-        enabled: true
+      enabled: true
 
     urlRewrite:
       enabled: true

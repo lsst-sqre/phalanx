@@ -57,6 +57,10 @@ global:
   # @default -- Set by Argo CD
   host: null
 
+  # -- Base URL for Repertoire discovery API
+  # @default -- Set by Argo CD
+  repertoireUrl: null
+
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: null

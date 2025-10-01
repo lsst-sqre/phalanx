@@ -3,15 +3,14 @@
 # Override strimzi-kafka subchart configuration.
 strimzi-kafka: {}
 
-strimzi-registry-operator:
-  # -- Name of the Strimzi Kafka cluster
-  clusterName: sasquatch
+schema-registry:
+  # -- Whether to enable the schema-registry subchart
+  enabled: false
 
-  # -- Namespace where the Strimzi Kafka cluster is deployed
-  clusterNamespace: sasquatch
-
-  # -- Namespace where the strimzi-registry-operator is deployed
-  operatorNamespace: sasquatch
+schema-registry-remote:
+  # -- Whether to enable schema-registry-remote, an instance
+  # of the schema-registry for remote topics
+  enabled: false
 
 influxdb:
   # -- Whether InfluxDB is enabled
@@ -128,6 +127,8 @@ influxdb:
     logging:
       # -- Logging level
       level: "debug"
+      # -- Format to use for log messages
+      format: "json"
 
   initScripts:
     # -- Whether to enable the InfluxDB custom initialization script
@@ -197,7 +198,7 @@ chronograf:
     repository: "quay.io/influxdb/chronograf"
 
     # -- Docker tag to use for Chronograf
-    tag: 1.10.7
+    tag: 1.10.8
 
   updateStrategy:
     # -- Deployment strategy, use recreate with persistence enabled
@@ -257,7 +258,7 @@ kapacitor:
     # -- Docker image to use for Kapacitor
     repository: docker.io/library/kapacitor
     # -- Tag to use for Kapacitor
-    tag: 1.8.0
+    tag: 1.8.1
     # -- Pull policy for Kapacitor
     pullPolicy: "IfNotPresent"
 

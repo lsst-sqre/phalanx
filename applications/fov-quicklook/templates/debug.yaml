@@ -1,0 +1,112 @@
+{{- if .Values.debug.jupyter }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fov-quicklook-debug
+  labels:
+    app: jupyter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jupyter
+  template:
+    metadata:
+      labels:
+        app: jupyter
+    spec:
+      containers:
+      - name: jupyter
+        image: jupyter/base-notebook:latest
+        command: ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--ServerApp.base_url={{ .Values.config.pathPrefix }}/debug", "--ServerApp.token=''", "--ServerApp.password=''"]
+        ports:
+        - containerPort: 8888
+        env:
+        - name: JUPYTER_ENABLE_LAB
+          value: "yes"
+        {{- include "fov-quicklook.env.s3_tile" . | nindent 8 }}
+        {{- with .Values.butler_settings }}
+        {{- range .envs }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}
+        volumeMounts:
+        {{- .volume_mounts | toYaml | nindent 8 }}
+        {{- end }}
+        - name: secret-volume
+          mountPath: /secret
+          readOnly: true
+        - name: empty
+          mountPath: /empty
+      volumes:
+      {{- .Values.butler_settings.volumes | toYaml | nindent 6 }}
+      - name: secret-volume
+        secret:
+          secretName: fov-quicklook
+      - name: empty
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fov-quicklook-debug
+  labels:
+    app: jupyter
+spec:
+  selector:
+    app: jupyter
+  ports:
+    - protocol: TCP
+      port: 8888
+      targetPort: 8888
+---
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: fov-quicklook-debug
+config:
+  username: {{ .Values.debug.username | quote }}
+  scopes:
+    all:
+      - "exec:notebook"
+  service: fov-quicklook-debug
+  loginRedirect: true
+  # baseUrl: {{ .Values.global.baseUrl | quote }}
+template:
+  metadata:
+    name: fov-quicklook-debug
+  spec:
+    rules:
+      - host: {{ .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.config.pathPrefix }}/debug
+              pathType: Prefix
+              backend:
+                service:
+                  name: fov-quicklook-debug
+                  port:
+                    number: 8888
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: fov-quicklook-debug
+spec:
+  podSelector:
+    matchLabels:
+      app: fov-quicklook-debug
+  policyTypes:
+    - "Ingress"
+  ingress:
+    # Allow inbound access from pods (in any namespace) labeled
+    # gafaelfawr.lsst.io/ingress: true.
+    - from:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              gafaelfawr.lsst.io/ingress: "true"
+      ports:
+        - protocol: "TCP"
+          port: 8888
+{{- end }}

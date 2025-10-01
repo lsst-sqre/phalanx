@@ -29,18 +29,18 @@ applications:
   obssys: true
   portal: true
   rapid-analysis: true
+  repertoire: true
   rubintv: true
+  rubin-too-producer: true
   sasquatch: true
   simonyitel: true
   squareone: true
   strimzi: true
   strimzi-access-operator: true
+  strimzi-registry-operator: true
   uws: true
 
 controlSystem:
-  imageTag: "c0041"
+  imageTag: "c0042"
   siteTag: "base"
   s3EndpointUrl: "https://s3.ls.lsst.org"
-
-revisions:
-  strimzi: strimzi-0.45.0

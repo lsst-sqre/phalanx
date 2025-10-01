@@ -1,0 +1,9 @@
+config:
+  influxdbDatabases:
+    base_efd:
+      url: "https://base.lsst.codes/influxdb/"
+      database: "efd"
+      username: "efdreader"
+      passwordKey: "idfdev_efd-password"
+      schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
+  slackAlerts: true

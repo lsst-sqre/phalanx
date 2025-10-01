@@ -14,3 +14,4 @@ Argo CD project: ``monitoring``
    grafana/index
    sasquatch-backpack/index
    sasquatch/index
+   strimzi-registry-operator/index

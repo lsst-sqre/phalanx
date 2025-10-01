@@ -52,6 +52,8 @@ config:
       - "sqre"
     "read:image":
       - "rsp-bts"
+    "read:sasquatch":
+      - "rsp-bts"
     "read:tap":
       - "rsp-bts"
     "write:sasquatch":

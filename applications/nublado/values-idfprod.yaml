@@ -1,6 +1,8 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-stable-6994.iam.gserviceaccount.com"
   slackAlerts: true
+  sentry:
+    enabled: true
   config:
     dropdownMenu:
       release:
@@ -13,6 +15,8 @@ controller:
         cutoffVersion: "28.0.0"
       experimental:
         age: "3w"
+    fsadmin:
+      mountPrefix: "/mnt/user-filesystems"
     fileserver:
       enabled: true
       nodeSelector:
@@ -48,7 +52,7 @@ controller:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.12.0"
+            tag: "8.15.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -124,6 +128,26 @@ jupyterhub:
       image:
         tag: "5.0.1"
 
+purger:
+  enabled: true
+  schedule: "32 05 * * 0"  # Sunday morning, 12:32 AM (UTC-5)
+  volumeName: "deleted-sundays"
+  policy:
+    directories:
+      - path: /purge
+        threshold: 1GiB
+        # This is the case where we just purge everything once a week.
+        # Set the threshold to 1 second: yeah, *everything*
+        intervals:
+          large:
+            accessInterval: 1s
+            modificationInterval: 1s
+            creationInterval: 1s
+          small:
+            accessInterval: 1s
+            modificationInterval: 1s
+            creationInterval: 1s
+
 cronjob:
   tutorials:
     enabled: true
@@ -131,12 +155,14 @@ cronjob:
     targetVolume:
       mountPath: "/rubin"
       volumeName: "rubin"
+    gid: 2000005
   artifacts:
     enabled: true
     gitTarget: "/rubin/cst_repos/tutorial-notebooks-data"
     targetVolume:
       mountPath: "/rubin"
       volumeName: "rubin"
+    gid: 2000005
 
 cloudsql:
   enabled: true

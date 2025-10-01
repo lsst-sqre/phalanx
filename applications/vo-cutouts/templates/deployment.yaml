@@ -33,18 +33,6 @@ spec:
         runAsGroup: 1000
       containers:
         - name: "vo-cutouts"
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - "all"
-            readOnlyRootFilesystem: true
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-          ports:
-            - containerPort: 8080
-              name: "http"
-              protocol: "TCP"
           env:
             - name: "CUTOUT_ARQ_QUEUE_PASSWORD"
               valueFrom:
@@ -58,9 +46,31 @@ spec:
                   name: "vo-cutouts"
                   key: "slack-webhook"
             {{- end }}
+            # Uvicorn keepalive timeout, in seconds. This should be longer
+            # than any keepalive timeouts on any downstream proxies. The
+            # keepalive timeout for ingress-nginx connections is 60s.
+            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
+              value: "61"
           envFrom:
             - configMapRef:
                 name: "vo-cutouts"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          lifecycle:
+            # Number of seconds k8s should wait before sending SIGTERM on
+            # graceful restarts/deployments/shutdowns. We need this because it
+            # takes ingress-nginx some time to configure itself to stop
+            # sending traffic to the pods scheduled for termination. If
+            # Uvicorn gets the SIGTERM and starts closing connections, we
+            # could end up with a TCP race condition if ingress-nginx still
+            # tries to send data over those connections.
+            preStop:
+              sleep:
+                seconds: 10
+          ports:
+            - containerPort: 8080
+              name: "http"
+              protocol: "TCP"
           readinessProbe:
             httpGet:
               path: "/api/cutout/availability"
@@ -69,6 +79,12 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
       {{- with .Values.frontend.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

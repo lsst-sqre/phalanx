@@ -1,0 +1,72 @@
+image:
+  # -- Image to use for the Butler writer service
+  repository: ghcr.io/lsst-dm/prompt_processing_butler_writer
+  # -- When to download an image.
+  # `IfNotPresent` uses a cached image if possible, and is the best choice for stable releases.
+  # `Always` checks for the latest tag online, and is needed for development builds.
+  pullPolicy: IfNotPresent
+  # -- Docker container version to use for the Butler writer service
+  tag: ""
+
+# -- URI to the repo the writer should write to.
+# @default -- None, must be set
+outputRepo: ""
+
+kafka:
+  # -- Address of Kafka broker containing Prompt Processing output events, for consumption by the Butler writer service.
+  # @default -- None, must be set
+  clusterAddress: ""
+  # -- Username for Kafka broker containing Prompt Processing output events, for consumption by the Butler writer service.
+  # @default -- None, must be set
+  username: ""
+  # -- Kafka topic containing Prompt Processing output events, for consumption by the Butler writer service.
+  # @default -- None, must be set
+  topic: ""
+
+s3:
+  # -- S3 endpoint where datasets are buffered.
+  # @default -- None, must be set
+  endpointUrl: ""
+  # -- If set, specify a S3 credential profile from the credential file.
+  # If empty, the `default` profile is used.
+  aws_profile: ""
+  # -- If set, configure S3 checksum options.
+  checksum: WHEN_REQUIRED
+
+nameOverride: ""
+fullnameOverride: ""
+
+# -- Pod annotations for the writer
+podAnnotations: {}
+
+resources:
+  # -- The cpu cores requested for the Butler writer service.
+  cpuRequest: 0.25
+  # -- The maximum cpu cores for the Butler writer service.
+  cpuLimit: 1
+  # -- The minimum memory to request for the Butler writer service.
+  memoryRequest: "0.5Gi"
+  # -- The maximum memory limit for the Butler writer service.
+  memoryLimit: "1Gi"
+
+# -- Node selection rules for the pod
+nodeSelector: {}
+
+# -- Tolerations for the pod
+tolerations: []
+
+# -- Affinity rules for the pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

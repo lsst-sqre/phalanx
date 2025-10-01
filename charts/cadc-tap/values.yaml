@@ -71,7 +71,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "1.21.2"
+      tag: "1.23.3"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -89,7 +89,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.6.0"
+      tag: "3.9.2"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -99,13 +99,13 @@ config:
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
   # -- Datalink payload URL
-  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/DP1-v1.1.4-rc1/datalink-snippets.zip"
+  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/DP1-v1.2.0/datalink-snippets.zip"
 
   # -- Name of GCS bucket in which to store results
   gcsBucket: "async-results.lsst.codes"
 
   # -- Base URL for results stored in GCS bucket
-  gcsBucketUrl: "https://tap-files.lsst.codes"
+  gcsBucketUrl: "https://storage.googleapis.com"
 
   # -- GCS bucket type (GCS or S3)
   gcsBucketType: "GCS"
@@ -133,15 +133,6 @@ config:
   # -- Kafka configuration
   kafka:
 
-    # -- Bootstrap Server
-    bootstrapServer: "sasquatch-dev-kafka-bootstrap.lsst.cloud:9094"
-
-    # -- Schema Registry Configuration
-    schemaRegistry:
-
-      # -- URL
-      url: ""
-
     # -- Kafka topics
     topics:
 
@@ -154,11 +145,8 @@ config:
       # -- Job Delete topic
       jobDelete: "lsst.tap.job-delete"
 
-    # -- Authentication configuration
-    auth:
-
-      # -- Whether auth is enabled
-      enabled: false
+    # -- Whether kafka is enabled
+    enabled: false
 
   # -- Rules for renaming Columns
   urlRewrite:
@@ -212,7 +200,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "DP1-v1.1.4-rc1"
+    tag: "DP1-v1.2.0"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
@@ -245,7 +233,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "3.6.0"
+    tag: "3.9.2"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
@@ -279,7 +267,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.8"
+    tag: "1.37.9"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"

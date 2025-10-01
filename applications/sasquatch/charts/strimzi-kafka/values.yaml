@@ -11,7 +11,11 @@ cluster:
 
 kafka:
   # -- Version of Kafka to deploy
-  version: "3.8.0"
+  version: "4.0.0"
+
+  # -- The KRaft metadata version used by the Kafka cluster.
+  # If the property is not set, it defaults to the metadata version that corresponds to the version property.
+  metadataVersion: null
 
   # -- Number of Kafka broker replicas to run
   replicas: 3
@@ -105,6 +109,9 @@ kafka:
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
 
+# -- Allow specification of JVM options for both controllers and brokers
+jvmOptions: {}
+
 controller:
   # -- Enable node pool for the kafka controllers
   enabled: false
@@ -119,6 +126,10 @@ controller:
     # -- Storage class to use when requesting persistent volumes
     # @default -- None, use the default storage class
     storageClassName: ""
+
+  # -- Whether to label the controller PVCs for backup by k8up,
+  # enabled on the summit and base environments
+  backup: false
 
   # -- Affinity for controller pod assignment
   affinity:
@@ -161,6 +172,10 @@ broker:
     # -- Storage class to use when requesting persistent volumes
     # @default -- None, use the default storage class
     storageClassName: ""
+
+  # -- Whether to label the broker PVCs for backup by k8up,
+  # enabled on the summit and base environments
+  backup: false
 
   # -- Affinity for broker pod assignment
   affinity:
@@ -276,7 +291,7 @@ connect:
   enabled: false
 
   # -- Custom strimzi-kafka image with connector plugins used by sasquatch
-  image: ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491
+  image: ghcr.io/lsst-sqre/strimzi-0.47.0-kafka-3.9.0:tickets-DM-43491
 
   # -- Number of Kafka Connect replicas to run
   replicas: 3

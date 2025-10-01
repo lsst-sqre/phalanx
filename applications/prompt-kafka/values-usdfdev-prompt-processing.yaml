@@ -9,6 +9,7 @@ strimzi-kafka:
   kafkaController:
     enabled: true
   kafka:
+    version: "3.9.1"
     storage:
       size: 100Gi
       storageClassName: wekafs--sdf-k8s01

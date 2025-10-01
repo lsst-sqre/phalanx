@@ -17,7 +17,7 @@ Authentication and identity system
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as a separate service (behind a `NetworkPolicy`) for other, lower-traffic services. |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.37.8"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.9"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.nodeSelector | object | `{}` | Node selection rules for the standalone Cloud SQL Proxy pod |
 | cloudsql.podAnnotations | object | `{}` | Annotations for the standalone Cloud SQL Proxy pod |
@@ -33,7 +33,6 @@ Authentication and identity system
 | config.cilogon.test | bool | `false` | Whether to use the test instance of CILogon |
 | config.cilogon.usernameClaim | string | `"username"` | Claim from which to get the username |
 | config.databaseUrl | string | None, must be set if neither `cloudsql.enabled` nor | URL for the PostgreSQL database `config.internalDatabase` are true |
-| config.enableSentry | bool | `false` | Whether to send trace and telemetry information to Sentry. This traces every call and therefore should only be enabled in non-production environments. |
 | config.errorFooter | string | `nil` | HTML footer to add to any login error page (will be enclosed in a <p> tag). |
 | config.firestore.project | string | Firestore support is disabled | If set, assign UIDs and GIDs using Google Firestore in the given project. Cloud SQL must be enabled and the Cloud SQL service account must have read/write access to that Firestore instance. |
 | config.github.clientId | string | `nil` | GitHub client ID. One and only one of this, `config.cilogon.clientId`, or `config.oidc.clientId` must be set. |
@@ -76,10 +75,13 @@ Authentication and identity system
 | config.oidcServer.keyId | string | `"gafaelfawr"` | Key ID (`kid` claim) of generated ID tokens, and the key ID served with the OAuth key metadata |
 | config.proxies | list | [`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`] | List of netblocks used for internal Kubernetes IP addresses, used to determine the true client IP for logging |
 | config.quota | object | `{}` | Quota settings (see [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)). |
+| config.sentry.enabled | bool | `false` | Set to true to enable the Sentry integration. |
+| config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1 |
 | config.slackAlerts | bool | `false` | Whether to send certain serious alerts to Slack. If `true`, the `slack-webhook` secret must also be set. |
 | config.tokenLifetime | string | `"30d"` | Session lifetime. Use `w`, `d`, `h`, `m`, and `s` for time intervals. For example, `1d6h23m` is one day, six hours, 23 minutes. |
 | config.updateSchema | bool | `false` | Whether to automatically update the Gafaelfawr database schema |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Gafaelfawr image |

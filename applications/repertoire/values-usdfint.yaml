@@ -1,0 +1,7 @@
+config:
+  availableDatasets:
+    - "dp02"
+    - "dp03"
+    - "dp1"
+  hips:
+    datasets: {}

@@ -260,7 +260,7 @@ redis:
     # -- The redis image to use
     repository: redis
     # -- The tag to use for the redis image
-    tag: 8.0.3
+    tag: 8.2.1
     # -- The pull policy for the redis image
     pullPolicy: IfNotPresent
   envSecrets:

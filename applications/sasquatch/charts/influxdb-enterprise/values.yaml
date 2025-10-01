@@ -64,24 +64,17 @@ bootstrap:
     resources: {}
 
 image:
+  # -- Docker repository for InfluxDB Enterprise images
+  repository: "influxdb"
   # -- Tagged version of the Docker image that you want to run
   # @default -- `appVersion` from `Chart.yaml`
   tag: ""
-
-  # -- Set to true to add a suffix for the type of image to the Docker tag
-  # (for example, `-meta`, making an image name of `influxdb:1.8.0-meta`)
-  addsuffix: false
+  # -- Pull policy for images
+  pullPolicy: "IfNotPresent"
 
 meta:
   # -- Number of meta pods to run
   replicas: 3
-
-  image:
-    # -- Docker repository for meta images
-    repository: "influxdb"
-
-    # -- Pull policy for meta images
-    pullPolicy: "IfNotPresent"
 
   # -- Node selection rules for meta pods
   nodeSelector: {}
@@ -230,13 +223,6 @@ meta:
 data:
   # -- Number of data replicas to run
   replicas: 1
-
-  image:
-    # -- Docker repository for data images
-    repository: "influxdb"
-
-    # -- Pull policy for data images
-    pullPolicy: "IfNotPresent"
 
   # -- Node selection rules for data pods
   nodeSelector: {}
@@ -402,6 +388,8 @@ data:
     logging:
       # -- Logging level
       level: "debug"
+      # -- Format to use for log messages
+      format: "json"
 
   podDisruptionBudget:
     # -- Minimum available pods to maintain

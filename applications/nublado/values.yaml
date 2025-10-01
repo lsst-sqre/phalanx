@@ -4,6 +4,10 @@ controller:
   # -- Affinity rules for the Nublado controller
   affinity: {}
 
+  sentry:
+    # -- Whether to report errors to Sentry
+    enabled: false
+
   # -- If Google Artifact Registry is used as the image source, the Google
   # service account that has an IAM binding to the `nublado-controller`
   # Kubernetes service account and has the Artifact Registry reader role
@@ -121,6 +125,55 @@ controller:
       # - containerPath: "/project"
       #   readOnly: true
       #   volumeName: "project"
+
+
+    fsadmin:
+      # -- Affinity rules for fsadmin pods
+      affinity: {}
+
+      # -- Argo CD application in which to collect fsadmins
+      application: "nublado-fileservers"
+
+      # -- Extra volumes that should be made available to fsadmin
+      extraVolumes: []
+
+      # -- Extra volumes that should be mounted to fsadmin
+      extraVolumeMounts: []
+
+      image:
+        # -- fsadmin image to use
+        repository: "ghcr.io/lsst-sqre/nublado-fsadmin"
+
+        # -- Pull policy for fsadmin image
+        pullPolicy: "IfNotPresent"
+
+        # -- Tag of fsadmin image to use
+        tag: "8.15.0"
+
+      # -- Mount prefix, to be prepended to mountpoints in order to
+      # collect them in one place
+      mountPrefix: null
+
+      # -- Node selector rules for fsadmin pods
+      nodeSelector: {}
+
+      # -- Resource requests and limits for fsadmin
+      # @default -- See `values.yaml`
+      resources:
+        requests:
+          cpu: 0.1
+          memory: "250Mi"
+        limits:
+          cpu: 1
+          memory: "10Gi"
+
+      # -- Timeout to wait for Kubernetes to create/destroy fsadmin, in Safir
+      # `parse_timedelta` format
+      timeout: 2m
+
+      # -- Tolerations for fsadmin pod
+      tolerations: []
+
 
     images:
       # -- How frequently to refresh the list of available images and compare
@@ -364,11 +417,21 @@ controller:
       # @default -- See `values.yaml`
       sizes:
         - size: "small"
-          cpu: 1.0
-          memory: "4Gi"
+          resources:
+            limits:
+              cpu: 1.0
+              memory: "4Gi"
+            requests:
+              cpu: 0.25
+              memory: "0.75Gi"
         - size: "large"
-          cpu: 4.0
-          memory: "16Gi"
+          resources:
+            limits:
+              cpu: 4.0
+              memory: "16Gi"
+            requests:
+              cpu: 1.0
+              memory: "4Gi"
 
       # -- How long to wait for Kubernetes to spawn a lab in seconds. This
       # should generally be shorter than the spawn timeout set in JupyterHub.
@@ -495,7 +558,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.12.0"
+      tag: "8.15.0"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
@@ -651,7 +714,7 @@ cloudsql:
     pullPolicy: "IfNotPresent"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.8"
+    tag: "1.37.9"
 
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
@@ -883,6 +946,10 @@ global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
   baseUrl: null
+
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD Application
+  environmentName: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD

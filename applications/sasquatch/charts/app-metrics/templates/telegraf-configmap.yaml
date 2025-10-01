@@ -38,12 +38,15 @@ data:
 
     {{- range $index, $app := .Values.apps }}
     {{- $globalInfluxTags := $.Values.globalInfluxTags | default list }}
-    {{- $appInfluxTags := (index $.Values.globalAppConfig $app "influxTags") | default list }}
+    {{- $appInfluxTags := $.Values.globalAppConfig | dig $app "influxTags" list }}
     {{- $influxTags := concat $globalInfluxTags $appInfluxTags }}
     [[inputs.kafka_consumer]]
       brokers = [
         "sasquatch-kafka-brokers.sasquatch:9092"
       ]
+      {{- if $.Values.kafkaVersion }}
+      kafka_version = "{{ $.Values.kafkaVersion }}"
+      {{- end }}
       consumer_group = "telegraf-kafka-consumer-app-metrics"
       sasl_mechanism = "SCRAM-SHA-512"
       sasl_password = "$TELEGRAF_PASSWORD"

@@ -207,6 +207,24 @@ initializer:
   # @default -- See the `values.yaml` file.
   podAnnotations: {}
 
+butler_writer:
+  # -- If false, pipeline outputs will be written directly to the central repo.
+  # If true, a Kafka message will be sent to a service to aggregate these writes instead.
+  # The init job writes directly to the central repo regardless of this setting.
+  enabled: false
+  # -- Address of Kafka broker where prompt processing output events will be
+  # written, for consumption by the Butler writer service.
+  # @default -- None, must be set
+  kafka_cluster: ""
+  # -- Username for Kafka broker where prompt processing output events will be
+  # written, for consumption by the Butler writer service.
+  # @default -- None, must be set
+  kafka_username: ""
+  # -- Kafka topic that prompt processing output events will be written to,
+  # for consumption by the Butler writer service.
+  # @default -- None, must be set
+  kafka_topic: ""
+
 # -- Override the base name for resources
 nameOverride: ""
 

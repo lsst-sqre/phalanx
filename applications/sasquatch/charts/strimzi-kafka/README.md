@@ -7,6 +7,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | broker.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for broker pod assignment |
+| broker.backup | bool | `false` | Whether to label the broker PVCs for backup by k8up, enabled on the summit and base environments |
 | broker.enabled | bool | `false` | Enable node pool for the kafka brokers |
 | broker.name | string | `"kafka"` | Node pool name |
 | broker.nodeIds | string | `"[0,1,2]"` | IDs to assign to the brokers |
@@ -32,10 +33,11 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | connect.config."value.converter.schema.registry.url" | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | URL for the schema registry |
 | connect.config."value.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message value |
 | connect.enabled | bool | `false` | Enable Kafka Connect |
-| connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
+| connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.47.0-kafka-3.9.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
 | connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
 | connect.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafka Connect |
 | controller.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for controller pod assignment |
+| controller.backup | bool | `false` | Whether to label the controller PVCs for backup by k8up, enabled on the summit and base environments |
 | controller.enabled | bool | `false` | Enable node pool for the kafka controllers |
 | controller.nodeIds | string | `"[3,4,5]"` | IDs to assign to the controllers |
 | controller.resources | object | `{"limits":{"cpu":"1","memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for the controllers |
@@ -45,6 +47,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | cruiseControl.enabled | bool | `false` | Enable cruise control (required for broker migration and rebalancing) |
 | cruiseControl.maxReplicasPerBroker | int | `20000` | Maximum number of replicas per broker |
 | cruiseControl.metricsConfig.enabled | bool | `false` | Enable metrics generation |
+| jvmOptions | object | `{}` | Allow specification of JVM options for both controllers and brokers |
 | kafka.config."log.retention.minutes" | int | 4320 minutes (3 days) | Number of days for a topic's data to be retained |
 | kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |
 | kafka.config."offsets.retention.minutes" | int | 4320 minutes (3 days) | Number of minutes for a consumer group's offsets to be retained |
@@ -58,10 +61,11 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled |
 | kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled |
 | kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled |
+| kafka.metadataVersion | string | `nil` | The KRaft metadata version used by the Kafka cluster. If the property is not set, it defaults to the metadata version that corresponds to the version property. |
 | kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
 | kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
 | kafka.replicas | int | `3` | Number of Kafka broker replicas to run |
-| kafka.version | string | `"3.8.0"` | Version of Kafka to deploy |
+| kafka.version | string | `"4.0.0"` | Version of Kafka to deploy |
 | kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
 | kafkaExporter.enabled | bool | `false` | Enable Kafka exporter |
 | kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |

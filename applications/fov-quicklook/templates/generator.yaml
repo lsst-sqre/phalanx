@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fov-quicklook-generator
+  labels:
+    app: fov-quicklook-generator
+spec:
+  replicas: {{ .Values.generator.replicas }}
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: fov-quicklook-generator
+  template:
+    metadata:
+      labels:
+        app: fov-quicklook-generator
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - fov-quicklook-generator
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+        - name: fov-quicklook-generator
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command: ["python", "-u", "-m", "quicklook.generator.api"]
+          ports:
+            - containerPort: 9502
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 9502
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
+          env:
+            - name: QUICKLOOK_coordinator_base_url
+              value: http://fov-quicklook-coordinator:9501
+            {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
+            {{- include "fov-quicklook.env.log-level" . | nindent 12 }}
+            {{- include "fov-quicklook.butler-settings.env" . | nindent 12 }}
+          volumeMounts:
+            - mountPath: /dev/shm/quicklook
+              name: shm
+            - mountPath: /tmp/quicklook/merged
+              name: merged-dir
+            {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}
+            - name: tmp
+              mountPath: /tmp
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+          resources: {{ toYaml .Values.generator.resources | nindent 12 }}
+      volumes:
+        - name: shm
+          emptyDir:
+            medium: {{ .Values.generator.workdir.medium | quote }}
+            sizeLimit: {{ .Values.generator.workdir.sizeLimit | quote }}
+        - name: merged-dir
+          emptyDir:
+            sizeLimit: {{ .Values.generator.mergedDir.sizeLimit | quote }}
+        {{- .Values.butler_settings.volumes | toYaml | nindent 8 }}
+        - name: tmp
+          emptyDir:
+            medium: Memory
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: fov-quicklook-generator-policy
+spec:
+  podSelector:
+    matchLabels:
+      app: fov-quicklook-generator
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: fov-quicklook-coordinator
+        - podSelector:
+            matchLabels:
+              app: fov-quicklook-frontend
+        - podSelector:
+            matchLabels:
+              app: fov-quicklook-generator
+      ports:
+        - protocol: TCP
+          port: 9502

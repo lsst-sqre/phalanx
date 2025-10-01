@@ -20,21 +20,6 @@ ingress:
   annotations: {}
 
 config:
-  # -- Default dataset for legacy /api/hips endpoints (optional)
-  # If not set it will use hips_base_url
-  hipsDefaultDataset: null
-
-  # -- HiPS dataset configurations mapping dataset names to their base URLs
-  hipsDatasets: {}
-
-  # -- URL path prefix for the HiPS v2 API (must match the configuration of the
-  # hips service)
-  hipsV2PathPrefix: "/api/hips/v2"
-
-  # -- URL path prefix for the HiPS API (must match the configuration of the
-  # hips service)
-  hipsPathPrefix: "/api/hips"
-
   # -- Lifetime of the `{links}` reply. Should be set to match the lifetime of
   # links returned by the Butler server
   linksLifetime: "1h"
@@ -45,12 +30,15 @@ config:
   # -- URL path prefix for DataLink and related APIs
   pathPrefix: "/api/datalink"
 
-  # -- Whether to send certain serious alerts to Slack. If `true`, the
-  # `slack-webhook` secret must also be set.
+  sentry:
+    # -- Whether to enable the Sentry integration
+    enabled: false
+
+  # -- Whether to send certain serious alerts to Slack
   slackAlerts: false
 
   # -- URL containing TAP schema metadata used to construct queries
-  tapMetadataUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"
+  tapMetadataUrl: "https://github.com/lsst/sdm_schemas/releases/download/DP1-v1.2.0/datalink-columns.zip"
 
 # -- Affinity rules for the datalinker deployment pod
 affinity: {}
@@ -77,17 +65,21 @@ tolerations: []
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: null
-
   # -- Butler repositories accessible via Butler server
   # @default -- Set by Argo CD
   butlerServerRepositories: null
 
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD
+  environmentName: null
+
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null
+
+  # -- Base URL for Repertoire discovery API
+  # @default -- Set by Argo CD
+  repertoireUrl: null
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD

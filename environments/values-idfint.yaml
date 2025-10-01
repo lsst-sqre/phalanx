@@ -25,15 +25,17 @@ applications:
   nublado: true
   portal: true
   qserv-kafka: true
+  repertoire: true
   rubin-rag: true
-  sasquatch: true
-  sia: true
-  ssotap: true
   sasquatch-backpack: true
+  sasquatch: true
   semaphore: true
+  sia: true
   squareone: true
-  strimzi: true
+  ssotap: true
   strimzi-access-operator: true
+  strimzi-registry-operator: true
+  strimzi: true
   tap: true
   times-square: true
   vo-cutouts: true

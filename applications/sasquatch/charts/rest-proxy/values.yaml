@@ -11,7 +11,7 @@ image:
   pullPolicy: IfNotPresent
 
   # -- Kafka REST proxy image tag
-  tag: 8.0.0
+  tag: 8.0.1
 
 service:
   # -- Kafka REST proxy service port
@@ -35,7 +35,7 @@ ingress:
   path: "/sasquatch-rest-proxy(/|$)(.*)"
 
 # -- Kafka REST proxy JVM Heap Option
-heapOptions: "-Xms512M -Xmx512M"
+heapOptions: "-Xms1024M -Xmx1024M"
 
 # -- Kafka REST configuration options
 # @default -- See `values.yaml`
@@ -73,10 +73,10 @@ kafka:
 # @default -- See `values.yaml`
 resources:
   requests:
-    memory: 500Mi
+    memory: 1Gi
     cpu: 200m
   limits:
-    memory: 1Gi
+    memory: 2Gi
     cpu: 1
 
 # -- Node selector configuration

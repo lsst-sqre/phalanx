@@ -85,6 +85,9 @@ strimzi-kafka:
   cruiseControl:
     enabled: true
 
+schema-registry:
+  enabled: true
+
 influxdb:
   enabled: false
 
@@ -113,15 +116,11 @@ influxdb-enterprise-standby:
         key: influxdb-enterprise-standby-shared-secret
   data:
     replicas: 1
+    config:
+      cluster:
+        max-concurrent-queries: 150
+        query-timeout: "90s"
     affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                    - sdfk8sn005
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 1
@@ -144,12 +143,12 @@ influxdb-enterprise-standby:
       size: 100Ti
     resources:
       requests:
-        memory: 96Gi
+        memory: 128Gi
         # The InfluxDB Enterprise license is limited to 16 cpu, the
         # standby instance uses a 1 node x 16 cpu setup
         cpu: 16
       limits:
-        memory: 96Gi
+        memory: 128Gi
         cpu: 16
 
 influxdb-enterprise-active:
@@ -178,6 +177,10 @@ influxdb-enterprise-active:
     resources:
   data:
     replicas: 2
+    config:
+      cluster:
+        max-concurrent-queries: 300
+        query-timeout: "180s"
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -234,7 +237,6 @@ telegraf:
       timestamp_field: "timestamp"
       topicRegexps: |
         [ "lsst.backpack" ]
-      debug: true
     # CSC connectors
     maintel:
       enabled: true
@@ -243,7 +245,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
-      debug: true
     mtmount:
       enabled: true
       repair: false
@@ -251,7 +252,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
-      debug: true
     comcam:
       enabled: true
       repair: false
@@ -259,7 +259,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
-      debug: true
     envsys:
       enabled: true
       repair: false
@@ -267,7 +266,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.EAS", "lsst.sal.ESS", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
-      debug: true
     m1m3:
       enabled: true
       metric_batch_size: 1500
@@ -275,7 +273,6 @@ telegraf:
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTM1M3([^T].*)" ]
-      debug: true
     m1m3ts:
       enabled: true
       metric_batch_size: 1500
@@ -283,7 +280,6 @@ telegraf:
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTM1M3TS" ]
-      debug: true
     m2:
       enabled: true
       repair: false
@@ -291,7 +287,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
-      debug: true
     obssys:
       enabled: true
       repair: false
@@ -299,7 +294,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
-      debug: true
     ocps:
       enabled: true
       repair: false
@@ -307,7 +301,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.OCPS" ]
-      debug: true
     pmd:
       enabled: true
       repair: false
@@ -315,7 +308,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.PMD" ]
-      debug: true
     calsys:
       enabled: true
       repair: false
@@ -323,7 +315,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.MTReflector", "lsst.sal.TunableLaser" ]
-      debug: true
     mtaircompressor:
       enabled: true
       repair: false
@@ -331,7 +322,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTAirCompressor" ]
-      debug: true
     genericcamera:
       enabled: true
       repair: false
@@ -339,7 +329,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
-      debug: true
     gis:
       enabled: true
       repair: false
@@ -347,7 +336,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.GIS" ]
-      debug: true
     mtvms:
       enabled: true
       repair: false
@@ -355,7 +343,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTVMS" ]
-      debug: true
     lsstcam:
       enabled: true
       repair: false
@@ -365,7 +352,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
-      debug: true
     auxtel:
       enabled: true
       repair: false
@@ -373,7 +359,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
-      debug: true
     latiss:
       enabled: true
       repair: false
@@ -381,7 +366,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
-      debug: true
     test:
       enabled: true
       repair: false
@@ -389,7 +373,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.Test" ]
-      debug: true
     lasertracker:
       enabled: true
       repair: false
@@ -397,7 +380,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.LaserTracker" ]
-      debug: true
     # CCS connectors (experimental) data is being written on separate databases for now
     atcamera:
       enabled: true
@@ -408,7 +390,6 @@ telegraf:
         [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source" ]
       topicRegexps: |
         [ "lsst.ATCamera" ]
-      debug: true
     cccamera:
       enabled: true
       database: "lsst.CCCamera"
@@ -418,7 +399,6 @@ telegraf:
         [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source" ]
       topicRegexps: |
         [ "lsst.CCCamera" ]
-      debug: true
     mtcamera:
       enabled: true
       database: "lsst.MTCamera"
@@ -428,7 +408,6 @@ telegraf:
         [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
       topicRegexps: |
         [ "lsst.MTCamera" ]
-      debug: true
     obsenv:
       enabled: true
       database: "lsst.obsenv"
@@ -436,7 +415,6 @@ telegraf:
       timestamp_field: "timestamp"
       topicRegexps: |
         [ "lsst.obsenv" ]
-      debug: true
     cp:
       enabled: true
       database: "lsst.cp"
@@ -446,7 +424,6 @@ telegraf:
         [ "lsst.cp" ]
       tags: |
         [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "exposure", "patch", "visit", "run", "pipeline" ]
-      debug: true
 
 kafdrop:
   ingress:
@@ -512,4 +489,7 @@ consdb:
   enabled: true
 
 data-transfer-monitoring:
+  enabled: true
+
+obsloctap:
   enabled: true

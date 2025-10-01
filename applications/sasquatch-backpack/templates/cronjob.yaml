@@ -26,6 +26,8 @@ spec:
               - configMapRef:
                   name: sasquatch-backpack
               env:
+              - name: SCHEMA_MANAGER_REGISTRY_URL
+                value: "{{ .Values.config.sasquatchSchemaRegistryUrl }}"
               - name: KAFKA_SECURITY_PROTOCOL
                 valueFrom:
                   secretKeyRef:

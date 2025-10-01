@@ -18,6 +18,7 @@ applications:
   fastapi-bootcamp: true
   mobu: true
   nublado: true
+  repertoire: true
   squareone: true
   times-square: true
   vault-secrets-operator: true

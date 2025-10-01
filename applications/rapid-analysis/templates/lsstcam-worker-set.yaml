@@ -54,6 +54,12 @@ spec:
                   fieldPath: metadata.labels['statefulset.kubernetes.io/pod-name']
             - name: RAPID_ANALYSIS_LOCATION
               value: {{ $.Values.location | upper | quote }}
+          {{- if $script.env }}
+          {{- range $env_var, $env_value := $script.env }}
+            - name: {{ $env_var }}
+              value: {{ $env_value | quote }}
+          {{- end }}
+          {{- end }}
           {{- if or $.Values.env $.Values.envSecrets }}
           {{- range $env_var, $env_value := $.Values.env }}
             - name: {{ $env_var }}
@@ -88,12 +94,9 @@ spec:
           {{- end }}
           {{- end }}
           {{- end }}
-          envFrom:
-            - configMapRef:
-                name: env-configmap
           volumeMounts:
-            - name: rubintv-creds
-              mountPath: "/etc/rubintv/creds"
+            - name: user-secrets
+              mountPath: {{ default "/home/saluser/.lsst" $.Values.butlerSecret.containerPath }}
               readOnly: true
           {{- if $.Values.nfsMountpoint }}
           {{- range $values := $.Values.nfsMountpoint }}
@@ -126,48 +129,19 @@ spec:
           {{- end }}
           {{- end }}
           {{- end }}
-          {{- if $.Values.butlerSecret }}
-            - name: butler-secret
-              mountPath: {{ $.Values.butlerSecret.containerPath }}
-          {{- end }}
           {{- if or $.Values.resources $script.resources }}
           {{- $resources := $script.resources | default $.Values.resources }}
           resources:
             {{- toYaml $resources | nindent 12 }}
           {{- end }}
-      {{- if $.Values.butlerSecret }}
       initContainers:
-        - name: butler-secret-perm-fixer
-          image: "alpine:latest"
-          command:
-            - "/bin/ash"
-            - "-c"
-            - |
-              cp -RL /secrets-raw/* /secrets
-              cat /secrets-rubintv/aws-credentials.ini > new-aws-credentials.ini
-              printf "\n" >> new-aws-credentials.ini
-              cat /secrets-rubintv/aws_credentials.ini >> new-aws-credentials.ini
-              printf "\n" >> new-aws-credentials.ini
-              mv new-aws-credentials.ini /secrets/aws-credentials.ini
-              chown 73006:73006 /secrets/*
-              chmod 0600 /secrets/*
-          volumeMounts:
-            - name: raw-butler-secret
-              mountPath: /secrets-raw
-              readOnly: true
-            - name: butler-secret
-              mountPath: /secrets
-            - name: rubintv-aws-creds
-              mountPath: /secrets-rubintv
-              readOnly: true
-      {{- end }}
+        {{ include "secret-perm-fixer-init-container" $ | nindent 8 }}
       volumes:
-        - name: rubintv-creds
+        - name: user-secrets
+          emptyDir: {}
+        - name: rapid-analysis-secrets
           secret:
-            secretName: google-creds
-        - name: rubintv-aws-creds
-          secret:
-            secretName: rubintv-secrets
+            secretName: rapid-analysis-secrets
       {{- if $.Values.nfsMountpoint }}
       {{- range $values := $.Values.nfsMountpoint }}
       {{- if (has $values.name $script.mounts) }}
@@ -196,14 +170,6 @@ spec:
             claimName: {{ $values.name }}
       {{- end }}
       {{- end }}
-      {{- end }}
-      {{- if $.Values.butlerSecret }}
-        - name: butler-secret
-          emptyDir: {}
-        - name: raw-butler-secret
-          secret:
-            secretName: butler-secret
-            defaultMode: 0600
       {{- end }}
       {{- if or $.Values.nodeSelector $script.nodeSelector }}
       {{- $nodeSelector := $script.nodeSelector | default $.Values.nodeSelector }}

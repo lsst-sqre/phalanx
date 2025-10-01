@@ -8,11 +8,11 @@ rubintv:
     debug: true
     env:
     - name: S3_ENDPOINT_URL
-      value: &s-s3E "https://s3.rubintv.cp.lsst.org"
+      value: &s3E "https://s3.cp.lsst.org"
     - name: RAPID_ANALYSIS_LOCATION
       value: "SUMMIT"
     - name: DDV_DEPLOY_BRANCH
-      value: &s-dbE "deploy-summit"
+      value: &dbE "deploy-summit"
     - name: DDV_BASE_HREF
       value: "/rubintv-dev/ddv/"
     - name: DDV_CLIENT_WS_ADDRESS
@@ -21,8 +21,8 @@ rubintv:
       value: "redis-service.rapid-analysis.svc.cluster.local"
     envSecrets:
     - name: RA_REDIS_PASSWORD
-      secretName: rubintv-dev-secrets
-      secretKey: redis-password
+      secretName: rubintv-secrets
+      secretKey: ra-redis-password
     image:
       repository: ghcr.io/lsst-ts/rubintv
       tag: deploy
@@ -31,23 +31,34 @@ rubintv:
   workers:
     replicas: 1
     image:
-      repository: ts-dockerhub.lsst.org/rapid-analysis
-      tag: c0041
+      repository: ghcr.io/lsst-sitcom/rubintv_production
+      tag: w_2025_38
       pullPolicy: Always
     uid: 73006
     gid: 73006
     scriptsLocation: /repos/rubintv_analysis_service/scripts
     script: rubintv_worker.py -a rubintv-dev -p 8080 -l summit
     env:
+    - name: RA_PULL_DIRECTORIES
+      value: "rubintv_analysis_service"
+    - name: SCRIPTS_LOCATION
+      value: "/repos/rubintv_analysis_service/scripts"
     - name: S3_ENDPOINT_URL
-      value: *s-s3E
+      value: *s3E
     - name: DAF_BUTLER_REPOSITORY_INDEX
-      value: "s3://rubin-summit-users/data-repos.yaml"
-    - name: DAF_BUTLER_REPOSITORY
-      value: "/sdf/group/rubin/repo/ir2/butler.yaml"
+      value: "/project/data-repos.yaml"
+    - name: LSST_RESOURCES_S3_PROFILE_butler
+      value: *s3E
+    - name: PGUSER
+      value: "oods"
     - name: DEPLOY_BRANCH
-      value: *s-dbE
+      value: *dbE
     nfsMountpoint:
+    - name: project-shared
+      containerPath: /project
+      readOnly: false
+      server: nfs-project.ls.lsst.org
+      serverPath: /project
     - name: project-rubintv-ddv-config
       containerPath: /var/ddv-config
       readOnly: false

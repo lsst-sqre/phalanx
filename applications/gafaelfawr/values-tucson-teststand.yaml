@@ -86,6 +86,19 @@ config:
       - github:
           organization: "rubin-summit"
           team: "rsp-access"
+    "read:sasquatch":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+      - github:
+          organization: "lsst-ts"
+          team: "tts-access"
+      - github:
+          organization: "rubin-summit"
+          team: "rsp-access"
     "read:tap":
       - github:
           organization: "lsst-sqre"

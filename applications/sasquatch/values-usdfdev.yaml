@@ -43,6 +43,9 @@ strimzi-kafka:
   connect:
     enabled: true
 
+schema-registry:
+  enabled: true
+
 influxdb:
   startupProbe:
     enabled: true
@@ -77,6 +80,7 @@ kafka-connect-manager:
   influxdbSink:
     # Based on the kafka producers configuration for the BTS
     # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-base-teststand.yaml
+    excludedTopicsRegex: "lsst.dm.object"
     connectors:
       auxtel:
         enabled: false
@@ -251,4 +255,7 @@ obsloctap:
   enabled: true
 
 consdb:
+  enabled: true
+
+tap:
   enabled: true

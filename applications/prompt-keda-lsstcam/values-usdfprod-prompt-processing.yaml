@@ -1,12 +1,12 @@
 prompt-keda:
   image:
     pullPolicy: IfNotPresent
-    tag: 7.0.0
+    tag: 11.0.0
 
   alerts:
     username: kafka-admin
     server: usdf-alert-stream-dev.lsst.cloud:9094
-    topic: lsst-alerts-v7.4
+    topic: lsst-alerts-v9.0
 
   worker:
     # TODO: need to adjust this once we know how leaky the LSSTCam pipeline is
@@ -77,13 +77,13 @@ prompt-keda:
 
   raw_microservice: http://172.24.5.158:8080/presence
 
-  mpSky_service: http://172.24.5.245/ephemerides/
+  mpSky_service: http://172.24.5.145/ephemerides/
 
   iers_cache: s3://rubin-summit-users/iers-cache.zip
 
   imageNotifications:
-    kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
-    topic: rubin-summit-notification
+    kafkaClusterAddress: s3-file-notifications-kafka-external-bootstrap.s3-file-notifications:9094
+    topic: rubin-summit-notification-6
     # TODO: need to adjust this based on observed nextVisit lead time (depends on scheduler) and PP prep time
     # The shorter this is, the less capacity is wasted on canceled visits
     imageTimeout: 120
@@ -117,6 +117,12 @@ prompt-keda:
     podAnnotations: {
       edu.stanford.slac.sdf.project/usdf-embargo: "true"
     }
+
+  butler_writer:
+    enabled: true
+    kafka_cluster: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
+    kafka_username: butler-writer
+    kafka_topic: butler-writer
 
   podAnnotations: {
     edu.stanford.slac.sdf.project/usdf-embargo: "true"

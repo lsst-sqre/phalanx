@@ -32,6 +32,9 @@ config:
   # -- Backpack Redis URL
   backpackRedisUrl: "redis://sasquatch-backpack-redis.sasquatch-backpack:6379/0"
 
+  # -- Sasquatch schema registry URL
+  sasquatchSchemaRegistryUrl: "http://sasquatch-schema-registry.sasquatch:8081"
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}

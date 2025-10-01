@@ -9,16 +9,10 @@ cluster:
 
 kafka:
   # -- Version of Kafka to deploy.
-  version: 3.4.0
-  # -- Encoding version for messages, see
-  # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
-  logMessageFormatVersion: 3.2
-  # -- Version of the protocol for inter-broker communication, see
-  # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
-  interBrokerProtocolVersion: 3.2
+  version: 3.7.0
 
   # -- Number of Kafka broker replicas to run.
-  replicas: 3
+  replicas: 6
 
   storage:
     # -- Size of the backing storage disk for each of the Kafka brokers.
@@ -32,7 +26,7 @@ kafka:
   # -- Configuration overrides for the Kafka server.
   config:
     # -- Number of minutes for a consumer group's offsets to be retained.
-    offsets.retention.minutes: 10080
+    offsets.retention.minutes: 43200
     # -- Number of hours for a brokers data to be retained.
     log.retention.hours: 168
     # -- Maximum retained number of bytes for a broker's data. This is a string

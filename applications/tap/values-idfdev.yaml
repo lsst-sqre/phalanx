@@ -10,11 +10,7 @@ cadc-tap:
       passwordEnabled: true
 
     kafka:
-      bootstrapServer: "sasquatch-dev-kafka-bootstrap.lsst.cloud:9094"
-      schemaRegistry:
-        url: "https://data-dev.lsst.cloud/schema-registry/"
-      auth:
-        enabled: true
+      enabled: true
 
     urlRewrite:
       enabled: true

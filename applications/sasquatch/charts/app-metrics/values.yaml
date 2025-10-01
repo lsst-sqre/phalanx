@@ -105,6 +105,10 @@ envFromSecret: ""
 # @default -- false
 debug: false
 
+# -- Set the minimal supported Kafka version for the Sarama Go client library.
+# @default -- null, use the Sarama library default.
+kafkaVersion: null
+
 influxdb:
   # -- URL of the InfluxDB v1 instance to write to
   url: "http://sasquatch-influxdb.sasquatch:8086"

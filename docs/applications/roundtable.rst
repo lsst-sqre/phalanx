@@ -12,6 +12,7 @@ Argo CD project: ``roundtable``
    :maxdepth: 1
    :caption: Roundtable
 
+   atlantis/index
    checkerboard/index
    eups-distributor/index
    giftless/index
