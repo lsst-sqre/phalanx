@@ -1,5 +1,8 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
+  image:
+    tag: "tickets-DM-52657"
+    pullPolicy: "Always"
   slackAlerts: true
   sentry:
     enabled: true
@@ -119,7 +122,11 @@ cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
   serviceAccount: "nublado@science-platform-dev-7696.iam.gserviceaccount.com"
+
 purger:
+  image:
+    tag: "tickets-DM-52657"
+    pullPolicy: "Always"
   enabled: true
   volumeName: "deleted-sundays"
   schedule: "19 05 * * 0"  # Sunday morning, 12:19 AM (UTC-5)
