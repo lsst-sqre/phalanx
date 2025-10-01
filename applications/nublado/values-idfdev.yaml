@@ -105,6 +105,9 @@ jupyterhub:
     timeout: 43200  # 12 hours
     maxAge: 86400   # 1 day
   hub:
+    image:
+      tag: "tickets-DM-52657"
+      pullPolicy: "Always"
     config:
       JupyterHub:
         # This has to exist for Zero to JupyterHub to configure the proxy
