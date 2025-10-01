@@ -138,6 +138,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
+| global.repertoireUrl | string | Set by Argo CD | Base URL for Repertoire discovery API |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | hub.internalDatabase | bool | `false` | Whether to use the cluster-internal PostgreSQL server instead of an external server. This is not used directly by the Nublado chart, but controls how the database password is managed. |
 | hub.landingPage | string | `"/lab"` | Default spawn page.  Usually '/lab', but can be overridden in order to specify a custom landing page. |
