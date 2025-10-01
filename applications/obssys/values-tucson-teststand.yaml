@@ -180,6 +180,7 @@ ocsqueue:
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
+  obsenv: true
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 3 --state enabled
@@ -198,11 +199,6 @@ ocsqueue:
     readOnly: false
     server: nfs-project.tu.lsst.org
     serverPath: /project
-  - name: obs-env
-    containerPath: /net/obs-env
-    readOnly: true
-    server: nfs-obsenv.tu.lsst.org
-    serverPath: /obs-env
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
