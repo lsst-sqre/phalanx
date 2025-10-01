@@ -17,6 +17,12 @@ spec:
     type: simple
     acls:
       - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operations:
+          - All
+      - resource:
           type: topic
           name: "lsst.obsenv"
           patternType: prefix
