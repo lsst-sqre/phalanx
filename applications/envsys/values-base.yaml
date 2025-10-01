@@ -202,11 +202,11 @@ eas-sim:
     RUN_ARG: --simulate
   resources:
     limits:
-      cpu: 150m
-      memory: 400Mi
+      cpu: 750m
+      memory: "2Gi"
     requests:
-      cpu: 15m
-      memory: 200Mi
+      cpu: 150m
+      memory: 300Mi
 
 epm-ess303-sim:
   enabled: true
