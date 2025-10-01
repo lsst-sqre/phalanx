@@ -108,7 +108,7 @@ spec:
           {{- end }}
           {{- if .Values.obsenv }}
             - name: obsenv
-              mountPath: "/net/obs-env/auto_base_packages"
+              mountPath: "/test/obs-env/auto_base_packages"
           {{- end }}
           {{- if .Values.secretFixup }}
             - name: {{ include "chart.name" $ }}-file-secrets
