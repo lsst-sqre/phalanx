@@ -41,19 +41,19 @@ global:
 # @default -- see `values.yaml`
 resources:
   limits:
-    cpu: "1"
-    memory: "512Mi"
+    cpu: "4"
+    memory: "2048Mi"
   requests:
-    cpu: "50m"
-    memory: "256Mi"
+    cpu: "2"
+    memory: "1024Mi"
 
 worker:
   resources:
     limits:
-      cpu: "1"
+      cpu: "2"
       memory: "2048Mi"
     requests:
-      cpu: "50m"
+      cpu: "1"
       memory: "512Mi"
 
 redis:
