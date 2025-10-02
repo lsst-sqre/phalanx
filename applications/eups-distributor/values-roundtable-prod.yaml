@@ -3,5 +3,10 @@ image:
 ingress:
   # -- Additional annotations for the ingress rule
   hostname: "eups.lsst.cloud"
+
+lsstDotCodes:
+  enabled: true
+  hostname: "eups.lsst.codes"
+
 config:
   serviceAccountReadonly: eups-distributor@roundtable-prod-f6fd.iam.gserviceaccount.com

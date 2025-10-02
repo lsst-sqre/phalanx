@@ -1,0 +1,24 @@
+{{- if .Values.lsstDotCodes.enabled -}}
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: "letsencrypt-dns-eups-dot-codes"
+  labels:
+    {{- include "eups-distributor.labels" . | nindent 4 }}
+spec:
+  acme:
+    email: {{ required "lsstDotCodes.email must be set" .Values.lsstDotCodes.email | quote }}
+    server: "https://acme-v02.api.letsencrypt.org/directory"
+    privateKeySecretRef:
+      name: "cert-manager-letsencrypt-dot-codes"
+    solvers:
+      - dns01:
+          cnameStrategy: "Follow"
+          route53:
+            region: "us-east-1"
+            accessKeyID: {{ required "lsstDotCodes.awsAccessKeyId must be set" .Values.lsstDotCodes.awsAccessKeyId | quote }}
+            hostedZoneID: {{ required "lsstDotCodes.hostedZoneId must be set" .Values.lsstDotCodes.hostedZoneId | quote }}
+            secretAccessKeySecretRef:
+              name: "eups-distributor"
+              key: "aws-secret-access-key"
+{{- end }}
