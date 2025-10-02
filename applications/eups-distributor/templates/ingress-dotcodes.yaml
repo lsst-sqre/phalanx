@@ -1,0 +1,36 @@
+{{- if .Values.lsstDotCodes.enabled }}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "eups-distributor-dot-codes"
+  labels:
+    {{- include "eups-distributor.labels" . | nindent 4 }}
+config:
+  scopes:
+    anonymous: true
+  service: "eups-distributor"
+template:
+  metadata:
+    name: "eups-distributor-dot-codes"
+    annotations:
+      cert-manager.io/issuer: "letsencrypt-dns-eups-dot-codes"
+      {{- with .Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  spec:
+    tls:
+      - hosts:
+        - {{ .Values.lsstDotCodes.hostname | quote }}
+        secretName: eups-distributor-tls-dot-codes
+    rules:
+      - host: {{ required "lsstDotCodes.hostname must be set" .Values.lsstDotCodes.hostname | quote }}
+        http:
+          paths:
+            - path: "/"
+              pathType: Prefix
+              backend:
+                service:
+                  name: "eups-distributor"
+                  port:
+                    number: 8080
+{{- end }}
