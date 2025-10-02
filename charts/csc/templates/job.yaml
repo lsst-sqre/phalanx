@@ -72,6 +72,12 @@ spec:
                 secretKeyRef:
                   name: {{ $.Values.global.controlSystem.appNamespace }}
                   key: ts-salkafka-password
+          {{- if .Values.obsenv }}
+            - name: OBSENV_SIDECAR
+              value: "1"
+            - name: OBS_ENV_PATH
+              value: "/test/obs-env/auto_base_packages"
+          {{- end }}
           {{- if .Values.env }}
           {{- range $env_var, $env_value := .Values.env }}
             - name: {{ $env_var }}
