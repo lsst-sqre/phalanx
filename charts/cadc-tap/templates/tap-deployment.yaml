@@ -277,20 +277,26 @@ spec:
           secret:
             secretName: "cadc-tap"
         - name: "tmp"
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: 1Gi
         - name: "config-volume"
           configMap:
             name: "cadc-tap-config"
         - name: "tomcat-base"
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: 500Mi
         - name: "tomcat-logs"
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: 100Mi
         - name: "tomcat-home"
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: 100Mi
         - name: "tomcat-cache"
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: 2Gi
         - name: "ca-trust"
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: 50Mi
         {{- if .Values.config.kafka.enabled }}
         - name: "kafka-certs"
           secret:
