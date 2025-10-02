@@ -71,7 +71,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "1.23.3"
+      tag: "1.24.0"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -89,7 +89,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.9.2"
+      tag: "3.10.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -233,7 +233,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "3.9.2"
+    tag: "3.10.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
