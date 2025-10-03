@@ -73,6 +73,9 @@ controller:
               volumeName: "rubin"
       nodeSelector:
         node_pool: "user-lab-pool"
+      secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "rubin-epo-cit-sci-pipeline.json"
       sizes:
         - size: "small"
           resources:
