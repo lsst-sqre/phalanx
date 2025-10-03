@@ -27,6 +27,24 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+            {{- if .Values.config.metrics.enabled }}
+            - name: "KAFKA_BOOTSTRAP_SERVERS"
+              valueFrom:
+                secretKeyRef:
+                  name: "repertoire-kafka"
+                  key: "bootstrapServers"
+            - name: "KAFKA_CLIENT_CERT_PATH"
+              value: "/etc/repertoire-kafka/user.crt"
+            - name: "KAFKA_CLIENT_KEY_PATH"
+              value: "/etc/repertoire-kafka/user.key"
+            - name: "KAFKA_CLUSTER_CA_PATH"
+              value: "/etc/repertoire-kafka/ca.crt"
+            - name: "KAFKA_SECURITY_PROTOCOL"
+              valueFrom:
+                secretKeyRef:
+                  name: "repertoire-kafka"
+                  key: "securityProtocol"
+            {{- end }}
             {{- if .Values.config.slackAlerts }}
             - name: "REPERTOIRE_SLACK_WEBHOOK"
               valueFrom:
@@ -100,6 +118,20 @@ spec:
             - name: "secrets"
               mountPath: "/etc/repertoire/secrets"
               readOnly: true
+            {{- if .Values.config.metrics.enabled }}
+            - name: "kafka"
+              mountPath: "/etc/repertoire-kafka/ca.crt"
+              readOnly: true
+              subPath: "ssl.truststore.crt"
+            - name: "kafka"
+              mountPath: "/etc/repertoire-kafka/user.crt"
+              readOnly: true
+              subPath: "ssl.keystore.crt"
+            - name: "kafka"
+              mountPath: "/etc/repertoire-kafka/user.key"
+              readOnly: true
+              subPath: "ssl.keystore.key"
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -119,3 +151,8 @@ spec:
         - name: "secrets"
           secret:
             secretName: "repertoire"
+        {{- if .Values.config.metrics.enabled }}
+        - name: "kafka"
+          secret:
+            secretName: "repertoire-kafka"
+        {{- end }}

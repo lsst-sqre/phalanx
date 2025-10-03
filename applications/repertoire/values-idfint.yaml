@@ -6,6 +6,8 @@ config:
   hips:
     legacy:
       dataset: "dp1"
+  metrics:
+    enabled: true
   slackAlerts: true
   useSubdomains:
     - "nublado"

@@ -89,6 +89,7 @@ app-metrics:
     - noteburst
     - nublado
     - qservkafka
+    - repertoire
     - sia
     - wobbly
 

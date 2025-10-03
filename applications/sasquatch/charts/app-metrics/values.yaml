@@ -31,6 +31,10 @@ globalAppConfig:
     influxTags:
       - "username"
       - "queue"
+  repertoire:
+    influxTags:
+      - "label"
+      - "username"
   sia:
     influxTags:
       - "username"
