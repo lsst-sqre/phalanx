@@ -185,6 +185,10 @@ telegraf:
   # -- Whether to enable the telegraf subchart
   enabled: false
 
+telegraf-standby:
+  # -- Whether to enable the telegraf-standby subchart
+  enabled: false
+
 rest-proxy:
   # -- Whether to enable the REST proxy
   enabled: false
