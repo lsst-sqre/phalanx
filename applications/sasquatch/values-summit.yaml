@@ -448,7 +448,7 @@ kapacitor:
 backup:
   enabled: true
   persistence:
-    size: 100Gi
+    size: 20Ti
     storageClass: rook-ceph-block
   backupItems:
     - name: chronograf
