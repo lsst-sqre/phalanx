@@ -457,6 +457,10 @@ backup:
     - name: kapacitor
       enabled: true
       retentionDays: 7
+    - name: influxdb-enterprise-incremental
+      enabled: true
+      bind: sasquatch-influxdb-enterprise-meta
+
 
 obsenv:
   enabled: true
