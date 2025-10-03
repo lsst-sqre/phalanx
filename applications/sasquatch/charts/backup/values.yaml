@@ -34,6 +34,7 @@ backupItems:
     retentionDays: 7
   - name: "influxdb-enterprise-incremental"
     enabled: false
+    bind: sasquatch-influxdb-enterprise-active-meta
   - name: "influxdb-oss-full"
     enabled: false
     retentionDays: 3
