@@ -179,7 +179,7 @@ backup:
       enabled: true
       retentionDays: 3
   restore:
-    enabled: true
+    enabled: false
 
 backpack:
   enabled: true
