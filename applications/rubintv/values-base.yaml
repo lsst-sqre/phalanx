@@ -58,6 +58,11 @@ rubintv:
       readOnly: false
       server: nfs-project.ls.lsst.org
       serverPath: /project
+    - name: project-rubintv-ddv-config
+      containerPath: /var/ddv-config
+      readOnly: false
+      server: nfs-project.ls.lsst.org
+      serverPath: /project/rubintv/ddv-config
     resources:
       limits:
         cpu: 2.0
