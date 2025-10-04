@@ -448,7 +448,7 @@ kapacitor:
 backup:
   enabled: true
   persistence:
-    size: 100Gi
+    size: 20Ti
     storageClass: rook-ceph-block
   backupItems:
     - name: chronograf
@@ -457,6 +457,10 @@ backup:
     - name: kapacitor
       enabled: true
       retentionDays: 7
+    - name: influxdb-enterprise-incremental
+      enabled: true
+      bind: sasquatch-influxdb-enterprise-meta
+
 
 obsenv:
   enabled: true
