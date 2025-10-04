@@ -26,6 +26,11 @@ Service discovery
 | config.influxdbDatabases | object | `{}` | Dictionary of InfluxDB database names to connection information for that database, with keys `url`, `database`, `username`, `passwordKey`, and `schemaRegistry`. `passwordKey` must match an entry in `secrets.yaml`. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
+| config.metrics.application | string | `"repertoire"` | Name under which to log metrics. Generally there is no reason to change this. |
+| config.metrics.enabled | bool | `false` | Whether to enable sending metrics |
+| config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
+| config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
+| config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.pathPrefix | string | `"/repertoire"` | URL path prefix |
 | config.rules | object | See `values.yaml` | Rules for determining the expected URLs of deployed services that use the main hostname. See the [Repertoire documentation](https://repertoire.lsst.io/) for more information. |
 | config.sentry.enabled | bool | `false` | Whether to enable the Sentry integration |
