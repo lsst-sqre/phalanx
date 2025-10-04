@@ -44,17 +44,20 @@ config:
         Science Pipelines v23 processing of the DESC Data Challenge 2
         simulation, which covered 300 square degrees of the wide-fast-deep
         LSST survey region over 5 years.
+      docsUrl: "https://dp0-2.lsst.io/"
     dp03:
       description: >-
         Data Preview 0.3 contains the catalog products of a Solar System
         Science Collaboration simulation of the results of SSO analysis of the
         wide-fast-deep data from the LSST dataset.
+      docsUrl: "https://dp0-3.lsst.io/"
     dp1:
       description: >-
         Data Preview 1 contains image and catalog products from the Rubin
         Science Pipelines v29 processing of observations obtained with the
         LSST Commissioning Camera of seven ~1 square degree fields, over seven
         weeks in late 2024.
+      docsUrl: "https://dp1.lsst.io/"
 
   hips:
     # -- Known HiPS datasets. Each should be a mapping of a label to an object
