@@ -136,13 +136,13 @@ atoods:
     path: /etc
     filename: atoods.yaml
     content: |
-      defaultInterval: &interval
+      default_interval: &interval
           days: 0
           hours: 0
           minutes: 0
           seconds: 0
 
-      ingester:
+      message_ingester:
           kafka:
               brokers:
                   - sasquatch-kafka-bootstrap.sasquatch:9092
@@ -151,26 +151,23 @@ atoods:
               group_id: ATOODS-S3
               max_messages: 250
 
-          butlers:
-              - butler:
-                  instrument: lsst.obs.lsst.Latiss
-                  class:
-                      import : lsst.ctrl.oods.messageAttendant
-                      name : MessageAttendant
-                  repoDirectory : s3://butler@rubinobs-butler-latiss
-                  s3profile: butler
-                  collections:
-                      - LATISS/raw/all
-                  cleanCollections:
+          butler:
+              instrument: lsst.obs.lsst.Latiss
+              repo_directory : s3://butler@rubinobs-butler-latiss
+              s3profile: butler
+              collections:
+                  - LATISS/raw/all
+              collection_cleaner:
+                  collections_to_clean:
                       - collection: LATISS/raw/all
-                        filesOlderThan:
+                        files_older_than:
                             <<: *interval
                             days: 30
                       - collection: LATISS/quickLook
-                        filesOlderThan:
+                        files_older_than:
                             <<: *interval
                             days: 7
-                  scanInterval:
+                  cleaning_interval:
                       <<: *interval
                       hours: 1
 
