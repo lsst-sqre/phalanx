@@ -31,6 +31,10 @@ config:
   # -- URL path prefix
   pathPrefix: "/wobbly"
 
+  sentry:
+    # -- Whether to enable the Sentry integration
+    enabled: false
+
   # -- Services allowed to use Wobbly for their backend
   # @default -- See `values.yaml`
   services:
@@ -139,6 +143,10 @@ maintenance:
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD
+  environmentName: null
+
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null

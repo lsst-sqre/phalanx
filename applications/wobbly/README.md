@@ -27,9 +27,11 @@ IVOA UWS database storage
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.pathPrefix | string | `"/wobbly"` | URL path prefix |
+| config.sentry.enabled | bool | `false` | Whether to enable the Sentry integration |
 | config.services | list | See `values.yaml` | Services allowed to use Wobbly for their backend |
 | config.slackAlerts | bool | `true` | Whether to send Slack alerts for unexpected failures |
 | config.updateSchema | bool | `false` | Whether to automatically update the Wobbly database schema |
+| global.environmentName | string | Set by Argo CD | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the wobbly image |

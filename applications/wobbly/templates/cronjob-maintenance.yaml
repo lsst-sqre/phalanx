@@ -36,18 +36,6 @@ spec:
                 - "wobbly"
                 - "expire"
               env:
-                - name: "WOBBLY_DATABASE_PASSWORD"
-                  valueFrom:
-                    secretKeyRef:
-                      name: "wobbly"
-                      key: "database-password"
-                {{- if .Values.config.slackAlerts }}
-                - name: "WOBBLY_SLACK_WEBHOOK"
-                  valueFrom:
-                    secretKeyRef:
-                      name: "wobbly"
-                      key: "slack-webhook"
-                {{- end }}
                 {{- if .Values.config.metrics.enabled }}
                 - name: "KAFKA_BOOTSTRAP_SERVERS"
                   valueFrom:
@@ -65,6 +53,27 @@ spec:
                     secretKeyRef:
                       name: "wobbly-kafka"
                       key: "securityProtocol"
+                {{- end }}
+                {{- if .Values.config.sentry.enabled }}
+                - name: "SENTRY_DSN"
+                  valueFrom:
+                    secretKeyRef:
+                      name: "datalinker"
+                      key: "sentry-dsn"
+                - name: "SENTRY_ENVIRONMENT"
+                  value: {{ .Values.global.environmentName | quote }}
+                {{- end }}
+                - name: "WOBBLY_DATABASE_PASSWORD"
+                  valueFrom:
+                    secretKeyRef:
+                      name: "wobbly"
+                      key: "database-password"
+                {{- if .Values.config.slackAlerts }}
+                - name: "WOBBLY_SLACK_WEBHOOK"
+                  valueFrom:
+                    secretKeyRef:
+                      name: "wobbly"
+                      key: "slack-webhook"
                 {{- end }}
               envFrom:
                 - configMapRef:
