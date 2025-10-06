@@ -128,16 +128,17 @@ Rubin Observatory's telemetry service
 | app-metrics.tolerations | list | `[]` | Tolerations for pod assignment |
 | backpack.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | backup.affinity | object | `{}` | Affinity rules for the backups deployment pod |
-| backup.backupItems | list | `[{"enabled":false,"name":"chronograf","retentionDays":7},{"enabled":false,"name":"kapacitor","retentionDays":7},{"enabled":false,"name":"influxdb-enterprise-incremental"},{"enabled":false,"name":"influxdb-oss-full","retentionDays":3}]` | List of items to backup using the sasquatch backup script |
+| backup.backupItems | list | `[{"enabled":false,"name":"chronograf","retentionDays":7},{"enabled":false,"name":"kapacitor","retentionDays":7},{"bind":"sasquatch-influxdb-enterprise-active-meta","enabled":false,"name":"influxdb-enterprise-incremental"},{"enabled":false,"name":"influxdb-oss-full","retentionDays":3}]` | List of items to backup using the sasquatch backup script |
 | backup.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the backups image |
 | backup.image.repository | string | `"ghcr.io/lsst-sqre/sasquatch"` | Image to use in the backups deployment |
 | backup.image.tag | string | The appVersion of the chart | Tag of image to use |
+| backup.k8up.enabled | bool | `false` | Whether to enable k8up backup of the backup PVC This option can be enabled at the base and summit environments only |
 | backup.nodeSelector | object | `{}` | Node selection rules for the backups deployment pod |
 | backup.persistence.size | string | "100Gi" | Size of the data store to request, if enabled |
 | backup.persistence.storageClass | string | "" (empty string) to use the cluster default storage class | Storage class to use for the backups |
 | backup.podAnnotations | object | `{}` | Annotations for the backups deployment pod |
 | backup.resources | object | `{}` | Resource limits and requests for the backups deployment pod |
-| backup.restore | object | `{"enabled":false}` | Whether to enable the restore deployment |
+| backup.restore.enabled | bool | `false` | Whether to enable the restore deployment |
 | backup.schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
 | backup.tolerations | list | `[]` | Tolerations for the backups deployment pod |
 | consdb.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |

@@ -10,7 +10,7 @@ image:
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
-  tag: "1.3.2"
+  tag: ""
 
 # -- Schedule for executing the sasquatch backup script
 # @default -- "0 3 * * *"
@@ -34,12 +34,18 @@ backupItems:
     retentionDays: 7
   - name: "influxdb-enterprise-incremental"
     enabled: false
+    bind: sasquatch-influxdb-enterprise-active-meta
   - name: "influxdb-oss-full"
     enabled: false
     retentionDays: 3
 
-# -- Whether to enable the restore deployment
+k8up:
+  # -- Whether to enable k8up backup of the backup PVC
+  # This option can be enabled at the base and summit environments only
+  enabled: false
+
 restore:
+  # -- Whether to enable the restore deployment
   enabled: false
 
 # -- Affinity rules for the backups deployment pod

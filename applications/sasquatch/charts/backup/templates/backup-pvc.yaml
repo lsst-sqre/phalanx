@@ -2,6 +2,10 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: sasquatch-backup-artifacts
+{{- if .Values.k8up.enabled }}
+  labels:
+    k8up.io/backup-target: "true"
+{{- end }}
 spec:
   accessModes:
     - ReadWriteOnce

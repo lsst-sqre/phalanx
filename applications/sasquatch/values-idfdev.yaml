@@ -174,9 +174,12 @@ backup:
       retentionDays: 3
     - name: "influxdb-enterprise-incremental"
       enabled: true
+      bind: sasquatch-influxdb-enterprise-meta
     - name: "influxdb-oss-full"
       enabled: true
       retentionDays: 3
+  restore:
+    enabled: false
 
 backpack:
   enabled: true
