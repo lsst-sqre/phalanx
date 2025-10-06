@@ -11,6 +11,7 @@ Backup Sasquatch data
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the backups image |
 | image.repository | string | `"ghcr.io/lsst-sqre/sasquatch"` | Image to use in the backups deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
+| k8up.enabled | bool | `false` | Whether to enable k8up backup of the backup PVC This option can be enabled at the base and summit environments only |
 | nodeSelector | object | `{}` | Node selection rules for the backups deployment pod |
 | persistence.size | string | "100Gi" | Size of the data store to request, if enabled |
 | persistence.storageClass | string | "" (empty string) to use the cluster default storage class | Storage class to use for the backups |

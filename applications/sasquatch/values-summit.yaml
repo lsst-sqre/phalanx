@@ -460,6 +460,8 @@ backup:
     - name: influxdb-enterprise-incremental
       enabled: true
       bind: sasquatch-influxdb-enterprise-meta
+  k8up:
+    enabled: true
 
 
 obsenv:

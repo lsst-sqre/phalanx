@@ -39,6 +39,11 @@ backupItems:
     enabled: false
     retentionDays: 3
 
+k8up:
+  # -- Whether to enable k8up backup of the backup PVC
+  # This option can be enabled at the base and summit environments only
+  enabled: false
+
 # -- Whether to enable the restore deployment
 restore:
   enabled: false
