@@ -559,11 +559,11 @@ love-producer:
   - name: auxteless202
     csc: ESS:202
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: auxteless308
-    csc: ESS:308
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: auxteless204
     csc: ESS:204
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: auxteless308
+    csc: ESS:308
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: calibhilless301
     csc: ESS:301
@@ -887,12 +887,6 @@ love-producer:
   - name: ringssess304
     csc: ESS:304
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: tmaess121
-    csc: ESS:121
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: tmaess122
-    csc: ESS:122
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess104
     csc: ESS:104
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -901,6 +895,12 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess110
     csc: ESS:110
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tmaess121
+    csc: ESS:121
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tmaess122
+    csc: ESS:122
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tunablelaser
     csc: TunableLaser:0
