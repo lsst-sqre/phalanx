@@ -71,7 +71,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "1.23.3"
+      tag: "1.24.0"
 
   qserv:
     # -- QServ hostname:port to connect to
