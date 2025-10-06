@@ -31,7 +31,7 @@ spec:
       automountServiceAccountToken: false
       {{- end }}
       containers:
-        - name: "wobbly"
+        - name: "wobbly-schema-update"
           command:
             - "wobbly"
             - "update-schema"
