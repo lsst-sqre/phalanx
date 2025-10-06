@@ -43,4 +43,5 @@ Kubernetes application manager
 | argo-cd.server.ingress.tls | bool | `true` | Enable TLS management for this ingress. Disable this if TLS should not use a Let's Encrypt TLS certificate. |
 | argo-cd.server.metrics.enabled | bool | `true` | Enable server metrics service |
 | argo-cd.server.resources | object | See `values.yaml` | Resource limits and requests for the Argo CD server |
+| config.style.enabled | bool | `false` |  |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

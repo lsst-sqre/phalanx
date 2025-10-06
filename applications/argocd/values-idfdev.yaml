@@ -59,3 +59,7 @@ argo-cd:
   server:
     ingress:
       hostname: "data-dev.lsst.cloud"
+
+config:
+  style:
+    enabled: true
