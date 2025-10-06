@@ -884,6 +884,9 @@ love-producer:
   - name: raocps
     csc: OCPS:101
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: test42
+    csc: Test:42
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ringssess304
     csc: ESS:304
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
