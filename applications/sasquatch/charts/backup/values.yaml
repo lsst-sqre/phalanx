@@ -44,8 +44,8 @@ k8up:
   # This option can be enabled at the base and summit environments only
   enabled: false
 
-# -- Whether to enable the restore deployment
 restore:
+  # -- Whether to enable the restore deployment
   enabled: false
 
 # -- Affinity rules for the backups deployment pod
