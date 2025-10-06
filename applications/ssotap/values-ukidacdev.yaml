@@ -2,7 +2,7 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstuk/tap-schema-ukidacdev-sso"
-      tag: "29.0.1"
+      tag: "29.2.1"
   config:
     gcsBucket: "async"
     gcsBucketUrl: "https://somerville.ed.ac.uk:6780"

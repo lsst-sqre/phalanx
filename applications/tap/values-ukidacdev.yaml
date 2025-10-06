@@ -2,7 +2,7 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstuk/tap-schema-ukidacdev"
-      tag: "29.0.1"
+      tag: "29.2.1"
 
   config:
     gcsBucket: "async-test"
