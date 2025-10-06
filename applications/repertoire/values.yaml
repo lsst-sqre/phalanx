@@ -153,6 +153,14 @@ config:
       - type: "ui"
         name: "argocd"
         template: "https://{{base_hostname}}/argo-cd"
+    datalinker:
+      - type: "data"
+        template: "https://{{base_hostname}}/api/datalinker"
+        versions:
+          datalink-links-1.1:
+            template: "https://{{base_hostname}}/api/datalinker/links"
+            ivoaStandardId: "ivo://ivoa.net/std/DataLink#links-1.1"
+        openapi: "https://{{base_hostname}}/api/datalinker/openapi.json"
     gafaelfawr:
       - type: "internal"
         name: "gafaelfawr"
