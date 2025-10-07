@@ -12,7 +12,7 @@ redis:
 
 resources:
   limits:
-    cpu: "4"
+    cpu: "6"
     memory: "90Gi"
   requests:
     cpu: "1"
