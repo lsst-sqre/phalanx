@@ -6,10 +6,10 @@ redis:
     storageClass: "wekafs--sdf-k8s01"
 
 config:
+  databaseUrl: postgresql://gafaelfawr@gf-db-rw.gfdb-int/gafaelfawr
+
   sentry:
     enabled: true
-
-  internalDatabase: true
 
   oidcServer:
     enabled: true
