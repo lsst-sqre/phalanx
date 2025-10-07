@@ -324,4 +324,4 @@ watcher:
       cpu: 3000m
     requests:
       cpu: 1000m
-      memory: 1500GiB
+      memory: 1500MiB
