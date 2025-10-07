@@ -36,7 +36,6 @@ audio-broadcaster:
 love-commander:
   image:
     repository: ts-dockerhub.lsst.org/love-commander
-    revision: 12
     pullPolicy: Always
   env:
     S3_INSTANCE: cp
@@ -51,18 +50,17 @@ love-commander:
     type: ClusterIP
   resources:
     requests:
-      cpu: 50m
-      memory: 512Mi
+      cpu: 300m
+      memory: 1Gi
     limits:
-      cpu: 500m
-      memory: 2048Mi
+      cpu: 900m
+      memory: 2Gi
 
 love-manager:
   manager:
     frontend:
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 15
         pullPolicy: Always
       env:
         SERVER_URL: summit-lsp.lsst.codes
@@ -106,7 +104,6 @@ love-manager:
     - name: general
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 9
         pullPolicy: Always
       env:
         LOVE_SITE: summit
@@ -169,7 +166,6 @@ love-manager:
     - name: queue
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 9
         pullPolicy: Always
       env:
         LOVE_SITE: summit
@@ -232,7 +228,6 @@ love-manager:
     - name: m1m3
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 9
         pullPolicy: Always
       env:
         LOVE_SITE: summit
@@ -302,7 +297,7 @@ love-manager:
       save ""
     resources:
       requests:
-        cpu: 250m
+        cpu: 450m
         memory: 300Mi
       limits:
         cpu: 2500m
@@ -335,12 +330,10 @@ love-nginx:
     frontend:
       image:
         repository: ts-dockerhub.lsst.org/love-frontend-k8s
-        revision: 12
         pullPolicy: Always
     manager:
       image:
         repository: ts-dockerhub.lsst.org/love-manager-static
-        revision: 0
         pullPolicy: Always
       command:
       - /bin/sh
@@ -353,8 +346,8 @@ love-nginx:
     claimSize: 2Gi
   resources:
     requests:
-      cpu: 50m
-      memory: 70Mi
+      cpu: 120m
+      memory: 140Mi
     limits:
       cpu: 500m
       memory: 300Mi
@@ -486,12 +479,11 @@ love-nginx:
 love-producer:
   image:
     repository: ts-dockerhub.lsst.org/love-producer
-    revision: 12
     pullPolicy: Always
   resources:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 150Mi
     limits:
       cpu: 100m
       memory: 300Mi
@@ -567,11 +559,11 @@ love-producer:
   - name: auxteless202
     csc: ESS:202
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: auxteless203
-    csc: ESS:203
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: auxteless204
     csc: ESS:204
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: auxteless308
+    csc: ESS:308
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: calibhilless301
     csc: ESS:301
@@ -892,14 +884,11 @@ love-producer:
   - name: raocps
     csc: OCPS:101
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: test42
+    csc: Test:42
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ringssess304
     csc: ESS:304
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: tmaess001
-    csc: ESS:1
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: tma-ess002
-    csc: ESS:2
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess104
     csc: ESS:104
@@ -909,6 +898,12 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess110
     csc: ESS:110
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tmaess121
+    csc: ESS:121
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tmaess122
+    csc: ESS:122
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tunablelaser
     csc: TunableLaser:0

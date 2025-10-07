@@ -64,7 +64,7 @@ atqueue:
       memory: 48Gi
     requests:
       cpu: 3
-      memory: 4Gi
+      memory: 8Gi
 
 atscheduler:
   classifier: scheduler2
@@ -120,10 +120,10 @@ gis:
   resources:
     limits:
       cpu: 300m
-      memory: 300Mi
+      memory: 360Mi
     requests:
       cpu: 30m
-      memory: 97Mi
+      memory: 180Mi
 
 mtqueue:
   classifier: scriptqueue1
@@ -177,8 +177,8 @@ mtqueue:
       cpu: 12
       memory: 48Gi
     requests:
-      cpu: 3
-      memory: 4Gi
+      cpu: 4
+      memory: 8Gi
 
 mtscheduler:
   classifier: scheduler1
@@ -271,7 +271,7 @@ ocsqueue:
       memory: 10Gi
     requests:
       cpu: 1
-      memory: 430Mi
+      memory: 1Gi
 
 ocsscheduler:
   classifier: scheduler3
@@ -324,4 +324,4 @@ watcher:
       cpu: 3000m
     requests:
       cpu: 1000m
-      memory: 445Mi
+      memory: 1.5GiB

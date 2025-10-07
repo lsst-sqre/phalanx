@@ -85,13 +85,13 @@ ccoods:
     path: /etc
     filename: ccoods.yaml
     content: |
-      defaultInterval: &interval
+      default_interval: &interval
           days: 0
           hours: 0
           minutes: 0
           seconds: 0
 
-      ingester:
+      message_ingester:
           kafka:
               brokers:
                   - sasquatch-kafka-bootstrap.sasquatch:9092
@@ -99,26 +99,23 @@ ccoods:
                 - lsst.s3.raw.comcam
               group_id: CCOODS-S3
               max_messages: 250
-          butlers:
-              - butler:
-                  instrument: lsst.obs.lsst.LsstComCam
-                  class:
-                      import : lsst.ctrl.oods.messageAttendant
-                      name : MessageAttendant
-                  repoDirectory : s3://butler@rubinobs-butler-comcam
-                  s3profile: butler
-                  collections:
-                      - LSSTComCam/raw/all
-                  cleanCollections:
+          butler:
+              instrument: lsst.obs.lsst.LsstComCam
+              repo_directory : s3://butler@rubinobs-butler-comcam
+              s3profile: butler
+              collections:
+                  - LSSTComCam/raw/all
+              collection_cleaner:
+                  collections_to_clean:
                       - collection: LSSTComCam/raw/all
-                        filesOlderThan:
+                        files_older_than:
                             <<: *interval
                             days: 30
                       - collection: LSSTComCam/quickLook
-                        filesOlderThan:
+                        files_older_than:
                             <<: *interval
                             days: 7
-                  scanInterval:
+                  cleaning_interval:
                       <<: *interval
                       hours: 1
 
@@ -198,10 +195,10 @@ lasertracker1:
   resources:
     limits:
       cpu: 200m
-      memory: 360Mi
+      memory: 512Mi
     requests:
-      cpu: 20m
-      memory: 120Mi
+      cpu: 45m
+      memory: 256Mi
 
 mtaircompressor1:
   enabled: true
@@ -213,10 +210,10 @@ mtaircompressor1:
   resources:
     limits:
       cpu: 100m
-      memory: 300Mi
+      memory: 360Mi
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 16m
+      memory: 180Mi
 
 mtaircompressor2:
   enabled: true
@@ -228,10 +225,10 @@ mtaircompressor2:
   resources:
     limits:
       cpu: 100m
-      memory: 300Mi
+      memory: 360Mi
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 13m
+      memory: 180Mi
 
 mtaos:
   image:
@@ -286,10 +283,10 @@ mtcamhexapod:
   resources:
     limits:
       cpu: 500m
-      memory: 768Mi
+      memory: 900Mi
     requests:
-      cpu: 50m
-      memory: 300Mi
+      cpu: 120m
+      memory: 450Mi
 
 mtcamhexapod-sim:
   enabled: false
@@ -315,10 +312,10 @@ mtdome:
   resources:
     limits:
       cpu: 900m
-      memory: 300Mi
+      memory: 320Mi
     requests:
       cpu: 90m
-      memory: 100Mi
+      memory: 160Mi
 
 mtdome-sim:
   enabled: false
@@ -342,10 +339,10 @@ mtdometrajectory:
   resources:
     limits:
       cpu: 250m
-      memory: 400Mi
+      memory: 560Mi
     requests:
-      cpu: 25m
-      memory: 115Mi
+      cpu: 55m
+      memory: 280Mi
 
 mtheaderservice:
   enabled: true
@@ -364,10 +361,10 @@ mtheaderservice:
   resources:
     limits:
       cpu: 2000m
-      memory: 3000Mi
+      memory: 3Gi
     requests:
       cpu: 200m
-      memory: 1000Mi
+      memory: 1Gi
 
 mtm1m3-sim:
   enabled: false
@@ -394,7 +391,7 @@ mtm2:
       cpu: 850m
       memory: 1500Mi
     requests:
-      cpu: 85m
+      cpu: 280m
       memory: 420Mi
 
 mtm2-sim:
@@ -429,10 +426,10 @@ mtm2hexapod:
   resources:
     limits:
       cpu: 400m
-      memory: 768Mi
+      memory: 1400Mi
     requests:
-      cpu: 40m
-      memory: 300Mi
+      cpu: 120m
+      memory: 700Mi
 
 mtm2hexapod-sim:
   enabled: false
@@ -457,11 +454,11 @@ mtmount:
     pullPolicy: Always
   resources:
     limits:
-      cpu: "1"
+      cpu: 1
       memory: 1000Mi
     requests:
-      cpu: 250m
-      memory: 300Mi
+      cpu: 280m
+      memory: 425Mi
 
 mtmount-ccw-only:
   enabled: false
@@ -512,19 +509,19 @@ mtoods:
       cpu: 1000m
       memory: 2100Mi
     requests:
-      cpu: 10m
+      cpu: 200m
       memory: 700Mi
   configfile:
     path: /etc
     filename: mtoods.yaml
     content: |
-      defaultInterval: &interval
+      default_interval: &interval
           days: 0
           hours: 0
           minutes: 0
           seconds: 0
 
-      ingester:
+      message_ingester:
           kafka:
               brokers:
                   - sasquatch-kafka-bootstrap.sasquatch:9092
@@ -532,30 +529,27 @@ mtoods:
                 - lsst.s3.raw.lsstcam
               group_id: MTOODS-S3
               max_messages: 250
-          butlers:
-              - butler:
-                  instrument: lsst.obs.lsst.LsstCam
-                  class:
-                      import : lsst.ctrl.oods.messageAttendant
-                      name : MessageAttendant
-                  repoDirectory : s3://butler@rubinobs-butler-lsstcam
-                  s3profile: butler
-                  collections:
-                      - LSSTCam/raw/all
-                  cleanCollections:
+          butler:
+              instrument: lsst.obs.lsst.LsstCam
+              repo_directory : s3://butler@rubinobs-butler-lsstcam
+              s3profile: butler
+              collections:
+                  - LSSTCam/raw/all
+              collection_cleaner:
+                  collections_to_clean:
                       - collection: LSSTCam/raw/all
-                        filesOlderThan:
+                        files_older_than:
                             <<: *interval
                             days: 30
                       - collection: LSSTCam/raw/guider
-                        filesOlderThan:
+                        files_older_than:
                             <<: *interval
                             days: 30
                       - collection: LSSTCam/quickLook
-                        filesOlderThan:
+                        files_older_than:
                             <<: *interval
                             days: 7
-                  scanInterval:
+                  cleaning_interval:
                       <<: *interval
                       hours: 1
 
@@ -582,10 +576,10 @@ mtrotator:
   resources:
     limits:
       cpu: 1
-      memory: 600Mi
+      memory: 900Mi
     requests:
-      cpu: 200m
-      memory: 150Mi
+      cpu: 280m
+      memory: 300Mi
 
 mtrotator-sim:
   enabled: false
