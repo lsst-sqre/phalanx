@@ -189,6 +189,9 @@ config:
             template: "https://{{base_hostname}}/noteburst/v1"
         openapi: "https://{{base_hostname}}/noteburst/openapi.json"
     nublado:
+      - type: "internal"
+        name: "nublado-controller"
+        template: "https://{{base_hostname}}/nublado"
       - type: "ui"
         name: "nublado"
         template: "https://{{base_hostname}}/nb"
