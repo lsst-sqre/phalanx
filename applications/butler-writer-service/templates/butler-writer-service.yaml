@@ -66,6 +66,10 @@ spec:
             {{- end }}
             - name: LSST_DB_AUTH
               value: /app/lsst-credentials/db-auth.yaml
+            {{- with .Values.logLevel }}
+            - name: WRITER_DEBUG_LEVEL
+              value: {{ . }}
+            {{- end }}
           volumeMounts:
             # /app is defined in Dockerfile
             - mountPath: /app/lsst-credentials

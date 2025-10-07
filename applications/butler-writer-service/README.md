@@ -21,6 +21,7 @@ Write proxy for the Butler that buffers concurrent requests.
 | kafka.clusterAddress | string | None, must be set | Address of Kafka broker containing Prompt Processing output events, for consumption by the Butler writer service. |
 | kafka.topic | string | None, must be set | Kafka topic containing Prompt Processing output events, for consumption by the Butler writer service. |
 | kafka.username | string | None, must be set | Username for Kafka broker containing Prompt Processing output events, for consumption by the Butler writer service. |
+| logLevel | string | `"INFO"` | Global logging level to use in the writer service. |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` | Node selection rules for the pod |
 | outputRepo | string | None, must be set | URI to the repo the writer should write to. |
