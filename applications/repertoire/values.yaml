@@ -155,6 +155,7 @@ config:
         template: "https://{{base_hostname}}/argo-cd"
     datalinker:
       - type: "data"
+        name: "datalink"
         template: "https://{{base_hostname}}/api/datalinker"
         versions:
           datalink-links-1.1:
