@@ -38,6 +38,7 @@ controller:
     lab:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
+        REPERTOIRE_BASE_URL: "https://demo.lsst.cloud/repertoire"
         TMPDIR: "/tmp"
       nodeSelector:
         cloud.google.com/gke-nodepool: "user-lab-pool"
