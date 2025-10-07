@@ -5,6 +5,7 @@ config:
 redis:
   persistence:
     enabled: true
+    size: "32Gi"
     storageClass: "wekafs--sdf-k8s01"
   resources:
     limits:
