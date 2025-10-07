@@ -5,6 +5,7 @@ controller:
     enabled: true
   image:
     tag: tickets-DM-52780
+    pullPolicy: Always
   config:
     dropdownMenu:
       release:
