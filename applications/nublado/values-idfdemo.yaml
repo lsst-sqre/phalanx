@@ -4,7 +4,7 @@ controller:
   sentry:
     enabled: true
   image:
-    tag: tickets-DM-52583
+    tag: tickets-DM-52780
   config:
     dropdownMenu:
       release:
