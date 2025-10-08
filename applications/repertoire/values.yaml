@@ -267,6 +267,9 @@ config:
   # @default -- See `values.yaml`
   subdomainRules:
     nublado:
+      - type: "internal"
+        name: "nublado-controller"
+        template: "https://{{base_hostname}}/nublado"
       - type: "ui"
         name: "nublado"
         template: "https://nb.{{base_hostname}}/nb"
