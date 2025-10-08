@@ -483,8 +483,12 @@ redis:
     # -- Access mode of storage to request
     accessMode: "ReadWriteOnce"
 
+    k8up:
+      # -- Whether to enable k8up backup of the redis PVC
+      enabled: false
+
     # -- Use an existing PVC, not dynamic provisioning. If this is set, the
-    # size, storageClass, and accessMode settings are ignored.
+    # size, storageClass, accessMode, and k8up settings are ignored.
     volumeClaimName: ""
 
   # -- Resource limits and requests for the persistent Redis pod
