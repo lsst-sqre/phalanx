@@ -20,6 +20,7 @@ Kubernetes application manager
 | argo-cd.configs.params."server.insecure" | bool | `true` | Do not use TLS (this is terminated at the ingress) |
 | argo-cd.configs.params."server.rootpath" | string | `"/argo-cd"` | Server root path when running under a reverse proxy |
 | argo-cd.configs.secret.createSecret | bool | `false` | Create the Argo CD secret (we manage this with Vault) |
+| argo-cd.configs.styles | string | `""` |  |
 | argo-cd.controller.metrics.applicationLabels.enabled | bool | `true` | Enable adding additional labels to `argocd_app_labels` metric |
 | argo-cd.controller.metrics.applicationLabels.labels | list | `["name","instance"]` | Labels to add to `argocd_app_labels` metric |
 | argo-cd.controller.metrics.enabled | bool | `true` | Enable controller metrics service |
@@ -43,5 +44,4 @@ Kubernetes application manager
 | argo-cd.server.ingress.tls | bool | `true` | Enable TLS management for this ingress. Disable this if TLS should not use a Let's Encrypt TLS certificate. |
 | argo-cd.server.metrics.enabled | bool | `true` | Enable server metrics service |
 | argo-cd.server.resources | object | See `values.yaml` | Resource limits and requests for the Argo CD server |
-| config.style.enabled | bool | `false` |  |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
