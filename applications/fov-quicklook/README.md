@@ -4,7 +4,7 @@ Full focal plane viewer
 
 ## Source Code
 
-* <https://github.com/michitaro/rubin-fov-quicklook>
+* <https://github.com/lsst-sqre/fov-quicklook>
 
 ## Values
 
