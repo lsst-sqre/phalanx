@@ -9,6 +9,8 @@ namespaceLabels:
   sasquatch:
     lsst.io/discover: 'true'
     k8up-enabled: 'true'
+  gafaelfawr:
+    k8up-enabled: 'true'
 
 applications:
   auxtel: true
