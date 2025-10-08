@@ -91,3 +91,4 @@ KEDA Prompt Processing instance for LATISS
 | prompt-keda.tolerations | list | `[]` | Tolerations for the Prompt Processing pod |
 | prompt-keda.worker.grace_period | int | `45` | When Kubernetes shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds). |
 | prompt-keda.worker.restart | int | `0` | The number of requests to process before rebooting a worker. If 0, workers process requests indefinitely. |
+| prompt-keda.worker.timeout | int | `900` | Maximum time that a worker can process a next_visit request (seconds). |
