@@ -3,6 +3,6 @@ appVersion: 0.1.0
 description: Full focal plane viewer
 name: fov-quicklook
 sources:
-- https://github.com/michitaro/rubin-fov-quicklook
+ - https://github.com/lsst-sqre/fov-quicklook
 type: application
 version: 1.0.0
