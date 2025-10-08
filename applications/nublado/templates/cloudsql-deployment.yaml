@@ -21,7 +21,7 @@ spec:
     spec:
       serviceAccountName: "cloud-sql-proxy"
       containers:
-        - name: "cloud-sql-proxy"
+        - name: "{{ .Chart.Name }}-cloud-sql-proxy"
           command:
             - "/cloud_sql_proxy"
             - "-ip_address_types=PRIVATE"
