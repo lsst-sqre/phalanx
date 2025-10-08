@@ -133,6 +133,7 @@ argo-cd:
       tls: true
 
   configs:
+    styles: ""
     cm:
       # -- Keep label-based tracking for now until Nublado is updated.
       application.resourceTrackingMethod: "label"
@@ -154,10 +155,6 @@ argo-cd:
     secret:
       # -- Create the Argo CD secret (we manage this with Vault)
       createSecret: false
-
-config:
-  style:
-    enabled: false
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
