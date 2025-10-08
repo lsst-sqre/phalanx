@@ -1,6 +1,8 @@
 redis:
   persistence:
     storageClass: "rook-ceph-block"
+    k8up:
+      enabled: true
 
 config:
   allowSubdomains: true
