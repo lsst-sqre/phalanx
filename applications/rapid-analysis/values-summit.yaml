@@ -413,6 +413,17 @@ scripts:
     limits:
       cpu: 2
       memory: 10G
+- name: LSSTCam/runZernikePredictionPlotting.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 2
+      memory: 10G
 - name: LSSTCam/runPerformanceMonitor.py
   mounts:
   - lsstcam-data
