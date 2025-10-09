@@ -164,7 +164,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | influxdb-enterprise.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
 | influxdb-enterprise.data.config.logging.format | string | `"json"` | Format to use for log messages |
-| influxdb-enterprise.data.config.logging.level | string | `"debug"` | Logging level |
+| influxdb-enterprise.data.config.logging.level | string | `"info"` | Logging level |
 | influxdb-enterprise.data.env | object | `{}` | Additional environment variables to set in the meta container |
 | influxdb-enterprise.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
 | influxdb-enterprise.data.ingress.className | string | `"nginx"` | Ingress class name of the data service |
@@ -256,7 +256,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | influxdb-enterprise-active.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
 | influxdb-enterprise-active.data.config.logging.format | string | `"json"` | Format to use for log messages |
-| influxdb-enterprise-active.data.config.logging.level | string | `"debug"` | Logging level |
+| influxdb-enterprise-active.data.config.logging.level | string | `"info"` | Logging level |
 | influxdb-enterprise-active.data.env | object | `{}` | Additional environment variables to set in the meta container |
 | influxdb-enterprise-active.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
 | influxdb-enterprise-active.data.ingress.className | string | `"nginx"` | Ingress class name of the data service |
@@ -348,7 +348,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | influxdb-enterprise-standby.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
 | influxdb-enterprise-standby.data.config.logging.format | string | `"json"` | Format to use for log messages |
-| influxdb-enterprise-standby.data.config.logging.level | string | `"debug"` | Logging level |
+| influxdb-enterprise-standby.data.config.logging.level | string | `"info"` | Logging level |
 | influxdb-enterprise-standby.data.env | object | `{}` | Additional environment variables to set in the meta container |
 | influxdb-enterprise-standby.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
 | influxdb-enterprise-standby.data.ingress.className | string | `"nginx"` | Ingress class name of the data service |

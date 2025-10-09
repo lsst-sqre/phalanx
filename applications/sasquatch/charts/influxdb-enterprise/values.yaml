@@ -401,7 +401,7 @@ data:
 
     logging:
       # -- Logging level
-      level: "debug"
+      level: "info"
       # -- Format to use for log messages
       format: "json"
 
