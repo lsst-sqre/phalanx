@@ -248,7 +248,7 @@ resultWorker:
   resources:
     limits:
       cpu: "1"
-      memory: "300Mi"
+      memory: "500Mi"
     requests:
       cpu: "1"
       memory: "145Mi"
