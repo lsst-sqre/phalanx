@@ -141,7 +141,10 @@ argo-cd:
       tls: true
 
   configs:
-    styles: ""
+
+    # -- Add css to configure ArgoCD styling
+    styles: null
+
     cm:
       # -- Keep label-based tracking for now until Nublado is updated.
       application.resourceTrackingMethod: "label"
