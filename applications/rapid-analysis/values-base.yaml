@@ -116,10 +116,10 @@ scripts:
   resources:
     requests:
       cpu: .5
-      memory: 4G
+      memory: 6G
     limits:
       cpu: 1
-      memory: 8G
+      memory: 12G
 - name: LSSTCam/runCleanup.py
   mounts:
   - lsstcam-data
