@@ -37,11 +37,8 @@ controller:
         image: "sciplat-lab"
     lab:
       env:
-        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
         DAF_BUTLER_REPOSITORY_INDEX: "https://data.lsst.cloud/api/butler/configs/idf-repositories.yaml"
-        GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
-        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         RUBIN_DIR: "/rubin"
         S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         SCRATCH_PATH: "/deleted-sundays"
