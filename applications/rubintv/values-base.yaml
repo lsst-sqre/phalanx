@@ -24,7 +24,7 @@ rubintv:
       secretName: rubintv-secrets
       secretKey: ra-redis-password
     image:
-      tag: deploy
+      tag: tickets-DM-52500
       pullPolicy: Always
 
   workers:
