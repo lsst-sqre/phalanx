@@ -20,7 +20,7 @@ Kubernetes application manager
 | argo-cd.configs.params."server.insecure" | bool | `true` | Do not use TLS (this is terminated at the ingress) |
 | argo-cd.configs.params."server.rootpath" | string | `"/argo-cd"` | Server root path when running under a reverse proxy |
 | argo-cd.configs.secret.createSecret | bool | `false` | Create the Argo CD secret (we manage this with Vault) |
-| argo-cd.configs.styles | string | `""` |  |
+| argo-cd.configs.styles | string | `nil` | Add css to configure ArgoCD styling |
 | argo-cd.controller.metrics.applicationLabels.enabled | bool | `true` | Enable adding additional labels to `argocd_app_labels` metric |
 | argo-cd.controller.metrics.applicationLabels.labels | list | `["name","instance"]` | Labels to add to `argocd_app_labels` metric |
 | argo-cd.controller.metrics.enabled | bool | `true` | Enable controller metrics service |
