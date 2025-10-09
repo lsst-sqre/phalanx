@@ -131,7 +131,7 @@ tests:
           path: spec.template.spec.containers[0].env[0].value
           pattern: "-Duws.url=jdbc:postgresql://cadc-tap-uws-db/"
 
-  - it: should create an init containers if cloudsql is enabled
+  - it: should create two init containers if cloudsql is enabled
     set:
       global:
         host: "example.com"
@@ -155,7 +155,7 @@ tests:
     asserts:
       - lengthEqual:
           path: spec.template.spec.initContainers
-          count: 1
+          count: 2
 
   - it: should setup TAP_SCHEMA database configuration
     set:
