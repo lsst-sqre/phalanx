@@ -6,11 +6,11 @@ argo-cd:
         border-top-style: none;
         border-bottom-style: none;
         border-image: repeating-linear-gradient(
-        45deg,
-        #fdc500,
-        #fdc500 15px,
-        #000000 15px,
-        #000000 30px) 5;
+          45deg,
+          #fdc500,
+          #fdc500 15px,
+          #000000 15px,
+          #000000 30px) 5;
       }
 
       .top-bar .row {
@@ -19,11 +19,11 @@ argo-cd:
         border-right-style: none;
         border-top-style: none;
         border-image: repeating-linear-gradient(
-        45deg,
-        #fdc500,
-        #fdc500 15px,
-        #000000 15px,
-        #000000 30px) 5;
+          45deg,
+          #fdc500,
+          #fdc500 15px,
+          #000000 15px,
+          #000000 30px) 5;
 
       }
     cm:
