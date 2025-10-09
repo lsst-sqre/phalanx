@@ -26,7 +26,7 @@ Run InfluxDB Enterprise on Kubernetes
 | data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
 | data.config.logging.format | string | `"json"` | Format to use for log messages |
-| data.config.logging.level | string | `"debug"` | Logging level |
+| data.config.logging.level | string | `"info"` | Logging level |
 | data.env | object | `{}` | Additional environment variables to set in the meta container |
 | data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
 | data.ingress.className | string | `"nginx"` | Ingress class name of the data service |
@@ -53,6 +53,10 @@ Run InfluxDB Enterprise on Kubernetes
 | data.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the data service |
 | data.service.nodePort | int | Do not allocate a node port | Node port for the data service |
 | data.service.type | string | `"ClusterIP"` | Service type for the data service |
+| data.startupProbe.enabled | bool | `false` | Whether to enable a startup probe to check if the data node is ready |
+| data.startupProbe.failureThreshold | int | `6` | Number of failures before the pod is restarted |
+| data.startupProbe.initialDelaySeconds | int | `60` | Number of seconds after the container has started before liveness/startup probes are initiated |
+| data.startupProbe.periodSeconds | int | `60` | How often (in seconds) to perform the probe |
 | data.tolerations | list | `[]` | Tolerations for data pods |
 | envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |

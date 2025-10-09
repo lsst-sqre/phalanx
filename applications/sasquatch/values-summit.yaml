@@ -125,6 +125,8 @@ influxdb-enterprise:
         key: influxdb-enterprise-shared-secret
   data:
     replicas: 2
+    startupProbe:
+      enabled: true
     ingress:
       enabled: true
       hostname: summit-lsp.lsst.codes
@@ -175,6 +177,8 @@ influxdb-enterprise-standby:
         key: influxdb-enterprise-standby-shared-secret
   data:
     replicas: 1
+    startupProbe:
+      enabled: true
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:

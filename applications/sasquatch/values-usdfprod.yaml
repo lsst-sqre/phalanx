@@ -93,6 +93,8 @@ influxdb:
 
 influxdb-enterprise-standby:
   enabled: true
+  image:
+    tag: "1.12.2"
   license:
     secret:
       name: sasquatch
@@ -116,6 +118,11 @@ influxdb-enterprise-standby:
         key: influxdb-enterprise-standby-shared-secret
   data:
     replicas: 1
+    startupProbe:
+      enabled: true
+      failureThreshold: 15
+      initialDelaySeconds: 900
+      periodSeconds: 60
     config:
       cluster:
         max-concurrent-queries: 150
@@ -153,6 +160,8 @@ influxdb-enterprise-standby:
 
 influxdb-enterprise-active:
   enabled: true
+  image:
+    tag: "1.12.2"
   license:
     secret:
       name: sasquatch
@@ -177,6 +186,11 @@ influxdb-enterprise-active:
     resources:
   data:
     replicas: 2
+    startupProbe:
+      enabled: true
+      failureThreshold: 15
+      initialDelaySeconds: 900
+      periodSeconds: 60
     config:
       cluster:
         max-concurrent-queries: 300
@@ -225,7 +239,6 @@ telegraf:
   enabled: true
   influxdb:
     urls:
-      - "http://sasquatch-influxdb-enterprise-standby-data.sasquatch:8086"
       - "http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086"
   registry:
     url: "https://usdf-rsp-int.slac.stanford.edu/schema-registry-remote"
@@ -416,6 +429,209 @@ telegraf:
       topicRegexps: |
         [ "lsst.obsenv" ]
     cp:
+      enabled: true
+      database: "lsst.cp"
+      timestamp_format: "unix"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.cp" ]
+      tags: |
+        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "exposure", "patch", "visit", "run", "pipeline" ]
+
+telegraf-standby:
+  enabled: true
+  influxdb:
+    urls:
+      - "http://sasquatch-influxdb-enterprise-standby-data.sasquatch:8086"
+  registry:
+    url: "https://usdf-rsp-int.slac.stanford.edu/schema-registry-remote"
+  kafkaConsumers:
+    # Sasquatch backpack connector
+    standby-backpack:
+      enabled: true
+      database: "lsst.backpack"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.backpack" ]
+    # CSC connectors
+    standby-maintel:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
+    standby-mtmount:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTMount" ]
+    standby-comcam:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
+    standby-envsys:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.EAS", "lsst.sal.ESS", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+    standby-m1m3:
+      enabled: true
+      metric_batch_size: 1500
+      max_undelivered_messages: 4000
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3([^T].*)" ]
+    standby-m1m3ts:
+      enabled: true
+      metric_batch_size: 1500
+      max_undelivered_messages: 4000
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3TS" ]
+    standby-m2:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
+    standby-obssys:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
+    standby-ocps:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.OCPS" ]
+    standby-pmd:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.PMD" ]
+    standby-calsys:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.MTReflector", "lsst.sal.TunableLaser" ]
+    standby-mtaircompressor:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTAirCompressor" ]
+    standby-genericcamera:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
+    standby-gis:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.GIS" ]
+    standby-mtvms:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTVMS" ]
+    standby-lsstcam:
+      enabled: true
+      repair: false
+      metric_batch_size: 250
+      max_undelivered_messages: 5000
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
+    standby-auxtel:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
+    standby-latiss:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
+    standby-test:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.Test" ]
+    standby-lasertracker:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.LaserTracker" ]
+    # CCS connectors (experimental) data is being written on separate databases for now
+    standby-atcamera:
+      enabled: true
+      database: "lsst.ATCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source" ]
+      topicRegexps: |
+        [ "lsst.ATCamera" ]
+    standby-cccamera:
+      enabled: true
+      database: "lsst.CCCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source" ]
+      topicRegexps: |
+        [ "lsst.CCCamera" ]
+    standby-mtcamera:
+      enabled: true
+      database: "lsst.MTCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
+      topicRegexps: |
+        [ "lsst.MTCamera" ]
+    standby-obsenv:
+      enabled: true
+      database: "lsst.obsenv"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.obsenv" ]
+    standby-cp:
       enabled: true
       database: "lsst.cp"
       timestamp_format: "unix"
