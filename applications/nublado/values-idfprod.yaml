@@ -70,13 +70,7 @@ controller:
         node_pool: "user-lab-pool"
       secrets:
         - secretName: "nublado-lab-secret"
-          secretKey: "aws-credentials.ini"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-gcs-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-hmac-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "postgres-credentials.txt"
+          secretKey: "rubin-epo-cit-sci-pipeline.json"
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
