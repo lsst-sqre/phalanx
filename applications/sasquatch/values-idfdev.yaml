@@ -63,6 +63,8 @@ influxdb-enterprise:
       name: sasquatch
       key: influxdb-enterprise-license
   meta:
+    service:
+      type: LoadBalancer
     ingress:
       enabled: true
       hostname: data-dev.lsst.cloud
