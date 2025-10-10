@@ -14,6 +14,7 @@ spec:
 {{- if (eq "ClusterIP" .Values.meta.service.type) }}
   clusterIP: None
 {{- end }}
+  allocateLoadBalancerNodePorts: false
   publishNotReadyAddresses: true
   ports:
   - port: 8089
