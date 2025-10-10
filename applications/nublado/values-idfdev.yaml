@@ -1,4 +1,7 @@
 controller:
+  image:
+    tag: "tickets-DM-52784"
+    pullPolicy: "Always"
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
   sentry:
@@ -110,6 +113,9 @@ jupyterhub:
     db:
       upgrade: true
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
+    image:
+      tag: "tickets-DM-52784"
+      pullPolicy: "Always"
   proxy:
     chp:
       image:
