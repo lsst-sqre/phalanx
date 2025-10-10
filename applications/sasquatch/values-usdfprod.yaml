@@ -175,6 +175,15 @@ influxdb-enterprise-active:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
       path: "/influxdb-enterprise-meta(/|$)(.*)"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - sdfk8sc042
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
