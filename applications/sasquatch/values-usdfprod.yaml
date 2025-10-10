@@ -236,7 +236,7 @@ influxdb-enterprise-active:
         cpu: 8
 
 telegraf:
-  enabled: true
+  enabled: false
   influxdb:
     urls:
       - "http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086"
