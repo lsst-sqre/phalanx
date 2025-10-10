@@ -6,6 +6,9 @@ controller:
         type: "docker"
         registry: "docker-registry.slac.stanford.edu"
         repository: "lsstsqre/sciplat-lab"
+      numReleases: 1
+      numWeeklies: 3
+      numDailies: 2
       pin:
         - "r29_2_0_rsp2244"
     lab:
