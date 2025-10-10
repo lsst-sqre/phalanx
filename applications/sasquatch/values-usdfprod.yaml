@@ -107,7 +107,7 @@ influxdb-enterprise-standby:
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
-      path: "/influxdb-enterprise-meta(/|$)(.*)"
+      path: "/influxdb-enterprise-standby-meta(/|$)(.*)"
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
@@ -142,7 +142,7 @@ influxdb-enterprise-standby:
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
-      path: "/influxdb-enterprise-data(/|$)(.*)"
+      path: "/influxdb-enterprise-standby-data(/|$)(.*)"
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
@@ -174,7 +174,7 @@ influxdb-enterprise-active:
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
-      path: "/influxdb-enterprise-active-meta(/|$)(.*)"
+      path: "/influxdb-enterprise-meta(/|$)(.*)"
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
@@ -219,7 +219,7 @@ influxdb-enterprise-active:
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
-      path: "/influxdb-enterprise-active-data(/|$)(.*)"
+      path: "/influxdb-enterprise-data(/|$)(.*)"
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
@@ -673,7 +673,7 @@ chronograf:
       cpu: 4
 
 kapacitor:
-  influxURL: http://sasquatch-influxdb-enterprise-standby-data.sasquatch:8086
+  influxURL: http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086
 
 app-metrics:
   enabled: true
