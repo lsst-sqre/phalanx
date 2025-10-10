@@ -7,8 +7,8 @@ controller:
     images:
       source:
         type: "docker"
-        registry: "ghcr.io"
-        repository: "lsst-sqre/sciplat-lab"
+        registry: "docker-registry.slac.stanford.edu"
+        repository: "lsstsqre/sciplat-lab"
       pin:
         - "r29_2_0_rsp2244"
     lab:
