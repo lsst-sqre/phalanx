@@ -1,4 +1,7 @@
 controller:
+  image:
+    tag: "tickets-DM-52851"
+    pullPolicy: "Always"
   config:
     logLevel: "DEBUG"
     images:
