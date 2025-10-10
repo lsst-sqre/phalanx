@@ -77,7 +77,7 @@ controller:
           rubin_users:x:4085:
           nogroup:x:65534:
 
-      pullSecret: "sciplat-pull-secret"
+      pullSecret: "pull-secret"
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "aws-credentials.ini"
