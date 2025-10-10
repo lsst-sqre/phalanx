@@ -18,9 +18,9 @@ controller:
       release:
         number: 0
       weekly:
-        number: 0
+        number: 1
       daily:
-        number: 0
+        number: 1
       releaseCandidate:
         number: 0
       experimental:
