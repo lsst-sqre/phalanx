@@ -41,9 +41,9 @@ argo-cd:
               hostedDomains:
                 - lsst.cloud
               redirectURI: https://data-dev.lsst.cloud/argo-cd/api/dex/callback
-      ui.bannercontent: "Test Banner!"
+      ui.bannercontent: "You are on idfdev!"
       ui.bannerpermanent: "true"
-      ui.bannerposition: "bottom"
+      ui.bannerposition: "top"
     rbac:
       policy.csv: |
         p, role:developer, applications, *, */*, allow
