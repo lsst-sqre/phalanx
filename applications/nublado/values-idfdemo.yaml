@@ -1,6 +1,9 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-demo-9e05.iam.gserviceaccount.com"
   slackAlerts: true
+  image:
+    tag: "tickets-DM-52581"
+    pullPolicy: "Always"
   sentry:
     enabled: true
   nodeSelector:
@@ -37,12 +40,12 @@ controller:
         # repository: "sciplat"
         # image: "sciplat-lab"
         #
-        type: "docker"
-        registry: "registry.hub.docker.com"
-        repository: "lsstsqre/sciplat-lab"
         # type: "docker"
-        # registry: "ghcr.io"
-        # repository: "lsst-sqre/sciplat-lab"
+        # registry: "registry.hub.docker.com"
+        # repository: "lsstsqre/sciplat-lab"
+        type: "docker"
+        registry: "ghcr.io"
+        repository: "lsst-sqre/sciplat-lab"
     lab:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
