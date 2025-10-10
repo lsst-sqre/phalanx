@@ -103,7 +103,7 @@ influxdb-enterprise-standby:
     service:
       type: LoadBalancer
       annotations:
-        metallb.universe.tf/address-pool: sdf-services
+        metallb.io/address-pool: sdf-services
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
@@ -170,7 +170,7 @@ influxdb-enterprise-active:
     service:
       type: LoadBalancer
       annotations:
-        metallb.universe.tf/address-pool: sdf-services
+        metallb.io/address-pool: sdf-services
     ingress:
       enabled: true
       hostname: usdf-rsp.slac.stanford.edu
