@@ -26,7 +26,6 @@ controller:
         - containerPath: "/home"
           volumeName: "home"
     images:
-<<<<<<< HEAD
       recommendedTag: w_2025_41
       source:
         # type: "google"
@@ -41,19 +40,6 @@ controller:
         type: "docker"
         registry: "ghcr.io"
         repository: "lsst-sqre/sciplat-lab"
-=======
-      recommendedTag: d_2025_10_01
-      source:
-        type: "google"
-        location: "us-central1"
-        projectId: "rubin-shared-services-71ec"
-        repository: "sciplat"
-        image: "sciplat-lab"
-        # source:
-        #   type: "docker"
-        #   registry: "registry.hub.docker.com"
-        #   repository: "lsstsqre/sciplat-lab"
->>>>>>> 98ac4dab2 (use controller image with platform filtering)
     lab:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
