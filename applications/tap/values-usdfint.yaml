@@ -9,7 +9,7 @@ cadc-tap:
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
       image:
-        tag: "2.13.1"
+        tag: "2.14.0"
 
     gcsBucket: "rubin:rubin-qserv"
     gcsBucketUrl: "https://s3dfrgw.slac.stanford.edu"
