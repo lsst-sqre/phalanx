@@ -164,7 +164,7 @@ atoods:
                         filesOlderThan:
                             <<: *interval
                             days: 30
-                      - collection: LATISS/quickLook
+                      - collection: LATISS/runs/quickLook
                         filesOlderThan:
                             <<: *interval
                             days: 2

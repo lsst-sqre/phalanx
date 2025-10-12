@@ -111,7 +111,7 @@ ccoods:
                         files_older_than:
                             <<: *interval
                             days: 30
-                      - collection: LSSTComCam/quickLook
+                      - collection: LSSTComCam/runs/quickLook
                         files_older_than:
                             <<: *interval
                             days: 7
@@ -545,7 +545,7 @@ mtoods:
                         files_older_than:
                             <<: *interval
                             days: 30
-                      - collection: LSSTCam/quickLook
+                      - collection: LSSTCam/runs/quickLook
                         files_older_than:
                             <<: *interval
                             days: 7

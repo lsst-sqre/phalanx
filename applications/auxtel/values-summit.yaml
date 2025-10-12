@@ -163,7 +163,7 @@ atoods:
                         files_older_than:
                             <<: *interval
                             days: 30
-                      - collection: LATISS/quickLook
+                      - collection: LATISS/runs/quickLook
                         files_older_than:
                             <<: *interval
                             days: 7
