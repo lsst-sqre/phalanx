@@ -317,7 +317,7 @@ mtoods:
                         files_older_than:
                             <<: *interval
                             days: 5
-                      - collection: LSSTCam/quickLook
+                      - collection: LSSTCam/runs/quickLook
                         files_older_than:
                             <<: *interval
                             days: 2
