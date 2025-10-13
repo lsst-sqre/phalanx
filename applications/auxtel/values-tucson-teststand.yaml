@@ -5,7 +5,7 @@ ataos:
   resources:
     limits:
       cpu: 450m
-      memory: 1200Mi
+      memory: 1024Mi
     requests:
       cpu: 45m
       memory: 400Mi
@@ -20,7 +20,7 @@ atbuilding-sim:
   resources:
     limits:
       cpu: 120m
-      memory: 396Mi
+      memory: 350Mi
     requests:
       cpu: 12m
       memory: 132Mi
@@ -35,7 +35,7 @@ atdome-sim:
   resources:
     limits:
       cpu: 170m
-      memory: 396Mi
+      memory: 320Mi
     requests:
       cpu: 17m
       memory: 132Mi
@@ -84,9 +84,9 @@ athexapod-sim:
   resources:
     limits:
       cpu: 90m
-      memory: 396Mi
+      memory: 320Mi
     requests:
-      cpu: 9m
+      cpu: 10m
       memory: 132Mi
 
 atmcs-sim:
@@ -127,7 +127,7 @@ atoods:
   resources:
     limits:
       cpu: 400m
-      memory: 1320Mi
+      memory: 1000Mi
     requests:
       cpu: 40m
       memory: 440Mi
@@ -182,7 +182,7 @@ atpneumatics-sim:
   resources:
     limits:
       cpu: 120m
-      memory: 396Mi
+      memory: 350Mi
     requests:
       cpu: 12m
       memory: 132Mi
@@ -212,7 +212,7 @@ atspectrograph-sim:
   resources:
     limits:
       cpu: 120m
-      memory: 540Mi
+      memory: 400Mi
     requests:
       cpu: 12m
       memory: 180Mi

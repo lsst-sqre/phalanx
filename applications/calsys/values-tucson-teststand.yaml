@@ -8,7 +8,7 @@ cbp-sim:
   resources:
     limits:
       cpu: 110m
-      memory: 400Mi
+      memory: 320Mi
     requests:
       cpu: 11m
       memory: 135Mi
@@ -29,7 +29,7 @@ electrometer101-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 400Mi
+      memory: 320Mi
     requests:
       cpu: 10m
       memory: 135Mi
@@ -50,7 +50,7 @@ electrometer102-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 450Mi
+      memory: 320Mi
     requests:
       cpu: 10m
       memory: 150Mi
@@ -71,7 +71,7 @@ electrometer103-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 450Mi
+      memory: 360Mi
     requests:
       cpu: 10m
       memory: 145Mi
@@ -92,7 +92,7 @@ electrometer201-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 396Mi
+      memory: 320Mi
     requests:
       cpu: 10m
       memory: 132Mi
@@ -115,7 +115,7 @@ gcheaderservice1:
   resources:
     limits:
       cpu: 140m
-      memory: 540Mi
+      memory: 400Mi
     requests:
       cpu: 14m
       memory: 180Mi
@@ -130,7 +130,7 @@ ledprojector-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 435Mi
+      memory: 360Mi
     requests:
       cpu: 10m
       memory: 145Mi
@@ -145,7 +145,7 @@ linearstage101-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 510Mi
+      memory: 360Mi
     requests:
       cpu: 10m
       memory: 170Mi
@@ -159,10 +159,10 @@ linearstage102-sim:
     RUN_ARG: 102 --simulate
   resources:
     limits:
-      cpu: 150m
-      memory: 520Mi
+      cpu: 120m
+      memory: 360Mi
     requests:
-      cpu: 15m
+      cpu: 12m
       memory: 170Mi
 
 linearstage103-sim:
@@ -174,10 +174,10 @@ linearstage103-sim:
     RUN_ARG: 103 --simulate
   resources:
     limits:
-      cpu: 150m
-      memory: 480Mi
+      cpu: 100m
+      memory: 400Mi
     requests:
-      cpu: 15m
+      cpu: 12m
       memory: 160Mi
 
 linearstage104-sim:
@@ -189,10 +189,10 @@ linearstage104-sim:
     RUN_ARG: 104 --simulate
   resources:
     limits:
-      cpu: 150m
-      memory: 480Mi
+      cpu: 100m
+      memory: 400Mi
     requests:
-      cpu: 15m
+      cpu: 12m
       memory: 160Mi
 
 mtreflector-sim:
@@ -205,7 +205,7 @@ mtreflector-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 330Mi
+      memory: 320Mi
     requests:
       cpu: 10m
       memory: 130Mi
@@ -231,7 +231,7 @@ simulation-gencam:
   resources:
     limits:
       cpu: 120m
-      memory: 600Mi
+      memory: 400Mi
     requests:
       cpu: 12m
       memory: 180Mi
