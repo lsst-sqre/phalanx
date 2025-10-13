@@ -71,6 +71,7 @@ ccoods:
                 - lsst.s3.raw.comcam
               group_id: CCOODS-S3
               max_messages: 250
+
           butler:
               instrument: lsst.obs.lsst.LsstComCam
               repo_directory : s3://butler@rubinobs-butler-comcam
@@ -80,6 +81,7 @@ ccoods:
               collection_cleaner:
                   collections_to_clean:
                       - collection: LSSTComCam/raw/all
+                        files_older_than:
                             <<: *interval
                             days: 30
                   cleaning_interval:
