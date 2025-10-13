@@ -11,7 +11,7 @@ image:
   pullPolicy: IfNotPresent
 
   # -- Kafka REST proxy image tag
-  tag: 8.0.1
+  tag: 8.0.2
 
 service:
   # -- Kafka REST proxy service port
