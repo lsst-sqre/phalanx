@@ -33,6 +33,7 @@ Deployment for the Simonyi Survey Telescope CSCs
 | mtm1m3-sim.enabled | bool | `false` | Enable the MTM1M3 simulator CSC |
 | mtm1m3.enabled | bool | `false` | Enable the MTM1M3 hardware simulator CSC |
 | mtm1m3ts-sim.enabled | bool | `false` | Enable the MTM1M3TS simulator CSC |
+| mtm2-hwsim.enabled | bool | `false` | Enable the MTM2 hardware simulator CSC |
 | mtm2-sim.enabled | bool | `false` | Enable the MTM2 simulator CSC |
 | mtm2.enabled | bool | `false` | Enable the MTM2 CSC |
 | mtm2hexapod-sim.enabled | bool | `false` | Enable the MTHexapod:2 simulator CSC |

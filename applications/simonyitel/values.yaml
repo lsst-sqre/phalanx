@@ -78,6 +78,10 @@ mtm2hexapod:
   # -- Enable the MTHexapod:2 CSC
   enabled: false
 
+mtm2-hwsim:
+  # -- Enable the MTM2 hardware simulator CSC
+  enabled: false
+
 mtm2hexapod-sim:
   # -- Enable the MTHexapod:2 simulator CSC
   enabled: false

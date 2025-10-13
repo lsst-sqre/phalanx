@@ -247,6 +247,20 @@ mtm2hexapod-sim:
       cpu: 40m
       memory: 400Mi
 
+mtm2-hwsim:
+  image:
+    repository: ts-dockerhub.lsst.org/m2
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate --host m2-crio-simulator.ls.lsst.org
+  resources:
+    limits:
+      cpu: 850m
+      memory: 1500Mi
+    requests:
+      cpu: 120m
+      memory: 500Mi
+
 mtmount-sim:
   enabled: true
   image:
