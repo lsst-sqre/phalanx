@@ -39,7 +39,7 @@ jobs:
         with:
           python-version-file: ".python-version"
 
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@v7
 
       - name: Run linters
         run: uv run --only-group=tox tox run -e lint
@@ -60,7 +60,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@v7
 
       - name: Run Python tests
         run: uv run --only-group=tox tox run -e typing,py,coverage-report
@@ -91,7 +91,7 @@ jobs:
         with:
           python-version-file: ".python-version"
 
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@v7
 
       - name: Run Phalanx Helm linter
         run: uv run --only-group=tox tox run -e phalanx-lint-change
@@ -156,7 +156,7 @@ jobs:
         with:
           python-version-file: ".python-version"
 
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@v7
 
       - name: Download installer dependencies
         run: |
@@ -216,7 +216,7 @@ jobs:
         with:
           python-version-file: ".python-version"
 
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@v7
 
       - name: Install graphviz
         run: |
