@@ -133,7 +133,7 @@ mtqueue:
       cpu: 2500m
       memory: 10Gi
     requests:
-      cpu: 500m
+      cpu: 1000m
       memory: 430Mi
 
 mtscheduler:
@@ -216,7 +216,7 @@ ocsqueue:
       memory: 10Gi
     requests:
       cpu: 500m
-      memory: 430Mi
+      memory: 750Mi
 
 ocsscheduler:
   classifier: scheduler3

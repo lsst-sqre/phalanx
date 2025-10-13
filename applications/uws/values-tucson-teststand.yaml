@@ -53,10 +53,10 @@ atocps:
   resources:
     limits:
       cpu: 100m
-      memory: 300Mi
+      memory: 320Mi
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 12m
+      memory: 160Mi
 
 ccocps:
   enabled: true
@@ -69,7 +69,7 @@ ccocps:
   resources:
     limits:
       cpu: 100m
-      memory: 300Mi
+      memory: 320Mi
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 12m
+      memory: 160Mi
