@@ -37,6 +37,6 @@ applications:
   uws: true
 
 controlSystem:
-  imageTag: "c0041"
+  imageTag: "c0042"
   siteTag: "tucson"
   s3EndpointUrl: "https://s3.tu.lsst.org"
