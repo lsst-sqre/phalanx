@@ -63,7 +63,7 @@ ccoods:
           minutes: 0
           seconds: 0
 
-      ingester:
+      message_ingester:
           kafka:
               brokers:
                   - sasquatch-kafka-bootstrap.sasquatch:9092
@@ -71,22 +71,18 @@ ccoods:
                 - lsst.s3.raw.comcam
               group_id: CCOODS-S3
               max_messages: 250
-          butlers:
-              - butler:
-                  instrument: lsst.obs.lsst.LsstComCam
-                  class:
-                      import: lsst.ctrl.oods.messageAttendant
-                      name: MessageAttendant
-                  repoDirectory : s3://butler@rubinobs-butler-comcam
-                  s3profile: butler
-                  collections:
-                      - LSSTComCam/raw/all
-                  cleanCollections:
+          butler:
+              instrument: lsst.obs.lsst.LsstComCam
+              repo_directory : s3://butler@rubinobs-butler-comcam
+              s3profile: butler
+              collections:
+                  - LSSTComCam/raw/all
+              collection_cleaner:
+                  collections_to_clean:
                       - collection: LSSTComCam/raw/all
-                        filesOlderThan:
                             <<: *interval
                             days: 30
-                  scanInterval:
+                  cleaning_interval:
                       <<: *interval
                       hours: 1
 
@@ -100,10 +96,10 @@ lasertracker1-sim:
   resources:
     limits:
       cpu: 200m
-      memory: 690Mi
+      memory: 512Mi
     requests:
-      cpu: 20m
-      memory: 230Mi
+      cpu: 26m
+      memory: 256Mi
 
 mtaircompressor1-sim:
   enabled: true
@@ -115,10 +111,10 @@ mtaircompressor1-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 450Mi
+      memory: 320Mi
     requests:
       cpu: 10m
-      memory: 150Mi
+      memory: 160Mi
 
 mtaircompressor2-sim:
   enabled: true
@@ -130,10 +126,10 @@ mtaircompressor2-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 450Mi
+      memory: 320Mi
     requests:
       cpu: 10m
-      memory: 150Mi
+      memory: 160Mi
 
 mtaos:
   image:
@@ -166,10 +162,10 @@ mtaos:
   resources:
     limits:
       cpu: 1000m
-      memory: 1860Mi
+      memory: 1800Mi
     requests:
-      cpu: 30m
-      memory: 620Mi
+      cpu: 35m
+      memory: 900Mi
 
 mtcamhexapod-sim:
   enabled: true
@@ -182,10 +178,10 @@ mtcamhexapod-sim:
   resources:
     limits:
       cpu: 500m
-      memory: 1050Mi
+      memory: 840Mi
     requests:
-      cpu: 50m
-      memory: 350Mi
+      cpu: 60m
+      memory: 420Mi
 
 mtdome-sim:
   enabled: true
@@ -196,11 +192,11 @@ mtdome-sim:
     RUN_ARG: --simulate 1
   resources:
     limits:
-      cpu: 2
-      memory: 450Mi
+      cpu: 900m
+      memory: 320Mi
     requests:
-      cpu: 200m
-      memory: 150Mi
+      cpu: 220m
+      memory: 160Mi
 
 mtdometrajectory:
   image:
@@ -209,10 +205,10 @@ mtdometrajectory:
   resources:
     limits:
       cpu: 250m
-      memory: 690Mi
+      memory: 512Mi
     requests:
       cpu: 25m
-      memory: 230Mi
+      memory: 256Mi
 
 mtm1m3-sim:
   enabled: true
@@ -226,10 +222,10 @@ mtm1m3-sim:
     LSST_KAFKA_MAX_QUEUE_MS: 100
   resources:
     limits:
-      cpu: 2
+      cpu: 1000m
     requests:
-      cpu: 200m
-      memory: 1000Mi
+      cpu: 300m
+      memory: 300Mi
 
 mtm1m3ts-sim:
   enabled: true
@@ -242,7 +238,7 @@ mtm1m3ts-sim:
       memory: 210Mi
     requests:
       cpu: 40m
-      memory: 70Mi
+      memory: 90Mi
 
 mtm2-sim:
   enabled: true
@@ -256,8 +252,8 @@ mtm2-sim:
       cpu: 850m
       memory: 1500Mi
     requests:
-      cpu: 85m
-      memory: 420Mi
+      cpu: 120m
+      memory: 500Mi
 
 mtm2hexapod-sim:
   enabled: true
@@ -270,10 +266,10 @@ mtm2hexapod-sim:
   resources:
     limits:
       cpu: 400m
-      memory: 900Mi
+      memory: 800Mi
     requests:
       cpu: 40m
-      memory: 300Mi
+      memory: 400Mi
 
 mtmount-sim:
   enabled: true
@@ -285,10 +281,10 @@ mtmount-sim:
   resources:
     limits:
       cpu: 500m
-      memory: 1400Mi
+      memory: 1000Mi
     requests:
-      cpu: 50m
-      memory: 460Mi
+      cpu: 100m
+      memory: 512Mi
 
 mtptg:
   image:
@@ -301,10 +297,10 @@ mtptg:
   resources:
     limits:
       cpu: 1200m
-      memory: 1000Mi
+      memory: 2000Mi
     requests:
       cpu: 120m
-      memory: 300Mi
+      memory: 1500Mi
 
 mtrotator-sim:
   enabled: true
@@ -316,10 +312,10 @@ mtrotator-sim:
   resources:
     limits:
       cpu: 400m
-      memory: 660Mi
+      memory: 600Mi
     requests:
-      cpu: 40m
-      memory: 220Mi
+      cpu: 60m
+      memory: 280Mi
 
 mtvms-m1m3-sim:
   enabled: true
@@ -331,6 +327,7 @@ mtvms-m1m3-sim:
   resources:
     limits:
       cpu: 250m
+      memory: 180Mi
     requests:
       cpu: 25m
-      memory: 20Mi
+      memory: 60Mi
