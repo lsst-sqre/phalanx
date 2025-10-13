@@ -550,7 +550,7 @@ Rubin Observatory's telemetry service
 | schema-registry.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster used by the Schema Registry. |
 | schema-registry.compatibilityLevel | string | `"none"` | Compatibility level for the Schema Registry. Options are: none, backward, backward_transitive, forward, forward_transitive, full, and full_transitive. |
 | schema-registry.image.repository | string | `"confluentinc/cp-schema-registry"` | Docker image for the Confluent Schema Registry. |
-| schema-registry.image.tag | string | `"8.0.1"` | Docker image tag for the Confluent Schema Registry. |
+| schema-registry.image.tag | string | `"8.0.2"` | Docker image tag for the Confluent Schema Registry. |
 | schema-registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | schema-registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | schema-registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
@@ -562,7 +562,7 @@ Rubin Observatory's telemetry service
 | schema-registry-remote.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster used by the Schema Registry. |
 | schema-registry-remote.compatibilityLevel | string | `"none"` | Compatibility level for the Schema Registry. Options are: none, backward, backward_transitive, forward, forward_transitive, full, and full_transitive. |
 | schema-registry-remote.image.repository | string | `"confluentinc/cp-schema-registry"` | Docker image for the Confluent Schema Registry. |
-| schema-registry-remote.image.tag | string | `"8.0.1"` | Docker image tag for the Confluent Schema Registry. |
+| schema-registry-remote.image.tag | string | `"8.0.2"` | Docker image tag for the Confluent Schema Registry. |
 | schema-registry-remote.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | schema-registry-remote.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | schema-registry-remote.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
