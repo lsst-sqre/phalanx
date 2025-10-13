@@ -25,7 +25,7 @@ auxtel-ess202-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 160Mi
     limits:
       cpu: 190m
       memory: 320Mi
@@ -41,7 +41,7 @@ auxtel-ess308-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 160Mi
     limits:
       cpu: 190m
       memory: 320Mi
@@ -57,7 +57,7 @@ auxtel-ess204-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 160Mi
     limits:
       cpu: 190m
       memory: 320Mi
@@ -73,7 +73,7 @@ calibhill-ess301-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 180Mi
     limits:
       cpu: 190m
       memory: 360Mi
@@ -89,7 +89,7 @@ camera-ess111-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 160Mi
     limits:
       cpu: 190m
       memory: 320Mi
@@ -105,7 +105,7 @@ cleanroom-ess109-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 160Mi
     limits:
       cpu: 190m
       memory: 320Mi
@@ -119,8 +119,8 @@ dimm1-sim:
     RUN_ARG: 1 --simulate
   resources:
     requests:
-      cpu: 23m
-      memory: 200Mi
+      cpu: 25m
+      memory: 256Mi
     limits:
       cpu: 230m
       memory: 512Mi
@@ -134,8 +134,8 @@ dimm2-sim:
     RUN_ARG: 2 --simulate
   resources:
     requests:
-      cpu: 23m
-      memory: 200Mi
+      cpu: 26m
+      memory: 240Mi
     limits:
       cpu: 230m
       memory: 480Mi
@@ -159,7 +159,7 @@ dream-sim:
       memory: 320Mi
     requests:
       cpu: 10m
-      memory: 150Mi
+      memory: 160Mi
 
 dsm1-sim:
   enabled: true
@@ -172,7 +172,7 @@ dsm1-sim:
   resources:
     requests:
       cpu: 14m
-      memory: 90Mi
+      memory: 160Mi
     limits:
       cpu: 140m
       memory: 320Mi
@@ -188,7 +188,7 @@ dsm2-sim:
   resources:
     requests:
       cpu: 10m
-      memory: 90Mi
+      memory: 160Mi
     limits:
       cpu: 100m
       memory: 320Mi
@@ -219,10 +219,10 @@ epm-ess303-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 360Mi
 
 epm-generator-ess305-sim:
   enabled: true
@@ -234,11 +234,11 @@ epm-generator-ess305-sim:
     RUN_ARG: 305 --simulate
   resources:
     requests:
-      cpu: 19m
-      memory: 150Mi
+      cpu: 30m
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 320Mi
 
 epm-generator-ess306-sim:
   enabled: true
@@ -250,11 +250,11 @@ epm-generator-ess306-sim:
     RUN_ARG: 306 --simulate
   resources:
     requests:
-      cpu: 19m
-      memory: 150Mi
+      cpu: 30m
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 320Mi
 
 hvac-sim:
   enabled: true
@@ -265,11 +265,11 @@ hvac-sim:
     RUN_ARG: --state enabled --simulate
   resources:
     requests:
-      cpu: 40m
-      memory: 120Mi
+      cpu: 80m
+      memory: 200Mi
     limits:
       cpu: 400m
-      memory: 3000Mi
+      memory: 2000Mi
 
 m1m3-ess113-sim:
   enabled: true
@@ -282,10 +282,10 @@ m1m3-ess113-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 160Mi
     limits:
-      cpu: 450m
-      memory: 900Mi
+      cpu: 190m
+      memory: 480Mi
 
 m1m3-ess114-sim:
   enabled: true
@@ -298,10 +298,10 @@ m1m3-ess114-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 480Mi
 
 m1m3-ess115-sim:
   enabled: true
@@ -314,10 +314,10 @@ m1m3-ess115-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 480Mi
 
 m1m3-ess116-sim:
   enabled: true
@@ -330,10 +330,10 @@ m1m3-ess116-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 480Mi
 
 m1m3-ess117-sim:
   enabled: true
@@ -346,10 +346,10 @@ m1m3-ess117-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 480Mi
 
 m2-ess106-sim:
   enabled: true
@@ -362,10 +362,10 @@ m2-ess106-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 480Mi
 
 m2-ess112-sim:
   enabled: true
@@ -378,10 +378,10 @@ m2-ess112-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 480Mi
 
 mtdome-ess107-sim:
   enabled: true
@@ -394,10 +394,10 @@ mtdome-ess107-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 480Mi
 
 mtdome-ess108-sim:
   enabled: true
@@ -410,10 +410,10 @@ mtdome-ess108-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 480Mi
 
 mtdome-ess118-sim:
   enabled: true
@@ -426,10 +426,10 @@ mtdome-ess118-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 480Mi
 
 mtdome-ess119-sim:
   enabled: true
@@ -442,10 +442,10 @@ mtdome-ess119-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 480Mi
 
 mtdome-ess120-sim:
   enabled: true
@@ -458,10 +458,10 @@ mtdome-ess120-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 480Mi
 
 ringss-ess304-sim:
   enabled: true
@@ -474,42 +474,42 @@ ringss-ess304-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 360Mi
 
-tma-ess001-sim:
+tma-ess121-sim:
   enabled: true
-  classifier: ess1
+  classifier: ess121
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 1 --simulate
+    RUN_ARG: 121 --simulate
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 480Mi
 
-tma-ess002-sim:
+tma-ess122-sim:
   enabled: true
-  classifier: ess2
+  classifier: ess122
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 2 --simulate
+    RUN_ARG: 122 --simulate
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 480Mi
 
 tma-ess104-sim:
   enabled: true
@@ -522,10 +522,10 @@ tma-ess104-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 200Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 600Mi
 
 tma-ess105-sim:
   enabled: true
@@ -538,10 +538,10 @@ tma-ess105-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 480Mi
 
 tma-ess110-sim:
   enabled: true
@@ -554,10 +554,10 @@ tma-ess110-sim:
   resources:
     requests:
       cpu: 19m
-      memory: 150Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 450Mi
+      memory: 480Mi
 
 weatherforecast:
   image:
@@ -570,7 +570,7 @@ weatherforecast:
     key: meteoblue-api-key
   resources:
     requests:
-      cpu: 9m
+      cpu: 14m
       memory: 150Mi
     limits:
       cpu: 90m
