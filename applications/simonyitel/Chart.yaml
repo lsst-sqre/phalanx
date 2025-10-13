@@ -140,6 +140,11 @@ dependencies:
   condition: mtm2hexapod-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: mtm2-hwsim
+  version: 1.0.0
+  condition: mtm2-hwsim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: mtmount
   version: 1.0.0
   condition: mtmount.enabled
