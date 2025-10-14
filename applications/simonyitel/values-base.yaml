@@ -96,6 +96,7 @@ mtcamhexapod-sim:
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
+  obsenv: true
   env:
     RUN_ARG: --simulate 1
   resources:
@@ -236,6 +237,7 @@ mtm2hexapod-sim:
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
+  obsenv: true
   env:
     RUN_ARG: --simulate 2
   resources:
