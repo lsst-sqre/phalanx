@@ -178,10 +178,10 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.scheduling.userScheduler.enabled | bool | `false` | Whether the user scheduler should be enabled |
 | proxy.ingress.annotations | object | See `values.yaml` | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |
 | purger.affinity | object | `{}` | Affinity rules for purger |
+| purger.config.addTimestamp | bool | `false` | Add timestamps to log messages |
 | purger.config.dryRun | bool | `false` | Report only; do not purge |
-| purger.config.logging.addTimestamps | bool | `false` | Add timestamps to log lines |
-| purger.config.logging.log_level | string | `"info"` | Level at which to log |
-| purger.config.logging.profile | string | `"production"` | "production" (JSON logs) or "development" (human-friendly) |
+| purger.config.logLevel | string | `"info"` | Level at which to log |
+| purger.config.logProfile | string | `"production"` | "production" (JSON logs) or "development" (human-friendly) |
 | purger.config.policyFile | string | `"/etc/purger/policy.yaml"` | File holding purge policy |
 | purger.enabled | bool | `false` | Purge scratch space? |
 | purger.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the purger image |
