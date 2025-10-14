@@ -810,15 +810,18 @@ purger:
   config:
     # -- File holding purge policy
     policyFile: /etc/purger/policy.yaml
+
     # -- Report only; do not purge
     dryRun: false
-    logging:
-      # -- Level at which to log
-      log_level: info
-      # -- "production" (JSON logs) or "development" (human-friendly)
-      profile: production
-      # -- Add timestamps to log lines
-      addTimestamps: false
+
+    # -- Level at which to log
+    logLevel: info
+
+    # -- Add timestamps to log messages
+    addTimestamp: false
+
+    # -- "production" (JSON logs) or "development" (human-friendly)
+    logProfile: production
 
   policy:
     directories:
