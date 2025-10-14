@@ -57,7 +57,7 @@ ccoods:
     path: /etc
     filename: ccoods.yaml
     content: |
-      defaultInterval: &interval
+      default_interval: &interval
           days: 0
           hours: 0
           minutes: 0
