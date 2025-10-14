@@ -1,8 +1,8 @@
+sentry:
+  enabled: true
 controller:
   googleServiceAccount: "nublado-controller@science-platform-demo-9e05.iam.gserviceaccount.com"
   slackAlerts: true
-  sentry:
-    enabled: true
   config:
     logLevel: "DEBUG"
     fileserver:

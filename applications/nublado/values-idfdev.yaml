@@ -1,8 +1,8 @@
+sentry:
+  enabled: true
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
-  sentry:
-    enabled: true
   config:
     dropdownMenu:
       release:

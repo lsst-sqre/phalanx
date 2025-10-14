@@ -1,12 +1,14 @@
 # Default values for Nublado.
 
+sentry:
+  # -- Whether to report errors to Sentry. Applies to all Nublado components
+  # that support Sentry.
+  enabled: false
+
+
 controller:
   # -- Affinity rules for the Nublado controller
   affinity: {}
-
-  sentry:
-    # -- Whether to report errors to Sentry
-    enabled: false
 
   # -- If Google Artifact Registry is used as the image source, the Google
   # service account that has an IAM binding to the `nublado-controller`

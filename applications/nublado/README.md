@@ -104,7 +104,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.nodeSelector | object | `{}` | Node selector rules for the Nublado controller |
 | controller.podAnnotations | object | `{}` | Annotations for the Nublado controller |
 | controller.resources | object | See `values.yaml` | Resource limits and requests for the Nublado controller |
-| controller.sentry.enabled | bool | `false` | Whether to report errors to Sentry |
 | controller.slackAlerts | bool | `false` | Whether to enable Slack alerts. If set to true, `slack_webhook` must be set in the corresponding Nublado Vault secret. |
 | controller.tolerations | list | `[]` | Tolerations for the Nublado controller |
 | cronjob.affinity | object | `{}` | Affinity rules for the cloning cronjob(s). |
@@ -198,3 +197,4 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | purger.tolerations | list | `[]` | Tolerations for purger |
 | purger.volumeName | string | None, must be set for each environment | Name of volume to purge (from controller.lab.config.volumes) |
 | secrets.templateSecrets | bool | `true` | Whether to use the new secrets management mechanism. If enabled, the Vault nublado secret will be split into a nublado secret for JupyterHub and a nublado-lab-secret secret used as a source for secret values for the user's lab. |
+| sentry.enabled | bool | `false` | Whether to report errors to Sentry. Applies to all Nublado components that support Sentry. |
