@@ -1,0 +1,116 @@
+{{- if .Values.tapSchema.useCloudSQL }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "cadc-tap.fullname" . }}-schema-update-{{ .Values.tapSchema.schemaVersion | replace "." "-" }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation"
+    helm.sh/hook-weight: "-5"
+  labels:
+    {{- include "cadc-tap.labels" . | nindent 4 }}
+    app.kubernetes.io/component: "schema-update"
+spec:
+  ttlSecondsAfterFinished: 86400
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        {{- include "cadc-tap.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "schema-update"
+    spec:
+      {{- if .Values.cloudsql.enabled }}
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+      {{- if .Values.cloudsql.enabled }}
+      initContainers:
+      - name: cloud-sql-proxy
+        image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
+        imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
+        command:
+          - "/cloud_sql_proxy"
+          - "-ip_address_types=PRIVATE"
+          - "-log_debug_stdout=true"
+          - "-structured_logs=true"
+          - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
+        {{- with .Values.cloudsql.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        restartPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - "all"
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 65532
+          runAsGroup: 65532
+      {{- end }}
+      containers:
+      - name: tap-schema-updater
+        image: {{ .Values.tapSchema.felisImage.repository }}:{{ .Values.tapSchema.felisImage.tag }}
+        imagePullPolicy: {{ .Values.tapSchema.felisImage.pullPolicy | default "IfNotPresent" }}
+        command: ["/bin/bash", "/scripts/update_tap_schema.sh"]
+        env:
+        - name: PGHOST
+          value: "127.0.0.1"
+        - name: PGPORT
+          value: "5432"
+        - name: PGDATABASE
+          value: {{ .Values.tapSchema.cloudSqlDatabase | quote }}
+        - name: PGUSER
+          value: {{ .Values.tapSchema.cloudSqlDatabase | quote }}
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "cadc-tap"
+              key: "uws-db-password"
+        - name: SCHEMA_VERSION
+          value: {{ .Values.tapSchema.schemaVersion | quote }}
+        - name: SCHEMAS_TO_LOAD
+          value: {{ .Values.tapSchema.schemas | join "," | quote }}
+        - name: GCS_BUCKET
+          value: {{ .Values.tapSchema.gcsBucket | default "sdm-schemas-releases" | quote }}
+        volumeMounts:
+        - name: scripts
+          mountPath: /scripts/update_tap_schema.sh
+          subPath: update_tap_schema.sh
+          readOnly: true
+        - name: scripts
+          mountPath: /sql
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        resources:
+          requests:
+            memory: {{ .Values.tapSchema.resources.requests.memory | default "512Mi" | quote }}
+            cpu: {{ .Values.tapSchema.resources.requests.cpu | default "250m" | quote }}
+          limits:
+            memory: {{ .Values.tapSchema.resources.limits.memory | default "2Gi" | quote }}
+            cpu: {{ .Values.tapSchema.resources.limits.cpu | default "1000m" | quote }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - all
+          readOnlyRootFilesystem: true
+      volumes:
+      - name: scripts
+        configMap:
+          name: {{ include "cadc-tap.fullname" $ }}-schema-update-script
+          defaultMode: 0755
+      - name: tmp
+        emptyDir:
+          sizeLimit: 1Gi
+{{- end }}

@@ -107,17 +107,24 @@ spec:
           env:
             - name: CATALINA_OPTS
               value: >-
+                {{- if .Values.tapSchema.useCloudSQL }}
+                -Dtapschemauser.password=$CLOUDSQL_TAP_PASSWORD
+                -Dtapschemauser.username={{ required "cloudsql.database must be specified" .Values.tapSchema.cloudSqlDatabase }}
+                -Dtapschemauser.url=jdbc:postgresql://localhost:5432/{{ .Values.uws.cloudSqlDatabase }}
+                -Dtapschemauser.driverClassName=org.postgresql.Driver
+                {{- else }}
                 -Dtapschemauser.username=TAP_SCHEMA
                 -Dtapschemauser.password=TAP_SCHEMA
                 -Dtapschemauser.driverClassName=com.mysql.cj.jdbc.Driver
                 -Dtapschemauser.url=jdbc:mysql://{{ .Values.config.tapSchemaAddress }}/
+                {{- end }}
                 -Dtapschemauser.maxActive=100
-                -Duws.driverClassName=org.postgresql.Driver
                 -Duws.maxActive=8
-                {{- if .Values.cloudsql.enabled }}
-                -Duws.password=$UWS_DB_PASSWORD
-                -Duws.username={{ required "cloudsql.database must be specified" .Values.cloudsql.database }}
-                -Duws.url=jdbc:postgresql://localhost:5432/{{ .Values.cloudsql.database }}
+                -Duws.driverClassName=org.postgresql.Driver
+                {{- if .Values.uws.useCloudSQL }}
+                -Duws.password=$CLOUDSQL_TAP_PASSWORD
+                -Duws.username={{ required "cloudsql.database must be specified" .Values.uws.cloudSqlDatabase }}
+                -Duws.url=jdbc:postgresql://localhost:5432/{{ .Values.uws.cloudSqlDatabase }}
                 {{- else }}
                 -Duws.username=postgres
                 -Duws.url=jdbc:postgresql://{{ template "cadc-tap.fullname" . }}-uws-db/
@@ -175,7 +182,7 @@ spec:
                   key: "pgpassword"
             {{- end }}
             {{- if .Values.cloudsql.enabled }}
-            - name: "UWS_DB_PASSWORD"
+            - name: "CLOUDSQL_TAP_PASSWORD"
               valueFrom:
                 secretKeyRef:
                   name: "cadc-tap"

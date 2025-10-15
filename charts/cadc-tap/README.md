@@ -79,15 +79,30 @@ IVOA TAP service
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `false` | Specifies whether a service account should be created. |
 | tapSchema.affinity | object | `{}` | Affinity rules for the TAP schema database pod |
+| tapSchema.cleanupOldSchemas | bool | `false` |  |
+| tapSchema.cloudSqlDatabase | string | `"tap"` |  |
+| tapSchema.dryRun | bool | `false` |  |
+| tapSchema.felisImage.pullPolicy | string | `"IfNotPresent"` |  |
+| tapSchema.felisImage.repository | string | `"stvoutsin/felis-updater"` |  |
+| tapSchema.felisImage.tag | string | `"latest"` |  |
+| tapSchema.gcsBucket | string | `"sdm-schemas-releases"` |  |
 | tapSchema.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP schema image |
 | tapSchema.image.repository | string | `"lsstsqre/tap-schema-mock"` | TAP schema image to ue. This must be overridden by each environment with the TAP schema for that environment. |
 | tapSchema.image.tag | string | `"DP1-v1.2.0"` | Tag of TAP schema image |
 | tapSchema.nodeSelector | object | `{}` | Node selection rules for the TAP schema database pod |
 | tapSchema.podAnnotations | object | `{}` | Annotations for the TAP schema database pod |
-| tapSchema.resources | object | See `values.yaml` | Resource limits and requests for the TAP schema database pod |
+| tapSchema.resources.limits.cpu | string | `"1"` |  |
+| tapSchema.resources.limits.memory | string | `"1Gi"` |  |
+| tapSchema.resources.requests.cpu | string | `"5m"` |  |
+| tapSchema.resources.requests.memory | string | `"400Mi"` |  |
+| tapSchema.schemaVersion | string | `"v1.0.0"` |  |
+| tapSchema.schemas[0] | string | `"dp02_dc2"` |  |
+| tapSchema.schemas[1] | string | `"dp1"` |  |
 | tapSchema.tolerations | list | `[]` | Tolerations for the TAP schema database pod |
+| tapSchema.useCloudSQL | bool | `false` |  |
 | tolerations | list | `[]` | Tolerations for the TAP pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
+| uws.cloudSqlDatabase | string | `"tap"` |  |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
 | uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
 | uws.image.tag | string | `"3.10.0"` | Tag of UWS database image to use |
@@ -95,3 +110,4 @@ IVOA TAP service
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |
 | uws.resources | object | See `values.yaml` | Resource limits and requests for the UWS database pod |
 | uws.tolerations | list | `[]` | Tolerations for the UWS database pod |
+| uws.useCloudSQL | bool | `false` |  |
