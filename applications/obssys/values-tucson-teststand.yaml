@@ -257,6 +257,21 @@ watcher:
   image:
     repository: ts-dockerhub.lsst.org/watcher
     pullPolicy: Always
+  env:
+    TS_CONFIG_OCS_DIR: "/net/obs-env/auto_base_packages/ts_config_ocs"
+  obsenv: true
+  obsenv_configfile:
+    filename: obs_env_config.json
+    content: |
+      {
+        "repositories": {
+          "ts_config_ocs": "https://github.com/lsst-ts/"
+        },
+        "base_env_source_org": "https://github.com/lsst-ts/",
+        "base_env_source_repo": "ts_cycle_build",
+        "base_env_def_file": "cycle/cycle.env",
+        "destination": "/net/obs-env/auto_base_packages"
+      }
   resources:
     limits:
       cpu: 2400m
