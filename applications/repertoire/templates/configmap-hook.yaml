@@ -1,0 +1,23 @@
+{{- if .Values.managedTapSchema }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "repertoire-hook-config"
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation"
+  labels:
+    app.kubernetes.io/name: "repertoire"
+data:
+  config.yaml: |
+    logLevel: {{ .Values.config.logLevel | quote }}
+    logProfile: {{ .Values.config.logProfile | quote }}
+    schemaVersion: {{ .Values.config.schemaVersion | quote }}
+    schemaSourceTemplate: {{ .Values.config.schemaSourceTemplate | quote }}
+    tapServers: {{ .Values.config.tapServers | toJson }}
+    metrics:
+      enabled: false
+      application: "repertoire"
+    sentry:
+      enabled: false
+{{- end }}
