@@ -1,12 +1,14 @@
 # Default values for Nublado.
 
+sentry:
+  # -- Whether to report errors to Sentry. Applies to all Nublado components
+  # that support Sentry.
+  enabled: false
+
+
 controller:
   # -- Affinity rules for the Nublado controller
   affinity: {}
-
-  sentry:
-    # -- Whether to report errors to Sentry
-    enabled: false
 
   # -- If Google Artifact Registry is used as the image source, the Google
   # service account that has an IAM binding to the `nublado-controller`
@@ -148,7 +150,7 @@ controller:
         pullPolicy: "IfNotPresent"
 
         # -- Tag of fsadmin image to use
-        tag: "8.16.0"
+        tag: "8.17.0"
 
       # -- Mount prefix, to be prepended to mountpoints in order to
       # collect them in one place
@@ -558,7 +560,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.16.0"
+      tag: "8.17.0"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
@@ -808,15 +810,18 @@ purger:
   config:
     # -- File holding purge policy
     policyFile: /etc/purger/policy.yaml
+
     # -- Report only; do not purge
     dryRun: false
-    logging:
-      # -- Level at which to log
-      log_level: info
-      # -- "production" (JSON logs) or "development" (human-friendly)
-      profile: production
-      # -- Add timestamps to log lines
-      addTimestamps: false
+
+    # -- Level at which to log
+    logLevel: info
+
+    # -- Add timestamps to log messages
+    addTimestamp: false
+
+    # -- "production" (JSON logs) or "development" (human-friendly)
+    logProfile: production
 
   policy:
     directories:

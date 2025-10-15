@@ -46,7 +46,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fsadmin.extraVolumes | list | `[]` | Extra volumes that should be made available to fsadmin |
 | controller.config.fsadmin.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for fsadmin image |
 | controller.config.fsadmin.image.repository | string | `"ghcr.io/lsst-sqre/nublado-fsadmin"` | fsadmin image to use |
-| controller.config.fsadmin.image.tag | string | `"8.16.0"` | Tag of fsadmin image to use |
+| controller.config.fsadmin.image.tag | string | `"8.17.0"` | Tag of fsadmin image to use |
 | controller.config.fsadmin.mountPrefix | string | `nil` | Mount prefix, to be prepended to mountpoints in order to collect them in one place |
 | controller.config.fsadmin.nodeSelector | object | `{}` | Node selector rules for fsadmin pods |
 | controller.config.fsadmin.resources | object | See `values.yaml` | Resource requests and limits for fsadmin |
@@ -104,7 +104,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.nodeSelector | object | `{}` | Node selector rules for the Nublado controller |
 | controller.podAnnotations | object | `{}` | Annotations for the Nublado controller |
 | controller.resources | object | See `values.yaml` | Resource limits and requests for the Nublado controller |
-| controller.sentry.enabled | bool | `false` | Whether to report errors to Sentry |
 | controller.slackAlerts | bool | `false` | Whether to enable Slack alerts. If set to true, `slack_webhook` must be set in the corresponding Nublado Vault secret. |
 | controller.tolerations | list | `[]` | Tolerations for the Nublado controller |
 | cronjob.affinity | object | `{}` | Affinity rules for the cloning cronjob(s). |
@@ -164,7 +163,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/nublado-jupyterhub"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"8.16.0"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"8.17.0"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | See `values.yaml` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |
@@ -179,10 +178,10 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.scheduling.userScheduler.enabled | bool | `false` | Whether the user scheduler should be enabled |
 | proxy.ingress.annotations | object | See `values.yaml` | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |
 | purger.affinity | object | `{}` | Affinity rules for purger |
+| purger.config.addTimestamp | bool | `false` | Add timestamps to log messages |
 | purger.config.dryRun | bool | `false` | Report only; do not purge |
-| purger.config.logging.addTimestamps | bool | `false` | Add timestamps to log lines |
-| purger.config.logging.log_level | string | `"info"` | Level at which to log |
-| purger.config.logging.profile | string | `"production"` | "production" (JSON logs) or "development" (human-friendly) |
+| purger.config.logLevel | string | `"info"` | Level at which to log |
+| purger.config.logProfile | string | `"production"` | "production" (JSON logs) or "development" (human-friendly) |
 | purger.config.policyFile | string | `"/etc/purger/policy.yaml"` | File holding purge policy |
 | purger.enabled | bool | `false` | Purge scratch space? |
 | purger.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the purger image |
@@ -198,3 +197,4 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | purger.tolerations | list | `[]` | Tolerations for purger |
 | purger.volumeName | string | None, must be set for each environment | Name of volume to purge (from controller.lab.config.volumes) |
 | secrets.templateSecrets | bool | `true` | Whether to use the new secrets management mechanism. If enabled, the Vault nublado secret will be split into a nublado secret for JupyterHub and a nublado-lab-secret secret used as a source for secret values for the user's lab. |
+| sentry.enabled | bool | `false` | Whether to report errors to Sentry. Applies to all Nublado components that support Sentry. |
