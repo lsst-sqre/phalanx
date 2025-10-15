@@ -35,6 +35,6 @@ Narrative log service
 | podAnnotations | object | `{}` | Annotations for the narrativelog pod |
 | podSecurityContext | object | `{}` | Security context for the narrativelog pod |
 | replicaCount | int | `1` | Number of narrativelog replicas to run |
-| resources | object | `{}` | Resource limits and requests for the narrativelog pod |
+| resources | object | `{"limits":{"cpu":1,"memory":"900Mi"},"requests":{"cpu":"300m","memory":"300Mi"}}` | Resource limits and requests for the narrativelog pod |
 | securityContext | object | `{}` | Security context for the narrativelog deployment |
 | tolerations | list | `[]` | Tolerations for the narrativelog pod |
