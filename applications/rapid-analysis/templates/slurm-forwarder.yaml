@@ -20,11 +20,14 @@ spec:
       - name: slurm-log-forwarder
         image: "alpine:latest"
         command:
-          - "/bin/sleep"
-          - "600"
+          - "/usr/bin/tail"
+          - "-n"
+          - "1"
+          - "-f"
+          - "/sdf/data/rubin/user/cslater/canary_output.log"
         volumeMounts:
-        - name: sdf-group-rubin
-          mountPath: "/sdf/group/rubin"
+        - name: sdf-data-rubin
+          mountPath: "/sdf/data/rubin"
           readOnly: true
         resources:
           requests:
@@ -35,8 +38,8 @@ spec:
             memory: 2G
 
       volumes:
-      - name: sdf-group-rubin
+      - name: sdf-data-rubin
         persistentVolumeClaim:
-          claimName: sdf-group-rubin
+          claimName: sdf-data-rubin
 {{- end }}
 
