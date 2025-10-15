@@ -14,3 +14,6 @@ data:
     dp02: {{ $dp02Remote }}
     dp02-remote: {{ $dp02Remote }}
     dp1: "{{.Values.global.baseUrl}}{{.Values.config.pathPrefix}}/repo/dp1/butler.yaml"
+    {{- if .Values.config.promptPostgresUri }}
+    prompt: "{{.Values.global.baseUrl}}{{.Values.config.pathPrefix}}/repo/prompt/butler.yaml"
+    {{ end }}
