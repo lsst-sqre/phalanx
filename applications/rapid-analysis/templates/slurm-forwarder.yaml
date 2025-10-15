@@ -20,11 +20,8 @@ spec:
       - name: slurm-log-forwarder
         image: "alpine:latest"
         command:
-          - "/usr/bin/tail"
-          - "-n"
-          - "1"
-          - "-f"
-          - "/sdf/group/rubin/u/cslater/canary_output.log"
+          - "/bin/sleep"
+          - "600"
         volumeMounts:
         - name: sdf-group-rubin
           mountPath: "/sdf/group/rubin"
