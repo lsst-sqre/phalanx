@@ -101,6 +101,11 @@ config:
   # @default -- No configuration file for DP1 will be generated.
   dp1PostgresUri: ""
 
+  # -- Postgres connection string pointing to the registry database hosting
+  # Prompt Data Products.
+  # @default -- No configuration file for prompt will be generated.
+  promptPostgresUri: ""
+
   # -- Postgres username used to connect to the Butler DB
   # @default -- Use values specified in per-repository Butler config files.
   pguser: ""

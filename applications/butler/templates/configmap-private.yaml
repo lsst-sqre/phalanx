@@ -21,6 +21,36 @@ data:
         opaque: lsst.daf.butler.registry.opaque.ByNameOpaqueTableStorageManager
       namespace: dm_51372
 
+  prompt.yaml: |
+    datastore:
+      cls: lsst.daf.butler.datastores.chainedDatastore.ChainedDatastore
+      datastores:
+        - datastore:
+            # Most of the files are in a single bucket, except for raws.
+            name: FileDatastore
+            cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+            root: s3://slac@rubin-prompt/
+            records:
+              table: file_datastore_records
+        - datastore:
+            # Raws are served from a separate bucket.
+            name: raw
+            cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+            root: s3://slac@rubin-lsstcam-raw/
+            records:
+              table: raw_datastore_records
+    registry:
+      db: {{ .Values.config.promptPostgresUri }}
+      temporary_tables: false
+      managers:
+        collections: lsst.daf.butler.registry.collections.synthIntKey.SynthIntKeyCollectionManager
+        datasets: lsst.daf.butler.registry.datasets.byDimensions.ByDimensionsDatasetRecordStorageManagerUUID
+        attributes: lsst.daf.butler.registry.attributes.DefaultButlerAttributeManager
+        datastores: lsst.daf.butler.registry.bridge.monolithic.MonolithicDatastoreRegistryBridgeManager
+        dimensions: lsst.daf.butler.registry.dimensions.static.StaticDimensionRecordStorageManager
+        opaque: lsst.daf.butler.registry.opaque.ByNameOpaqueTableStorageManager
+      namespace: prompt
+
   {{- if .Values.config.dp02PostgresUri }}
   # Internal Butler server configuration for DP02.
   dp02.yaml: |
