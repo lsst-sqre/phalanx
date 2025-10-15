@@ -67,8 +67,6 @@ prompt-keda:
       - "preloaded_dia_object"
       - "preloaded_dia_source"
       - "preloaded_ss_object"
-      - "difference_image_metrics"
-      - "diffimPlots_.*"
 
   s3:
     imageBucket: rubin-summit
