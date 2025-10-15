@@ -2,6 +2,13 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfdev-tap"
+    schemaVersion: "v1.2.4"
+    schemas:
+      - dp02_dc2
+    useCloudSQL: true
+
+  uws:
+    useCloudSQL: true
 
   config:
     qserv:
@@ -20,4 +27,3 @@ cadc-tap:
     enabled: true
     instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
     serviceAccount: "tap-service@science-platform-dev-7696.iam.gserviceaccount.com"
-    database: "tap"
