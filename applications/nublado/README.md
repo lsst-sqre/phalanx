@@ -113,7 +113,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cronjob.artifacts.gitSource | string | `"https://github.com/lsst/tutorial-notebooks-data"` | Source for Tutorials binary artifact repository to clone |
 | cronjob.artifacts.gitTarget | string | `"/rubin/cst_repos/tutorial-notebooks-data"` | Target where Tutorial artifacts repository should land |
 | cronjob.artifacts.schedule | string | `"43 * * * *"` | Schedule for the cloning cronjob(s). |
-| cronjob.artifacts.targetVolume | object | See `values.yaml` | Repository volume definition |
 | cronjob.artifacts.targetVolume.mountPath | string | `"/rubin"` | Where volume will be mounted in the container |
 | cronjob.artifacts.targetVolume.volumeName | string | None, must be set for each environment | Name of volume to mount (from controller.lab.config.volumes) |
 | cronjob.artifacts.targetVolumePath | string | `"/rubin"` | Where repository volume should be mounted |
@@ -129,7 +128,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cronjob.tutorials.gitSource | string | `"https://github.com/lsst/tutorial-notebooks"` | Source for Tutorials repository to clone |
 | cronjob.tutorials.gitTarget | string | `"/rubin/cst_repos/tutorial-notebooks"` | Target where Tutorials repository should land |
 | cronjob.tutorials.schedule | string | `"42 * * * *"` | Schedule for the cloning cronjob(s). |
-| cronjob.tutorials.targetVolume | object | See `values.yaml` | Repository volume definition |
 | cronjob.tutorials.targetVolume.mountPath | string | `"/rubin"` | Where volume will be mounted in the container |
 | cronjob.tutorials.targetVolume.volumeName | string | None, must be set for each environment | Name of volume to mount (from controller.lab.config.volumes) |
 | cronjob.tutorials.targetVolumePath | string | `"/rubin"` | Where repository volume should be mounted |
@@ -189,9 +187,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | purger.image.tag | string | The appVersion of the chart | Tag of purger image to use |
 | purger.nodeSelector | object | `{}` | Node selector rules for purger |
 | purger.podAnnotations | object | `{}` | Annotations for the purger pod |
-| purger.policy.directories[0].intervals | object | see `values.yaml`; each environment must set its own values. | If any of these times are older than specified, remove the file.  Zero means "never remove". |
-| purger.policy.directories[0].path | string | `"/scratch"` |  |
-| purger.policy.directories[0].threshold | string | `"1GiB"` | Files this large or larger will be subject to the "large" interval set |
+| purger.policy.directories | list | See `values.yaml` | Per-directory pruning policy. |
 | purger.resources | object | See `values.yaml` | Resource limits and requests for the filesystem purger |
 | purger.schedule | string | `"05 03 * * *"` | Crontab entry for when to run. |
 | purger.tolerations | list | `[]` | Tolerations for purger |
