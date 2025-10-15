@@ -21,6 +21,7 @@ Server for Butler data abstraction service
 | config.enableSentry | bool | `false` | True to enable capture of trace and other diagnostics to Sentry.io. |
 | config.pathPrefix | string | `"/api/butler"` | The prefix of the path portion of the URL where the Butler service will be exposed.  For example, if the service should be exposed at `https://data.lsst.cloud/api/butler`, this should be set to `/api/butler` |
 | config.pguser | string | Use values specified in per-repository Butler config files. | Postgres username used to connect to the Butler DB |
+| config.promptPostgresUri | string | No configuration file for prompt will be generated. | Postgres connection string pointing to the registry database hosting Prompt Data Products. |
 | config.repositories | object | `{}` | Mapping from Butler repository label to Butler configuration URI for repositories which will be hosted by this server. |
 | config.s3EndpointUrl | string | `""` | URL for the primary S3 service where files for datasets are stored by Butler. |
 | config.shareNubladoSecrets | bool | `true` | If true, borrow the S3 and Postgres secrets set up in Nublado for end-users.  Otherwise, use secrets specifically set up for the Butler server. |

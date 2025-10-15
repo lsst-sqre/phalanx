@@ -3,6 +3,7 @@ autoscaling:
 config:
   dp02PostgresUri: postgresql://butler@alloydb-dp.rsp-sql-int.internal:5432/dp02
   dp1PostgresUri: postgresql://butler@alloydb-dp.rsp-sql-int.internal:5432/dp1
+  promptPostgresUri: postgresql://butler@alloydb-butler-prompt.rsp-sql-int.internal:5432/prompt
   s3EndpointUrl: "https://storage.googleapis.com"
   repositories:
     dp02:
@@ -10,6 +11,9 @@ config:
       authorized_groups: ["*"]
     dp1:
       config_uri: "file:///opt/lsst/butler/config/dp1.yaml"
+      authorized_groups: ["*"]
+    prompt:
+      config_uri: "file:///opt/lsst/butler/config/prompt.yaml"
       authorized_groups: ["*"]
   shareNubladoSecrets: false
   additionalS3EndpointUrls:
