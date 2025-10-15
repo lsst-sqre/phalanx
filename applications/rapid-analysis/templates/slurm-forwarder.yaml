@@ -1,0 +1,46 @@
+{{- if $.Values.slurmForwarder }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slurm-log-forwarder
+  labels:
+    app.kubernetes.io/name: slurm-log-forwarder
+  namespace: {{ $.Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: slurm-log-forwarder
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: slurm-log-forwarder
+    spec:
+      containers:
+      - name: slurm-log-forwarder
+        image: "alpine:latest"
+        command:
+          - "/bin/sh"
+          - "-c"
+          - "/usr/bin/tail -n 1 -f ${LOG_FILENAME}"
+        volumeMounts:
+        - name: sdf-data-rubin
+          mountPath: "/sdf/data/rubin"
+          readOnly: true
+        env:
+          - name: LOG_FILENAME
+            value: {{ .Values.slurmForwarder.filename | quote }}
+        resources:
+          requests:
+            cpu: 0.5
+            memory: 2G
+          limits:
+            cpu: 0.5
+            memory: 2G
+
+      volumes:
+      - name: sdf-data-rubin
+        persistentVolumeClaim:
+          claimName: sdf-data-rubin
+{{- end }}
+

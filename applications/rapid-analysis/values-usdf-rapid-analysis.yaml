@@ -35,6 +35,8 @@ affinity:
 securityContext:
   uid: 17951
   gid: 4085
+slurmForwarder:
+  filename: /sdf/data/rubin/user/cslater/canary_output.log
 scripts:
 ###
 ### LSSTCam pods
@@ -77,16 +79,6 @@ scripts:
     limits:
       cpu: 1
       memory: 8G
-- name: LSSTCam/runFWHMPlotting.py
-  mounts:
-  - sdf-scratch
-  resources:
-    requests:
-      cpu: 1
-      memory: 4G
-    limits:
-      cpu: 1
-      memory: 6G
 - name: LSSTCam/runPlotter.py
   mounts:
   - sdf-scratch
