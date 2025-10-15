@@ -1,8 +1,4 @@
 cadc-tap:
-  tapSchema:
-    image:
-      repository: "lsstsqre/tap-schema-idfdev-tap"
-
   config:
     qserv:
       host: "qserv-int.slac.stanford.edu:4090"

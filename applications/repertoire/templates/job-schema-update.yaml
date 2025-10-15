@@ -1,0 +1,97 @@
+{{- $root := . -}}
+{{- if eq (include "repertoire.anyTapServerEnabled" .) "true" }}
+{{- range $app, $config := .Values.config.tap.servers }}
+{{- if $config.enabled }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "repertoire-{{ $app }}-schema-update"
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
+    helm.sh/hook-weight: "1"
+  labels:
+    app.kubernetes.io/component: "tap-schema-update"
+    {{- include "repertoire.labels" $root | nindent 4 }}
+spec:
+  template:
+    metadata:
+      {{- with $root.Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "repertoire.selectorLabels" $root | nindent 8 }}
+        app.kubernetes.io/component: "tap-schema-update"
+    spec:
+      {{- with $root.Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if $root.Values.cloudsql.enabled }}
+      serviceAccountName: "repertoire"
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        - name: "tap-schema-update"
+          command:
+            - "repertoire"
+            - "update-tap-schema"
+            - "--app"
+            - {{ $app | quote }}
+          env:
+            - name: "REPERTOIRE_CONFIG_PATH"
+              value: "/etc/repertoire/config.yaml"
+            - name: "REPERTOIRE_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "repertoire"
+                  key: {{ $config.databasePasswordKey | quote }}
+            - name: "REPERTOIRE_DATABASE_USER"
+              value: {{ $config.databaseUser | quote }}
+          image: "{{ $root.Values.image.repository }}:{{ $root.Values.image.tag | default $root.Chart.AppVersion }}"
+          imagePullPolicy: {{ $root.Values.image.pullPolicy | quote }}
+          {{- with $root.Values.schemaHook.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "config"
+              mountPath: "/etc/repertoire"
+              readOnly: true
+            - name: "tmp"
+              mountPath: "/tmp"
+      {{- if $root.Values.cloudsql.enabled }}
+      initContainers:
+        {{- include "repertoire.cloudsqlSidecar" $root | nindent 8 }}
+      {{- end }}
+      {{- with $root.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: "Never"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with $root.Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: "tmp"
+          emptyDir: {}
+        - name: "config"
+          configMap:
+            name: "repertoire-hook-config"
+{{- end }}
+{{- end }}
+{{- end }}

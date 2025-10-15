@@ -20,7 +20,7 @@ spec:
         {{- include "cadc-tap.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "server"
     spec:
-      {{- if .Values.cloudsql.enabled }}
+      {{- if or .Values.cloudsql.enabled (eq .Values.tapSchema.type "cloudsql") (eq .Values.uws.type "cloudsql") }}
       serviceAccountName: {{ .Values.serviceAccount.name }}
       {{- else }}
       automountServiceAccountToken: false
@@ -60,38 +60,15 @@ spec:
               mountPath: "/var/lib/tomcat"
             - name: "tomcat-cache"
               mountPath: "/var/cache/tomcat"
-        {{- if .Values.cloudsql.enabled }}
-        - name: "cloud-sql-proxy"
-          command:
-            - "/cloud_sql_proxy"
-            - "-ip_address_types=PRIVATE"
-            - "-log_debug_stdout=true"
-            - "-structured_logs=true"
-            - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
-          image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
-          imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
-          {{- with .Values.cloudsql.resources }}
-          resources:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          restartPolicy: "Always"
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - "all"
-            readOnlyRootFilesystem: true
-            runAsNonRoot: true
-            runAsUser: 65532
-            runAsGroup: 65532
-        {{- end }}
+
+        {{- include "cadc-tap.cloudSqlProxyContainer" . | nindent 8 }}
+
       containers:
         - name: "tap-server"
           {{- if eq .Values.config.backend "pg" }}
           image: "{{ .Values.config.pg.image.repository }}:{{ .Values.config.pg.image.tag }}"
           imagePullPolicy: {{ .Values.config.pg.image.pullPolicy | quote }}
-          {{- end }}
-          {{- if eq .Values.config.backend "qserv" }}
+          {{- else }}
           image: "{{ .Values.config.qserv.image.repository }}:{{ .Values.config.qserv.image.tag }}"
           imagePullPolicy: {{ .Values.config.qserv.image.pullPolicy | quote }}
           {{- end }}
@@ -107,21 +84,32 @@ spec:
           env:
             - name: CATALINA_OPTS
               value: >-
-                -Dtapschemauser.username=TAP_SCHEMA
-                -Dtapschemauser.password=TAP_SCHEMA
+                -Dtapschemauser.username={{ .Values.tapSchema.username }}
+                -Dtapschemauser.password=$TAP_SCHEMA_PASSWORD
+                {{- if eq .Values.tapSchema.type "containerized" }}
                 -Dtapschemauser.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dtapschemauser.url=jdbc:mysql://{{ .Values.config.tapSchemaAddress }}/
+                -Dtapschemauser.url=jdbc:mysql://{{ template "cadc-tap.fullname" . }}-schema-db:3306/
+                {{- else if eq .Values.tapSchema.type "external" }}
+                -Dtapschemauser.driverClassName=org.postgresql.Driver
+                -Dtapschemauser.url=jdbc:postgresql://{{ .Values.tapSchema.external.host }}:{{ .Values.tapSchema.external.port }}/{{ .Values.tapSchema.database }}
+                {{- else }}
+                -Dtapschemauser.driverClassName=org.postgresql.Driver
+                -Dtapschemauser.url=jdbc:postgresql://localhost:5432/{{ .Values.tapSchema.database }}
+                {{- end }}
                 -Dtapschemauser.maxActive=100
+                -Duws.username={{ .Values.uws.username }}
+                {{- if or (eq .Values.uws.type "cloudsql") (eq .Values.uws.type "external") }}
+                -Duws.password=$UWS_DB_PASSWORD
+                {{- end }}
+                {{- if eq .Values.uws.type "containerized" }}
+                -Duws.url=jdbc:postgresql://{{ template "cadc-tap.fullname" . }}-uws-db/
+                {{- else if eq .Values.uws.type "external" }}
+                -Duws.url=jdbc:postgresql://{{ .Values.uws.external.host }}:{{ .Values.uws.external.port }}/{{ .Values.uws.database }}
+                {{- else }}
+                -Duws.url=jdbc:postgresql://localhost:5432/{{ .Values.uws.database }}
+                {{- end }}
                 -Duws.driverClassName=org.postgresql.Driver
                 -Duws.maxActive=8
-                {{- if .Values.cloudsql.enabled }}
-                -Duws.password=$UWS_DB_PASSWORD
-                -Duws.username={{ required "cloudsql.database must be specified" .Values.cloudsql.database }}
-                -Duws.url=jdbc:postgresql://localhost:5432/{{ .Values.cloudsql.database }}
-                {{- else }}
-                -Duws.username=postgres
-                -Duws.url=jdbc:postgresql://{{ template "cadc-tap.fullname" . }}-uws-db/
-                {{- end }}
                 {{- if eq .Values.config.backend "pg" }}
                 -Dtap.username={{ .Values.config.pg.username }}
                 -Dtap.password=$TAP_DB_PASSWORD
@@ -140,7 +128,7 @@ spec:
                 -Dgcs_bucket_url={{ .Values.config.gcsBucketUrl }}
                 -Dgcs_bucket_type={{ .Values.config.gcsBucketType }}
                 -Ddatabase={{ .Values.config.database }}
-                 {{- if .Values.config.kafka.enabled }}
+                {{- if .Values.config.kafka.enabled }}
                 -Dkafka.ssl.truststore=/etc/cadc-tap/kafka/ca.crt
                 -Dkafka.ssl.keystore=/etc/cadc-tap/kafka/user.crt
                 -Dkafka.ssl.key=/etc/cadc-tap/kafka/user.key
@@ -174,7 +162,17 @@ spec:
                   name: "cadc-tap"
                   key: "pgpassword"
             {{- end }}
-            {{- if .Values.cloudsql.enabled }}
+            {{- if .Values.tapSchema.useVaultPassword }}
+            - name: "TAP_SCHEMA_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "cadc-tap"
+                  key: "tap-schema-password"
+            {{- else }}
+            - name: "TAP_SCHEMA_PASSWORD"
+              value: "{{ .Values.tapSchema.password }}"
+            {{- end }}
+            {{- if .Values.uws.useVaultPassword }}
             - name: "UWS_DB_PASSWORD"
               valueFrom:
                 secretKeyRef:
@@ -248,7 +246,7 @@ spec:
               mountPath: "/var/cache/tomcat"
             - name: "ca-trust"
               mountPath: "/etc/pki/ca-trust/source/anchors"
-          {{- if .Values.config.kafka.enabled }}
+            {{- if .Values.config.kafka.enabled }}
             - name: "kafka-certs"
               mountPath: "/etc/cadc-tap/kafka/ca.crt"
               readOnly: true
@@ -261,7 +259,7 @@ spec:
               mountPath: "/etc/cadc-tap/kafka/user.key"
               readOnly: true
               subPath: "ssl.keystore.key"
-          {{- end }}
+            {{- end }}
           livenessProbe:
             failureThreshold: 3
             httpGet:

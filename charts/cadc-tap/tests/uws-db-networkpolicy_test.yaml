@@ -3,26 +3,35 @@ templates:
   - uws-db-networkpolicy.yaml
 
 tests:
-  - it: should not create a UWS Network policy when cloudsql is enabled
+  - it: should not create a UWS Network policy when uws type is cloudsql
     set:
-      cloudsql:
-        enabled: true
-        instanceConnectionName: "science-platform--xyz:test"
-        serviceAccount: "sa@xyz"
-        database: "mydb"
-      serviceAccount:
-        create: true
-        name: "sa"
       global:
         host: "example.com"
+      uws:
+        type: "cloudsql"
     asserts:
       - hasDocuments:
           count: 0
 
-  - it: should create a UWS DB Network Policy by default
+  - it: should not create a UWS Network policy when uws type is external
     set:
       global:
         host: "example.com"
+      uws:
+        type: "external"
+        external:
+          host: "external-db"
+          port: 5432
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should create a UWS Network policy when uws type is containerized
+    set:
+      global:
+        host: "example.com"
+      uws:
+        type: "containerized"
     asserts:
       - hasDocuments:
           count: 1
