@@ -48,6 +48,10 @@ config:
     # -- Key within db authn secret with db password
     secretKey: "internalDatabasePassword"
 
+  # see lsst.cmservice.common.flags for available features
+  # -- Enabled features as a mapping of feature to "1" (enabled) or "0" (disabled)
+  features: {}
+
   # -- Logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`, or `CRITICAL`)
   logLevel: "INFO"
 

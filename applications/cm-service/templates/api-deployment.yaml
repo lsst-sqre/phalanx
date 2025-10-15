@@ -31,9 +31,9 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Chart.Name }}-env
+            - configMapRef:
+                name: {{ .Chart.Name }}-features-env
           env:
-            - name: BUTLER__MOCK
-              value: "1"
             - name: DB__PASSWORD
               valueFrom:
                 secretKeyRef:

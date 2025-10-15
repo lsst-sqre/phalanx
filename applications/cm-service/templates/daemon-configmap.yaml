@@ -4,8 +4,4 @@ metadata:
   name: "{{ .Chart.Name }}-config-daemon"
   labels:
     {{- include "application.labels" . | nindent 4 }}
-data:
-  {{- with .Values.config.htcondor.config }}
-  config: |
-    {{- .contents | nindent 4 }}
-  {{- end }}
+data: {}
