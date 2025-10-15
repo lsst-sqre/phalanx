@@ -191,18 +191,48 @@ mockdb:
   affinity: {}
 
 tapSchema:
+
+  # Enable CloudSQL for TAP_SCHEMA
+  useCloudSQL: false
+
+  # CloudSQL database name for TAP_SCHEMA
+  cloudSqlDatabase: "tap"
+
+  # Schema version to load
+  schemaVersion: "v1.0.0"
+
+  # Schemas to load (comma-separated list becomes this array)
+  schemas:
+    - dp02_dc2
+    - dp1
+
+  dryRun: false
+
+  # GCS bucket for schema releases
+  gcsBucket: "sdm-schemas-releases"
+
+  # Cleanup old schemas not in the list above
+  cleanupOldSchemas: false
+
+  # Felis image
+  felisImage:
+    repository: "ghcr.io/lsst/felis"
+    tag: "tickets-DM-52910"
+    pullPolicy: "Always"
+
+  # Legacy image config for containerized TAP_SCHEMA (when useCloudSQL=false)
   image:
+
     # -- TAP schema image to ue. This must be overridden by each environment
     # with the TAP schema for that environment.
     repository: "lsstsqre/tap-schema-mock"
 
-    # -- Pull policy for the TAP schema image
-    pullPolicy: "IfNotPresent"
-
     # -- Tag of TAP schema image
     tag: "DP1-v1.2.0"
 
-  # -- Resource limits and requests for the TAP schema database pod
+    # -- Pull policy for the TAP schema image
+    pullPolicy: "IfNotPresent"
+
   # @default -- See `values.yaml`
   resources:
     limits:
@@ -225,6 +255,11 @@ tapSchema:
   affinity: {}
 
 uws:
+  useCloudSQL: false
+
+  # CloudSQL database name for TAP_SCHEMA
+  cloudSqlDatabase: "tap"
+
   image:
     # -- UWS database image to use
     repository: "ghcr.io/lsst-sqre/lsst-tap-uws-db"

@@ -1,0 +1,24 @@
+  {{- if .Values.tapSchema.useCloudSQL }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cadc-tap.fullname" . }}-schema-update-script
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "cadc-tap.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-upgrade
+    helm.sh/hook-weight: "-10"
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+data:
+  update_tap_schema.sh: |-
+{{ .Files.Get "files/update_tap_schema.sh" | nindent 4 }}
+  create_views.sql: |-
+{{ .Files.Get "files/sql/create_views.sql" | nindent 4 }}
+  swap_schemas.sql: |-
+{{ .Files.Get "files/sql/swap_schemas.sql" | nindent 4 }}
+  prepare_schemas.sql: |-
+{{ .Files.Get "files/sql/prepare_schemas.sql" | nindent 4 }}
+  create_version_table.sql: |-
+{{ .Files.Get "files/sql/create_version_table.sql" | nindent 4 }}
+{{- end }}
