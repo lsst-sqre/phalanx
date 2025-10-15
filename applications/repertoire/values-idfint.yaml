@@ -9,5 +9,16 @@ config:
   metrics:
     enabled: true
   slackAlerts: true
+  tap:
+    servers:
+      tap:
+        enabled: true
+      ssotap:
+        enabled: true
   useSubdomains:
     - "nublado"
+
+cloudsql:
+  enabled: true
+  instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
+  serviceAccount: "repertoire@science-platform-int-dc5d.iam.gserviceaccount.com"
