@@ -150,7 +150,7 @@ controller:
         pullPolicy: "IfNotPresent"
 
         # -- Tag of fsadmin image to use
-        tag: "8.16.0"
+        tag: "8.17.0"
 
       # -- Mount prefix, to be prepended to mountpoints in order to
       # collect them in one place
@@ -560,7 +560,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.16.0"
+      tag: "8.17.0"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
