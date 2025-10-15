@@ -35,6 +35,7 @@ affinity:
 securityContext:
   uid: 17951
   gid: 4085
+slurmForwarder: true
 scripts:
 ###
 ### LSSTCam pods
@@ -77,16 +78,6 @@ scripts:
     limits:
       cpu: 1
       memory: 8G
-- name: LSSTCam/runFWHMPlotting.py
-  mounts:
-  - sdf-scratch
-  resources:
-    requests:
-      cpu: 1
-      memory: 4G
-    limits:
-      cpu: 1
-      memory: 6G
 - name: LSSTCam/runPlotter.py
   mounts:
   - sdf-scratch
