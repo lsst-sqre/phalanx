@@ -56,7 +56,8 @@ spec:
           value: {{ .Values.tapSchema.cleanupOldSchemas | default "false" | quote }}
         volumeMounts:
         - name: update-script
-          mountPath: /scripts
+          mountPath: /scripts/update-tap-schema.sh
+          subPath: update_tap_schema.sh
           readOnly: true
         - name: tmp
           mountPath: /tmp
