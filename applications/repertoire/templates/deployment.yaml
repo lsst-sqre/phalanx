@@ -115,9 +115,11 @@ spec:
             - name: "config"
               mountPath: "/etc/repertoire"
               readOnly: true
+            {{- if .Values.config.influxdbDatabases }}
             - name: "secrets"
               mountPath: "/etc/repertoire/secrets"
               readOnly: true
+            {{- end }}
             {{- if .Values.config.metrics.enabled }}
             - name: "kafka"
               mountPath: "/etc/repertoire-kafka/ca.crt"
@@ -148,9 +150,11 @@ spec:
         - name: "config"
           configMap:
             name: "repertoire"
+        {{- if .Values.config.influxdbDatabases }}
         - name: "secrets"
           secret:
             secretName: "repertoire"
+        {{- end }}
         {{- if .Values.config.metrics.enabled }}
         - name: "kafka"
           secret:
