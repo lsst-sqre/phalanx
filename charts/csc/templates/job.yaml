@@ -21,6 +21,52 @@ spec:
       {{- end }}
     spec:
       containers:
+        {{- if .Values.obsenv }}
+        - name: obs-env-sidecar
+          image: ts-dockerhub.lsst.org/obs_env_sidecar
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          stdin: true
+          tty: true
+          volumeMounts:
+            - name: obsenv
+              mountPath: "/net/obs-env/auto_base_packages"
+          {{- if .Values.obsenv_configfile }}
+            - name: obsenv-configfile
+              mountPath: {{ .Values.obsenv_configfile.path }}/{{ .Values.obsenv_configfile.filename }}
+              subPath: {{ .Values.obsenv_configfile.filename }}
+          {{- end }}
+          envFrom:
+          - configMapRef:
+              name: csc-env-config
+          env:
+            - name: OBS_ENV_KAFKA_SECURITY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.global.controlSystem.appNamespace }}
+                  key: ts-obsenv-password
+            - name: OBS_ENV_KAFKA_SECURITY_USERNAME
+              value: ts-obsenv
+          {{- if .Values.obsenv_configfile }}
+            - name: OBSENV_SIDECAR_CONFIG_PATH
+              value: {{ $.Values.obsenv_configfile.path }}/{{ $.Values.obsenv_configfile.filename }}
+          {{- end }}
+          {{- if .Values.envSecrets }}
+          {{- range $env := .Values.envSecrets }}
+            - name: {{ $env.name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.global.controlSystem.appNamespace }}
+                  key: {{ $env.key }}
+          {{- end }}
+          {{- end }}
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+        {{- end }}
         - name: {{ include "csc.class" . }}
           {{- $image := dict "repo" .Values.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" .Values.image.revision }}
           image: {{ include "helpers.makeImage" $image }}
@@ -36,6 +82,12 @@ spec:
                 secretKeyRef:
                   name: {{ $.Values.global.controlSystem.appNamespace }}
                   key: ts-salkafka-password
+          {{- if .Values.obsenv }}
+            - name: OBSENV_SIDECAR
+              value: "1"
+            - name: OBS_ENV_PATH
+              value: "/net/obs-env/auto_base_packages"
+          {{- end }}
           {{- if .Values.env }}
           {{- range $env_var, $env_value := .Values.env }}
             - name: {{ $env_var }}
@@ -57,7 +109,7 @@ spec:
             - name: PGUSER
               value: {{ .Values.butlerSecret.dbUser | quote }}
           {{- end }}
-          {{- $volumeTest := or .Values.entrypoint (or .Values.configfile (or .Values.secretFixup (or .Values.pvcMountpoint .Values.nfsMountpoint))) }}
+          {{- $volumeTest := or .Values.entrypoint (or .Values.configfile (or .Values.secretFixup (or .Values.pvcMountpoint .Values.nfsMountpoint (or .Values.obsenv)))) }}
           {{- if $volumeTest }}
           volumeMounts:
           {{- if .Values.entrypoint }}
@@ -69,6 +121,10 @@ spec:
             - name: configfile
               mountPath: {{ .Values.configfile.path }}/{{ .Values.configfile.filename }}
               subPath: {{ .Values.configfile.filename }}
+          {{- end }}
+          {{- if .Values.obsenv }}
+            - name: obsenv
+              mountPath: "/net/obs-env/auto_base_packages"
           {{- end }}
           {{- if .Values.secretFixup }}
             - name: {{ include "chart.name" $ }}-file-secrets
@@ -146,6 +202,18 @@ spec:
             items:
               - key: {{ .Values.configfile.filename }}
                 path: {{ .Values.configfile.filename }}
+      {{- end }}
+      {{- if .Values.obsenv}}
+        - name: obsenv
+          emptyDir: {}
+      {{- if .Values.obsenv_configfile }}
+        - name: obsenv-configfile
+          configMap:
+            name: {{ include "chart.name" $ }}-obsenv-configfile
+            items:
+              - key: {{ .Values.obsenv_configfile.filename }}
+                path: {{ .Values.obsenv_configfile.filename }}
+      {{- end }}
       {{- end }}
       {{- if .Values.secretFixup }}
         - name: {{ include "chart.name" $ }}-file-secrets
