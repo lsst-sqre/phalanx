@@ -12,6 +12,7 @@ Image cutout service complying with IVOA SODA
 |-----|------|---------|-------------|
 | config.gracePeriod | int | `60` | Grace period in seconds to wait for cutout worker jobs to finish |
 | config.lifetime | string | `"30d"` | Lifetime of job results in Safir `parse_timedelta` format |
+| config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.loglevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.pathPrefix | string | `"/api/cutout"` | URL path prefix for the cutout API |
 | config.serviceAccount | string | None, must be set | Google service account with an IAM binding to the `vo-cutouts` Kubernetes service accounts and has access to write to the GCS bucket and ability to sign URLs as itself |

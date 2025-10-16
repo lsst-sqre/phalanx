@@ -3,17 +3,21 @@
 # Declare variables to be passed into your templates.
 
 config:
-  # -- Choose from the text form of Python logging levels
-  loglevel: "INFO"
-
-  # -- URL path prefix for the cutout API
-  pathPrefix: "/api/cutout"
-
   # -- Grace period in seconds to wait for cutout worker jobs to finish
   gracePeriod: 60
 
   # -- Lifetime of job results in Safir `parse_timedelta` format
   lifetime: "30d"
+
+  # -- Choose from the text form of Python logging levels
+  loglevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix for the cutout API
+  pathPrefix: "/api/cutout"
 
   # -- Google service account with an IAM binding to the `vo-cutouts`
   # Kubernetes service accounts and has access to write to the GCS bucket and
