@@ -134,3 +134,7 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: null
+  #
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD
+  environmentName: null

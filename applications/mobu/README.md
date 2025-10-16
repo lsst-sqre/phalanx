@@ -30,6 +30,7 @@ Continuous integration testing
 | config.sentryTracesSampleConfig | float | `0` | Sentry tracing config: a float to specify a percentage, or "errors" to send all transactions with errors. |
 | config.slackAlerts | bool | `true` | Whether to send alerts and status to Slack. |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.environmentName | string | Set by Argo CD | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the mobu image |
