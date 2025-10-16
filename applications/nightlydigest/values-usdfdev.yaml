@@ -57,10 +57,21 @@ nightlydigest-backend:
       value: rubinobs.atlassian.net
     - name: EXTERNAL_INSTANCE_URL
       value: https://usdf-rsp-dev.slac.stanford.edu
+    - name: RUBIN_SIM_DATA_DIR
+      value: &rsd /sdf/data/rubin/shared/rubin_sim_data
   envSecrets:
     - name: JIRA_API_TOKEN
       secretName: nightlydigest
       secretKey: jira-api-token
+  pvcMountpoints:
+    - name: sdf-data-rubin
+      storageClassName: sdf-data-rubin
+      accessMode: ReadOnlyMany
+      capacity: 1Gi
+      mount:
+        readOnly: true
+        subPath: shared/rubin_sim_data
+        mountPath: *rsd
   resources:
     requests:
       cpu: 150m

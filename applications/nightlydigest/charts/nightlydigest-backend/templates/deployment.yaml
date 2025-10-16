@@ -48,6 +48,25 @@ spec:
                   name: {{ $env.secretName }}
                   key: {{ $env.secretKey }}
             {{- end }}
+          {{- if .Values.pvcMountpoints}}
+          volumeMounts:
+          {{- range $vol := .Values.pvcMountpoints }}
+          - name: {{ $vol.name }}
+            readOnly: {{ $vol.mount.readOnly | default true }}
+            mountPath: {{ $vol.mount.mountPath }}
+            {{- if ($vol.mount.subPath) }}
+            subPath: {{ $vol.mount.subPath }}
+            {{- end }}
+          {{- end }}
+          {{- end }}
+      {{- if .Values.pvcMountpoints}}
+      volumes:
+      {{- range $vol := .Values.pvcMountpoints }}
+      - name: {{ $vol.name | quote }}
+        persistentVolumeClaim:
+          claimName: {{ $vol.storageClassName | quote }}
+      {{- end }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

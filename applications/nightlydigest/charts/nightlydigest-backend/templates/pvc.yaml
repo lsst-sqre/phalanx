@@ -1,0 +1,17 @@
+{{- if .Values.pvcMountpoints }}
+{{- range $vol := .Values.pvcMountpoints }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ $vol.name | quote }}
+spec:
+  accessModes:
+  - {{ $vol.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ $vol.capacity | quote }}
+  storageClassName: {{ $vol.storageClassName | quote }}
+{{- end }}
+{{- end }}
+
