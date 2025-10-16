@@ -97,8 +97,21 @@ mtcamhexapod-sim:
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
   obsenv: true
+  obsenv_configfile:
+    filename: obs_env_config.json
+    content: |
+      {
+        "repositories": {
+          "ts_config_mttcs": "https://github.com/lsst-ts/"
+        },
+        "base_env_source_org": "https://github.com/lsst-ts/",
+        "base_env_source_repo": "ts_cycle_build",
+        "base_env_def_file": "cycle/cycle.env",
+        "destination": "/net/obs-env/auto_base_packages"
+      }
   env:
     RUN_ARG: --simulate 1
+    TS_CONFIG_MTTCS_DIR: "/net/obs-env/auto_base_packages/ts_config_mttcs"
   resources:
     limits:
       cpu: 500m
@@ -238,8 +251,21 @@ mtm2hexapod-sim:
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
   obsenv: true
+  obsenv_configfile:
+    filename: obs_env_config.json
+    content: |
+      {
+        "repositories": {
+          "ts_config_mttcs": "https://github.com/lsst-ts/"
+        },
+        "base_env_source_org": "https://github.com/lsst-ts/",
+        "base_env_source_repo": "ts_cycle_build",
+        "base_env_def_file": "cycle/cycle.env",
+        "destination": "/net/obs-env/auto_base_packages"
+      }
   env:
     RUN_ARG: --simulate 2
+    TS_CONFIG_MTTCS_DIR: "/net/obs-env/auto_base_packages/ts_config_mttcs"
   resources:
     limits:
       cpu: 400m
