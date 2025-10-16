@@ -56,6 +56,14 @@ config:
       # for experimentation during development.
       suffix: ""
 
+  sentry:
+    # -- Set to true to enable the Sentry integration.
+    enabled: false
+
+    # -- The percentage of requests that should be traced. This
+    # should be a float between 0 and 1
+    tracesSampleRate: 0.0
+
   # -- Extra database connections that may be opened in excess of the pool
   # size to handle surges in load. This is used primarily by the frontend for
   # jobs that complete immediately.

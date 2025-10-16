@@ -67,4 +67,15 @@ Common environment variables
       name: "qserv-kafka"
       key: "qserv-password"
 {{- end }}
+{{- if .Values.config.sentry.enabled }}
+- name: "SENTRY_DSN"
+  valueFrom:
+    secretKeyRef:
+      name: "qserv-kafka"
+      key: "sentry-dsn"
+- name: "SENTRY_ENVIRONMENT"
+  value: {{ .Values.global.environmentName | quote }}
+- name: "SENTRY_TRACES_SAMPLE_RATE"
+  value: {{ .Values.config.sentry.tracesSampleRate | quote }}
+{{- end }}
 {{- end }}
