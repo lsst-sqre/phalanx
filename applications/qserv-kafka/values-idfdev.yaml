@@ -1,7 +1,3 @@
-image:
-  tag: tickets-DM-52933-sentry
-  pullPolicy: Always
-
 config:
   logLevel: "DEBUG"
   metrics:
