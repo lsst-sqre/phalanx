@@ -145,10 +145,6 @@ jupyterhub:
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
-  proxy:
-    chp:
-      image:
-        tag: "5.0.1"
 
 purger:
   enabled: true
