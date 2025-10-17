@@ -1,3 +1,7 @@
+image:
+  tag: tickets-DM-52933-slack-ify
+  pullPolicy: Always
+
 config:
   logLevel: "DEBUG"
   metrics:
