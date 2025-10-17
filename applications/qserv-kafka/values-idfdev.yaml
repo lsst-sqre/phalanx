@@ -1,5 +1,5 @@
 image:
-  tag: tickets-DM-52933-sentry
+  tag: tickets-DM-52933-slack-ify
   pullPolicy: Always
 
 config:
