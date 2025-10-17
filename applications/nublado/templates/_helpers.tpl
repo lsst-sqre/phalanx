@@ -35,12 +35,8 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "nublado.labels" -}}
-app.kubernetes.io/name: {{ include "nublado.name" . }}
 helm.sh/chart: {{ include "nublado.chart" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
+{{ include "nublado.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
