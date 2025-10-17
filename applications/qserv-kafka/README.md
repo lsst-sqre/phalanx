@@ -40,6 +40,7 @@ Qserv Kafka bridge
 | config.resultTimeout | int | 3600 (1 hour) | How long to wait for result processing (retrieval and upload) before timing out, in seconds. This doubles as the timeout forcibly terminating result worker pods. |
 | config.sentry.enabled | bool | `false` | Set to true to enable the Sentry integration. |
 | config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1 |
+| config.slack.enabled | bool | `false` | Set to true to enable the Slack integration. If true, the slack-webhook secret must be provided. |
 | config.tapService | string | `"qserv"` | Name of the TAP service for which this Qserv Kafka instance is managing queries. This must match the name of the TAP service for the corresponding query quota in the Gafaelfawr configuration. |
 | frontend.affinity | object | `{}` | Affinity rules for the qserv-kafka frontend pod |
 | frontend.debug.disablePymalloc | bool | `false` |  |
