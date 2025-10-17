@@ -5,8 +5,6 @@ controller:
   slackAlerts: true
   sentry:
     enabled: true
-  image:
-    tag: tickets-DM-52583
   config:
     dropdownMenu:
       release:
@@ -55,7 +53,7 @@ controller:
       initContainers:
         - name: "inithome"
           image:
-            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
+            repository: "ghcr.io/lsst-sqre/nublado-inithome"
             tag: "8.17.0"
           privileged: true
           volumeMounts:
@@ -73,6 +71,9 @@ controller:
           volumeName: "home"
 jupyterhub:
   hub:
+    image:
+      tag: tickets-DM-52955
+      pullPolicy: Always
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
 cloudsql:
