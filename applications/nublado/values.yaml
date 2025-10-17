@@ -148,7 +148,7 @@ controller:
         pullPolicy: "IfNotPresent"
 
         # -- Tag of fsadmin image to use
-        tag: "8.17.0"
+        tag: "8.17.1"
 
       # -- Mount prefix, to be prepended to mountpoints in order to
       # collect them in one place
