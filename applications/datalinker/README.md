@@ -30,4 +30,4 @@ IVOA DataLink-based service and data discovery
 | podAnnotations | object | `{}` | Annotations for the datalinker deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the datalinker deployment pod |
-| tolerations | list | `[]` | Tolerations for the datalinker deployment pod |
+| tolerations | list | Tolerate GKE arm64 taint | Tolerations for the datalinker deployment pod |

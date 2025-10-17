@@ -1,11 +1,5 @@
 # Default values for Nublado.
 
-sentry:
-  # -- Whether to report errors to Sentry. Applies to all Nublado components
-  # that support Sentry.
-  enabled: false
-
-
 controller:
   # -- Affinity rules for the Nublado controller
   affinity: {}
@@ -52,7 +46,12 @@ controller:
   slackAlerts: false
 
   # -- Tolerations for the Nublado controller
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
   # Passed as YAML to the lab controller.
   config:
@@ -149,7 +148,7 @@ controller:
         pullPolicy: "IfNotPresent"
 
         # -- Tag of fsadmin image to use
-        tag: "8.17.0"
+        tag: "8.17.1"
 
       # -- Mount prefix, to be prepended to mountpoints in order to
       # collect them in one place
@@ -173,7 +172,12 @@ controller:
       timeout: 2m
 
       # -- Tolerations for fsadmin pod
-      tolerations: []
+      # @default -- Tolerate GKE arm64 taint
+      tolerations:
+        - key: "kubernetes.io/arch"
+          operator: "Equal"
+          value: "arm64"
+          effect: "NoSchedule"
 
     images:
       # -- How frequently to refresh the list of available images and compare
@@ -558,7 +562,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.17.0"
+      tag: "8.17.1"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
@@ -778,7 +782,12 @@ purger:
   podAnnotations: {}
 
   # -- Tolerations for purger
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
   # -- Resource limits and requests for the filesystem purger
   # @default -- See `values.yaml`
@@ -925,6 +934,9 @@ cronjob:
     # -- Tag of repo cloner image to use
     tag: "0.1.0"
 
+  # -- Affinity rules for the cloning cronjob(s).
+  affinity: {}
+
   # -- Resource limits and requests for the cloning cronjob(s)
   # @default -- See `values.yaml`
   resources:
@@ -937,8 +949,11 @@ cronjob:
 
   # -- Tolerations for the cloning cronjob(s).
   tolerations: []
-  # -- Affinity rules for the cloning cronjob(s).
-  affinity: {}
+
+sentry:
+  # -- Whether to report errors to Sentry. Applies to all Nublado components
+  # that support Sentry.
+  enabled: false
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
