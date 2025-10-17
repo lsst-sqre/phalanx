@@ -52,7 +52,12 @@ controller:
   slackAlerts: false
 
   # -- Tolerations for the Nublado controller
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
   # Passed as YAML to the lab controller.
   config:
@@ -173,7 +178,12 @@ controller:
       timeout: 2m
 
       # -- Tolerations for fsadmin pod
-      tolerations: []
+      # @default -- Tolerate GKE arm64 taint
+      tolerations:
+        - key: "kubernetes.io/arch"
+          operator: "Equal"
+          value: "arm64"
+          effect: "NoSchedule"
 
     images:
       # -- How frequently to refresh the list of available images and compare
@@ -778,7 +788,12 @@ purger:
   podAnnotations: {}
 
   # -- Tolerations for purger
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
   # -- Resource limits and requests for the filesystem purger
   # @default -- See `values.yaml`
@@ -925,6 +940,9 @@ cronjob:
     # -- Tag of repo cloner image to use
     tag: "0.1.0"
 
+  # -- Affinity rules for the cloning cronjob(s).
+  affinity: {}
+
   # -- Resource limits and requests for the cloning cronjob(s)
   # @default -- See `values.yaml`
   resources:
@@ -937,8 +955,6 @@ cronjob:
 
   # -- Tolerations for the cloning cronjob(s).
   tolerations: []
-  # -- Affinity rules for the cloning cronjob(s).
-  affinity: {}
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
