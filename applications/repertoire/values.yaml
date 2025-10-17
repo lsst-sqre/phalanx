@@ -306,7 +306,12 @@ resources:
     memory: "50Mi"
 
 # -- Tolerations for the repertoire deployment pod
-tolerations: []
+# @default -- Tolerate GKE arm64 taint
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
