@@ -2,6 +2,8 @@ config:
   logLevel: "DEBUG"
   sentry:
     enabled: true
+  slack:
+    enabled: true
   qservDatabaseUrl: "mysql+asyncmy://qsmaster@sdfqserv001.sdf.slac.stanford.edu:4090/"
   qservRestSendApiVersion: false
   qservRestUrl: "https://sdfqserv001.sdf.slac.stanford.edu:4098/"

@@ -78,4 +78,11 @@ Common environment variables
 - name: "SENTRY_TRACES_SAMPLE_RATE"
   value: {{ .Values.config.sentry.tracesSampleRate | quote }}
 {{- end }}
+{{- if .Values.config.slack.enabled }}
+- name: "QSERV_KAFKA_SLACK_WEBHOOK"
+  valueFrom:
+    secretKeyRef:
+      name: "qserv-kafka"
+      key: "slack-webhook"
+{{- end }}
 {{- end }}
