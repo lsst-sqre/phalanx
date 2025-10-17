@@ -1,11 +1,5 @@
 # Default values for Nublado.
 
-sentry:
-  # -- Whether to report errors to Sentry. Applies to all Nublado components
-  # that support Sentry.
-  enabled: false
-
-
 controller:
   # -- Affinity rules for the Nublado controller
   affinity: {}
@@ -955,6 +949,11 @@ cronjob:
 
   # -- Tolerations for the cloning cronjob(s).
   tolerations: []
+
+sentry:
+  # -- Whether to report errors to Sentry. Applies to all Nublado components
+  # that support Sentry.
+  enabled: false
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
