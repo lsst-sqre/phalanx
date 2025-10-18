@@ -20,7 +20,7 @@
       name: fov-quicklook
       key: db_password
 - name: QUICKLOOK_db_url
-  value: postgresql://quicklook:$(DB_PASSWORD)@fov-quicklook-db:5432/quicklook
+  value: postgresql+asyncpg://quicklook:$(DB_PASSWORD)@fov-quicklook-db:5432/quicklook
 {{- end }}
 
 {{- define "fov-quicklook.env.log-level" -}}
