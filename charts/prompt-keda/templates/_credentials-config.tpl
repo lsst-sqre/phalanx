@@ -14,7 +14,7 @@
     [
     "sh",
     "-c",
-    "cp -L /app/db-auth-mount/db-auth.yaml /app/dbauth/ && chown 17951:4085 /app/dbauth/db-auth.yaml && chmod u=r,go-rwx /app/dbauth/db-auth.yaml",
+    "cp -L /app/db-auth-mount/db-auth.yaml /app/dbauth/ && chown 1000:1000 /app/dbauth/db-auth.yaml && chmod u=r,go-rwx /app/dbauth/db-auth.yaml",
     ]
   volumeMounts:
     - mountPath: /app/db-auth-mount
