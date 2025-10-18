@@ -19,7 +19,7 @@ spec:
       {{- end }}
       spec:
         initContainers:
-          {{- include "prompt-keda.dbauth-initcontainer" . | nindent 10 }}
+          {{- include "prompt-keda.dbauth-initcontainer2" . | nindent 10 }}
         restartPolicy: Never
         containers:
           - name: {{ include "prompt-keda.fullname" . | trimPrefix "prompt-keda-" }}
