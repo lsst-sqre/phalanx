@@ -204,10 +204,14 @@
       "properties": {
         "pathPrefix": {
           "type": "string"
+        },
+        "s3_tile_path_prefix": {
+          "type": "string"
         }
       },
       "required": [
-        "pathPrefix"
+        "pathPrefix",
+        "s3_tile_path_prefix"
       ],
       "additionalProperties": false
     },

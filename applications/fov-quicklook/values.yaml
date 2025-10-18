@@ -17,6 +17,7 @@ image:
 config:
   # -- URL path prefix
   pathPrefix: /fov-quicklook
+  s3_tile_path_prefix: 'fov-quicklook/prod'
 
 # -- S3 configuration for the tile storage
 s3_tile:
