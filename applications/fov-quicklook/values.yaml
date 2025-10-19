@@ -18,7 +18,7 @@ config:
   # -- URL path prefix
   pathPrefix: /fov-quicklook
   # -- path prefix for object storage for tiles
-  s3_tile_path_prefix: 'fov-quicklook/prod'
+  s3_tile_path_prefix: "fov-quicklook/prod"
   # -- Maximum allowed storage usage for object storage in bytes
   max_object_storage_usage: 100_000_000_000
 
@@ -68,14 +68,16 @@ generator:
   resources:
     # -- Resource requests for the generator
     requests:
-      cpu: 8000m
-      memory: 32Gi
+      cpu: 4000m
+      memory: 8Gi
     # -- Resource limits for the generator
     limits:
-      cpu: 16000m
-      memory: 32Gi
+      cpu: 12000m
+      memory: 8Gi
   # -- Number of replicas for the generator
-  replicas: 9
+  replicas: 8
+  # -- Number of concurrent tile generations
+  concurrency: 20
   # -- Local storage configuration for the generator
   local_storage:
     sizeLimit: 32Gi
