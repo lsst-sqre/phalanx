@@ -204,10 +204,19 @@
       "properties": {
         "pathPrefix": {
           "type": "string"
+        },
+        "s3_tile_path_prefix": {
+          "type": "string"
+        },
+        "max_object_storage_usage": {
+          "type": "number",
+          "$comment": "Maximum allowed storage usage for object storage in bytes"
         }
       },
       "required": [
-        "pathPrefix"
+        "pathPrefix",
+        "s3_tile_path_prefix",
+        "max_object_storage_usage"
       ],
       "additionalProperties": false
     },
