@@ -119,25 +119,11 @@
         "resources": {
           "$ref": "#/definitions/resources"
         },
-        "workdir": {
-          "type": "object",
-          "properties": {
-            "medium": {
-              "type": "string",
-              "enum": [
-                "",
-                "Memory"
-              ]
-            },
-            "sizeLimit": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "medium"
-          ]
+        "replicas": {
+          "type": "integer",
+          "minimum": 1
         },
-        "mergedDir": {
+        "local_storage": {
           "type": "object",
           "properties": {
             "sizeLimit": {
@@ -147,16 +133,11 @@
           "required": [
             "sizeLimit"
           ]
-        },
-        "replicas": {
-          "type": "integer",
-          "minimum": 1
         }
       },
       "required": [
         "resources",
-        "workdir",
-        "mergedDir",
+        "local_storage",
         "replicas"
       ]
     },

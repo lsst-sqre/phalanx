@@ -46,13 +46,11 @@ spec:
             {{- include "fov-quicklook.env.log-level" . | nindent 12 }}
             {{- include "fov-quicklook.butler-settings.env" . | nindent 12 }}
           volumeMounts:
-            - mountPath: /dev/shm/quicklook
+            - mountPath: /tmp
               name: shm
-            - mountPath: /tmp/quicklook/merged
-              name: merged-dir
+            - mountPath: /tmp/quicklook
+              name: local-storage
             {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}
-            - name: tmp
-              mountPath: /tmp
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -66,15 +64,11 @@ spec:
       volumes:
         - name: shm
           emptyDir:
-            medium: {{ .Values.generator.workdir.medium | quote }}
-            sizeLimit: {{ .Values.generator.workdir.sizeLimit | quote }}
-        - name: merged-dir
-          emptyDir:
-            sizeLimit: {{ .Values.generator.mergedDir.sizeLimit | quote }}
-        {{- .Values.butler_settings.volumes | toYaml | nindent 8 }}
-        - name: tmp
-          emptyDir:
             medium: Memory
+        - name: local-storage
+          emptyDir:
+            sizeLimit: {{ .Values.generator.local_storage.sizeLimit | quote }}
+        {{- .Values.butler_settings.volumes | toYaml | nindent 8 }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy

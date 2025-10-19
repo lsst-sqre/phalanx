@@ -21,12 +21,10 @@ Full focal plane viewer
 | db_storage_class | string | `nil` | Storage class to use for the database |
 | frontend.resources.limits | object | `{"cpu":"8000m","memory":"512Mi"}` | Resource limits for the frontend |
 | frontend.resources.requests | object | `{"cpu":"100m","memory":"512Mi"}` | Resource requests for the frontend |
-| generator.mergedDir.sizeLimit | string | `"32Gi"` | Size limit for the merged directory |
+| generator.local_storage | object | `{"sizeLimit":"32Gi"}` | Local storage configuration for the generator |
 | generator.replicas | int | `9` | Number of replicas for the generator |
 | generator.resources.limits | object | `{"cpu":"16000m","memory":"32Gi"}` | Resource limits for the generator |
 | generator.resources.requests | object | `{"cpu":"8000m","memory":"32Gi"}` | Resource requests for the generator |
-| generator.workdir.medium | string | `"Memory"` | Work directory type for the generator |
-| generator.workdir.sizeLimit | string | `"32Gi"` | Size limit for the shared memory work directory |
 | image.pullPolicy | string | `"Always"` | Pull policy for the fov-quicklook image |
 | image.repository | string | `"ghcr.io/michitaro/rubin-fov-viewer"` | Image to use in the fov-quicklook deployment |
 | image.tag | string | `"latest"` | Tag of image to use |
