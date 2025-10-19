@@ -1,0 +1,59 @@
+frontend:
+  replicas: 4
+admin_page: true
+db_storage_class: wekafs--sdf-k8s01
+log_level: warning
+butler_settings:
+  envs:
+    - name: DAF_BUTLER_REPOSITORY_INDEX
+      value: /var/run/fov-quicklook/config/data-repos.yaml
+    - name: AWS_SHARED_CREDENTIALS_FILE
+      value: "/var/run/fov-quicklook/secrets/aws-credentials.ini"
+    - name: PGUSER
+      value: "rubin"
+    - name: PGPASSFILE
+      value: "/var/run/fov-quicklook/secrets/postgres-credentials.txt"
+    - name: S3_ENDPOINT_URL
+      value: "https://s3dfrgw.slac.stanford.edu"
+    - name: LSST_DISABLE_BUCKET_VALIDATION
+      value: "1"
+    - name: LSST_RESOURCES_S3_PROFILE_embargo
+      value: "https://sdfembs3.sdf.slac.stanford.edu"
+  volumes:
+    - name: aws-credentials
+      secret:
+        secretName: fov-quicklook
+    - name: postgres-credentials
+      secret:
+        secretName: fov-quicklook
+    - name: butler-config
+      configMap:
+        name: fov-quicklook-butler-config
+  volume_mounts:
+    - name: aws-credentials
+      mountPath: /var/run/fov-quicklook/secrets/aws-credentials.ini
+      subPath: aws-credentials.ini
+    - name: postgres-credentials
+      mountPath: /var/run/fov-quicklook/secrets/postgres-credentials.txt
+      subPath: postgres-credentials.txt
+    - name: butler-config
+      mountPath: /var/run/fov-quicklook/config
+  data_repos:
+    embargo: "s3://embargo@rubin-summit-users/butler.yaml"
+context_menu_templates:
+  - name: 'UUID'
+    template: "%(uuid)"
+    is_url: false
+  - name: 'Data ID for Butler'
+    template: "{'exposure': %(exposure), 'detector': %(detector)}"
+    is_url: false
+  - name: 'Butler Snippet'
+    template: |
+      from lsst.daf.butler import Butler
+      butler = Butler('embargo')
+      dataId = {'exposure': %(exposure), 'detector': %(detector)}
+      data = butler.get('%(dataType)', dataId)
+    is_url: false
+  - name: 'LSSTCam/Calexp mosaic'
+    template: 'https://usdf-rsp.slac.stanford.edu/rubintv/summit-usdf/lsstcam/event?key=lsstcam/%(day_obs|iso8601)/calexp_mosaic/%(exposure|sequence|zeropadding(6))/lsstcam_calexp_mosaic_%(day_obs|iso8601)_%(exposure|sequence|zeropadding(6)).jpg'
+    is_url: true
