@@ -123,6 +123,10 @@
           "type": "integer",
           "minimum": 1
         },
+        "concurrency": {
+          "type": "integer",
+          "minimum": 1
+        },
         "local_storage": {
           "type": "object",
           "properties": {
@@ -137,6 +141,7 @@
       },
       "required": [
         "resources",
+        "concurrency",
         "local_storage",
         "replicas"
       ]
