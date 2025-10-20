@@ -24,7 +24,7 @@ config:
     DAEMON_CAMPAIGNS: 1
     DAEMON_NODES: 1
     STORE_FSM: 1
-    ALLOW_TASK_UPSERT: 0
+    ALLOW_TASK_UPSERT: 1
     MOCK_BUTLER: 0
     MOCK_BPS: 0
 
@@ -62,7 +62,7 @@ config:
     useNativeHttplib: "1"
 
 image:
-  tag: "0.6.0"
+  tag: "0.6.1"
   pullPolicy: IfNotPresent
 
 daemon:
@@ -71,5 +71,5 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.6.0"
+    tag: "0.6.1"
     pullPolicy: IfNotPresent
