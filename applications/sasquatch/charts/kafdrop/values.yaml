@@ -86,10 +86,6 @@ ingress:
   # -- Additional ingress annotations
   annotations: {}
 
-  # -- Ingress hostname
-  # @default -- None, must be set if ingress is enabled
-  hostname: ""
-
   # -- Ingress path
   path: /kafdrop
 

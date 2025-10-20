@@ -78,7 +78,6 @@ telegraf:
 kafdrop:
   ingress:
     enabled: true
-    hostname: data-int.lsst.cloud
 
 rest-proxy:
   enabled: true

@@ -21,7 +21,7 @@ template:
     name: {{ $fullName }}
   spec:
     rules:
-      - host: {{ .Values.ingress.hostname | quote }}
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
             - path: {{ $ingressPath }}
