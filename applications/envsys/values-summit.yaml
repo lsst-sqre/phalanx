@@ -246,10 +246,10 @@ hvac:
     RUN_ARG: --state enabled
   resources:
     requests:
-      cpu: 40m
+      cpu: 120m
       memory: 200Mi
     limits:
-      cpu: 400m
+      cpu: 1
       memory: 30000Mi
 
 m1m3-ess113:
