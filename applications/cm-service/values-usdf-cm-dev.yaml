@@ -38,9 +38,10 @@ config:
       secretName: "cm-service"
       secretKey: "butler-authn"
     storageClassName: "sdf-data-rubin"
-    subPath: "repo/main"
-    mountPath: "/sdf/group/rubin/repo/main"
+    subPath: "repo"
+    mountPath: "/sdf/group/rubin/repo"
     repositories:
+      "dp2_prep": "/sdf/group/rubin/repo/dp2_prep"
       "/repo/main": "/sdf/group/rubin/repo/main/butler.yaml"
       "/repo/main+sasquatch_dev": "/sdf/group/rubin/repo/main/butler+sasquatch_dev.yaml"
       "/repo/embargo": "s3://embargo@rubin-summit-users/butler.yaml"
@@ -61,7 +62,7 @@ config:
     useNativeHttplib: "1"
 
 image:
-  tag: "0.6.0"
+  tag: "tickets-DM-53781-canvas"
   pullPolicy: Always
 
 daemon:
@@ -70,5 +71,5 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.6.0"
+    tag: "tickets-DM-53781-canvas"
     pullPolicy: Always
