@@ -61,7 +61,6 @@ telegraf:
 kafdrop:
   ingress:
     enabled: true
-    hostname: data.lsst.cloud
 
 chronograf:
   ingress:

@@ -277,7 +277,6 @@ telegraf:
 kafdrop:
   ingress:
     enabled: true
-    hostname: tucson-teststand.lsst.codes
 
 rest-proxy:
   enabled: true

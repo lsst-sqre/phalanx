@@ -67,7 +67,6 @@ kafka-connect-manager:
 kafdrop:
   ingress:
     enabled: true
-    hostname: usdf-rsp-int.slac.stanford.edu
 
 rest-proxy:
   enabled: false

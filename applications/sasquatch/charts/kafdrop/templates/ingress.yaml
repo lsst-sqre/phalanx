@@ -1,8 +1,8 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "chart.fullname" . -}}
 {{- $ingressPath := .Values.ingress.path -}}
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
 metadata:
   name: {{ $fullName }}
   labels:
@@ -11,17 +11,24 @@ metadata:
     {{- with .Values.ingress.annotations }}
     {{ toYaml . | indent 4 }}
     {{- end }}
-spec:
-  ingressClassName: "nginx"
-  rules:
-    - host: {{ .Values.ingress.hostname | quote }}
-      http:
-        paths:
-          - path: {{ $ingressPath }}
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ $fullName }}
-                port:
-                  number: {{ .Values.service.port }}
+config:
+  scopes:
+    all:
+      - "exec:internal-tools"
+  loginRedirect: true
+template:
+  metadata:
+    name: {{ $fullName }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ $ingressPath }}
+              pathType: Prefix
+              backend:
+                service:
+                  name: {{ $fullName }}
+                  port:
+                    number: {{ .Values.service.port }}
 {{- end }}

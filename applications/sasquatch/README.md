@@ -434,7 +434,6 @@ Rubin Observatory's telemetry service
 | kafdrop.image.tag | string | `"4.2.0"` | Kafdrop image version |
 | kafdrop.ingress.annotations | object | `{}` | Additional ingress annotations |
 | kafdrop.ingress.enabled | bool | `false` | Whether to enable the ingress |
-| kafdrop.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
 | kafdrop.ingress.path | string | `"/kafdrop"` | Ingress path |
 | kafdrop.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
 | kafdrop.jvm.opts | string | `""` | JVM options |

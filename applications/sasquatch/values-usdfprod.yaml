@@ -644,7 +644,6 @@ telegraf-standby:
 kafdrop:
   ingress:
     enabled: true
-    hostname: usdf-rsp.slac.stanford.edu
 
 chronograf:
   ingress:

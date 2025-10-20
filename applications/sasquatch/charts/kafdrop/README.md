@@ -20,7 +20,6 @@ A subchart to deploy the Kafdrop UI for Sasquatch.
 | image.tag | string | `"4.2.0"` | Kafdrop image version |
 | ingress.annotations | object | `{}` | Additional ingress annotations |
 | ingress.enabled | bool | `false` | Whether to enable the ingress |
-| ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
 | ingress.path | string | `"/kafdrop"` | Ingress path |
 | jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
 | jvm.opts | string | `""` | JVM options |

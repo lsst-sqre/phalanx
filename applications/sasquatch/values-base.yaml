@@ -287,7 +287,6 @@ telegraf:
 kafdrop:
   ingress:
     enabled: true
-    hostname: base-lsp.lsst.codes
 
 rest-proxy:
   enabled: true
