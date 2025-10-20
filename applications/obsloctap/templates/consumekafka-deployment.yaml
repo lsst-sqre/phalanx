@@ -85,7 +85,7 @@ spec:
             - name: "KAFKA_BOOTSTRAP"
               value: "{{ .Values.kafka.bootstrap }}"
             - name: "KAFKA_CLUSTER"
-              value: "{{ .Values.kafka.CLUSTER }}"
+              value: "{{ .Values.kafka.KAFKA_CLUSTER }}"
             - name: "KAFKA_USERNAME"
               value: "{{ .Values.kafka.username }}"
             - name: "KAFKA_PASSWORD"
