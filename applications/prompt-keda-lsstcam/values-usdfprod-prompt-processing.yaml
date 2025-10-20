@@ -19,6 +19,11 @@ prompt-keda:
       # The config will get corrupted after template substitution.
       # Block-style mappings can have lines of any length.
       main: |-
+        - survey: BLOCK-407  # FBS Pre-Operations Survey
+          pipelines:
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         - survey: BLOCK-365  # FBS SV Field Survey
           pipelines:
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
@@ -34,6 +39,8 @@ prompt-keda:
         - {pipelines: []}
       preprocessing: |-
         # Run to enable solar system processing in SingleFrame
+        - survey: BLOCK-407
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
         - survey: BLOCK-365
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
         - {survey: "", pipelines: []}
