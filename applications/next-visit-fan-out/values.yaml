@@ -47,7 +47,8 @@ replicaCount: 1
 image:
   repository: us-central1-docker.pkg.dev/prompt-proto/prompt/nextvisit-fanout
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
+  # -- Overrides the image tag whose default is the chart appVersion.
+  # @default -- None, must be set.
   tag: ""
 
 nameOverride: ""
