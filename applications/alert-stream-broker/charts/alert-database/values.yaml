@@ -10,7 +10,7 @@ fullnameOverride: ""
 ingester:
   image:
     repository: lsstdm/alert_database_ingester
-    tag: v3.0.0
+    tag: v3.3.0
     imagePullPolicy: Always
 
   kafka:
@@ -39,7 +39,7 @@ ingester:
     serviceAccountName: ""
     schemaBucket: "alert-archive"
     alertBucket: "alert-archive"
-    endpointURL: "https://sdfembs3.sdf.slac.stanford.edu/"
+    endpointURL: "https://sdfdatas3.slac.stanford.edu/"
     usdf: true
 
   # -- The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM
@@ -61,7 +61,7 @@ server:
     # alert database's backing storage buckets.
     serviceAccountName: ""
     # -- Project ID which has the above GCP IAM service account
-    endpointURL: "https://sdfembs3.sdf.slac.stanford.edu/"
+    endpointURL: "https://sdfdatas3.slac.stanford.edu/ "
     schemaBucket: "alert-archive"
     alertBucket: "alert-archive"
 
@@ -81,10 +81,10 @@ server:
 storage:
   s3:
     # -- Name of a s3 storage bucket with alert data
-    alertBucket: "alert-archive"
+    alertBucket: "rubin-alert-archive"
     # -- Name of a s3 storage bucket with schema data
-    schemaBucket: "alert-archive"
-    endpointURL: "https://sdfembs3.sdf.slac.stanford.edu/"
+    schemaBucket: "rubin-alert-archive"
+    endpointURL: "https://sdfdatas3.slac.stanford.edu/"
 
 ingress:
   # -- Whether to create an ingress
