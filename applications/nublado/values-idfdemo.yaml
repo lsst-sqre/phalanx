@@ -69,8 +69,8 @@ controller:
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
-hub:
-  useSubdomains: true
+# hub:
+#   useSubdomains: true
 jupyterhub:
   cull:
     timeout: 43200  # 12 hours
@@ -78,11 +78,11 @@ jupyterhub:
   hub:
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
-    config:
-      JupyterHub:
-        # This has to exist for Zero to JupyterHub to configure the proxy
-        # correctly.
-        subdomain_host: "nb.demo.lsst.cloud"
+#     config:
+#       JupyterHub:
+          # This has to exist for Zero to JupyterHub to configure the proxy
+          # correctly.
+#         subdomain_host: "nb.demo.lsst.cloud"
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-demo-9e05:us-central1:science-platform-demo-a4dbbf96"
