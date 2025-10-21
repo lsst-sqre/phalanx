@@ -103,7 +103,7 @@ Alert transmission to community brokers
 | alert-stream-broker.users[0].username | string | `"rubin-testing"` | The username for the user that should be created. |
 | alert-stream-broker.vaultSecretsPath | string | `""` | Path to the secret resource in Vault |
 | alert-stream-schema-registry.clusterName | string | `"alert-broker"` | Strimzi "cluster name" of the broker to use as a backend. |
-| alert-stream-schema-registry.compatibilityLevel | string | `"None"` |  |
+| alert-stream-schema-registry.compatibilityLevel | string | `"none"` |  |
 | alert-stream-schema-registry.hostname | string | `"usdf-alert-schemas-dev.slac.stanford.edu"` | Hostname for an ingress which sends traffic to the Schema Registry. |
 | alert-stream-schema-registry.name | string | `"alert-schema-registry"` | Name used by the registry, and by its users. |
 | alert-stream-schema-registry.port | int | `8081` | Port where the registry is listening. NOTE: Not actually configurable in strimzi-registry-operator, so this basically cannot be changed. |
