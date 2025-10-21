@@ -1,0 +1,20 @@
+config:
+  # slackAlerts: true
+  debug: true
+mapping:
+  routes:
+  - source_prefix: "/queries/"
+    target: "${base_url}/nb/user/${user}/lab/tree/notebooks/queries/portal_${path}.ipynb"
+    hooks:
+    - "ensure_running_lab"
+    - "portal_query"
+  - source_prefix: "/notebooks/github.com/"
+    target: "${base_url}/nb/user/${user}/lab/tree/notebooks/on-demand/github.com/${path}.ipynb"
+    hooks:
+    - "ensure_running_lab"
+    - "github_notebook"
+  # Two convenience routes that themselves just use the github_notebook hook
+  - source_prefix: "/system-test/"
+    target: "${base_url}/notebooks/github.com/lsst-sqre/system-test/${path}"
+  - source_prefix: "/tutorials/"
+    target: "${base_url}/notebooks/github.com/lsst/tutorial-notebooks/${path}"
