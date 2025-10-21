@@ -9,11 +9,11 @@ controller:
   config:
     dropdownMenu:
       release:
-        cutoffVersion: "29.0.0"
+        cutoffVersion: "29.2.1"
       weekly:
-        number: 78
+        number: 3
       daily:
-        number: 25
+        number: 5
       releaseCandidate:
         cutoffVersion: "29.2.1"
       experimental:
