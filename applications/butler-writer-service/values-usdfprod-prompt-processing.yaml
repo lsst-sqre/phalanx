@@ -13,6 +13,9 @@ s3:
   endpointUrl: https://sdfembs3.sdf.slac.stanford.edu
   aws_profile: embargo
 
+# Needed for dashboard monitoring of writer run time
+logLevel: DEBUG
+
 nameOverride: ""
 fullnameOverride: ""
 
