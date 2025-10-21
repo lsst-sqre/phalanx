@@ -82,7 +82,7 @@ jupyterhub:
       JupyterHub:
         # This has to exist for Zero to JupyterHub to configure the proxy
         # correctly.
-        subdomain_host: "nb.data-demo.lsst.cloud"
+        subdomain_host: "nb.demo.lsst.cloud"
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-demo-9e05:us-central1:science-platform-demo-a4dbbf96"
