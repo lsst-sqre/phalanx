@@ -84,8 +84,6 @@ spec:
               value: "{{ .Values.lfa.s3EndpointUrl }}"
             - name: "KAFKA_BOOTSTRAP"
               value: "{{ .Values.kafka.bootstrap }}"
-            - name: "KAFKA_CLUSTER"
-              value: "{{ .Values.kafka.CLUSTER }}"
             - name: "KAFKA_USERNAME"
               value: "{{ .Values.kafka.username }}"
             - name: "KAFKA_PASSWORD"
@@ -138,11 +136,11 @@ spec:
             persistentVolumeClaim:
               claimName: sdf-data-rubin
 
-
+# kt says for access ot sunset file in sim use uid=47726(rubins3) gid=4085(rubin_users)
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
+        runAsUser: 47726
+        runAsGroup: 4085
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
