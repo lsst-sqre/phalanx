@@ -10,7 +10,4 @@ metadata:
 spec:
   strimzi-version: {{ .Values.strimziAPIVersion }}
   listener: internal
-  containers:
-    - env:
-        - name: SCHEMA_REGISTRY_SCHEMA_COMPATIBILITY_LEVEL
-          value: none
+  compatibilityLevel: none
