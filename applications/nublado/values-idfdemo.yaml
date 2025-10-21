@@ -3,7 +3,21 @@ sentry:
 controller:
   googleServiceAccount: "nublado-controller@science-platform-demo-9e05.iam.gserviceaccount.com"
   slackAlerts: true
+  image:
+    tag: tickets-DM-52597
+    pullPolicy: Always
   config:
+    dropdownMenu:
+      release:
+        cutoffVersion: "29.0.0"
+      weekly:
+        number: 78
+      daily:
+        number: 25
+      releaseCandidate:
+        cutoffVersion: "29.2.1"
+      experimental:
+        age: "3w"
     logLevel: "DEBUG"
     fileserver:
       enabled: true
@@ -12,30 +26,47 @@ controller:
           volumeName: "home"
     images:
       source:
-        type: "google"
-        location: "us-central1"
-        projectId: "rubin-shared-services-71ec"
-        repository: "sciplat"
-        image: "sciplat-lab"
+#        type: "google"
+#        location: "us-central1"
+#        projectId: "rubin-shared-services-71ec"
+#        repository: "sciplat"
+#        image: "sciplat-lab"
+        type: "docker"
+        registry: "ghcr.io"
+        repository: "lsst-sqre/sciplat-lab"
+      recommendedTag: "w_2025_42"
+      numReleases: 1
+      numWeeklies: 1
+      numDailies: 1
     lab:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
+        REPERTOIRE_BASE_URL: "https://demo.lsst.cloud/repertoire"
         TMPDIR: "/tmp"
       initContainers:
         - name: "inithome"
           image:
-            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
+            # repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
+            repository: "ghcr.io/lsst-sqre/nublado-inithome"
             tag: "8.17.1"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
+      nodeSelector:
+        cloud.google.com/gke-nodepool: "user-lab-pool"
+      pullSecret: pull-secret
+      tolerations:
+        - key: "kubernetes.io/arch"
+          value: arm64
+          operator: "Equal"
+          effect: NoSchedule
       volumes:
         - name: "home"
           source:
             type: nfs
-            serverPath: "/share1/home"
-            server: "10.32.121.98"
+            serverPath: "/home-share"
+            server: "10.235.176.36"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
