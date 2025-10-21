@@ -9,15 +9,15 @@ controller:
   config:
     dropdownMenu:
       release:
-        cutoffVersion: "29.0.0"
+        cutoffVersion: "29.2.0"
       weekly:
-        number: 78
+        number: 26
       daily:
-        number: 25
+        number: 5
       releaseCandidate:
         cutoffVersion: "29.2.1"
       experimental:
-        age: "3w"
+        age: "1w"
     fsadmin:
       mountPrefix: "/mnt/user-filesystems"
     logLevel: "DEBUG"
