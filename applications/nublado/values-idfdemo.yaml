@@ -41,7 +41,6 @@ controller:
     lab:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
-        REPERTOIRE_BASE_URL: "https://demo.lsst.cloud/repertoire"
         TMPDIR: "/tmp"
       initContainers:
         - name: "inithome"
@@ -70,10 +69,20 @@ controller:
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
+hub:
+  useSubdomains: true
 jupyterhub:
+  cull:
+    timeout: 43200  # 12 hours
+    maxAge: 86400   # 1 day
   hub:
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
+    config:
+      JupyterHub:
+        # This has to exist for Zero to JupyterHub to configure the proxy
+        # correctly.
+        subdomain_host: "nb.data-demo.lsst.cloud"
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-demo-9e05:us-central1:science-platform-demo-a4dbbf96"
