@@ -53,7 +53,7 @@ KEDA Prompt Processing instance for LSSTCam
 | prompt-keda.instrument.repoWait | int | `30` | The average time to wait (in seconds) before retrying a failed connection to the shared repo. |
 | prompt-keda.instrument.skymap | string | `"lsst_cells_v1"` | Skymap to use with the instrument |
 | prompt-keda.keda.failedJobsHistoryLimit | int | `5` | How many failed jobs should be kept available in Kubernetes. |
-| prompt-keda.keda.maxReplicaCount | int | `30` | Maximum number of replicas to scale to. |
+| prompt-keda.keda.maxReplicaCount | int | `600` | Maximum number of replicas to scale to. |
 | prompt-keda.keda.minReplicaCount | int | `3` | Minimum number of replicas to start with. |
 | prompt-keda.keda.pollingInterval | int | `2` | Polling interval for Keda to poll scalar for scaling determination. |
 | prompt-keda.keda.redisStreams.activationLagCount | string | `"1"` | Lag count at which scaler triggers |

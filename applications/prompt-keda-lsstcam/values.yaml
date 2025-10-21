@@ -152,7 +152,7 @@ prompt-keda:
     # -- Minimum number of replicas to start with.
     minReplicaCount: 3
     # -- Maximum number of replicas to scale to.
-    maxReplicaCount: 30
+    maxReplicaCount: 600
     # -- Scaling algorithm
     scalingStrategy: eager
     # -- Polling interval for Keda to poll scalar for scaling determination.
