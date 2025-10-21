@@ -16,6 +16,9 @@ clusterName: alert-broker
 # -- Name of the topic used by the Schema Registry to store data.
 schemaTopic: registry-schemas
 
+# -- Compatibility level for the Schema Registry.
+# Options are: none, backward, backward_transitive, forward,
+# forward_transitive, full, and full_transitive.
 compatibilityLevel: none
 
 # -- Hostname for an ingress which sends traffic to the Schema Registry.
