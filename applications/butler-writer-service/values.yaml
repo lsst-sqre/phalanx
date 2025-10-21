@@ -6,6 +6,7 @@ image:
   # `Always` checks for the latest tag online, and is needed for development builds.
   pullPolicy: IfNotPresent
   # -- Docker container version to use for the Butler writer service
+  # @default -- None, must be set
   tag: ""
 
 # -- URI to the repo the writer should write to.
