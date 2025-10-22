@@ -1,0 +1,30 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "alloydb-auth-proxy"
+  labels:
+    {{- include "alloydb-auth-proxy.labels" . | nindent 4 }}
+config:
+  scopes:
+    all:
+      - "read:image"
+  service: "alloydb-auth-proxy"
+template:
+  metadata:
+    name: "alloydb-auth-proxy"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/alloydb-auth-proxy"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "alloydb-auth-proxy"
+                  port:
+                    number: 8080
