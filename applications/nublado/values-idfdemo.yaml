@@ -36,14 +36,11 @@ controller:
           volumeName: "home"
     images:
       source:
-        # type: "google"
-        # location: "us-central1"
-        # projectId: "rubin-shared-services-71ec"
-        # repository: "sciplat"
-        # image: "sciplat-lab"
-        type: "docker"
-        registry: "ghcr.io"
-        repository: "lsst-sqre/sciplat-lab"
+        type: "google"
+        location: "us-central1"
+        projectId: "rubin-shared-services-71ec"
+        repository: "sciplat"
+        image: "sciplat-lab"
       recommendedTag: "w_2025_42"
       numReleases: 1
       numWeeklies: 1
@@ -55,8 +52,7 @@ controller:
       initContainers:
         - name: "inithome"
           image:
-            # repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            repository: "ghcr.io/lsst-sqre/nublado-inithome"
+            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
             tag: "8.17.1"
           privileged: true
           volumeMounts:
