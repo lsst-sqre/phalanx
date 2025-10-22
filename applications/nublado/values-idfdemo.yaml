@@ -26,14 +26,14 @@ controller:
           volumeName: "home"
     images:
       source:
-        type: "google"
-        location: "us-central1"
-        projectId: "rubin-shared-services-71ec"
-        repository: "sciplat"
-        image: "sciplat-lab"
-        # type: "docker"
-        # registry: "ghcr.io"
-        # repository: "lsst-sqre/sciplat-lab"
+        # type: "google"
+        # location: "us-central1"
+        # projectId: "rubin-shared-services-71ec"
+        # repository: "sciplat"
+        # image: "sciplat-lab"
+        type: "docker"
+        registry: "ghcr.io"
+        repository: "lsst-sqre/sciplat-lab"
       recommendedTag: "w_2025_42"
       numReleases: 1
       numWeeklies: 1
