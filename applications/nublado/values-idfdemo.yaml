@@ -21,6 +21,16 @@ controller:
     logLevel: "DEBUG"
     fileserver:
       enabled: true
+      nodeSelector:
+        node_pool: "user-lab-pool"
+      tolerations:
+        - key: "nublado.lsst.io/permitted"
+          operator: "Exists"
+          effect: "NoExecute"
+        - key: "kubernetes.io/arch"
+          value: arm64
+          operator: "Equal"
+          effect: NoSchedule
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -53,13 +63,16 @@ controller:
             - containerPath: "/home"
               volumeName: "home"
       nodeSelector:
-        cloud.google.com/gke-nodepool: "user-lab-pool"
+        node_pool: "user-lab-pool"
       pullSecret: pull-secret
       tolerations:
         - key: "kubernetes.io/arch"
           value: arm64
           operator: "Equal"
           effect: NoSchedule
+        - key: "nublado.lsst.io/permitted"
+          operator: "Exists"
+          effect: "NoExecute"
       volumes:
         - name: "home"
           source:
