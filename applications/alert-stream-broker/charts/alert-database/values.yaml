@@ -39,7 +39,7 @@ ingester:
     serviceAccountName: ""
     schemaBucket: "alert-archive"
     alertBucket: "alert-archive"
-    endpointURL: "https://sdfembs3.sdf.slac.stanford.edu/"
+    endpointURL: "https://sdfdatas3.slac.stanford.edu/"
     usdf: true
 
   # -- The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM
@@ -61,7 +61,7 @@ server:
     # alert database's backing storage buckets.
     serviceAccountName: ""
     # -- Project ID which has the above GCP IAM service account
-    endpointURL: "https://sdfembs3.sdf.slac.stanford.edu/"
+    endpointURL: "https://sdfdatas3.slac.stanford.edu/ "
     schemaBucket: "alert-archive"
     alertBucket: "alert-archive"
 
@@ -84,7 +84,7 @@ storage:
     alertBucket: "alert-archive"
     # -- Name of a s3 storage bucket with schema data
     schemaBucket: "alert-archive"
-    endpointURL: "https://sdfembs3.sdf.slac.stanford.edu/"
+    endpointURL: "https://sdfdatas3.slac.stanford.edu/ "
 
 ingress:
   # -- Whether to create an ingress
