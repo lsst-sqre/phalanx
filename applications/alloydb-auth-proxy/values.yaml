@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the alloydb-auth-proxy deployment
-  repository: "ghcr.io/lsst-sqre/alloydb-auth-proxy"
+  repository: "gcr.io/alloydb-connectors/alloydb-auth-proxy"
 
   # -- Pull policy for the alloydb-auth-proxy image
   pullPolicy: "IfNotPresent"
@@ -15,6 +15,10 @@ image:
   # -- Tag of image to use
   # @default -- The appVersion of the chart
   tag: null
+
+config:
+  # -- AlloyDB instance URI
+  instance_uri: ""
 
 ingress:
   # -- Additional annotations for the ingress rule

@@ -1,15 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    metallb.io/address-pool: sdf-rubin-ingest
   name: "alloydb-auth-proxy"
   labels:
     {{- include "alloydb-auth-proxy.labels" . | nindent 4 }}
 spec:
   type: "ClusterIP"
   ports:
-    - port: 8080
-      targetPort: "http"
+    - port: 5482
+      targetPort: "postgres"
       protocol: "TCP"
-      name: "http"
+      name: "postgres"
   selector:
     {{- include "alloydb-auth-proxy.selectorLabels" . | nindent 4 }}
