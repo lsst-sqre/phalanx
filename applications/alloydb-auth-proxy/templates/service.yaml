@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "alloydb-auth-proxy"
+  labels:
+    {{- include "alloydb-auth-proxy.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: 8080
+      targetPort: "http"
+      protocol: "TCP"
+      name: "http"
+  selector:
+    {{- include "alloydb-auth-proxy.selectorLabels" . | nindent 4 }}

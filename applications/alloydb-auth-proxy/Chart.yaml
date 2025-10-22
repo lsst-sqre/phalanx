@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Proxy service for connecting to AlloyDB from USDF
+name: alloydb-auth-proxy
+sources:
+- https://github.com/lsst-sqre/alloydb-auth-proxy
+type: application
+version: 1.0.0
