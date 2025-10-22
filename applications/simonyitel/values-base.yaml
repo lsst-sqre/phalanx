@@ -217,7 +217,6 @@ mtm1m3ts-sim:
       memory: 90Mi
 
 mtm2-sim:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/m2
     pullPolicy: Always
@@ -248,6 +247,7 @@ mtm2hexapod-sim:
       memory: 400Mi
 
 mtm2-hwsim:
+  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/m2
     pullPolicy: Always
