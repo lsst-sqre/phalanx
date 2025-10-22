@@ -17,24 +17,34 @@ spec:
       {{- end }}
       labels:
         {{- include "alloydb-auth-proxy.selectorLabels" . | nindent 8 }}
+        # The imaging caching agent deployed at USDF doesn't work with gcr.io
+        # container registry.  This label disables the proxy.
+        kube-image-keeper.enix.io/image-caching-policy: ignore
     spec:
       {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      labels:
       automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          command: [
+            "/alloydb-auth-proxy",
+            "--public-ip",
+            "--address", "0.0.0.0",
+            "--credentials-file", "/opt/lsst/secrets/gcs-creds",
+            "{{ .Values.config.instance_uri }}"
+          ]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: "secrets"
+              mountPath: "/opt/lsst/secrets"
           ports:
-            - name: "http"
-              containerPort: 8080
+            - name: "postgres"
+              containerPort: 5432
               protocol: "TCP"
-          readinessProbe:
-            httpGet:
-              path: "/"
-              port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           securityContext:
@@ -43,6 +53,10 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+      volumes:
+        - name: "secrets"
+          secret:
+            secretName: "alloydb-auth-proxy"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
