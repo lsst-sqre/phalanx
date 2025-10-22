@@ -32,7 +32,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fileserver.idleTimeout | string | `"1d"` | Timeout for idle user fileservers, in Safir `parse_timedelta` format |
 | controller.config.fileserver.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for file server image |
 | controller.config.fileserver.image.repository | string | `"ghcr.io/lsst-sqre/worblehat"` | File server image to use |
-| controller.config.fileserver.image.tag | string | `"0.1.0"` | Tag of file server image to use |
+| controller.config.fileserver.image.tag | string | `"0.2.0"` | Tag of file server image to use |
 | controller.config.fileserver.namespace | string | `"fileservers"` | Namespace for user file servers |
 | controller.config.fileserver.nodeSelector | object | `{}` | Node selector rules for user file server pods |
 | controller.config.fileserver.pathPrefix | string | `"/files"` | Path prefix for user file servers |
