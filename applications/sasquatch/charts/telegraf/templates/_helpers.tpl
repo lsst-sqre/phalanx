@@ -26,6 +26,7 @@ data:
       namedrop = ["telegraf_*"]
       urls = [{{ . | quote }}]
       database = {{ $database | quote }}
+      timeout = "15s"
       username = "${INFLUXDB_USER}"
       password = "${INFLUXDB_PASSWORD}"
     {{ end }}
@@ -35,6 +36,7 @@ data:
       namepass = ["telegraf_*"]
       urls = [{{ . | quote }}]
       database = "telegraf"
+      timeout = "15s"
       username = "${INFLUXDB_USER}"
       password = "${INFLUXDB_PASSWORD}"
     {{ end }}
