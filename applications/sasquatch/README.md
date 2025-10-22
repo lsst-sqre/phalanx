@@ -25,7 +25,7 @@ Rubin Observatory's telemetry service
 | chronograf.env | object | See `values.yaml` | Additional environment variables for Chronograf |
 | chronograf.envFromSecret | string | `"sasquatch"` | Name of secret to use. The keys `generic_client_id`, `generic_client_secret`, and `token_secret` should be set. |
 | chronograf.image.repository | string | `"quay.io/influxdb/chronograf"` | Docker image to use for Chronograf |
-| chronograf.image.tag | string | `"1.10.7"` | Docker tag to use for Chronograf |
+| chronograf.image.tag | string | `"1.10.8"` | Docker tag to use for Chronograf |
 | chronograf.ingress.className | string | `"nginx"` | Ingress class to use |
 | chronograf.ingress.enabled | bool | `false` | Whether to enable the Chronograf ingress |
 | chronograf.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
@@ -59,6 +59,7 @@ Rubin Observatory's telemetry service
 | influxdb.config.http.enabled | bool | `true` | Whether to enable the HTTP endpoints |
 | influxdb.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
 | influxdb.config.http.max-row-limit | int | `0` | Maximum number of rows the system can return from a non-chunked query (0 is unlimited) |
+| influxdb.config.logging.format | string | `"json"` | Format to use for log messages |
 | influxdb.config.logging.level | string | `"debug"` | Logging level |
 | influxdb.enabled | bool | `true` | Whether InfluxDB is enabled |
 | influxdb.image.tag | string | `"1.11.8"` | InfluxDB image tag |
@@ -87,7 +88,7 @@ Rubin Observatory's telemetry service
 | kapacitor.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
 | kapacitor.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Kapacitor |
 | kapacitor.image.repository | string | `"docker.io/library/kapacitor"` | Docker image to use for Kapacitor |
-| kapacitor.image.tag | string | `"1.8.0"` | Tag to use for Kapacitor |
+| kapacitor.image.tag | string | `"1.8.2"` | Tag to use for Kapacitor |
 | kapacitor.influxURL | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB connection URL |
 | kapacitor.persistence.enabled | bool | `true` | Whether to enable Kapacitor data persistence |
 | kapacitor.persistence.size | string | `"100Gi"` | Size of storage to request if enabled |
@@ -98,13 +99,13 @@ Rubin Observatory's telemetry service
 | obsloctap.enabled | bool | `false` | Whether to enable the obsloctap subchart |
 | prompt-processing.enabled | bool | `false` | Whether to enable the prompt-processing subchart |
 | rest-proxy.enabled | bool | `false` | Whether to enable the REST proxy |
+| schema-registry-remote.enabled | bool | `false` | Whether to enable schema-registry-remote, an instance of the schema-registry for remote topics |
+| schema-registry.enabled | bool | `false` | Whether to enable the schema-registry subchart |
 | scimma.enabled | bool | `false` | Whether to enable the scimma subchart |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations |
 | strimzi-kafka | object | `{}` |  |
-| strimzi-registry-operator.clusterName | string | `"sasquatch"` | Name of the Strimzi Kafka cluster |
-| strimzi-registry-operator.clusterNamespace | string | `"sasquatch"` | Namespace where the Strimzi Kafka cluster is deployed |
-| strimzi-registry-operator.operatorNamespace | string | `"sasquatch"` | Namespace where the strimzi-registry-operator is deployed |
 | tap.enabled | bool | `false` | Whether to enable the tap subchart |
+| telegraf-standby.enabled | bool | `false` | Whether to enable the telegraf-standby subchart |
 | telegraf.enabled | bool | `false` | Whether to enable the telegraf subchart |
 | app-metrics.affinity | object | `{}` | Affinity for pod assignment |
 | app-metrics.apps | list | `[]` | A list of applications that will publish metrics events, and the keys that should be ingested into InfluxDB as tags.  The names should be the same as the app names in Phalanx. |
@@ -117,9 +118,10 @@ Rubin Observatory's telemetry service
 | app-metrics.globalInfluxTags | list | `["application"]` | Keys in an every event sent by any app that should be recorded in InfluxDB as "tags" (vs. "fields"). These will be concatenated with the `influxTags` from `globalAppConfig` |
 | app-metrics.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | app-metrics.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| app-metrics.image.tag | string | `"1.34.0-alpine"` | Telegraf image tag |
+| app-metrics.image.tag | string | The appVersion of the chart | Telegraf image tag |
 | app-metrics.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | app-metrics.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
+| app-metrics.kafkaVersion | string | null, use the Sarama library default. | Set the minimal supported Kafka version for the Sarama Go client library. |
 | app-metrics.nodeSelector | object | `{}` | Node labels for pod assignment |
 | app-metrics.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | app-metrics.podLabels | object | `{}` | Labels for the Telegraf pods |
@@ -128,16 +130,17 @@ Rubin Observatory's telemetry service
 | app-metrics.tolerations | list | `[]` | Tolerations for pod assignment |
 | backpack.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | backup.affinity | object | `{}` | Affinity rules for the backups deployment pod |
-| backup.backupItems | list | `[{"enabled":false,"name":"chronograf","retentionDays":7},{"enabled":false,"name":"kapacitor","retentionDays":7},{"enabled":false,"name":"influxdb-enterprise-incremental"},{"enabled":false,"name":"influxdb-oss-full","retentionDays":3}]` | List of items to backup using the sasquatch backup script |
+| backup.backupItems | list | `[{"enabled":false,"name":"chronograf","retentionDays":7},{"enabled":false,"name":"kapacitor","retentionDays":7},{"bind":"sasquatch-influxdb-enterprise-active-meta","enabled":false,"name":"influxdb-enterprise-incremental"},{"enabled":false,"name":"influxdb-oss-full","retentionDays":3}]` | List of items to backup using the sasquatch backup script |
 | backup.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the backups image |
 | backup.image.repository | string | `"ghcr.io/lsst-sqre/sasquatch"` | Image to use in the backups deployment |
 | backup.image.tag | string | The appVersion of the chart | Tag of image to use |
+| backup.k8up.enabled | bool | `false` | Whether to enable k8up backup of the backup PVC This option can be enabled at the base and summit environments only |
 | backup.nodeSelector | object | `{}` | Node selection rules for the backups deployment pod |
 | backup.persistence.size | string | "100Gi" | Size of the data store to request, if enabled |
 | backup.persistence.storageClass | string | "" (empty string) to use the cluster default storage class | Storage class to use for the backups |
 | backup.podAnnotations | object | `{}` | Annotations for the backups deployment pod |
 | backup.resources | object | `{}` | Resource limits and requests for the backups deployment pod |
-| backup.restore | object | `{"enabled":false}` | Whether to enable the restore deployment |
+| backup.restore.enabled | bool | `false` | Whether to enable the restore deployment |
 | backup.schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
 | backup.tolerations | list | `[]` | Tolerations for the backups deployment pod |
 | consdb.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
@@ -161,10 +164,9 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.data.config.hintedHandoff.max-size | int | `107374182400` | Maximum size of the hinted-handoff queue in bytes |
 | influxdb-enterprise.data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | influxdb-enterprise.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
-| influxdb-enterprise.data.config.logging.level | string | `"debug"` | Logging level |
+| influxdb-enterprise.data.config.logging.format | string | `"json"` | Format to use for log messages |
+| influxdb-enterprise.data.config.logging.level | string | `"info"` | Logging level |
 | influxdb-enterprise.data.env | object | `{}` | Additional environment variables to set in the meta container |
-| influxdb-enterprise.data.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for data images |
-| influxdb-enterprise.data.image.repository | string | `"influxdb"` | Docker repository for data images |
 | influxdb-enterprise.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
 | influxdb-enterprise.data.ingress.className | string | `"nginx"` | Ingress class name of the data service |
 | influxdb-enterprise.data.ingress.enabled | bool | `false` | Whether to enable an ingress for the data service |
@@ -190,10 +192,15 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.data.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the data service |
 | influxdb-enterprise.data.service.nodePort | int | Do not allocate a node port | Node port for the data service |
 | influxdb-enterprise.data.service.type | string | `"ClusterIP"` | Service type for the data service |
+| influxdb-enterprise.data.startupProbe.enabled | bool | `false` | Whether to enable a startup probe to check if the data node is ready |
+| influxdb-enterprise.data.startupProbe.failureThreshold | int | `6` | Number of failures before the pod is restarted |
+| influxdb-enterprise.data.startupProbe.initialDelaySeconds | int | `60` | Number of seconds after the container has started before liveness/startup probes are initiated |
+| influxdb-enterprise.data.startupProbe.periodSeconds | int | `60` | How often (in seconds) to perform the probe |
 | influxdb-enterprise.data.tolerations | list | `[]` | Tolerations for data pods |
 | influxdb-enterprise.envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
 | influxdb-enterprise.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| influxdb-enterprise.image.addsuffix | bool | `false` | Set to true to add a suffix for the type of image to the Docker tag (for example, `-meta`, making an image name of `influxdb:1.8.0-meta`) |
+| influxdb-enterprise.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for images |
+| influxdb-enterprise.image.repository | string | `"influxdb"` | Docker repository for InfluxDB Enterprise images |
 | influxdb-enterprise.image.tag | string | `appVersion` from `Chart.yaml` | Tagged version of the Docker image that you want to run |
 | influxdb-enterprise.imagePullSecrets | list | `[]` | List of pull secrets needed for images. If set, each object in the list should have one attribute, _name_, identifying the pull secret to use |
 | influxdb-enterprise.license.key | string | `""` | License key. You can put your license key here for testing this chart out, but we STRONGLY recommend using a license file stored in a secret when you ship to production. |
@@ -201,8 +208,6 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.license.secret.name | string | `"influxdb-enterprise-license"` | Name of the secret containing the license |
 | influxdb-enterprise.meta.affinity | object | See `values.yaml` | Affinity rules for meta pods |
 | influxdb-enterprise.meta.env | object | `{}` | Additional environment variables to set in the meta container |
-| influxdb-enterprise.meta.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for meta images |
-| influxdb-enterprise.meta.image.repository | string | `"influxdb"` | Docker repository for meta images |
 | influxdb-enterprise.meta.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the meta ingress |
 | influxdb-enterprise.meta.ingress.className | string | `"nginx"` | Ingress class name of the meta service |
 | influxdb-enterprise.meta.ingress.enabled | bool | `false` | Whether to enable an ingress for the meta service |
@@ -251,10 +256,9 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.data.config.hintedHandoff.max-size | int | `107374182400` | Maximum size of the hinted-handoff queue in bytes |
 | influxdb-enterprise-active.data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | influxdb-enterprise-active.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
-| influxdb-enterprise-active.data.config.logging.level | string | `"debug"` | Logging level |
+| influxdb-enterprise-active.data.config.logging.format | string | `"json"` | Format to use for log messages |
+| influxdb-enterprise-active.data.config.logging.level | string | `"info"` | Logging level |
 | influxdb-enterprise-active.data.env | object | `{}` | Additional environment variables to set in the meta container |
-| influxdb-enterprise-active.data.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for data images |
-| influxdb-enterprise-active.data.image.repository | string | `"influxdb"` | Docker repository for data images |
 | influxdb-enterprise-active.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
 | influxdb-enterprise-active.data.ingress.className | string | `"nginx"` | Ingress class name of the data service |
 | influxdb-enterprise-active.data.ingress.enabled | bool | `false` | Whether to enable an ingress for the data service |
@@ -280,10 +284,15 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.data.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the data service |
 | influxdb-enterprise-active.data.service.nodePort | int | Do not allocate a node port | Node port for the data service |
 | influxdb-enterprise-active.data.service.type | string | `"ClusterIP"` | Service type for the data service |
+| influxdb-enterprise-active.data.startupProbe.enabled | bool | `false` | Whether to enable a startup probe to check if the data node is ready |
+| influxdb-enterprise-active.data.startupProbe.failureThreshold | int | `6` | Number of failures before the pod is restarted |
+| influxdb-enterprise-active.data.startupProbe.initialDelaySeconds | int | `60` | Number of seconds after the container has started before liveness/startup probes are initiated |
+| influxdb-enterprise-active.data.startupProbe.periodSeconds | int | `60` | How often (in seconds) to perform the probe |
 | influxdb-enterprise-active.data.tolerations | list | `[]` | Tolerations for data pods |
 | influxdb-enterprise-active.envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
 | influxdb-enterprise-active.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| influxdb-enterprise-active.image.addsuffix | bool | `false` | Set to true to add a suffix for the type of image to the Docker tag (for example, `-meta`, making an image name of `influxdb:1.8.0-meta`) |
+| influxdb-enterprise-active.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for images |
+| influxdb-enterprise-active.image.repository | string | `"influxdb"` | Docker repository for InfluxDB Enterprise images |
 | influxdb-enterprise-active.image.tag | string | `appVersion` from `Chart.yaml` | Tagged version of the Docker image that you want to run |
 | influxdb-enterprise-active.imagePullSecrets | list | `[]` | List of pull secrets needed for images. If set, each object in the list should have one attribute, _name_, identifying the pull secret to use |
 | influxdb-enterprise-active.license.key | string | `""` | License key. You can put your license key here for testing this chart out, but we STRONGLY recommend using a license file stored in a secret when you ship to production. |
@@ -291,8 +300,6 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.license.secret.name | string | `"influxdb-enterprise-license"` | Name of the secret containing the license |
 | influxdb-enterprise-active.meta.affinity | object | See `values.yaml` | Affinity rules for meta pods |
 | influxdb-enterprise-active.meta.env | object | `{}` | Additional environment variables to set in the meta container |
-| influxdb-enterprise-active.meta.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for meta images |
-| influxdb-enterprise-active.meta.image.repository | string | `"influxdb"` | Docker repository for meta images |
 | influxdb-enterprise-active.meta.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the meta ingress |
 | influxdb-enterprise-active.meta.ingress.className | string | `"nginx"` | Ingress class name of the meta service |
 | influxdb-enterprise-active.meta.ingress.enabled | bool | `false` | Whether to enable an ingress for the meta service |
@@ -341,10 +348,9 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.data.config.hintedHandoff.max-size | int | `107374182400` | Maximum size of the hinted-handoff queue in bytes |
 | influxdb-enterprise-standby.data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | influxdb-enterprise-standby.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
-| influxdb-enterprise-standby.data.config.logging.level | string | `"debug"` | Logging level |
+| influxdb-enterprise-standby.data.config.logging.format | string | `"json"` | Format to use for log messages |
+| influxdb-enterprise-standby.data.config.logging.level | string | `"info"` | Logging level |
 | influxdb-enterprise-standby.data.env | object | `{}` | Additional environment variables to set in the meta container |
-| influxdb-enterprise-standby.data.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for data images |
-| influxdb-enterprise-standby.data.image.repository | string | `"influxdb"` | Docker repository for data images |
 | influxdb-enterprise-standby.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
 | influxdb-enterprise-standby.data.ingress.className | string | `"nginx"` | Ingress class name of the data service |
 | influxdb-enterprise-standby.data.ingress.enabled | bool | `false` | Whether to enable an ingress for the data service |
@@ -370,10 +376,15 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.data.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the data service |
 | influxdb-enterprise-standby.data.service.nodePort | int | Do not allocate a node port | Node port for the data service |
 | influxdb-enterprise-standby.data.service.type | string | `"ClusterIP"` | Service type for the data service |
+| influxdb-enterprise-standby.data.startupProbe.enabled | bool | `false` | Whether to enable a startup probe to check if the data node is ready |
+| influxdb-enterprise-standby.data.startupProbe.failureThreshold | int | `6` | Number of failures before the pod is restarted |
+| influxdb-enterprise-standby.data.startupProbe.initialDelaySeconds | int | `60` | Number of seconds after the container has started before liveness/startup probes are initiated |
+| influxdb-enterprise-standby.data.startupProbe.periodSeconds | int | `60` | How often (in seconds) to perform the probe |
 | influxdb-enterprise-standby.data.tolerations | list | `[]` | Tolerations for data pods |
 | influxdb-enterprise-standby.envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
 | influxdb-enterprise-standby.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| influxdb-enterprise-standby.image.addsuffix | bool | `false` | Set to true to add a suffix for the type of image to the Docker tag (for example, `-meta`, making an image name of `influxdb:1.8.0-meta`) |
+| influxdb-enterprise-standby.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for images |
+| influxdb-enterprise-standby.image.repository | string | `"influxdb"` | Docker repository for InfluxDB Enterprise images |
 | influxdb-enterprise-standby.image.tag | string | `appVersion` from `Chart.yaml` | Tagged version of the Docker image that you want to run |
 | influxdb-enterprise-standby.imagePullSecrets | list | `[]` | List of pull secrets needed for images. If set, each object in the list should have one attribute, _name_, identifying the pull secret to use |
 | influxdb-enterprise-standby.license.key | string | `""` | License key. You can put your license key here for testing this chart out, but we STRONGLY recommend using a license file stored in a secret when you ship to production. |
@@ -381,8 +392,6 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.license.secret.name | string | `"influxdb-enterprise-license"` | Name of the secret containing the license |
 | influxdb-enterprise-standby.meta.affinity | object | See `values.yaml` | Affinity rules for meta pods |
 | influxdb-enterprise-standby.meta.env | object | `{}` | Additional environment variables to set in the meta container |
-| influxdb-enterprise-standby.meta.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for meta images |
-| influxdb-enterprise-standby.meta.image.repository | string | `"influxdb"` | Docker repository for meta images |
 | influxdb-enterprise-standby.meta.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the meta ingress |
 | influxdb-enterprise-standby.meta.ingress.className | string | `"nginx"` | Ingress class name of the meta service |
 | influxdb-enterprise-standby.meta.ingress.enabled | bool | `false` | Whether to enable an ingress for the meta service |
@@ -423,16 +432,20 @@ Rubin Observatory's telemetry service
 | kafdrop.host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
 | kafdrop.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | kafdrop.image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository |
-| kafdrop.image.tag | string | `"4.1.0"` | Kafdrop image version |
+| kafdrop.image.tag | string | `"4.2.0"` | Kafdrop image version |
 | kafdrop.ingress.annotations | object | `{}` | Additional ingress annotations |
 | kafdrop.ingress.enabled | bool | `false` | Whether to enable the ingress |
-| kafdrop.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
 | kafdrop.ingress.path | string | `"/kafdrop"` | Ingress path |
 | kafdrop.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
 | kafdrop.jvm.opts | string | `""` | JVM options |
 | kafdrop.kafka.broker | string | sasquatch-kafka-bootstrap.sasquatch:9092 | Kafka bootstrap servers to connect to |
 | kafdrop.kafka.topicPrefix | string | lsst | Kafka topic prefix to filter topics by |
 | kafdrop.kafka.user | string | kafdrop | Kafka user to use for kafdrop |
+| kafdrop.logging.kafdrop.config.level | string | `"WARN"` | Log level for Kafdrop config package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| kafdrop.logging.kafdrop.controller.level | string | `"INFO"` | Log level for Kafdrop controller package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| kafdrop.logging.kafdrop.level | string | `"INFO"` | Log level for Kafdrop package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| kafdrop.logging.kafdrop.service.level | string | `"INFO"` | Log level for Kafdrop service package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| kafdrop.logging.root.level | string | `"WARN"` | Log level for Kafdrop root logger (TRACE, DEBUG, INFO, WARN, ERROR) |
 | kafdrop.nodeSelector | object | `{}` | Node selector configuration |
 | kafdrop.podAnnotations | object | `{}` | Pod annotations |
 | kafdrop.replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
@@ -450,16 +463,20 @@ Rubin Observatory's telemetry service
 | kafdrop-remote.host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
 | kafdrop-remote.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | kafdrop-remote.image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository |
-| kafdrop-remote.image.tag | string | `"4.1.0"` | Kafdrop image version |
+| kafdrop-remote.image.tag | string | `"4.2.0"` | Kafdrop image version |
 | kafdrop-remote.ingress.annotations | object | `{}` | Additional ingress annotations |
 | kafdrop-remote.ingress.enabled | bool | `false` | Whether to enable the ingress |
-| kafdrop-remote.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
 | kafdrop-remote.ingress.path | string | `"/kafdrop"` | Ingress path |
 | kafdrop-remote.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
 | kafdrop-remote.jvm.opts | string | `""` | JVM options |
 | kafdrop-remote.kafka.broker | string | sasquatch-kafka-bootstrap.sasquatch:9092 | Kafka bootstrap servers to connect to |
 | kafdrop-remote.kafka.topicPrefix | string | lsst | Kafka topic prefix to filter topics by |
 | kafdrop-remote.kafka.user | string | kafdrop | Kafka user to use for kafdrop |
+| kafdrop-remote.logging.kafdrop.config.level | string | `"WARN"` | Log level for Kafdrop config package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| kafdrop-remote.logging.kafdrop.controller.level | string | `"INFO"` | Log level for Kafdrop controller package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| kafdrop-remote.logging.kafdrop.level | string | `"INFO"` | Log level for Kafdrop package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| kafdrop-remote.logging.kafdrop.service.level | string | `"INFO"` | Log level for Kafdrop service package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| kafdrop-remote.logging.root.level | string | `"WARN"` | Log level for Kafdrop root logger (TRACE, DEBUG, INFO, WARN, ERROR) |
 | kafdrop-remote.nodeSelector | object | `{}` | Node selector configuration |
 | kafdrop-remote.podAnnotations | object | `{}` | Pod annotations |
 | kafdrop-remote.replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
@@ -544,10 +561,10 @@ Rubin Observatory's telemetry service
 | rest-proxy.affinity | object | `{}` | Affinity configuration |
 | rest-proxy.configurationOverrides | object | See `values.yaml` | Kafka REST configuration options |
 | rest-proxy.customEnv | object | `{}` | Kafka REST additional env variables |
-| rest-proxy.heapOptions | string | `"-Xms512M -Xmx512M"` | Kafka REST proxy JVM Heap Option |
+| rest-proxy.heapOptions | string | `"-Xms1024M -Xmx1024M"` | Kafka REST proxy JVM Heap Option |
 | rest-proxy.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | rest-proxy.image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository |
-| rest-proxy.image.tag | string | `"8.0.0"` | Kafka REST proxy image tag |
+| rest-proxy.image.tag | string | `"8.0.2"` | Kafka REST proxy image tag |
 | rest-proxy.ingress.annotations | object | See `values.yaml` | Additional annotations to add to the ingress |
 | rest-proxy.ingress.enabled | bool | `false` | Whether to enable the ingress |
 | rest-proxy.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
@@ -566,6 +583,7 @@ Rubin Observatory's telemetry service
 | scimma.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | square-events.cluster.name | string | `"sasquatch"` |  |
 | strimzi-kafka.broker.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for broker pod assignment |
+| strimzi-kafka.broker.backup | bool | `false` | Whether to label the broker PVCs for backup by k8up, enabled on the summit and base environments |
 | strimzi-kafka.broker.enabled | bool | `false` | Enable node pool for the kafka brokers |
 | strimzi-kafka.broker.name | string | `"kafka"` | Node pool name |
 | strimzi-kafka.broker.nodeIds | string | `"[0,1,2]"` | IDs to assign to the brokers |
@@ -591,10 +609,11 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.connect.config."value.converter.schema.registry.url" | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | URL for the schema registry |
 | strimzi-kafka.connect.config."value.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message value |
 | strimzi-kafka.connect.enabled | bool | `false` | Enable Kafka Connect |
-| strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
+| strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.47.0-kafka-3.9.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
 | strimzi-kafka.connect.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafka Connect |
 | strimzi-kafka.controller.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for controller pod assignment |
+| strimzi-kafka.controller.backup | bool | `false` | Whether to label the controller PVCs for backup by k8up, enabled on the summit and base environments |
 | strimzi-kafka.controller.enabled | bool | `false` | Enable node pool for the kafka controllers |
 | strimzi-kafka.controller.nodeIds | string | `"[3,4,5]"` | IDs to assign to the controllers |
 | strimzi-kafka.controller.resources | object | `{"limits":{"cpu":"1","memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for the controllers |
@@ -604,6 +623,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.cruiseControl.enabled | bool | `false` | Enable cruise control (required for broker migration and rebalancing) |
 | strimzi-kafka.cruiseControl.maxReplicasPerBroker | int | `20000` | Maximum number of replicas per broker |
 | strimzi-kafka.cruiseControl.metricsConfig.enabled | bool | `false` | Enable metrics generation |
+| strimzi-kafka.jvmOptions | object | `{}` | Allow specification of JVM options for both controllers and brokers |
 | strimzi-kafka.kafka.config."log.retention.minutes" | int | 4320 minutes (3 days) | Number of days for a topic's data to be retained |
 | strimzi-kafka.kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |
 | strimzi-kafka.kafka.config."offsets.retention.minutes" | int | 4320 minutes (3 days) | Number of minutes for a consumer group's offsets to be retained |
@@ -617,10 +637,11 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled |
 | strimzi-kafka.kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled |
 | strimzi-kafka.kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled |
+| strimzi-kafka.kafka.metadataVersion | string | `nil` | The KRaft metadata version used by the Kafka cluster. If the property is not set, it defaults to the metadata version that corresponds to the version property. |
 | strimzi-kafka.kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
 | strimzi-kafka.kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
 | strimzi-kafka.kafka.replicas | int | `3` | Number of Kafka broker replicas to run |
-| strimzi-kafka.kafka.version | string | `"3.8.0"` | Version of Kafka to deploy |
+| strimzi-kafka.kafka.version | string | `"4.0.0"` | Version of Kafka to deploy |
 | strimzi-kafka.kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
 | strimzi-kafka.kafkaExporter.enabled | bool | `false` | Enable Kafka exporter |
 | strimzi-kafka.kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
@@ -659,7 +680,7 @@ Rubin Observatory's telemetry service
 | telegraf.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
 | telegraf.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | telegraf.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| telegraf.image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
+| telegraf.image.tag | string | The appVersion of the chart | Telegraf image tag |
 | telegraf.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | telegraf.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
 | telegraf.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
@@ -684,6 +705,7 @@ Rubin Observatory's telemetry service
 | telegraf.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | telegraf.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
 | telegraf.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
+| telegraf.kafkaVersion | string | null, use the Sarama library default. | Set the minimal supported Kafka version for the Sarama Go client library. |
 | telegraf.nodeSelector | object | `{}` | Node labels for pod assignment |
 | telegraf.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | telegraf.podLabels | object | `{}` | Labels for the Telegraf pods |
@@ -697,7 +719,7 @@ Rubin Observatory's telemetry service
 | telegraf-oss.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
 | telegraf-oss.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | telegraf-oss.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| telegraf-oss.image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
+| telegraf-oss.image.tag | string | The appVersion of the chart | Telegraf image tag |
 | telegraf-oss.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | telegraf-oss.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
 | telegraf-oss.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
@@ -722,6 +744,7 @@ Rubin Observatory's telemetry service
 | telegraf-oss.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | telegraf-oss.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
 | telegraf-oss.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
+| telegraf-oss.kafkaVersion | string | null, use the Sarama library default. | Set the minimal supported Kafka version for the Sarama Go client library. |
 | telegraf-oss.nodeSelector | object | `{}` | Node labels for pod assignment |
 | telegraf-oss.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | telegraf-oss.podLabels | object | `{}` | Labels for the Telegraf pods |
