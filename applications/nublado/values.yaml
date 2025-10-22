@@ -91,7 +91,7 @@ controller:
         pullPolicy: "IfNotPresent"
 
         # -- Tag of file server image to use
-        tag: "0.1.0"
+        tag: "0.2.0"
 
       # -- Namespace for user file servers
       namespace: "fileservers"
