@@ -34,7 +34,7 @@ spec:
               - all
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
-        image: "{{ .Values.image.repo }}:{{ .Values.image.tag }}"
+        image: "{{ .Values.image.repo }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy | quote }}
         {{- if .Values.resources }}
         resources:
