@@ -17,7 +17,7 @@ Kafka topics, users, and a telegraf connector for metrics events.
 | globalInfluxTags | list | `["application"]` | Keys in an every event sent by any app that should be recorded in InfluxDB as "tags" (vs. "fields"). These will be concatenated with the `influxTags` from `globalAppConfig` |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| image.tag | string | `"1.34.0-alpine"` | Telegraf image tag |
+| image.tag | string | The appVersion of the chart | Telegraf image tag |
 | imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
 | kafkaVersion | string | null, use the Sarama library default. | Set the minimal supported Kafka version for the Sarama Go client library. |

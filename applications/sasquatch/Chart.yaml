@@ -44,6 +44,10 @@ dependencies:
   - name: kafdrop
     condition: kafdrop.enabled
     version: 1.0.0
+  - name: kafdrop
+    alias: kafdrop-remote
+    condition: kafdrop-remote.enabled
+    version: 1.0.0
   - name: schema-registry
     condition: registry.enabled
     version: 1.0.0
@@ -55,8 +59,8 @@ dependencies:
     condition: telegraf.enabled
     version: 1.0.0
   - name: telegraf
-    alias: telegraf-standby
-    condition: telegraf-standby.enabled
+    alias: telegraf-oss
+    condition: telegraf-oss.enabled
     version: 1.0.0
   - name: rest-proxy
     condition: rest-proxy.enabled

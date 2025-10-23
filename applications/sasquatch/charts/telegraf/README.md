@@ -13,7 +13,7 @@ Telegraf is an agent for collecting, processing, aggregating, and writing metric
 | envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
+| image.tag | string | The appVersion of the chart | Telegraf image tag |
 | imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
 | kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |

@@ -19,6 +19,8 @@ data:
       flush_jitter = {{ default "0s" .value.flush_jitter | quote }}
       debug = {{ default false .value.debug }}
       omit_hostname = true
+      skip_processors_after_aggregators = false
+
 
     {{- $database := .value.database }}
     {{- range .influxdbUrls }}
