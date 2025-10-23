@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "turborepo-cache"
+  labels:
+    {{- include "turborepo-cache.cache.labels" . | nindent 4 }}
+data:
+  AUTH_MODE: "static"
+  LOG_LEVEL: "info"
+  ENABLE_STATUS_LOG: "false"
+  STORAGE_PROVIDER: "google-cloud-storage"
+  STORAGE_PATH: {{ .Values.cache.config.storagePath | quote }}

@@ -1,0 +1,38 @@
+{{- if (index .Values "applications" "turborepo-cache") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "turborepo-cache"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "turborepo-cache"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "turborepo-cache"
+    server: "https://kubernetes.default.svc"
+  project: "roundtable"
+  source:
+    path: "applications/turborepo-cache"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ or (index .Values "revisions" "turborepo-cache") .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.repertoireUrl"
+          value: "https://{{ .Values.fqdn }}/repertoire"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

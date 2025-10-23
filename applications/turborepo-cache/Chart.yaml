@@ -1,0 +1,9 @@
+apiVersion: v2
+appVersion: 2.6.1 # version of turborepo-remote-cache; set proxy version in values.yaml
+description: Turborepo remote cache
+name: turborepo-cache
+sources:
+  - https://github.com/ducktors/turborepo-remote-cache
+  - https://github.com/lsst-sqre/turborepo-cache-proxy
+type: application
+version: 1.0.0

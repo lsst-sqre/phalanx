@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "turborepo-cache-proxy"
+  labels:
+    {{- include "turborepo-cache.proxy.labels" . | nindent 4 }}
+data:
+  TURBOREPO_CACHE_PROXY_LOG_LEVEL: {{ .Values.proxy.config.logLevel | quote }}
+  TURBOREPO_CACHE_PROXY_LOG_PROFILE: {{ .Values.proxy.config.logProfile | quote }}
+  TURBOREPO_CACHE_PROXY_PATH_PREFIX: {{ .Values.proxy.config.pathPrefix | quote }}
