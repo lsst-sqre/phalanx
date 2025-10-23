@@ -32,7 +32,6 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: [
             "/alloydb-auth-proxy",
-            "--health-check",
             "--public-ip",
             "--address", "0.0.0.0",
             "--credentials-file", "/opt/lsst/secrets/gcs-creds",
@@ -43,16 +42,9 @@ spec:
             - name: "secrets"
               mountPath: "/opt/lsst/secrets"
           ports:
-            - name: "http"
-              containerPort: 9090
-              protocol: "TCP"
             - name: "postgres"
               containerPort: 5432
               protocol: "TCP"
-          readinessProbe:
-            httpGet:
-              path: "/readiness"
-              port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           securityContext:
