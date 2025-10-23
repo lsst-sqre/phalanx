@@ -17,6 +17,7 @@ data:
       flush_jitter = "0s"
       debug = {{ default false .Values.debug }}
       omit_hostname = true
+      skip_processors_after_aggregators = false
 
     [[outputs.influxdb]]
       namedrop = ["telegraf_*"]
