@@ -58,21 +58,19 @@ strimzi-kafka:
       limits:
         memory: 16Gi
         cpu: "2"
-  registry:
-    enabled: true
-    schemaTopic: registry-schemas
-    ingress:
-      enabled: true
-      hostname: usdf-rsp-int.slac.stanford.edu
-    remote:
-      enabled: true
-      schemaTopic: summit.registry-schemas
-      ingress:
-        enabled: true
-        hostname: usdf-rsp-int.slac.stanford.edu
 
 schema-registry:
   enabled: true
+
+schema-registry-remote:
+  enabled: true
+  topic:
+    name: summit.registry-schemas
+    create: false
+  ingress:
+    enabled: true
+    hostname: usdf-rsp-int.slac.stanford.edu
+    path: /schema-registry-remote(/|$)(.*)
 
 influxdb:
   ingress:
