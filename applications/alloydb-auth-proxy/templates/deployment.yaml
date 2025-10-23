@@ -30,14 +30,18 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          command: ["/alloydb-auth-proxy", "--health-check", "--public-ip", "--address", "0.0.0.0", "{{ .Values.config.instance_uri }}"]
+          command: [
+            "/alloydb-auth-proxy",
+            "--health-check",
+            "--public-ip",
+            "--address", "0.0.0.0",
+            "--credentials-file", "/opt/lsst/secrets/gcs-creds",
+            "{{ .Values.config.instance_uri }}"
+          ]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: GOOGLE_APPLICATION_CREDENTIALS
-              valueFrom:
-                secretKeyRef:
-                  name: "alloydb-auth-proxy"
-                  key: "gcs-creds"
+          volumeMounts:
+            - name: "secrets"
+              mountPath: "/opt/lsst/secrets"
           ports:
             - name: "http"
               containerPort: 9090
@@ -57,6 +61,10 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+      volumes:
+        - name: "secrets"
+          secret:
+            secretName: "alloydb-auth-proxy"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
