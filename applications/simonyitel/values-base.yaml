@@ -252,7 +252,7 @@ mtm2-hwsim:
     repository: ts-dockerhub.lsst.org/m2
     pullPolicy: Always
   env:
-    RUN_ARG: --simulate --host m2-crio-simulator.ls.lsst.org
+    RUN_ARG: --host m2-crio-simulator.ls.lsst.org
   resources:
     limits:
       cpu: 850m
