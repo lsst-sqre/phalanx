@@ -30,7 +30,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          command: ["alloydb-auth-proxy", "--health-check", "--public-ip", "--address", "0.0.0.0", "{{ .Values.config.instance_uri }}"]
+          command: ["/alloydb-auth-proxy", "--health-check", "--public-ip", "--address", "0.0.0.0", "{{ .Values.config.instance_uri }}"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: GOOGLE_APPLICATION_CREDENTIALS
