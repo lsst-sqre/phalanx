@@ -14,7 +14,7 @@ spec:
 {{- if (eq "ClusterIP" .Values.data.service.type) }}
   clusterIP: None
 {{- end }}
-{{- if eq "LoadBalancer" .Values.meta.service.type }}
+{{- if eq "LoadBalancer" .Values.data.service.type }}
   allocateLoadBalancerNodePorts: false
 {{- end }}
   publishNotReadyAddresses: true
