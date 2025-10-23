@@ -17,11 +17,15 @@ spec:
       {{- end }}
       labels:
         {{- include "alloydb-auth-proxy.selectorLabels" . | nindent 8 }}
+        # The imaging caching agent deployed at USDF doesn't work with gcr.io
+        # container registry.  This label disables the proxy.
+        kube-image-keeper.enix.io/image-caching-policy: ignore
     spec:
       {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      labels:
       automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
