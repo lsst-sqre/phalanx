@@ -90,3 +90,11 @@ nodeSelector: {}
 tolerations: []
 # -- This specifies the scheduling constraints of the pod
 affinity: {}
+# -- Enable observing environment sidecar?
+obsenv: false
+# -- This key allows specification of a json configuration file for the observing environment.
+# If this section is used, it must contain the following attributes defined:
+# _path_ (The container path for the configuration file),
+# _filename_ (The configuration file name),
+# _content_ (The json content for the configuration file)
+obsenv_configfile: {}
