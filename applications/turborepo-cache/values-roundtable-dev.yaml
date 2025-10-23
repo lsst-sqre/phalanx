@@ -1,0 +1,8 @@
+cache:
+  config:
+    storagePath: "rubin-us-central1-turborepo-cache-dev"
+    googleServiceAccount: "turborepo-cache@roundtable-dev-abe2.iam.gserviceaccount.com"
+
+proxy:
+  image:
+    pullPolicy: Always
