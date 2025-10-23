@@ -118,3 +118,6 @@ backup:
 
 consdb:
   enabled: true
+
+tap:
+  enabled: true
