@@ -170,4 +170,4 @@ jupyterhub:
     maxAge: 691200  # 8 days
 
 hub:
-  internalDatabase: true
+  internalDatabase: false
