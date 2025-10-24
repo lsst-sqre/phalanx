@@ -12,6 +12,7 @@ applications:
   cert-manager: true
   ingress-nginx: false
 
+  alloydb-auth-proxy: true
   butler: true
   consdbtap: true
   consdb: true
