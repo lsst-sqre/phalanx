@@ -1,8 +1,14 @@
+image:
+  tag: tickets-DM-52933-slack-ify
+  pullPolicy: Always
+
 config:
   logLevel: "DEBUG"
   metrics:
     enabled: true
   sentry:
+    enabled: true
+  slack:
     enabled: true
   qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-int.slac.stanford.edu:4090/"
   qservRestSendApiVersion: false
