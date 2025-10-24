@@ -1,6 +1,5 @@
 strimzi-kafka:
   kafka:
-    version: "3.9.0"
     listeners:
       tls:
         enabled: true
@@ -224,7 +223,6 @@ chronograf:
 
 app-metrics:
   enabled: true
-  kafkaVersion: "3.9.0"
   apps:
     - gafaelfawr
     - noteburst
