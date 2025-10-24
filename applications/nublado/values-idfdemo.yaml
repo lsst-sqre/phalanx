@@ -4,7 +4,7 @@ controller:
   googleServiceAccount: "nublado-controller@science-platform-demo-9e05.iam.gserviceaccount.com"
   slackAlerts: true
   image:
-    tag: tickets-DM-52597
+    tag: tickets-DM-53011
     pullPolicy: Always
   config:
     dropdownMenu:
