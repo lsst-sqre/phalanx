@@ -81,7 +81,6 @@ chronograf:
 
 app-metrics:
   enabled: true
-  kafkaVersion: "4.0.0"
   apps:
     - gafaelfawr
     - mobu

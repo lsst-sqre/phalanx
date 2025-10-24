@@ -107,7 +107,7 @@ customInfluxDBIngress:
 
 telegraf:
   enabled: true
-  kafkaVersion: "4.0.0"
+  kafkaVersion: "3.9.1"
   image:
     tag: 1.35.4-alpine
   kafkaConsumers:

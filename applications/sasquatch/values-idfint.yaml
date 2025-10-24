@@ -54,7 +54,6 @@ customInfluxDBIngress:
 
 telegraf:
   enabled: true
-  kafkaVersion: "4.0.0"
   kafkaConsumers:
     example:
       enabled: true
@@ -108,7 +107,6 @@ chronograf:
 
 app-metrics:
   enabled: true
-  kafkaVersion: "4.0.0"
   apps:
     - gafaelfawr
     - mobu

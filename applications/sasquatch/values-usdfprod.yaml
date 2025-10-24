@@ -237,6 +237,7 @@ influxdb-enterprise-active:
 
 telegraf:
   enabled: true
+  kafkaVersion: "3.9.0"
   influxdb:
     urls:
       - "http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086"
@@ -440,6 +441,7 @@ telegraf:
 
 telegraf-standby:
   enabled: true
+  kafkaVersion: "3.9.0"
   influxdb:
     urls:
       - "http://sasquatch-influxdb-enterprise-standby-data.sasquatch:8086"
@@ -676,6 +678,7 @@ kapacitor:
 
 app-metrics:
   enabled: true
+  kafkaVersion: "3.9.0"
   apps:
     - gafaelfawr
     - noteburst

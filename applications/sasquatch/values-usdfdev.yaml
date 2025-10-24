@@ -224,6 +224,7 @@ chronograf:
 
 app-metrics:
   enabled: true
+  kafkaVersion: "3.9.0"
   apps:
     - gafaelfawr
     - noteburst

@@ -133,6 +133,7 @@ customInfluxDBIngress:
 
 telegraf:
   enabled: true
+  kafkaVersion: "3.9.1"
   kafkaConsumers:
     auxtel:
       enabled: true

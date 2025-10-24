@@ -216,6 +216,7 @@ telegraf:
     urls:
       - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
       - "http://sasquatch-influxdb-enterprise-standby-data.sasquatch:8086"
+  kafkaVersion: "3.9.1"
   kafkaConsumers:
     # Application connectors
     obsenv:
