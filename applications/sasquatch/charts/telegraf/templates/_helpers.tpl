@@ -51,6 +51,7 @@ data:
       sasl_mechanism = "SCRAM-SHA-512"
       sasl_password = "$TELEGRAF_PASSWORD"
       sasl_username = "telegraf"
+      sasl_version = 1
       data_format = "avro"
       avro_schema_registry = {{ default "http://sasquatch-schema-registry.sasquatch:8081" .registryUrl | quote }}
       avro_timestamp = {{ default "private_efdStamp" .value.timestamp_field | quote }}
