@@ -1,6 +1,5 @@
 strimzi-kafka:
   kafka:
-    version: "3.9.0"
     listeners:
       tls:
         enabled: true
@@ -88,7 +87,7 @@ telegraf:
   enabled: true
   registry:
     url: "http://sasquatch-schema-registry-remote.sasquatch:8081"
-  kafkaVersion: "3.9.0"
+  kafkaVersion: "4.0.0"
   kafkaConsumers:
     test:
       enabled: true
