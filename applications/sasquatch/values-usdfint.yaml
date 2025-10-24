@@ -88,6 +88,7 @@ telegraf:
   enabled: true
   registry:
     url: "http://sasquatch-schema-registry-remote.sasquatch:8081"
+  kafkaVersion: "3.9.0"
   kafkaConsumers:
     test:
       enabled: true
