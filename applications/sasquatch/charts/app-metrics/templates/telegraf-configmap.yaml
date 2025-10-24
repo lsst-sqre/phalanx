@@ -45,9 +45,7 @@ data:
       brokers = [
         "sasquatch-kafka-brokers.sasquatch:9092"
       ]
-      {{- if $.Values.kafkaVersion }}
-      kafka_version = "{{ $.Values.kafkaVersion }}"
-      {{- end }}
+      kafka_version = {{ $.Values.kafkaVersion | quote }}
       consumer_group = "telegraf-kafka-consumer-app-metrics"
       sasl_mechanism = "SCRAM-SHA-512"
       sasl_password = "$TELEGRAF_PASSWORD"

@@ -20,7 +20,7 @@ Kafka topics, users, and a telegraf connector for metrics events.
 | image.tag | string | The appVersion of the chart | Telegraf image tag |
 | imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
-| kafkaVersion | string | null, use the Sarama library default. | Set the minimal supported Kafka version for the Sarama Go client library. |
+| kafkaVersion | string | `"4.0.0"` |  |
 | nodeSelector | object | `{}` | Node labels for pod assignment |
 | podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | podLabels | object | `{}` | Labels for the Telegraf pods |
