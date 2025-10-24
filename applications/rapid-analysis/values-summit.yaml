@@ -423,7 +423,7 @@ scripts:
       memory: 6G
     limits:
       cpu: 2
-      memory: 10G
+      memory: 12G
 - name: LSSTCam/runPerformanceMonitor.py
   mounts:
   - lsstcam-data
