@@ -3,4 +3,4 @@ name: app-metrics
 version: 1.0.0
 description: Kafka topics, users, and a telegraf connector for metrics events.
 type: application
-appVersion: 1.36.1
+appVersion: 1.36.3
