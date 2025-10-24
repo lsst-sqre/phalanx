@@ -117,10 +117,10 @@ Rubin Observatory's telemetry service
 | app-metrics.globalInfluxTags | list | `["application"]` | Keys in an every event sent by any app that should be recorded in InfluxDB as "tags" (vs. "fields"). These will be concatenated with the `influxTags` from `globalAppConfig` |
 | app-metrics.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | app-metrics.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| app-metrics.image.tag | string | `"1.34.0-alpine"` | Telegraf image tag |
+| app-metrics.image.tag | string | The appVersion of the chart | Telegraf image tag |
 | app-metrics.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | app-metrics.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
-| app-metrics.kafkaVersion | string | null, use the Sarama library default. | Set the minimal supported Kafka version for the Sarama Go client library. |
+| app-metrics.kafkaVersion | string | `"4.0.0"` |  |
 | app-metrics.nodeSelector | object | `{}` | Node labels for pod assignment |
 | app-metrics.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | app-metrics.podLabels | object | `{}` | Labels for the Telegraf pods |
@@ -662,7 +662,7 @@ Rubin Observatory's telemetry service
 | telegraf.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
 | telegraf.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | telegraf.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| telegraf.image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
+| telegraf.image.tag | string | The appVersion of the chart | Telegraf image tag |
 | telegraf.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | telegraf.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
 | telegraf.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
@@ -687,7 +687,7 @@ Rubin Observatory's telemetry service
 | telegraf.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | telegraf.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
 | telegraf.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
-| telegraf.kafkaVersion | string | null, use the Sarama library default. | Set the minimal supported Kafka version for the Sarama Go client library. |
+| telegraf.kafkaVersion | string | `"4.0.0"` |  |
 | telegraf.nodeSelector | object | `{}` | Node labels for pod assignment |
 | telegraf.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | telegraf.podLabels | object | `{}` | Labels for the Telegraf pods |
@@ -701,7 +701,7 @@ Rubin Observatory's telemetry service
 | telegraf-standby.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
 | telegraf-standby.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | telegraf-standby.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| telegraf-standby.image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
+| telegraf-standby.image.tag | string | The appVersion of the chart | Telegraf image tag |
 | telegraf-standby.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | telegraf-standby.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
 | telegraf-standby.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
@@ -726,7 +726,7 @@ Rubin Observatory's telemetry service
 | telegraf-standby.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | telegraf-standby.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
 | telegraf-standby.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
-| telegraf-standby.kafkaVersion | string | null, use the Sarama library default. | Set the minimal supported Kafka version for the Sarama Go client library. |
+| telegraf-standby.kafkaVersion | string | `"4.0.0"` |  |
 | telegraf-standby.nodeSelector | object | `{}` | Node labels for pod assignment |
 | telegraf-standby.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | telegraf-standby.podLabels | object | `{}` | Labels for the Telegraf pods |

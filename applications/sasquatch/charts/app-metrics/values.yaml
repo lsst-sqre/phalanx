@@ -63,7 +63,8 @@ image:
   repo: "docker.io/library/telegraf"
 
   # -- Telegraf image tag
-  tag: "1.34.0-alpine"
+  # @default -- The appVersion of the chart
+  tag: ""
 
   # -- Image pull policy
   pullPolicy: "IfNotPresent"
@@ -109,9 +110,9 @@ envFromSecret: ""
 # @default -- false
 debug: false
 
-# -- Set the minimal supported Kafka version for the Sarama Go client library.
-# @default -- null, use the Sarama library default.
-kafkaVersion: null
+# Must match the Kafka broker version used in Sasquatch.
+# @default -- the default Kafka version in Sasquatch (see strimzi-kafka subchart values.yaml)
+kafkaVersion: "4.0.0"
 
 influxdb:
   # -- URL of the InfluxDB v1 instance to write to

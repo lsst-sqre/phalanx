@@ -19,6 +19,8 @@ data:
       flush_jitter = {{ default "0s" .value.flush_jitter | quote }}
       debug = {{ default false .value.debug }}
       omit_hostname = true
+      skip_processors_after_aggregators = false
+
 
     {{- $database := .value.database }}
     {{- range .influxdbUrls }}
@@ -68,9 +70,7 @@ data:
       consumer_fetch_default = {{ default "20MB" .value.consumer_fetch_default | quote }}
       max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
       compression_codec = {{ default 3 .value.compression_codec }}
-      {{- if .kafkaVersion }}
-      kafka_version = "{{ .kafkaVersion }}"
-      {{- end }}
+      kafka_version = {{ .kafkaVersion | quote }}
 
     {{- if .value.repair }}
     [[inputs.kafka_consumer]]
@@ -100,6 +100,7 @@ data:
       consumer_fetch_default = {{ default "20MB" .value.consumer_fetch_default | quote }}
       max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
       compression_codec = {{ default 3 .value.compression_codec }}
+      kafka_version = {{ .kafkaVersion | quote }}
     {{- end }}
 
     [[inputs.internal]]
