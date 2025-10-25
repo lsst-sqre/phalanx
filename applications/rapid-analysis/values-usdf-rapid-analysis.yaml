@@ -1,7 +1,7 @@
 image:
   repository: ghcr.io/lsst-sitcom/rubintv_production
-  tag: tickets-DM-50534-w38
-  pullPolicy: Always
+  tag: tickets-DM-50534-w41
+  pullPolicy: IfNotPresent
 location: USDF
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /config/data-repos.yaml
