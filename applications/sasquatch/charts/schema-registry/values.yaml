@@ -4,7 +4,7 @@ image:
   # -- Docker image for the Confluent Schema Registry.
   repository: confluentinc/cp-schema-registry
   # -- Docker image tag for the Confluent Schema Registry.
-  tag: "8.0.2"
+  tag: "8.1.0"
 
 cluster:
   # -- Name of the Strimzi cluster used by the Schema Registry.
