@@ -56,8 +56,6 @@ spec:
           env:
             - name: "LOG_CONFIG"
               value: "{{ .Values.obsloctap.logLevel }}"
-            - name: "lfa"
-              value: "{{ .Values.lfa.s3EndpointUrl }}"
             - name: "database"
               valueFrom:
                 secretKeyRef:
@@ -80,19 +78,6 @@ spec:
                   key: "password"
             - name: "database_schema"
               value: "{{ .Values.config.database_schema }}"
-            - name: "KAFKA_BOOTSTRAP"
-              value: "{{ .Values.kafka.bootstrap }}"
-            - name: "KAFKA_USERNAME"
-              value: "{{ .Values.kafka.username }}"
-            - name: "KAFKA_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: obsloctap
-                  key: "obsloctap-password"
-            - name: "KAFKA_GROUP_ID"
-              value: "{{ .Values.kafka.group_id }}"
-            - name: "SCHEMA_URL"
-              value: "{{ .Values.kafka.schema_url }}"
 
 {{- range $key, $value := .Values.environment }}
             - name: {{ $key | quote }}
