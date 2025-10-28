@@ -26,6 +26,8 @@ config:
       Can write objects to Git LFS storage bucket
     "read:checkerboard": >-
       Can query Checkerboard for user mappings
+    "exec:internal-tools": >-
+      Can use internal APIs
 
   groupMapping:
     "admin:userinfo":
@@ -53,7 +55,10 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "friends"
-
+    "exec:internal-tools":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
 
   initialAdmins:
     - "afausti"
