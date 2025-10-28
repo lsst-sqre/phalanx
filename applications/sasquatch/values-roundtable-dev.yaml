@@ -55,6 +55,8 @@ kafdrop:
   enabled: true
   ingress:
     enabled: true
+  kafka:
+    topicPrefix: "lsst.square-events.squarebot.slack.interaction"
 
 rest-proxy:
   enabled: false
