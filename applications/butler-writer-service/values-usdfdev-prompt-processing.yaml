@@ -2,7 +2,7 @@ image:
   pullPolicy: Always
   # prompt_processing_butler_writer does not have a standard dev tag
   # release should be good enough if we aren't testing a branch build
-  tag: 2.2.0
+  tag: 2.2.1
 
 outputRepo: s3://rubin-pp-dev-users/central_repo_2
 
