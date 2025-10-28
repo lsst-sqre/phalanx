@@ -101,6 +101,11 @@ Common environment variables
     secretKeyRef:
       name: "ook"
       key: "OOK_GITHUB_APP_PRIVATE_KEY"
+- name: "OOK_SLACK_WEBHOOK"
+  valueFrom:
+    secretKeyRef:
+      name: "ook"
+      key: "OOK_SLACK_WEBHOOK"
 {{- end }}
 
 {{/*

@@ -32,7 +32,7 @@ template:
                     number: {{ .Values.service.port }}
 
 ---
-# Swagger API browser has exec:admin scope and a login redirect
+# Swagger API browser has exec:internal-tools scope and a login redirect
 # to ensure that the user is logged in.
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
@@ -44,7 +44,7 @@ config:
   loginRedirect: true
   scopes:
     all:
-      - "exec:admin"
+      - "exec:internal-tools"
   service: "ook"
 template:
   metadata:
@@ -67,28 +67,38 @@ template:
                     number: {{ .Values.service.port }}
 
 ---
-# Ingest API (/ingest) requires exec:admin scope
+# APIs that require exec:internal-tools (/ingest and /admin)
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "ook-ingest"
+  name: "ook-admin"
   labels:
     {{- include "ook.labels" . | nindent 4 }}
 config:
   loginRedirect: false
   scopes:
     all:
-      - "exec:admin"
+      - "exec:internal-tools"
   service: "ook"
 template:
   metadata:
-    name: "ook-ingest"
+    name: "ook-admin"
     {{- with .Values.ingress.annotations }}
     annotations:
       {{- toYaml . | nindent 6 }}
     {{- end }}
   spec:
     rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.ingress.path }}/admin"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "ook"
+                  port:
+                    number: {{ .Values.service.port }}
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
