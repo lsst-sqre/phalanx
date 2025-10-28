@@ -17,7 +17,7 @@ image:
 
   # -- Tag of dax_ppdb image to use
   # @default -- The appVersion of the chart
-  tag: "main"
+  tag: "tickets-DM-53023"
 
 ingress:
   # -- Additional annotations for the ingress rule
