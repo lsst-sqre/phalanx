@@ -438,6 +438,7 @@ Rubin Observatory's telemetry service
 | kafdrop.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
 | kafdrop.jvm.opts | string | `""` | JVM options |
 | kafdrop.kafka.broker | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Bootstrap list of Kafka host/port pairs |
+| kafdrop.kafka.user | string | kafdrop | Kafdrop Kafka user |
 | kafdrop.logging.kafdrop.config.level | string | `"WARN"` | Log level for Kafdrop config package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
 | kafdrop.logging.kafdrop.controller.level | string | `"INFO"` | Log level for Kafdrop controller package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
 | kafdrop.logging.kafdrop.level | string | `"INFO"` | Log level for Kafdrop package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
