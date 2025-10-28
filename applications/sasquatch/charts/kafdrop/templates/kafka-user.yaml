@@ -24,9 +24,10 @@ spec:
           - All
       - resource:
           type: topic
-          name: "*"
-          patternType: literal
+          name:  {{ .Values.kafka.topicPrefix }}
+          patternType: prefix
         type: allow
         host: "*"
         operations:
-          - All
+          - Read
+          - Describe
