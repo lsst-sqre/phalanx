@@ -52,7 +52,9 @@ kapacitor:
   enabled: false
 
 kafdrop:
-  enabled: false
+  enabled: true
+  ingress:
+    enabled: true
 
 rest-proxy:
   enabled: false
