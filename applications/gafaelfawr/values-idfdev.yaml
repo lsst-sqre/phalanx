@@ -7,6 +7,7 @@ config:
   allowSubdomains: true
   logLevel: "DEBUG"
   slackAlerts: true
+  tokenLifetime: "2d"
 
   sentry:
     enabled: true
