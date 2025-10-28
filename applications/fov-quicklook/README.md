@@ -14,8 +14,8 @@ Full focal plane viewer
 | config.pathPrefix | string | `"/fov-quicklook"` | URL path prefix |
 | config.s3_tile_path_prefix | string | `"fov-quicklook/prod"` | path prefix for object storage for tiles |
 | context_menu_templates | list | `[]` | Context menu templates for the frontend |
-| coordinator.resources.limits | object | `{"cpu":"4000m","memory":"256Mi"}` | Resource limits for the coordinator |
-| coordinator.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | Resource requests for the coordinator |
+| coordinator.resources.limits | object | `{"cpu":"4000m","memory":"512Mi"}` | Resource limits for the coordinator |
+| coordinator.resources.requests | object | `{"cpu":"100m","memory":"512Mi"}` | Resource requests for the coordinator |
 | db.resources.limits | object | `{"cpu":"2000m","memory":"256Mi"}` | Resource limits for the database |
 | db.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | Resource requests for the database |
 | db_storage_class | string | `nil` | Storage class to use for the database |
