@@ -7,7 +7,7 @@ metadata:
 config:
   scopes:
     all:
-      - "write:git-lfs" # temporary until we create a dedicated scope
+      - "write:turborepo"
   allowCookies: false
   service: "turborepo-cache-proxy"
 template:
