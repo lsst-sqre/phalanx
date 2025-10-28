@@ -28,6 +28,8 @@ config:
       Can query Checkerboard for user mappings
     "exec:internal-tools": >-
       Can use internal APIs
+    "write:turborepo": >-
+      Can read and write to the Turborepo remote cache
 
   groupMapping:
     "admin:userinfo":
@@ -56,6 +58,10 @@ config:
           organization: "lsst-sqre"
           team: "friends"
     "exec:internal-tools":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "write:turborepo":
       - github:
           organization: "lsst-sqre"
           team: "square"
