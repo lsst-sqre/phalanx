@@ -2,7 +2,7 @@ strimzi-kafka:
   kafka:
     listeners:
       plain:
-        enabled: false
+        enabled: true
       tls:
         enabled: true
       external:
