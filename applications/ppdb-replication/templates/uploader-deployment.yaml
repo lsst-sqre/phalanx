@@ -73,6 +73,8 @@ spec:
               value: {{ .Values.config.disableBucketValidation | quote }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/app/secrets/gcs-credentials.json"
+            - name: DAX_APDB_MONITOR_CONFIG
+              value: "logging:lsst.dax.ppdb.metrics,lsst.dax.ppdb.bigquery.chunk_uploader,-any"
           volumeMounts:
             - name: "ppdb-replication-secrets"
               mountPath: "/app/secrets"
@@ -85,12 +87,9 @@ spec:
           args:
             - "--log-level={{ .Values.config.logLevel }}"
             - "upload-chunks"
-            - "--directory={{ .Values.config.stagingDirectory }}"
-            - "--bucket={{ .Values.config.gcsBucket }}"
-            - "--prefix={{ .Values.config.gcsPrefix }}"
             - "--wait-interval=60"
             - "--upload-interval=0"
-            - "--delete-chunks"
+            - {{ .Values.config.ppdbConfig | quote }}
       securityContext:
         runAsNonRoot: true
         runAsUser: 8286  # jeremym

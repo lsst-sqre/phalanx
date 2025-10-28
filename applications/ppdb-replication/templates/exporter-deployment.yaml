@@ -71,6 +71,8 @@ spec:
               value: {{ .Values.config.additionalS3ProfileUrl | quote }}
             - name: LSST_DISABLE_BUCKET_VALIDATION
               value: {{ .Values.config.disableBucketValidation | quote }}
+            - name: DAX_APDB_MONITOR_CONFIG
+              value: "logging:lsst.dax.ppdb.metrics,lsst.dax.ppdb.bigquery.ppdb_bigquery,-any"
           volumeMounts:
             - name: "ppdb-replication-secrets"
               mountPath: "/app/secrets"
@@ -82,16 +84,12 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           args:
             - "--log-level={{ .Values.config.logLevel }}"
-            - "export-chunks"
+            - "run"
             - {{ .Values.config.apdbConfig | quote }}
             - {{ .Values.config.ppdbConfig | quote }}
-            - "--directory={{ .Values.config.stagingDirectory }}"
-            - "--compression=snappy"
-            - "--batch-size={{ .Values.config.batchSize }}"
             - "--min-wait-time={{ .Values.config.minWaitTime }}"
             - "--max-wait-time={{ .Values.config.maxWaitTime }}"
             - "--check-interval={{ .Values.config.checkInterval }}"
-            # - "--single"
       securityContext:
         runAsNonRoot: true
         runAsUser: 8286  # jeremym
