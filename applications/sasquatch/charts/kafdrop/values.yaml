@@ -21,6 +21,9 @@ image:
 kafka:
   # -- Bootstrap list of Kafka host/port pairs
   broker: "sasquatch-kafka-bootstrap.sasquatch:9092"
+  # -- Kafdrop Kafka user
+  # @default -- kafdrop
+  user: "kafdrop"
 
 jvm:
   # -- JVM options
