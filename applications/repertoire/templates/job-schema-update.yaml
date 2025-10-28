@@ -1,0 +1,110 @@
+{{- range $app, $config := $.Values.config.tapSchemaApps }}
+{{- if index $.Values.applications $app }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "repertoire.fullname" . }}-schema-update-{{ $app }}-{{ $config.schemaVersion | replace "." "-" }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    helm.sh/hook: pre-upgrade,pre-install
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "-5"
+  labels:
+    {{- include "repertoire.labels" . | nindent 4 }}
+    app.kubernetes.io/component: schema-update
+spec:
+  ttlSecondsAfterFinished: 86400
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        {{- include "repertoire.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: schema-update
+    spec:
+      serviceAccountName: {{ include "repertoire.serviceAccountName" . }}
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+      containers:
+      - name: cloud-sql-proxy
+        image: "{{ $.Values.cloudsql.image.repository }}:{{ $.Values.cloudsql.image.tag }}"
+        imagePullPolicy: {{ $.Values.cloudsql.image.pullPolicy | quote }}
+        args:
+          - "--structured-logs"
+          - "--port=5432"
+          - "--max-sigterm-delay=30s"
+          - {{ $.Values.cloudsql.instanceConnectionName | quote }}
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 65532
+          runAsGroup: 65532
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
+        resources:
+          {{- toYaml $.Values.cloudsql.resources | nindent 10 }}
+      - name: tap-schema-updater
+        image: "{{ $.Values.tapSchemaFelis.image.repository }}:{{ $.Values.tapSchemaFelis.image.tag }}"
+        imagePullPolicy: {{ $.Values.tapSchemaFelis.image.pullPolicy | quote }}
+        command: ["/bin/bash", "/scripts/update_tap_schema.sh"]
+        env:
+        - name: PGHOST
+          value: "127.0.0.1"
+        - name: PGPORT
+          value: "5432"
+        - name: PGDATABASE
+          value: {{ $config.cloudSqlDatabase | quote }}
+        - name: PGUSER
+          value: "postgres"
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "repertoire.fullname" . }}-cloudsql
+              key: password
+        - name: SCHEMA_VERSION
+          value: {{ $config.schemaVersion | default $.Values.config.schemaVersion | quote }}
+        - name: SCHEMAS_TO_LOAD
+          value: {{ $config.schemas | join "," | quote }}
+        - name: GCS_BUCKET
+          value: {{ $.Values.config.gcsBucket | default "sdm-schemas-releases" | quote }}
+        volumeMounts:
+        - name: scripts
+          mountPath: /scripts
+          readOnly: true
+        - name: sql
+          mountPath: /sql
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - all
+          readOnlyRootFilesystem: true
+      volumes:
+      - name: scripts
+        configMap:
+          name: {{ include "repertoire.fullname" . }}-schema-update-script
+          defaultMode: 0755
+      - name: sql
+        configMap:
+          name: {{ include "repertoire.fullname" . }}-schema-update-script
+          defaultMode: 0755
+      - name: tmp
+        emptyDir:
+          sizeLimit: 1Gi
+{{- end }}

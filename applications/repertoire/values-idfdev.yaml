@@ -16,5 +16,24 @@ config:
   metrics:
     enabled: true
   slackAlerts: true
+  tapSchemaApps:
+    tap:
+      schemaVersion: "w.2025.42"
+      schemas:
+        - dp02_dc2
+        - dp1
+        - ivoa_obscore
+      cloudSqlDatabase: "tap"
+    ssotap:
+      schemaVersion: "w.2025.42"
+      schemas:
+        - dp03
+      cloudSqlDatabase: "ssotap"
   useSubdomains:
     - "nublado"
+
+cloudsql:
+  enabled: true
+  instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
+  serviceAccount: "repertoire@science-platform-dev-7696.iam.gserviceaccount.com"
+
