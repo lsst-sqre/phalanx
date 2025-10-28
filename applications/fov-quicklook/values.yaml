@@ -36,11 +36,11 @@ coordinator:
     # -- Resource requests for the coordinator
     requests:
       cpu: 100m
-      memory: 256Mi
+      memory: 512Mi
     # -- Resource limits for the coordinator
     limits:
       cpu: 4000m
-      memory: 256Mi
+      memory: 512Mi
 
 frontend:
   resources:
