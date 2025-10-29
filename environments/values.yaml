@@ -112,6 +112,9 @@ applications:
   # -- Enable the hoverdrive application
   hoverdrive: false
 
+  # -- Enable the octavius application
+  octavius: false
+
   # -- Enable the qserv-kafka application
   qserv-kafka: false
 

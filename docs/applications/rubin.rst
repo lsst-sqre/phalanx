@@ -17,6 +17,7 @@ Argo CD project: ``rubin``
    fastapi-bootcamp/index
    mpsky/index
    nvr-control/index
+   octavius/index
    rubin-rag/index
    narrativelog/index
    nightlydigest/index

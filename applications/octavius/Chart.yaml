@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 1.0.0
+description: Object classification tool for postage stamp images
+name: octavius
+sources:
+- https://github.com/lsst-sitcom/octavius
+type: application
+version: 1.0.0
