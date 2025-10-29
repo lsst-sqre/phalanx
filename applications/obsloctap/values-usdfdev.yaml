@@ -13,15 +13,15 @@ image:
 consumekafka:
   image:
     # -- Tag of image to use
-    tag: "prod"
-  logLevel: debug
+    tag: "tickets-DM-44729"
+  logLevel: DEBUG
 
 obsloctap:
   image:
     # -- Tag of image to use
     # @default -- The appVersion of the chart
-    tag: "prod"
-  logLevel: debug
+    tag: "tickets-DM-44729"
+  logLevel: DEBUG
 
 controller:
   config:
