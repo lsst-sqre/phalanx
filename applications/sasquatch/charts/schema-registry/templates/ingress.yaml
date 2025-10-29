@@ -1,25 +1,33 @@
-{{- if .Values.ingress.enabled }}
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+{{- if .Values.ingress.enabled -}}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
 metadata:
-  name: {{ include "schema-registry.fullname" . }}
+  name: {{ include "chart.fullname" . }}
   labels:
-    name: {{ include "schema-registry.fullname" . }}
-  annotations:
-    {{- with .Values.ingress.annotations }}
-    {{ toYaml . | indent 4 }}
-    {{- end }}
-spec:
-  ingressClassName: "nginx"
-  rules:
-    - host: {{ .Values.ingress.hostname | quote }}
-      http:
-        paths:
-          - path: {{ .Values.ingress.path }}
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ include "schema-registry.fullname" . }}
-                port:
-                  number: 8081
+    {{- include "schema-registry.labels" . | nindent 4 }}
+config:
+  scopes:
+    all:
+      - "write:sasquatch"
+template:
+  metadata:
+    name: {{ include "chart.fullname" . }}
+    labels:
+      {{- include "schema-registry.labels" . | nindent 6 }}
+    annotations:
+      {{- with .Values.ingress.annotations }}
+      {{ toYaml . | indent 6 }}
+      {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.ingress.path }}
+              pathType: ImplementationSpecific
+              backend:
+                service:
+                  name: {{ include "chart.fullname" . }}
+                  port:
+                    number: 8081
 {{- end }}

@@ -29,16 +29,13 @@ ingress:
   # -- Whether to enable an ingress for the Schema Registry
   enabled: false
 
-  # -- Hostname for the Schema Registry
-  # @default -- None, must be set if ingress is enabled
-  hostname: ""
-
   # -- Path for the ingress
   # @default -- `"/schema-registry(/|$)(.*)"`
   path: "/schema-registry(/|$)(.*)"
 
   # -- Annotations that will be added to the Ingress resource
-  annotations: {}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 
 # -- Kubernetes requests and limits for the Schema Registry
 # @default -- See `values.yaml`
