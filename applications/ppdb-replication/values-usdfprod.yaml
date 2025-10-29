@@ -10,18 +10,6 @@ config:
   # -- PPDB config file resource
   ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_lsstcam.yaml"
 
-  # -- Target BigQuery dataset in the form of `project:dataset`
-  dataset: "ppdb-prod:ppdb_lsstcam"
-
-  # -- Staging directory for replicated data
-  stagingDirectory: "/sdf/scratch/rubin/ppdb/data/lsstcam"
-
-  # -- GCS bucket name
-  gcsBucket: "rubin-ppdb-lsstcam"
-
-  # -- GCS prefix
-  gcsPrefix: "data/lsstcam"
-
   # -- Volumes specific to the environment
   volumes:
     - name: sdf-group-rubin
