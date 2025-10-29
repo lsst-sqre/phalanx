@@ -49,6 +49,7 @@
 | applications.obsenv-management | bool | `false` | Enable the obsenv-management application |
 | applications.obsloctap | bool | `false` | Enable the obsloctap application |
 | applications.obssys | bool | `false` | Enable the obssys control system application |
+| applications.octavius | bool | `false` | Enable the octavius application |
 | applications.onepassword-connect | bool | `false` | Enable the onepassword-connect application |
 | applications.ook | bool | `false` | Enable the ook application |
 | applications.plot-navigator | bool | `false` | Enable the plot-navigator application |
