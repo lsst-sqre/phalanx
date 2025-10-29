@@ -75,8 +75,8 @@ controller:
       volumes:
         - name: "home"
           source:
-            serverPath: "/home-share"
-            server: "10.231.144.5"
+            serverPath: "/lcv-home-share"
+            server: "10.231.144.6"
             type: "nfs"
         - name: "rubin"
           source:
