@@ -34,12 +34,12 @@ Common environment variables
     secretKeyRef:
       name: "qserv-kafka-access"
       key: "bootstrapServers"
+- name: "KAFKA_CLUSTER_CA_PATH"
+  value: "/etc/qserv-kafka/ca.crt"
 - name: "KAFKA_CLIENT_CERT_PATH"
   value: "/etc/qserv-kafka/user.crt"
 - name: "KAFKA_CLIENT_KEY_PATH"
   value: "/etc/qserv-kafka/user.key"
-- name: "KAFKA_CLUSTER_CA_PATH"
-  value: "/etc/qserv-kafka/ca.crt"
 - name: "KAFKA_SECURITY_PROTOCOL"
   valueFrom:
     secretKeyRef:
@@ -67,6 +67,13 @@ Common environment variables
       name: "qserv-kafka"
       key: "qserv-password"
 {{- end }}
+{{- if .Values.config.slack.enabled }}
+- name: "QSERV_KAFKA_SLACK_WEBHOOK"
+  valueFrom:
+    secretKeyRef:
+      name: "qserv-kafka"
+      key: "slack-webhook"
+{{- end }}
 {{- if .Values.config.sentry.enabled }}
 - name: "SENTRY_DSN"
   valueFrom:
@@ -77,12 +84,5 @@ Common environment variables
   value: {{ .Values.global.environmentName | quote }}
 - name: "SENTRY_TRACES_SAMPLE_RATE"
   value: {{ .Values.config.sentry.tracesSampleRate | quote }}
-{{- end }}
-{{- if .Values.config.slack.enabled }}
-- name: "QSERV_KAFKA_SLACK_WEBHOOK"
-  valueFrom:
-    secretKeyRef:
-      name: "qserv-kafka"
-      key: "slack-webhook"
 {{- end }}
 {{- end }}
