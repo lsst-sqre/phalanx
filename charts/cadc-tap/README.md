@@ -79,7 +79,7 @@ IVOA TAP service
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `false` | Specifies whether a service account should be created. |
 | tapSchema.affinity | object | `{}` | Affinity rules for the TAP schema database pod |
-| tapSchema.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP schema image |
+| tapSchema.image.pullPolicy | string | `"Always"` | Pull policy for the TAP schema image |
 | tapSchema.image.repository | string | `"lsstsqre/tap-schema-mock"` | TAP schema image to ue. This must be overridden by each environment with the TAP schema for that environment. |
 | tapSchema.image.tag | string | `"DP1-v1.2.0"` | Tag of TAP schema image |
 | tapSchema.nodeSelector | object | `{}` | Node selection rules for the TAP schema database pod |
