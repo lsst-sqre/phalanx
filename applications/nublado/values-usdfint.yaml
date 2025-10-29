@@ -161,7 +161,7 @@ jupyterhub:
   hub:
     baseUrl: "/nb"
     db:
-      url: "postgresql://nublado@nb-db-rw.nbdb-int/nublado"
+      url: "postgresql://nublado@gf-db-rw.gfdb-int/nublado"
       upgrade: true
   cull:
     timeout: 432000  # 5 days
