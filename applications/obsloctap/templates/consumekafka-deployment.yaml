@@ -75,8 +75,16 @@ spec:
               value: "{{ .Values.rubinsim.dataDir }}"
             - name: "LSST_DISABLE_BUCKET_VALIDATION"
               value: "{{ .Values.rubinsim.bucketVal }}"
-            - name: "AWS_SHARED_CREDENTIALS_FILE"
-              value: "{{ .Values.rubinsim.AWS_SHARED_CREDENTIALS_FILE }}"
+            - name: "AWS_ACCESS_KEY_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "default-key"
+            - name: "AWS_SECRET_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "default-password"
             - name: "S3_ENDPOINT_URL"
               value: "{{ .Values.rubinsim.S3_ENDPOINT_URL }}"
             - name: "MPLCONFIGDIR"
