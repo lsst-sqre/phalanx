@@ -44,6 +44,13 @@ spec:
             initialDelaySeconds: 15
             periodSeconds: 10
             timeoutSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.config.pathPrefix }}/api/healthz
+              port: 9500
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
           ports:
             - containerPort: 9500
           resources: {{ toYaml .Values.frontend.resources | nindent 12 }}
