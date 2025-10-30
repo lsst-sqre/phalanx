@@ -41,7 +41,6 @@ schema-registry:
   enabled: true
   ingress:
     enabled: true
-    anonymous: true
 
 schema-registry-remote:
   enabled: true

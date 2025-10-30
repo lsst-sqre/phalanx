@@ -47,6 +47,9 @@ strimzi-kafka:
 
 schema-registry:
   enabled: true
+  ingress:
+    enabled: true
+
 
 influxdb:
   ingress:
