@@ -37,4 +37,16 @@ template:
                   name: "proxy-public"
                   port:
                     name: "http"
+      {{- if .Values.hub.useSubdomains }}
+      - host: "nb.{{ .Values.global.host }}"
+        http:
+          paths:
+            - path: "{{ .Values.jupyterhub.hub.baseUrl }}/hub/spawn"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "proxy-public"
+                  port:
+                    name: "http"
+      {{- end }}
 {{- end }}
