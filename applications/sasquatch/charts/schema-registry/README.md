@@ -11,6 +11,7 @@ Sasquatch configuration do deploy the Confluent Schema Registry as managed by th
 | image.repository | string | `"confluentinc/cp-schema-registry"` | Docker image for the Confluent Schema Registry. |
 | image.tag | string | `"8.1.0"` | Docker image tag for the Confluent Schema Registry. |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
+| ingress.anonymous | bool | false | Whether to enable anonymous access to the Schema Registry |
 | ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | ingress.path | string | `"/schema-registry(/|$)(.*)"` | Path for the ingress |
 | replicas | int | 3 | Number of Schema Registry replicas to deploy. |

@@ -551,6 +551,7 @@ Rubin Observatory's telemetry service
 | schema-registry.image.repository | string | `"confluentinc/cp-schema-registry"` | Docker image for the Confluent Schema Registry. |
 | schema-registry.image.tag | string | `"8.1.0"` | Docker image tag for the Confluent Schema Registry. |
 | schema-registry.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
+| schema-registry.ingress.anonymous | bool | false | Whether to enable anonymous access to the Schema Registry |
 | schema-registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | schema-registry.ingress.path | string | `"/schema-registry(/|$)(.*)"` | Path for the ingress |
 | schema-registry.replicas | int | 3 | Number of Schema Registry replicas to deploy. |
@@ -562,6 +563,7 @@ Rubin Observatory's telemetry service
 | schema-registry-remote.image.repository | string | `"confluentinc/cp-schema-registry"` | Docker image for the Confluent Schema Registry. |
 | schema-registry-remote.image.tag | string | `"8.1.0"` | Docker image tag for the Confluent Schema Registry. |
 | schema-registry-remote.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
+| schema-registry-remote.ingress.anonymous | bool | false | Whether to enable anonymous access to the Schema Registry |
 | schema-registry-remote.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | schema-registry-remote.ingress.path | string | `"/schema-registry(/|$)(.*)"` | Path for the ingress |
 | schema-registry-remote.replicas | int | 3 | Number of Schema Registry replicas to deploy. |

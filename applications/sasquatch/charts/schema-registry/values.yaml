@@ -33,6 +33,10 @@ ingress:
   # @default -- `"/schema-registry(/|$)(.*)"`
   path: "/schema-registry(/|$)(.*)"
 
+  # -- Whether to enable anonymous access to the Schema Registry
+  # @default -- false
+  anonymous: false
+
   # -- Annotations that will be added to the Ingress resource
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2

@@ -7,8 +7,12 @@ metadata:
     {{- include "schema-registry.labels" . | nindent 4 }}
 config:
   scopes:
+    {{- if .Values.ingress.anonymous }}
+    anonymous: true
+    {{- else }}
     all:
       - "write:sasquatch"
+    {{- end }}
 template:
   metadata:
     name: {{ include "chart.fullname" . }}
