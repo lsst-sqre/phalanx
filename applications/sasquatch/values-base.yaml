@@ -108,10 +108,7 @@ schema-registry:
   enabled: true
   ingress:
     enabled: true
-    annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /$2
-    hostname: base-lsp.lsst.codes
-    path: /schema-registry(/|$)(.*)
+    anonymous: true
 
 influxdb:
   ingress:
