@@ -39,6 +39,8 @@ strimzi-kafka:
 
 schema-registry:
   enabled: true
+  ingress:
+    enabled: true
 
 schema-registry-remote:
   enabled: true
