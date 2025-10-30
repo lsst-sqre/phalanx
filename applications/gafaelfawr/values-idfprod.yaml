@@ -88,8 +88,8 @@ config:
       - "g_users"
 
   initialAdmins:
+    - "adam"
     - "afausti"
-    - "athornton"
     - "danfuchs"
     - "frossie"
     - "jonathansick"
