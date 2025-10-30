@@ -82,7 +82,6 @@ rest-proxy:
   enabled: true
   ingress:
     enabled: true
-    hostname: data-int.lsst.cloud
   kafka:
     topicPrefixes:
       - lsst.example
