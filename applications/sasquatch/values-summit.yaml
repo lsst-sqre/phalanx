@@ -409,7 +409,7 @@ rest-proxy:
   enabled: true
   ingress:
     enabled: true
-    hostname: summit-lsp.lsst.codes
+    anonymous: true
   configurationOverrides:
     "access.control.allow.origin": https://summit-lsp.lsst.codes/love,http://love01.cp.lsst.org
   kafka:
