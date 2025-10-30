@@ -282,7 +282,7 @@ rest-proxy:
   enabled: true
   ingress:
     enabled: true
-    hostname: tucson-teststand.lsst.codes
+    anonymous: true
   configurationOverrides:
     "access.control.allow.origin": https://tucson-teststand.lsst.codes/love
   kafka:

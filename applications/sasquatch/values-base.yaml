@@ -293,7 +293,7 @@ rest-proxy:
   enabled: true
   ingress:
     enabled: true
-    hostname: base-lsp.lsst.codes
+    anonymous: true
   configurationOverrides:
     "access.control.allow.origin": https://base-lsp.lsst.codes/love
   kafka:

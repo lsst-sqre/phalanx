@@ -17,10 +17,10 @@ A subchart to deploy Confluent REST proxy for Sasquatch.
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository |
 | image.tag | string | `"8.1.0"` | Kafka REST proxy image tag |
-| ingress.annotations | object | See `values.yaml` | Additional annotations to add to the ingress |
-| ingress.enabled | bool | `false` | Whether to enable the ingress |
-| ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
-| ingress.path | string | `"/sasquatch-rest-proxy(/|$)(.*)"` | Ingress path @default - `"/sasquatch-rest-proxy(/\|$)(.*)"` |
+| ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
+| ingress.anonymous | bool | false | Whether to enable anonymous access to the REST proxy |
+| ingress.enabled | bool | `false` | Whether to enable the ingress for the REST proxy |
+| ingress.path | string | `"/sasquatch-rest-proxy(/|$)(.*)"` | Ingress path @default - `"/sasquatch-rest-proxy(/|$)(.*)"` |
 | kafka.bootstrapServers | string | `"SASL_PLAINTEXT://sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka bootstrap servers, use the internal listerner on port 9092 with SASL connection |
 | kafka.cluster.name | string | `"sasquatch"` | Name of the Strimzi Kafka cluster. |
 | kafka.topicPrefixes | list | `[]` | List of topic prefixes to use when exposing Kafka topics to the REST Proxy v2 API. |
