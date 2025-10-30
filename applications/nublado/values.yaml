@@ -550,8 +550,8 @@ jupyterhub:
     removeNamedServers: true
 
     # -- Maximum age of a lab regardless of activity
-    # @default -- 2160000 (25 days)
-    maxAge: 2160000
+    # @default -- 864000 (10 days)
+    maxAge: 864000
 
   hub:
     # -- Whether to require metrics requests to be authenticated
