@@ -145,7 +145,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | hub.useSubdomains | bool | `false` | Whether to put each user's lab in a separate domain. This is strongly recommended for security, but requires wildcard DNS and cert-manager support and requires subdomain support be enabled in Gafaelfawr. |
 | jupyterhub.cull.enabled | bool | `true` | Enable the lab culler. |
 | jupyterhub.cull.every | int | 3600 (1 hour) | How frequently to check for idle labs in seconds |
-| jupyterhub.cull.maxAge | int | 2160000 (25 days) | Maximum age of a lab regardless of activity |
+| jupyterhub.cull.maxAge | int | 864000 (10 days) | Maximum age of a lab regardless of activity |
 | jupyterhub.cull.removeNamedServers | bool | `true` | Whether to remove named servers when culling their lab |
 | jupyterhub.cull.timeout | int | 432000 (5 days) | Default idle timeout before the lab is automatically deleted in seconds |
 | jupyterhub.cull.users | bool | `false` | Whether to log out the user (from JupyterHub) when culling their lab |

@@ -78,7 +78,7 @@ Authentication and identity system
 | config.sentry.enabled | bool | `false` | Set to true to enable the Sentry integration. |
 | config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1 |
 | config.slackAlerts | bool | `false` | Whether to send certain serious alerts to Slack. If `true`, the `slack-webhook` secret must also be set. |
-| config.tokenLifetime | string | `"30d"` | Session lifetime. Use `w`, `d`, `h`, `m`, and `s` for time intervals. For example, `1d6h23m` is one day, six hours, 23 minutes. |
+| config.tokenLifetime | string | `"14d"` | Session lifetime. Use `w`, `d`, `h`, `m`, and `s` for time intervals. For example, `1d6h23m` is one day, six hours, 23 minutes. |
 | config.updateSchema | bool | `false` | Whether to automatically update the Gafaelfawr database schema |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
