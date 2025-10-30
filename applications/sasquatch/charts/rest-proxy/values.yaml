@@ -18,21 +18,20 @@ service:
   port: 8082
 
 ingress:
-  # -- Whether to enable the ingress
+  # -- Whether to enable the ingress for the REST proxy
   enabled: false
 
-  # -- Additional annotations to add to the ingress
-  # @default -- See `values.yaml`
+  # -- Ingress path
+  # @default - `"/sasquatch-rest-proxy(/|$)(.*)"`
+  path: "/sasquatch-rest-proxy(/|$)(.*)"
+
+  # -- Whether to enable anonymous access to the REST proxy
+  # @default -- false
+  anonymous: false
+
+  # -- Annotations that will be added to the Ingress resource
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
-
-  # -- Ingress hostname
-  # @default -- None, must be set if ingress is enabled
-  hostname: ""
-
-  # -- Ingress path
-  # @default - `"/sasquatch-rest-proxy(/\|$)(.*)"`
-  path: "/sasquatch-rest-proxy(/|$)(.*)"
 
 # -- Kafka REST proxy JVM Heap Option
 heapOptions: "-Xms1024M -Xmx1024M"

@@ -531,10 +531,10 @@ Rubin Observatory's telemetry service
 | rest-proxy.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | rest-proxy.image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository |
 | rest-proxy.image.tag | string | `"8.1.0"` | Kafka REST proxy image tag |
-| rest-proxy.ingress.annotations | object | See `values.yaml` | Additional annotations to add to the ingress |
-| rest-proxy.ingress.enabled | bool | `false` | Whether to enable the ingress |
-| rest-proxy.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
-| rest-proxy.ingress.path | string | `"/sasquatch-rest-proxy(/|$)(.*)"` | Ingress path @default - `"/sasquatch-rest-proxy(/\|$)(.*)"` |
+| rest-proxy.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
+| rest-proxy.ingress.anonymous | bool | false | Whether to enable anonymous access to the REST proxy |
+| rest-proxy.ingress.enabled | bool | `false` | Whether to enable the ingress for the REST proxy |
+| rest-proxy.ingress.path | string | `"/sasquatch-rest-proxy(/|$)(.*)"` | Ingress path @default - `"/sasquatch-rest-proxy(/|$)(.*)"` |
 | rest-proxy.kafka.bootstrapServers | string | `"SASL_PLAINTEXT://sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka bootstrap servers, use the internal listerner on port 9092 with SASL connection |
 | rest-proxy.kafka.cluster.name | string | `"sasquatch"` | Name of the Strimzi Kafka cluster. |
 | rest-proxy.kafka.topicPrefixes | list | `[]` | List of topic prefixes to use when exposing Kafka topics to the REST Proxy v2 API. |
