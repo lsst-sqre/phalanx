@@ -1,5 +1,7 @@
 nodeSelector:
   node_pool: "arm-core-pool"
+image:
+  tag: "tickets-DM-52819B"
 
 # Use the CSI storage class so that we can use snapshots.
 redis:
