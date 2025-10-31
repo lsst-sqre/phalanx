@@ -36,4 +36,4 @@ Server for Butler data abstraction service
 | podAnnotations | object | `{}` | Annotations for the butler deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | see `values.yaml` | Resource limits and requests for the butler deployment pod |
-| tolerations | list | `[]` | Tolerations for the butler deployment pod |
+| tolerations | list | Tolerate GKE arm64 taint | Tolerations for the butler deployment pod |
