@@ -40,7 +40,12 @@ podAnnotations: {}
 nodeSelector: {}
 
 # -- Tolerations for the TAP pod
-tolerations: []
+# @default -- Tolerate GKE arm64 taint
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
 
 # -- Affinity rules for the TAP pod
 affinity: {}
@@ -185,7 +190,12 @@ mockdb:
   nodeSelector: {}
 
   # -- Tolerations for the mock db pod
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
   # -- Affinity rules for the mock db pod
   affinity: {}
@@ -219,7 +229,12 @@ tapSchema:
   nodeSelector: {}
 
   # -- Tolerations for the TAP schema database pod
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
   # -- Affinity rules for the TAP schema database pod
   affinity: {}
@@ -252,7 +267,12 @@ uws:
   nodeSelector: {}
 
   # -- Tolerations for the UWS database pod
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
   # -- Affinity rules for the UWS database pod
   affinity: {}
