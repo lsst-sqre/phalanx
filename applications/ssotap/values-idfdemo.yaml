@@ -1,4 +1,12 @@
 cadc-tap:
+  pg:
+    image:
+      pullPolicy: Always
+      tag: "tickets-DM-52819"
+
+  nodeSelector:
+    node_pool: "arm-core-pool"
+
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfdemo-sso"
