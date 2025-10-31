@@ -165,13 +165,14 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.loadRoles.server.scopes | list | See `values.yaml` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |
-| jupyterhub.hub.tolerations | list | Tolerate GKE arm64 taint | Tolerations for Hub/Proxy pods |
+| jupyterhub.hub.tolerations | list | Tolerate GKE arm64 taint | Tolerations for Hub pod |
 | jupyterhub.ingress.enabled | bool | `false` | Whether to enable the default ingress. Should always be disabled since we install our own `GafaelfawrIngress` to avoid repeating the global hostname and manually configuring authentication |
 | jupyterhub.prePuller.continuous.enabled | bool | `false` | Whether to run the JupyterHub continuous prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.prePuller.hook.enabled | bool | `false` | Whether to run the JupyterHub hook prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.proxy.chp.extraCommandLineFlags | list | `["--keep-alive-timeout=61000"]` | Extra CLI options to pass to the proxy. The most up-to-date list is [here](https://github.com/jupyterhub/configurable-http-proxy/blob/main/bin/configurable-http-proxy) (not the docs, unfortunately) |
 | jupyterhub.proxy.chp.networkPolicy.interNamespaceAccessLabels | string | `"accept"` | Enable access to the proxy from other namespaces, since we put each user's lab environment in its own namespace |
 | jupyterhub.proxy.chp.resources | object | See `values.yaml` | Resource limits and requests for proxy pod |
+| jupyterhub.proxy.chp.tolerations | list | Tolerate GKE arm64 taint | Tolerations for proxy pod |
 | jupyterhub.proxy.service.type | string | `"ClusterIP"` | Only expose the proxy to the cluster, overriding the default of exposing the proxy directly to the Internet |
 | jupyterhub.scheduling.userPlaceholder.enabled | bool | `false` | Whether to spawn placeholder pods representing fake users to force autoscaling in advance of running out of resources |
 | jupyterhub.scheduling.userScheduler.enabled | bool | `false` | Whether the user scheduler should be enabled |

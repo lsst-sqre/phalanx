@@ -584,7 +584,7 @@ jupyterhub:
         cpu: "100m"
         memory: "128Mi"
 
-    # -- Tolerations for Hub/Proxy pods
+    # -- Tolerations for Hub pod
     # @default -- Tolerate GKE arm64 taint
     tolerations:
       - key: "kubernetes.io/arch"
@@ -709,6 +709,15 @@ jupyterhub:
         requests:
           cpu: "250m"
           memory: "200Mi"
+
+      # -- Tolerations for proxy pod
+      # @default -- Tolerate GKE arm64 taint
+      tolerations:
+        - key: "kubernetes.io/arch"
+          operator: "Equal"
+          value: "arm64"
+          effect: "NoSchedule"
+
 
   scheduling:
     userScheduler:
