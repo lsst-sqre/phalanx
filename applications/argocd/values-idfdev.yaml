@@ -18,15 +18,6 @@ argo-cd:
         border-color: #77151d;
       }
 
-      .theme-light .application-details__status-panel .row,
-      .theme-light .application-details__tree,
-      .theme-light .page__content-wrapper .flex-top-bar,
-      .theme-light .flex-top-bar__actions,
-      .theme-light .flex-top-bar__tools,
-      .theme-light .applications-list {
-        background: #fcf2f2;
-      }
-
       .theme-dark .application-details__status-panel .row,
       .theme-dark .application-details__tree,
       .theme-dark .page__content-wrapper .flex-top-bar,
