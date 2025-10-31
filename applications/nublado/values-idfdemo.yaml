@@ -3,9 +3,11 @@ sentry:
 controller:
   googleServiceAccount: "nublado-controller@science-platform-demo-9e05.iam.gserviceaccount.com"
   slackAlerts: true
-  image:
-    tag: tickets-DM-53011
-    pullPolicy: Always
+  nodeSelector:
+    node_pool: "arm-core-pool"
+  # image:
+  #   tag: tickets-DM-53011
+  #   pullPolicy: Always
   config:
     dropdownMenu:
       release:
@@ -19,6 +21,10 @@ controller:
       experimental:
         age: "3w"
     logLevel: "DEBUG"
+    fsadmin:
+      nodeSelector:
+        node_pool: "arm-core-pool"
+      mountPrefix: "/mnt/user-filesystems"
     fileserver:
       enabled: true
       nodeSelector:
@@ -85,6 +91,8 @@ jupyterhub:
     timeout: 43200  # 12 hours
     maxAge: 86400   # 1 day
   hub:
+    nodeSelector:
+      node_pool: "arm-core-pool"
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
 #     config:
@@ -96,3 +104,5 @@ cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-demo-9e05:us-central1:science-platform-demo-a4dbbf96"
   serviceAccount: "nublado@science-platform-demo-9e05.iam.gserviceaccount.com"
+  nodeSelector:
+    node_pool: "arm-core-pool"

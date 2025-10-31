@@ -118,7 +118,12 @@ controller:
           memory: "10Gi"
 
       # -- Tolerations for user file server pods
-      tolerations: []
+      # @default -- Tolerate GKE arm64 taint
+      tolerations:
+        - key: "kubernetes.io/arch"
+          operator: "Equal"
+          value: "arm64"
+          effect: "NoSchedule"
 
       # -- Volumes that should be made available via WebDAV
       volumeMounts: []
@@ -447,7 +452,12 @@ controller:
       tmpSource: "memory"
 
       # -- Tolerations for user lab pods
-      tolerations: []
+      # @default -- Tolerate GKE arm64 taint
+      tolerations:
+        - key: "kubernetes.io/arch"
+          operator: "Equal"
+          value: "arm64"
+          effect: "NoSchedule"
 
       # -- Volumes that will be in lab pods or init containers. This supports
       # NFS, HostPath, and PVC volume types (differentiated in source.type).
@@ -573,6 +583,14 @@ jupyterhub:
       requests:
         cpu: "100m"
         memory: "128Mi"
+
+    # -- Tolerations for Hub/Proxy pods
+    # @default -- Tolerate GKE arm64 taint
+    tolerations:
+      - key: "kubernetes.io/arch"
+        operator: "Equal"
+        value: "arm64"
+        effect: "NoSchedule"
 
     db:
       # -- Type of database to use
@@ -747,7 +765,12 @@ cloudsql:
   serviceAccount: null
 
   # -- Tolerations for the Cloud SQL Auth Proxy pod
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 # JupyterHub proxy configuration handled directly by this chart rather than by
 # Zero to JupyterHub.
@@ -948,7 +971,12 @@ cronjob:
       memory: "50Mi"
 
   # -- Tolerations for the cloning cronjob(s).
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 sentry:
   # -- Whether to report errors to Sentry. Applies to all Nublado components
