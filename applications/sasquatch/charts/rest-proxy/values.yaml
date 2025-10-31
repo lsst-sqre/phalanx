@@ -34,7 +34,7 @@ ingress:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 
 # -- Kafka REST proxy JVM Heap Option
-heapOptions: "-Xms1024M -Xmx1024M"
+heapOptions: "-Xms4096M -Xmx4096M"
 
 # -- Kafka REST configuration options
 # @default -- See `values.yaml`
@@ -72,10 +72,10 @@ kafka:
 # @default -- See `values.yaml`
 resources:
   requests:
-    memory: 1Gi
-    cpu: 200m
+    memory: 4Gi
+    cpu: 1
   limits:
-    memory: 2Gi
+    memory: 4Gi
     cpu: 1
 
 # -- Node selector configuration
