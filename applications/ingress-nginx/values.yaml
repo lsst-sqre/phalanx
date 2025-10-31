@@ -101,6 +101,14 @@ ingress-nginx:
       gafaelfawr.lsst.io/ingress: "true"
       hub.jupyter.org/network-access-proxy-http: "true"
 
+    # -- Tolerations for the ingress-nginx-controller deployment pod
+    # @default -- Tolerate GKE arm64 taint
+    tolerations:
+      - key: "kubernetes.io/arch"
+        operator: "Equal"
+        value: "arm64"
+        effect: "NoSchedule"
+
 vaultCertificate:
   # -- Whether to get the ingress TLS certificate from Vault instead of Let's
   # Encrypt
