@@ -66,7 +66,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
 | redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
-| redis.tolerations | list | `[]` | Tolerations for the Redis pod |
+| redis.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the Redis pod |
 | replicaCount.api | int | `1` | Number of API deployment pods to start |
 | replicaCount.worker | int | `1` | Number of worker deployment pods to start |
 | resources | object | see `values.yaml` | Resource limits and requests for the times-square deployment pod |
@@ -75,4 +75,4 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account. If Cloud SQL is in use, the annotation specifying the Google service account will also be added. |
 | serviceAccount.create | bool | `false` | Force creation of a service account. Normally, no service account is used or mounted. If Cloud SQL is enabled, a service account is always created regardless of this value. |
 | serviceAccount.name | string | Name based on the fullname template | Name of the service account to use |
-| tolerations | list | `[]` | Tolerations for the times-square deployment pod |
+| tolerations | list | Tolerate GKE arm64 taint | Tolerations for the times-square deployment pod |
