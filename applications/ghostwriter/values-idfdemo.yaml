@@ -18,3 +18,5 @@ mapping:
     target: "${base_url}/notebooks/github.com/lsst-sqre/system-test/${path}"
   - source_prefix: "/tutorials/"
     target: "${base_url}/notebooks/github.com/lsst/tutorial-notebooks/${path}"
+nodeSelector:
+  node_pool: "arm-core-pool"
