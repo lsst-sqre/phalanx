@@ -1,4 +1,7 @@
 argo-cd:
+  global:
+    nodeSelector:
+      node_pool: "arm-core-pool"
   configs:
     cm:
       url: "https://demo.lsst.cloud/argo-cd"

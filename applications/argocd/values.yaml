@@ -7,6 +7,14 @@ argo-cd:
       # -- Set the global logging format. Either: `text` or `json`
       format: "json"
 
+    # Global argo-cd tolerations
+    # @default -- Tolerate GKE arm64 taint
+    tolerations:
+      - key: "kubernetes.io/arch"
+        operator: "Equal"
+        value: "arm64"
+        effect: "NoSchedule"
+
   redis:
     metrics:
       # -- Enable Redis metrics service
