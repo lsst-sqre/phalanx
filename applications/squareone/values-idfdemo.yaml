@@ -3,3 +3,6 @@ config:
 
 ingress:
   timesSquareScope: "exec:admin"
+
+nodeSelector:
+  node_pool: "arm-core-pool"

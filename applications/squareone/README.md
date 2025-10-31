@@ -49,4 +49,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | podAnnotations | object | `{}` | Annotations for squareone pods |
 | replicaCount | int | `1` | Number of squareone pods to run in the deployment. |
 | resources | object | see `values.yaml` | Resource requests and limits for squareone pods |
-| tolerations | list | `[]` |  |
+| tolerations[0].effect | string | `"NoSchedule"` |  |
+| tolerations[0].key | string | `"kubernetes.io/arch"` |  |
+| tolerations[0].operator | string | `"Equal"` |  |
+| tolerations[0].value | string | `"arm64"` |  |
