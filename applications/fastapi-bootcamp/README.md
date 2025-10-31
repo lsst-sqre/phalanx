@@ -25,4 +25,4 @@ FastAPI demonstration application for bootcamp
 | podAnnotations | object | `{}` | Annotations for the fastapi-bootcamp deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the fastapi-bootcamp deployment pod |
-| tolerations | list | `[]` | Tolerations for the fastapi-bootcamp deployment pod |
+| tolerations | list | Tolerate GKE arm64 taint | Tolerations for the fastapi-bootcamp deployment pod |
