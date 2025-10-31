@@ -69,7 +69,7 @@ IVOA TAP service
 | mockdb.podAnnotations | object | `{}` | Annotations for the mock db pod |
 | mockdb.port | int | `3306` | Port to connect to the mock-db on |
 | mockdb.resources | object | `{}` | Resource limits and requests for the mock db pod |
-| mockdb.tolerations | list | `[]` | Tolerations for the mock db pod |
+| mockdb.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the mock db pod |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the TAP pod |
 | podAnnotations | object | `{}` | Annotations for the TAP pod |
@@ -85,8 +85,8 @@ IVOA TAP service
 | tapSchema.nodeSelector | object | `{}` | Node selection rules for the TAP schema database pod |
 | tapSchema.podAnnotations | object | `{}` | Annotations for the TAP schema database pod |
 | tapSchema.resources | object | See `values.yaml` | Resource limits and requests for the TAP schema database pod |
-| tapSchema.tolerations | list | `[]` | Tolerations for the TAP schema database pod |
-| tolerations | list | `[]` | Tolerations for the TAP pod |
+| tapSchema.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the TAP schema database pod |
+| tolerations | list | Tolerate GKE arm64 taint | Tolerations for the TAP pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
 | uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
@@ -94,4 +94,4 @@ IVOA TAP service
 | uws.nodeSelector | object | `{}` | Node selection rules for the UWS database pod |
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |
 | uws.resources | object | See `values.yaml` | Resource limits and requests for the UWS database pod |
-| uws.tolerations | list | `[]` | Tolerations for the UWS database pod |
+| uws.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the UWS database pod |
