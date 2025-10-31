@@ -90,6 +90,10 @@ jupyterhub:
   cull:
     timeout: 43200  # 12 hours
     maxAge: 86400   # 1 day
+  proxy:
+    chp:
+      nodeSelector:
+        node_pool: "arm-core-pool"
   hub:
     nodeSelector:
       node_pool: "arm-core-pool"
