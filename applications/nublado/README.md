@@ -22,7 +22,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cloudsql.podAnnotations | object | `{}` | Annotations for the Cloud SQL Auth Proxy pod |
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy pod |
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `cloud-sql-proxy` Kubernetes service account and has the `cloudsql.client` role |
-| cloudsql.tolerations | list | `[]` | Tolerations for the Cloud SQL Auth Proxy pod |
+| cloudsql.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the Cloud SQL Auth Proxy pod |
 | controller.affinity | object | `{}` | Affinity rules for the Nublado controller |
 | controller.config.fileserver.affinity | object | `{}` | Affinity rules for user file server pods |
 | controller.config.fileserver.application | string | `"nublado-fileservers"` | Argo CD application in which to collect user file servers |
@@ -38,7 +38,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fileserver.pathPrefix | string | `"/files"` | Path prefix for user file servers |
 | controller.config.fileserver.reconcileInterval | string | `"1h"` | How frequently to reconcile file server state against Kubernetes to catch deletions from outside Nublado, in Safir `parse_timedelta` format |
 | controller.config.fileserver.resources | object | See `values.yaml` | Resource requests and limits for user file servers |
-| controller.config.fileserver.tolerations | list | `[]` | Tolerations for user file server pods |
+| controller.config.fileserver.tolerations | list | Tolerate GKE arm64 taint | Tolerations for user file server pods |
 | controller.config.fileserver.volumeMounts | list | `[]` | Volumes that should be made available via WebDAV |
 | controller.config.fsadmin.affinity | object | `{}` | Affinity rules for fsadmin pods |
 | controller.config.fsadmin.application | string | `"nublado-fileservers"` | Argo CD application in which to collect fsadmins |
@@ -86,7 +86,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.sizes | list | See `values.yaml` | Available lab sizes. Sizes must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI suffixes for memory are supported. Sizes will be shown in the order defined here, and the first defined size will be the default. |
 | controller.config.lab.spawnTimeout | int | `600` | How long to wait for Kubernetes to spawn a lab in seconds. This should generally be shorter than the spawn timeout set in JupyterHub. |
 | controller.config.lab.tmpSource | string | `"memory"` | Select where `/tmp` in the lab will come from. Choose between `disk` (node-local ephemeral storage) and `memory` (tmpfs capped at 25% of the available memory). |
-| controller.config.lab.tolerations | list | `[]` | Tolerations for user lab pods |
+| controller.config.lab.tolerations | list | Tolerate GKE arm64 taint | Tolerations for user lab pods |
 | controller.config.lab.volumeMounts | list | `[]` | Volumes that should be mounted in lab pods. |
 | controller.config.lab.volumes | list | `[]` | Volumes that will be in lab pods or init containers. This supports NFS, HostPath, and PVC volume types (differentiated in source.type). |
 | controller.config.logLevel | string | `"INFO"` | Level of Python logging |
@@ -121,7 +121,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cronjob.image.repository | string | `"ghcr.io/lsst-sqre/repo-cloner"` | Repository cloner image to use |
 | cronjob.image.tag | string | `"0.1.0"` | Tag of repo cloner image to use |
 | cronjob.resources | object | See `values.yaml` | Resource limits and requests for the cloning cronjob(s) |
-| cronjob.tolerations | list | `[]` | Tolerations for the cloning cronjob(s). |
+| cronjob.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the cloning cronjob(s). |
 | cronjob.tutorials.enabled | bool | `false` | Clone the notebooks? |
 | cronjob.tutorials.gid | int | `1000` | GID for the cloning cronjob(s) |
 | cronjob.tutorials.gitBranch | string | `"main"` | Branch of repository to clone |
@@ -165,6 +165,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.loadRoles.server.scopes | list | See `values.yaml` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |
+| jupyterhub.hub.tolerations | list | Tolerate GKE arm64 taint | Tolerations for Hub/Proxy pods |
 | jupyterhub.ingress.enabled | bool | `false` | Whether to enable the default ingress. Should always be disabled since we install our own `GafaelfawrIngress` to avoid repeating the global hostname and manually configuring authentication |
 | jupyterhub.prePuller.continuous.enabled | bool | `false` | Whether to run the JupyterHub continuous prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.prePuller.hook.enabled | bool | `false` | Whether to run the JupyterHub hook prepuller (the Nublado controller does its own prepulling) |
