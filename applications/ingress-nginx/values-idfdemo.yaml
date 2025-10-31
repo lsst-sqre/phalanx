@@ -4,3 +4,5 @@ ingress-nginx:
       error-log-level: "error"
     service:
       loadBalancerIP: "34.172.193.32"
+    nodeSelector:
+      node_pool: "arm-core-pool"
