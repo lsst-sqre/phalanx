@@ -52,7 +52,13 @@ autoscaling:
 
 nodeSelector: {}
 
-tolerations: []
+# Tolerations for squareone pod
+# @default -- Tolerate GKE arm64 taint
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
 
 affinity: {}
 

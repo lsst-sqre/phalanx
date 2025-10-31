@@ -1,5 +1,8 @@
 config:
-  siteName: "Phalanx @ data-demo"
+  siteName: "demo.lsst.cloud"
 
 ingress:
   timesSquareScope: "exec:admin"
+
+nodeSelector:
+  node_pool: "arm-core-pool"

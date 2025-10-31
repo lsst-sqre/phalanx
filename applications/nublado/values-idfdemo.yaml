@@ -3,10 +3,40 @@ sentry:
 controller:
   googleServiceAccount: "nublado-controller@science-platform-demo-9e05.iam.gserviceaccount.com"
   slackAlerts: true
+  nodeSelector:
+    node_pool: "arm-core-pool"
+  # image:
+  #   tag: tickets-DM-53011
+  #   pullPolicy: Always
   config:
+    dropdownMenu:
+      release:
+        cutoffVersion: "29.2.1"
+      weekly:
+        number: 3
+      daily:
+        number: 5
+      releaseCandidate:
+        cutoffVersion: "29.2.1"
+      experimental:
+        age: "3w"
     logLevel: "DEBUG"
+    fsadmin:
+      nodeSelector:
+        node_pool: "arm-core-pool"
+      mountPrefix: "/mnt/user-filesystems"
     fileserver:
       enabled: true
+      nodeSelector:
+        node_pool: "user-lab-pool"
+      tolerations:
+        - key: "nublado.lsst.io/permitted"
+          operator: "Exists"
+          effect: "NoExecute"
+        - key: "kubernetes.io/arch"
+          value: arm64
+          operator: "Equal"
+          effect: NoSchedule
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -17,6 +47,10 @@ controller:
         projectId: "rubin-shared-services-71ec"
         repository: "sciplat"
         image: "sciplat-lab"
+      recommendedTag: "w_2025_42"
+      numReleases: 1
+      numWeeklies: 1
+      numDailies: 1
     lab:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
@@ -30,20 +64,49 @@ controller:
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
+      nodeSelector:
+        node_pool: "user-lab-pool"
+      pullSecret: pull-secret
+      tolerations:
+        - key: "kubernetes.io/arch"
+          value: arm64
+          operator: "Equal"
+          effect: NoSchedule
+        - key: "nublado.lsst.io/permitted"
+          operator: "Exists"
+          effect: "NoExecute"
       volumes:
         - name: "home"
           source:
             type: nfs
-            serverPath: "/share1/home"
-            server: "10.32.121.98"
+            serverPath: "/home-share"
+            server: "10.235.176.36"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
+# hub:
+#   useSubdomains: true
 jupyterhub:
+  cull:
+    timeout: 43200  # 12 hours
+    maxAge: 86400   # 1 day
+  proxy:
+    chp:
+      nodeSelector:
+        node_pool: "arm-core-pool"
   hub:
+    nodeSelector:
+      node_pool: "arm-core-pool"
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
+#     config:
+#       JupyterHub:
+          # This has to exist for Zero to JupyterHub to configure the proxy
+          # correctly.
+#         subdomain_host: "nb.demo.lsst.cloud"
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-demo-9e05:us-central1:science-platform-demo-a4dbbf96"
   serviceAccount: "nublado@science-platform-demo-9e05.iam.gserviceaccount.com"
+  nodeSelector:
+    node_pool: "arm-core-pool"

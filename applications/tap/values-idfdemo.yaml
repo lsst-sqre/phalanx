@@ -1,0 +1,30 @@
+cadc-tap:
+  pg:
+    image:
+      pullPolicy: Always
+      tag: "tickets-DM-52819"
+  nodeSelector:
+    node_pool: "arm-core-pool"
+
+  tapSchema:
+    image:
+      repository: "lsstsqre/tap-schema-idfdemo-tap"
+
+  config:
+    qserv:
+      host: "qserv-int.slac.stanford.edu:4090"
+      jdbcParams: "?enabledTLSProtocols=TLSv1.3"
+      passwordEnabled: true
+
+    kafka:
+      enabled: true
+
+    urlRewrite:
+      enabled: true
+      rules: "ivoa.ObsCore:access_url, dp02_dc2_catalogs.ObsCore:access_url, dp1.ObsCore:access_url"
+
+  cloudsql:
+    enabled: true
+    instanceConnectionName: "science-platform-demo-9e05:us-central1:science-platform-dev-e9e11de2"
+    serviceAccount: "tap-service@science-platform-dev-9e05.iam.gserviceaccount.com"
+    database: "tap"

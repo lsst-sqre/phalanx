@@ -16,9 +16,13 @@ applications:
   butler: true
   datalinker: true
   fastapi-bootcamp: true
+  ghostwriter: true
   mobu: true
   nublado: true
+  portal: true
   repertoire: true
   squareone: true
+  ssotap: true
+  tap: true
   times-square: true
   vault-secrets-operator: true

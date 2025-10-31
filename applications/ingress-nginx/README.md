@@ -27,4 +27,5 @@ Ingress controller
 | ingress-nginx.controller.podLabels | object | See `values.yaml` | Add labels used by `NetworkPolicy` objects to restrict access to the ingress and thus ensure that auth subrequest handlers run |
 | ingress-nginx.controller.resources | object | See `values.yaml` | Resource requests and limits for ingress-nginx controller |
 | ingress-nginx.controller.service.externalTrafficPolicy | string | `"Local"` | Force traffic routing policy to Local so that the external IP in `X-Forwarded-For` will be correct |
+| ingress-nginx.controller.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the ingress-nginx-controller deployment pod |
 | vaultCertificate.enabled | bool | `false` | Whether to get the ingress TLS certificate from Vault instead of Let's Encrypt |

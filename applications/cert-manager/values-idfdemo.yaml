@@ -2,3 +2,14 @@ config:
   route53:
     awsAccessKeyId: "AKIAQSJOS2SFL5I4TYND"
     hostedZone: "Z0567328105IEHEMIXLCO"
+cert-manager:
+  nodeSelector:
+    node_pool: "arm-core-pool"
+
+  webhook:
+    nodeSelector:
+      node_pool: "arm-core-pool"
+
+  cainjector:
+    nodeSelector:
+      node_pool: "arm-core-pool"

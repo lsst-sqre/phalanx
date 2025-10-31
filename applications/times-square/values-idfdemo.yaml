@@ -1,5 +1,8 @@
 image:
+  tag: tickets-DM-52819
   pullPolicy: Always
+nodeSelector:
+  node_pool: "arm-core-pool"
 ingress:
   defaultScope: "exec:admin"
 config:
@@ -14,3 +17,5 @@ cloudsql:
 redis:
   persistence:
     storageClass: "standard-rwo"
+  nodeSelector:
+    node_pool: "arm-core-pool"

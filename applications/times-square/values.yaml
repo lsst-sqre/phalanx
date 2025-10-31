@@ -100,7 +100,12 @@ autoscaling:
 nodeSelector: {}
 
 # -- Tolerations for the times-square deployment pod
-tolerations: []
+# @default -- Tolerate GKE arm64 taint
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
 
 # -- Affinity rules for the times-square deployment pod
 affinity: {}
@@ -141,10 +146,10 @@ config:
   githubOrgs: "lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"
 
   # -- Timeout for GitHub check runs in seconds
-  githubCheckRunTimeout: "3600" # 1 hour
+  githubCheckRunTimeout: "3600"  # 1 hour
 
   # -- Default execution timeout for notebooks in seconds
-  defaultExecutionTimeout: "300" # 5 minutes
+  defaultExecutionTimeout: "300"  # 5 minutes
 
   # Sentry tracing sample rate
   sentryTracesSampleRate: 0.0
@@ -239,7 +244,12 @@ redis:
   nodeSelector: {}
 
   # -- Tolerations for the Redis pod
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
   # -- Affinity rules for the Redis pod
   affinity: {}

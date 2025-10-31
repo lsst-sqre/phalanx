@@ -1,0 +1,3 @@
+vault-secrets-operator:
+  nodeSelector:
+    node_pool: "arm-core-pool"
