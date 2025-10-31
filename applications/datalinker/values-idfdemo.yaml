@@ -1,2 +1,4 @@
 config:
   slackAlerts: true
+nodeSelector:
+  node_pool: arm-core-pool
