@@ -2,7 +2,7 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfdev-tap"
-
+      tag: "tickets/DM-53031"
   config:
     qserv:
       host: "qserv-int.slac.stanford.edu:4090"
