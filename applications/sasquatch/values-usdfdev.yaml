@@ -188,6 +188,47 @@ kafka-connect-manager:
         topicsRegex: "lsst.prompt.*"
         tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,group
 
+telegraf:
+  enabled: true
+  influxdb:
+    urls:
+      - "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data"
+  kafkaConsumers:
+    verify:
+      enabled: true
+      debug: true
+      database: "lsst.verify"
+      topicRegexps: |
+        [ "lsst.verify" ]
+      timestamp_field: "timestamp"
+      tags: |
+        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch", "pipeline"]
+    prompt:
+      enabled: true
+      debug: true
+      database: "lsst.prompt"
+      topicRegexps: |
+        [ "lsst.prompt" ]
+      timestamp_field: "timestamp"
+      tags: |
+        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch", "group"]
+    dm:
+      enabled: true
+      debug: true
+      database: "lsst.dm"
+      topicRegexps: |
+        [ "lsst.dm" ]
+      timestamp_field: "timestamp"
+      tags: |
+        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch"]
+  resources:
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+    requests:
+      cpu: "1"
+      memory: "512Mi"
+
 kafdrop:
   ingress:
     enabled: true
