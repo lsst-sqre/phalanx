@@ -1,10 +1,4 @@
 environment:
-  DAF_BUTLER_REPOSITORY_INDEX: "/sdf/group/rubin/shared/data-repos.yaml"
-  PGPASSFILE: "/home/worker/.lsst/postgres-credentials.txt"
-  PGUSER: "rubin"
-  AWS_SHARED_CREDENTIALS_FILE: "/home/worker/.lsst/aws-credentials.ini"
-  S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
-  EFD: "usdf-efd"
 
 config:
   database_schema: "obsloctap_dev"
@@ -16,10 +10,20 @@ config:
 image:
   pullPolicy: Always
 
+consumekafka:
+  image:
+    # -- Tag of image to use
+    tag: "1.0.0"
+  logLevel: DEBUG
+
+obsloctap:
+  image:
+    # -- Tag of image to use
+    # @default -- The appVersion of the chart
+    tag: "1.0.0"
+  logLevel: DEBUG
+
 controller:
   config:
     safir:
       logLevel: "None"
-
-lfa:
-  s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu/"

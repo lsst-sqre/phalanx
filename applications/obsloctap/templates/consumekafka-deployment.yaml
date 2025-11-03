@@ -58,34 +58,8 @@ spec:
               value: "LSSTCam"
             - name: "LOG_CONFIG"
               value: "{{ .Values.consumekafka.logLevel }}"
-            - name: "LFA_AWS_ACCESS_KEY_ID"
-              valueFrom:
-                secretKeyRef:
-                  name: obsloctap
-                  key: "lfa-key"
-            - name: "AWS_ACCESS_KEY_ID"
-              valueFrom:
-                secretKeyRef:
-                  name: obsloctap
-                  key: "default-key"
-            - name: "LFA_AWS_SECRET_ACCESS_KEY"
-              valueFrom:
-                secretKeyRef:
-                  name: obsloctap
-                  key: "lfa-password"
-            - name: "AWS_SECRET_ACCESS_KEY"
-              valueFrom:
-                secretKeyRef:
-                  name: obsloctap
-                  key: "default-password"
-            - name: "BUCKET_PREFIX"
-              value: "{{ .Values.lfa.bucket_prefix }}"
-            - name: "S3_ENDPOINT_URL"
-              value: "{{ .Values.lfa.s3EndpointUrl }}"
             - name: "KAFKA_BOOTSTRAP"
               value: "{{ .Values.kafka.bootstrap }}"
-            - name: "KAFKA_CLUSTER"
-              value: "{{ .Values.kafka.CLUSTER }}"
             - name: "KAFKA_USERNAME"
               value: "{{ .Values.kafka.username }}"
             - name: "KAFKA_PASSWORD"
@@ -101,6 +75,18 @@ spec:
               value: "{{ .Values.rubinsim.dataDir }}"
             - name: "LSST_DISABLE_BUCKET_VALIDATION"
               value: "{{ .Values.rubinsim.bucketVal }}"
+            - name: "AWS_ACCESS_KEY_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "default-key"
+            - name: "AWS_SECRET_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "default-password"
+            - name: "S3_ENDPOINT_URL"
+              value: "{{ .Values.rubinsim.S3_ENDPOINT_URL }}"
             - name: "MPLCONFIGDIR"
               value: "/tmp/.config/matplotlib"
             - name: "consdb_database"
@@ -138,11 +124,11 @@ spec:
             persistentVolumeClaim:
               claimName: sdf-data-rubin
 
-
+# kt says for access ot sunset file in sim use uid=47726(rubins3) gid=4085(rubin_users)
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
+        runAsUser: 47726
+        runAsGroup: 4085
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
