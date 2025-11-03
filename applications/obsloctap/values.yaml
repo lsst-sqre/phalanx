@@ -12,6 +12,7 @@ obsloctap:
   logLevel: INFO
 
 consumekafka:
+  replicaCount: 1
   image:
     # -- obsloctap image to use
     repository: "ghcr.io/lsst-dm/consumekafka"

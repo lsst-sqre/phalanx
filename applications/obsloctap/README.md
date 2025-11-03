@@ -20,6 +20,7 @@ Publish observing schedule
 | consumekafka.image.repository | string | `"ghcr.io/lsst-dm/consumekafka"` | obsloctap image to use |
 | consumekafka.image.tag | string | The appVersion of the chart | Tag of image to use |
 | consumekafka.logLevel | string | `"INFO"` |  |
+| consumekafka.replicaCount | int | `1` |  |
 | environment | string | `nil` | Environment variables (e.g. butler configuration/auth parms) for panel |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
