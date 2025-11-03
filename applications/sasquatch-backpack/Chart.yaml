@@ -10,5 +10,5 @@ version: 1.0.0
 dependencies:
 - redis:
   name: "redis"
-  version: 1.1.4
+  version: 1.1.5
   repository: "https://lsst-sqre.github.io/charts/"
