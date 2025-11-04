@@ -133,11 +133,11 @@ mtqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 2500m
-      memory: 10Gi
+      cpu: 6
+      memory: 12Gi
     requests:
-      cpu: 1000m
-      memory: 430Mi
+      cpu: 3
+      memory: 4Gi
 
 mtscheduler:
   classifier: scheduler1
