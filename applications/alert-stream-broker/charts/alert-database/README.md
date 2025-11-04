@@ -16,9 +16,9 @@ Archival database of alerts sent through the alert stream.
 | ingester.kafka.topic | string | `"alerts-simulated"` | Name of the topic which will holds alert data. |
 | ingester.kafka.user | string | `"alert-database-ingester"` | The username of the Kafka user identity used to connect to the broker. |
 | ingester.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
-| ingester.s3.alertBucket | string | `"alert-archive"` |  |
+| ingester.s3.alertBucket | string | `"rubin-alert-archive"` |  |
 | ingester.s3.endpointURL | string | `"https://sdfdatas3.slac.stanford.edu/"` |  |
-| ingester.s3.schemaBucket | string | `"alert-archive"` |  |
+| ingester.s3.schemaBucket | string | `"rubin-alert-archive"` |  |
 | ingester.s3.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
 | ingester.s3.usdf | bool | `true` |  |
 | ingester.schemaRegistryURL | string | `""` | URL of a schema registry instance |
@@ -33,9 +33,9 @@ Archival database of alerts sent through the alert stream.
 | server.image.repository | string | `"lsstdm/alert_database_server"` |  |
 | server.image.tag | string | `"v3.0.0"` |  |
 | server.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
-| server.s3.alertBucket | string | `"alert-archive"` |  |
+| server.s3.alertBucket | string | `"rubin-alert-archive"` |  |
 | server.s3.endpointURL | string | `"https://sdfdatas3.slac.stanford.edu/ "` | Project ID which has the above GCP IAM service account |
-| server.s3.schemaBucket | string | `"alert-archive"` |  |
+| server.s3.schemaBucket | string | `"rubin-alert-archive"` |  |
 | server.s3.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
 | server.service.port | int | `3000` |  |
 | server.service.type | string | `"ClusterIP"` |  |

@@ -18,16 +18,16 @@ Alert transmission to community brokers
 | alert-database.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | alert-database.ingester.image.imagePullPolicy | string | `"Always"` |  |
 | alert-database.ingester.image.repository | string | `"lsstdm/alert_database_ingester"` |  |
-| alert-database.ingester.image.tag | string | `"tickets-DM-52309"` |  |
+| alert-database.ingester.image.tag | string | `"v3.3.0"` |  |
 | alert-database.ingester.kafka.cluster | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
 | alert-database.ingester.kafka.port | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal listener that expects SCRAM SHA-512 auth. |
 | alert-database.ingester.kafka.strimziAPIVersion | string | `"v1beta2"` | API version of the Strimzi installation's custom resource definitions |
 | alert-database.ingester.kafka.topic | string | `"alerts-simulated"` | Name of the topic which will holds alert data. |
 | alert-database.ingester.kafka.user | string | `"alert-database-ingester"` | The username of the Kafka user identity used to connect to the broker. |
 | alert-database.ingester.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
-| alert-database.ingester.s3.alertBucket | string | `"alert-archive"` |  |
+| alert-database.ingester.s3.alertBucket | string | `"rubin-alert-archive"` |  |
 | alert-database.ingester.s3.endpointURL | string | `"https://sdfdatas3.slac.stanford.edu/"` |  |
-| alert-database.ingester.s3.schemaBucket | string | `"alert-archive"` |  |
+| alert-database.ingester.s3.schemaBucket | string | `"rubin-alert-archive"` |  |
 | alert-database.ingester.s3.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
 | alert-database.ingester.s3.usdf | bool | `true` |  |
 | alert-database.ingester.schemaRegistryURL | string | `""` | URL of a schema registry instance |
@@ -42,9 +42,9 @@ Alert transmission to community brokers
 | alert-database.server.image.repository | string | `"lsstdm/alert_database_server"` |  |
 | alert-database.server.image.tag | string | `"v3.0.0"` |  |
 | alert-database.server.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
-| alert-database.server.s3.alertBucket | string | `"alert-archive"` |  |
+| alert-database.server.s3.alertBucket | string | `"rubin-alert-archive"` |  |
 | alert-database.server.s3.endpointURL | string | `"https://sdfdatas3.slac.stanford.edu/ "` | Project ID which has the above GCP IAM service account |
-| alert-database.server.s3.schemaBucket | string | `"alert-archive"` |  |
+| alert-database.server.s3.schemaBucket | string | `"rubin-alert-archive"` |  |
 | alert-database.server.s3.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
 | alert-database.server.service.port | int | `3000` |  |
 | alert-database.server.service.type | string | `"ClusterIP"` |  |
