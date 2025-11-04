@@ -37,11 +37,11 @@ controller:
             serverPath: "/datasets"
             server: "192.41.122.33"
             type: "nfs"
-        # - name: "rubin"
-        #   source:
-        #     serverPath: "/data/butler/rubin"
-        #     server: "192.41.122.33"
-        #     type: "nfs"
+        - name: "rubin"
+          source:
+            serverPath: "/data/butler/rubin"
+            server: "192.41.122.33"
+            type: "nfs"
       volumeMounts:
         - containerPath: "/data"
           volumeName: "data"
