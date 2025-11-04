@@ -161,7 +161,6 @@ alert-database:
       port: 9092
       topic:
         - lsst-alerts-v9.0
-        - lsst-alerts-v7.4
 
   server:
     serviceAccountName: alert-database-reader
