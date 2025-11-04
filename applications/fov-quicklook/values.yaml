@@ -43,6 +43,7 @@ coordinator:
       memory: 512Mi
 
 frontend:
+  replicas: 2
   resources:
     # -- Resource requests for the frontend
     requests:
@@ -68,7 +69,7 @@ generator:
   resources:
     # -- Resource requests for the generator
     requests:
-      cpu: 4000m
+      cpu: 2000m
       memory: 8Gi
     # -- Resource limits for the generator
     limits:

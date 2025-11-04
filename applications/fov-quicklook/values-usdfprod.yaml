@@ -1,8 +1,6 @@
 config:
   s3_tile_path_prefix: "fov-quicklook/prod/"
   max_object_storage_usage: 450_000_000_000
-frontend:
-  replicas: 4
 admin_page: true
 db_storage_class: wekafs--sdf-k8s01
 log_level: warning
