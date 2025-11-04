@@ -37,8 +37,8 @@ ingester:
     # -- Name of a service account which has credentials granting access to the
     # alert database's backing storage buckets.
     serviceAccountName: ""
-    schemaBucket: "alert-archive"
-    alertBucket: "alert-archive"
+    schemaBucket: "rubin-alert-archive"
+    alertBucket: "rubin-alert-archive"
     endpointURL: "https://sdfdatas3.slac.stanford.edu/"
     usdf: true
 
@@ -62,8 +62,8 @@ server:
     serviceAccountName: ""
     # -- Project ID which has the above GCP IAM service account
     endpointURL: "https://sdfdatas3.slac.stanford.edu/ "
-    schemaBucket: "alert-archive"
-    alertBucket: "alert-archive"
+    schemaBucket: "rubin-alert-archive"
+    alertBucket: "rubin-alert-archive"
 
   # -- The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM
   # service account!) which is used by the alert database server.
