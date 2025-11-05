@@ -2,7 +2,7 @@ strimzi-kafka:
   kafka:
     listeners:
       plain:
-        enabled: false
+        enabled: true
       tls:
         enabled: true
       external:
@@ -52,7 +52,11 @@ kapacitor:
   enabled: false
 
 kafdrop:
-  enabled: false
+  enabled: true
+  ingress:
+    enabled: true
+  kafka:
+    topicPrefix: "lsst.square-events.squarebot.slack.interaction"
 
 rest-proxy:
   enabled: false
