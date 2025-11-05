@@ -30,6 +30,7 @@ applications:
   obssys: true
   portal: true
   rapid-analysis: true
+  repertoire: true
   rubintv: true
   rubintv-dev: true
   rubin-too-producer: true
