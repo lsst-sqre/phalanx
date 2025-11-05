@@ -29,7 +29,7 @@ Full focal plane viewer
 | generator.resources.limits | object | `{"cpu":"12000m","memory":"8Gi"}` | Resource limits for the generator |
 | generator.resources.requests | object | `{"cpu":"2000m","memory":"8Gi"}` | Resource requests for the generator |
 | image.pullPolicy | string | `"Always"` | Pull policy for the fov-quicklook image |
-| image.repository | string | `"ghcr.io/michitaro/rubin-fov-viewer"` | Image to use in the fov-quicklook deployment |
+| image.repository | string | `"ghcr.io/lsst-sqre/fov-quicklook:main"` | Image to use in the fov-quicklook deployment |
 | image.tag | string | `"latest"` | Tag of image to use |
 | s3_tile | object | `{"bucket":"fov-quicklook-tile","endpoint":"sdfembs3.sdf.slac.stanford.edu:443","secure":true}` | S3 configuration for the tile storage |
 | use_gafaelfawr | bool | `true` | Use gafaelfawr to authenticate |

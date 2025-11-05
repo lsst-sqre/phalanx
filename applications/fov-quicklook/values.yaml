@@ -6,7 +6,7 @@ use_gafaelfawr: true
 
 image:
   # -- Image to use in the fov-quicklook deployment
-  repository: ghcr.io/michitaro/rubin-fov-viewer
+  repository: ghcr.io/lsst-sqre/fov-quicklook:main
 
   # -- Pull policy for the fov-quicklook image
   pullPolicy: Always
