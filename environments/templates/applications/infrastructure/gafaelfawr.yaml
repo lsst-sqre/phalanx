@@ -3,6 +3,10 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: "gafaelfawr"
+  {{- with .Values.namespaceLabels.gafaelfawr }}
+  labels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
