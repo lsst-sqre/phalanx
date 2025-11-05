@@ -10,7 +10,7 @@ Deployment environment
 Phalanx can only be installed in environments that meet the following requirements:
 
 - Phalanx is a Kubernetes deployment platform that installs within a Kubernetes cluster.
-  The oldest version of Kubernetes known to work is 1.23.
+  The oldest version of Kubernetes known to work is 1.30.
   Phalanx is regularly tested on the stable and rapid channels of Google Kubernetes Engine and will normally support any Kubernetes version up to the current GKE rapid channel default.
 
 - An external authentication system for users must be provided.
