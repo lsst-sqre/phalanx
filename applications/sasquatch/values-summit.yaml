@@ -460,7 +460,7 @@ backup:
       enabled: true
       retentionDays: 7
     - name: influxdb-enterprise-incremental
-      enabled: true
+      enabled: false
       bind: sasquatch-influxdb-enterprise-meta
   k8up:
     enabled: true
