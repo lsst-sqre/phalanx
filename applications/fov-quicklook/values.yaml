@@ -6,13 +6,13 @@ use_gafaelfawr: true
 
 image:
   # -- Image to use in the fov-quicklook deployment
-  repository: ghcr.io/lsst-sqre/fov-quicklook:main
+  repository: ghcr.io/lsst-sqre/fov-quicklook
 
   # -- Pull policy for the fov-quicklook image
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: latest
+  tag: main
 
 config:
   # -- URL path prefix
