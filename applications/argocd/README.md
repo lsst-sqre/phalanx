@@ -26,6 +26,10 @@ Kubernetes application manager
 | argo-cd.controller.resources | object | See `values.yaml` | Resource limits and requests for the application controller pods |
 | argo-cd.dex.resources | object | See `values.yaml` | Resource limits and requests for the Dex server |
 | argo-cd.global.logging.format | string | `"json"` | Set the global logging format. Either: `text` or `json` |
+| argo-cd.global.tolerations[0].effect | string | `"NoSchedule"` |  |
+| argo-cd.global.tolerations[0].key | string | `"kubernetes.io/arch"` |  |
+| argo-cd.global.tolerations[0].operator | string | `"Equal"` |  |
+| argo-cd.global.tolerations[0].value | string | `"arm64"` |  |
 | argo-cd.notifications.metrics.enabled | bool | `true` | Enable notifications metrics service |
 | argo-cd.notifications.resources | object | See `values.yaml` | Resource limits and requests for the notifications controller |
 | argo-cd.redis.metrics.enabled | bool | `true` | Enable Redis metrics service |

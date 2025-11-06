@@ -1,4 +1,7 @@
 image:
   pullPolicy: Always
+  tag: tickets-DM-52819
 config:
   logLevel: "DEBUG"
+nodeSelector:
+  node_pool: "arm-core-pool"

@@ -34,7 +34,12 @@ nodeSelector: {}
 podAnnotations: {}
 
 # -- Tolerations for the Gafaelfawr frontend pod
-tolerations: []
+# @default -- Tolerate GKE arm64 taint
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
 
 config:
   # -- Where to send the user after they log out
@@ -359,7 +364,12 @@ cloudsql:
   podAnnotations: {}
 
   # -- Tolerations for the standalone Cloud SQL Proxy pod
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 maintenance:
   # -- Cron schedule string for Gafaelfawr data consistency audit (in UTC)
@@ -393,7 +403,12 @@ maintenance:
   nodeSelector: {}
 
   # -- Tolerations for Gafaelfawr maintenance and audit pods
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
   # -- Affinity rules for Gafaelfawr maintenance and audit pods
   affinity: {}
@@ -418,7 +433,12 @@ operator:
   nodeSelector: {}
 
   # -- Tolerations for the token management pod
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
   # -- Affinity rules for the token management pod
   affinity: {}
@@ -457,7 +477,12 @@ redis-ephemeral:
   podAnnotations: {}
 
   # -- Tolerations for the ephemeral Redis pod
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 redis:
   config:
@@ -511,7 +536,12 @@ redis:
   podAnnotations: {}
 
   # -- Tolerations for the persistent Redis pod
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

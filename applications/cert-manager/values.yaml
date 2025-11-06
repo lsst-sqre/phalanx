@@ -32,6 +32,15 @@ cert-manager:
     extraArgs:
       - "--logging-format=json"
 
+    # -- Tolerations for the cert-manager cainjector pod
+    # @default -- Tolerate GKE arm64 taint
+    tolerations:
+      - key: "kubernetes.io/arch"
+        operator: "Equal"
+        value: "arm64"
+        effect: "NoSchedule"
+
+
   # -- Resource requests and limits for the cert-manager controller
   # @default -- See `values.yaml`
   resources:
@@ -41,6 +50,14 @@ cert-manager:
     requests:
       cpu: "50m"
       memory: "64Mi"
+
+  # -- Tolerations for the cert-manager controller
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
   webhook:
     # -- Additional arguments to the webhook pod
@@ -57,6 +74,13 @@ cert-manager:
         cpu: "10m"
         memory: "32Mi"
 
+    # -- Tolerations for the cert-manager webhook pod
+    # @default -- Tolerate GKE arm64 taint
+    tolerations:
+      - key: "kubernetes.io/arch"
+        operator: "Equal"
+        value: "arm64"
+        effect: "NoSchedule"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

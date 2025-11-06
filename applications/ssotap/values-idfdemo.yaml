@@ -1,0 +1,18 @@
+cadc-tap:
+  pg:
+    image:
+      pullPolicy: Always
+      tag: "tickets-DM-52819"
+
+  nodeSelector:
+    node_pool: "arm-core-pool"
+
+  tapSchema:
+    image:
+      repository: "lsstsqre/tap-schema-idfdemo-sso"
+
+  cloudsql:
+    enabled: true
+    instanceConnectionName: "science-platform-demo-9e05:us-central1:science-platform-dev-e9e11de2"
+    serviceAccount: "ssotap@science-platform-demo-9e05.iam.gserviceaccount.com"
+    database: "ssotap"
