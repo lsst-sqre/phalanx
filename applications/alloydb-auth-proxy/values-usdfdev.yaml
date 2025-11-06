@@ -1,0 +1,2 @@
+config:
+  instance_uri: "projects/science-platform-int-dc5d/locations/us-central1/clusters/butler-prompt-int/instances/butler-prompt-int-primary"
