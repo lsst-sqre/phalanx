@@ -197,7 +197,7 @@ tapSchema:
     repository: "lsstsqre/tap-schema-mock"
 
     # -- Pull policy for the TAP schema image
-    pullPolicy: "IfNotPresent"
+    pullPolicy: "Always" # "IfNotPresent"
 
     # -- Tag of TAP schema image
     tag: "DP1-v1.2.0"
