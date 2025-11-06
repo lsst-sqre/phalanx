@@ -17,6 +17,3 @@ applications:
   s3-file-notifications: true
   strimzi: true
   vault-secrets-operator: false
-
-revisions:
-  strimzi: strimzi-0.47.0
