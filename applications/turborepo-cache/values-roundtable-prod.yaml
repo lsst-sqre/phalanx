@@ -1,0 +1,8 @@
+cache:
+  replicaCount: 2
+  config:
+    storagePath: "rubin-us-central1-turborepo-cache"
+    googleServiceAccount: "turborepo-cache@roundtable-prod-f6fd.iam.gserviceaccount.com"
+
+proxy:
+  replicaCount: 2

@@ -96,8 +96,22 @@ mtcamhexapod-sim:
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
+  obsenv: true
+  obsenv_configfile:
+    filename: obs_env_config.json
+    content: |
+      {
+        "repositories": {
+          "ts_config_mttcs": "https://github.com/lsst-ts/"
+        },
+        "base_env_source_org": "https://github.com/lsst-ts/",
+        "base_env_source_repo": "ts_cycle_build",
+        "base_env_def_file": "cycle/cycle.env",
+        "destination": "/net/obs-env/auto_base_packages"
+      }
   env:
     RUN_ARG: --simulate 1
+    TS_CONFIG_MTTCS_DIR: "/net/obs-env/auto_base_packages/ts_config_mttcs"
   resources:
     limits:
       cpu: 500m
@@ -217,7 +231,6 @@ mtm1m3ts-sim:
       memory: 90Mi
 
 mtm2-sim:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/m2
     pullPolicy: Always
@@ -237,8 +250,22 @@ mtm2hexapod-sim:
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
+  obsenv: true
+  obsenv_configfile:
+    filename: obs_env_config.json
+    content: |
+      {
+        "repositories": {
+          "ts_config_mttcs": "https://github.com/lsst-ts/"
+        },
+        "base_env_source_org": "https://github.com/lsst-ts/",
+        "base_env_source_repo": "ts_cycle_build",
+        "base_env_def_file": "cycle/cycle.env",
+        "destination": "/net/obs-env/auto_base_packages"
+      }
   env:
     RUN_ARG: --simulate 2
+    TS_CONFIG_MTTCS_DIR: "/net/obs-env/auto_base_packages/ts_config_mttcs"
   resources:
     limits:
       cpu: 400m
@@ -246,6 +273,21 @@ mtm2hexapod-sim:
     requests:
       cpu: 40m
       memory: 400Mi
+
+mtm2-hwsim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/m2
+    pullPolicy: Always
+  env:
+    RUN_ARG: --host m2-crio-simulator.ls.lsst.org
+  resources:
+    limits:
+      cpu: 850m
+      memory: 1500Mi
+    requests:
+      cpu: 120m
+      memory: 500Mi
 
 mtmount-sim:
   enabled: true
@@ -317,7 +359,7 @@ mtoods:
                         files_older_than:
                             <<: *interval
                             days: 5
-                      - collection: LSSTCam/quickLook
+                      - collection: LSSTCam/runs/quickLook
                         files_older_than:
                             <<: *interval
                             days: 2

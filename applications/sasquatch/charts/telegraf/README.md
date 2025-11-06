@@ -13,7 +13,7 @@ Telegraf is an agent for collecting, processing, aggregating, and writing metric
 | envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
+| image.tag | string | The appVersion of the chart | Telegraf image tag |
 | imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
 | kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
@@ -38,7 +38,7 @@ Telegraf is an agent for collecting, processing, aggregating, and writing metric
 | kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
 | kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
-| kafkaVersion | string | null, use the Sarama library default. | Set the minimal supported Kafka version for the Sarama Go client library. |
+| kafkaVersion | string | `"4.0.0"` |  |
 | nodeSelector | object | `{}` | Node labels for pod assignment |
 | podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | podLabels | object | `{}` | Labels for the Telegraf pods |

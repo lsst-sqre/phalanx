@@ -491,11 +491,11 @@ love-producer:
   - name: auxteless202
     csc: ESS:202 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: auxteless203
-    csc: ESS:203 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: auxteless204
     csc: ESS:204 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: auxteless308
+    csc: ESS:308 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: calibhilless301
     csc: ESS:301 --log-level 10
@@ -706,10 +706,10 @@ love-producer:
     resources:
       requests:
         cpu: 30m
-        memory: 150Mi
+        memory: 100Mi
       limits:
         cpu: 300m
-        memory: 450Mi
+        memory: 300Mi
   - name: mtptg
     csc: MTPtg:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -751,11 +751,8 @@ love-producer:
   - name: ringssess304
     csc: ESS:304 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: tmaess001
-    csc: ESS:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: tma-ess002
-    csc: ESS:2 --log-level 10
+  - name: test42
+    csc: Test:42 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess104
     csc: ESS:104 --log-level 10
@@ -765,6 +762,12 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess110
     csc: ESS:110 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tmaess121
+    csc: ESS:121 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tma-ess122
+    csc: ESS:122 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tunablelaser
     csc: TunableLaser:0 --log-level 10

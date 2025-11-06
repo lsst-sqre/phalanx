@@ -8,11 +8,11 @@ auxtel-ess201:
     RUN_ARG: 201
   resources:
     requests:
-      cpu: 19m
-      memory: 90Mi
+      cpu: 32m
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 360Mi
 
 auxtel-ess202:
   enabled: true
@@ -25,26 +25,26 @@ auxtel-ess202:
   resources:
     requests:
       cpu: 1
-      memory: 90Mi
+      memory: 180Mi
     limits:
       cpu: 3
-      memory: 900Mi
+      memory: 360Mi
 
-auxtel-ess203:
+auxtel-ess308:
   enabled: true
-  classifier: ess203
+  classifier: ess308
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 203
+    RUN_ARG: 308
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 170Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 350Mi
 
 auxtel-ess204:
   enabled: true
@@ -57,10 +57,10 @@ auxtel-ess204:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 160Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 320Mi
 
 calibhill-ess301:
   enabled: true
@@ -72,11 +72,11 @@ calibhill-ess301:
     RUN_ARG: 301
   resources:
     requests:
-      cpu: 19m
-      memory: 90Mi
+      cpu: 30m
+      memory: 170Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 350Mi
 
 camera-ess111:
   enabled: true
@@ -89,10 +89,10 @@ camera-ess111:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 170Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 350Mi
 
 cleanroom-ess109:
   enabled: true
@@ -105,10 +105,10 @@ cleanroom-ess109:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 360Mi
 
 dimm1:
   enabled: true
@@ -120,10 +120,10 @@ dimm1:
   resources:
     requests:
       cpu: 23m
-      memory: 107Mi
+      memory: 256Mi
     limits:
       cpu: 230m
-      memory: 1070Mi
+      memory: 512Mi
 
 dimm2:
   enabled: true
@@ -134,11 +134,11 @@ dimm2:
     RUN_ARG: 2
   resources:
     requests:
-      cpu: 23m
-      memory: 107Mi
+      cpu: 30m
+      memory: 320Mi
     limits:
       cpu: 230m
-      memory: 1070Mi
+      memory: 640Mi
 
 dream:
   enabled: true
@@ -171,10 +171,10 @@ earthquake-ess302:
   resources:
     requests:
       cpu: 50m
-      memory: 150Mi
+      memory: 330Mi
     limits:
       cpu: 500m
-      memory: 500Mi
+      memory: 660Mi
 
 eas:
   enabled: true
@@ -183,11 +183,11 @@ eas:
     pullPolicy: Always
   resources:
     requests:
-      cpu: 150m
-      memory: 300Mi
+      cpu: 300m
+      memory: 1Gi
     limits:
       cpu: 750m
-      memory: "2Gi"
+      memory: 2Gi
 
 epm-ess303:
   enabled: true
@@ -199,11 +199,11 @@ epm-ess303:
     RUN_ARG: 303
   resources:
     requests:
-      cpu: 200m
-      memory: 90Mi
+      cpu: 500m
+      memory: 200Mi
     limits:
       cpu: 2
-      memory: 900Mi
+      memory: 400Mi
 
 epm-generator-ess305:
   enabled: true
@@ -215,11 +215,11 @@ epm-generator-ess305:
     RUN_ARG: 305
   resources:
     requests:
-      cpu: 19m
-      memory: 90Mi
+      cpu: 30m
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 360Mi
 
 epm-generator-ess306:
   enabled: true
@@ -231,11 +231,11 @@ epm-generator-ess306:
     RUN_ARG: 306
   resources:
     requests:
-      cpu: 19m
-      memory: 90Mi
+      cpu: 30m
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 360Mi
 
 hvac:
   enabled: true
@@ -246,10 +246,10 @@ hvac:
     RUN_ARG: --state enabled
   resources:
     requests:
-      cpu: 40m
-      memory: 120Mi
+      cpu: 120m
+      memory: 200Mi
     limits:
-      cpu: 400m
+      cpu: 1
       memory: 30000Mi
 
 m1m3-ess113:
@@ -263,10 +263,10 @@ m1m3-ess113:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 540Mi
 
 m1m3-ess114:
   enabled: true
@@ -279,10 +279,10 @@ m1m3-ess114:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 540Mi
 
 m1m3-ess115:
   enabled: true
@@ -295,10 +295,10 @@ m1m3-ess115:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 540Mi
 
 m1m3-ess116:
   enabled: true
@@ -311,10 +311,10 @@ m1m3-ess116:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 540Mi
 
 m1m3-ess117:
   enabled: true
@@ -327,10 +327,10 @@ m1m3-ess117:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 540Mi
 
 m2-ess106:
   enabled: true
@@ -343,10 +343,10 @@ m2-ess106:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 170Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 510Mi
 
 m2-ess112:
   enabled: true
@@ -359,10 +359,10 @@ m2-ess112:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 170Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 510Mi
 
 mtdome-ess107:
   enabled: true
@@ -391,10 +391,10 @@ mtdome-ess108:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 170Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 510Mi
 
 mtdome-ess118:
   enabled: true
@@ -407,10 +407,10 @@ mtdome-ess118:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 540Mi
 
 mtdome-ess119:
   enabled: true
@@ -423,10 +423,10 @@ mtdome-ess119:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 540Mi
 
 mtdome-ess120:
   enabled: true
@@ -439,10 +439,10 @@ mtdome-ess120:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 540Mi
 
 ringss-ess304:
   enabled: true
@@ -459,42 +459,42 @@ ringss-ess304:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 200Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 400Mi
 
-tma-ess001:
+tma-ess121:
   enabled: true
-  classifier: ess1
+  classifier: ess121
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 1
+    RUN_ARG: 121
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 170Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 510Mi
 
-tma-ess002:
+tma-ess122:
   enabled: true
-  classifier: ess2
+  classifier: ess122
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 2
+    RUN_ARG: 122
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 170Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 510Mi
 
 tma-ess104:
   enabled: true
@@ -507,10 +507,10 @@ tma-ess104:
   resources:
     requests:
       cpu: 1
-      memory: 90Mi
+      memory: 200Mi
     limits:
       cpu: 3
-      memory: 900Mi
+      memory: 600Mi
 
 tma-ess105:
   enabled: true
@@ -523,10 +523,10 @@ tma-ess105:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 170Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 510Mi
 
 tma-ess110:
   enabled: true
@@ -539,10 +539,10 @@ tma-ess110:
   resources:
     requests:
       cpu: 19m
-      memory: 90Mi
+      memory: 180Mi
     limits:
       cpu: 190m
-      memory: 900Mi
+      memory: 540Mi
 
 weatherforecast:
   image:
@@ -555,8 +555,8 @@ weatherforecast:
     key: meteoblue-api-key
   resources:
     requests:
-      cpu: 9m
-      memory: 95Mi
+      cpu: 15m
+      memory: 170Mi
     limits:
       cpu: 90m
-      memory: 950Mi
+      memory: 350Mi

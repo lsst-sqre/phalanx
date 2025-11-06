@@ -56,6 +56,19 @@ config:
       # for experimentation during development.
       suffix: ""
 
+  sentry:
+    # -- Set to true to enable the Sentry integration.
+    enabled: false
+
+    # -- The percentage of requests that should be traced. This
+    # should be a float between 0 and 1
+    tracesSampleRate: 0.0
+
+  slack:
+    # -- Set to true to enable the Slack integration. If true, the
+    # slack-webhook secret must be provided.
+    enabled: false
+
   # -- Extra database connections that may be opened in excess of the pool
   # size to handle surges in load. This is used primarily by the frontend for
   # jobs that complete immediately.
@@ -248,7 +261,7 @@ resultWorker:
   resources:
     limits:
       cpu: "1"
-      memory: "300Mi"
+      memory: "500Mi"
     requests:
       cpu: "1"
       memory: "145Mi"

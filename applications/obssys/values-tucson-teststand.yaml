@@ -133,7 +133,7 @@ mtqueue:
       cpu: 2500m
       memory: 10Gi
     requests:
-      cpu: 500m
+      cpu: 1000m
       memory: 430Mi
 
 mtscheduler:
@@ -180,6 +180,7 @@ ocsqueue:
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
+  obsenv: true
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 3 --state enabled
@@ -198,11 +199,6 @@ ocsqueue:
     readOnly: false
     server: nfs-project.tu.lsst.org
     serverPath: /project
-  - name: obs-env
-    containerPath: /net/obs-env
-    readOnly: true
-    server: nfs-obsenv.tu.lsst.org
-    serverPath: /obs-env
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -216,7 +212,7 @@ ocsqueue:
       memory: 10Gi
     requests:
       cpu: 500m
-      memory: 430Mi
+      memory: 750Mi
 
 ocsscheduler:
   classifier: scheduler3
@@ -261,6 +257,21 @@ watcher:
   image:
     repository: ts-dockerhub.lsst.org/watcher
     pullPolicy: Always
+  env:
+    TS_CONFIG_OCS_DIR: "/net/obs-env/auto_base_packages/ts_config_ocs"
+  obsenv: true
+  obsenv_configfile:
+    filename: obs_env_config.json
+    content: |
+      {
+        "repositories": {
+          "ts_config_ocs": "https://github.com/lsst-ts/"
+        },
+        "base_env_source_org": "https://github.com/lsst-ts/",
+        "base_env_source_repo": "ts_cycle_build",
+        "base_env_def_file": "cycle/cycle.env",
+        "destination": "/net/obs-env/auto_base_packages"
+      }
   resources:
     limits:
       cpu: 2400m

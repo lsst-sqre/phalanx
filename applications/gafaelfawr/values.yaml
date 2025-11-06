@@ -87,7 +87,7 @@ config:
 
   # -- Session lifetime. Use `w`, `d`, `h`, `m`, and `s` for time intervals.
   # For example, `1d6h23m` is one day, six hours, 23 minutes.
-  tokenLifetime: "30d"
+  tokenLifetime: "14d"
 
   # -- Whether to automatically update the Gafaelfawr database schema
   updateSchema: false
@@ -325,7 +325,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.9"
+    tag: "1.37.10"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -483,8 +483,12 @@ redis:
     # -- Access mode of storage to request
     accessMode: "ReadWriteOnce"
 
+    k8up:
+      # -- Whether to enable k8up backup of the redis PVC
+      enabled: false
+
     # -- Use an existing PVC, not dynamic provisioning. If this is set, the
-    # size, storageClass, and accessMode settings are ignored.
+    # size, storageClass, accessMode, and k8up settings are ignored.
     volumeClaimName: ""
 
   # -- Resource limits and requests for the persistent Redis pod

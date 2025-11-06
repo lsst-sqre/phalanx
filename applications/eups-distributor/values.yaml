@@ -22,6 +22,23 @@ ingress:
   hostname: ""
   nginx.ingress.kubernetes.io/preserve-trailing-slash: "true"
 
+lsstDotCodes:
+  # Whether to additionally serve the app at an .lsst.code domain
+  enabled: false
+
+  # The .lsst.code hostname to serve the app at
+  hostname: null
+
+  # The access key id for an AWS IAM user with powers to create records in
+  # tls.lsst.codes
+  awsAccessKeyId: "AKIAQSJOS2SFBNRYNM4I"
+
+  # The ID of the AWS Route53 tls.lsst.codes
+  hostedZoneId: "Z06873202D7WVTZUFOQ42"
+
+  # -- Contact email address registered with Let's Encrypt
+  email: "sqre-admin@lists.lsst.org"
+
 # -- Affinity rules for the eups-distributor deployment pod
 affinity: {}
 

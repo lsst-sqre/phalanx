@@ -11,31 +11,30 @@ image:
   pullPolicy: IfNotPresent
 
   # -- Kafka REST proxy image tag
-  tag: 8.0.1
+  tag: 8.1.0
 
 service:
   # -- Kafka REST proxy service port
   port: 8082
 
 ingress:
-  # -- Whether to enable the ingress
+  # -- Whether to enable the ingress for the REST proxy
   enabled: false
 
-  # -- Additional annotations to add to the ingress
-  # @default -- See `values.yaml`
+  # -- Ingress path
+  # @default - `"/sasquatch-rest-proxy(/|$)(.*)"`
+  path: "/sasquatch-rest-proxy(/|$)(.*)"
+
+  # -- Whether to enable anonymous access to the REST proxy
+  # @default -- false
+  anonymous: false
+
+  # -- Annotations that will be added to the Ingress resource
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 
-  # -- Ingress hostname
-  # @default -- None, must be set if ingress is enabled
-  hostname: ""
-
-  # -- Ingress path
-  # @default - `"/sasquatch-rest-proxy(/\|$)(.*)"`
-  path: "/sasquatch-rest-proxy(/|$)(.*)"
-
 # -- Kafka REST proxy JVM Heap Option
-heapOptions: "-Xms1024M -Xmx1024M"
+heapOptions: "-Xms4096M -Xmx4096M"
 
 # -- Kafka REST configuration options
 # @default -- See `values.yaml`
@@ -73,10 +72,10 @@ kafka:
 # @default -- See `values.yaml`
 resources:
   requests:
-    memory: 1Gi
-    cpu: 200m
+    memory: 4Gi
+    cpu: 1
   limits:
-    memory: 2Gi
+    memory: 4Gi
     cpu: 1
 
 # -- Node selector configuration

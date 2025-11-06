@@ -21,6 +21,13 @@ image:
 kafka:
   # -- Bootstrap list of Kafka host/port pairs
   broker: "sasquatch-kafka-bootstrap.sasquatch:9092"
+  # -- Kafdrop Kafka user
+  # @default -- kafdrop
+  user: "kafdrop"
+  # -- Kafka topic prefix to filter topics by
+  # @default -- "lsst"
+  topicPrefix: "lsst"
+
 
 jvm:
   # -- JVM options
@@ -85,10 +92,6 @@ ingress:
 
   # -- Additional ingress annotations
   annotations: {}
-
-  # -- Ingress hostname
-  # @default -- None, must be set if ingress is enabled
-  hostname: ""
 
   # -- Ingress path
   path: /kafdrop

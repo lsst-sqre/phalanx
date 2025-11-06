@@ -1,6 +1,5 @@
 strimzi-kafka:
   kafka:
-    version: "3.9.0"
     listeners:
       tls:
         enabled: true
@@ -13,17 +12,17 @@ strimzi-kafka:
         enabled: true
       bootstrap:
         annotations:
-          metallb.universe.tf/address-pool: sdf-rubin-ingest
+          metallb.io/address-pool: sdf-rubin-ingest
       brokers:
         - broker: 0
           annotations:
-            metallb.universe.tf/address-pool: sdf-rubin-ingest
+            metallb.io/address-pool: sdf-rubin-ingest
         - broker: 1
           annotations:
-            metallb.universe.tf/address-pool: sdf-rubin-ingest
+            metallb.io/address-pool: sdf-rubin-ingest
         - broker: 2
           annotations:
-            metallb.universe.tf/address-pool: sdf-rubin-ingest
+            metallb.io/address-pool: sdf-rubin-ingest
   mirrormaker2:
     enabled: false
     source:
@@ -45,6 +44,8 @@ strimzi-kafka:
 
 schema-registry:
   enabled: true
+  ingress:
+    enabled: true
 
 influxdb:
   startupProbe:
@@ -187,13 +188,12 @@ kafka-connect-manager:
 kafdrop:
   ingress:
     enabled: true
-    hostname: usdf-rsp-dev.slac.stanford.edu
 
 rest-proxy:
   enabled: true
   ingress:
     enabled: true
-    hostname: usdf-rsp-dev.slac.stanford.edu
+    anonymous: true
   kafka:
     topicPrefixes:
       - test

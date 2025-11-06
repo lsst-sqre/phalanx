@@ -1,7 +1,7 @@
 prompt-keda:
   image:
     pullPolicy: IfNotPresent
-    tag: 11.0.0
+    tag: 11.3.0
 
   alerts:
     username: kafka-admin
@@ -19,6 +19,16 @@ prompt-keda:
       # The config will get corrupted after template substitution.
       # Block-style mappings can have lines of any length.
       main: |-
+        - survey: BLOCK-407  # FBS Pre-Operations Survey (independent of environmental conditions)
+          pipelines:
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
+        - survey: BLOCK-408  # FBS Pre-Operations Survey (triggered by environmental conditions)
+          pipelines:
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         - survey: BLOCK-365  # FBS SV Field Survey
           pipelines:
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
@@ -34,6 +44,10 @@ prompt-keda:
         - {pipelines: []}
       preprocessing: |-
         # Run to enable solar system processing in SingleFrame
+        - survey: BLOCK-407
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
+        - survey: BLOCK-408
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
         - survey: BLOCK-365
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
         - {survey: "", pipelines: []}
@@ -41,7 +55,7 @@ prompt-keda:
         - {pipelines: []}
     preloadPadding: 50.1
     centralRepo: s3://rubin-summit-users
-    readRepo: s3://rubin-summit-users/butler-nochain-readonly.yaml
+    readRepo: s3://rubin-summit-users/butler-readonly.yaml
     exportTypes: |-
       - ".*_(config|metadata|log)"
       - "packages"
@@ -67,8 +81,6 @@ prompt-keda:
       - "preloaded_dia_object"
       - "preloaded_dia_source"
       - "preloaded_ss_object"
-      - "difference_image_metrics"
-      - "diffimPlots_.*"
 
   s3:
     imageBucket: rubin-summit

@@ -1,18 +1,18 @@
+sentry:
+  enabled: true
 controller:
   googleServiceAccount: "nublado-controller@science-platform-stable-6994.iam.gserviceaccount.com"
   slackAlerts: true
-  sentry:
-    enabled: true
   config:
     dropdownMenu:
       release:
-        cutoffVersion: "27.0.0"
+        cutoffVersion: "29.0.0"
       weekly:
         number: 78
       daily:
         number: 25
       releaseCandidate:
-        cutoffVersion: "28.0.0"
+        cutoffVersion: "29.2.1"
       experimental:
         age: "3w"
     fsadmin:
@@ -37,11 +37,8 @@ controller:
         image: "sciplat-lab"
     lab:
       env:
-        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
         DAF_BUTLER_REPOSITORY_INDEX: "https://data.lsst.cloud/api/butler/configs/idf-repositories.yaml"
-        GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
-        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         RUBIN_DIR: "/rubin"
         S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         SCRATCH_PATH: "/deleted-sundays"
@@ -52,7 +49,7 @@ controller:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.15.0"
+            tag: "8.17.1"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -70,13 +67,7 @@ controller:
         node_pool: "user-lab-pool"
       secrets:
         - secretName: "nublado-lab-secret"
-          secretKey: "aws-credentials.ini"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-gcs-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-hmac-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "postgres-credentials.txt"
+          secretKey: "rubin-epo-cit-sci-pipeline.json"
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
@@ -84,8 +75,8 @@ controller:
       volumes:
         - name: "home"
           source:
-            serverPath: "/home-share"
-            server: "10.231.144.5"
+            serverPath: "/lcv-home-share"
+            server: "10.231.144.6"
             type: "nfs"
         - name: "rubin"
           source:
@@ -123,10 +114,6 @@ jupyterhub:
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
-  proxy:
-    chp:
-      image:
-        tag: "5.0.1"
 
 purger:
   enabled: true

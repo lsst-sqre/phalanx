@@ -39,6 +39,8 @@ strimzi-kafka:
 
 schema-registry:
   enabled: true
+  ingress:
+    enabled: true
 
 schema-registry-remote:
   enabled: true
@@ -89,7 +91,6 @@ influxdb-enterprise:
 
 telegraf:
   enabled: true
-  kafkaVersion: "4.0.0"
   influxdb:
     urls:
       - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
@@ -118,13 +119,11 @@ kafdrop:
   cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=true --topic.createEnabled=true"
   ingress:
     enabled: true
-    hostname: data-dev.lsst.cloud
 
 rest-proxy:
   enabled: true
   ingress:
     enabled: true
-    hostname: data-dev.lsst.cloud
   kafka:
     topicPrefixes:
       - lsst.example
@@ -149,13 +148,13 @@ chronograf:
 
 app-metrics:
   enabled: true
-  kafkaVersion: "4.0.0"
   apps:
     - gafaelfawr
     - mobu
     - noteburst
     - nublado
     - qservkafka
+    - repertoire
     - sia
     - wobbly
 
@@ -173,9 +172,12 @@ backup:
       retentionDays: 3
     - name: "influxdb-enterprise-incremental"
       enabled: true
+      bind: sasquatch-influxdb-enterprise-meta
     - name: "influxdb-oss-full"
       enabled: true
       retentionDays: 3
+  restore:
+    enabled: false
 
 backpack:
   enabled: true

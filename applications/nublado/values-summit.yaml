@@ -8,8 +8,8 @@ controller:
       numReleases: 0
       numWeeklies: 3
       numDailies: 2
-      cycle: 41
-      recommendedTag: "recommended_c0041"
+      cycle: 42
+      recommendedTag: "recommended_c0042"
     lab:
       defaultSize: "small"
       env:
@@ -29,7 +29,7 @@ controller:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "8.15.0"
+            tag: "8.17.1"
           privileged: true
           volumeMounts:
             - containerPath: "/home"

@@ -4,10 +4,6 @@ controller:
   # -- Affinity rules for the Nublado controller
   affinity: {}
 
-  sentry:
-    # -- Whether to report errors to Sentry
-    enabled: false
-
   # -- If Google Artifact Registry is used as the image source, the Google
   # service account that has an IAM binding to the `nublado-controller`
   # Kubernetes service account and has the Artifact Registry reader role
@@ -50,7 +46,12 @@ controller:
   slackAlerts: false
 
   # -- Tolerations for the Nublado controller
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
   # Passed as YAML to the lab controller.
   config:
@@ -126,7 +127,6 @@ controller:
       #   readOnly: true
       #   volumeName: "project"
 
-
     fsadmin:
       # -- Affinity rules for fsadmin pods
       affinity: {}
@@ -148,7 +148,7 @@ controller:
         pullPolicy: "IfNotPresent"
 
         # -- Tag of fsadmin image to use
-        tag: "8.15.0"
+        tag: "8.17.1"
 
       # -- Mount prefix, to be prepended to mountpoints in order to
       # collect them in one place
@@ -172,8 +172,12 @@ controller:
       timeout: 2m
 
       # -- Tolerations for fsadmin pod
-      tolerations: []
-
+      # @default -- Tolerate GKE arm64 taint
+      tolerations:
+        - key: "kubernetes.io/arch"
+          operator: "Equal"
+          value: "arm64"
+          effect: "NoSchedule"
 
     images:
       # -- How frequently to refresh the list of available images and compare
@@ -546,8 +550,8 @@ jupyterhub:
     removeNamedServers: true
 
     # -- Maximum age of a lab regardless of activity
-    # @default -- 2160000 (25 days)
-    maxAge: 2160000
+    # @default -- 864000 (10 days)
+    maxAge: 864000
 
   hub:
     # -- Whether to require metrics requests to be authenticated
@@ -558,7 +562,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.15.0"
+      tag: "8.17.1"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
@@ -714,7 +718,7 @@ cloudsql:
     pullPolicy: "IfNotPresent"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.9"
+    tag: "1.37.10"
 
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
@@ -764,7 +768,6 @@ secrets:
   # user's lab.
   templateSecrets: true
 
-# Configuration for the scratch purger
 purger:
   # -- Purge scratch space?
   enabled: false
@@ -779,7 +782,12 @@ purger:
   podAnnotations: {}
 
   # -- Tolerations for purger
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
   # -- Resource limits and requests for the filesystem purger
   # @default -- See `values.yaml`
@@ -806,25 +814,33 @@ purger:
   schedule: "05 03 * * *"
 
   config:
+    # -- Add timestamps to log messages
+    addTimestamp: false
+
     # -- File holding purge policy
     policyFile: /etc/purger/policy.yaml
+
     # -- Report only; do not purge
     dryRun: false
-    logging:
-      # -- Level at which to log
-      log_level: info
-      # -- "production" (JSON logs) or "development" (human-friendly)
-      profile: production
-      # -- Add timestamps to log lines
-      addTimestamps: false
+
+    # -- Level at which to log
+    logLevel: info
+
+    # -- "production" (JSON logs) or "development" (human-friendly)
+    logProfile: production
 
   policy:
+    # -- Per-directory pruning policy.
+    # @default -- See `values.yaml`
     directories:
       - path: /scratch
-        # -- Files this large or larger will be subject to the "large" interval set
+
+        # Files this large or larger will be subject to the "large" interval
+        # set
         threshold: 1GiB
-        # -- If any of these times are older than specified, remove the file.  Zero means "never remove".
-        # @default -- see `values.yaml`; each environment must set its own values.
+
+        # If any of these times are older than specified, remove the file.
+        # Zero means "never remove".
         intervals:
           large:
             accessInterval: 0
@@ -834,15 +850,14 @@ purger:
             accessInterval: 0
             modificationInterval: 0
             creationInterval: 0
+
   # -- Name of volume to purge (from controller.lab.config.volumes)
   # @default -- None, must be set for each environment
   volumeName: null
 
-
 # If we're installing tutorials and artifacts at a given site, this cronjob
 # controls their refresh.
 cronjob:
-  # For tutorials notebooks
   tutorials:
     # -- Clone the notebooks?
     enabled: false
@@ -859,8 +874,6 @@ cronjob:
     # -- Where repository volume should be mounted
     targetVolumePath: "/rubin"
 
-    # -- Repository volume definition
-    # @default -- See `values.yaml`
     targetVolume:
       # -- Name of volume to mount (from controller.lab.config.volumes)
       # @default -- None, must be set for each environment
@@ -894,8 +907,6 @@ cronjob:
     # -- Where repository volume should be mounted
     targetVolumePath: "/rubin"
 
-    # -- Repository volume definition
-    # @default -- See `values.yaml`
     targetVolume:
       # -- Name of volume to mount (from controller.lab.config.volumes)
       # @default -- None, must be set for each environment
@@ -913,7 +924,6 @@ cronjob:
     # -- GID for the cloning cronjob(s)
     gid: 1000
 
-
   image:
     # -- Repository cloner image to use
     repository: "ghcr.io/lsst-sqre/repo-cloner"
@@ -923,6 +933,9 @@ cronjob:
 
     # -- Tag of repo cloner image to use
     tag: "0.1.0"
+
+  # -- Affinity rules for the cloning cronjob(s).
+  affinity: {}
 
   # -- Resource limits and requests for the cloning cronjob(s)
   # @default -- See `values.yaml`
@@ -936,9 +949,11 @@ cronjob:
 
   # -- Tolerations for the cloning cronjob(s).
   tolerations: []
-  # -- Affinity rules for the cloning cronjob(s).
-  affinity: {}
 
+sentry:
+  # -- Whether to report errors to Sentry. Applies to all Nublado components
+  # that support Sentry.
+  enabled: false
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
@@ -954,6 +969,10 @@ global:
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null
+
+  # -- Base URL for Repertoire discovery API
+  # @default -- Set by Argo CD
+  repertoireUrl: null
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD

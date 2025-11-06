@@ -22,6 +22,8 @@ spec:
     targetRevision: {{ or (index .Values "revisions" "wobbly") .Values.targetRevision | quote }}
     helm:
       parameters:
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
         - name: "global.host"
           value: {{ .Values.fqdn | quote }}
         - name: "global.baseUrl"

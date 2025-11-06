@@ -38,6 +38,7 @@ data:
   QSERV_KAFKA_REDIS_URL: "redis://qserv-kafka-redis.{{ .Release.Namespace }}:6379/0"
   QSERV_KAFKA_RESULT_TIMEOUT: {{ .Values.config.resultTimeout | quote }}
   QSERV_KAFKA_REWRITE_BASE_URL: {{ .Values.global.baseUrl | quote }}
+  QSERV_KAFKA_SLACK_ENABLED: {{ .Values.config.slack.enabled | quote }}
   QSERV_KAFKA_TAP_SERVICE: {{ .Values.config.tapService | quote }}
   SCHEMA_MANAGER_REGISTRY_URL: {{ .Values.config.metrics.schemaManager.registryUrl | quote }}
   SCHEMA_MANAGER_SUFFIX: {{ .Values.config.metrics.schemaManager.suffix | quote }}

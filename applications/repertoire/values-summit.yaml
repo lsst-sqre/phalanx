@@ -1,0 +1,15 @@
+config:
+  influxdbDatabases:
+    summit_efd:
+      url: "https://summit-lsp.lsst.codes/influxdb/"
+      database: "efd"
+      username: "efdreader"
+      passwordKey: "summit_efd-password"
+      schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
+    usdf_efd:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "efd"
+      username: "efdreader"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
+  slackAlerts: true

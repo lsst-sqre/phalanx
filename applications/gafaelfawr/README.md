@@ -17,7 +17,7 @@ Authentication and identity system
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as a separate service (behind a `NetworkPolicy`) for other, lower-traffic services. |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.37.9"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.10"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.nodeSelector | object | `{}` | Node selection rules for the standalone Cloud SQL Proxy pod |
 | cloudsql.podAnnotations | object | `{}` | Annotations for the standalone Cloud SQL Proxy pod |
@@ -78,7 +78,7 @@ Authentication and identity system
 | config.sentry.enabled | bool | `false` | Set to true to enable the Sentry integration. |
 | config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1 |
 | config.slackAlerts | bool | `false` | Whether to send certain serious alerts to Slack. If `true`, the `slack-webhook` secret must also be set. |
-| config.tokenLifetime | string | `"30d"` | Session lifetime. Use `w`, `d`, `h`, `m`, and `s` for time intervals. For example, `1d6h23m` is one day, six hours, 23 minutes. |
+| config.tokenLifetime | string | `"14d"` | Session lifetime. Use `w`, `d`, `h`, `m`, and `s` for time intervals. For example, `1d6h23m` is one day, six hours, 23 minutes. |
 | config.updateSchema | bool | `false` | Whether to automatically update the Gafaelfawr database schema |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
@@ -118,9 +118,10 @@ Authentication and identity system
 | redis.nodeSelector | object | `{}` | Node selection rules for the persistent Redis pod |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
 | redis.persistence.enabled | bool | `true` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset all tokens on every restart. Only use this for a test deployment. |
+| redis.persistence.k8up.enabled | bool | `false` | Whether to enable k8up backup of the redis PVC |
 | redis.persistence.size | string | `"1Gi"` | Amount of persistent storage to request |
 | redis.persistence.storageClass | string | `""` | Class of storage to request |
-| redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
+| redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, accessMode, and k8up settings are ignored. |
 | redis.podAnnotations | object | `{}` | Pod annotations for the persistent Redis pod |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the persistent Redis pod |
 | redis.tolerations | list | `[]` | Tolerations for the persistent Redis pod |

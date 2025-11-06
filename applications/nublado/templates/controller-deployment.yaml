@@ -35,7 +35,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-        - name: "controller"
+        - name: "{{ .Chart.Name }}-controller"
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -47,15 +47,6 @@ spec:
           env:
             - name: EXTERNAL_INSTANCE_URL
               value: {{ .Values.global.baseUrl | quote }}
-            {{- if .Values.controller.sentry.enabled }}
-            - name: "SENTRY_DSN"
-              valueFrom:
-                secretKeyRef:
-                  name: "nublado-secret"
-                  key: "sentry-dsn"
-            - name: "SENTRY_ENVIRONMENT"
-              value: {{ .Values.global.environmentName }}
-            {{- end }}
             {{- if .Values.controller.config.metrics.enabled }}
             - name: "KAFKA_BOOTSTRAP_SERVERS"
               valueFrom:
@@ -81,6 +72,39 @@ spec:
                   name: "nublado-secret"
                   key: "slack-webhook"
             {{- end }}
+            - name: "REPERTOIRE_BASE_URL"
+              value: {{ .Values.global.repertoireUrl | quote }}
+            {{- if .Values.sentry.enabled }}
+            - name: "SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: "nublado-secret"
+                  key: "sentry-dsn"
+            - name: "SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.environmentName }}
+            {{- end }}
+            # Uvicorn keepalive timeout, in seconds. This should be longer
+            # than any keepalive timeouts on any downstream proxies. The
+            # keepalive timeout for ingress-nginx connections is 60s.
+            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
+              value: "61"
+          lifecycle:
+            # Number of seconds k8s should wait before sending SIGTERM on
+            # graceful restarts/deployments/shutdowns. We need this because it
+            # takes ingress-nginx some time to configure itself to stop
+            # sending traffic to the pods scheduled for termination. If
+            # Uvicorn gets the SIGTERM and starts closing connections, we
+            # could end up with a TCP race condition if ingress-nginx still
+            # tries to send data over those connections.
+            #
+            # Note that terminationGracePeriodSeconds includes the time that
+            # is spent in the preStop hook. If you’re adding a preStop hook
+            # and your terminationGracePeriodSeconds is super fine-tuned, then
+            # you should update your terminationGracePeriodSeconds to add the
+            # amount of time you’ll be spending in your preStop hook.
+            preStop:
+              sleep:
+                seconds: 10
           ports:
             - name: "http"
               containerPort: 8080

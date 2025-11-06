@@ -3,7 +3,8 @@ strimzi-kafka:
     monitorLabel:
       lsst.io/monitor: "true"
   kafka:
-    version: 3.8.0
+    version: 3.9.1
+    metadataVersion: "3.8-IV0"
     config:
       auto.create.topics.enable: false
       log.cleaner.min.compaction.lag.ms: 604800000
@@ -96,10 +97,7 @@ schema-registry:
   enabled: true
   ingress:
     enabled: true
-    annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /$2
-    hostname: summit-lsp.lsst.codes
-    path: /schema-registry(/|$)(.*)
+    anonymous: true
 
 influxdb:
   enabled: false
@@ -124,6 +122,8 @@ influxdb-enterprise:
         key: influxdb-enterprise-shared-secret
   data:
     replicas: 2
+    startupProbe:
+      enabled: true
     ingress:
       enabled: true
       hostname: summit-lsp.lsst.codes
@@ -174,6 +174,8 @@ influxdb-enterprise-standby:
         key: influxdb-enterprise-standby-shared-secret
   data:
     replicas: 1
+    startupProbe:
+      enabled: true
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
@@ -211,6 +213,7 @@ telegraf:
     urls:
       - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
       - "http://sasquatch-influxdb-enterprise-standby-data.sasquatch:8086"
+  kafkaVersion: "3.9.1"
   kafkaConsumers:
     # Application connectors
     obsenv:
@@ -398,13 +401,12 @@ telegraf:
 kafdrop:
   ingress:
     enabled: true
-    hostname: summit-lsp.lsst.codes
 
 rest-proxy:
   enabled: true
   ingress:
     enabled: true
-    hostname: summit-lsp.lsst.codes
+    anonymous: true
   configurationOverrides:
     "access.control.allow.origin": https://summit-lsp.lsst.codes/love,http://love01.cp.lsst.org
   kafka:
@@ -448,7 +450,7 @@ kapacitor:
 backup:
   enabled: true
   persistence:
-    size: 100Gi
+    size: 20Ti
     storageClass: rook-ceph-block
   backupItems:
     - name: chronograf
@@ -457,6 +459,12 @@ backup:
     - name: kapacitor
       enabled: true
       retentionDays: 7
+    - name: influxdb-enterprise-incremental
+      enabled: false
+      bind: sasquatch-influxdb-enterprise-meta
+  k8up:
+    enabled: true
+
 
 obsenv:
   enabled: true

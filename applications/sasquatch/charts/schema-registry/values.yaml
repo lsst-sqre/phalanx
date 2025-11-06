@@ -4,7 +4,7 @@ image:
   # -- Docker image for the Confluent Schema Registry.
   repository: confluentinc/cp-schema-registry
   # -- Docker image tag for the Confluent Schema Registry.
-  tag: "8.0.1"
+  tag: "8.1.0"
 
 cluster:
   # -- Name of the Strimzi cluster used by the Schema Registry.
@@ -29,16 +29,17 @@ ingress:
   # -- Whether to enable an ingress for the Schema Registry
   enabled: false
 
-  # -- Hostname for the Schema Registry
-  # @default -- None, must be set if ingress is enabled
-  hostname: ""
-
   # -- Path for the ingress
   # @default -- `"/schema-registry(/|$)(.*)"`
   path: "/schema-registry(/|$)(.*)"
 
+  # -- Whether to enable anonymous access to the Schema Registry
+  # @default -- false
+  anonymous: false
+
   # -- Annotations that will be added to the Ingress resource
-  annotations: {}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 
 # -- Kubernetes requests and limits for the Schema Registry
 # @default -- See `values.yaml`

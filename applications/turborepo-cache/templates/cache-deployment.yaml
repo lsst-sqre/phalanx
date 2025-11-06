@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "turborepo-cache"
+  labels:
+    {{- include "turborepo-cache.cache.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.cache.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "turborepo-cache.cache.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/cache-configmap.yaml") . | sha256sum }}
+        {{- with .Values.cache.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "turborepo-cache.cache.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.cache.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.cache.config.googleServiceAccount }}
+      serviceAccountName: turborepo-cache
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.cache.image.repository }}:{{ .Values.cache.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.cache.image.pullPolicy }}
+          ports:
+            - name: "http"
+              containerPort: 3000
+              protocol: "TCP"
+          envFrom:
+            - configMapRef:
+                name: "turborepo-cache"
+          env:
+            - name: "TURBO_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "turborepo-cache"
+                  key: "cacheToken"
+          livenessProbe:
+            httpGet:
+              path: "/v8/artifacts/status"
+              port: "http"
+            initialDelaySeconds: 5
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: "/v8/artifacts/status"
+              port: "http"
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.cache.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+      {{- with .Values.cache.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.cache.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 100
+        runAsGroup: 101

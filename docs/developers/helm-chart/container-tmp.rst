@@ -29,7 +29,7 @@ Any files written to this type of volume will be stored in memory, not on any di
 
 Here is how to do that:
 
-#. Add a ``volumes`` section to the ``spec`` part of the Deployment_ (or add a new element one is not already there) that creates a volume for temporary files:
+#. Add a ``volumes`` section to the ``spec`` part of the Deployment_ (or add a new element if one is not already there) that creates a volume for temporary files:
 
    .. code-block:: yaml
       :caption: deployment.yaml
@@ -65,7 +65,7 @@ This provisions an external disk volume using whatever storage class you declare
 
 Here is how to do that:
 
-#. Add a ``volumes`` section to the ``spec`` part of the Deployment_ (or add a new element one is not already there) that creates a volume for temporary files:
+#. Add a ``volumes`` section to the ``spec`` part of the Deployment_ (or add a new element if one is not already there) that creates a volume for temporary files:
 
    .. code-block:: yaml
       :caption: deployment.yaml
@@ -74,13 +74,13 @@ Here is how to do that:
         - name: "tmp"
           ephemeral:
             volumeClaimTemplate:
-            spec:
-               accessModes:
+              spec:
+                accessModes:
                   - "ReadWriteOnce"
-               storageClassName: "standard-rwo"
-               resources:
+                storageClassName: "standard-rwo"
+                resources:
                   requests:
-                     storage: 2Gi
+                    storage: "2Gi"
 
 #. Mount that volume by adding a ``volumeMounts`` section to the main container in the Deployment_ (or add it to the volume mounts if there already are others):
 
@@ -90,6 +90,8 @@ Here is how to do that:
       volumeMounts:
         - name: "tmp"
           mountPath: "/tmp"
+
+You may also need to adjust the security context of your pod to allow writing to that volume by setting ``fsGroup`` in the ``securityContext`` section of the pod spec.
 
 Why not a disk-based emptyDir?
 ==============================

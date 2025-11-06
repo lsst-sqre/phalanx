@@ -16,6 +16,7 @@ atqueue:
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
+  obsenv: true
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 2 --state enabled
@@ -34,11 +35,6 @@ atqueue:
     readOnly: false
     server: nfs-project.ls.lsst.org
     serverPath: /project
-  - name: obs-env
-    containerPath: /net/obs-env
-    readOnly: true
-    server: nfs-obsenv.ls.lsst.org
-    serverPath: /obs-env
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -59,9 +55,25 @@ atscheduler:
   image:
     repository: ts-dockerhub.lsst.org/scheduler
     pullPolicy: Always
+  obsenv: true
+  obsenv_configfile:
+    filename: obs_env_config.json
+    content: |
+      {
+        "repositories": {
+          "ts_config_scheduler": "https://github.com/lsst-ts/",
+          "ts_standardscripts": "https://github.com/lsst-ts/",
+          "ts_externalscripts": "https://github.com/lsst-ts/"
+        },
+        "base_env_source_org": "https://github.com/lsst-ts/",
+        "base_env_source_repo": "ts_cycle_build",
+        "base_env_def_file": "cycle/cycle.env",
+        "destination": "/net/obs-env/auto_base_packages"
+      }
   env:
     INDEX: 2
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+    TS_CONFIG_SCHEDULER_DIR: "/net/obs-env/auto_base_packages/ts_config_scheduler"
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -73,11 +85,6 @@ atscheduler:
     readOnly: false
     server: nfs-project.ls.lsst.org
     serverPath: /project/scheduler
-  - name: obs-env
-    containerPath: /net/obs-env
-    readOnly: true
-    server: nfs-obsenv.ls.lsst.org
-    serverPath: /obs-env
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -98,6 +105,7 @@ mtqueue:
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
+  obsenv: true
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 1 --state enabled
@@ -116,11 +124,6 @@ mtqueue:
     readOnly: false
     server: nfs-project.ls.lsst.org
     serverPath: /project
-  - name: obs-env
-    containerPath: /net/obs-env
-    readOnly: true
-    server: nfs-obsenv.ls.lsst.org
-    serverPath: /obs-env
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -130,20 +133,36 @@ mtqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 2500m
-      memory: 10Gi
+      cpu: 6
+      memory: 12Gi
     requests:
-      cpu: 1000m
-      memory: 430Mi
+      cpu: 3
+      memory: 4Gi
 
 mtscheduler:
   classifier: scheduler1
   image:
     repository: ts-dockerhub.lsst.org/scheduler
     pullPolicy: Always
+  obsenv: true
+  obsenv_configfile:
+    filename: obs_env_config.json
+    content: |
+      {
+        "repositories": {
+          "ts_config_scheduler": "https://github.com/lsst-ts/",
+          "ts_standardscripts": "https://github.com/lsst-ts/",
+          "ts_externalscripts": "https://github.com/lsst-ts/"
+        },
+        "base_env_source_org": "https://github.com/lsst-ts/",
+        "base_env_source_repo": "ts_cycle_build",
+        "base_env_def_file": "cycle/cycle.env",
+        "destination": "/net/obs-env/auto_base_packages"
+      }
   env:
     INDEX: 1
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+    TS_CONFIG_SCHEDULER_DIR: "/net/obs-env/auto_base_packages/ts_config_scheduler"
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -155,11 +174,6 @@ mtscheduler:
     readOnly: false
     server: nfs-project.ls.lsst.org
     serverPath: /project/scheduler
-  - name: obs-env
-    containerPath: /net/obs-env
-    readOnly: true
-    server: nfs-obsenv.ls.lsst.org
-    serverPath: /obs-env
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -180,6 +194,7 @@ ocsqueue:
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
+  obsenv: true
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 3 --state enabled
@@ -198,11 +213,6 @@ ocsqueue:
     readOnly: false
     server: nfs-project.ls.lsst.org
     serverPath: /project
-  - name: obs-env
-    containerPath: /net/obs-env
-    readOnly: true
-    server: nfs-obsenv.ls.lsst.org
-    serverPath: /obs-env
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -223,9 +233,25 @@ ocsscheduler:
   image:
     repository: ts-dockerhub.lsst.org/scheduler
     pullPolicy: Always
+  obsenv: true
+  obsenv_configfile:
+    filename: obs_env_config.json
+    content: |
+      {
+        "repositories": {
+          "ts_config_scheduler": "https://github.com/lsst-ts/",
+          "ts_standardscripts": "https://github.com/lsst-ts/",
+          "ts_externalscripts": "https://github.com/lsst-ts/"
+        },
+        "base_env_source_org": "https://github.com/lsst-ts/",
+        "base_env_source_repo": "ts_cycle_build",
+        "base_env_def_file": "cycle/cycle.env",
+        "destination": "/net/obs-env/auto_base_packages"
+      }
   env:
     INDEX: 3
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+    TS_CONFIG_SCHEDULER_DIR: "/net/obs-env/auto_base_packages/ts_config_scheduler"
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -237,11 +263,6 @@ ocsscheduler:
     readOnly: false
     server: nfs-project.ls.lsst.org
     serverPath: /project/scheduler
-  - name: obs-env
-    containerPath: /net/obs-env
-    readOnly: true
-    server: nfs-obsenv.ls.lsst.org
-    serverPath: /obs-env
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -261,6 +282,21 @@ watcher:
   image:
     repository: ts-dockerhub.lsst.org/watcher
     pullPolicy: Always
+  env:
+    TS_CONFIG_OCS_DIR: "/net/obs-env/auto_base_packages/ts_config_ocs"
+  obsenv: true
+  obsenv_configfile:
+    filename: obs_env_config.json
+    content: |
+      {
+        "repositories": {
+          "ts_config_ocs": "https://github.com/lsst-ts/"
+        },
+        "base_env_source_org": "https://github.com/lsst-ts/",
+        "base_env_source_repo": "ts_cycle_build",
+        "base_env_def_file": "cycle/cycle.env",
+        "destination": "/net/obs-env/auto_base_packages"
+      }
   resources:
     limits:
       cpu: 2400m

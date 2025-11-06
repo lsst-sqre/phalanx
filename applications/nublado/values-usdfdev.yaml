@@ -7,7 +7,7 @@ controller:
         registry: "docker-registry.slac.stanford.edu"
         repository: "lsstsqre/sciplat-lab"
       pin:
-        - "r29.1.1"
+        - "r29_2_0_rsp2244"
     lab:
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"

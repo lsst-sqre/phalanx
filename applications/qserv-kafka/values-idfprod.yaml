@@ -1,6 +1,10 @@
 config:
   metrics:
     enabled: true
+  sentry:
+    enabled: true
+  slack:
+    enabled: true
   qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-prod.slac.stanford.edu:4040/"
   qservRestSendApiVersion: false
   qservRestUrl: "https://qserv-prod-https.slac.stanford.edu:4048/"

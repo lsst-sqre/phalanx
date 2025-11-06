@@ -44,17 +44,20 @@ config:
         Science Pipelines v23 processing of the DESC Data Challenge 2
         simulation, which covered 300 square degrees of the wide-fast-deep
         LSST survey region over 5 years.
+      docsUrl: "https://dp0-2.lsst.io/"
     dp03:
       description: >-
         Data Preview 0.3 contains the catalog products of a Solar System
         Science Collaboration simulation of the results of SSO analysis of the
         wide-fast-deep data from the LSST dataset.
+      docsUrl: "https://dp0-3.lsst.io/"
     dp1:
       description: >-
         Data Preview 1 contains image and catalog products from the Rubin
         Science Pipelines v29 processing of observations obtained with the
         LSST Commissioning Camera of seven ~1 square degree fields, over seven
         weeks in late 2024.
+      docsUrl: "https://dp1.lsst.io/"
 
   hips:
     # -- Known HiPS datasets. Each should be a mapping of a label to an object
@@ -116,6 +119,28 @@ config:
   # human-friendly)
   logProfile: "production"
 
+  metrics:
+    # -- Whether to enable sending metrics
+    enabled: false
+
+    # -- Name under which to log metrics. Generally there is no reason to
+    # change this.
+    application: "repertoire"
+
+    events:
+      # -- Topic prefix for events. It may sometimes be useful to change this
+      # in development environments.
+      topicPrefix: "lsst.square.metrics.events"
+
+    schemaManager:
+      # -- URL of the Confluent-compatible schema registry server
+      # @default -- Sasquatch in the local cluster
+      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
+
+      # -- Suffix to add to all registered subjects. This is sometimes useful
+      # for experimentation during development.
+      suffix: ""
+
   # -- URL path prefix
   pathPrefix: "/repertoire"
 
@@ -128,6 +153,15 @@ config:
       - type: "ui"
         name: "argocd"
         template: "https://{{base_hostname}}/argo-cd"
+    datalinker:
+      - type: "data"
+        name: "datalink"
+        template: "https://{{base_hostname}}/api/datalinker"
+        versions:
+          datalink-links-1.1:
+            template: "https://{{base_hostname}}/api/datalinker/links"
+            ivoaStandardId: "ivo://ivoa.net/std/DataLink#links-1.1"
+        openapi: "https://{{base_hostname}}/api/datalinker/openapi.json"
     gafaelfawr:
       - type: "internal"
         name: "gafaelfawr"
@@ -156,6 +190,9 @@ config:
             template: "https://{{base_hostname}}/noteburst/v1"
         openapi: "https://{{base_hostname}}/noteburst/openapi.json"
     nublado:
+      - type: "internal"
+        name: "nublado-controller"
+        template: "https://{{base_hostname}}/nublado"
       - type: "ui"
         name: "nublado"
         template: "https://{{base_hostname}}/nb"
@@ -230,6 +267,9 @@ config:
   # @default -- See `values.yaml`
   subdomainRules:
     nublado:
+      - type: "internal"
+        name: "nublado-controller"
+        template: "https://{{base_hostname}}/nublado"
       - type: "ui"
         name: "nublado"
         template: "https://nb.{{base_hostname}}/nb"
@@ -266,7 +306,12 @@ resources:
     memory: "50Mi"
 
 # -- Tolerations for the repertoire deployment pod
-tolerations: []
+# @default -- Tolerate GKE arm64 taint
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

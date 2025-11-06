@@ -1,7 +1,7 @@
 apiVersion: roundtable.lsst.codes/v1beta1
 kind: StrimziSchemaRegistry
 metadata:
-  name: {{ include "schema-registry.fullname" . }}
+  name: {{ include "chart.fullname" . }}
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:

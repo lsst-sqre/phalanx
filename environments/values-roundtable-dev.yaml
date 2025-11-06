@@ -27,5 +27,6 @@ applications:
   strimzi-access-operator: true
   strimzi-registry-operator: true
   templatebot: true
+  turborepo-cache: true
   unfurlbot: true
   vault: true

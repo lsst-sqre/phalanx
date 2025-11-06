@@ -87,7 +87,7 @@ Rubin Observatory's telemetry service
 | kapacitor.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
 | kapacitor.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Kapacitor |
 | kapacitor.image.repository | string | `"docker.io/library/kapacitor"` | Docker image to use for Kapacitor |
-| kapacitor.image.tag | string | `"1.8.1"` | Tag to use for Kapacitor |
+| kapacitor.image.tag | string | `"1.8.2"` | Tag to use for Kapacitor |
 | kapacitor.influxURL | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB connection URL |
 | kapacitor.persistence.enabled | bool | `true` | Whether to enable Kapacitor data persistence |
 | kapacitor.persistence.size | string | `"100Gi"` | Size of storage to request if enabled |
@@ -104,6 +104,7 @@ Rubin Observatory's telemetry service
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations |
 | strimzi-kafka | object | `{}` |  |
 | tap.enabled | bool | `false` | Whether to enable the tap subchart |
+| telegraf-standby.enabled | bool | `false` | Whether to enable the telegraf-standby subchart |
 | telegraf.enabled | bool | `false` | Whether to enable the telegraf subchart |
 | app-metrics.affinity | object | `{}` | Affinity for pod assignment |
 | app-metrics.apps | list | `[]` | A list of applications that will publish metrics events, and the keys that should be ingested into InfluxDB as tags.  The names should be the same as the app names in Phalanx. |
@@ -116,10 +117,10 @@ Rubin Observatory's telemetry service
 | app-metrics.globalInfluxTags | list | `["application"]` | Keys in an every event sent by any app that should be recorded in InfluxDB as "tags" (vs. "fields"). These will be concatenated with the `influxTags` from `globalAppConfig` |
 | app-metrics.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | app-metrics.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| app-metrics.image.tag | string | `"1.34.0-alpine"` | Telegraf image tag |
+| app-metrics.image.tag | string | The appVersion of the chart | Telegraf image tag |
 | app-metrics.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | app-metrics.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
-| app-metrics.kafkaVersion | string | null, use the Sarama library default. | Set the minimal supported Kafka version for the Sarama Go client library. |
+| app-metrics.kafkaVersion | string | `"4.0.0"` |  |
 | app-metrics.nodeSelector | object | `{}` | Node labels for pod assignment |
 | app-metrics.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | app-metrics.podLabels | object | `{}` | Labels for the Telegraf pods |
@@ -128,16 +129,17 @@ Rubin Observatory's telemetry service
 | app-metrics.tolerations | list | `[]` | Tolerations for pod assignment |
 | backpack.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | backup.affinity | object | `{}` | Affinity rules for the backups deployment pod |
-| backup.backupItems | list | `[{"enabled":false,"name":"chronograf","retentionDays":7},{"enabled":false,"name":"kapacitor","retentionDays":7},{"enabled":false,"name":"influxdb-enterprise-incremental"},{"enabled":false,"name":"influxdb-oss-full","retentionDays":3}]` | List of items to backup using the sasquatch backup script |
+| backup.backupItems | list | `[{"enabled":false,"name":"chronograf","retentionDays":7},{"enabled":false,"name":"kapacitor","retentionDays":7},{"bind":"sasquatch-influxdb-enterprise-active-meta","enabled":false,"name":"influxdb-enterprise-incremental"},{"enabled":false,"name":"influxdb-oss-full","retentionDays":3}]` | List of items to backup using the sasquatch backup script |
 | backup.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the backups image |
 | backup.image.repository | string | `"ghcr.io/lsst-sqre/sasquatch"` | Image to use in the backups deployment |
 | backup.image.tag | string | The appVersion of the chart | Tag of image to use |
+| backup.k8up.enabled | bool | `false` | Whether to enable k8up backup of the backup PVC This option can be enabled at the base and summit environments only |
 | backup.nodeSelector | object | `{}` | Node selection rules for the backups deployment pod |
 | backup.persistence.size | string | "100Gi" | Size of the data store to request, if enabled |
 | backup.persistence.storageClass | string | "" (empty string) to use the cluster default storage class | Storage class to use for the backups |
 | backup.podAnnotations | object | `{}` | Annotations for the backups deployment pod |
 | backup.resources | object | `{}` | Resource limits and requests for the backups deployment pod |
-| backup.restore | object | `{"enabled":false}` | Whether to enable the restore deployment |
+| backup.restore.enabled | bool | `false` | Whether to enable the restore deployment |
 | backup.schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
 | backup.tolerations | list | `[]` | Tolerations for the backups deployment pod |
 | consdb.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
@@ -162,7 +164,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | influxdb-enterprise.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
 | influxdb-enterprise.data.config.logging.format | string | `"json"` | Format to use for log messages |
-| influxdb-enterprise.data.config.logging.level | string | `"debug"` | Logging level |
+| influxdb-enterprise.data.config.logging.level | string | `"info"` | Logging level |
 | influxdb-enterprise.data.env | object | `{}` | Additional environment variables to set in the meta container |
 | influxdb-enterprise.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
 | influxdb-enterprise.data.ingress.className | string | `"nginx"` | Ingress class name of the data service |
@@ -189,6 +191,10 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.data.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the data service |
 | influxdb-enterprise.data.service.nodePort | int | Do not allocate a node port | Node port for the data service |
 | influxdb-enterprise.data.service.type | string | `"ClusterIP"` | Service type for the data service |
+| influxdb-enterprise.data.startupProbe.enabled | bool | `false` | Whether to enable a startup probe to check if the data node is ready |
+| influxdb-enterprise.data.startupProbe.failureThreshold | int | `6` | Number of failures before the pod is restarted |
+| influxdb-enterprise.data.startupProbe.initialDelaySeconds | int | `60` | Number of seconds after the container has started before liveness/startup probes are initiated |
+| influxdb-enterprise.data.startupProbe.periodSeconds | int | `60` | How often (in seconds) to perform the probe |
 | influxdb-enterprise.data.tolerations | list | `[]` | Tolerations for data pods |
 | influxdb-enterprise.envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
 | influxdb-enterprise.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
@@ -250,7 +256,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | influxdb-enterprise-active.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
 | influxdb-enterprise-active.data.config.logging.format | string | `"json"` | Format to use for log messages |
-| influxdb-enterprise-active.data.config.logging.level | string | `"debug"` | Logging level |
+| influxdb-enterprise-active.data.config.logging.level | string | `"info"` | Logging level |
 | influxdb-enterprise-active.data.env | object | `{}` | Additional environment variables to set in the meta container |
 | influxdb-enterprise-active.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
 | influxdb-enterprise-active.data.ingress.className | string | `"nginx"` | Ingress class name of the data service |
@@ -277,6 +283,10 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.data.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the data service |
 | influxdb-enterprise-active.data.service.nodePort | int | Do not allocate a node port | Node port for the data service |
 | influxdb-enterprise-active.data.service.type | string | `"ClusterIP"` | Service type for the data service |
+| influxdb-enterprise-active.data.startupProbe.enabled | bool | `false` | Whether to enable a startup probe to check if the data node is ready |
+| influxdb-enterprise-active.data.startupProbe.failureThreshold | int | `6` | Number of failures before the pod is restarted |
+| influxdb-enterprise-active.data.startupProbe.initialDelaySeconds | int | `60` | Number of seconds after the container has started before liveness/startup probes are initiated |
+| influxdb-enterprise-active.data.startupProbe.periodSeconds | int | `60` | How often (in seconds) to perform the probe |
 | influxdb-enterprise-active.data.tolerations | list | `[]` | Tolerations for data pods |
 | influxdb-enterprise-active.envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
 | influxdb-enterprise-active.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
@@ -338,7 +348,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.data.config.http.auth-enabled | bool | `true` | Whether authentication is required |
 | influxdb-enterprise-standby.data.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
 | influxdb-enterprise-standby.data.config.logging.format | string | `"json"` | Format to use for log messages |
-| influxdb-enterprise-standby.data.config.logging.level | string | `"debug"` | Logging level |
+| influxdb-enterprise-standby.data.config.logging.level | string | `"info"` | Logging level |
 | influxdb-enterprise-standby.data.env | object | `{}` | Additional environment variables to set in the meta container |
 | influxdb-enterprise-standby.data.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the data ingress |
 | influxdb-enterprise-standby.data.ingress.className | string | `"nginx"` | Ingress class name of the data service |
@@ -365,6 +375,10 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.data.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the data service |
 | influxdb-enterprise-standby.data.service.nodePort | int | Do not allocate a node port | Node port for the data service |
 | influxdb-enterprise-standby.data.service.type | string | `"ClusterIP"` | Service type for the data service |
+| influxdb-enterprise-standby.data.startupProbe.enabled | bool | `false` | Whether to enable a startup probe to check if the data node is ready |
+| influxdb-enterprise-standby.data.startupProbe.failureThreshold | int | `6` | Number of failures before the pod is restarted |
+| influxdb-enterprise-standby.data.startupProbe.initialDelaySeconds | int | `60` | Number of seconds after the container has started before liveness/startup probes are initiated |
+| influxdb-enterprise-standby.data.startupProbe.periodSeconds | int | `60` | How often (in seconds) to perform the probe |
 | influxdb-enterprise-standby.data.tolerations | list | `[]` | Tolerations for data pods |
 | influxdb-enterprise-standby.envFromSecret | string | No secret | The name of a secret in the same kubernetes namespace which contain values to be added to the environment |
 | influxdb-enterprise-standby.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
@@ -420,11 +434,12 @@ Rubin Observatory's telemetry service
 | kafdrop.image.tag | string | `"4.2.0"` | Kafdrop image version |
 | kafdrop.ingress.annotations | object | `{}` | Additional ingress annotations |
 | kafdrop.ingress.enabled | bool | `false` | Whether to enable the ingress |
-| kafdrop.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
 | kafdrop.ingress.path | string | `"/kafdrop"` | Ingress path |
 | kafdrop.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
 | kafdrop.jvm.opts | string | `""` | JVM options |
 | kafdrop.kafka.broker | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Bootstrap list of Kafka host/port pairs |
+| kafdrop.kafka.topicPrefix | string | "lsst" | Kafka topic prefix to filter topics by |
+| kafdrop.kafka.user | string | kafdrop | Kafdrop Kafka user |
 | kafdrop.logging.kafdrop.config.level | string | `"WARN"` | Log level for Kafdrop config package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
 | kafdrop.logging.kafdrop.controller.level | string | `"INFO"` | Log level for Kafdrop controller package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
 | kafdrop.logging.kafdrop.level | string | `"INFO"` | Log level for Kafdrop package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
@@ -514,14 +529,14 @@ Rubin Observatory's telemetry service
 | rest-proxy.affinity | object | `{}` | Affinity configuration |
 | rest-proxy.configurationOverrides | object | See `values.yaml` | Kafka REST configuration options |
 | rest-proxy.customEnv | object | `{}` | Kafka REST additional env variables |
-| rest-proxy.heapOptions | string | `"-Xms1024M -Xmx1024M"` | Kafka REST proxy JVM Heap Option |
+| rest-proxy.heapOptions | string | `"-Xms4096M -Xmx4096M"` | Kafka REST proxy JVM Heap Option |
 | rest-proxy.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | rest-proxy.image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository |
-| rest-proxy.image.tag | string | `"8.0.1"` | Kafka REST proxy image tag |
-| rest-proxy.ingress.annotations | object | See `values.yaml` | Additional annotations to add to the ingress |
-| rest-proxy.ingress.enabled | bool | `false` | Whether to enable the ingress |
-| rest-proxy.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
-| rest-proxy.ingress.path | string | `"/sasquatch-rest-proxy(/|$)(.*)"` | Ingress path @default - `"/sasquatch-rest-proxy(/\|$)(.*)"` |
+| rest-proxy.image.tag | string | `"8.1.0"` | Kafka REST proxy image tag |
+| rest-proxy.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
+| rest-proxy.ingress.anonymous | bool | false | Whether to enable anonymous access to the REST proxy |
+| rest-proxy.ingress.enabled | bool | `false` | Whether to enable the ingress for the REST proxy |
+| rest-proxy.ingress.path | string | `"/sasquatch-rest-proxy(/|$)(.*)"` | Ingress path @default - `"/sasquatch-rest-proxy(/|$)(.*)"` |
 | rest-proxy.kafka.bootstrapServers | string | `"SASL_PLAINTEXT://sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka bootstrap servers, use the internal listerner on port 9092 with SASL connection |
 | rest-proxy.kafka.cluster.name | string | `"sasquatch"` | Name of the Strimzi Kafka cluster. |
 | rest-proxy.kafka.topicPrefixes | list | `[]` | List of topic prefixes to use when exposing Kafka topics to the REST Proxy v2 API. |
@@ -536,10 +551,10 @@ Rubin Observatory's telemetry service
 | schema-registry.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster used by the Schema Registry. |
 | schema-registry.compatibilityLevel | string | `"none"` | Compatibility level for the Schema Registry. Options are: none, backward, backward_transitive, forward, forward_transitive, full, and full_transitive. |
 | schema-registry.image.repository | string | `"confluentinc/cp-schema-registry"` | Docker image for the Confluent Schema Registry. |
-| schema-registry.image.tag | string | `"8.0.1"` | Docker image tag for the Confluent Schema Registry. |
-| schema-registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
+| schema-registry.image.tag | string | `"8.1.0"` | Docker image tag for the Confluent Schema Registry. |
+| schema-registry.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
+| schema-registry.ingress.anonymous | bool | false | Whether to enable anonymous access to the Schema Registry |
 | schema-registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
-| schema-registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
 | schema-registry.ingress.path | string | `"/schema-registry(/|$)(.*)"` | Path for the ingress |
 | schema-registry.replicas | int | 3 | Number of Schema Registry replicas to deploy. |
 | schema-registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
@@ -548,10 +563,10 @@ Rubin Observatory's telemetry service
 | schema-registry-remote.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster used by the Schema Registry. |
 | schema-registry-remote.compatibilityLevel | string | `"none"` | Compatibility level for the Schema Registry. Options are: none, backward, backward_transitive, forward, forward_transitive, full, and full_transitive. |
 | schema-registry-remote.image.repository | string | `"confluentinc/cp-schema-registry"` | Docker image for the Confluent Schema Registry. |
-| schema-registry-remote.image.tag | string | `"8.0.1"` | Docker image tag for the Confluent Schema Registry. |
-| schema-registry-remote.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
+| schema-registry-remote.image.tag | string | `"8.1.0"` | Docker image tag for the Confluent Schema Registry. |
+| schema-registry-remote.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
+| schema-registry-remote.ingress.anonymous | bool | false | Whether to enable anonymous access to the Schema Registry |
 | schema-registry-remote.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
-| schema-registry-remote.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
 | schema-registry-remote.ingress.path | string | `"/schema-registry(/|$)(.*)"` | Path for the ingress |
 | schema-registry-remote.replicas | int | 3 | Number of Schema Registry replicas to deploy. |
 | schema-registry-remote.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
@@ -586,7 +601,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.connect.config."value.converter.schema.registry.url" | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | URL for the schema registry |
 | strimzi-kafka.connect.config."value.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message value |
 | strimzi-kafka.connect.enabled | bool | `false` | Enable Kafka Connect |
-| strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.47.0-kafka-3.9.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
+| strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.47.0-kafka-4.0.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
 | strimzi-kafka.connect.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafka Connect |
 | strimzi-kafka.controller.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for controller pod assignment |
@@ -649,7 +664,7 @@ Rubin Observatory's telemetry service
 | telegraf.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
 | telegraf.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | telegraf.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| telegraf.image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
+| telegraf.image.tag | string | The appVersion of the chart | Telegraf image tag |
 | telegraf.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | telegraf.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
 | telegraf.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
@@ -674,49 +689,49 @@ Rubin Observatory's telemetry service
 | telegraf.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | telegraf.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
 | telegraf.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
-| telegraf.kafkaVersion | string | null, use the Sarama library default. | Set the minimal supported Kafka version for the Sarama Go client library. |
+| telegraf.kafkaVersion | string | `"4.0.0"` |  |
 | telegraf.nodeSelector | object | `{}` | Node labels for pod assignment |
 | telegraf.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | telegraf.podLabels | object | `{}` | Labels for the Telegraf pods |
 | telegraf.registry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema Registry URL |
 | telegraf.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | telegraf.tolerations | list | `[]` | Tolerations for pod assignment |
-| telegraf-oss.affinity | object | `{}` | Affinity for pod assignment |
-| telegraf-oss.args | list | `[]` | Arguments passed to the Telegraf agent on startup |
-| telegraf-oss.enabled | bool | `false` | Wether Telegraf is enabled |
-| telegraf-oss.env | list | See `values.yaml` | Telegraf agent environment variables |
-| telegraf-oss.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
-| telegraf-oss.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
-| telegraf-oss.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| telegraf-oss.image.tag | string | `"1.32.1-alpine"` | Telegraf image tag |
-| telegraf-oss.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
-| telegraf-oss.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
-| telegraf-oss.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
-| telegraf-oss.kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
-| telegraf-oss.kafkaConsumers.test.consumer_fetch_default | string | "20MB" | Maximum amount of data the server should return for a fetch request. |
-| telegraf-oss.kafkaConsumers.test.database | string | `""` | Name of the InfluxDB v1 database to write to (required) |
-| telegraf-oss.kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
-| telegraf-oss.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
-| telegraf-oss.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
-| telegraf-oss.kafkaConsumers.test.flush_interval | string | "10s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
-| telegraf-oss.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
-| telegraf-oss.kafkaConsumers.test.max_processing_time | string | "5s" | Maximum processing time for a single message. |
-| telegraf-oss.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
-| telegraf-oss.kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
-| telegraf-oss.kafkaConsumers.test.metric_buffer_limit | int | 100000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
-| telegraf-oss.kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
-| telegraf-oss.kafkaConsumers.test.precision | string | "1us" | Data precision. |
-| telegraf-oss.kafkaConsumers.test.replicaCount | int | `1` | Number of Telegraf Kafka consumer replicas. Increase this value to increase the consumer throughput. |
-| telegraf-oss.kafkaConsumers.test.tags | list | `[]` | List of Avro fields to be recorded as InfluxDB tags.  The Avro fields specified as tags will be converted to strings before ingestion into InfluxDB. |
-| telegraf-oss.kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Avro field to be used as the InfluxDB timestamp (optional).  If unspecified or set to the empty string, Telegraf will use the time it received the measurement. |
-| telegraf-oss.kafkaConsumers.test.timestamp_format | string | `"unix"` | Timestamp format. Possible values are `unix` (the default if unset) a timestamp in seconds since the Unix epoch, `unix_ms` (milliseconds), `unix_us` (microsseconds), or `unix_ns` (nanoseconds). |
-| telegraf-oss.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
-| telegraf-oss.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
-| telegraf-oss.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
-| telegraf-oss.kafkaVersion | string | null, use the Sarama library default. | Set the minimal supported Kafka version for the Sarama Go client library. |
-| telegraf-oss.nodeSelector | object | `{}` | Node labels for pod assignment |
-| telegraf-oss.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
-| telegraf-oss.podLabels | object | `{}` | Labels for the Telegraf pods |
-| telegraf-oss.registry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema Registry URL |
-| telegraf-oss.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
-| telegraf-oss.tolerations | list | `[]` | Tolerations for pod assignment |
+| telegraf-standby.affinity | object | `{}` | Affinity for pod assignment |
+| telegraf-standby.args | list | `[]` | Arguments passed to the Telegraf agent on startup |
+| telegraf-standby.enabled | bool | `false` | Wether Telegraf is enabled |
+| telegraf-standby.env | list | See `values.yaml` | Telegraf agent environment variables |
+| telegraf-standby.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
+| telegraf-standby.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| telegraf-standby.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
+| telegraf-standby.image.tag | string | The appVersion of the chart | Telegraf image tag |
+| telegraf-standby.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
+| telegraf-standby.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
+| telegraf-standby.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
+| telegraf-standby.kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
+| telegraf-standby.kafkaConsumers.test.consumer_fetch_default | string | "20MB" | Maximum amount of data the server should return for a fetch request. |
+| telegraf-standby.kafkaConsumers.test.database | string | `""` | Name of the InfluxDB v1 database to write to (required) |
+| telegraf-standby.kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
+| telegraf-standby.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
+| telegraf-standby.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
+| telegraf-standby.kafkaConsumers.test.flush_interval | string | "10s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
+| telegraf-standby.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
+| telegraf-standby.kafkaConsumers.test.max_processing_time | string | "5s" | Maximum processing time for a single message. |
+| telegraf-standby.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
+| telegraf-standby.kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
+| telegraf-standby.kafkaConsumers.test.metric_buffer_limit | int | 100000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
+| telegraf-standby.kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
+| telegraf-standby.kafkaConsumers.test.precision | string | "1us" | Data precision. |
+| telegraf-standby.kafkaConsumers.test.replicaCount | int | `1` | Number of Telegraf Kafka consumer replicas. Increase this value to increase the consumer throughput. |
+| telegraf-standby.kafkaConsumers.test.tags | list | `[]` | List of Avro fields to be recorded as InfluxDB tags.  The Avro fields specified as tags will be converted to strings before ingestion into InfluxDB. |
+| telegraf-standby.kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Avro field to be used as the InfluxDB timestamp (optional).  If unspecified or set to the empty string, Telegraf will use the time it received the measurement. |
+| telegraf-standby.kafkaConsumers.test.timestamp_format | string | `"unix"` | Timestamp format. Possible values are `unix` (the default if unset) a timestamp in seconds since the Unix epoch, `unix_ms` (milliseconds), `unix_us` (microsseconds), or `unix_ns` (nanoseconds). |
+| telegraf-standby.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
+| telegraf-standby.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
+| telegraf-standby.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
+| telegraf-standby.kafkaVersion | string | `"4.0.0"` |  |
+| telegraf-standby.nodeSelector | object | `{}` | Node labels for pod assignment |
+| telegraf-standby.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
+| telegraf-standby.podLabels | object | `{}` | Labels for the Telegraf pods |
+| telegraf-standby.registry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema Registry URL |
+| telegraf-standby.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
+| telegraf-standby.tolerations | list | `[]` | Tolerations for pod assignment |

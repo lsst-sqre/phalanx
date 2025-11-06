@@ -18,6 +18,6 @@ strimzi-kafka:
       enabled: true
       partitions: 1
       replicas: 3
-      retention: 14400000
+      retention: 1209600000 # milliseconds, = 2 weeks
 kafdrop:
   enabled: true

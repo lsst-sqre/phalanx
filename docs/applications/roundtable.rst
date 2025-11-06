@@ -20,6 +20,7 @@ Argo CD project: ``roundtable``
    ook/index
    squarebot/index
    templatebot/index
+   turborepo-cache/index
    unfurlbot/index
    vault/index
 

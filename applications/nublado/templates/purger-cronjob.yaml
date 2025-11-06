@@ -6,6 +6,7 @@ metadata:
 spec:
   schedule: {{ .Values.purger.schedule | quote }}
   successfulJobsHistoryLimit: 1
+  concurrencyPolicy: "Forbid"
   jobTemplate:
     spec:
       template:
@@ -21,22 +22,34 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           containers:
-          - name: purger
+          - name: "{{ .Chart.Name }}-purger"
             image: "{{ .Values.purger.image.repository }}:{{ .Values.purger.image.tag | default .Chart.AppVersion }}"
             imagePullPolicy: "{{ .Values.purger.image.pullPolicy }}"
             {{- with .Values.purger.resources }}
             resources:
               {{- toYaml . | nindent 14 }}
             {{- end }}
-            {{- if .Values.controller.slackAlerts }}
+
+            {{- if or .Values.controller.slackAlerts .Values.sentry.enabled }}
             env:
+            {{- if .Values.sentry.enabled }}
+            - name: "SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: "nublado-secret"
+                  key: "sentry-dsn"
+            - name: "SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.environmentName }}
+            {{- end }}
+            {{- if .Values.controller.slackAlerts }}
             - name: "RSP_SCRATCHPURGER_ALERT_HOOK"
               valueFrom:
                 secretKeyRef:
                   name: "nublado-secret"
                   key: "slack-webhook"
             {{- end }}
-            command: [ "rsp_execute" ]
+            {{- end }}
+            command: [ "rsp_purger", "execute" ]
             securityContext:
               allowPrivilegeEscalation: true
               runAsNonRoot: false

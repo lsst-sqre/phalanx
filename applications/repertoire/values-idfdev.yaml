@@ -13,6 +13,8 @@ config:
       username: "efdreader"
       passwordKey: "idfdev_efd-password"
       schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
+  metrics:
+    enabled: true
   slackAlerts: true
   useSubdomains:
     - "nublado"

@@ -42,6 +42,8 @@ strimzi-kafka:
 
 schema-registry:
   enabled: true
+  ingress:
+    enabled: true
 
 influxdb:
   ingress:
@@ -54,7 +56,6 @@ customInfluxDBIngress:
 
 telegraf:
   enabled: true
-  kafkaVersion: "4.0.0"
   kafkaConsumers:
     example:
       enabled: true
@@ -78,13 +79,11 @@ telegraf:
 kafdrop:
   ingress:
     enabled: true
-    hostname: data-int.lsst.cloud
 
 rest-proxy:
   enabled: true
   ingress:
     enabled: true
-    hostname: data-int.lsst.cloud
   kafka:
     topicPrefixes:
       - lsst.example
@@ -109,13 +108,13 @@ chronograf:
 
 app-metrics:
   enabled: true
-  kafkaVersion: "4.0.0"
   apps:
     - gafaelfawr
     - mobu
     - noteburst
     - nublado
     - qservkafka
+    - repertoire
     - sia
     - wobbly
 

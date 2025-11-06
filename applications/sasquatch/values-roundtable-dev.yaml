@@ -2,13 +2,23 @@ strimzi-kafka:
   kafka:
     listeners:
       plain:
-        enabled: false
+        enabled: true
       tls:
         enabled: true
       external:
         enabled: false
   controller:
     enabled: true
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: "strimzi.io/pool-name"
+                  operator: "In"
+                  values:
+                    - "controller"
+            topologyKey: "kubernetes.io/hostname"
   broker:
     enabled: true
     storage:
@@ -19,10 +29,10 @@ strimzi-kafka:
         requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchExpressions:
-                - key: "strimzi.io/cluster"
+                - key: "strimzi.io/pool-name"
                   operator: "In"
                   values:
-                    - "sasquatch"
+                    - "kafka"
             topologyKey: "kubernetes.io/hostname"
   connect:
     enabled: false
@@ -42,7 +52,11 @@ kapacitor:
   enabled: false
 
 kafdrop:
-  enabled: false
+  enabled: true
+  ingress:
+    enabled: true
+  kafka:
+    topicPrefix: "lsst.square-events.squarebot.slack.interaction"
 
 rest-proxy:
   enabled: false

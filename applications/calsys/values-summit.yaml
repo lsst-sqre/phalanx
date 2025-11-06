@@ -6,10 +6,10 @@ atmonochromator:
   resources:
     limits:
       cpu: 100m
-      memory: 300Mi
+      memory: 320Mi
     requests:
-      cpu: 10m
-      memory: 97Mi
+      cpu: 18m
+      memory: 160Mi
 
 atwhitelight:
   enabled: true
@@ -19,10 +19,10 @@ atwhitelight:
   resources:
     limits:
       cpu: 80m
-      memory: 384Mi
+      memory: 350Mi
     requests:
-      cpu: 8m
-      memory: 128Mi
+      cpu: 13m
+      memory: 170Mi
 
 cbp:
   enabled: true
@@ -32,10 +32,10 @@ cbp:
   resources:
     limits:
       cpu: 110m
-      memory: 300Mi
+      memory: 360Mi
     requests:
-      cpu: 11m
-      memory: 100Mi
+      cpu: 18m
+      memory: 180Mi
 
 electrometer101:
   enabled: true
@@ -74,10 +74,10 @@ electrometer102:
   resources:
     limits:
       cpu: 1
-      memory: 350Mi
+      memory: 360Mi
     requests:
       cpu: 100m
-      memory: 115Mi
+      memory: 180Mi
 
 electrometer103:
   enabled: true
@@ -95,10 +95,10 @@ electrometer103:
   resources:
     limits:
       cpu: 1
-      memory: 350Mi
+      memory: 360Mi
     requests:
-      cpu: 100m
-      memory: 115Mi
+      cpu: 200m
+      memory: 180Mi
 
 electrometer201:
   enabled: true
@@ -116,10 +116,10 @@ electrometer201:
   resources:
     limits:
       cpu: 1
-      memory: 330Mi
+      memory: 320Mi
     requests:
       cpu: 100m
-      memory: 110Mi
+      memory: 160Mi
 
 ledprojector:
   enabled: true
@@ -129,10 +129,10 @@ ledprojector:
   resources:
     limits:
       cpu: 100m
-      memory: 330Mi
+      memory: 360Mi
     requests:
-      cpu: 10m
-      memory: 110Mi
+      cpu: 18m
+      memory: 180Mi
 
 linearstage101:
   enabled: true
@@ -144,10 +144,10 @@ linearstage101:
   resources:
     limits:
       cpu: 100m
-      memory: 330Mi
+      memory: 512Mi
     requests:
-      cpu: 10m
-      memory: 130Mi
+      cpu: 18m
+      memory: 256Mi
 
 linearstage102:
   enabled: true
@@ -158,11 +158,11 @@ linearstage102:
     RUN_ARG: 102
   resources:
     limits:
-      cpu: 150m
-      memory: 330Mi
+      cpu: 100m
+      memory: 512Mi
     requests:
-      cpu: 15m
-      memory: 130Mi
+      cpu: 16m
+      memory: 256Mi
 
 linearstage103:
   enabled: true
@@ -174,10 +174,10 @@ linearstage103:
   resources:
     limits:
       cpu: 100m
-      memory: 330Mi
+      memory: 512Mi
     requests:
-      cpu: 10m
-      memory: 130Mi
+      cpu: 16m
+      memory: 256Mi
 
 linearstage104:
   enabled: true
@@ -189,10 +189,10 @@ linearstage104:
   resources:
     limits:
       cpu: 100m
-      memory: 330Mi
+      memory: 400Mi
     requests:
-      cpu: 10m
-      memory: 130Mi
+      cpu: 18m
+      memory: 200Mi
 
 mtreflector:
   enabled: true
@@ -202,10 +202,10 @@ mtreflector:
   resources:
     limits:
       cpu: 100m
-      memory: 330Mi
+      memory: 512Mi
     requests:
-      cpu: 10m
-      memory: 130Mi
+      cpu: 14m
+      memory: 256Mi
 
 simulation-gencam:
   enabled: true
@@ -228,10 +228,10 @@ simulation-gencam:
   resources:
     limits:
       cpu: 120m
-      memory: 360Mi
+      memory: 512Mi
     requests:
-      cpu: 12m
-      memory: 120Mi
+      cpu: 25m
+      memory: 256Mi
 
 tunablelaser:
   enabled: true
@@ -241,7 +241,7 @@ tunablelaser:
   resources:
     limits:
       cpu: 120m
-      memory: 300Mi
+      memory: 350Mi
     requests:
-      cpu: 12m
-      memory: 100Mi
+      cpu: 15m
+      memory: 170Mi

@@ -53,7 +53,7 @@ KEDA Prompt Processing instance for LSSTCam
 | prompt-keda.instrument.repoWait | int | `30` | The average time to wait (in seconds) before retrying a failed connection to the shared repo. |
 | prompt-keda.instrument.skymap | string | `"lsst_cells_v1"` | Skymap to use with the instrument |
 | prompt-keda.keda.failedJobsHistoryLimit | int | `5` | How many failed jobs should be kept available in Kubernetes. |
-| prompt-keda.keda.maxReplicaCount | int | `30` | Maximum number of replicas to scale to. |
+| prompt-keda.keda.maxReplicaCount | int | `600` | Maximum number of replicas to scale to. |
 | prompt-keda.keda.minReplicaCount | int | `3` | Minimum number of replicas to start with. |
 | prompt-keda.keda.pollingInterval | int | `2` | Polling interval for Keda to poll scalar for scaling determination. |
 | prompt-keda.keda.redisStreams.activationLagCount | string | `"1"` | Lag count at which scaler triggers |
@@ -89,3 +89,4 @@ KEDA Prompt Processing instance for LSSTCam
 | prompt-keda.tolerations | list | `[]` | Tolerations for the Prompt Processing pod |
 | prompt-keda.worker.grace_period | int | `45` | When Kubernetes shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds). |
 | prompt-keda.worker.restart | int | `0` | The number of requests to process before rebooting a worker. If 0, workers process requests indefinitely. |
+| prompt-keda.worker.timeout | int | `900` | Maximum time that a worker can process a next_visit request (seconds). |

@@ -291,7 +291,7 @@ connect:
   enabled: false
 
   # -- Custom strimzi-kafka image with connector plugins used by sasquatch
-  image: ghcr.io/lsst-sqre/strimzi-0.47.0-kafka-3.9.0:tickets-DM-43491
+  image: ghcr.io/lsst-sqre/strimzi-0.47.0-kafka-4.0.0:tickets-DM-43491
 
   # -- Number of Kafka Connect replicas to run
   replicas: 3

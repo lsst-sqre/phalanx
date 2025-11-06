@@ -82,10 +82,7 @@ schema-registry:
   enabled: true
   ingress:
     enabled: true
-    annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /$2
-    hostname: tucson-teststand.lsst.codes
-    path: /schema-registry(/|$)(.*)
+    anonymous: true
 
 influxdb:
   persistence:
@@ -107,7 +104,7 @@ customInfluxDBIngress:
 
 telegraf:
   enabled: true
-  kafkaVersion: "4.0.0"
+  kafkaVersion: "3.9.1"
   image:
     tag: 1.35.4-alpine
   kafkaConsumers:
@@ -277,13 +274,12 @@ telegraf:
 kafdrop:
   ingress:
     enabled: true
-    hostname: tucson-teststand.lsst.codes
 
 rest-proxy:
   enabled: true
   ingress:
     enabled: true
-    hostname: tucson-teststand.lsst.codes
+    anonymous: true
   configurationOverrides:
     "access.control.allow.origin": https://tucson-teststand.lsst.codes/love
   kafka:

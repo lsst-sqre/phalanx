@@ -14,7 +14,7 @@ IVOA UWS database storage
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.37.9"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.10"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL is used | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `wobbly` Kubernetes service account and has the `cloudsql.client` role |
@@ -27,9 +27,11 @@ IVOA UWS database storage
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.pathPrefix | string | `"/wobbly"` | URL path prefix |
+| config.sentry.enabled | bool | `false` | Whether to enable the Sentry integration |
 | config.services | list | See `values.yaml` | Services allowed to use Wobbly for their backend |
 | config.slackAlerts | bool | `true` | Whether to send Slack alerts for unexpected failures |
 | config.updateSchema | bool | `false` | Whether to automatically update the Wobbly database schema |
+| global.environmentName | string | Set by Argo CD | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the wobbly image |

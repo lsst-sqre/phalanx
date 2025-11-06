@@ -282,6 +282,9 @@ applications:
   # -- Enable the times-square application
   times-square: false
 
+  # -- Enable the turborepo-cache application
+  turborepo-cache: false
+
   # -- Enable the unfurlbot application
   unfurlbot: false
 

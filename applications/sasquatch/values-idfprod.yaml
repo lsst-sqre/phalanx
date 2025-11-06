@@ -35,6 +35,8 @@ strimzi-kafka:
 
 schema-registry:
   enabled: true
+  ingress:
+    enabled: true
 
 influxdb:
   ingress:
@@ -61,7 +63,6 @@ telegraf:
 kafdrop:
   ingress:
     enabled: true
-    hostname: data.lsst.cloud
 
 chronograf:
   ingress:
@@ -82,13 +83,13 @@ chronograf:
 
 app-metrics:
   enabled: true
-  kafkaVersion: "4.0.0"
   apps:
     - gafaelfawr
     - mobu
     - noteburst
     - nublado
     - qservkafka
+    - repertoire
     - sia
     - wobbly
 

@@ -26,6 +26,10 @@ config:
       Can write objects to Git LFS storage bucket
     "read:checkerboard": >-
       Can query Checkerboard for user mappings
+    "exec:internal-tools": >-
+      Can use internal APIs
+    "write:turborepo": >-
+      Can read and write to the Turborepo remote cache
 
   groupMapping:
     "admin:userinfo":
@@ -50,6 +54,14 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "friends"
+    "exec:internal-tools":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "write:turborepo":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
 
   initialAdmins:
     - "afausti"

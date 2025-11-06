@@ -8,6 +8,9 @@ vaultPathPrefix: "secret/phalanx/base"
 namespaceLabels:
   sasquatch:
     lsst.io/discover: 'true'
+    k8up-enabled: 'true'
+  gafaelfawr:
+    k8up-enabled: 'true'
 
 applications:
   argo-workflows: true

@@ -86,6 +86,7 @@
 | applications.tasso | bool | `false` | Enable the tasso application |
 | applications.templatebot | bool | `false` | Enable the templatebot application |
 | applications.times-square | bool | `false` | Enable the times-square application |
+| applications.turborepo-cache | bool | `false` | Enable the turborepo-cache application |
 | applications.unfurlbot | bool | `false` | Enable the unfurlbot application |
 | applications.uws | bool | `false` | Enable the uws application. This includes the dmocps control system application. |
 | applications.vault | bool | `false` | Enable the vault application. This is the actual vault storage and there should only be one production and one development instance globally. |

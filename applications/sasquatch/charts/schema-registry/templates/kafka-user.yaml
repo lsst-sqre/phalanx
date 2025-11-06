@@ -3,7 +3,7 @@ kind: KafkaUser
 metadata:
   # strimzi-registry-operator requires a KafkaUser with the same name as the
   # StrimziSchemaRegistry name.
-  name: {{ include "schema-registry.fullname" . }}
+  name: {{ include "chart.fullname" . }}
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:

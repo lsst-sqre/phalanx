@@ -185,6 +185,10 @@ telegraf:
   # -- Whether to enable the telegraf subchart
   enabled: false
 
+telegraf-standby:
+  # -- Whether to enable the telegraf-standby subchart
+  enabled: false
+
 rest-proxy:
   # -- Whether to enable the REST proxy
   enabled: false
@@ -258,7 +262,7 @@ kapacitor:
     # -- Docker image to use for Kapacitor
     repository: docker.io/library/kapacitor
     # -- Tag to use for Kapacitor
-    tag: 1.8.1
+    tag: 1.8.2
     # -- Pull policy for Kapacitor
     pullPolicy: "IfNotPresent"
 

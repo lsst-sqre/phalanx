@@ -6,3 +6,10 @@ redis:
   persistence:
     enabled: true
     storageClass: "wekafs--sdf-k8s01"
+  resources:
+    limits:
+      memory: "512Mi"
+
+resources:
+  limits:
+    memory: "30Gi"
