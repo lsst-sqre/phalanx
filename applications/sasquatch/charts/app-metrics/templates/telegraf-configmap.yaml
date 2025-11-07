@@ -18,6 +18,7 @@ data:
       debug = {{ default false .Values.debug }}
       omit_hostname = true
       skip_processors_after_aggregators = false
+      logformat = "structured"
 
     [[outputs.influxdb]]
       namedrop = ["telegraf_*"]
