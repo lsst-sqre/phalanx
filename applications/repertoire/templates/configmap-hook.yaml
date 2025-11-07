@@ -12,6 +12,7 @@ data:
   config.yaml: |
     logLevel: {{ .Values.config.logLevel | quote }}
     logProfile: {{ .Values.config.logProfile | quote }}
+    baseHostname: {{ .Values.global.host | quote }}
     schemaVersion: {{ .Values.config.schemaVersion | quote }}
     schemaSourceTemplate: {{ .Values.config.schemaSourceTemplate | quote }}
     tapServers: {{ .Values.config.tapServers | toJson }}

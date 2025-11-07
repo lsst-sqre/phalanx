@@ -201,12 +201,33 @@ mockdb:
   affinity: {}
 
 tapSchema:
+  # -- Database backend type: "containerized", "cloudsql", or "external"
+  # @default -- "containerized"
+  type: "containerized"
 
-  # Enable CloudSQL for TAP_SCHEMA
-  useCloudSQL: false
+  # -- Database name
+  database: "TAP_SCHEMA"
 
-  # CloudSQL database name for TAP_SCHEMA
-  cloudSqlDatabase: "tap"
+  # -- Database username
+  username: "TAP_SCHEMA"
+
+  # -- Database password (only used for containerized)
+  password: "TAP_SCHEMA"
+
+  # -- Secret key containing the database password
+  passwordKey: "tap-schema-password"
+
+  # -- Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external)
+  useVaultPassword: false
+
+  # -- External PostgreSQL configuration (only used if type is "external")
+  external:
+
+    # -- Hostname of external PostgreSQL server
+    host: ""
+
+    # -- Port of external PostgreSQL server
+    port: 5432
 
   # Legacy image config for containerized TAP_SCHEMA (when useCloudSQL=false)
   image:
@@ -249,10 +270,27 @@ tapSchema:
   affinity: {}
 
 uws:
-  useCloudSQL: false
+  # -- Database backend type: "containerized", "cloudsql", or "external"
+  # @default -- "containerized"
+  type: "containerized"
 
-  # CloudSQL database name for TAP_SCHEMA
-  cloudSqlDatabase: "tap"
+  # -- Database name
+  database: "postgres"
+
+  # -- Database username
+  username: "postgres"
+
+  # -- Whether UWS database requires a password in Vault (true for cloudsql/external)
+  useVaultPassword: false
+
+  # -- External PostgreSQL configuration (only used if type is "external")
+  external:
+
+    # -- Hostname of external PostgreSQL server
+    host: ""
+
+    # -- Port of external PostgreSQL server
+    port: 5432
 
   image:
     # -- UWS database image to use
