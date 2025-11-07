@@ -17,6 +17,10 @@ IVOA TAP service
 | cadc-tap.config.vaultSecretName | string | `"tap"` | Vault secret name: the final key in the vault path |
 | cadc-tap.ingress.path | string | `"tap"` | Ingress path that should be routed to this service |
 | cadc-tap.serviceAccount.name | string | `"tap"` | Name of the Kubernetes `ServiceAccount`, used for CloudSQL access |
+| cadc-tap.uws.database | string | `"tap"` | Database name |
+| cadc-tap.uws.type | string | `"cloudsql"` | Database backend type: "containerized", "cloudsql", or "external" |
+| cadc-tap.uws.useVaultPassword | bool | `true` | Whether the UWS database requires a password in Vault (true for cloudsql/external) |
+| cadc-tap.uws.username | string | `"tap"` | Database username |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

@@ -1,6 +1,6 @@
 {{- $root := . -}}
 {{- if $root.Values.managedTapSchema }}
-{{- range $app, $config := .Values.config.tapServers }}
+{{- range $app, $config := .Values.config.tap.servers }}
 {{- if $config.enabled }}
 ---
 apiVersion: batch/v1

@@ -1,4 +1,4 @@
-{{- if not .Values.tapSchema.useCloudSQL }}
+{{- if eq .Values.tapSchema.type "containerized" }}
 kind: Service
 apiVersion: v1
 metadata:

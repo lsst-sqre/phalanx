@@ -282,41 +282,44 @@ config:
   # information.
   useSubdomains: []
 
-  # -- Default schema version for all TAP services (can be overridden per-app)
-  schemaVersion: "w.2025.43"
+  # -- TAP schema management configuration
+  tap:
 
-  # -- Template for schema artifact URLs (use {schemaVersion} placeholder)
-  schemaSourceTemplate: "https://github.com/lsst/sdm_schemas/archive/refs/tags/{version}.tar.gz"
+    # -- Default schema version for all TAP services (can be overridden per-app)
+    schemaVersion: "w.2025.43"
 
-  # -- TAP Server configuration by application name. Configuration is used
-  # to populate & update the TAP_SCHEMA database for each enabled TAP application
-  tapServers:
-    tap:
-      enabled: false
-      schemas:
-        - dp02_dc2
-        - dp1
-        - ivoa_obscore
-      database: "tap"
-      databaseUser: "tap"
-      databasePasswordKey: "tap-database-password"
+    # -- Template for schema artifact URLs (use {schemaVersion} placeholder)
+    schemaSourceTemplate: "https://github.com/lsst/sdm_schemas/archive/refs/tags/{version}.tar.gz"
 
-    ssotap:
-      enabled: false
-      schemas:
-        - dp03_1yr
-        - dp03_10yr
-      database: "ssotap"
-      databaseUser: "ssotap"
-      databasePasswordKey: "ssotap-database-password"
+    # -- TAP Server configuration by application name. Configuration is used
+    # to populate & update the TAP_SCHEMA database for each enabled TAP application
+    servers:
+      tap:
+        enabled: false
+        schemas:
+          - dp02_dc2
+          - dp1
+          - ivoa_obscore
+        database: "tap"
+        databaseUser: "tap"
+        databasePasswordKey: "tap-database-password"
 
-    livetap:
-      enabled: false
-      schemas:
-        - oga_live_obscore
-      database: "livetap"
-      databaseUser: "livetap"
-      databasePasswordKey: "livetap-database-password"
+      ssotap:
+        enabled: false
+        schemas:
+          - dp03_1yr
+          - dp03_10yr
+        database: "ssotap"
+        databaseUser: "ssotap"
+        databasePasswordKey: "ssotap-database-password"
+
+      livetap:
+        enabled: false
+        schemas:
+          - oga_live_obscore
+        database: "livetap"
+        databaseUser: "livetap"
+        databasePasswordKey: "livetap-database-password"
 
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google
