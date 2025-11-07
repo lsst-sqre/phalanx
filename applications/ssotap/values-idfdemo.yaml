@@ -4,17 +4,19 @@ cadc-tap:
     gcsBucketUrl: "https://tap-files.lsst.codes"
     datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/DP1-v1.1.4-rc1/datalink-snippets.zip"
 
-  pg:
-    image:
-      pullPolicy: Always
-      tag: "tickets-DM-52819"
+    pg:
+      image:
+        pullPolicy: Always
+        tag: "tickets-DM-52731"
 
   nodeSelector:
     node_pool: "arm-core-pool"
 
   tapSchema:
     image:
-      repository: "lsstsqre/tap-schema-idfdev-sso"
+      repository: "lsstsqre/tap-schema-idfdemo-sso"
+      tag: "tickets-DM-52731"
+      pullPolicy: "Always"
 
   cloudsql:
     enabled: true

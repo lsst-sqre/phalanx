@@ -4,7 +4,9 @@ cadc-tap:
 
   tapSchema:
     image:
-      repository: "lsstsqre/tap-schema-idfdev-tap"  # Really.
+      repository: "lsstsqre/tap-schema-idfdemo-tap"
+      tag: "tickets-DM-52731"
+      pullPolicy: "Always"
 
   config:
     qserv:
@@ -13,6 +15,11 @@ cadc-tap:
       passwordEnabled: true
       image:
         tag: "tickets-DM-52819"
+        pullPolicy: "Always"
+    pg:
+      image:
+        tag: "tickets/DM-52731"
+        pullPolicy: "Always"
 
     kafka:
       enabled: false
