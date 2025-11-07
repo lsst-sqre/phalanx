@@ -93,6 +93,7 @@ IVOA TAP service
 | tapSchema.resources | object | See `values.yaml` | Resource limits and requests for the TAP schema database pod |
 | tapSchema.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the TAP schema database pod |
 | tapSchema.type | string | "containerized" | Database backend type: "containerized", "cloudsql", or "external" |
+| tapSchema.useVaultPassword | bool | `false` | Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external) |
 | tapSchema.username | string | `"TAP_SCHEMA"` | Database username |
 | tolerations | list | Tolerate GKE arm64 taint | Tolerations for the TAP pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
@@ -108,4 +109,5 @@ IVOA TAP service
 | uws.resources | object | See `values.yaml` | Resource limits and requests for the UWS database pod |
 | uws.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the UWS database pod |
 | uws.type | string | "containerized" | Database backend type: "containerized", "cloudsql", or "external" |
+| uws.useVaultPassword | bool | `false` | Whether UWS database requires a password in Vault (true for cloudsql/external) |
 | uws.username | string | `"postgres"` | Database username |

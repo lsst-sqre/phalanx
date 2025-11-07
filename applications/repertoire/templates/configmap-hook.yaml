@@ -12,9 +12,11 @@ data:
   config.yaml: |
     logLevel: {{ .Values.config.logLevel | quote }}
     logProfile: {{ .Values.config.logProfile | quote }}
-    schemaVersion: {{ .Values.config.schemaVersion | quote }}
-    schemaSourceTemplate: {{ .Values.config.schemaSourceTemplate | quote }}
-    tapServers: {{ .Values.config.tapServers | toJson }}
+    baseHostname: {{ .Values.global.host | quote }}
+    tap:
+      schemaVersion: {{ .Values.config.tap.schemaVersion | quote }}
+      schemaSourceTemplate: {{ .Values.config.tap.schemaSourceTemplate | quote }}
+      servers: {{ .Values.config.tap.servers | toJson }}
     metrics:
       enabled: false
       application: "repertoire"

@@ -1,4 +1,4 @@
-{{ if (not .Values.cloudsql.enabled) -}}
+{{- if eq .Values.uws.type "containerized" }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
