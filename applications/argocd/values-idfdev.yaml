@@ -76,8 +76,6 @@ argo-cd:
                 - lsst.cloud
               redirectURI: https://data-dev.lsst.cloud/argo-cd/api/dex/callback
       ui.bannercontent: "idfdev"
-      ui.bannerpermanent: "true"
-      ui.bannerposition: "top"
     rbac:
       policy.csv: |
         p, role:developer, applications, *, */*, allow

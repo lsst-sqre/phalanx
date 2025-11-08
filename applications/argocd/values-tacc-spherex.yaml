@@ -15,6 +15,7 @@ argo-cd:
               clientSecret: $dex.clientSecret
               orgs:
                 - name: lsst-sqre
+      ui.bannercontent: "tacc-spherex"
     rbac:
       policy.csv: |
         g, lsst-sqre:square, role:admin

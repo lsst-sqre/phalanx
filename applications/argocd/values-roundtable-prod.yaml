@@ -15,6 +15,7 @@ argo-cd:
               hostedDomains:
                 - lsst.cloud
               redirectURI: https://roundtable.lsst.cloud/argo-cd/api/dex/callback
+      ui.bannercontent: "roundtable-prod"
     rbac:
       policy.csv: |
         g, adam@lsst.cloud, role:admin
