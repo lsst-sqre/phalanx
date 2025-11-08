@@ -153,6 +153,12 @@ argo-cd:
       resource.compareoptions: |
         ignoreAggregatedRoles: true
 
+      # -- Enable top banner for env labelling
+      ui.bannerposition: "top"
+
+      # -- Persist env banner
+      ui.bannerpermanent: "true"
+
     params:
       # -- Do not use TLS (this is terminated at the ingress)
       server.insecure: true

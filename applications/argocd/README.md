@@ -16,6 +16,8 @@ Kubernetes application manager
 | argo-cd.applicationSet.resources | object | See `values.yaml` | Resource limits and requests for the applicationSet server |
 | argo-cd.configs.cm."application.resourceTrackingMethod" | string | `"label"` | Keep label-based tracking for now until Nublado is updated. |
 | argo-cd.configs.cm."resource.compareoptions" | string | `"ignoreAggregatedRoles: true\n"` | Configure resource comparison |
+| argo-cd.configs.cm."ui.bannerpermanent" | string | `"true"` | Persist env banner |
+| argo-cd.configs.cm."ui.bannerposition" | string | `"top"` | Enable top banner for env labelling |
 | argo-cd.configs.params."server.basehref" | string | `"/argo-cd"` | Base href for `index.html` when running under a reverse proxy |
 | argo-cd.configs.params."server.insecure" | bool | `true` | Do not use TLS (this is terminated at the ingress) |
 | argo-cd.configs.params."server.rootpath" | string | `"/argo-cd"` | Server root path when running under a reverse proxy |
