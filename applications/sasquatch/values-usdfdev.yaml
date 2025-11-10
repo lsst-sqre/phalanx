@@ -1,5 +1,8 @@
 strimzi-kafka:
   kafka:
+    config:
+      log.retention.minutes: 10080
+      offsets.retention.minutes: 10080
     listeners:
       tls:
         enabled: true
@@ -76,114 +79,46 @@ customInfluxDBIngress:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
 
-kafka-connect-manager:
+telegraf:
   enabled: true
-  influxdbSink:
-    # Based on the kafka producers configuration for the BTS
-    # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-base-teststand.yaml
-    excludedTopicsRegex: "lsst.dm.object"
-    connectors:
-      auxtel:
-        enabled: false
-        topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
-      maintel:
-        enabled: false
-        topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
-      mtmount:
-        enabled: false
-        topicsRegex: ".*MTMount"
-      comcam:
-        enabled: false
-        topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
-      eas:
-        enabled: false
-        topicsRegex: ".*DIMM|.*DSM|.*WeatherForecast|.*WeatherStation"
-      latiss:
-        enabled: false
-        topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
-      m1m3:
-        enabled: false
-        topicsRegex: ".*MTM1M3"
-      m2:
-        enabled: false
-        topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
-      obssys:
-        enabled: false
-        topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
-      ocps:
-        enabled: false
-        topicsRegex: ".*OCPS"
-      test:
-        enabled: false
-        topicsRegex: "lsst.sal.Test"
-      pmd:
-        enabled: false
-        topicsRegex: ".*PMD"
-      calsys:
-        enabled: false
-        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
-      mtaircompressor:
-        enabled: false
-        topicsRegex: ".*MTAirCompressor"
-      authorize:
-        enabled: false
-        topicsRegex: ".*Authorize"
-      lasertracker:
-        enabled: false
-        topicsRegex: ".*LaserTracker"
-      genericcamera:
-        enabled: false
-        topicsRegex: ".*GCHeaderService|.*GenericCamera"
-      gis:
-        enabled: false
-        topicsRegex: ".*GIS"
-      lsstdm:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.dm"
-        topicsRegex: "lsst.dm.*"
-        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
-      lsstdebug:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.debug"
-        topicsRegex: "lsst.debug.*"
-        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
-      lsstexample:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.example"
-        topicsRegex: "lsst.example.*"
-        tags: band,instrument
-      lsstrubintv:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.rubintv"
-        topicsRegex: "lsst.rubintv.*"
-        tags: image_type,observation_reason,science_program,filter,disperser
-      lsstcamera:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.camera"
-        topicsRegex: "lsst.camera.*"
-      lsstverify:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.verify"
-        topicsRegex: "lsst.verify.*"
-        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run,pipeline
-      lsstlf:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.lf"
-        topicsRegex: "lsst.lf.*"
-        tags: benchmark_env,module,benchmark_type
-      lsstprompt:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.prompt"
-        topicsRegex: "lsst.prompt.*"
-        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,group
+  influxdb:
+    urls:
+      - "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data"
+  kafkaConsumers:
+    verify:
+      enabled: true
+      debug: true
+      database: "lsst.verify"
+      topicRegexps: |
+        [ "lsst.verify" ]
+      timestamp_field: "timestamp"
+      tags: |
+        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch", "pipeline"]
+    prompt:
+      enabled: true
+      debug: true
+      database: "lsst.prompt"
+      topicRegexps: |
+        [ "lsst.prompt" ]
+      timestamp_field: "timestamp"
+      tags: |
+        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch", "group"]
+    dm:
+      enabled: true
+      debug: true
+      database: "lsst.dm"
+      topicRegexps: |
+        [ "lsst.dm" ]
+      timestamp_field: "timestamp"
+      tags: |
+        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch"]
+  resources:
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+    requests:
+      cpu: "1"
+      memory: "512Mi"
 
 kafdrop:
   ingress:

@@ -20,6 +20,7 @@ data:
       debug = {{ default false .value.debug }}
       omit_hostname = true
       skip_processors_after_aggregators = false
+      logformat = "structured"
 
 
     {{- $database := .value.database }}
