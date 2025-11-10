@@ -168,12 +168,12 @@ kafkaConsumers:
     precision: "1us"
 
     # -- Maximum processing time for a single message.
-    # @default -- "5s"
-    max_processing_time: "5s"
+    # @default -- "1s"
+    max_processing_time: "1s"
 
     # -- Maximum amount of data the server should return for a fetch request.
-    # @default -- "20MB"
-    consumer_fetch_default: "20MB"
+    # @default -- "1MB"
+    consumer_fetch_default: "1MB"
 
     # -- Maximum number of undelivered messages.
     # Should be a multiple of metric_batch_size, setting it too low may never
