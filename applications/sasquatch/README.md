@@ -669,14 +669,14 @@ Rubin Observatory's telemetry service
 | telegraf.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
 | telegraf.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
 | telegraf.kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
-| telegraf.kafkaConsumers.test.consumer_fetch_default | string | "20MB" | Maximum amount of data the server should return for a fetch request. |
+| telegraf.kafkaConsumers.test.consumer_fetch_default | string | "1MB" | Maximum amount of data the server should return for a fetch request. |
 | telegraf.kafkaConsumers.test.database | string | `""` | Name of the InfluxDB v1 database to write to (required) |
 | telegraf.kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
 | telegraf.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | telegraf.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
 | telegraf.kafkaConsumers.test.flush_interval | string | "10s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
 | telegraf.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
-| telegraf.kafkaConsumers.test.max_processing_time | string | "5s" | Maximum processing time for a single message. |
+| telegraf.kafkaConsumers.test.max_processing_time | string | "1s" | Maximum processing time for a single message. |
 | telegraf.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
 | telegraf.kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
 | telegraf.kafkaConsumers.test.metric_buffer_limit | int | 100000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
@@ -708,14 +708,14 @@ Rubin Observatory's telemetry service
 | telegraf-standby.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
 | telegraf-standby.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
 | telegraf-standby.kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
-| telegraf-standby.kafkaConsumers.test.consumer_fetch_default | string | "20MB" | Maximum amount of data the server should return for a fetch request. |
+| telegraf-standby.kafkaConsumers.test.consumer_fetch_default | string | "1MB" | Maximum amount of data the server should return for a fetch request. |
 | telegraf-standby.kafkaConsumers.test.database | string | `""` | Name of the InfluxDB v1 database to write to (required) |
 | telegraf-standby.kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
 | telegraf-standby.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | telegraf-standby.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
 | telegraf-standby.kafkaConsumers.test.flush_interval | string | "10s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
 | telegraf-standby.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
-| telegraf-standby.kafkaConsumers.test.max_processing_time | string | "5s" | Maximum processing time for a single message. |
+| telegraf-standby.kafkaConsumers.test.max_processing_time | string | "1s" | Maximum processing time for a single message. |
 | telegraf-standby.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
 | telegraf-standby.kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
 | telegraf-standby.kafkaConsumers.test.metric_buffer_limit | int | 100000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |

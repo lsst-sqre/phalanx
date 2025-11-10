@@ -67,8 +67,8 @@ data:
       topic_regexps = {{ .value.topicRegexps }}
       offset = {{ default "oldest" .value.offset | quote }}
       precision = {{ default "1us" .value.precision | quote }}
-      max_processing_time = {{ default "5s" .value.max_processing_time | quote }}
-      consumer_fetch_default = {{ default "20MB" .value.consumer_fetch_default | quote }}
+      max_processing_time = {{ default "1s" .value.max_processing_time | quote }}
+      consumer_fetch_default = {{ default "1MB" .value.consumer_fetch_default | quote }}
       max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
       compression_codec = {{ default 3 .value.compression_codec }}
       kafka_version = {{ .kafkaVersion | quote }}
@@ -97,8 +97,8 @@ data:
       topic_regexps = {{ .value.topicRegexps }}
       offset = "oldest"
       precision = {{ default "1us" .value.precision | quote }}
-      max_processing_time = {{ default "5s" .value.max_processing_time | quote }}
-      consumer_fetch_default = {{ default "20MB" .value.consumer_fetch_default | quote }}
+      max_processing_time = {{ default "1s" .value.max_processing_time | quote }}
+      consumer_fetch_default = {{ default "1MB" .value.consumer_fetch_default | quote }}
       max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
       compression_codec = {{ default 3 .value.compression_codec }}
       kafka_version = {{ .kafkaVersion | quote }}
