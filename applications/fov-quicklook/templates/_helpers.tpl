@@ -11,6 +11,15 @@
     secretKeyRef:
       name: fov-quicklook
       key: s3_repository_secret_key
+- name: QUICKLOOK_s3_tile__secret_key
+  valueFrom:
+    secretKeyRef:
+      name: fov-quicklook
+      key: s3_repository_secret_key
+- name: QUICKLOOK_s3_tile_key_prefix
+  value: {{ .Values.config.s3_tile_path_prefix | quote }}
+- name: QUICKLOOK_max_object_storage_usage
+  value: {{ printf "%.0f" .Values.config.max_object_storage_usage | quote }}
 {{- end }}
 
 {{- define "fov-quicklook.env.db" -}}
@@ -20,7 +29,7 @@
       name: fov-quicklook
       key: db_password
 - name: QUICKLOOK_db_url
-  value: postgresql://quicklook:$(DB_PASSWORD)@fov-quicklook-db:5432/quicklook
+  value: postgresql+asyncpg://quicklook:$(DB_PASSWORD)@fov-quicklook-db:5432/quicklook
 {{- end }}
 
 {{- define "fov-quicklook.env.log-level" -}}

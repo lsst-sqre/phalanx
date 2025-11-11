@@ -4,6 +4,8 @@ metadata:
   name: fov-quicklook-db
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: fov-quicklook-db
@@ -44,6 +46,18 @@ spec:
                   key: db_password
           ports:
             - containerPort: 5432
+          livenessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 3
+          readinessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
           volumeMounts:
             - name: fov-quicklook-db
               mountPath: /var/lib/postgresql/data
