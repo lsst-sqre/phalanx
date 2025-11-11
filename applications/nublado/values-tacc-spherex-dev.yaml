@@ -6,7 +6,6 @@ controller:
         registry: "registry.hub.docker.com"
         repository: "lsstsqre/spherex-lab"
     lab:
-      defaultSize: "small"
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
@@ -22,44 +21,29 @@ controller:
               volumeName: "home"
       sizes:
         - size: small
-          resources:
-            limits:
-              cpu: 1.0
-              memory: 2Gi
-            requests:
-              cpu: 0.25
-              memory: 0.5Gi
+          cpu: 1.0
+          memory: 2Gi
         - size: medium
-          resources:
-            limits:
-              cpu: 2.0
-              memory: 4Gi
-            requests:
-              cpu: 0.5
-              memory: 1Gi
+          cpu: 2.0
+          memory: 4Gi
         - size: large
-          resources:
-            limits:
-              cpu: 4.0
-              memory: 8Gi
-            requests:
-              cpu: 1
-              memory: 2Gi
+          cpu: 4.0
+          memory: 8Gi
       volumes:
         - name: "home"
           source:
             serverPath: "/data/home"
-            server: "192.168.115.150"
+            server: "192.168.114.233"
             type: "nfs"
         - name: "project"
           source:
             serverPath: "/data/project"
-            server: "192.168.115.150"
+            server: "192.168.114.233"
             type: "nfs"
         - name: "scratch"
           source:
             serverPath: "/data/scratch"
-            server: "192.168.115.150"
+            server: "192.168.114.233"
             type: "nfs"
       volumeMounts:
         - containerPath: "/home"
@@ -72,7 +56,7 @@ jupyterhub:
   hub:
     baseUrl: "/nb"
     db:
-      url: "postgresql://jhubsessions@192.168.115.125/jhubsessions01"
+      url: "postgresql://jhubsessions@192.168.114.188/jhubsessions01"
       upgrade: true
   cull:
     timeout: 432000  # 5 days
