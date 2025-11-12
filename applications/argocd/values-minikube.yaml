@@ -1,5 +1,7 @@
 argo-cd:
   configs:
+    cm:
+      ui.bannercontent: "minikube"
     params:
       controller.repo.server.timeout.seconds: 180
 

@@ -15,6 +15,7 @@ argo-cd:
               clientSecret: $dex.clientSecret
               orgs:
                 - name: rubin-lsst
+      ui.bannercontent: "ccin2p3"
     rbac:
       policy.csv: |
         g, rubin-lsst:admin, role:admin
