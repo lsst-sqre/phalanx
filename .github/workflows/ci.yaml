@@ -4,6 +4,9 @@ env:
   # Version of Argo CD to use for the installer.
   ARGO_CD_VERSION: "3.0.6"
 
+  # Version of helm to use for linting.
+  HELM_VERSION: "v3.19.2"
+
   # Version of helm-docs to use for linting.
   HELM_DOCS_VERSION: "1.14.2"
 
@@ -75,6 +78,7 @@ jobs:
 
       - uses: azure/setup-helm@v4
         with:
+          version: ${{ env.HELM_VERSION }}
           # Used to query GitHub for the latest Helm release.
           token: ${{ secrets.GITHUB_TOKEN }}
 
