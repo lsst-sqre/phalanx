@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-sitcom/rubintv_production
-  tag: tickets-DM-52681
+  tag: w_2025_41_tarts
   pullPolicy: Always
 location: BTS
 siteTag: bts
@@ -9,6 +9,7 @@ env:
   DEPLOY_BRANCH: deploy-bts
   LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  RAPID_ANALYSIS_DO_RAISE: True
   BUTLER_ROLLOUT_PAUSE: 1.0
   RA_PULL_DIRECTORIES: "TARTS donut_viz drp_pipe ts_wep summit_utils summit_extras rubintv_production"
   TARTS_DATA_DIR: /project/rubintv/aos_data/TARTS

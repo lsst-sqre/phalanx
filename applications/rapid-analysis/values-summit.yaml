@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-sitcom/rubintv_production
-  tag: tickets-DM-52681
+  tag: w_2025_41_tarts
   pullPolicy: Always
 location: SUMMIT
 siteTag: summit
