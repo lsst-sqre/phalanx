@@ -1,0 +1,38 @@
+resources:
+  requests:
+    cpu: 200m
+    memory: 20Gi
+  limits:
+    cpu: 500m
+    memory: 20Gi
+
+environment:
+  s3EndpointUrl: "https://s3.ls.lsst.org"
+
+config:
+  database_schema: "obsloctap_dev"
+  separateSecrets: false
+  persistentVolumeClaims:
+    - name: sdf-data-rubin
+      storageClassName: sdf-data-rubin
+
+image:
+  pullPolicy: Always
+
+consumekafka:
+  image:
+    # -- Tag of image to use
+    tag: "1.0.0"
+  logLevel: DEBUG
+
+obsloctap:
+  image:
+    # -- Tag of image to use
+    # @default -- The appVersion of the chart
+    tag: "1.0.0"
+  logLevel: DEBUG
+
+controller:
+  config:
+    safir:
+      logLevel: "None"
