@@ -15,9 +15,7 @@ config:
       - username: "bot-noteburst03"
       - username: "bot-noteburst04"
       - username: "bot-noteburst05"
-    # Pin for efd client compatibility
-    imageReference: "docker-registry.slac.stanford.edu/lsstsqre/sciplat-lab:w_2025_41"
-    imageSelector: "reference"
+    imageSelector: "weekly"
 
 # Use SSD for Redis storage.
 redis:
