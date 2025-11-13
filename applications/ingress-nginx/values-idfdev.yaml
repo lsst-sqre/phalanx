@@ -2,5 +2,6 @@ ingress-nginx:
   controller:
     config:
       error-log-level: "error"
+      proxy-body-size: "2g"
     service:
       loadBalancerIP: "35.225.112.77"
