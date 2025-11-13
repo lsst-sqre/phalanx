@@ -29,59 +29,6 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-            {{- if .Values.config.slackAlerts }}
-            - name: "MOBU_ALERT_HOOK"
-              valueFrom:
-                secretKeyRef:
-                  name: "mobu"
-                  key: "ALERT_HOOK"
-            {{- end }}
-            - name: "MOBU_ENVIRONMENT_URL"
-              value: {{ .Values.global.baseUrl }}
-            - name: "MOBU_REPLICA_COUNT"
-              value: {{ .Values.replicaCount | quote }}
-            - name: "MOBU_REPLICA_INDEX"
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.labels['apps.kubernetes.io/pod-index']
-            - name: "MOBU_GAFAELFAWR_TOKEN"
-              valueFrom:
-                secretKeyRef:
-                  name: "mobu-gafaelfawr-token"
-                  key: "token"
-            - name: "MOBU_SENTRY_ENVIRONMENT"
-              value: {{ .Values.global.environmentName }}
-            - name: "MOBU_SENTRY_DSN"
-              valueFrom:
-                secretKeyRef:
-                  name: "mobu"
-                  key: "sentry-dsn"
-            - name: "SENTRY_RELEASE"
-              value: {{ .Values.image.tag | default .Chart.AppVersion }}
-            {{- if .Values.config.githubRefreshApp }}
-            - name: "MOBU_GITHUB_REFRESH_APP_WEBHOOK_SECRET"
-              valueFrom:
-                secretKeyRef:
-                  name: "mobu"
-                  key: "github-refresh-app-webhook-secret"
-            {{- end}}
-            {{- if .Values.config.githubCiApp }}
-            - name: "MOBU_GITHUB_CI_APP_ID"
-              valueFrom:
-                secretKeyRef:
-                  name: "mobu"
-                  key: "github-ci-app-id"
-            - name: "MOBU_GITHUB_CI_APP_PRIVATE_KEY"
-              valueFrom:
-                secretKeyRef:
-                  name: "mobu"
-                  key: "github-ci-app-private-key"
-            - name: "MOBU_GITHUB_CI_APP_WEBHOOK_SECRET"
-              valueFrom:
-                secretKeyRef:
-                  name: "mobu"
-                  key: "github-ci-app-webhook-secret"
-            {{- end}}
             {{- if .Values.config.metrics.enabled }}
             - name: "KAFKA_BOOTSTRAP_SERVERS"
               valueFrom:
@@ -100,6 +47,61 @@ spec:
             - name: "KAFKA_CLUSTER_CA_PATH"
               value: "/etc/mobu-kafka/ca.crt"
             {{- end }}
+            {{- if .Values.config.slackAlerts }}
+            - name: "MOBU_ALERT_HOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu"
+                  key: "ALERT_HOOK"
+            {{- end }}
+            - name: "MOBU_ENVIRONMENT_URL"
+              value: {{ .Values.global.baseUrl }}
+            - name: "MOBU_GAFAELFAWR_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu-gafaelfawr-token"
+                  key: "token"
+            {{- if .Values.config.githubCiApp }}
+            - name: "MOBU_GITHUB_CI_APP_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu"
+                  key: "github-ci-app-id"
+            - name: "MOBU_GITHUB_CI_APP_PRIVATE_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu"
+                  key: "github-ci-app-private-key"
+            - name: "MOBU_GITHUB_CI_APP_WEBHOOK_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu"
+                  key: "github-ci-app-webhook-secret"
+            {{- end}}
+            {{- if .Values.config.githubRefreshApp }}
+            - name: "MOBU_GITHUB_REFRESH_APP_WEBHOOK_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu"
+                  key: "github-refresh-app-webhook-secret"
+            {{- end}}
+            - name: "MOBU_REPLICA_COUNT"
+              value: {{ .Values.replicaCount | quote }}
+            - name: "MOBU_REPLICA_INDEX"
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['apps.kubernetes.io/pod-index']
+            - name: "MOBU_SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.environmentName | quote }}
+            - name: "MOBU_SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: "mobu"
+                  key: "sentry-dsn"
+            - name: "REPERTOIRE_BASE_URL"
+              value: {{ .Values.global.repertoireUrl | quote }}
+            - name: "SENTRY_RELEASE"
+              value: {{ .Values.image.tag | default .Chart.AppVersion | quote }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:

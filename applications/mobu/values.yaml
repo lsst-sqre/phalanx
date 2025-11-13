@@ -132,14 +132,18 @@ global:
   # @default -- Set by Argo CD
   baseUrl: null
 
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD
+  environmentName: null
+
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null
 
+  # -- Base URL for Repertoire discovery API
+  # @default -- Set by Argo CD
+  repertoireUrl: null
+
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: null
-  #
-  # -- Name of the Phalanx environment
-  # @default -- Set by Argo CD
-  environmentName: null
