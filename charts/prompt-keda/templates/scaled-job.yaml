@@ -158,6 +158,9 @@ spec:
                 name: read-repo-file
               {{- end }}
               {{- end }}
+              - mountPath: /sdf/data/rubin
+                name: sdf-data-rubin
+                readOnly: true
               {{- with .Values.additionalVolumeMounts }}
               {{- toYaml . | nindent 8 }}
               {{- end }}
@@ -186,6 +189,9 @@ spec:
                 path: butler.yaml
           {{- end }}
           {{- end }}
+          - name: sdf-data-rubin
+            persistentVolumeClaim:
+              claimName: "sdf-data-rubin"
           {{- with .Values.tolerations }}
         tolerations:
           {{- toYaml . | nindent 12 }}
@@ -218,3 +224,15 @@ spec:
         activationLagCount: {{ .Values.keda.redisStreams.activationLagCount | toString | quote}}
         lagCount: {{ .Values.keda.redisStreams.lagCount| toString | quote}}
         pendingEntriesCount: {{ .Values.keda.redisStreams.pendingEntriesCount | toString | quote}}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sdf-data-rubin
+spec:
+  storageClassName: sdf-data-rubin
+  accessModes:
+  - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Gi
