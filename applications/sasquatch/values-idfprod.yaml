@@ -95,6 +95,7 @@ app-metrics:
 
 backup:
   enabled: true
+  schedule: "0 5 * * *"
   persistence:
     size: 500Gi
     storageClass: standard
