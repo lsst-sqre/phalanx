@@ -28,6 +28,8 @@ spec:
           value: "https://{{ .Values.fqdn }}"
         - name: "global.environmentName"
           value: {{ .Values.name | quote }}
+        - name: "global.repertoireUrl"
+          value: "https://{{ .Values.fqdn }}/repertoire"
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
