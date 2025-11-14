@@ -19,6 +19,9 @@ Kubernetes Event Driven Autoscaling
 | keda.logging.operator.stackTracesEnabled | bool | `false` | If enabled, the stack traces will be also printed |
 | keda.logging.operator.timeEncoding | string | `"rfc3339"` | Logging time encoding for KEDA Operator. allowed values are `epoch`, `millis`, `nano`, `iso8601`, `rfc3339` or `rfc3339nano` |
 | keda.nodeSelector | object | `{}` | Node selector for pod scheduling ([docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)) |
+| keda.podLabels.keda | object | `{}` | Pod labels for KEDA operator |
+| keda.podLabels.metricsAdapter | object | `{}` | Pod labels for KEDA Metrics Adapter |
+| keda.podLabels.webhooks | object | `{}` | Pod labels for KEDA Admission webhooks |
 | keda.priorityClassName | string | `""` | priorityClassName for all KEDA components |
 | keda.prometheus.metricServer.enabled | bool | `true` | Enable metric server Prometheus metrics expose |
 | keda.prometheus.metricServer.port | int | `8000` | HTTP port used for exposing metrics server prometheus metrics |

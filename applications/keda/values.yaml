@@ -3,6 +3,14 @@ keda:
   # This is a YAML-formatted file.
   # Declare variables to be passed into your templates.
 
+  podLabels:
+    # -- Pod labels for KEDA operator
+    keda: {}
+    # -- Pod labels for KEDA Metrics Adapter
+    metricsAdapter: {}
+    # -- Pod labels for KEDA Admission webhooks
+    webhooks: {}
+
   # -- Defines Kubernetes namespaces to watch to scale their workloads. Default watches all namespaces
   watchNamespace: ""
 
