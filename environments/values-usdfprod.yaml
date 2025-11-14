@@ -22,6 +22,7 @@ applications:
   livetap: true
   mobu: true
   narrativelog: true
+  nightlydigest: true
   nightreport: true
   noteburst: true
   nublado: true
