@@ -1,4 +1,16 @@
 keda:
+
+  podLabels:
+    keda: {
+      env: "dev"
+    }
+    metricsAdapter: {
+      env: "dev"
+    }
+    webhooks: {
+      env: "dev"
+    }
+
   resources:
     operator:
       limits:
