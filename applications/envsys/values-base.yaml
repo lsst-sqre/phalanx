@@ -265,10 +265,10 @@ hvac-sim:
     RUN_ARG: --state enabled --simulate
   resources:
     requests:
-      cpu: 80m
+      cpu: 160m
       memory: 200Mi
     limits:
-      cpu: 400m
+      cpu: 500m
       memory: 2000Mi
 
 m1m3-ess113-sim:
