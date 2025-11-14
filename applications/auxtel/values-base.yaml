@@ -127,10 +127,10 @@ atoods:
   resources:
     limits:
       cpu: 400m
-      memory: 1000Mi
+      memory: 1600Mi
     requests:
       cpu: 40m
-      memory: 480Mi
+      memory: 800Mi
   configfile:
     path: /etc
     filename: atoods.yaml
