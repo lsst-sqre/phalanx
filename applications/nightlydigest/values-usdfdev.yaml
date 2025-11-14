@@ -63,6 +63,9 @@ nightlydigest-backend:
     - name: JIRA_API_TOKEN
       secretName: nightlydigest
       secretKey: jira-api-token
+    - name: ACCESS_TOKEN
+      secretName: nightlydigest
+      secretKey: temp-access-token
   pvcMountpoints:
     - name: sdf-data-rubin
       storageClassName: sdf-data-rubin
