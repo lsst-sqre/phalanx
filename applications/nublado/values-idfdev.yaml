@@ -3,9 +3,6 @@ sentry:
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
-  image:
-    tag: tickets-DM-52597
-    pullPolicy: Always
   config:
     dropdownMenu:
       release:
@@ -51,7 +48,7 @@ controller:
         - name: "inithome"
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "8.17.1"
+            tag: "9.0.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
