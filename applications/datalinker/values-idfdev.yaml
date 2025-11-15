@@ -1,3 +1,6 @@
+image:
+  tag: "tickets-DM-52929"
+  pullPolicy: "Always"
 config:
   logLevel: "DEBUG"
   slackAlerts: true
