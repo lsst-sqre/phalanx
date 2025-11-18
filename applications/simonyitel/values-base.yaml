@@ -357,13 +357,13 @@ mtoods:
                         files_older_than:
                             <<: *interval
                             days: 5
-                      - collection:
+                      - collections:
                           - LSSTCam/raw/guider
                         files_older_than:
                             <<: *interval
                             days: 5
-                      - collection:
-                          LSSTCam/runs/quickLook
+                      - collections:
+                          - LSSTCam/runs/quickLook
                         files_older_than:
                             <<: *interval
                             days: 2
