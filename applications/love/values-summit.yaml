@@ -35,7 +35,7 @@ audio-broadcaster:
 
 love-commander:
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/love-commander
     pullPolicy: Always
   env:
