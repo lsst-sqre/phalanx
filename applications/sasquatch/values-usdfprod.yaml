@@ -199,6 +199,9 @@ influxdb-enterprise-active:
         log-queries-after: "10s"
         log-timedout-queries: true
         termination-query-log: true
+        max-select-point: 50000000
+        max-select-series: 200000
+        max-select-buckets: 20000
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
