@@ -24,10 +24,10 @@ consumekafka:
   logLevel: DEBUG
   nfsMountpoint:
     - name: rubin-sim-data
-      containerPath: /project/scheduler
+      containerPath: /project
       readOnly: false
       server: nfs-project.ls.lsst.org
-      serverPath: /project/scheduler
+      serverPath: /project
 
 obsloctap:
   image:
