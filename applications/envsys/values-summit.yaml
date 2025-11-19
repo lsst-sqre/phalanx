@@ -80,10 +80,10 @@ calibhill-ess301:
       memory: 350Mi
 
 camera-ess111:
-  revision: 0
   enabled: true
   classifier: ess111
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -255,10 +255,10 @@ hvac:
       memory: 30000Mi
 
 m1m3-ess113:
-  revision: 0
   enabled: true
   classifier: ess113
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -469,10 +469,10 @@ ringss-ess304:
       memory: 400Mi
 
 tma-ess121:
-  revision: 0
   enabled: true
   classifier: ess121
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
