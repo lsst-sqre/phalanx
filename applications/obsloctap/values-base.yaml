@@ -6,11 +6,8 @@ resources:
     cpu: 500m
     memory: 20Gi
 
-environment:
-  s3EndpointUrl: "https://s3.ls.lsst.org"
-
 config:
-  database_schema: "obsloctap_dev"
+  database_schema: "obsloctap"
   separateSecrets: false
   persistentVolumeClaims:
     - name: sdf-data-rubin
@@ -18,6 +15,10 @@ config:
 
 image:
   pullPolicy: Always
+
+rubinsim:
+  # for rubin sim
+  dataDir: "/project/scheduler/"
 
 consumekafka:
   image:
