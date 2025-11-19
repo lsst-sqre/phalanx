@@ -24,6 +24,10 @@ consumekafka:
     # @default -- The appVersion of the chart
     tag: ""
   logLevel: INFO
+  # -- PVC claims for USDF in USDF values
+  pvcMountpoint: []
+  # -- NFS mountpoints for base since no PVC
+  nfsMountpoint: []
 
 rubinsim:
   # for rubin sim

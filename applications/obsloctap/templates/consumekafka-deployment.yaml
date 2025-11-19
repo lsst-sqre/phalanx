@@ -112,17 +112,37 @@ spec:
           volumeMounts:
             - name: "tmp-volume"
               mountPath: "/tmp"
-            - name: sdf-data-rubin
-              mountPath: /sdf/data/rubin
-              readOnly: true
+            { { - range $vol := .Values.consumekafka.pvcMountpoint } }
+            - name: { { $vol.name } }
+              mountPath: { { $vol.mountPath } }
+            { { - end } }
+            { { - range $vol := .Values.consumekafka.nfsMountpoint } }
+            - name: { { $vol.name } }
+              mountPath: { { $vol.containerPath } }
+              readOnly: { { $vol.readOnly } }
+            { { - end } }
 
       volumes:
           - name: tmp-volume
             emptyDir:
               sizeLimit: 500Mi
+          { { - range $vol := .Values.consumekafka.pvcMountpoint } }
+          - name: { { $vol.name | quote } }
+            { { with $vol.persistentVolumeClaim } }
+            persistentVolumeClaim:
+              claimName: { { .name | quote } }
+            { { - end } }
+          { { - end } }
           - name: sdf-data-rubin
             persistentVolumeClaim:
               claimName: sdf-data-rubin
+          { { - range $vol := .Values.consumekafka.nfsMountpoint } }
+          - name: { { $vol.name | quote } }
+            nfs:
+              path: { { $vol.serverPath } }
+              readOnly: { { $vol.readOnly } }
+              server: { { $vol.server } }
+          { { - end } }
 
 # kt says for access ot sunset file in sim use uid=47726(rubins3) gid=4085(rubin_users)
       securityContext:

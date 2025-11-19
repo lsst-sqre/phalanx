@@ -9,9 +9,6 @@ resources:
 config:
   database_schema: "obsloctap"
   separateSecrets: false
-  persistentVolumeClaims:
-    - name: sdf-data-rubin
-      storageClassName: sdf-data-rubin
 
 image:
   pullPolicy: Always
@@ -25,6 +22,12 @@ consumekafka:
     # -- Tag of image to use
     tag: "1.0.0"
   logLevel: DEBUG
+  nfsMountpoint:
+    - name: rubin-sim-data
+      containerPath: /project/scheduler
+      readOnly: false
+      server: nfs-project.ls.lsst.org
+      serverPath: /project/scheduler
 
 obsloctap:
   image:
