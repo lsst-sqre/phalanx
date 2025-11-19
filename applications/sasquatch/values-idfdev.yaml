@@ -198,3 +198,6 @@ grafana:
     databases:
       - lsst.square.metrics
       - lsst.example
+
+trickster:
+  enabled: true
