@@ -363,6 +363,10 @@ grafana:
   # -- Whether to enable the grafana subchart
   enabled: false
 
+trickster:
+  # -- Whether to enable trickster
+  enabled: false
+
 global:
   # -- Host name for ingress
   # @default -- Set by Argo CD

@@ -100,6 +100,10 @@ dependencies:
   - name: grafana
     condition: grafana.enabled
     version: 1.0.0
+  - name: trickster
+    condition: trickster.enabled
+    version: 2.0.0
+    repository: oci://ghcr.io/trickstercache/charts
 
 annotations:
   phalanx.lsst.io/docs: |
