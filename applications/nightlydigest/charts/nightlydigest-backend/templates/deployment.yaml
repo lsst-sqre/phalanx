@@ -8,6 +8,7 @@ spec:
   selector:
     matchLabels:
       {{- include "nightlydigest-backend.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.replicas | default 1 }}
   template:
     metadata:
       {{- with .Values.annotations }}
@@ -31,10 +32,12 @@ spec:
             httpGet:
               path: /health
               port: http
+            timeoutSeconds: 120
           readinessProbe:
             httpGet:
               path: /health
               port: http
+            timeoutSeconds: 120
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
