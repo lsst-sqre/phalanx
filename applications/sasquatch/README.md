@@ -97,6 +97,12 @@ Rubin Observatory's telemetry service
 | obsenv.enabled | bool | `false` | Whether to enable the obsenv subchart |
 | obsloctap.enabled | bool | `false` | Whether to enable the obsloctap subchart |
 | prompt-processing.enabled | bool | `false` | Whether to enable the prompt-processing subchart |
+| redis.affinity | object | `{}` | Affinity rules for the ephemeral Redis pod |
+| redis.enabled | bool | `false` | Whether to enable the ephemeral Redis instance for Trickster |
+| redis.nodeSelector | object | `{}` | Node selection rules for the ephemeral Redis pod |
+| redis.persistence.enabled | bool | `false` | Whether to persist Redis storage of ephemeral data. This should be false to use emptyDir for better performance. |
+| redis.podAnnotations | object | `{}` | Pod annotations for the ephemeral Redis pod |
+| redis.resources | object | See `values.yaml` | Resource limits and requests for the ephemeral Redis pod |
 | rest-proxy.enabled | bool | `false` | Whether to enable the REST proxy |
 | schema-registry-remote.enabled | bool | `false` | Whether to enable schema-registry-remote, an instance of the schema-registry for remote topics |
 | schema-registry.enabled | bool | `false` | Whether to enable the schema-registry subchart |
@@ -106,7 +112,26 @@ Rubin Observatory's telemetry service
 | tap.enabled | bool | `false` | Whether to enable the tap subchart |
 | telegraf-standby.enabled | bool | `false` | Whether to enable the telegraf-standby subchart |
 | telegraf.enabled | bool | `false` | Whether to enable the telegraf subchart |
+| trickster.config.backends.default.cache_name | string | `"default"` | Name of the cache to use with this backend |
+| trickster.config.backends.default.negative_cache_name | string | `"general"` | Name of the negative cache to use with this backend |
+| trickster.config.backends.default.origin_url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | Base upstream URL for all proxied requests |
+| trickster.config.backends.default.provider | string | `"influxdb"` | Backend type used by Trickster (see docs for details) |
+| trickster.config.backends.default.timeseries_retention_factor | int | `1024` | Maximum number of recent timestamps to cache for a given query @default 1024 |
+| trickster.config.backends.default.timeseries_ttl | string | `"6h"` | Relative expiration of cached timeseries data @default is 6h |
+| trickster.config.caches.default.provider | string | `"redis"` | Cache type used by Trickster (see docs for details) |
+| trickster.config.caches.default.redis.endpoint | string | `"sasquatch-redis:6379"` |  |
+| trickster.config.frontend.listen_port | int | `8480` | Port to listen on for Trickster's requests |
+| trickster.config.logging.log_level | string | info | Log verbosity level (debug, info, warn, error) |
+| trickster.config.metrics.listen_port | int | `8481` |  |
+| trickster.config.negative_caches.general.400 | string | `"3s"` | Negative cache configuration (see docs for details) |
+| trickster.config.negative_caches.general.404 | string | `"3s"` |  |
+| trickster.config.negative_caches.general.500 | string | `"3s"` |  |
+| trickster.config.negative_caches.general.502 | string | `"3s"` |  |
 | trickster.enabled | bool | `false` | Whether to enable trickster |
+| trickster.image.tag | string | the chart appVersion | Trickster Docker image tag |
+| trickster.podLabels.sasquatch-redis-client | string | `"true"` |  |
+| trickster.resources.limits | object | `{"cpu":"200m","memory":"512Mi"}` | Kubernetes resource limits for Trickster |
+| trickster.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | Kubernetes resource requests and limits for Trickster |
 | app-metrics.affinity | object | `{}` | Affinity for pod assignment |
 | app-metrics.apps | list | `[]` | A list of applications that will publish metrics events, and the keys that should be ingested into InfluxDB as tags.  The names should be the same as the app names in Phalanx. |
 | app-metrics.args | list | `[]` | Arguments passed to the Telegraf agent containers |

@@ -366,6 +366,58 @@ grafana:
 trickster:
   # -- Whether to enable trickster
   enabled: false
+  image:
+    # -- Trickster Docker image tag
+    # @default -- the chart appVersion
+    tag: main
+  config:
+    frontend:
+      # -- Port to listen on for Trickster's requests
+      listen_port: 8480
+    caches:
+      default:
+        # -- Cache type used by Trickster (see docs for details)
+        provider: memory
+    negative_caches:
+      general:
+        # -- Negative cache configuration (see docs for details)
+        "400": 3s
+        "404": 3s
+        "500": 3s
+        "502": 3s
+    backends:
+      default:
+        # -- Backend type used by Trickster (see docs for details)
+        provider: influxdb
+        # -- Base upstream URL for all proxied requests
+        origin_url: http://sasquatch-influxdb.sasquatch:8086
+        # -- Name of the cache to use with this backend
+        cache_name: default
+        # -- Name of the negative cache to use with this backend
+        negative_cache_name: general
+        # -- Maximum number of recent timestamps to cache for a given query
+        # @default 1024
+        timeseries_retention_factor: 1024
+        # -- Relative expiration of cached timeseries data
+        # @default is 6h
+        timeseries_ttl: 6h
+    logging:
+      # -- Log verbosity level (debug, info, warn, error)
+      # @default -- info
+      log_level: info
+    metrics:
+      # -- Port to listen on for Trickster's metrics endpoint /metrics
+      # -- @default -- 8481
+      listen_port: 8481
+  resources:
+    # -- Kubernetes resource requests and limits for Trickster
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    # -- Kubernetes resource limits for Trickster
+    limits:
+      memory: 512Mi
+      cpu: 200m
 
 global:
   # -- Host name for ingress
