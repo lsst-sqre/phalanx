@@ -106,6 +106,7 @@ Rubin Observatory's telemetry service
 | tap.enabled | bool | `false` | Whether to enable the tap subchart |
 | telegraf-standby.enabled | bool | `false` | Whether to enable the telegraf-standby subchart |
 | telegraf.enabled | bool | `false` | Whether to enable the telegraf subchart |
+| trickster.enabled | bool | `false` | Whether to enable trickster |
 | app-metrics.affinity | object | `{}` | Affinity for pod assignment |
 | app-metrics.apps | list | `[]` | A list of applications that will publish metrics events, and the keys that should be ingested into InfluxDB as tags.  The names should be the same as the app names in Phalanx. |
 | app-metrics.args | list | `[]` | Arguments passed to the Telegraf agent containers |
