@@ -1,5 +1,6 @@
 ataos:
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/ataos
     pullPolicy: Always
   resources:
@@ -13,6 +14,7 @@ ataos:
 atbuilding:
   enabled: true
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/atbuilding
     pullPolicy: Always
   resources:
@@ -26,6 +28,7 @@ atbuilding:
 atdome:
   enabled: true
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/atdome
     pullPolicy: Always
   resources:
@@ -38,6 +41,7 @@ atdome:
 
 atdometrajectory:
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/atdometrajectory
     pullPolicy: Always
   resources:
@@ -50,6 +54,7 @@ atdometrajectory:
 
 atheaderservice:
   image:
+    revision: 4
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
   env:
@@ -72,6 +77,7 @@ atheaderservice:
 athexapod:
   enabled: true
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/athexapod
     pullPolicy: Always
   resources:
@@ -85,6 +91,7 @@ athexapod:
 atmcs:
   enabled: true
   image:
+    revision: 4
     repository: ts-dockerhub.lsst.org/atmcs
     pullPolicy: Always
   resources:
@@ -175,6 +182,7 @@ atoods:
 atpneumatics:
   enabled: true
   image:
+    revision: 4
     repository: ts-dockerhub.lsst.org/at_pneumatics
     pullPolicy: Always
   resources:
@@ -187,6 +195,7 @@ atpneumatics:
 
 atptg:
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/ptkernel
     pullPolicy: Always
   env:
@@ -203,6 +212,7 @@ atptg:
 atspectrograph:
   enabled: true
   image:
+    revision: 4
     repository: ts-dockerhub.lsst.org/atspec
     pullPolicy: Always
   resources:
@@ -216,6 +226,7 @@ atspectrograph:
 pmd1:
   enabled: true
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/pmd
     pullPolicy: Always
   env:
