@@ -195,6 +195,7 @@ kapacitor:
 grafana:
   enabled: true
   influxdb:
+    url: "http://sasquatch-trickster.sasquatch"
     databases:
       - lsst.square.metrics
       - lsst.example
