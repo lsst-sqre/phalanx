@@ -35,3 +35,35 @@ data:
     appLinks:
       {{- toYaml .Values.config.appLinks | nindent 6 }}
     mdxDir: "/etc/squareone/mdx-content"
+    {{- if .Values.config.headerLogoUrl }}
+    headerLogoUrl: {{ .Values.config.headerLogoUrl | quote }}
+    {{- else if .Values.config.headerLogoFile }}
+      {{- $environmentName := .Values.global.environmentName }}
+      {{- $logoPath := printf "content/%s/%s" $environmentName .Values.config.headerLogoFile }}
+      {{- $logoContent := $.Files.Get $logoPath }}
+      {{- if $logoContent }}
+    headerLogoData: {{ $logoContent | b64enc | quote }}
+        {{- $ext := .Values.config.headerLogoFile | splitList "." | last | lower }}
+        {{- if eq $ext "png" }}
+    headerLogoMimeType: "image/png"
+        {{- else if or (eq $ext "jpg") (eq $ext "jpeg") }}
+    headerLogoMimeType: "image/jpeg"
+        {{- else if eq $ext "svg" }}
+    headerLogoMimeType: "image/svg+xml"
+        {{- else if eq $ext "webp" }}
+    headerLogoMimeType: "image/webp"
+        {{- else if eq $ext "gif" }}
+    headerLogoMimeType: "image/gif"
+        {{- end }}
+      {{- end }}
+    {{- else if .Values.config.headerLogoData }}
+    headerLogoData: {{ .Values.config.headerLogoData | quote }}
+      {{- if .Values.config.headerLogoMimeType }}
+    headerLogoMimeType: {{ .Values.config.headerLogoMimeType | quote }}
+      {{- end }}
+    {{- end }}
+    headerLogoHeight: {{ .Values.config.headerLogoHeight }}
+    {{- if .Values.config.headerLogoWidth }}
+    headerLogoWidth: {{ .Values.config.headerLogoWidth }}
+    {{- end }}
+    headerLogoAlt: {{ .Values.config.headerLogoAlt | quote }}
