@@ -35,6 +35,7 @@ auxtel-ess308:
   enabled: true
   classifier: ess308
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -51,6 +52,7 @@ auxtel-ess204:
   enabled: true
   classifier: ess204
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -339,6 +341,7 @@ m2-ess106:
   enabled: true
   classifier: ess106
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -489,6 +492,7 @@ tma-ess122:
   enabled: true
   classifier: ess122
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
