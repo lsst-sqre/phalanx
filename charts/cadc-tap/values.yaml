@@ -94,7 +94,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.10.2"
+      tag: "3.11.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -210,7 +210,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "DP1-v1.2.0"
+    tag: "w.2025.48"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
@@ -248,7 +248,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "3.10.2"
+    tag: "3.11.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
