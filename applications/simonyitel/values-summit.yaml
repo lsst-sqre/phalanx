@@ -549,11 +549,6 @@ mtoods:
                         files_older_than:
                             <<: *interval
                             days: 30
-                      - collections:
-                          - LSSTCam/quickLook
-                        files_older_than:
-                            <<: *interval
-                            days: 7
                   cleaning_interval:
                       <<: *interval
                       hours: 1
