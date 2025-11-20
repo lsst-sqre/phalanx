@@ -10,4 +10,4 @@ metadata:
 spec:
   strimzi-version: {{ .Values.strimziAPIVersion }}
   listener: internal
-  compatibilityLevel: none
+  compatibilityLevel: {{ .Values.compatibilityLevel | quote }}
