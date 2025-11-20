@@ -349,3 +349,6 @@ control-system:
 
 consdb:
   enabled: true
+
+obsloctap:
+  enabled: true

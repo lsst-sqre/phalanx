@@ -133,9 +133,6 @@ spec:
               claimName: {{ .name | quote }}
             {{- end }}
           {{- end }}
-          - name: sdf-data-rubin
-            persistentVolumeClaim:
-              claimName: sdf-data-rubin
           {{- range $vol := .Values.consumekafka.nfsMountpoint }}
           - name: {{ $vol.name | quote }}
             nfs:
