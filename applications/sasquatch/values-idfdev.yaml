@@ -202,3 +202,6 @@ grafana:
 
 trickster:
   enabled: true
+  config:
+    logging:
+      log_level: "debug"
