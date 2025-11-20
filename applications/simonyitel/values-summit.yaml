@@ -493,7 +493,6 @@ mtmount-sim:
 mtoods:
   enabled: true
   image:
-    revision: 0
     repository: ts-dockerhub.lsst.org/mtoods
     pullPolicy: Always
   env:
