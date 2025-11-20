@@ -25,8 +25,6 @@ controller:
         no_proxy: "hub.nublado,.sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
         LSST_DISABLE_BUCKET_VALIDATION: "1"
         LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
-      extraAnnotations:
-        "edu.stanford.slac.sdf.project/usdf-embargo": "true"
       homedirSchema: "initialThenUsername"
       nodeSelector:
         node-role.kubernetes.io/rsp-notebook: "true"
