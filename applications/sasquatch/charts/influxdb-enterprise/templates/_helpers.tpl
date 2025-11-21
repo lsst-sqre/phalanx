@@ -61,3 +61,20 @@ Create the name of the service account
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Render config map, cast to int to fix Helm converting integers to float64
+*/}}
+{{- define "renderConfigMap" -}}
+  {{- $map := . -}}
+  {{- range $key, $value := $map }}
+    {{- $tp := typeOf $value -}}
+    {{- if eq $tp "string" }}
+      {{ $key }} = {{ $value | quote }}
+    {{- else if or (eq $tp "int") (eq $tp "float64") }}
+      {{ $key }} = {{ int $value }}
+    {{- else }}
+      {{ $key }} = {{ $value }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
