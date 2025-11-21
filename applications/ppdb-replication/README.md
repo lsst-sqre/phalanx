@@ -29,7 +29,7 @@ Replicates data from the APDB to the PPDB
 | config.waitInterval | int | `300` | Time to wait between uploader file scans |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| image.pullPolicy | string | `"Always"` | Pull policy for the ppdb-replication image |
+| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the ppdb-replication image |
 | image.repository | string | `"ghcr.io/lsst/ppdb-replication"` | Image to use in the ppdb-replication deployment |
 | image.tag | string | The appVersion of the chart | Tag of dax_ppdb image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |

@@ -13,11 +13,11 @@ image:
   repository: "ghcr.io/lsst/ppdb-replication"
 
   # -- Pull policy for the ppdb-replication image
-  pullPolicy: "Always"
+  pullPolicy: "IfNotPresent"
 
   # -- Tag of dax_ppdb image to use
   # @default -- The appVersion of the chart
-  tag: "tickets-DM-53023"
+  tag: "main"
 
 ingress:
   # -- Additional annotations for the ingress rule
