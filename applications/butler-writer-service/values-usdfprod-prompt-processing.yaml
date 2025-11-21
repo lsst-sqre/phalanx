@@ -8,6 +8,7 @@ kafka:
   clusterAddress: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
   username: butler-writer
   topic: butler-writer
+  output_topic: butler-writer-ingestion-events
 
 s3:
   endpointUrl: https://sdfembs3.sdf.slac.stanford.edu
