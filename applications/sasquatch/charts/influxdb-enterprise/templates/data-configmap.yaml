@@ -11,14 +11,7 @@ data:
     reporting-disabled = false
 
     [http]
-      {{- range $key, $value := index .Values.data.config.http }}
-      {{- $tp := typeOf $value }}
-      {{- if eq $tp "string" }}
-      {{ $key }} = {{ $value | quote }}
-      {{- else }}
-      {{ $key }} = {{ $value }}
-      {{- end }}
-      {{- end }}
+      {{- include "renderConfigMap" .Values.data.config.http }}
 
     [enterprise]
       {{ if .Values.license.key }}
@@ -34,67 +27,24 @@ data:
 
     [hinted-handoff]
       dir = "/var/lib/influxdb/hh"
-      {{- range $key, $value := index .Values.data.config.hintedHandoff }}
-      {{- $tp := typeOf $value }}
-      {{- if eq $tp "string" }}
-      {{ $key }} = {{ $value | quote }}
-      {{- else }}
-      {{ $key }} = {{ $value | int }}
-      {{- end }}
-      {{- end }}
+      {{- include "renderConfigMap" .Values.data.config.hintedHandoff }}
 
     [data]
       dir = "/var/lib/influxdb/data"
       wal-dir = "/var/lib/influxdb/wal"
-      {{- range $key, $value := index .Values.data.config.data }}
-      {{- $tp := typeOf $value }}
-      {{- if eq $tp "string" }}
-      {{ $key }} = {{ $value | quote }}
-      {{- else }}
-      {{ $key }} = {{ $value }}
-      {{- end }}
-      {{- end }}
+      {{- include "renderConfigMap" .Values.data.config.data }}
 
     [anti-entropy]
-      {{- range $key, $value := index .Values.data.config.antiEntropy }}
-      {{- $tp := typeOf $value }}
-      {{- if eq $tp "string" }}
-      {{ $key }} = {{ $value | quote }}
-      {{- else }}
-      {{ $key }} = {{ $value }}
-      {{- end }}
-      {{- end }}
+      {{- include "renderConfigMap" .Values.data.config.antiEntropy }}
 
     [cluster]
-      {{- range $key, $value := index .Values.data.config.cluster }}
-      {{- $tp := typeOf $value }}
-      {{- if eq $tp "string" }}
-      {{ $key }} = {{ $value | quote }}
-      {{- else }}
-      {{ $key }} = {{ $value }}
-      {{- end  }}
-      {{- end }}
+      {{- include "renderConfigMap" .Values.data.config.cluster }}
 
     [continuous_queries]
-      {{- range $key, $value := index .Values.data.config.continuousQueries }}
-      {{- $tp := typeOf $value }}
-      {{- if eq $tp "string" }}
-      {{ $key }} = {{ $value | quote }}
-      {{- else }}
-      {{ $key }} = {{ $value }}
-      {{- end  }}
-      {{- end }}
+      {{- include "renderConfigMap" .Values.data.config.continuousQueries }}
 
     [logging]
-      {{- range $key, $value := index .Values.data.config.logging }}
-      {{- $tp := typeOf $value }}
-      {{- if eq $tp "string" }}
-      {{ $key }} = {{ $value | quote }}
-      {{- else }}
-      {{ $key }} = {{ $value }}
-      {{- end  }}
-      {{- end }}
-
+      {{- include "renderConfigMap" .Values.data.config.logging }}
 
   entrypoint.pl: |+
     #!/usr/bin/env perl
