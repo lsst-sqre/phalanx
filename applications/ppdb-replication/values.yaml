@@ -13,7 +13,7 @@ image:
   repository: "ghcr.io/lsst/ppdb-replication"
 
   # -- Pull policy for the ppdb-replication image
-  pullPolicy: "Always"
+  pullPolicy: "IfNotPresent"
 
   # -- Tag of dax_ppdb image to use
   # @default -- The appVersion of the chart
@@ -61,9 +61,6 @@ config:
   # -- Logging level
   logLevel: "INFO"
 
-  # -- Name of logger for monitoring
-  monLogger: "lsst.dax.ppdb.monitor"
-
   # -- Logging profile (`production` for JSON, `development` for
   # human-friendly)
   logProfile: "production"
@@ -71,35 +68,17 @@ config:
   # -- URL path prefix
   pathPrefix: "/ppdb-replication"
 
-  # -- GCS bucket name
-  gcsBucket: null
-
-  # -- GCS bucket prefix
-  gcsPrefix: null
-
   # -- APDB config file resource
   apdbConfig: null
 
   # -- PPDB config file resource
   ppdbConfig: null
 
-  # -- Target BigQuery dataset
-  dataset: null
-
-  # -- Staging directory for replicated data
-  stagingDirectory: null
-
-  # -- Size of record batches when writing parquet files
-  batchSize: 1000
-
   # -- APDB index URI
   apdbIndexUri: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
 
   # -- Comma-separated list of monitoring filter rules
   monRules: null
-
-  # -- Allow updates to already replicated data
-  updateExisting: false
 
   # -- Minimum time to wait before replicating a chunk after next chunk appears
   minWaitTime: 60
