@@ -46,6 +46,7 @@ atocps:
   enabled: true
   classifier: ocps1
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/dmocps
     pullPolicy: Always
   env:
@@ -62,6 +63,7 @@ ccocps:
   enabled: true
   classifier: ocps2
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/dmocps
     pullPolicy: Always
   env:
@@ -78,6 +80,7 @@ mtocps:
   enabled: true
   classifier: ocps3
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/dmocps
     pullPolicy: Always
   env:
@@ -94,6 +97,7 @@ raocps:
   enabled: true
   classifier: ocps101
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/dmocps
     pullPolicy: Always
   env:

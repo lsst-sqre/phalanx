@@ -1,6 +1,7 @@
 atmonochromator:
   enabled: true
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/atmonochromator
     pullPolicy: Always
   resources:
@@ -14,6 +15,7 @@ atmonochromator:
 atwhitelight:
   enabled: true
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/atwhitelight
     pullPolicy: Always
   resources:
@@ -27,6 +29,7 @@ atwhitelight:
 cbp:
   enabled: true
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/cbp
     pullPolicy: Always
   resources:
@@ -40,6 +43,7 @@ cbp:
 electrometer101:
   enabled: true
   image:
+    revision: 4
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -61,6 +65,7 @@ electrometer101:
 electrometer102:
   enabled: true
   image:
+    revision: 4
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -82,6 +87,7 @@ electrometer102:
 electrometer103:
   enabled: true
   image:
+    revision: 4
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -103,6 +109,7 @@ electrometer103:
 electrometer201:
   enabled: true
   image:
+    revision: 4
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -124,6 +131,7 @@ electrometer201:
 ledprojector:
   enabled: true
   image:
+    revision: 4
     repository: ts-dockerhub.lsst.org/ledprojector
     pullPolicy: Always
   resources:
@@ -137,6 +145,7 @@ ledprojector:
 linearstage101:
   enabled: true
   image:
+    revision: 4
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
@@ -152,6 +161,7 @@ linearstage101:
 linearstage102:
   enabled: true
   image:
+    revision: 4
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
@@ -167,6 +177,7 @@ linearstage102:
 linearstage103:
   enabled: true
   image:
+    revision: 4
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
@@ -182,6 +193,7 @@ linearstage103:
 linearstage104:
   enabled: true
   image:
+    revision: 4
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
@@ -197,6 +209,7 @@ linearstage104:
 mtreflector:
   enabled: true
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtreflector
     pullPolicy: Always
   resources:
@@ -211,6 +224,7 @@ simulation-gencam:
   enabled: true
   classifier: genericcamera1
   image:
+    revision: 6
     repository: ts-dockerhub.lsst.org/genericcamera
     pullPolicy: Always
   env:
@@ -236,6 +250,7 @@ simulation-gencam:
 tunablelaser:
   enabled: true
   image:
+    revision: 6
     repository: ts-dockerhub.lsst.org/tunablelaser
     pullPolicy: Always
   resources:
