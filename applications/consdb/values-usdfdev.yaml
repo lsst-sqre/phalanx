@@ -6,13 +6,13 @@ db:
 hinfo:
   latiss:
     enable: false
-    tag: "24.10.3"
+    tag: "25.11.2"
   lsstcomcam:
     enable: false
-    tag: "24.10.3"
+    tag: "25.11.2"
   lsstcam:
     enable: false
-    tag: "24.10.3"
+    tag: "25.11.2"
 pq:
   image:
-    tag: "25.8.2"
+    tag: "25.11.2"
