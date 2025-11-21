@@ -28,6 +28,13 @@ spec:
         type: allow
         host: "*"
         operation: All
+      - resource:
+          type: transactionalId
+          name: butler-writer-output
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
       {{- end }}
 
 ---

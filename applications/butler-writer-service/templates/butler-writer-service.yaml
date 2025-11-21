@@ -45,6 +45,8 @@ spec:
               value: {{ .Values.kafka.clusterAddress }}
             - name: KAFKA_TOPIC
               value: {{ .Values.kafka.topic }}
+            - name: KAFKA_OUTPUT_TOPIC
+              value: {{ .Values.kafka.outputTopic }}
             - name: KAFKA_USERNAME
               value: {{ .Values.kafka.username }}
             - name: KAFKA_PASSWORD
@@ -52,6 +54,8 @@ spec:
                 secretKeyRef:
                   name: {{ template "butler-writer-service.fullname" . }}-secret
                   key: butler-writer-password
+            - name: OUTPUT_DATASET_LIST_DIRECTORY
+              value: {{ .Values.outputDatasetListDirectory }}
             - name: S3_ENDPOINT_URL
               value: {{ .Values.s3.endpointUrl }}
             - name: AWS_SHARED_CREDENTIALS_FILE
