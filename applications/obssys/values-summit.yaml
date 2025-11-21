@@ -14,6 +14,7 @@ x-butler-lfa-combo: &butler-lfa-combo
 atqueue:
   classifier: scriptqueue2
   image:
+    revision: 6
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
   env:
@@ -69,6 +70,7 @@ atqueue:
 atscheduler:
   classifier: scheduler2
   image:
+    revision: 6
     repository: ts-dockerhub.lsst.org/scheduler
     pullPolicy: Always
   env:
@@ -108,6 +110,7 @@ atscheduler:
 gis:
   enabled: true
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/gis
     pullPolicy: Always
   secretFixup:
@@ -128,6 +131,7 @@ gis:
 mtqueue:
   classifier: scriptqueue1
   image:
+    revision: 6
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
   env:
@@ -183,6 +187,7 @@ mtqueue:
 mtscheduler:
   classifier: scheduler1
   image:
+    revision: 6
     repository: ts-dockerhub.lsst.org/scheduler
     pullPolicy: Always
   env:
@@ -222,6 +227,7 @@ mtscheduler:
 ocsqueue:
   classifier: scriptqueue3
   image:
+    revision: 6
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
   env:
@@ -276,6 +282,7 @@ ocsqueue:
 ocsscheduler:
   classifier: scheduler3
   image:
+    revision: 6
     repository: ts-dockerhub.lsst.org/scheduler
     pullPolicy: Always
   env:
@@ -314,6 +321,7 @@ ocsscheduler:
 
 watcher:
   image:
+    revision: 5
     repository: ts-dockerhub.lsst.org/watcher
     pullPolicy: Always
   envSecrets:
