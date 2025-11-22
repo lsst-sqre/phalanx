@@ -131,6 +131,7 @@ Rubin Observatory's telemetry service
 | trickster.image.tag | string | the chart appVersion | Trickster Docker image tag |
 | trickster.persistentVolume.enabled | bool | `false` | Whether to enable persistence for Trickster cache data. This is not needed when using Redis as a backend. |
 | trickster.podLabels.sasquatch-redis-client | string | `"true"` | Label to identify that Trickster is using the Sasquatch Redis instance |
+| trickster.replicaCount | int | `3` | Number of Trickster replicas |
 | trickster.resources.limits | object | `{"cpu":"200m","memory":"512Mi"}` | Kubernetes resource limits for Trickster |
 | trickster.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | Kubernetes resource requests and limits for Trickster |
 | app-metrics.affinity | object | `{}` | Affinity for pod assignment |

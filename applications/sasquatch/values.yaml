@@ -366,6 +366,8 @@ grafana:
 trickster:
   # -- Whether to enable trickster
   enabled: false
+  # -- Number of Trickster replicas
+  replicaCount: 3
   image:
     # -- Trickster Docker image tag
     # @default -- the chart appVersion
