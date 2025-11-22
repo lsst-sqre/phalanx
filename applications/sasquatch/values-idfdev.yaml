@@ -205,3 +205,6 @@ trickster:
   config:
     logging:
       log_level: "debug"
+
+redis:
+  enabled: true
