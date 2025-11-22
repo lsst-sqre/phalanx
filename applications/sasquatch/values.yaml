@@ -370,6 +370,9 @@ trickster:
     # -- Trickster Docker image tag
     # @default -- the chart appVersion
     tag: main
+  podLabels:
+    # -- Label to identify that Trickster is using the Sasquatch Redis instance
+    sasquatch-redis-client: 'true'
   config:
     frontend:
       # -- Port to listen on for Trickster's requests
@@ -377,7 +380,9 @@ trickster:
     caches:
       default:
         # -- Cache type used by Trickster (see docs for details)
-        provider: memory
+        provider: redis
+        redis:
+          endpoint: sasquatch-redis:6379
     negative_caches:
       general:
         # -- Negative cache configuration (see docs for details)
@@ -409,6 +414,10 @@ trickster:
       # -- Port to listen on for Trickster's metrics endpoint /metrics
       # -- @default -- 8481
       listen_port: 8481
+  persistentVolume:
+    # -- Whether to enable persistence for Trickster cache data.
+    # This is not needed when using Redis as a backend.
+    enabled: false
   resources:
     # -- Kubernetes resource requests and limits for Trickster
     requests:
