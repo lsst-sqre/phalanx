@@ -22,6 +22,57 @@ love-commander:
       cpu: 900m
       memory: 2Gi
 
+x-manager-producer:
+  &base-manager-producer
+  image:
+    repository: ts-dockerhub.lsst.org/love-manager
+    pullPolicy: Always
+  env:
+    LOVE_SITE: base
+    SERVER_URL: base-lsp.lsst.codes
+    OLE_API_HOSTNAME: base-lsp.lsst.codes
+    AUTH_LDAP_1_SERVER_URI: ldap://ipa1.ls.lsst.org
+    AUTH_LDAP_2_SERVER_URI: ldap://ipa2.ls.lsst.org
+    AUTH_LDAP_3_SERVER_URI: ldap://ipa3.ls.lsst.org
+    COMMANDER_HOSTNAME: love-commander-service
+    COMMANDER_PORT: 5000
+    DB_HOST: postgresdb01.ls.lsst.org
+    DB_ENGINE: postgresql
+    DB_NAME: love
+    DB_PORT: 5432
+    DB_USER: love
+    HEARTBEAT_QUERY_COMMANDER: false
+    JIRA_API_HOSTNAME: rubinobs.atlassian.net
+    JIRA_PROJECT_ID: 10063
+    REDIS_CONFIG_CAPACITY: 100
+    REDIS_CONFIG_EXPIRY: 5
+    REDIS_HOST: love-manager-redis-service
+    REMOTE_STORAGE: true
+    URL_SUBPATH: /love
+  envSecrets:
+    SECRET_KEY: manager-secret-key
+    PROCESS_CONNECTION_PASS: process-connection-pass
+    ADMIN_USER_PASS: admin-user-pass
+    USER_USER_PASS: user-user-pass
+    CMD_USER_PASS: cmd-user-pass
+    AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
+    DB_PASS: db-pass
+    REDIS_PASS: redis-pass
+  resources:
+    requests:
+      cpu: 150m
+      memory: 200Mi
+    limits:
+      cpu: 1000m
+      memory: 1500Mi
+  readinessProbe:
+    tcpSocket:
+      port: 8000
+    initialDelaySeconds: 20
+    periodSeconds: 10
+  autoscaling:
+    enabled: false
+
 love-manager:
   manager:
     frontend:
@@ -65,191 +116,20 @@ love-manager:
         periodSeconds: 10
     producers:
     - name: general
-      image:
-        repository: ts-dockerhub.lsst.org/love-manager
-        pullPolicy: Always
-      env:
-        LOVE_SITE: base
-        SERVER_URL: base-lsp.lsst.codes
-        OLE_API_HOSTNAME: base-lsp.lsst.codes
-        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.ls.lsst.org
-        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.ls.lsst.org
-        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.ls.lsst.org
-        COMMANDER_HOSTNAME: love-commander-service
-        COMMANDER_PORT: 5000
-        DB_HOST: postgresdb01.ls.lsst.org
-        DB_ENGINE: postgresql
-        DB_NAME: love
-        DB_PORT: 5432
-        DB_USER: love
-        HEARTBEAT_QUERY_COMMANDER: false
-        JIRA_API_HOSTNAME: rubinobs.atlassian.net
-        JIRA_PROJECT_ID: 10063
-        REDIS_CONFIG_CAPACITY: 100
-        REDIS_CONFIG_EXPIRY: 5
-        REDIS_HOST: love-manager-redis-service
-        REMOTE_STORAGE: true
-        URL_SUBPATH: /love
-      envSecrets:
-        SECRET_KEY: manager-secret-key
-        PROCESS_CONNECTION_PASS: process-connection-pass
-        ADMIN_USER_PASS: admin-user-pass
-        USER_USER_PASS: user-user-pass
-        CMD_USER_PASS: cmd-user-pass
-        AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
-        DB_PASS: db-pass
-        REDIS_PASS: redis-pass
+      <<: *base-manager-producer
       replicas: 10
-      autoscaling:
-        enabled: false
-        minReplicas: 2
-        maxReplicas: 25
-        targetCPUUtilizationPercentage: 50
-        scaleDownPolicy:
-          policies:
-          - type: Pods
-            value: 2
-            periodSeconds: 120
-          - type: Percent
-            value: 10
-            periodSeconds: 120
-          selectPolicy: Min
-      resources:
-        requests:
-          cpu: 150m
-          memory: 200Mi
-        limits:
-          cpu: 1000m
-          memory: 1500Mi
-      readinessProbe:
-        tcpSocket:
-          port: 8000
-        initialDelaySeconds: 20
-        periodSeconds: 10
-    - name: queue
-      image:
-        repository: ts-dockerhub.lsst.org/love-manager
-        pullPolicy: Always
-      env:
-        LOVE_SITE: base
-        SERVER_URL: base-lsp.lsst.codes
-        OLE_API_HOSTNAME: base-lsp.lsst.codes
-        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.ls.lsst.org
-        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.ls.lsst.org
-        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.ls.lsst.org
-        COMMANDER_HOSTNAME: love-commander-service
-        COMMANDER_PORT: 5000
-        DB_HOST: postgresdb01.ls.lsst.org
-        DB_ENGINE: postgresql
-        DB_NAME: love
-        DB_PORT: 5432
-        DB_USER: love
-        HEARTBEAT_QUERY_COMMANDER: false
-        JIRA_API_HOSTNAME: rubinobs.atlassian.net
-        JIRA_PROJECT_ID: 10063
-        REDIS_CONFIG_CAPACITY: 100
-        REDIS_CONFIG_EXPIRY: 5
-        REDIS_HOST: love-manager-redis-service
-        REMOTE_STORAGE: true
-        URL_SUBPATH: /love
-      envSecrets:
-        SECRET_KEY: manager-secret-key
-        PROCESS_CONNECTION_PASS: process-connection-pass
-        ADMIN_USER_PASS: admin-user-pass
-        USER_USER_PASS: user-user-pass
-        CMD_USER_PASS: cmd-user-pass
-        AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
-        DB_PASS: db-pass
-        REDIS_PASS: redis-pass
-      replicas: 3
-      autoscaling:
-        enabled: false
-        minReplicas: 2
-        maxReplicas: 25
-        targetCPUUtilizationPercentage: 50
-        scaleDownPolicy:
-          policies:
-          - type: Pods
-            value: 2
-            periodSeconds: 120
-          - type: Percent
-            value: 10
-            periodSeconds: 120
-          selectPolicy: Min
-      resources:
-        requests:
-          cpu: 150m
-          memory: 200Mi
-        limits:
-          cpu: 1000m
-          memory: 1500Mi
-      readinessProbe:
-        tcpSocket:
-          port: 8000
-        initialDelaySeconds: 20
-        periodSeconds: 10
-    - name: m1m3
-      image:
-        repository: ts-dockerhub.lsst.org/love-manager
-        pullPolicy: Always
-      env:
-        LOVE_SITE: base
-        SERVER_URL: base-lsp.lsst.codes
-        OLE_API_HOSTNAME: base-lsp.lsst.codes
-        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.ls.lsst.org
-        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.ls.lsst.org
-        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.ls.lsst.org
-        COMMANDER_HOSTNAME: love-commander-service
-        COMMANDER_PORT: 5000
-        DB_HOST: postgresdb01.ls.lsst.org
-        DB_ENGINE: postgresql
-        DB_NAME: love
-        DB_PORT: 5432
-        DB_USER: love
-        HEARTBEAT_QUERY_COMMANDER: false
-        JIRA_API_HOSTNAME: rubinobs.atlassian.net
-        JIRA_PROJECT_ID: 10063
-        REDIS_CONFIG_CAPACITY: 100
-        REDIS_CONFIG_EXPIRY: 5
-        REDIS_HOST: love-manager-redis-service
-        REMOTE_STORAGE: true
-        URL_SUBPATH: /love
-      envSecrets:
-        SECRET_KEY: manager-secret-key
-        PROCESS_CONNECTION_PASS: process-connection-pass
-        ADMIN_USER_PASS: admin-user-pass
-        USER_USER_PASS: user-user-pass
-        CMD_USER_PASS: cmd-user-pass
-        AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
-        DB_PASS: db-pass
-        REDIS_PASS: redis-pass
+    - name: atqueue
+      <<: *base-manager-producer
       replicas: 1
-      autoscaling:
-        enabled: false
-        minReplicas: 2
-        maxReplicas: 25
-        targetCPUUtilizationPercentage: 50
-        scaleDownPolicy:
-          policies:
-          - type: Pods
-            value: 2
-            periodSeconds: 120
-          - type: Percent
-            value: 10
-            periodSeconds: 120
-          selectPolicy: Min
-      resources:
-        requests:
-          cpu: 150m
-          memory: 200Mi
-        limits:
-          cpu: 1000m
-          memory: 1500Mi
-      readinessProbe:
-        tcpSocket:
-          port: 8000
-        initialDelaySeconds: 20
-        periodSeconds: 10
+    - name: mtqueue
+      <<: *base-manager-producer
+      replicas: 1
+    - name: ocsqueue
+      <<: *base-manager-producer
+      replicas: 1
+    - name: m1m3
+      <<: *base-manager-producer
+      replicas: 1
   redis:
     image:
       repository: redis
@@ -347,8 +227,24 @@ love-nginx:
           proxy_set_header Host $host;
           proxy_redirect off;
       }
-      location /love/manager/queue {
-          proxy_pass http://love-manager-producer-queue-service:8000;
+      location /love/manager/atqueue {
+          proxy_pass http://love-manager-producer-atqueue-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/mtqueue {
+          proxy_pass http://love-manager-producer-mtqueue-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/ocsqueue {
+          proxy_pass http://love-manager-producer-ocsqueue-service:8000;
           proxy_http_version 1.1;
           proxy_set_header Upgrade $http_upgrade;
           proxy_set_header Connection "upgrade";
@@ -488,7 +384,7 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: atscriptqueue
     csc: ScriptQueue:2 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/queue/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atqueue/ws/subscription
     resources:
       requests:
         cpu: 50m
@@ -752,7 +648,7 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtscriptqueue
     csc: ScriptQueue:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/queue/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtqueue/ws/subscription
     resources:
       requests:
         cpu: 50m
@@ -768,7 +664,7 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ocsscriptqueue
     csc: ScriptQueue:3 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/queue/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/ocsqueue/ws/subscription
     resources:
       requests:
         cpu: 50m
