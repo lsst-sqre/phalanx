@@ -20,6 +20,7 @@ argo-cd:
         requestedScopes: ["openid", "profile", "email", "groups"]
         # Optional set of OIDC claims to request on the ID token.
         requestedIDTokenClaims: {"groups": {"essential": true}}
+      ui.bannercontent: "usdf-rapid-analysis"
     rbac:
       policy.csv: |
         g, ytl@slac.stanford.edu, role:admin

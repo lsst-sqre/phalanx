@@ -15,6 +15,7 @@ argo-cd:
               hostedDomains:
                 - lsst.cloud
               redirectURI: https://data-int.lsst.cloud/argo-cd/api/dex/callback
+      ui.bannercontent: "idfint"
     rbac:
       policy.csv: |
         p, role:developer, applications, *, */*, allow
