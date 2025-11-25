@@ -76,6 +76,8 @@ spec:
   podMetricsEndpoints:
   - path: /metrics
     port: tcp-prometheus
+    interval: 30s
+    scrapeTimeout: 20s
     relabelings:
     - separator: ;
       regex: __meta_kubernetes_pod_label_(strimzi_io_.+)
