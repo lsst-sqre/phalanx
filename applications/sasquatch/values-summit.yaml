@@ -36,6 +36,8 @@ strimzi-kafka:
           host: sasquatch-summit-kafka-8.lsst.codes
     metricsConfig:
       enabled: true
+      interval: 40s
+      scrapeTimeout: 30s
   kafkaExporter:
     enabled: true
     logging: debug
