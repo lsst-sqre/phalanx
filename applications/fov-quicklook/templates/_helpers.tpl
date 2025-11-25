@@ -58,3 +58,10 @@ rules:
   value: {{ .value | quote }}
 {{- end }}
 {{- end }}
+
+{{- define "fov-quicklook.env.ccd_data_types" -}}
+{{- if .Values.ccd_data_types }}
+- name: QUICKLOOK_ccd_data_types
+  value: {{ .Values.ccd_data_types | toJson | quote }}
+{{- end }}
+{{- end }}

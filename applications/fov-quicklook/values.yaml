@@ -124,3 +124,44 @@ butler_settings:
 
 # -- Context menu templates for the frontend
 context_menu_templates: []
+
+# -- CCD data type configurations for the quicklook system
+# Each entry defines how to access different types of Butler data
+ccd_data_types:
+  # -- Raw data from LSSTCam
+  - id: raw
+    name: raw
+    display_name: Raw
+    collections:
+      - LSSTCam/raw/all
+    data_id_dimension: exposure
+    order_by:
+      - -day_obs
+      - -exposure
+    partial: false
+    repository_name: embargo
+    instrument: LSSTCam
+  # -- Post-ISR (Instrument Signature Removal) processed images
+  - id: post_isr_image
+    name: post_isr_image
+    display_name: Post-ISR
+    collections:
+      - LSSTCam/runs/nightlyValidation
+    data_id_dimension: exposure
+    order_by:
+      - -exposure
+    partial: true
+    repository_name: embargo
+    instrument: LSSTCam
+  # -- Preliminary visit images
+  - id: preliminary_visit_image
+    name: preliminary_visit_image
+    display_name: Preliminary
+    collections:
+      - LSSTCam/runs/nightlyValidation
+    data_id_dimension: visit
+    order_by:
+      - -visit
+    partial: true
+    repository_name: embargo
+    instrument: LSSTCam
