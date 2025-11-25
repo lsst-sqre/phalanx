@@ -33,8 +33,8 @@ hinfo:
     logConfig: "INFO"
 
 pq:
-  # -- Number of consdb-hinfo deployment pods to start
-  replicaCount: 1
+  # -- Number of consdb-pqserver deployment pods to start
+  replicaCount: 2
   image:
     # -- Pull policy for the consdb-hinfo image
     pullPolicy: "Always"
