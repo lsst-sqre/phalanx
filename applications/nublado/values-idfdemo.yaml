@@ -5,9 +5,9 @@ controller:
   slackAlerts: true
   nodeSelector:
     node_pool: "arm-core-pool"
-  # image:
-  #   tag: tickets-DM-53011
-  #   pullPolicy: Always
+  image:
+    tag: tickets-DM-53305
+    pullPolicy: Always
   config:
     dropdownMenu:
       release:
@@ -64,6 +64,20 @@ controller:
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
+        - name: "rsp-initcontainer"
+          image:
+            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/rsp-initcontainer"
+            tag: "tickets-DM-53305"
+            pullPolicy: "Always"
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+            - containerPath: "/etc/passwd"
+              volumeName: "passwd"
+              readOnly: true
+            - containerPath: "/etc/group"
+              volumeName: "group"
+              readOnly: true
       nodeSelector:
         node_pool: "user-lab-pool"
       pullSecret: pull-secret
