@@ -430,11 +430,11 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1
-      memory: 6G
+      cpu: 2
+      memory: 10G
     limits:
-      cpu: 1
-      memory: 8G
+      cpu: 3
+      memory: 12G
 - name: LSSTCam/runClusterManager.py
   mounts:
   - lsstcam-data
