@@ -148,7 +148,7 @@ alert-database:
   ingester:
     # The image can use either a tag or a digest to determine which is being used.
     image:
-      tag: tickets-DM-52309
+      tag: v3.4.0
 
     logLevel: verbose
 
@@ -161,7 +161,6 @@ alert-database:
       port: 9092
       topic:
         - lsst-alerts-v9.0
-        - lsst-alerts-v7.4
 
   server:
     serviceAccountName: alert-database-reader
