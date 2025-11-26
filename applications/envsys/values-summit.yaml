@@ -152,7 +152,7 @@ dimm2:
 dream:
   enabled: true
   image:
-    revision: 6
+    revision: 7
     repository: ts-dockerhub.lsst.org/dream
     pullPolicy: Always
   env:
@@ -190,7 +190,7 @@ earthquake-ess302:
 eas:
   enabled: true
   image:
-    revision: 6
+    revision: 7
     repository: ts-dockerhub.lsst.org/eas
     pullPolicy: Always
   resources:
