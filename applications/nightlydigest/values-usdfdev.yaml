@@ -60,6 +60,10 @@ nightlydigest-backend:
       value: https://usdf-rsp-dev.slac.stanford.edu
     - name: RUBIN_SIM_DATA_DIR
       value: &rsd /sdf/data/rubin/shared/rubin_sim_data
+    - name: AWS_SHARED_CREDENTIALS_FILE
+      value: /etc/secrets/aws-credentials-butler.ini
+    - name: S3_ENDPOINT_URL
+      value: https://s3dfrgw.slac.stanford.edu
   envSecrets:
     - name: JIRA_API_TOKEN
       secretName: nightlydigest

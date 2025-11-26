@@ -53,6 +53,9 @@ spec:
             {{- end }}
           {{- if .Values.pvcMountpoints}}
           volumeMounts:
+          - name: nightlydigest-backend-secrets
+            mountPath: "/etc/secrets"
+            readOnly: true
           {{- range $vol := .Values.pvcMountpoints }}
           - name: {{ $vol.name }}
             readOnly: {{ $vol.mount.readOnly | default true }}
@@ -64,6 +67,10 @@ spec:
           {{- end }}
       {{- if .Values.pvcMountpoints}}
       volumes:
+      - name: nightlydigest-backend-secrets
+        secret:
+          secretName: nightlydigest
+          defaultMode: 0400
       {{- range $vol := .Values.pvcMountpoints }}
       - name: {{ $vol.name | quote }}
         persistentVolumeClaim:
