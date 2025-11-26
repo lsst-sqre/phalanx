@@ -3,6 +3,10 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: "[[ name ]]"
+  {{- if .Values.defaultComputeClass }}
+  labels:
+    cloud.google.com/default-compute-class: {{ .Values.defaultComputeClass | quote }}
+  {{- end}}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
