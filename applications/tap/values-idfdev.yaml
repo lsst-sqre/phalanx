@@ -2,12 +2,17 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfdev-tap"
+      pullPolicy: "Always"
+      tag: "tickets-DM-53338"
 
   config:
     qserv:
       host: "qserv-int.slac.stanford.edu:4090"
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
+      image:
+        tag: "tickets-DM-53437"
+        pullPolicy: "Always"
 
     kafka:
       enabled: true
