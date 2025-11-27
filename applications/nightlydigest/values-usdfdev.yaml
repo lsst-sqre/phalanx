@@ -48,7 +48,7 @@ nightlydigest-nginx:
     }
 
 nightlydigest-backend:
-  replicas: 4
+  replicas: 5
   image:
     repository: ts-dockerhub.lsst.org/nightlydigest-backend
     tag: c0042
