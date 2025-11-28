@@ -36,7 +36,7 @@ auxtel-ess308:
   enabled: true
   classifier: ess308
   image:
-    revision: 6
+    revision: 7
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
