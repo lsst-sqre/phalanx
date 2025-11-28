@@ -18,6 +18,7 @@ nightlydigest-nginx:
     storageClass: sdf-data-rubin
     accessMode: ReadWriteMany
     claimSize: 1Gi
+    subPath: nightlydigest-dev
   resources:
     requests:
       cpu: 50m
