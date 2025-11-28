@@ -1,0 +1,38 @@
+{{- if (index .Values "applications" "octavius") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "octavius"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "octavius"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "octavius"
+    server: "https://kubernetes.default.svc"
+  project: "rubin"
+  source:
+    path: "applications/octavius"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ or (index .Values "revisions" "octavius") .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.repertoireUrl"
+          value: "https://{{ .Values.fqdn }}/repertoire"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}
