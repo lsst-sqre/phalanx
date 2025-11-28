@@ -21,9 +21,10 @@ spec:
       - name: nightlydigest-frontend
         image: "{{ .Values.initContainers.frontend.image.repository }}:{{ .Values.initContainers.frontend.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.initContainers.frontend.image.pullPolicy }}
-        command: ["/bin/sh", "-c", "mkdir -p /usr/src/nightlydigest; cp -Rv /usr/src/app/dist/* /usr/src/nightlydigest/"]
+        command: ["/bin/sh", "-c", "mkdir -p {{ .Values.staticStore.mountPath }}; cp -Rv /usr/src/app/dist/* {{ .Values.staticStore.mountPath }}/"]
         volumeMounts:
-          - mountPath: /usr/src
+          - mountPath: {{ .Values.staticStore.mountPath }}
+            subPath: {{ .Values.staticStore.subPath }}
             name: {{ .Values.staticStore.name }}
       containers:
       - name: {{ include "nightlydigest-nginx.name" . }}
@@ -35,7 +36,8 @@ spec:
           - mountPath: /etc/nginx/conf.d
             readOnly: true
             name: nginx-conf
-          - mountPath: /usr/src
+          - mountPath: {{ .Values.staticStore.mountPath }}
+            subPath: {{ .Values.staticStore.subPath }}
             name: {{ .Values.staticStore.name }}
         {{- with $.Values.resources }}
         resources:

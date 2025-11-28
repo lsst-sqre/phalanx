@@ -18,6 +18,8 @@ nightlydigest-nginx:
     storageClass: sdf-data-rubin
     accessMode: ReadWriteMany
     claimSize: 1Gi
+    mountPath: /usr/src/nightlydigest-dev
+    subPath: nightlydigest-dev
   resources:
     requests:
       cpu: 50m
@@ -30,8 +32,8 @@ nightlydigest-nginx:
       listen 80;
       server_name localhost;
       location /nightlydigest {
-        root /usr/src;
-        try_files $uri$args $uri$args/ $uri/ /nightlydigest/index.html;
+        alias /usr/src/nightlydigest-dev;
+        try_files $uri $uri/ /index.html;
       }
 
       location /nightlydigest/api/ {
