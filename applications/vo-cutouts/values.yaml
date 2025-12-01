@@ -87,7 +87,12 @@ frontend:
   podAnnotations: {}
 
   # -- Tolerations for the vo-cutouts frontend pod
-  tolerations: []
+  # @default -- Tolerage GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 cutoutWorker:
   # -- Number of cutout worker pods to start
@@ -124,7 +129,12 @@ cutoutWorker:
   podAnnotations: {}
 
   # -- Tolerations for the cutout worker pod
-  tolerations: []
+  # @default -- Tolerage GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 databaseWorker:
   # -- Number of database worker pods to start
@@ -150,7 +160,12 @@ databaseWorker:
   podAnnotations: {}
 
   # -- Tolerations for the database worker pod
-  tolerations: []
+  # @default -- Tolerage GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 redis:
   config:
@@ -200,7 +215,12 @@ redis:
   podAnnotations: {}
 
   # -- Tolerations for the Redis pod
-  tolerations: []
+  # @default -- Tolerage GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

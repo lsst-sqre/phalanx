@@ -30,19 +30,19 @@ Image cutout service complying with IVOA SODA
 | cutoutWorker.podAnnotations | object | `{}` | Annotations for the cutout worker pod |
 | cutoutWorker.replicaCount | int | `2` | Number of cutout worker pods to start |
 | cutoutWorker.resources | object | See `values.yaml` | Resource limits and requests for the cutout worker pod |
-| cutoutWorker.tolerations | list | `[]` | Tolerations for the cutout worker pod |
+| cutoutWorker.tolerations | list | Tolerage GKE arm64 taint | Tolerations for the cutout worker pod |
 | databaseWorker.affinity | object | `{}` | Affinity rules for the database worker pod |
 | databaseWorker.nodeSelector | object | `{}` | Node selection rules for the database worker pod |
 | databaseWorker.podAnnotations | object | `{}` | Annotations for the database worker pod |
 | databaseWorker.replicaCount | int | `1` | Number of database worker pods to start |
 | databaseWorker.resources | object | See `values.yaml` | Resource limits and requests for the database worker pod |
-| databaseWorker.tolerations | list | `[]` | Tolerations for the database worker pod |
+| databaseWorker.tolerations | list | Tolerage GKE arm64 taint | Tolerations for the database worker pod |
 | frontend.affinity | object | `{}` | Affinity rules for the vo-cutouts frontend pod |
 | frontend.nodeSelector | object | `{}` | Node selector rules for the vo-cutouts frontend pod |
 | frontend.podAnnotations | object | `{}` | Annotations for the vo-cutouts frontend pod |
 | frontend.replicaCount | int | `1` | Number of web frontend pods to start |
 | frontend.resources | object | See `values.yaml` | Resource limits and requests for the vo-cutouts frontend pod |
-| frontend.tolerations | list | `[]` | Tolerations for the vo-cutouts frontend pod |
+| frontend.tolerations | list | Tolerage GKE arm64 taint | Tolerations for the vo-cutouts frontend pod |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.butlerServerRepositories | string | Set by Argo CD | Butler repositories accessible via Butler server |
 | global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
@@ -63,4 +63,4 @@ Image cutout service complying with IVOA SODA
 | redis.persistence.volumeClaimName | string | `nil` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
 | redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
-| redis.tolerations | list | `[]` | Tolerations for the Redis pod |
+| redis.tolerations | list | Tolerage GKE arm64 taint | Tolerations for the Redis pod |
