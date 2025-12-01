@@ -18,6 +18,7 @@ nightlydigest-nginx:
     storageClass: rook-ceph-block
     accessMode: ReadWriteOnce
     claimSize: 2Gi
+    subPath: nightlydigest
   resources:
     requests:
       cpu: 50m

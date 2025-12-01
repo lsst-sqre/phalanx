@@ -23,7 +23,8 @@ spec:
         imagePullPolicy: {{ .Values.initContainers.frontend.image.pullPolicy }}
         command: ["/bin/sh", "-c", "mkdir -p /usr/src/nightlydigest; cp -Rv /usr/src/app/dist/* /usr/src/nightlydigest/"]
         volumeMounts:
-          - mountPath: /usr/src
+          - mountPath: /usr/src/nightlydigest
+            subPath: {{ .Values.staticStore.subPath }}
             name: {{ .Values.staticStore.name }}
       containers:
       - name: {{ include "nightlydigest-nginx.name" . }}
@@ -35,7 +36,8 @@ spec:
           - mountPath: /etc/nginx/conf.d
             readOnly: true
             name: nginx-conf
-          - mountPath: /usr/src
+          - mountPath: /usr/src/nightlydigest
+            subPath: {{ .Values.staticStore.subPath }}
             name: {{ .Values.staticStore.name }}
         {{- with $.Values.resources }}
         resources:
