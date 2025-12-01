@@ -50,6 +50,7 @@ Qserv Kafka bridge
 | frontend.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka frontend pod |
 | frontend.tolerations | list | `[]` | Tolerations for the qserv-kafka frontend pod |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the qserv-kafka image |

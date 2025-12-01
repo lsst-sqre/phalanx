@@ -290,6 +290,10 @@ global:
   # @default -- Set by Argo CD
   baseUrl: null
 
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD Application
+  environmentName: null
+
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null

@@ -16,3 +16,7 @@ data:
   CUTOUT_SYNC_TIMEOUT: {{ .Values.config.syncTimeout | quote }}
   CUTOUT_TIMEOUT: {{ .Values.config.timeout | quote }}
   CUTOUT_WOBBLY_URL: "{{ .Values.global.baseUrl }}/wobbly"
+  {{- if .Values.config.sentry.enabled }}
+  SENTRY_ENVIRONMENT: {{ .Values.global.environmentName | quote }}
+  SENTRY_TRACES_SAMPLE_RATE: {{ .Values.config.sentry.tracesSampleRate | quote }}
+  {{- end }}

@@ -28,6 +28,14 @@ config:
   # -- Whether to send Slack alerts for unexpected failures
   slackAlerts: true
 
+  sentry:
+    # -- Set to true to enable the Sentry integration.
+    enabled: false
+
+    # -- The percentage of requests that should be traced. This should be a
+    # float between 0 and 1.
+    tracesSampleRate: 0.0
+
   # -- URL for the GCS bucket for results (must start with `gs`)
   # @default -- None, must be set
   storageBucketUrl: null
@@ -204,6 +212,10 @@ global:
   # -- Butler repositories accessible via Butler server
   # @default -- Set by Argo CD
   butlerServerRepositories: null
+
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD Application
+  environmentName: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
