@@ -9,6 +9,8 @@ strimzi-kafka:
         enabled: false
   controller:
     enabled: true
+    storage:
+      storageClassName: "standard-rwo"
     affinity:
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
