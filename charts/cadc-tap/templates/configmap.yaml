@@ -26,3 +26,20 @@ data:
     url.rewrite.enabled={{ .Values.config.urlRewrite.enabled | default true }}
     # Format: table1:column1,table2:column2,table3:column3
     url.rewrite.rules={{ .Values.config.urlRewrite.rules | default "ivoa.ObsCore:access_url" }}
+  PluginFactory.properties: |
+    ca.nrc.cadc.tap.TapQuery.langValues = ADQL ADQL-2.0
+    {{- if eq .Values.config.backend "bigquery" }}
+    ADQL = org.opencadc.tap.dialect.bigquery.BigQueryAdqlQueryImpl
+    ADQL-2.0 = org.opencadc.tap.dialect.bigquery.BigQueryAdqlQueryImpl
+    ca.nrc.cadc.tap.writer.format.FormatFactory=org.opencadc.tap.dialect.bigquery.writer.format.BigQueryFormatFactory
+    {{- else }}
+    ADQL = org.opencadc.tap.dialect.qserv.QServAdqlQueryImpl
+    ADQL-2.0 = org.opencadc.tap.dialect.qserv.QServAdqlQueryImpl
+    ca.nrc.cadc.tap.writer.format.FormatFactory = org.opencadc.tap.impl.RubinFormatFactory
+    {{- end }}
+    ca.nrc.cadc.tap.TableWriter = org.opencadc.tap.impl.RubinTableWriter
+    ca.nrc.cadc.tap.upload.datatype.DatabaseDataType = ca.nrc.cadc.tap.upload.datatype.OracleDataType
+    ca.nrc.cadc.tap.ResultStore = org.opencadc.tap.impl.ResultStoreImpl
+    ca.nrc.cadc.tap.schema.TapSchemaDAO = org.opencadc.tap.schema.ALMATapSchemaDAO
+    ca.nrc.cadc.tap.UploadManager = org.opencadc.tap.impl.RubinUploadManagerImpl
+    ca.nrc.cadc.tap.MaxRecValidator = org.opencadc.tap.impl.MaxRecValidatorImpl
