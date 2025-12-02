@@ -94,8 +94,6 @@ influxdb:
 
 influxdb-enterprise-standby:
   enabled: true
-  image:
-    tag: "1.12.2"
   license:
     secret:
       name: sasquatch
@@ -157,8 +155,6 @@ influxdb-enterprise-standby:
 
 influxdb-enterprise-active:
   enabled: true
-  image:
-    tag: "1.12.2"
   license:
     secret:
       name: sasquatch
