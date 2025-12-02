@@ -4,4 +4,4 @@ version: 1.0.0
 description: Run InfluxDB Enterprise on Kubernetes
 sources:
   - https://github.com/influxdata/influxdb
-appVersion: 1.11.8
+appVersion: 1.12.2
