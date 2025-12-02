@@ -41,9 +41,9 @@ server:
   port: 9000
 
 # -- The endpoint of Schema Registry
-schemaRegistry: "prompt-kafka-schema-registry:8081"
+schemaRegistry: "http://prompt-kafka-schema-registry:8081"
 
-# -- Existing Kubernetes secrect use to set kafdrop environment variables.
+# -- Existing Kubernetes secret use to set kafdrop environment variables.
 # Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form
 # `<username>:<password>`
 # @default -- Do not use a secret
@@ -51,7 +51,7 @@ existingSecret: ""
 
 # -- Command line arguments to Kafdrop
 # @default -- See `values.yaml`
-cmdArgs: "--message.format=AVRO --topic.deleteEnabled=false --topic.createEnabled=false"
+cmdArgs: "--topic.deleteEnabled=false --topic.createEnabled=false"
 
 service:
   # -- Additional annotations to add to the service
@@ -81,8 +81,8 @@ resources:
     memory: 200Mi
     cpu: 1
   limits:
-    memory: 4Gi
-    cpu: 2
+    memory: 2Gi
+    cpu: 1
 
 # -- Node selector configuration
 nodeSelector: {}

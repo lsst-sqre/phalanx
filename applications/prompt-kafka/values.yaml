@@ -36,4 +36,4 @@ strimzi-registry-operator:
 
 kafdrop:
   # -- Whether Kafdrop is enabled
-  enabled: false
+  enabled: true

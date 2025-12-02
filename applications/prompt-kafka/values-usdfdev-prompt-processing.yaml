@@ -20,4 +20,6 @@ strimzi-kafka:
       replicas: 3
       retention: 1209600000 # milliseconds, = 2 weeks
 kafdrop:
-  enabled: true
+  ingress:
+    enabled: true
+    hostname: usdfdev-prompt-processing.slac.stanford.edu

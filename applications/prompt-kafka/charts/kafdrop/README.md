@@ -12,7 +12,7 @@ A subchart to deploy the Kafdrop UI.
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity configuration |
 | cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |
-| existingSecret | string | Do not use a secret | Existing Kubernetes secrect use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |
+| existingSecret | string | Do not use a secret | Existing Kubernetes secret use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |
 | host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository |
@@ -29,7 +29,7 @@ A subchart to deploy the Kafdrop UI.
 | podAnnotations | object | `{}` | Pod annotations |
 | replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
 | resources | object | See `values.yaml` | Kubernetes requests and limits for Kafdrop |
-| schemaRegistry | string | `"prompt-kafka-schema-registry:8081"` | The endpoint of Schema Registry |
+| schemaRegistry | string | `"http://prompt-kafka-schema-registry:8081"` | The endpoint of Schema Registry |
 | server.port | int | `9000` | The web server port to listen on |
 | server.servlet.contextPath | string | `"/kafdrop"` | The context path to serve requests on |
 | service.annotations | object | `{}` | Additional annotations to add to the service |
