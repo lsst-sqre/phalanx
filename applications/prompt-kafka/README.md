@@ -22,7 +22,7 @@ Kafka environment for Prompt Processing
 | strimzi-registry-operator.operatorNamespace | string | `"prompt-kafka"` | Namespace where the strimzi-registry-operator is deployed |
 | kafdrop.affinity | object | `{}` | Affinity configuration |
 | kafdrop.cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |
-| kafdrop.existingSecret | string | Do not use a secret | Existing Kubernetes secrect use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |
+| kafdrop.existingSecret | string | Do not use a secret | Existing Kubernetes secret use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |
 | kafdrop.host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
 | kafdrop.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | kafdrop.image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository |
@@ -39,7 +39,7 @@ Kafka environment for Prompt Processing
 | kafdrop.podAnnotations | object | `{}` | Pod annotations |
 | kafdrop.replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
 | kafdrop.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafdrop |
-| kafdrop.schemaRegistry | string | `"prompt-kafka-schema-registry:8081"` | The endpoint of Schema Registry |
+| kafdrop.schemaRegistry | string | `"http://prompt-kafka-schema-registry:8081"` | The endpoint of Schema Registry |
 | kafdrop.server.port | int | `9000` | The web server port to listen on |
 | kafdrop.server.servlet.contextPath | string | `"/kafdrop"` | The context path to serve requests on |
 | kafdrop.service.annotations | object | `{}` | Additional annotations to add to the service |
