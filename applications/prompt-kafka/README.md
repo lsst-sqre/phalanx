@@ -11,7 +11,7 @@ Kafka environment for Prompt Processing
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| kafdrop.enabled | bool | `false` | Whether Kafdrop is enabled |
+| kafdrop.enabled | bool | `true` | Whether Kafdrop is enabled |
 | strimzi-kafka.kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled |
 | strimzi-kafka.kafka.listeners.noauth.enabled | bool | `true` | Whether internal no authentication listener is enabled |
 | strimzi-kafka.kafka.listeners.plain.enabled | bool | `true` | Whether internal plaintext listener is enabled |
