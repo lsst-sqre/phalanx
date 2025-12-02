@@ -3,7 +3,7 @@ strimzi-kafka:
     butlerWriter:
       enabled: true
     kafdrop:
-      enabled: false
+      enabled: true
   kraft:
     enabled: true
   kafkaController:
