@@ -2,6 +2,10 @@ cadc-tap:
   config:
     kafka:
       enabled: true
+    qserv:
+      image:
+        tag: "tickets-DM-53451"
+        pullPolicy: "Always"
 
     urlRewrite:
       enabled: true
