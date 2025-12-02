@@ -1,31 +1,20 @@
 cadc-tap:
-
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfdev-tap"
-
+    type: "cloudsql"
+    username: "tap"
+    database: "tap"
+    useVaultPassword: true
 
   config:
-    backend: "bigquery"
-
     qserv:
       host: "qserv-int.slac.stanford.edu:4090"
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
 
-    bigquery:
-      project: "ppdb-dev-438721"
-      dataset: "ppdb_dm50643_1"
-      image:
-        tag: "tickets-DM-53451"
-        pullPolicy: "Always"
-
     kafka:
       enabled: true
-      #topics:
-      #  jobRun: "lsst.bigquery.job-run"
-      #  jobStatus: "lsst.bigquery.job-status"
-      #  jobDelete: "lsst.bigquery.job-delete"
 
     urlRewrite:
       enabled: true
