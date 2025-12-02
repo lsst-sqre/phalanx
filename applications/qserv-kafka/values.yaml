@@ -183,7 +183,12 @@ frontend:
       memory: "145Mi"
 
   # -- Tolerations for the qserv-kafka frontend pod
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 redis:
   config:
@@ -222,6 +227,14 @@ redis:
     requests:
       cpu: "10m"
       memory: "20Mi"
+
+  # -- Tolerations for the qserv-kafka Redis pod
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 resultWorker:
   # -- Affinity rules for the qserv-kafka worker pods
@@ -267,11 +280,16 @@ resultWorker:
       memory: "145Mi"
 
   # -- Tolerations for the qserv-kafka worker pods
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 periodicMetrics:
-  # -- How often to run the periodic metrics job
-  schedule: "* * * * *"
+  # -- Affinity rules for the qserv-kafka metrics job
+  affinity: {}
 
   # -- Resource limits and requests for the qserv-kafka periodic metrics pods
   # @default -- See `values.yaml`
@@ -282,6 +300,23 @@ periodicMetrics:
     requests:
       cpu: "100m"
       memory: "50Mi"
+
+  # -- Node selection rules for the qserv-kafka metrics job
+  nodeSelector: {}
+
+  # -- Annotations for the qserv-kafka metrics job
+  podAnnotations: {}
+
+  # -- How often to run the periodic metrics job
+  schedule: "* * * * *"
+
+  # -- Tolerations for the qserv-kafka metrics job
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

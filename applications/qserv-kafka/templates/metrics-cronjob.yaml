@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "qserv-kafka.labels" . | nindent 4 }}
 spec:
-  schedule: {{ .Values.periodicMetrics.schedule | quote }}
   concurrencyPolicy: "Forbid"
   jobTemplate:
     spec:
@@ -16,15 +15,19 @@ spec:
             app.kubernetes.io/component: "periodic-metrics"
             qserv-kafka-redis-client: "true"
         spec:
-          restartPolicy: "Never"
+          {{- with .Values.periodicMetrics.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          automountServiceAccountToken: false
           containers:
             - name: periodic-metrics
               command: ["qserv-kafka", "publish-periodic-metrics"]
               env:
               {{- include "qserv-kafka.envVars" (dict "Values" .Values) | nindent 14 }}
               envFrom:
-              - configMapRef:
-                  name: "qserv-kafka"
+                - configMapRef:
+                    name: "qserv-kafka"
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
               resources:
@@ -48,11 +51,21 @@ spec:
                   mountPath: "/etc/qserv-kafka/user.key"
                   readOnly: true
                   subPath: "ssl.keystore.key"
+          {{- with .Values.periodicMetrics.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          restartPolicy: "Never"
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
             runAsGroup: 1000
+          {{- with .Values.periodicMetrics.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumes:
             - name: "kafka"
               secret:
                 secretName: "qserv-kafka-access"
+  schedule: {{ .Values.periodicMetrics.schedule | quote }}
