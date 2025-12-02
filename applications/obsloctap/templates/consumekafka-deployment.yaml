@@ -130,7 +130,7 @@ spec:
           - name: {{ $vol.name | quote }}
             {{ with $vol.persistentVolumeClaim }}
             persistentVolumeClaim:
-              claimName: {{ .name | quote }}
+              claimName: {{ $vol.name | quote }}
             {{- end }}
           {{- end }}
           {{- range $vol := .Values.consumekafka.nfsMountpoint }}
