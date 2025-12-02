@@ -14,10 +14,8 @@ consumekafka:
   logLevel: info
   pvcMountpoint:
     - name: sdf-data-rubin
-      persistentVolumeClaims:
-        - name: sdf-data-rubin
-          storageClassName: sdf-data-rubin
-          capacity: 1Gi
+      storageClassName: sdf-data-rubin
+      capacity: 1Gi
       accessMode: ReadOnlyMany
       mountPath: /sdf/data/rubin
 
