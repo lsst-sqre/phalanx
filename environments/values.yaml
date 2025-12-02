@@ -31,6 +31,12 @@ vaultUrl: "https://vault.lsst.cloud/"
 # @default -- None, must be set
 vaultPathPrefix: ""
 
+# -- Whether to force workloads into Autopilot or Standard mode. If this is
+# null, the workloads will use the compute class that corresponds to the
+# cluster type. Here's an [example of setting an Autopilot compute
+# class](https://cloud.google.com/kubernetes-engine/docs/how-to/autopilot-classes-standard-clusters#built-in-class)
+defaultComputeClass: null
+
 applications:
   # -- Enable the alert-stream-broker application
   alert-stream-broker: false
