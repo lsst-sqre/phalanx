@@ -124,10 +124,6 @@ influxdb-enterprise-standby:
       failureThreshold: 15
       initialDelaySeconds: 900
       periodSeconds: 60
-    config:
-      cluster:
-        max-concurrent-queries: 150
-        query-timeout: "90s"
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
@@ -192,16 +188,6 @@ influxdb-enterprise-active:
       failureThreshold: 15
       initialDelaySeconds: 900
       periodSeconds: 60
-    config:
-      cluster:
-        max-concurrent-queries: 100
-        query-timeout: "180s"
-        log-queries-after: "10s"
-        log-timedout-queries: true
-        termination-query-log: true
-        max-select-point: 50000000
-        max-select-series: 200000
-        max-select-buckets: 20000
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:

@@ -81,15 +81,6 @@ influxdb-enterprise:
     config:
       antiEntropy:
         enabled: true
-      cluster:
-        max-concurrent-queries: 100
-        query-timeout: "180s"
-        log-queries-after: "10s"
-        log-timedout-queries: true
-        termination-query-log: true
-        max-select-point: 50000000
-        max-select-series: 200000
-        max-select-buckets: 20000
     ingress:
       enabled: true
       hostname: data-dev.lsst.cloud

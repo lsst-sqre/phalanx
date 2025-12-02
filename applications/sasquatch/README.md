@@ -153,9 +153,14 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
 | influxdb-enterprise.data.affinity | object | See `values.yaml` | Affinity rules for data pods |
 | influxdb-enterprise.data.config.antiEntropy.enabled | bool | `false` | Enable the anti-entropy service, which copies and repairs shards |
-| influxdb-enterprise.data.config.cluster.log-queries-after | string | `"15s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
-| influxdb-enterprise.data.config.cluster.max-concurrent-queries | int | `1000` | Maximum number of running queries allowed on the instance (0 is unlimited) |
-| influxdb-enterprise.data.config.cluster.query-timeout | string | `"300s"` | Maximum duration a query is allowed to run before it is killed |
+| influxdb-enterprise.data.config.cluster.log-queries-after | string | `"10s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
+| influxdb-enterprise.data.config.cluster.log-timedout-queries | bool | `true` | Whether to log timed out queries |
+| influxdb-enterprise.data.config.cluster.max-concurrent-queries | int | `50` | Maximum number of running queries allowed |
+| influxdb-enterprise.data.config.cluster.max-select-buckets | int | `20000` | Maximum number of GROUP BY time() buckets a single select query can retrieve |
+| influxdb-enterprise.data.config.cluster.max-select-point | int | `50000000` | Maximum number of points a single select query can process before it is killed |
+| influxdb-enterprise.data.config.cluster.max-select-series | int | `200000` | Maximum number of series a single select query can process before it is killed |
+| influxdb-enterprise.data.config.cluster.query-timeout | string | `"180s"` | Maximum duration a query is allowed to run before it is killed |
+| influxdb-enterprise.data.config.cluster.termination-query-log | bool | `true` | Whether to log queries that are terminated due to resource limits |
 | influxdb-enterprise.data.config.continuousQueries.enabled | bool | `false` | Whether continuous queries are enabled |
 | influxdb-enterprise.data.config.data.cache-max-memory-size | int | `0` | Maximum size a shared cache can reach before it starts rejecting writes |
 | influxdb-enterprise.data.config.data.trace-logging-enabled | bool | `true` | Whether to enable verbose logging of additional debug information within the TSM engine and WAL |
@@ -245,9 +250,14 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
 | influxdb-enterprise-active.data.affinity | object | See `values.yaml` | Affinity rules for data pods |
 | influxdb-enterprise-active.data.config.antiEntropy.enabled | bool | `false` | Enable the anti-entropy service, which copies and repairs shards |
-| influxdb-enterprise-active.data.config.cluster.log-queries-after | string | `"15s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
-| influxdb-enterprise-active.data.config.cluster.max-concurrent-queries | int | `1000` | Maximum number of running queries allowed on the instance (0 is unlimited) |
-| influxdb-enterprise-active.data.config.cluster.query-timeout | string | `"300s"` | Maximum duration a query is allowed to run before it is killed |
+| influxdb-enterprise-active.data.config.cluster.log-queries-after | string | `"10s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
+| influxdb-enterprise-active.data.config.cluster.log-timedout-queries | bool | `true` | Whether to log timed out queries |
+| influxdb-enterprise-active.data.config.cluster.max-concurrent-queries | int | `50` | Maximum number of running queries allowed |
+| influxdb-enterprise-active.data.config.cluster.max-select-buckets | int | `20000` | Maximum number of GROUP BY time() buckets a single select query can retrieve |
+| influxdb-enterprise-active.data.config.cluster.max-select-point | int | `50000000` | Maximum number of points a single select query can process before it is killed |
+| influxdb-enterprise-active.data.config.cluster.max-select-series | int | `200000` | Maximum number of series a single select query can process before it is killed |
+| influxdb-enterprise-active.data.config.cluster.query-timeout | string | `"180s"` | Maximum duration a query is allowed to run before it is killed |
+| influxdb-enterprise-active.data.config.cluster.termination-query-log | bool | `true` | Whether to log queries that are terminated due to resource limits |
 | influxdb-enterprise-active.data.config.continuousQueries.enabled | bool | `false` | Whether continuous queries are enabled |
 | influxdb-enterprise-active.data.config.data.cache-max-memory-size | int | `0` | Maximum size a shared cache can reach before it starts rejecting writes |
 | influxdb-enterprise-active.data.config.data.trace-logging-enabled | bool | `true` | Whether to enable verbose logging of additional debug information within the TSM engine and WAL |
@@ -337,9 +347,14 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
 | influxdb-enterprise-standby.data.affinity | object | See `values.yaml` | Affinity rules for data pods |
 | influxdb-enterprise-standby.data.config.antiEntropy.enabled | bool | `false` | Enable the anti-entropy service, which copies and repairs shards |
-| influxdb-enterprise-standby.data.config.cluster.log-queries-after | string | `"15s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
-| influxdb-enterprise-standby.data.config.cluster.max-concurrent-queries | int | `1000` | Maximum number of running queries allowed on the instance (0 is unlimited) |
-| influxdb-enterprise-standby.data.config.cluster.query-timeout | string | `"300s"` | Maximum duration a query is allowed to run before it is killed |
+| influxdb-enterprise-standby.data.config.cluster.log-queries-after | string | `"10s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
+| influxdb-enterprise-standby.data.config.cluster.log-timedout-queries | bool | `true` | Whether to log timed out queries |
+| influxdb-enterprise-standby.data.config.cluster.max-concurrent-queries | int | `50` | Maximum number of running queries allowed |
+| influxdb-enterprise-standby.data.config.cluster.max-select-buckets | int | `20000` | Maximum number of GROUP BY time() buckets a single select query can retrieve |
+| influxdb-enterprise-standby.data.config.cluster.max-select-point | int | `50000000` | Maximum number of points a single select query can process before it is killed |
+| influxdb-enterprise-standby.data.config.cluster.max-select-series | int | `200000` | Maximum number of series a single select query can process before it is killed |
+| influxdb-enterprise-standby.data.config.cluster.query-timeout | string | `"180s"` | Maximum duration a query is allowed to run before it is killed |
+| influxdb-enterprise-standby.data.config.cluster.termination-query-log | bool | `true` | Whether to log queries that are terminated due to resource limits |
 | influxdb-enterprise-standby.data.config.continuousQueries.enabled | bool | `false` | Whether continuous queries are enabled |
 | influxdb-enterprise-standby.data.config.data.cache-max-memory-size | int | `0` | Maximum size a shared cache can reach before it starts rejecting writes |
 | influxdb-enterprise-standby.data.config.data.trace-logging-enabled | bool | `true` | Whether to enable verbose logging of additional debug information within the TSM engine and WAL |
