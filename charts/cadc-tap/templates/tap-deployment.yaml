@@ -34,8 +34,13 @@ spec:
         - name: "init-tomcat-dirs"
           {{- if eq .Values.config.backend "pg" }}
           image: "{{ .Values.config.pg.image.repository }}:{{ .Values.config.pg.image.tag }}"
+          imagePullPolicy: {{ .Values.config.pg.image.pullPolicy | quote }}
+          {{- else if eq .Values.config.backend "bigquery" }}
+          image: "{{ .Values.config.bigquery.image.repository }}:{{ .Values.config.bigquery.image.tag }}"
+          imagePullPolicy: {{ .Values.config.bigquery.image.pullPolicy | quote }}
           {{- else }}
           image: "{{ .Values.config.qserv.image.repository }}:{{ .Values.config.qserv.image.tag }}"
+          imagePullPolicy: {{ .Values.config.qserv.image.pullPolicy | quote }}
           {{- end }}
           command:
             - "/bin/bash"
@@ -45,7 +50,27 @@ spec:
               mkdir -p /var/lib/tomcat/webapps /var/lib/tomcat/conf
               mkdir -p /var/cache/tomcat/temp
               cp -r /etc/tomcat/* /var/lib/tomcat/conf/
-              cp -v /opt/tomcat-wars/*.war /var/lib/tomcat/webapps/
+
+              # Extract WAR
+              cd /var/lib/tomcat/webapps
+              for war in /opt/tomcat-wars/*.war; do
+                warname=$(basename "$war" .war)
+                mkdir -p "$warname"
+                cd "$warname"
+                unzip -q "$war"
+                cd ..
+              done
+
+              {{- if eq .Values.config.backend "bigquery" }}
+              # Swap to BigQuery PluginFactory
+              for dir in /var/lib/tomcat/webapps/*/; do
+                if [ -f "${dir}WEB-INF/classes/PluginFactory-bigquery.properties" ]; then
+                  cp "${dir}WEB-INF/classes/PluginFactory-bigquery.properties" "${dir}WEB-INF/classes/PluginFactory.properties"
+                  echo "Using BigQuery PluginFactory.properties in $dir"
+                fi
+              done
+              {{- end }}
+
               echo "org.apache.catalina.startup.VersionLoggerListener.level = OFF" >> /var/lib/tomcat/conf/logging.properties
           securityContext:
             runAsNonRoot: true
@@ -90,8 +115,10 @@ spec:
           {{- if eq .Values.config.backend "pg" }}
           image: "{{ .Values.config.pg.image.repository }}:{{ .Values.config.pg.image.tag }}"
           imagePullPolicy: {{ .Values.config.pg.image.pullPolicy | quote }}
-          {{- end }}
-          {{- if eq .Values.config.backend "qserv" }}
+          {{- else if eq .Values.config.backend "bigquery" }}
+          image: "{{ .Values.config.bigquery.image.repository }}:{{ .Values.config.bigquery.image.tag }}"
+          imagePullPolicy: {{ .Values.config.bigquery.image.pullPolicy | quote }}
+          {{- else }}
           image: "{{ .Values.config.qserv.image.repository }}:{{ .Values.config.qserv.image.tag }}"
           imagePullPolicy: {{ .Values.config.qserv.image.pullPolicy | quote }}
           {{- end }}
@@ -127,8 +154,20 @@ spec:
                 -Dtap.password=$TAP_DB_PASSWORD
                 -Dtap.url=jdbc:postgresql://{{ .Values.config.pg.host }}/{{ .Values.config.pg.database }}
                 -Dtap.maxActive=100
-                {{- end }}
-                {{- if eq .Values.config.backend "qserv" }}
+                -Dqservuser.username=unused
+                -Dqservuser.password=unused
+                -Dqservuser.driverClassName=com.mysql.cj.jdbc.Driver
+                -Dqservuser.url=jdbc:mysql://localhost:3306/unused
+                -Dqservuser.maxActive=1
+                {{- else if eq .Values.config.backend "bigquery" }}
+                -Dtap.bigquery.project={{ .Values.config.bigquery.project }}
+                -Dtap.bigquery.dataset={{ .Values.config.bigquery.dataset }}
+                -Dqservuser.username=unused
+                -Dqservuser.password=unused
+                -Dqservuser.driverClassName=com.mysql.cj.jdbc.Driver
+                -Dqservuser.url=jdbc:mysql://localhost:3306/unused
+                -Dqservuser.maxActive=1
+                {{- else }}
                 -Dqservuser.username=qsmaster
                 -Dqservuser.password=$QSERV_DB_PASSWORD
                 -Dqservuser.driverClassName=com.mysql.cj.jdbc.Driver
@@ -140,7 +179,7 @@ spec:
                 -Dgcs_bucket_url={{ .Values.config.gcsBucketUrl }}
                 -Dgcs_bucket_type={{ .Values.config.gcsBucketType }}
                 -Ddatabase={{ .Values.config.database }}
-                 {{- if .Values.config.kafka.enabled }}
+                {{- if .Values.config.kafka.enabled }}
                 -Dkafka.ssl.truststore=/etc/cadc-tap/kafka/ca.crt
                 -Dkafka.ssl.keystore=/etc/cadc-tap/kafka/user.crt
                 -Dkafka.ssl.key=/etc/cadc-tap/kafka/user.key
@@ -205,8 +244,10 @@ spec:
               value: "{{ .Values.config.pg.image.tag }}"
               {{- else if eq .Values.config.backend "qserv" }}
               value: "{{ .Values.config.qserv.image.tag }}"
+              {{- else if eq .Values.config.backend "bigquery" }}
+              value: "{{ .Values.config.bigquery.image.tag }}"
               {{- else }}
-              value: "{{ .Chart.AppVersion }}"
+              value: "{{ .Values.config.qserv.image.tag }}"
               {{- end }}
             - name: "SENTRY_DSN"
               valueFrom:
@@ -248,7 +289,7 @@ spec:
               mountPath: "/var/cache/tomcat"
             - name: "ca-trust"
               mountPath: "/etc/pki/ca-trust/source/anchors"
-          {{- if .Values.config.kafka.enabled }}
+            {{- if .Values.config.kafka.enabled }}
             - name: "kafka-certs"
               mountPath: "/etc/cadc-tap/kafka/ca.crt"
               readOnly: true
@@ -261,7 +302,7 @@ spec:
               mountPath: "/etc/cadc-tap/kafka/user.key"
               readOnly: true
               subPath: "ssl.keystore.key"
-          {{- end }}
+            {{- end }}
           livenessProbe:
             failureThreshold: 3
             httpGet:

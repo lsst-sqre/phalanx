@@ -1,0 +1,32 @@
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstsqre/tap-schema-idfdev-ppdbtap"
+    type: "cloudsql"
+    username: "tap"
+    database: "tap"
+    useVaultPassword: true
+
+  config:
+    kafka:
+      enabled: true
+
+    bigquery:
+      project: "ppdb-dev-438721"
+      dataset: "ppdb_dm50643_1"
+      image:
+        tag: "tickets-DM-53451"
+        pullPolicy: "Always"
+
+    kafka:
+      enabled: true
+      topics:
+        jobRun: "lsst.ppdb.job-run"
+        jobStatus: "lsst.ppdb.job-status"
+        jobDelete: "lsst.ppdb.job-delete"
+
+  cloudsql:
+    enabled: true
+    instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
+    serviceAccount: "ppdbtap-service@science-platform-dev-7696.iam.gserviceaccount.com"
+    database: "ppdbtap"

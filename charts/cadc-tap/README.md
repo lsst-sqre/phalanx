@@ -22,6 +22,11 @@ IVOA TAP service
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
 | cloudsql.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `cadc-tap` Kubernetes service accounts and has the `cloudsql.client` role, access |
 | config.backend | string | None, must be set to `pg` or `qserv` | What type of backend are we connecting to? |
+| config.bigquery.dataset | string | None, must be set if backend is `bigquery` | BigQuery dataset name |
+| config.bigquery.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
+| config.bigquery.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
+| config.bigquery.image.tag | string | `"3.11.0"` | Tag of TAP image to use |
+| config.bigquery.project | string | None, must be set if backend is `bigquery` | BigQuery project ID |
 | config.database | string | `"dp02"` | Data Database name |
 | config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/DP1-v1.2.0/datalink-snippets.zip"` | Datalink payload URL |
 | config.gcsBucket | string | `"async-results.lsst.codes"` | Name of GCS bucket in which to store results |
@@ -43,7 +48,7 @@ IVOA TAP service
 | config.qserv.host | string | `"mock-db:3306"` (the mock QServ) | QServ hostname:port to connect to |
 | config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.qserv.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
-| config.qserv.image.tag | string | `"3.10.2"` | Tag of TAP image to use |
+| config.qserv.image.tag | string | `"3.11.0"` | Tag of TAP image to use |
 | config.qserv.jdbcParams | string | `""` | Extra JDBC connection parameters |
 | config.qserv.passwordEnabled | bool | false | Whether the Qserv database is password protected |
 | config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
@@ -81,7 +86,7 @@ IVOA TAP service
 | tapSchema.affinity | object | `{}` | Affinity rules for the TAP schema database pod |
 | tapSchema.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP schema image |
 | tapSchema.image.repository | string | `"lsstsqre/tap-schema-mock"` | TAP schema image to ue. This must be overridden by each environment with the TAP schema for that environment. |
-| tapSchema.image.tag | string | `"DP1-v1.2.0"` | Tag of TAP schema image |
+| tapSchema.image.tag | string | `"w.2025.48"` | Tag of TAP schema image |
 | tapSchema.nodeSelector | object | `{}` | Node selection rules for the TAP schema database pod |
 | tapSchema.podAnnotations | object | `{}` | Annotations for the TAP schema database pod |
 | tapSchema.resources | object | See `values.yaml` | Resource limits and requests for the TAP schema database pod |
@@ -90,7 +95,7 @@ IVOA TAP service
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
 | uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
-| uws.image.tag | string | `"3.10.2"` | Tag of UWS database image to use |
+| uws.image.tag | string | `"3.11.0"` | Tag of UWS database image to use |
 | uws.nodeSelector | object | `{}` | Node selection rules for the UWS database pod |
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |
 | uws.resources | object | See `values.yaml` | Resource limits and requests for the UWS database pod |
