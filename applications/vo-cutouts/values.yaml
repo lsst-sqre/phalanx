@@ -3,17 +3,21 @@
 # Declare variables to be passed into your templates.
 
 config:
-  # -- Choose from the text form of Python logging levels
-  loglevel: "INFO"
-
-  # -- URL path prefix for the cutout API
-  pathPrefix: "/api/cutout"
-
   # -- Grace period in seconds to wait for cutout worker jobs to finish
   gracePeriod: 60
 
   # -- Lifetime of job results in Safir `parse_timedelta` format
   lifetime: "30d"
+
+  # -- Choose from the text form of Python logging levels
+  loglevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix for the cutout API
+  pathPrefix: "/api/cutout"
 
   # -- Google service account with an IAM binding to the `vo-cutouts`
   # Kubernetes service accounts and has access to write to the GCS bucket and
@@ -23,6 +27,14 @@ config:
 
   # -- Whether to send Slack alerts for unexpected failures
   slackAlerts: true
+
+  sentry:
+    # -- Set to true to enable the Sentry integration.
+    enabled: false
+
+    # -- The percentage of requests that should be traced. This should be a
+    # float between 0 and 1.
+    tracesSampleRate: 0.0
 
   # -- URL for the GCS bucket for results (must start with `gs`)
   # @default -- None, must be set
@@ -75,7 +87,12 @@ frontend:
   podAnnotations: {}
 
   # -- Tolerations for the vo-cutouts frontend pod
-  tolerations: []
+  # @default -- Tolerage GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 cutoutWorker:
   # -- Number of cutout worker pods to start
@@ -112,7 +129,12 @@ cutoutWorker:
   podAnnotations: {}
 
   # -- Tolerations for the cutout worker pod
-  tolerations: []
+  # @default -- Tolerage GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 databaseWorker:
   # -- Number of database worker pods to start
@@ -138,7 +160,12 @@ databaseWorker:
   podAnnotations: {}
 
   # -- Tolerations for the database worker pod
-  tolerations: []
+  # @default -- Tolerage GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 redis:
   config:
@@ -188,7 +215,12 @@ redis:
   podAnnotations: {}
 
   # -- Tolerations for the Redis pod
-  tolerations: []
+  # @default -- Tolerage GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
@@ -200,6 +232,10 @@ global:
   # -- Butler repositories accessible via Butler server
   # @default -- Set by Argo CD
   butlerServerRepositories: null
+
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD Application
+  environmentName: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
