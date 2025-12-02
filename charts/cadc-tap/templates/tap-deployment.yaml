@@ -37,6 +37,9 @@ spec:
           {{- else }}
           image: "{{ .Values.config.qserv.image.repository }}:{{ .Values.config.qserv.image.tag }}"
           {{- end }}
+          {{- if eq .Values.config.backend "bigquery" }}
+          image: "{{ .Values.config.bigquery.image.repository }}:{{ .Values.config.bigquery.image.tag }}"
+          {{- end }}
           command:
             - "/bin/bash"
             - "-c"
@@ -71,6 +74,10 @@ spec:
           {{- else }}
           image: "{{ .Values.config.qserv.image.repository }}:{{ .Values.config.qserv.image.tag }}"
           imagePullPolicy: {{ .Values.config.qserv.image.pullPolicy | quote }}
+          {{- end }}
+          {{- if eq .Values.config.backend "bigquery" }}
+          image: "{{ .Values.config.bigquery.image.repository }}:{{ .Values.config.bigquery.image.tag }}"
+          imagePullPolicy: {{ .Values.config.bigquery.image.pullPolicy | quote }}
           {{- end }}
           securityContext:
             allowPrivilegeEscalation: false
@@ -125,6 +132,10 @@ spec:
                 -Dqservuser.driverClassName=com.mysql.cj.jdbc.Driver
                 -Dqservuser.url=jdbc:mysql://{{ .Values.config.qserv.host }}/{{ .Values.config.qserv.jdbcParams }}
                 -Dqservuser.maxActive=100
+                {{- end }}
+                {{- if eq .Values.config.backend "bigquery" }}
+                -Dtap.bigquery.project={{ .Values.config.bigquery.project }}
+                -Dtap.bigquery.dataset={{ .Values.config.bigquery.dataset }}
                 {{- end }}
                 -Dgafaelfawr_url={{ .Values.global.baseUrl }}/auth/api/v1/user-info
                 -Dgcs_bucket={{ .Values.config.gcsBucket }}
@@ -206,6 +217,8 @@ spec:
               value: "{{ .Values.config.pg.image.tag }}"
               {{- else if eq .Values.config.backend "qserv" }}
               value: "{{ .Values.config.qserv.image.tag }}"
+              {{- else if eq .Values.config.backend "bigquery" }}
+              value: "{{ .Values.config.bigquery.image.tag }}"
               {{- else }}
               value: "{{ .Chart.AppVersion }}"
               {{- end }}
