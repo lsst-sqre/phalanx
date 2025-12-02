@@ -363,6 +363,100 @@ grafana:
   # -- Whether to enable the grafana subchart
   enabled: false
 
+trickster:
+  # -- Whether to enable trickster
+  enabled: false
+  # -- Number of Trickster replicas
+  replicaCount: 3
+  image:
+    # -- Trickster Docker image tag
+    # @default -- the chart appVersion
+    tag: main
+  podLabels:
+    # -- Label to identify that Trickster is using the Sasquatch Redis instance
+    sasquatch-redis-client: 'true'
+  config:
+    frontend:
+      # -- Port to listen on for Trickster's requests
+      listen_port: 8480
+    caches:
+      default:
+        # -- Cache type used by Trickster (see docs for details)
+        provider: redis
+        redis:
+          endpoint: sasquatch-redis:6379
+    negative_caches:
+      general:
+        # -- Negative cache configuration (see docs for details)
+        "400": 3s
+        "404": 3s
+        "500": 3s
+        "502": 3s
+    backends:
+      default:
+        # -- Backend type used by Trickster (see docs for details)
+        provider: influxdb
+        # -- Base upstream URL for all proxied requests
+        origin_url: http://sasquatch-influxdb.sasquatch:8086
+        # -- Name of the cache to use with this backend
+        cache_name: default
+        # -- Name of the negative cache to use with this backend
+        negative_cache_name: general
+        # -- Maximum number of recent timestamps to cache for a given query
+        # @default 1024
+        timeseries_retention_factor: 1024
+        # -- Relative expiration of cached timeseries data
+        # @default is 6h
+        timeseries_ttl: 6h
+    logging:
+      # -- Log verbosity level (debug, info, warn, error)
+      # @default -- info
+      log_level: info
+    metrics:
+      # -- Port to listen on for Trickster's metrics endpoint /metrics
+      # -- @default -- 8481
+      listen_port: 8481
+  persistentVolume:
+    # -- Whether to enable persistence for Trickster cache data.
+    # This is not needed when using Redis as a backend.
+    enabled: false
+  resources:
+    # -- Kubernetes resource requests and limits for Trickster
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    # -- Kubernetes resource limits for Trickster
+    limits:
+      memory: 512Mi
+      cpu: 200m
+
+redis:
+  # -- Whether to enable the ephemeral Redis instance for Trickster
+  enabled: false
+  persistence:
+    # -- Whether to persist Redis storage of ephemeral data.
+    # This should be false to use emptyDir for better performance.
+    enabled: false
+
+  # -- Resource limits and requests for the ephemeral Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+    limits:
+      cpu: "200m"
+      memory: "512Mi"
+
+  # -- Affinity rules for the ephemeral Redis pod
+  affinity: {}
+
+  # -- Node selection rules for the ephemeral Redis pod
+  nodeSelector: {}
+
+  # -- Pod annotations for the ephemeral Redis pod
+  podAnnotations: {}
+
 global:
   # -- Host name for ingress
   # @default -- Set by Argo CD
