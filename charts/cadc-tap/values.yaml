@@ -94,7 +94,11 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
+<<<<<<< HEAD
       tag: "3.12.0"
+=======
+      tag: "3.11.0"
+>>>>>>> 13f7325ca (Add topics for bigquery to idfdev TAP service)
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -117,7 +121,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.10.2"
+      tag: "3.11.0"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
@@ -168,6 +172,10 @@ config:
 
       # -- Job Delete topic
       jobDelete: "lsst.tap.job-delete"
+
+    # -- Name of the KafkaUser to use for authentication
+    # @default -- "tap-tls"
+    kafkaUserName: "tap-tls"
 
     # -- Whether kafka is enabled
     enabled: false
@@ -268,7 +276,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "DP1-v1.2.0"
+    tag: "w.2025.48"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
@@ -332,7 +340,11 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
+<<<<<<< HEAD
     tag: "3.12.0"
+=======
+    tag: "3.11.0"
+>>>>>>> 13f7325ca (Add topics for bigquery to idfdev TAP service)
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`

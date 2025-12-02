@@ -1,15 +1,7 @@
 cadc-tap:
-  backend: "bigquery"
-
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfdev-tap"
-
-  bigquery:
-    project: "ppdb-dev-438721"
-    dataset: "ppdb_dm50643_1"
-    image:
-      tag: "tickets-DM-53451"
 
   config:
     kafka:
