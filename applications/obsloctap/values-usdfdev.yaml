@@ -10,7 +10,7 @@ image:
 consumekafka:
   image:
     # -- Tag of image to use
-    tag: "1.0.0"
+    tag: "tickets-dm-53470"
   logLevel: DEBUG
   pvcMountpoint:
   - name: sdf-data-rubin
