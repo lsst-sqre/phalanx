@@ -29,6 +29,11 @@ prompt-keda:
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
+        - survey: BLOCK-416  # FBS Pre-Operations Survey (with a constrained LSST configuration)
+          pipelines:
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         - survey: BLOCK-365  # FBS SV Field Survey
           pipelines:
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
@@ -47,6 +52,8 @@ prompt-keda:
         - survey: BLOCK-407
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
         - survey: BLOCK-408
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
+        - survey: BLOCK-416
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
         - survey: BLOCK-365
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
