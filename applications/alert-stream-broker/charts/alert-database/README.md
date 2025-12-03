@@ -31,7 +31,7 @@ Archival database of alerts sent through the alert stream.
 | nameOverride | string | `""` | Override the base name for resources |
 | server.image.imagePullPolicy | string | `"Always"` |  |
 | server.image.repository | string | `"lsstdm/alert_database_server"` |  |
-| server.image.tag | string | `"v3.0.0"` |  |
+| server.image.tag | string | `"tickets-DM-53513"` |  |
 | server.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
 | server.s3.alertBucket | string | `"rubin-alert-archive"` |  |
 | server.s3.endpointURL | string | `"https://sdfdatas3.slac.stanford.edu/ "` | Project ID which has the above GCP IAM service account |
