@@ -10,14 +10,12 @@ image:
 consumekafka:
   image:
     # -- Tag of image to use
-    tag: "1.0.0"
+    tag: "1.0.1"
   logLevel: info
   pvcMountpoint:
     - name: sdf-data-rubin
-      persistentVolumeClaims:
-        - name: sdf-data-rubin
-          storageClassName: sdf-data-rubin
-          capacity: 1Gi
+      storageClassName: sdf-data-rubin
+      capacity: 1Gi
       accessMode: ReadOnlyMany
       mountPath: /sdf/data/rubin
 

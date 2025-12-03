@@ -20,7 +20,7 @@ rubinsim:
 consumekafka:
   image:
     # -- Tag of image to use
-    tag: "1.0.0"
+    tag: "1.0.1"
   logLevel: DEBUG
   nfsMountpoint:
     - name: rubin-sim-data
