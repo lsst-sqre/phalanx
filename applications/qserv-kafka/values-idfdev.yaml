@@ -1,3 +1,5 @@
+image:
+  tag: "tickets-DM-53251-app-metrics-resiliency-fix"
 config:
   logLevel: "DEBUG"
   metrics:
