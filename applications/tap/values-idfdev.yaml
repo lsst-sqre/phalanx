@@ -2,6 +2,10 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfdev-tap"
+    type: "cloudsql"
+    username: "tap"
+    database: "tap"
+    useVaultPassword: true
 
   config:
     qserv:
