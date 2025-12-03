@@ -1,0 +1,70 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: ppdbtap-tls
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operations:
+          - All
+      - resource:
+          type: topic
+          name: "lsst.ppdbtap"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operations:
+          - All
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: ppdbtap-kafka
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operations:
+          - All
+      - resource:
+          type: topic
+          name: "lsst.ppdbtap"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operations:
+          - All
+      - host: '*'
+        operations:
+          - "Read"
+        resource:
+          name: "app-metrics-events"
+          patternType: "prefix"
+          type: "group"
+      - host: '*'
+        operations:
+          - "Describe"
+          - "Read"
+          - "Write"
+        resource:
+          name: "lsst.square.metrics.events.ppdbtapkafka"
+          patternType: "literal"
+          type: "topic"
