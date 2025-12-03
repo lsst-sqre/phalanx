@@ -91,6 +91,9 @@ dependencies:
   - name: obsloctap
     condition: obsloctap.enabled
     version: 1.0.0
+  - name: ppdbtap
+    condition: ppdbtap.enabled
+    version: 1.0.0
   - name: consdb
     condition: consdb.enabled
     version: 1.0.0

@@ -568,6 +568,7 @@ Rubin Observatory's telemetry service
 | kapacitor.tolerations | list | None, must be set if you want tolerations | Tolerations for pod assignment |
 | obsenv.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | obsloctap.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
+| ppdbtap.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | prompt-processing.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | rest-proxy.affinity | object | `{}` | Affinity configuration |
 | rest-proxy.configurationOverrides | object | See `values.yaml` | Kafka REST configuration options |

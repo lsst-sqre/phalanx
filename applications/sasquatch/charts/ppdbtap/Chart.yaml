@@ -1,0 +1,5 @@
+apiVersion: v2
+name: ppdbtap
+version: 1.0.0
+description: Sasquatch configuration for ppdbtap.
+type: application

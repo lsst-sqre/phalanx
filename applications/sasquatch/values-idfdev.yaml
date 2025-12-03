@@ -184,6 +184,9 @@ backpack:
 tap:
   enabled: true
 
+ppdbtap:
+  enabled: true
+
 # Send alerts to squadcast
 kapacitor:
   enabled: true
