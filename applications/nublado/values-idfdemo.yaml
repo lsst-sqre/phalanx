@@ -5,9 +5,9 @@ controller:
   slackAlerts: true
   nodeSelector:
     node_pool: "arm-core-pool"
-  # image:
-  #   tag: tickets-DM-53011
-  #   pullPolicy: Always
+    image:
+      tag: tickets-DM-53305
+      pullPolicy: Always
   config:
     dropdownMenu:
       release:
@@ -60,6 +60,14 @@ controller:
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
             tag: "9.0.0"
+          privileged: true
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+        - name: "landingpage"
+          image:
+            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/rsp-init-container"
+            tag: "tickets-DM-53305"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
