@@ -77,6 +77,10 @@ spec:
               - name: READ_CENTRAL_REPO
                 value: {{ . }}
               {{- end }}
+              {{- with .Values.instrument.localRepoConfig }}
+              - name: LOCAL_REPO_CONFIG
+                value: {{ . }}
+              {{- end }}
               - name: REPO_RETRY_DELAY
                 value: {{ .Values.instrument.repoWait | toString | quote }}
               - name: LSST_DISABLE_BUCKET_VALIDATION
