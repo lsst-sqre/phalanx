@@ -1,46 +1,5 @@
 # Default values for Gafaelfawr.
 
-# -- Number of web frontend pods to start
-replicaCount: 1
-
-image:
-  # -- Gafaelfawr image to use
-  repository: "ghcr.io/lsst-sqre/gafaelfawr"
-
-  # -- Pull policy for the Gafaelfawr image
-  pullPolicy: "IfNotPresent"
-
-  # -- Tag of Gafaelfawr image to use
-  # @default -- The appVersion of the chart
-  tag: ""
-
-# -- Resource limits and requests for the Gafaelfawr frontend pod
-# @default -- See `values.yaml`
-resources:
-  limits:
-    cpu: "1"
-    memory: "400Mi"
-  requests:
-    cpu: "100m"
-    memory: "210Mi"
-
-# -- Affinity rules for the Gafaelfawr frontend pod
-affinity: {}
-
-# -- Node selector rules for the Gafaelfawr frontend pod
-nodeSelector: {}
-
-# -- Annotations for the Gafaelfawr frontend pod
-podAnnotations: {}
-
-# -- Tolerations for the Gafaelfawr frontend pod
-# @default -- Tolerate GKE arm64 taint
-tolerations:
-  - key: "kubernetes.io/arch"
-    operator: "Equal"
-    value: "arm64"
-    effect: "NoSchedule"
-
 config:
   # -- Where to send the user after they log out
   # @default -- Top-level page of this Phalanx environment
@@ -312,11 +271,52 @@ config:
   # [DMTN-235](https://dmtn-235.lsst.io/) for more details on scopes.
   groupMapping: {}
 
+image:
+  # -- Gafaelfawr image to use
+  repository: "ghcr.io/lsst-sqre/gafaelfawr"
+
+  # -- Pull policy for the Gafaelfawr image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of Gafaelfawr image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
 ingress:
-  # -- Defines additional FQDNs for Gafaelfawr.  This doesn't work for
-  # cookie or browser authentication, but for token-based services like
-  # git-lfs or the webdav server it does.
+  # -- Defines additional FQDNs for Gafaelfawr. This doesn't work for cookie
+  # or browser authentication, but for token-based services like git-lfs or
+  # the webdav server it does.
   additionalHosts: []
+
+# -- Number of web frontend pods to start
+replicaCount: 1
+
+# -- Resource limits and requests for the Gafaelfawr frontend pod
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "400Mi"
+  requests:
+    cpu: "100m"
+    memory: "210Mi"
+
+# -- Affinity rules for the Gafaelfawr frontend pod
+affinity: {}
+
+# -- Node selector rules for the Gafaelfawr frontend pod
+nodeSelector: {}
+
+# -- Annotations for the Gafaelfawr frontend pod
+podAnnotations: {}
+
+# -- Tolerations for the Gafaelfawr frontend pod
+# @default -- Tolerate GKE arm64 taint
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
 
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google
@@ -324,6 +324,9 @@ cloudsql:
   # a separate service (behind a `NetworkPolicy`) for other, lower-traffic
   # services.
   enabled: false
+
+  # -- Affinity rules for the standalone Cloud SQL Proxy pod
+  affinity: {}
 
   image:
     # -- Cloud SQL Auth Proxy image to use
@@ -339,10 +342,11 @@ cloudsql:
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
   instanceConnectionName: ""
 
-  # -- The Google service account that has an IAM binding to the `gafaelfawr`
-  # Kubernetes service account and has the `cloudsql.client` role
-  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
-  serviceAccount: ""
+  # -- Node selection rules for the standalone Cloud SQL Proxy pod
+  nodeSelector: {}
+
+  # -- Annotations for the standalone Cloud SQL Proxy pod
+  podAnnotations: {}
 
   # -- Resource limits and requests for the Cloud SQL Proxy container
   # @default -- See `values.yaml`
@@ -354,14 +358,10 @@ cloudsql:
       cpu: "5m"
       memory: "15Mi"
 
-  # -- Affinity rules for the standalone Cloud SQL Proxy pod
-  affinity: {}
-
-  # -- Node selection rules for the standalone Cloud SQL Proxy pod
-  nodeSelector: {}
-
-  # -- Annotations for the standalone Cloud SQL Proxy pod
-  podAnnotations: {}
+  # -- The Google service account that has an IAM binding to the `gafaelfawr`
+  # Kubernetes service account and has the `cloudsql.client` role
+  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
+  serviceAccount: ""
 
   # -- Tolerations for the standalone Cloud SQL Proxy pod
   # @default -- Tolerate GKE arm64 taint
@@ -372,6 +372,9 @@ cloudsql:
       effect: "NoSchedule"
 
 maintenance:
+  # -- Affinity rules for Gafaelfawr maintenance and audit pods
+  affinity: {}
+
   # -- Cron schedule string for Gafaelfawr data consistency audit (in UTC)
   auditSchedule: "30 3 * * *"
 
@@ -410,10 +413,16 @@ maintenance:
       value: "arm64"
       effect: "NoSchedule"
 
-  # -- Affinity rules for Gafaelfawr maintenance and audit pods
+operator:
+  # -- Affinity rules for the token management pod
   affinity: {}
 
-operator:
+  # -- Annotations for the token management pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the token management pod
+  nodeSelector: {}
+
   # -- Resource limits and requests for the Gafaelfawr Kubernetes operator.
   # The limits are artificially higher since the operator pod is also where we
   # manually run `gafaelfawr audit --fix`, which requires more CPU and memory.
@@ -426,12 +435,6 @@ operator:
       cpu: "10m"
       memory: "175Mi"
 
-  # -- Annotations for the token management pod
-  podAnnotations: {}
-
-  # -- Node selection rules for the token management pod
-  nodeSelector: {}
-
   # -- Tolerations for the token management pod
   # @default -- Tolerate GKE arm64 taint
   tolerations:
@@ -440,10 +443,10 @@ operator:
       value: "arm64"
       effect: "NoSchedule"
 
-  # -- Affinity rules for the token management pod
+redis-ephemeral:
+  # -- Affinity rules for the ephemeral Redis pod
   affinity: {}
 
-redis-ephemeral:
   config:
     # -- Name of secret containing Redis password (do not change)
     secretName: "gafaelfawr"
@@ -452,10 +455,16 @@ redis-ephemeral:
     # change)
     secretKey: "redis-password"
 
+  # -- Node selection rules for the ephemeral Redis pod
+  nodeSelector: {}
+
   persistence:
     # -- Whether to persist Redis storage of ephemeral data. This should
     # always be false.
     enabled: false
+
+  # -- Pod annotations for the ephemeral Redis pod
+  podAnnotations: {}
 
   # -- Resource limits and requests for the ephemeral Redis pod
   # @default -- See `values.yaml`
@@ -467,15 +476,6 @@ redis-ephemeral:
       cpu: "50m"
       memory: "15Mi"
 
-  # -- Affinity rules for the ephemeral Redis pod
-  affinity: {}
-
-  # -- Node selection rules for the ephemeral Redis pod
-  nodeSelector: {}
-
-  # -- Pod annotations for the ephemeral Redis pod
-  podAnnotations: {}
-
   # -- Tolerations for the ephemeral Redis pod
   # @default -- Tolerate GKE arm64 taint
   tolerations:
@@ -485,6 +485,9 @@ redis-ephemeral:
       effect: "NoSchedule"
 
 redis:
+  # -- Affinity rules for the persistent Redis pod
+  affinity: {}
+
   config:
     # -- Name of secret containing Redis password (do not change)
     secretName: "gafaelfawr"
@@ -499,12 +502,6 @@ redis:
     # use this for a test deployment.
     enabled: true
 
-    # -- Amount of persistent storage to request
-    size: "1Gi"
-
-    # -- Class of storage to request
-    storageClass: ""
-
     # -- Access mode of storage to request
     accessMode: "ReadWriteOnce"
 
@@ -512,9 +509,21 @@ redis:
       # -- Whether to enable k8up backup of the redis PVC
       enabled: false
 
+    # -- Amount of persistent storage to request
+    size: "1Gi"
+
+    # -- Class of storage to request
+    storageClass: ""
+
     # -- Use an existing PVC, not dynamic provisioning. If this is set, the
     # size, storageClass, accessMode, and k8up settings are ignored.
     volumeClaimName: ""
+
+  # -- Node selection rules for the persistent Redis pod
+  nodeSelector: {}
+
+  # -- Pod annotations for the persistent Redis pod
+  podAnnotations: {}
 
   # -- Resource limits and requests for the persistent Redis pod
   # @default -- See `values.yaml`
@@ -525,15 +534,6 @@ redis:
     requests:
       cpu: "50m"
       memory: "100Mi"
-
-  # -- Affinity rules for the persistent Redis pod
-  affinity: {}
-
-  # -- Node selection rules for the persistent Redis pod
-  nodeSelector: {}
-
-  # -- Pod annotations for the persistent Redis pod
-  podAnnotations: {}
 
   # -- Tolerations for the persistent Redis pod
   # @default -- Tolerate GKE arm64 taint
