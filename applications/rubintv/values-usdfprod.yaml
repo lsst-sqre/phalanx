@@ -24,6 +24,13 @@ rubintv:
     image:
       tag: v2.6.10
       pullPolicy: Always
+    resources:
+      requests:
+        cpu: 1
+        memory: 3Gi
+      limits:
+        cpu: 2
+        memory: 6Gi
 
   workers:
     replicas: 1
