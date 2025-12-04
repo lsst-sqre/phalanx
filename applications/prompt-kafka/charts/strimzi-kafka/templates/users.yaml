@@ -29,6 +29,13 @@ spec:
         host: "*"
         operation: All
       - resource:
+          type: topic
+          name: butler-writer-ingestion-events
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
           type: transactionalId
           name: butler-writer-output
           patternType: literal
