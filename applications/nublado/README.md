@@ -24,6 +24,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `cloud-sql-proxy` Kubernetes service account and has the `cloudsql.client` role |
 | cloudsql.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the Cloud SQL Auth Proxy pod |
 | controller.affinity | object | `{}` | Affinity rules for the Nublado controller |
+| controller.command | string | `nil` | Command to run nublado controller, if different from image default |
 | controller.config.fileserver.affinity | object | `{}` | Affinity rules for user file server pods |
 | controller.config.fileserver.application | string | `"nublado-fileservers"` | Argo CD application in which to collect user file servers |
 | controller.config.fileserver.creationTimeout | string | `"3m"` | Timeout to wait for Kubernetes to create file servers, in Safir `parse_timedelta` format |
@@ -42,6 +43,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fileserver.volumeMounts | list | `[]` | Volumes that should be made available via WebDAV |
 | controller.config.fsadmin.affinity | object | `{}` | Affinity rules for fsadmin pods |
 | controller.config.fsadmin.application | string | `"nublado-fileservers"` | Argo CD application in which to collect fsadmins |
+| controller.config.fsadmin.command | string | `nil` | Command to run in fsadmin container, if different from default |
 | controller.config.fsadmin.extraVolumeMounts | list | `[]` | Extra volumes that should be mounted to fsadmin |
 | controller.config.fsadmin.extraVolumes | list | `[]` | Extra volumes that should be made available to fsadmin |
 | controller.config.fsadmin.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for fsadmin image |

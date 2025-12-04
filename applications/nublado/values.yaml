@@ -10,6 +10,9 @@ controller:
   # @default -- None, must be set when using Google Artifact Registry
   googleServiceAccount: null
 
+  # -- Command to run nublado controller, if different from image default
+  command: null
+
   image:
     # -- Nublado controller image to use
     repository: "ghcr.io/lsst-sqre/nublado-controller"
@@ -138,6 +141,9 @@ controller:
 
       # -- Argo CD application in which to collect fsadmins
       application: "nublado-fileservers"
+
+      # -- Command to run in fsadmin container, if different from default
+      command: null
 
       # -- Extra volumes that should be made available to fsadmin
       extraVolumes: []

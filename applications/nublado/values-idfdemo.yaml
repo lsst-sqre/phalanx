@@ -5,6 +5,7 @@ controller:
   slackAlerts: true
   nodeSelector:
     node_pool: "arm-core-pool"
+  command: ["nublado", "controller"]
   image:
     repository: "ghcr.io/lsst-sqre/nublado-utils"
     tag: tickets-DM-53456
@@ -23,6 +24,11 @@ controller:
         age: "3w"
     logLevel: "DEBUG"
     fsadmin:
+      command: ["nublado", "fsadmin"]
+      image:
+        repository: "ghcr.io/lsst-sqre/nublado-utils"
+        tag: tickets-DM-53456
+        pullPolicy: Always
       nodeSelector:
         node_pool: "arm-core-pool"
       mountPrefix: "/mnt/user-filesystems"
