@@ -56,27 +56,27 @@ controller:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         TMPDIR: "/tmp"
-      initContainers:
-        - name: "inithome"
-          image:
-            repository: "ghcr.io/lsst-sqre/nublado-utils"
-            tag: "tickets-DM-53456"
-            command: ["nublado"]
-            args: ["inithome"]
-          privileged: true
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
-        - name: "landingpage"
-          image:
-            repository: "ghcr.io/lsst-sqre/nublado-utils"
-            tag: "tickets-DM-53456"
-          command: ["nublado"]
-          args: ["landingpage"]
-          privileged: true
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
+      initContainers: []
+        # - name: "inithome"
+        #   image:
+        #     repository: "ghcr.io/lsst-sqre/nublado-utils"
+        #     tag: "tickets-DM-53456"
+        #     command: ["nublado"]
+        #     args: ["inithome"]
+        #   privileged: true
+        #   volumeMounts:
+        #     - containerPath: "/home"
+        #       volumeName: "home"
+        # - name: "landingpage"
+        #   image:
+        #     repository: "ghcr.io/lsst-sqre/nublado-utils"
+        #     tag: "tickets-DM-53456"
+        #   command: ["nublado"]
+        #   args: ["landingpage"]
+        #   privileged: true
+        #   volumeMounts:
+        #     - containerPath: "/home"
+        #       volumeName: "home"
       nodeSelector:
         node_pool: "user-lab-pool"
       tolerations:
