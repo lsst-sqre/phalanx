@@ -1,12 +1,12 @@
 prompt-keda:
   image:
     pullPolicy: IfNotPresent
-    tag: 11.6.0
+    tag: 12.0.0
 
   alerts:
     username: kafka-admin
     server: usdf-alert-stream-dev.lsst.cloud:9094
-    topic: lsst-alerts-v9.0
+    topic: lsst-alerts-v10.0
 
   worker:
     # TODO: need to adjust this once we know how leaky the LSSTCam pipeline is
