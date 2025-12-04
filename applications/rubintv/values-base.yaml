@@ -74,6 +74,8 @@ rubintv:
       requests:
         cpu: 1
         memory: 4Gi
+        ephemeral-storage: 256Mi
       limits:
         cpu: 2
         memory: 8Gi
+        ephemeral-storage: 512Mi
