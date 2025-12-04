@@ -80,7 +80,8 @@ ccoods:
                   - LSSTComCam/raw/all
               collection_cleaner:
                   collections_to_clean:
-                      - collection: LSSTComCam/raw/all
+                      - collections:
+                          - LSSTComCam/raw/all
                         files_older_than:
                             <<: *interval
                             days: 30
