@@ -28,6 +28,8 @@ kafka:
   # Service.
   # @default -- None, must be set
   outputTopic: ""
+  # -- Enable additional Kafka debug logging
+  debug: false
 
 
 # -- Directory path URI (in lsst.resources.ResourcePath format) where the Butler

@@ -54,6 +54,10 @@ spec:
                 secretKeyRef:
                   name: {{ template "butler-writer-service.fullname" . }}-secret
                   key: butler-writer-password
+            {{ if .Values.kafka.debug }}
+            - name: KAFKA_DEBUG
+              value: "1"
+            {{ end }}
             - name: OUTPUT_DATASET_LIST_DIRECTORY
               value: {{ .Values.outputDatasetListDirectory }}
             - name: S3_ENDPOINT_URL

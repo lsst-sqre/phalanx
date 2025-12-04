@@ -19,6 +19,7 @@ Write proxy for the Butler that buffers concurrent requests.
 | image.repository | string | `"ghcr.io/lsst-dm/prompt_processing_butler_writer"` | Image to use for the Butler writer service |
 | image.tag | string | None, must be set | Docker container version to use for the Butler writer service |
 | kafka.clusterAddress | string | None, must be set | Address of Kafka broker containing Prompt Processing output events, for consumption by the Butler writer service. |
+| kafka.debug | bool | `false` | Enable additional Kafka debug logging |
 | kafka.outputTopic | string | None, must be set | Kafka topic where the Butler writer service will output information about ingested datasets, for consumption by the Prompt Publication Service. |
 | kafka.topic | string | None, must be set | Kafka topic containing Prompt Processing output events, for consumption by the Butler writer service. |
 | kafka.username | string | None, must be set | Username for Kafka broker containing Prompt Processing output events, for consumption by the Butler writer service. |
