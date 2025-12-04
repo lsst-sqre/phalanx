@@ -36,6 +36,8 @@ spec:
       {{- end }}
       containers:
         - name: "{{ .Chart.Name }}-controller"
+          command: ["nublado"]
+          args: ["controller"]
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
