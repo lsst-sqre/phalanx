@@ -107,9 +107,9 @@ Alert transmission to community brokers
 | alert-stream-schema-registry.hostname | string | `"usdf-alert-schemas-dev.slac.stanford.edu"` | Hostname for an ingress which sends traffic to the Schema Registry. |
 | alert-stream-schema-registry.name | string | `"alert-schema-registry"` | Name used by the registry, and by its users. |
 | alert-stream-schema-registry.port | int | `8081` | Port where the registry is listening. NOTE: Not actually configurable in strimzi-registry-operator, so this basically cannot be changed. |
-| alert-stream-schema-registry.schemaSync | object | `{"image":{"digest":"sha256:23adb95fbebf229883a3593217fb7a350c0011152355f8c3d6bf9db366874676","pullPolicy":"Always","repository":"lsstdm/lsst_alert_packet"},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
-| alert-stream-schema-registry.schemaSync.image.digest | string | `"sha256:23adb95fbebf229883a3593217fb7a350c0011152355f8c3d6bf9db366874676"` | Version of the container to use. If container isn't updating in Argo, switch to digest. tag: tickets-DM-53520 |
+| alert-stream-schema-registry.schemaSync | object | `{"image":{"pullPolicy":"Always","repository":"lsstdm/lsst_alert_packet","tag":"tickets-DM-53520"},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
 | alert-stream-schema-registry.schemaSync.image.repository | string | `"lsstdm/lsst_alert_packet"` | Repository of a container which has the alert_packet syncLatestSchemaToRegistry.py program. |
+| alert-stream-schema-registry.schemaSync.image.tag | string | `"tickets-DM-53520"` | Version of the container to use. If container isn't updating in Argo, switch to digest. |
 | alert-stream-schema-registry.schemaSync.subject | string | `"alert-packet"` | Subject name to use when inserting data into the Schema Registry |
 | alert-stream-schema-registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry to store data. |
 | alert-stream-schema-registry.strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |
