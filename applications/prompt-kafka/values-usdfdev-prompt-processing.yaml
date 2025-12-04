@@ -19,6 +19,11 @@ strimzi-kafka:
       partitions: 1
       replicas: 3
       retention: 1209600000 # milliseconds, = 2 weeks
+    butlerWriterIngestionEvents:
+      enabled: true
+      partitions: 1
+      replicas: 3
+      retention: 1209600000 # milliseconds, = 2 weeks
 kafdrop:
   ingress:
     enabled: true

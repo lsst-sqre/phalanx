@@ -10,4 +10,16 @@ spec:
   replicas: {{ .Values.topics.butlerWriter.replicas }}
   config:
     retention.ms: {{ .Values.topics.butlerWriter.retention }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: butler-writer-ingestion-events
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: {{ .Values.topics.butlerWriterIngestionEvents.partitions }}
+  replicas: {{ .Values.topics.butlerWriterIngestionEvents.replicas }}
+  config:
+    retention.ms: {{ .Values.topics.butlerWriterIngestionEvents.retention }}
 {{- end }}

@@ -10,6 +10,9 @@ kafka:
   clusterAddress: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
   username: butler-writer
   topic: butler-writer
+  outputTopic: butler-writer-ingestion-events
+
+outputDatasetListDirectory: s3://rubin-pp-dev-users/central_repo_2/publication/prompt_processing/
 
 s3:
   endpointUrl: https://s3dfrgw.slac.stanford.edu
