@@ -24,6 +24,13 @@ rubintv:
     image:
       tag: deploy
       pullPolicy: Always
+    resources:
+      requests:
+        cpu: 1
+        memory: 3Gi
+      limits:
+        cpu: 2
+        memory: 6Gi
 
   workers:
     replicas: 1
@@ -68,6 +75,11 @@ rubintv:
       mountPath: /var/ddv-config
       subPath: shared/rubintv-ddv-config
     resources:
+      requests:
+        cpu: 1
+        memory: 4Gi
+        ephemeral-storage: 256Mi
       limits:
-        cpu: 2.0
-        memory: "8Gi"
+        cpu: 2
+        memory: 8Gi
+        ephemeral-storage: 512Mi
