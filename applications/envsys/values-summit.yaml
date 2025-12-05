@@ -190,16 +190,16 @@ earthquake-ess302:
 eas:
   enabled: true
   image:
-    revision: 7
+    revision: 8
     repository: ts-dockerhub.lsst.org/eas
     pullPolicy: Always
   resources:
     requests:
-      cpu: 300m
-      memory: 1Gi
+      cpu: 120m
+      memory: 512Mi
     limits:
-      cpu: 750m
-      memory: 2Gi
+      cpu: 500m
+      memory: 768Mi
 
 epm-ess303:
   enabled: true
