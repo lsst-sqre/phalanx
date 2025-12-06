@@ -579,7 +579,7 @@ mtoods:
 
 mtptg:
   image:
-    revision: 0
+    revision: 8
     repository: ts-dockerhub.lsst.org/ptkernel
     pullPolicy: Always
   env:
