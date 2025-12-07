@@ -126,6 +126,10 @@ influxdb-enterprise:
     replicas: 2
     startupProbe:
       enabled: true
+    config:
+      cluster:
+        # Adjusted because of the query load from dashboards at the Summit
+        max-concurrent-queries: 300
     ingress:
       enabled: true
       hostname: summit-lsp.lsst.codes
@@ -178,6 +182,10 @@ influxdb-enterprise-standby:
     replicas: 1
     startupProbe:
       enabled: true
+    config:
+      cluster:
+        # Adjusted because of the query load from dashboards at the Summit
+        max-concurrent-queries: 300
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
