@@ -8,8 +8,13 @@ cadc-tap:
       host: "sdfqserv001.sdf.slac.stanford.edu:4090"
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
-      image:
-        tag: "2.14.0"
+
+    kafka:
+      enabled: true
+
+    urlRewrite:
+      enabled: true
+      rules: "ivoa.ObsCore:access_url, dp02_dc2_catalogs.ObsCore:access_url, dp1.ObsCore:access_url"
 
     gcsBucket: "rubin:rubin-qserv"
     gcsBucketUrl: "https://s3dfrgw.slac.stanford.edu"
