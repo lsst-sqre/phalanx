@@ -9,7 +9,7 @@ Sasquatch configuration do deploy the Confluent Schema Registry as managed by th
 | cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster used by the Schema Registry. |
 | compatibilityLevel | string | `"none"` | Compatibility level for the Schema Registry. Options are: none, backward, backward_transitive, forward, forward_transitive, full, and full_transitive. |
 | image.repository | string | `"confluentinc/cp-schema-registry"` | Docker image for the Confluent Schema Registry. |
-| image.tag | string | `"8.1.0"` | Docker image tag for the Confluent Schema Registry. |
+| image.tag | string | `"8.1.1"` | Docker image tag for the Confluent Schema Registry. |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
 | ingress.anonymous | bool | false | Whether to enable anonymous access to the Schema Registry |
 | ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |

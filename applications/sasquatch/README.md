@@ -594,7 +594,7 @@ Rubin Observatory's telemetry service
 | schema-registry.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster used by the Schema Registry. |
 | schema-registry.compatibilityLevel | string | `"none"` | Compatibility level for the Schema Registry. Options are: none, backward, backward_transitive, forward, forward_transitive, full, and full_transitive. |
 | schema-registry.image.repository | string | `"confluentinc/cp-schema-registry"` | Docker image for the Confluent Schema Registry. |
-| schema-registry.image.tag | string | `"8.1.0"` | Docker image tag for the Confluent Schema Registry. |
+| schema-registry.image.tag | string | `"8.1.1"` | Docker image tag for the Confluent Schema Registry. |
 | schema-registry.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
 | schema-registry.ingress.anonymous | bool | false | Whether to enable anonymous access to the Schema Registry |
 | schema-registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
@@ -606,7 +606,7 @@ Rubin Observatory's telemetry service
 | schema-registry-remote.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster used by the Schema Registry. |
 | schema-registry-remote.compatibilityLevel | string | `"none"` | Compatibility level for the Schema Registry. Options are: none, backward, backward_transitive, forward, forward_transitive, full, and full_transitive. |
 | schema-registry-remote.image.repository | string | `"confluentinc/cp-schema-registry"` | Docker image for the Confluent Schema Registry. |
-| schema-registry-remote.image.tag | string | `"8.1.0"` | Docker image tag for the Confluent Schema Registry. |
+| schema-registry-remote.image.tag | string | `"8.1.1"` | Docker image tag for the Confluent Schema Registry. |
 | schema-registry-remote.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
 | schema-registry-remote.ingress.anonymous | bool | false | Whether to enable anonymous access to the Schema Registry |
 | schema-registry-remote.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
