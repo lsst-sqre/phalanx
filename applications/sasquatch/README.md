@@ -575,7 +575,7 @@ Rubin Observatory's telemetry service
 | rest-proxy.heapOptions | string | `"-Xms4096M -Xmx4096M"` | Kafka REST proxy JVM Heap Option |
 | rest-proxy.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | rest-proxy.image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository |
-| rest-proxy.image.tag | string | `"8.1.0"` | Kafka REST proxy image tag |
+| rest-proxy.image.tag | string | `"8.1.1"` | Kafka REST proxy image tag |
 | rest-proxy.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
 | rest-proxy.ingress.anonymous | bool | false | Whether to enable anonymous access to the REST proxy |
 | rest-proxy.ingress.enabled | bool | `false` | Whether to enable the ingress for the REST proxy |
