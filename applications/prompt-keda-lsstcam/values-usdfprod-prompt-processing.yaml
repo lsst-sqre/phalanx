@@ -20,25 +20,16 @@ prompt-keda:
       # Block-style mappings can have lines of any length.
       main: |-
         - survey: BLOCK-407  # FBS Pre-Operations Survey (independent of environmental conditions)
-          pipelines:
+          pipelines: &std-main-pipelines
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         - survey: BLOCK-408  # FBS Pre-Operations Survey (triggered by environmental conditions)
-          pipelines:
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
+          pipelines: *std-main-pipelines
         - survey: BLOCK-416  # FBS Pre-Operations Survey (with a constrained LSST configuration)
-          pipelines:
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
+          pipelines: *std-main-pipelines
         - survey: BLOCK-365  # FBS SV Field Survey
-          pipelines:
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
+          pipelines: *std-main-pipelines
         - survey: BLOCK-T427  # Daytime checkout
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
         # Produces nextVisits but not images
@@ -50,13 +41,14 @@ prompt-keda:
       preprocessing: |-
         # Run to enable solar system processing in SingleFrame
         - survey: BLOCK-407
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
+          pipelines: &std-pre-pipelines
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml
         - survey: BLOCK-408
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
+          pipelines: *std-pre-pipelines
         - survey: BLOCK-416
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
+          pipelines: *std-pre-pipelines
         - survey: BLOCK-365
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
+          pipelines: *std-pre-pipelines
         - {survey: "", pipelines: []}
         # Don't preprocess anything unknown
         - {pipelines: []}
