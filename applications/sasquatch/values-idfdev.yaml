@@ -15,10 +15,10 @@ strimzi-kafka:
         host: sasquatch-dev-kafka-bootstrap.lsst.cloud
       brokers:
         - broker: 0
-          loadBalancerIP: "35.193.196.189"
+          loadBalancerIP: "34.46.163.104"
           host: sasquatch-dev-kafka-0.lsst.cloud
         - broker: 1
-          loadBalancerIP: "35.232.19.196"
+          loadBalancerIP: "35.202.38.197"
           host: sasquatch-dev-kafka-1.lsst.cloud
         - broker: 2
           loadBalancerIP: "34.172.163.125"
