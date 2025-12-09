@@ -67,6 +67,8 @@ nightlydigest-backend:
       value: https://s3.ls.lsst.org
     - name: LSST_DISABLE_BUCKET_VALIDATION
       value: "1"
+    - name: SIMS_SKYBRIGHTNESS_DATA
+      value: /project/scheduler/skybrightness_pre_full
   envSecrets:
     - name: JIRA_API_TOKEN
       secretName: nightlydigest
