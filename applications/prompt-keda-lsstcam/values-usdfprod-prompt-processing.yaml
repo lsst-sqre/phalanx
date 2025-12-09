@@ -55,6 +55,7 @@ prompt-keda:
     preloadPadding: 50.1
     centralRepo: s3://rubin-summit-users
     readRepo: s3://rubin-summit-users/butler-readonly.yaml
+    localRepoConfig: s3://rubin-summit-users/config/prompt_processing.yaml
     exportTypes: |-
       - ".*_(config|metadata|log)"
       - "packages"

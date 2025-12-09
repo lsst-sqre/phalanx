@@ -47,6 +47,8 @@ prompt-keda:
     readRepo: ""
     # -- The average time to wait (in seconds) before retrying a failed connection to the shared repo.
     repoWait: 30
+    # -- Optional config overrides for local butler repo
+    localRepoConfig: ""
     # -- YAML-formatted list of regex patterns to specify the dataset types to export.
     exportTypes: "- .*"
 

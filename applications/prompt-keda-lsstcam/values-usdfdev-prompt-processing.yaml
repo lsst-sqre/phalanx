@@ -23,6 +23,7 @@ prompt-keda:
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/dev/Preprocessing.yaml']
     centralRepo: s3://rubin-pp-dev-users/central_repo_2
     repoWait: 5
+    localRepoConfig: s3://rubin-pp-dev-users/central_repo_2/config/compression.yaml
 
   s3:
     imageBucket: rubin-pp-dev

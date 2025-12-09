@@ -49,6 +49,8 @@ instrument:
   # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
   # @default -- Matches `centralRepo`
   readRepo: ""
+  # -- Optional config overrides for local butler repo.
+  localRepoConfig: ""
   # -- The average time to wait (in seconds) before retrying a failed connection to the shared repo.
   repoWait: 30
   # -- Dataset types to export.
