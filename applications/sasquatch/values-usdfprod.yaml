@@ -697,3 +697,6 @@ data-transfer-monitoring:
 
 obsloctap:
   enabled: true
+
+tap:
+  enabled: true
