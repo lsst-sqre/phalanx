@@ -9,7 +9,6 @@ Argo CD project: ``monitoring``
 .. toctree::
    :maxdepth: 1
 
-   flink/index
    google-cloud-observability/index
    grafana/index
    sasquatch-backpack/index
