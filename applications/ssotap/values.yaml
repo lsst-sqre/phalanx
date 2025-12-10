@@ -30,6 +30,20 @@ cadc-tap:
     # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
     name: "ssotap"
 
+  tapSchema:
+    # -- Database backend type: "containerized", "cloudsql", or "external"
+    # @default -- "cloudsql"
+    type: "cloudsql"
+
+    # -- Database name
+    database: "ssotap"
+
+    # -- Database username
+    username: "ssotap"
+
+    # -- Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external)
+    useVaultPassword: true
+
   uws:
     # -- Database backend type: "containerized", "cloudsql", or "external"
     type: "cloudsql"

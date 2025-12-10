@@ -2,10 +2,6 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfdev-sso"
-    type: "cloudsql"
-    username: "ssotap"
-    database: "ssotap"
-    useVaultPassword: true
 
   cloudsql:
     enabled: true
