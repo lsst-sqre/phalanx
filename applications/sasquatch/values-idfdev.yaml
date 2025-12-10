@@ -11,7 +11,7 @@ strimzi-kafka:
       tls:
         enabled: true
       bootstrap:
-        loadBalancerIP: "35.222.7.174"
+        loadBalancerIP: "34.71.118.138"
         host: sasquatch-dev-kafka-bootstrap.lsst.cloud
       brokers:
         - broker: 0
@@ -21,7 +21,7 @@ strimzi-kafka:
           loadBalancerIP: "35.202.38.197"
           host: sasquatch-dev-kafka-1.lsst.cloud
         - broker: 2
-          loadBalancerIP: "34.172.163.125"
+          loadBalancerIP: "34.45.111.124"
           host: sasquatch-dev-kafka-2.lsst.cloud
   users:
     replicator:
