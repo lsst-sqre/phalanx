@@ -21,6 +21,7 @@ env:
   AWS_RESPONSE_CHECKSUM_VALIDATION: WHEN_REQUIRED
   HOME: /home/saluser
   RA_PULL_DIRECTORIES: ""
+  TARTS_DATA_DIR: /sdf/scratch/rubin/rapid-analysis/aos_data/TARTS
 podAnnotations:
   edu.stanford.slac.sdf.project/usdf-embargo: "true"
 affinity:
