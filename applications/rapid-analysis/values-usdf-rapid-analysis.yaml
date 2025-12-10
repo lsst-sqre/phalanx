@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-sitcom/rubintv_production
-  tag: tickets-DM-50534-w41
+  tag: tickets-DM-50534-w48
   pullPolicy: IfNotPresent
 location: USDF
 env:
