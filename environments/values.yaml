@@ -94,8 +94,6 @@ applications:
   # -- Enable the fastapi-bootcamp application
   fastapi-bootcamp: false
 
-  # -- Enable the flink application
-  flink: false
   # -- Switch to enable the fov-quicklook application in specific environments (off by default)
   fov-quicklook: false
 
