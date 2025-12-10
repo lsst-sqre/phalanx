@@ -28,6 +28,8 @@ prompt-keda:
           pipelines: *std-main-pipelines
         - survey: BLOCK-416  # FBS Pre-Operations Survey (with a constrained LSST configuration)
           pipelines: *std-main-pipelines
+        - survey: BLOCK-417  # FBS Pre-Operations Survey (with a constrained LSST configuration)
+          pipelines: *std-main-pipelines
         - survey: BLOCK-T637  # Exposure time test
           pipelines: *std-main-pipelines
         - survey: BLOCK-T427  # Daytime checkout
@@ -46,6 +48,8 @@ prompt-keda:
         - survey: BLOCK-408
           pipelines: *std-pre-pipelines
         - survey: BLOCK-416
+          pipelines: *std-pre-pipelines
+        - survey: BLOCK-417
           pipelines: *std-pre-pipelines
         - survey: BLOCK-T637
           pipelines: *std-pre-pipelines
