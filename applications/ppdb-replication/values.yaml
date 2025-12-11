@@ -87,7 +87,7 @@ config:
   maxWaitTime: 3600
 
   # -- Time to wait before checking for new chunks, if no chunk appears
-  checkInterval: 30
+  checkInterval: 300
 
   # -- Time to wait between uploader file scans
   waitInterval: 300
