@@ -60,7 +60,6 @@ Service discovery
 | image.repository | string | `"ghcr.io/lsst-sqre/repertoire"` | Image to use in the repertoire deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
-| managedTapSchema | bool | `false` | Whether the TAP_SCHEMA databases are created & updated by Repertoire |
 | nodeSelector | object | `{}` | Node selection rules for the repertoire deployment pod |
 | podAnnotations | object | `{}` | Annotations for the repertoire deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |

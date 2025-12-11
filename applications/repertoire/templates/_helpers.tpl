@@ -53,3 +53,16 @@ Cloud SQL Auth Proxy sidecar container
     runAsUser: 65532
     runAsGroup: 65532
 {{- end }}
+
+{{/*
+Check if any TAP server is enabled
+*/}}
+{{- define "repertoire.anyTapServerEnabled" -}}
+{{- $enabled := false -}}
+{{- range $app, $config := .Values.config.tap.servers -}}
+  {{- if $config.enabled -}}
+    {{- $enabled = true -}}
+  {{- end -}}
+{{- end -}}
+{{- $enabled -}}
+{{- end -}}

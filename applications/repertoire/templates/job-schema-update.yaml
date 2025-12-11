@@ -1,5 +1,5 @@
 {{- $root := . -}}
-{{- if $root.Values.managedTapSchema }}
+{{- if eq (include "repertoire.anyTapServerEnabled" .) "true" }}
 {{- range $app, $config := .Values.config.tap.servers }}
 {{- if $config.enabled }}
 ---

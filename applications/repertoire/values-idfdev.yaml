@@ -29,8 +29,6 @@ config:
   useSubdomains:
     - "nublado"
 
-managedTapSchema: true
-
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
