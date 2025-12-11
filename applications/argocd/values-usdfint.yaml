@@ -47,6 +47,7 @@ argo-cd:
         g, gpdf@slac.stanford.edu, role:admin
         g, jsick@slac.stanford.edu, role:admin
         g, ktl@slac.stanford.edu, role:admin
+        g, mokun@slac.stanford.edu, role:admin
         g, pav@slac.stanford.edu, role:admin
         g, ppascual@slac.stanford.edu, role:admin
         g, reinking@slac.stanford.edu, role:admin
