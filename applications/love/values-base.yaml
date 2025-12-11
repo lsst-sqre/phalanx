@@ -87,7 +87,7 @@ love-manager:
         AUTH_LDAP_3_SERVER_URI: ldap://ipa3.ls.lsst.org
         DB_HOST: postgresdb01.ls.lsst.org
         LOVE_SITE: base
-        NIGHTREPORT_MAIL_ADDRESS: saranda@lsst.org
+        NIGHTREPORT_MAIL_ADDRESS: sebastian.aranda@noirlab.edu
       autoscaling:
         enabled: true
         minReplicas: 2
