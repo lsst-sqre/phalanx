@@ -9,6 +9,8 @@ controller:
       pin:
         - "r29_2_0_rsp2244"
     lab:
+      extraAnnotations:
+        edu.stanford.slac.sdf.project/rsp: "true"
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
