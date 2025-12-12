@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 1
 config:
   metrics:
     enabled: true
@@ -22,7 +22,7 @@ config:
       - "read:tap"
   autostart:
     - name: "scale-test-tap"
-      count: 200
+      count: 1
       user_spec:
         username_prefix: "bot-mobu-scale-notebook"
       scopes:
@@ -45,4 +45,4 @@ config:
           collection_rules:
             - type: "intersect_union_of"
               patterns:
-              - "TAP_QSERV_QUICK.ipynb"
+              - "TAP_QSERV_QUICK_CONCURRENT.ipynb"
