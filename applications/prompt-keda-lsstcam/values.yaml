@@ -200,7 +200,7 @@ prompt-keda:
       memoryLimit: "1Gi"
 
     # -- Maximum time for a single attempt to initialize the central repo (seconds).
-    timeout: 120
+    timeout: 300
     # -- Maximum number of times to attempt initializing the central repo.
     # If the initializer fails, the PP service cannot run!
     retries: 6
