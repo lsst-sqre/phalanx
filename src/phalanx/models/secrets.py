@@ -17,10 +17,10 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from pydantic import BaseModel, ConfigDict, Field, SecretStr, model_validator
+from rubin.gafaelfawr import create_token
 
 from ..constants import PULL_SECRET_DESCRIPTION
 from ..yaml import YAMLFoldedString
-from .gafaelfawr import Token
 
 __all__ = [
     "ConditionalMixin",
@@ -110,7 +110,7 @@ class SimpleSecretGenerateRules(BaseModel):
             case SecretGenerateType.password:
                 return SecretStr(secrets.token_hex(32))
             case SecretGenerateType.gafaelfawr_token:
-                return SecretStr(str(Token()))
+                return SecretStr(create_token())
             case SecretGenerateType.fernet_key:
                 return SecretStr(Fernet.generate_key().decode())
             case SecretGenerateType.rsa_private_key:

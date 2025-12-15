@@ -14,7 +14,6 @@ import yaml
 from cryptography.fernet import Fernet
 
 from phalanx.factory import Factory
-from phalanx.models.gafaelfawr import Token
 
 from ..support.cli import run_cli
 from ..support.data import (
@@ -443,7 +442,6 @@ def test_sync_regenerate(
     # check that some secrets that would have been left alone without
     # --regenerate were regenerated and are syntactically valid.
     after = _get_app_secret(mock_vault, f"{base_vault_path}/gafaelfawr")
-    assert Token.from_str(after["bootstrap-token"])
     assert before["bootstrap-token"] != after["bootstrap-token"]
     assert re.match("^[0-9a-f]{64}$", after["redis-password"])
     assert before["redis-password"] != after["redis-password"]

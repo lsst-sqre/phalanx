@@ -34,9 +34,6 @@ This API is only intended for use within the Phalanx code itself.
 .. automodapi:: phalanx.models.environments
    :include-all-objects:
 
-.. automodapi:: phalanx.models.gafaelfawr
-   :include-all-objects:
-
 .. automodapi:: phalanx.models.helm
    :include-all-objects:
 

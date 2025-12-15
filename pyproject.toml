@@ -29,7 +29,8 @@ dependencies = [
     "jinja2",
     "onepasswordconnectsdk",
     "pydantic>2",
-    "PyYAML",
+    "pyyaml",
+    "rubin-gafaelfawr",
     "safir>5",
 ]
 
