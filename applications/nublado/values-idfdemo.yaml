@@ -26,8 +26,8 @@ controller:
     fsadmin:
       command: ["nublado", "fsadmin"]
       image:
-        repository: "ghcr.io/lsst-sqre/nublado-utils"
-        tag: tickets-DM-53456
+        repository: "ghcr.io/lsst-sqre/nublado"
+        tag: tickets-DM-53456-py314
         pullPolicy: Always
       nodeSelector:
         node_pool: "arm-core-pool"
@@ -65,18 +65,9 @@ controller:
       initContainers:
         - name: "inithome"
           image:
-            repository: "ghcr.io/lsst-sqre/nublado-utils"
-            tag: "tickets-DM-53456"
+            repository: "ghcr.io/lsst-sqre/nublado"
+            tag: "tickets-DM-53456-py314"
           command: ["nublado", "inithome"]
-          privileged: true
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
-        - name: "landingpage"
-          image:
-            repository: "ghcr.io/lsst-sqre/nublado-utils"
-            tag: "tickets-DM-53456"
-          command: ["nublado", "landingpage"]
           privileged: true
           volumeMounts:
             - containerPath: "/home"

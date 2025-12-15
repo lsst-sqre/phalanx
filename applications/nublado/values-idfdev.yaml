@@ -46,9 +46,10 @@ controller:
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
         - name: "inithome"
+          command: ["nublado", "inithome"]
           image:
-            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "9.0.0"
+            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/nublado-inithome"
+            tag: "tickets-DM-53456-py314"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
