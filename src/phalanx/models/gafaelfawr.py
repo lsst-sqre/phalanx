@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import base64
 import os
-from typing import Self
+from typing import Self, override
 
 from pydantic import BaseModel, Field
 
@@ -94,6 +94,7 @@ class Token(BaseModel):
         key, secret = trimmed_token.split(".", 1)
         return len(key) == 22 and len(secret) == 22
 
+    @override
     def __str__(self) -> str:
         """Return the encoded token."""
         return f"gt-{self.key}.{self.secret}"
