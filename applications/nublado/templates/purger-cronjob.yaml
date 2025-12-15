@@ -23,8 +23,8 @@ spec:
           {{- end }}
           containers:
           - name: "{{ .Chart.Name }}-purger"
-            image: "{{ .Values.purger.image.repository }}:{{ .Values.purger.image.tag | default .Chart.AppVersion }}"
-            imagePullPolicy: "{{ .Values.purger.image.pullPolicy }}"
+            image: "{{ .Values.controller.image.repository }}:{{ .Values.controller.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.controller.image.pullPolicy }}"
             {{- with .Values.purger.resources }}
             resources:
               {{- toYaml . | nindent 14 }}

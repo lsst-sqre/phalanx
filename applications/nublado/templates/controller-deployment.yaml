@@ -36,6 +36,10 @@ spec:
       {{- end }}
       containers:
         - name: "{{ .Chart.Name }}-controller"
+          {{- with .Values.controller.command }}
+          command:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

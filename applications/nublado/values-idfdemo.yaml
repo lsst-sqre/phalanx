@@ -5,9 +5,9 @@ controller:
   slackAlerts: true
   nodeSelector:
     node_pool: "arm-core-pool"
-    image:
-      tag: tickets-DM-53305
-      pullPolicy: Always
+  image:
+    tag: "tickets-DM-53456-ctr"
+    pullPolicy: Always
   config:
     dropdownMenu:
       release:
@@ -58,16 +58,9 @@ controller:
       initContainers:
         - name: "inithome"
           image:
-            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "9.0.3"
-          privileged: true
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
-        - name: "landingpage"
-          image:
-            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/rsp-init-container"
-            tag: "tickets-DM-53305"
+            repository: "ghcr.io/lsst-sqre/nublado"
+            tag: "10.0.0"
+          command: ["nublado", "inithome"]
           privileged: true
           volumeMounts:
             - containerPath: "/home"
