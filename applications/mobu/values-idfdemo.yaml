@@ -1,6 +1,6 @@
 config:
   logLevel: DEBUG
-  profile: development
+  logProfile: development
   autostart: []
 
 image:
