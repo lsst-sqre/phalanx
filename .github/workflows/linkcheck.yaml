@@ -28,10 +28,6 @@ jobs:
           # Ensure the documentation gets the right version.
           fetch-depth: 0
 
-      - uses: actions/setup-python@v6
-        with:
-          python-version-file: ".python-version"
-
       - uses: astral-sh/setup-uv@v7
 
       - name: Install graphviz
