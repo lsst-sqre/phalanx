@@ -5,6 +5,7 @@ image:
 location: USDF
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /config/data-repos.yaml
+  DAF_BUTLER_CONFIG_PATH: /repos/drp_pipe/bps/compression/LSSTCam/nightly-validation/config
   http_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
   https_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
   squid_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
@@ -20,7 +21,7 @@ env:
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   AWS_RESPONSE_CHECKSUM_VALIDATION: WHEN_REQUIRED
   HOME: /home/saluser
-  RA_PULL_DIRECTORIES: ""
+  RA_PULL_DIRECTORIES: "drp_pipe"
   TARTS_DATA_DIR: /sdf/scratch/rubin/rapid-analysis/aos_data/TARTS
 podAnnotations:
   edu.stanford.slac.sdf.project/usdf-embargo: "true"
