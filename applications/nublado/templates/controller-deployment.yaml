@@ -36,8 +36,10 @@ spec:
       {{- end }}
       containers:
         - name: "{{ .Chart.Name }}-controller"
-          command: ["nublado"]
-          args: ["controller"]
+          {{- with .Values.controller.command }}
+          command:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
