@@ -38,10 +38,6 @@ jobs:
         env:
           GOBIN: /usr/local/bin/
 
-      - uses: actions/setup-python@v6
-        with:
-          python-version-file: ".python-version"
-
       - uses: astral-sh/setup-uv@v7
 
       - name: Run linters
@@ -55,15 +51,14 @@ jobs:
       matrix:
         python:
           - "3.13"
+          - "3.14"
 
     steps:
       - uses: actions/checkout@v6
 
-      - uses: actions/setup-python@v6
+      - uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python }}
-
-      - uses: astral-sh/setup-uv@v7
 
       - name: Run Python tests
         run: uv run --only-group=tox tox run -e typing,py,coverage-report
@@ -91,10 +86,6 @@ jobs:
       - name: Run helm unittest for sub-charts
         run: helm unittest applications/*/charts/*/tests/..
 
-      - uses: actions/setup-python@v6
-        with:
-          python-version-file: ".python-version"
-
       - uses: astral-sh/setup-uv@v7
 
       - name: Run Phalanx Helm linter
@@ -120,6 +111,7 @@ jobs:
           filters: |
             docs:
               - ".github/workflows/docs.yaml"
+              - ".python-version"
               - "docs/**"
               - "applications/*/Chart.yaml"
               - "applications/*/values.yaml"
@@ -132,6 +124,7 @@ jobs:
               - "docs/**"
             minikube:
               - ".github/workflows/ci.yaml"
+              - ".python-version"
               - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/Chart.yaml"
               - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/templates/**"
               - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/values.yaml"
@@ -155,10 +148,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version-file: ".python-version"
 
       - uses: astral-sh/setup-uv@v7
 
@@ -215,10 +204,6 @@ jobs:
         with:
           # Ensure the documentation gets the right version.
           fetch-depth: 0
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version-file: ".python-version"
 
       - uses: astral-sh/setup-uv@v7
 
