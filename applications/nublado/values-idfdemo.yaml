@@ -22,7 +22,6 @@ controller:
         age: "3w"
     logLevel: "DEBUG"
     fsadmin:
-      command: ["nublado", "fsadmin"]
       image:
         repository: "ghcr.io/lsst-sqre/nublado"
         tag: tickets-DM-53456-ctr
