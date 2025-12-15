@@ -11,7 +11,7 @@ controller:
   googleServiceAccount: null
 
   # -- Command to run nublado controller.
-  command: ["nublado", "controller"]
+  command: ["uvicorn", "nublado.controller.main:create_app", "--port", "8080", "--host", "0.0.0.0"]
 
   image:
     # -- Nublado controller image to use

@@ -24,7 +24,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `cloud-sql-proxy` Kubernetes service account and has the `cloudsql.client` role |
 | cloudsql.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the Cloud SQL Auth Proxy pod |
 | controller.affinity | object | `{}` | Affinity rules for the Nublado controller |
-| controller.command | list | `["nublado","controller"]` | Command to run nublado controller. |
+| controller.command | list | `["uvicorn","nublado.controller.main:create_app","--port","8080","--host","0.0.0.0"]` | Command to run nublado controller. |
 | controller.config.fileserver.affinity | object | `{}` | Affinity rules for user file server pods |
 | controller.config.fileserver.application | string | `"nublado-fileservers"` | Argo CD application in which to collect user file servers |
 | controller.config.fileserver.creationTimeout | string | `"3m"` | Timeout to wait for Kubernetes to create file servers, in Safir `parse_timedelta` format |

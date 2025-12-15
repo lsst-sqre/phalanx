@@ -5,10 +5,8 @@ controller:
   slackAlerts: true
   nodeSelector:
     node_pool: "arm-core-pool"
-  command: ["nublado", "controller"]
   image:
-    repository: "ghcr.io/lsst-sqre/nublado-utils"
-    tag: tickets-DM-53456
+    tag: "tickets-DM-53456-ctr"
     pullPolicy: Always
   config:
     dropdownMenu:

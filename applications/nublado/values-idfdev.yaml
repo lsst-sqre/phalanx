@@ -48,8 +48,8 @@ controller:
         - name: "inithome"
           command: ["nublado", "inithome"]
           image:
-            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/nublado-inithome"
-            tag: "tickets-DM-53456-py314"
+            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/nublado"
+            tag: "tickets-DM-53456-ctr"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
