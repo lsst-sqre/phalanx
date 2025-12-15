@@ -685,12 +685,13 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
 | strimzi-kafka.kafkaExporter.showAllOffsets | bool | `true` | Whether to show all offsets or just offsets from connected groups |
 | strimzi-kafka.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
-| strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster |
+| strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication from the source cluster |
 | strimzi-kafka.mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
 | strimzi-kafka.mirrormaker2.replication.policy.class | string | org.apache.kafka.connect.mirror.IdentityReplicationPolicy | Replication policy. |
 | strimzi-kafka.mirrormaker2.replication.policy.separator | string | No separator, topic names are preserved when IdentityReplicationPolicy is used. | Convention used for the replicated topic name when the DefaultReplicationPolicy replication policy is used. |
 | strimzi-kafka.mirrormaker2.resources | object | `{"limits":{"cpu":1,"memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for MirrorMaker2 |
-| strimzi-kafka.mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
+| strimzi-kafka.mirrormaker2.source.alias | string | None, must be set if enabled | Source cluster alias. Used to identify the source cluster in MirrorMaker2 configuration. The alias is also added as a prefix to the replicated topics when the DefaultReplicationPolicy replication policy is used. |
+| strimzi-kafka.mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source cluster bootstrap server address |
 | strimzi-kafka.mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
 | strimzi-kafka.registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | strimzi-kafka.registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |

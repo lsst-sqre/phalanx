@@ -6,13 +6,13 @@ kind: KafkaMirrorMaker2
 metadata:
   name:  {{ .Values.cluster.name }}
 spec:
-  version: {{ .Values.kafka.version | quote }}
+  version: {{ .Values.kafka.version }}
   replicas:  {{ .Values.mirrormaker2.replicas }}
-  # In the unidirectional (active/passive) replication scenario
-  # it is recommended to deploy MirrorMaker2 on the target (passive) cluster.
+  # In Sasquatch MirrorMaker2 is deployed on the target cluster
+  # and replicates data from the source cluster.
   connectCluster: "target"
   clusters:
-  - alias: "source"
+  - alias: {{ .Values.mirrormaker2.source.alias }}
     bootstrapServers: {{ .Values.mirrormaker2.source.bootstrapServer }}
     tls: {}
     # The external kafka listeneres in Sasquatch use scram-sha-512 authentication
@@ -43,7 +43,7 @@ spec:
       # by the brokers and offset data committed.
       offset.flush.timeout.ms: 10000
   mirrors:
-  - sourceCluster: "source"
+  - sourceCluster: {{ .Values.mirrormaker2.source.alias }}
     targetCluster: "target"
     sourceConnector:
       tasksMax: 128

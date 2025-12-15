@@ -73,12 +73,13 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
 | kafkaExporter.showAllOffsets | bool | `true` | Whether to show all offsets or just offsets from connected groups |
 | kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
-| mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster |
+| mirrormaker2.enabled | bool | `false` | Enable replication from the source cluster |
 | mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
 | mirrormaker2.replication.policy.class | string | org.apache.kafka.connect.mirror.IdentityReplicationPolicy | Replication policy. |
 | mirrormaker2.replication.policy.separator | string | No separator, topic names are preserved when IdentityReplicationPolicy is used. | Convention used for the replicated topic name when the DefaultReplicationPolicy replication policy is used. |
 | mirrormaker2.resources | object | `{"limits":{"cpu":1,"memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for MirrorMaker2 |
-| mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
+| mirrormaker2.source.alias | string | None, must be set if enabled | Source cluster alias. Used to identify the source cluster in MirrorMaker2 configuration. The alias is also added as a prefix to the replicated topics when the DefaultReplicationPolicy replication policy is used. |
+| mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source cluster bootstrap server address |
 | mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
 | registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |

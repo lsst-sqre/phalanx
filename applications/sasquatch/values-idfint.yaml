@@ -26,6 +26,7 @@ strimzi-kafka:
   mirrormaker2:
     enabled: true
     source:
+      alias: "idfdev"
       bootstrapServer: sasquatch-dev-kafka-bootstrap.lsst.cloud:9094
       topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*"
   users:

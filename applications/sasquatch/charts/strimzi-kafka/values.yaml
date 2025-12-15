@@ -367,14 +367,19 @@ users:
     enabled: false
 
 mirrormaker2:
-  # -- Enable replication in the target (passive) cluster
+  # -- Enable replication from the source cluster
   enabled: false
 
   # -- Number of Mirror Maker replicas to run
   replicas: 3
 
   source:
-    # -- Source (active) cluster to replicate from
+    # -- Source cluster alias. Used to identify the source cluster in
+    # MirrorMaker2 configuration. The alias is also added as a prefix to
+    # the replicated topics when the DefaultReplicationPolicy replication policy is used.
+    # @default -- None, must be set if enabled
+    alias: ""
+    # -- Source cluster bootstrap server address
     # @default -- None, must be set if enabled
     bootstrapServer: ""
 
