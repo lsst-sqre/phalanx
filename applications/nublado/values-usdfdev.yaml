@@ -1,4 +1,13 @@
 controller:
+  tolerations:
+    - key: edu.stanford.slac.sdf.project/rsp
+      effect: NoSchedule
+      operator: Equal
+      value: "true"
+  nodeSelector:
+    edu.stanford.slac.sdf.project/rsp: "true"
+  podAnnotations:
+    edu.stanford.slac.sdf.project/rsp: "true"
   config:
     logLevel: "DEBUG"
     images:
