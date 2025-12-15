@@ -34,6 +34,8 @@ nitpick_ignore = [
     ["py:obj", "pydantic.BaseModel.model_dict"],
     # See https://github.com/sphinx-doc/sphinx/issues/13178
     ["py:class", "pathlib._local.Path"],
+    # Bug in Sphinx with Python 3.14
+    ["py:data", "typing.Union"],
 ]
 nitpick_ignore_regex = [
     # Bug in Sphinx
