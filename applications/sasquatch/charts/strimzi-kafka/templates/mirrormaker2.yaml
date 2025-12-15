@@ -85,6 +85,7 @@ spec:
         # Increase request timeout
         producer.request.timeout.ms: 240000
         consumer.request.timeout.ms: 240000
+        consumer.auto.offset.reset: {{ .Values.mirrormaker2.replication.offset }}
     heartbeatConnector:
       autoRestart:
         enabled: true

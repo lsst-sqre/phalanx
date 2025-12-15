@@ -397,6 +397,10 @@ mirrormaker2:
       # -- Replication policy.
       # @default -- org.apache.kafka.connect.mirror.IdentityReplicationPolicy
       class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
+    # -- Offset reset policy for the Mirror Maker consumer.
+    # Options are 'earliest' and 'latest'.
+    # @default -- earliest
+    offset: earliest
 
   # -- Kubernetes resources for MirrorMaker2
   resources:
