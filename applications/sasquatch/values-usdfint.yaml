@@ -57,7 +57,18 @@ schema-registry:
   enabled: true
   ingress:
     enabled: true
+    anonymous: true
 
+schema-registry-remote:
+  enabled: true
+  topic:
+    name: summit.registry-schemas
+    create: false
+  ingress:
+    enabled: true
+    hostname: usdf-rsp-int.slac.stanford.edu
+    path: /schema-registry-remote(/|$)(.*)
+    anonymous: true
 
 influxdb:
   ingress:
