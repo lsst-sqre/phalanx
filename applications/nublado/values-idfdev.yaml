@@ -49,6 +49,7 @@ controller:
           command: ["nublado", "inithome"]
           image:
             repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/nublado"
+            tag: "10.0.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
