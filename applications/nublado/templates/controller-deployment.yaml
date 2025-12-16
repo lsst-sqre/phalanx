@@ -36,18 +36,13 @@ spec:
       {{- end }}
       containers:
         - name: "{{ .Chart.Name }}-controller"
-          {{- with .Values.controller.command }}
           command:
-            {{- toYaml . | nindent 10 }}
-          {{- end }}
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - "all"
-            readOnlyRootFilesystem: true
-          image: "{{ .Values.controller.image.repository }}:{{ .Values.controller.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.controller.image.pullPolicy | quote }}
+            - "uvicorn"
+            - "nublado.controller.main:create_app"
+            - "--port"
+            - "8080"
+            - "--host"
+            - "0.0.0.0"
           env:
             - name: EXTERNAL_INSTANCE_URL
               value: {{ .Values.global.baseUrl | quote }}
@@ -92,6 +87,8 @@ spec:
             # keepalive timeout for ingress-nginx connections is 60s.
             - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
               value: "61"
+          image: "{{ .Values.controller.image.repository }}:{{ .Values.controller.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.controller.image.pullPolicy | quote }}
           lifecycle:
             # Number of seconds k8s should wait before sending SIGTERM on
             # graceful restarts/deployments/shutdowns. We need this because it
@@ -117,16 +114,22 @@ spec:
             httpGet:
               path: "/"
               port: "http"
+          {{- with .Values.controller.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
           startupProbe:
             httpGet:
               path: "/"
               port: "http"
             failureThreshold: 30
             periodSeconds: 10
-          {{- with .Values.controller.resources }}
-          resources:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
           volumeMounts:
             - name: "config"
               mountPath: "/etc/nublado"

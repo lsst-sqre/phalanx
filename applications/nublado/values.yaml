@@ -10,14 +10,6 @@ controller:
   # @default -- None, must be set when using Google Artifact Registry
   googleServiceAccount: null
 
-  # -- Command to run nublado controller.
-  command:
-    - "uvicorn"
-    - "nublado.controller.main:create_app"
-    - "--port"
-    - "8080"
-    - "--host"
-    - "0.0.0.0"
   image:
     # -- Nublado controller image to use
     repository: "ghcr.io/lsst-sqre/nublado"
