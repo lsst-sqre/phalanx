@@ -218,10 +218,10 @@ mtscheduler:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 2700m
+      cpu: 6
       memory: 10000Mi
     requests:
-      cpu: 270m
+      cpu: 3
       memory: 5000Mi
 
 ocsqueue:
