@@ -42,11 +42,12 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fileserver.volumeMounts | list | `[]` | Volumes that should be made available via WebDAV |
 | controller.config.fsadmin.affinity | object | `{}` | Affinity rules for fsadmin pods |
 | controller.config.fsadmin.application | string | `"nublado-fileservers"` | Argo CD application in which to collect fsadmins |
+| controller.config.fsadmin.command | list | `["tail","-f","/dev/null"]` | Command to run in fsadmin container |
 | controller.config.fsadmin.extraVolumeMounts | list | `[]` | Extra volumes that should be mounted to fsadmin |
 | controller.config.fsadmin.extraVolumes | list | `[]` | Extra volumes that should be made available to fsadmin |
-| controller.config.fsadmin.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for fsadmin image |
-| controller.config.fsadmin.image.repository | string | `"ghcr.io/lsst-sqre/nublado-fsadmin"` | fsadmin image to use |
-| controller.config.fsadmin.image.tag | string | `"9.0.3"` | Tag of fsadmin image to use |
+| controller.config.fsadmin.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for file system admin image |
+| controller.config.fsadmin.image.repository | string | `"ghcr.io/lsst-sqre/nublado"` | File system admin image to use |
+| controller.config.fsadmin.image.tag | string | `"10.0.0"` | Tag of file system admin image |
 | controller.config.fsadmin.mountPrefix | string | `nil` | Mount prefix, to be prepended to mountpoints in order to collect them in one place |
 | controller.config.fsadmin.nodeSelector | object | `{}` | Node selector rules for fsadmin pods |
 | controller.config.fsadmin.resources | object | See `values.yaml` | Resource requests and limits for fsadmin |
@@ -97,9 +98,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | controller.config.pathPrefix | string | `"/nublado"` | Path prefix that will be routed to the controller |
 | controller.googleServiceAccount | string | None, must be set when using Google Artifact Registry | If Google Artifact Registry is used as the image source, the Google service account that has an IAM binding to the `nublado-controller` Kubernetes service account and has the Artifact Registry reader role |
-| controller.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the controller image |
-| controller.image.repository | string | `"ghcr.io/lsst-sqre/nublado-controller"` | Nublado controller image to use |
-| controller.image.tag | string | The appVersion of the chart | Tag of Nublado controller image to use |
 | controller.ingress.annotations | object | `{}` | Additional annotations to add for the Nublado controller ingress |
 | controller.nodeSelector | object | `{}` | Node selector rules for the Nublado controller |
 | controller.podAnnotations | object | `{}` | Annotations for the Nublado controller |
@@ -117,9 +115,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cronjob.artifacts.targetVolume.volumeName | string | None, must be set for each environment | Name of volume to mount (from controller.lab.config.volumes) |
 | cronjob.artifacts.targetVolumePath | string | `"/rubin"` | Where repository volume should be mounted |
 | cronjob.artifacts.uid | int | `1000` | UID for the cloning cronjob(s) |
-| cronjob.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the repo cloner image |
-| cronjob.image.repository | string | `"ghcr.io/lsst-sqre/repo-cloner"` | Repository cloner image to use |
-| cronjob.image.tag | string | `"0.1.0"` | Tag of repo cloner image to use |
 | cronjob.resources | object | See `values.yaml` | Resource limits and requests for the cloning cronjob(s) |
 | cronjob.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the cloning cronjob(s). |
 | cronjob.tutorials.enabled | bool | `false` | Clone the notebooks? |
@@ -143,6 +138,9 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | hub.resources | object | See `values.yaml` | Resource limits and requests for the Hub |
 | hub.timeout.startup | int | `90` | Timeout for JupyterLab to start in seconds. Currently this sometimes takes over 60 seconds for reasons we don't understand. |
 | hub.useSubdomains | bool | `false` | Whether to put each user's lab in a separate domain. This is strongly recommended for security, but requires wildcard DNS and cert-manager support and requires subdomain support be enabled in Gafaelfawr. |
+| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Nublado image |
+| image.repository | string | `"ghcr.io/lsst-sqre/nublado"` | Nublado image to use |
+| image.tag | string | The appVersion of the chart | Tag of Nublado image to use |
 | jupyterhub.cull.enabled | bool | `true` | Enable the lab culler. |
 | jupyterhub.cull.every | int | 3600 (1 hour) | How frequently to check for idle labs in seconds |
 | jupyterhub.cull.maxAge | int | 864000 (10 days) | Maximum age of a lab regardless of activity |
@@ -161,7 +159,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/nublado-jupyterhub"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"9.0.3"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"10.0.0"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | See `values.yaml` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |
@@ -184,9 +182,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | purger.config.logProfile | string | `"production"` | "production" (JSON logs) or "development" (human-friendly) |
 | purger.config.policyFile | string | `"/etc/purger/policy.yaml"` | File holding purge policy |
 | purger.enabled | bool | `false` | Purge scratch space? |
-| purger.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the purger image |
-| purger.image.repository | string | `"ghcr.io/lsst-sqre/nublado-purger"` | purger image to use |
-| purger.image.tag | string | The appVersion of the chart | Tag of purger image to use |
 | purger.nodeSelector | object | `{}` | Node selector rules for purger |
 | purger.podAnnotations | object | `{}` | Annotations for the purger pod |
 | purger.policy.directories | list | See `values.yaml` | Per-directory pruning policy. |

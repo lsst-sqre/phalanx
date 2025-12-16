@@ -22,13 +22,13 @@ spec:
           {{- end }}
           containers:
           - name: "{{ .Chart.Name }}-tutorial"
-            image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
-            imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.image.pullPolicy }}"
             {{- with .Values.cronjob.resources }}
             resources:
               {{- toYaml . | nindent 14 }}
             {{- end }}
-            command: [ "/entrypoint.sh" ]
+            command: [ "/usr/local/bin/repo-cloner.sh" ]
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -86,14 +86,14 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           containers:
-          - name: artifacts
-            image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
-            imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
+          - name: "{{ .Chart.Name }}-artifacts"
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.image.pullPolicy }}"
             {{- with .Values.cronjob.resources }}
             resources:
               {{- toYaml . | nindent 14 }}
             {{- end }}
-            command: [ "/entrypoint.sh" ]
+            command: [ "/usr/local/bin/repo-cloner.sh" ]
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true

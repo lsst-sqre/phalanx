@@ -13,9 +13,10 @@ controller:
         FIREFLY_URL: "/portal/app"
       initContainers:
         - name: "inithome"
+          command: ["nublado", "inithome"]
           image:
-            repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "9.0.3"
+            repository: "ghcr.io/lsst-sqre/nublado"
+            tag: "10.0.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
