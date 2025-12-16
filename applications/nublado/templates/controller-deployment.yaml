@@ -87,8 +87,8 @@ spec:
             # keepalive timeout for ingress-nginx connections is 60s.
             - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
               value: "61"
-          image: "{{ .Values.controller.image.repository }}:{{ .Values.controller.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.controller.image.pullPolicy | quote }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           lifecycle:
             # Number of seconds k8s should wait before sending SIGTERM on
             # graceful restarts/deployments/shutdowns. We need this because it

@@ -1,13 +1,13 @@
 sentry:
   enabled: true
+image:
+  tag: "tickets-DM-53456-ctr"
+  pullPolicy: Always
 controller:
   googleServiceAccount: "nublado-controller@science-platform-demo-9e05.iam.gserviceaccount.com"
   slackAlerts: true
   nodeSelector:
     node_pool: "arm-core-pool"
-  image:
-    tag: "tickets-DM-53456-ctr"
-    pullPolicy: Always
   config:
     dropdownMenu:
       release:

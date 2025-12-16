@@ -1,5 +1,16 @@
 # Default values for Nublado.
 
+image:
+  # -- Nublado image to use
+  repository: "ghcr.io/lsst-sqre/nublado"
+
+  # -- Pull policy for the Nublado image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of Nublado image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
 controller:
   # -- Affinity rules for the Nublado controller
   affinity: {}
@@ -9,17 +20,6 @@ controller:
   # Kubernetes service account and has the Artifact Registry reader role
   # @default -- None, must be set when using Google Artifact Registry
   googleServiceAccount: null
-
-  image:
-    # -- Nublado controller image to use
-    repository: "ghcr.io/lsst-sqre/nublado"
-
-    # -- Pull policy for the controller image
-    pullPolicy: "IfNotPresent"
-
-    # -- Tag of Nublado controller image to use
-    # @default -- The appVersion of the chart
-    tag: null
 
   ingress:
     # -- Additional annotations to add for the Nublado controller ingress

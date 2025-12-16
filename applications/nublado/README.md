@@ -95,9 +95,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | controller.config.pathPrefix | string | `"/nublado"` | Path prefix that will be routed to the controller |
 | controller.googleServiceAccount | string | None, must be set when using Google Artifact Registry | If Google Artifact Registry is used as the image source, the Google service account that has an IAM binding to the `nublado-controller` Kubernetes service account and has the Artifact Registry reader role |
-| controller.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the controller image |
-| controller.image.repository | string | `"ghcr.io/lsst-sqre/nublado"` | Nublado controller image to use |
-| controller.image.tag | string | The appVersion of the chart | Tag of Nublado controller image to use |
 | controller.ingress.annotations | object | `{}` | Additional annotations to add for the Nublado controller ingress |
 | controller.nodeSelector | object | `{}` | Node selector rules for the Nublado controller |
 | controller.podAnnotations | object | `{}` | Annotations for the Nublado controller |
@@ -138,6 +135,9 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | hub.resources | object | See `values.yaml` | Resource limits and requests for the Hub |
 | hub.timeout.startup | int | `90` | Timeout for JupyterLab to start in seconds. Currently this sometimes takes over 60 seconds for reasons we don't understand. |
 | hub.useSubdomains | bool | `false` | Whether to put each user's lab in a separate domain. This is strongly recommended for security, but requires wildcard DNS and cert-manager support and requires subdomain support be enabled in Gafaelfawr. |
+| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Nublado image |
+| image.repository | string | `"ghcr.io/lsst-sqre/nublado"` | Nublado image to use |
+| image.tag | string | The appVersion of the chart | Tag of Nublado image to use |
 | jupyterhub.cull.enabled | bool | `true` | Enable the lab culler. |
 | jupyterhub.cull.every | int | 3600 (1 hour) | How frequently to check for idle labs in seconds |
 | jupyterhub.cull.maxAge | int | 864000 (10 days) | Maximum age of a lab regardless of activity |

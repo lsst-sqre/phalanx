@@ -22,8 +22,8 @@ spec:
           {{- end }}
           containers:
           - name: "{{ .Chart.Name }}-tutorial"
-            image: "{{ .Values.controller.image.repository }}:{{ .Values.controller.image.tag | default .Chart.AppVersion }}"
-            imagePullPolicy: "{{ .Values.controller.image.pullPolicy }}"
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.image.pullPolicy }}"
             {{- with .Values.cronjob.resources }}
             resources:
               {{- toYaml . | nindent 14 }}
@@ -87,8 +87,8 @@ spec:
           {{- end }}
           containers:
           - name: "{{ .Chart.Name }}-artifacts"
-            image: "{{ .Values.controller.image.repository }}:{{ .Values.controller.image.tag | default .Chart.AppVersion }}"
-            imagePullPolicy: "{{ .Values.controller.image.pullPolicy }}"
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.image.pullPolicy }}"
             {{- with .Values.cronjob.resources }}
             resources:
               {{- toYaml . | nindent 14 }}
