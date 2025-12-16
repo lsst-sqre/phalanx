@@ -148,6 +148,16 @@ controller:
       # -- Extra volumes that should be mounted to fsadmin
       extraVolumeMounts: []
 
+      image:
+        # -- File system admin image to use
+        repository: "ghcr.io/lsst-sqre/nublado"
+
+        # -- Pull policy for file system admin image
+        pullPolicy: "IfNotPresent"
+
+        # -- Tag of file system admin image
+        tag: "10.0.0"
+
       # -- Mount prefix, to be prepended to mountpoints in order to
       # collect them in one place
       mountPrefix: null

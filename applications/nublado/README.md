@@ -45,6 +45,9 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fsadmin.command | list | `["tail","-f","/dev/null"]` | Command to run in fsadmin container |
 | controller.config.fsadmin.extraVolumeMounts | list | `[]` | Extra volumes that should be mounted to fsadmin |
 | controller.config.fsadmin.extraVolumes | list | `[]` | Extra volumes that should be made available to fsadmin |
+| controller.config.fsadmin.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for file system admin image |
+| controller.config.fsadmin.image.repository | string | `"ghcr.io/lsst-sqre/nublado"` | File system admin image to use |
+| controller.config.fsadmin.image.tag | string | `"10.0.0"` | Tag of file system admin image |
 | controller.config.fsadmin.mountPrefix | string | `nil` | Mount prefix, to be prepended to mountpoints in order to collect them in one place |
 | controller.config.fsadmin.nodeSelector | object | `{}` | Node selector rules for fsadmin pods |
 | controller.config.fsadmin.resources | object | See `values.yaml` | Resource requests and limits for fsadmin |
