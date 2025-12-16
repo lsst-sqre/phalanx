@@ -44,7 +44,7 @@ KEDA Prompt Processing instance for HSC
 | prompt-keda.initializer.resources.memoryLimit | string | `"1Gi"` | The maximum memory limit for the initializer. |
 | prompt-keda.initializer.resources.memoryRequest | string | `"512Mi"` | The minimum memory to request for the initializer. |
 | prompt-keda.initializer.retries | int | `6` | Maximum number of times to attempt initializing the central repo. If the initializer fails, the PP service cannot run! |
-| prompt-keda.initializer.timeout | int | `120` | Maximum time for a single attempt to initialize the central repo (seconds). |
+| prompt-keda.initializer.timeout | int | `300` | Maximum time for a single attempt to initialize the central repo (seconds). |
 | prompt-keda.instrument.centralRepo | string | None, must be set | URI to the shared repo used for pipeline inputs and outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
 | prompt-keda.instrument.exportTypes | string | `"- .*"` | YAML-formatted list of regex patterns to specify the dataset types to export. |
 | prompt-keda.instrument.localRepoConfig | string | `""` | Optional config overrides for local butler repo |
