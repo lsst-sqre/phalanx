@@ -80,6 +80,9 @@ Rubin Observatory's telemetry service
 | influxdb.securityContext.runAsUser | int | `1500` |  |
 | influxdb.setDefaultUser.enabled | bool | `true` | Whether the default InfluxDB user is set |
 | influxdb.setDefaultUser.user.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
+| kafdrop-remote.enabled | bool | `false` | Whether to enable the kafdrop-remote, an instance of kafdrop for remote topics |
+| kafdrop-remote.kafka.topicPrefix | string | None, must be set if enabled | Prefix of the remote topics kafdrop-remote has access to. |
+| kafdrop-remote.kafka.user | string | `"kafdrop-remote"` | Kafka user to use for kafdrop-remote |
 | kafdrop.enabled | bool | `true` | Whether to enable the kafdrop subchart |
 | kafka-connect-manager.enabled | bool | `false` | Whether to enable the Kafka Connect Manager |
 | kapacitor.enabled | bool | `true` | Whether to enable Kapacitor |
@@ -498,6 +501,37 @@ Rubin Observatory's telemetry service
 | kafdrop.service.annotations | object | `{}` | Additional annotations to add to the service |
 | kafdrop.service.port | int | `9000` | Service port |
 | kafdrop.tolerations | list | `[]` | Tolerations configuration |
+| kafdrop-remote.affinity | object | `{}` | Affinity configuration |
+| kafdrop-remote.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
+| kafdrop-remote.cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |
+| kafdrop-remote.existingSecret | string | Do not use a secret | Existing Kubernetes secrect use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |
+| kafdrop-remote.host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
+| kafdrop-remote.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| kafdrop-remote.image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository |
+| kafdrop-remote.image.tag | string | `"4.2.0"` | Kafdrop image version |
+| kafdrop-remote.ingress.annotations | object | `{}` | Additional ingress annotations |
+| kafdrop-remote.ingress.enabled | bool | `false` | Whether to enable the ingress |
+| kafdrop-remote.ingress.path | string | `"/kafdrop"` | Ingress path |
+| kafdrop-remote.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
+| kafdrop-remote.jvm.opts | string | `""` | JVM options |
+| kafdrop-remote.kafka.broker | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Bootstrap list of Kafka host/port pairs |
+| kafdrop-remote.kafka.topicPrefix | string | "lsst" | Kafka topic prefix to filter topics by |
+| kafdrop-remote.kafka.user | string | kafdrop | Kafdrop Kafka user |
+| kafdrop-remote.logging.kafdrop.config.level | string | `"WARN"` | Log level for Kafdrop config package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| kafdrop-remote.logging.kafdrop.controller.level | string | `"INFO"` | Log level for Kafdrop controller package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| kafdrop-remote.logging.kafdrop.level | string | `"INFO"` | Log level for Kafdrop package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| kafdrop-remote.logging.kafdrop.service.level | string | `"INFO"` | Log level for Kafdrop service package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| kafdrop-remote.logging.root.level | string | `"WARN"` | Log level for Kafdrop root logger (TRACE, DEBUG, INFO, WARN, ERROR) |
+| kafdrop-remote.nodeSelector | object | `{}` | Node selector configuration |
+| kafdrop-remote.podAnnotations | object | `{}` | Pod annotations |
+| kafdrop-remote.replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
+| kafdrop-remote.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafdrop |
+| kafdrop-remote.schemaregistry | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | The endpoint of Schema Registry |
+| kafdrop-remote.server.port | int | `9000` | The web server port to listen on |
+| kafdrop-remote.server.servlet.contextPath | string | `"/kafdrop"` | The context path to serve requests on |
+| kafdrop-remote.service.annotations | object | `{}` | Additional annotations to add to the service |
+| kafdrop-remote.service.port | int | `9000` | Service port |
+| kafdrop-remote.tolerations | list | `[]` | Tolerations configuration |
 | kafka-connect-manager.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations |
 | kafka-connect-manager.enabled | bool | `false` | Whether to enable Kafka Connect Manager |
 | kafka-connect-manager.env.kafkaBrokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker URL |

@@ -307,6 +307,17 @@ kafdrop:
   # -- Whether to enable the kafdrop subchart
   enabled: true
 
+kafdrop-remote:
+  # -- Whether to enable the kafdrop-remote, an instance of kafdrop for
+  # remote topics
+  enabled: false
+  kafka:
+    # -- Kafka user to use for kafdrop-remote
+    user: "kafdrop-remote"
+    # -- Prefix of the remote topics kafdrop-remote has access to.
+    # @default -- None, must be set if enabled
+    topicPrefix: ""
+
 squareEvents:
   # -- Enable the Square Events subchart with topic and user configurations
   enabled: false

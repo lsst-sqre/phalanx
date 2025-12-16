@@ -60,7 +60,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: sasquatch
-                key: kafdrop-kafka-properties
+                key: {{ .Values.kafka.user }}-kafka-properties
           - name: LOGGING_LEVEL_ROOT
             value: {{ .Values.logging.root.level | upper | quote }}
           - name: LOGGING_LEVEL_KAFDROP
