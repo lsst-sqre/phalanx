@@ -120,7 +120,7 @@ cleanroom-ess109:
 dimm1:
   enabled: true
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/dimm
     pullPolicy: Always
   env:
@@ -136,7 +136,7 @@ dimm1:
 dimm2:
   enabled: true
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/dimm
     pullPolicy: Always
   env:
