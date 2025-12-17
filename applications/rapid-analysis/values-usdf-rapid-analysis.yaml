@@ -94,6 +94,11 @@ scripts:
   - sdf-scratch
   env:
     DAF_BUTLER_CACHE_EXPIRATION_MODE: disabled
+- name: LSSTCam/runTransferAlarm.py
+  image:
+    pullPolicy: Always
+  mounts:
+  - sdf-scratch
 ###
 ### LSSTCam StatefulSets
 ###
