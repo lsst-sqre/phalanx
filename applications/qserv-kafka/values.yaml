@@ -83,6 +83,10 @@ config:
   # @default -- None, must be set
   qservDatabaseUrl: null
 
+  # -- Whether to delete queries after they complete. If this is set to false,
+  # rely on Qserv's internal garbage collection of old queries.
+  qservDeleteQueries: true
+
   # -- Interval at which Qserv is polled for query status in Safir
   # `parse_timedelta` format
   qservPollInterval: "1s"
