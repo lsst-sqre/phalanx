@@ -55,11 +55,11 @@ spec:
                   name: {{ $env.secretName }}
                   key: {{ $env.secretKey }}
             {{- end }}
-          {{- if .Values.pvcMountpoints}}
           volumeMounts:
           - name: nightlydigest-backend-secrets
             mountPath: "/etc/secrets"
             readOnly: true
+          {{- if .Values.pvcMountpoints}}
           {{- range $vol := .Values.pvcMountpoints }}
           - name: {{ $vol.name }}
             readOnly: {{ $vol.mount.readOnly | default true }}
@@ -69,16 +69,32 @@ spec:
             {{- end }}
           {{- end }}
           {{- end }}
-      {{- if .Values.pvcMountpoints}}
+          {{- if .Values.nfsMountpoints}}
+          {{- range $vol := .Values.nfsMountpoints }}
+          - name: {{ $vol.name }}
+            mountPath: {{ $vol.mountPath }}
+            readOnly: {{ $vol.readOnly | default true }}
+          {{- end }}
+          {{- end }}
       volumes:
       - name: nightlydigest-backend-secrets
         secret:
           secretName: nightlydigest
           defaultMode: 0400
+      {{- if .Values.pvcMountpoints}}
       {{- range $vol := .Values.pvcMountpoints }}
       - name: {{ $vol.name | quote }}
         persistentVolumeClaim:
           claimName: {{ $vol.storageClassName | quote }}
+      {{- end }}
+      {{- end }}
+      {{- if .Values.nfsMountpoints}}
+      {{- range $vol := .Values.nfsMountpoints }}
+      - name: {{ $vol.name | quote }}
+        nfs:
+          server: {{ $vol.server | quote }}
+          readOnly: {{ $vol.readOnly | default true }}
+          path: {{ $vol.serverPath | quote }}
       {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
