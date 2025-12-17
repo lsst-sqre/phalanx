@@ -50,13 +50,13 @@ config:
   # main mobu log.
   logLevel: INFO
 
-  # -- Prefix for mobu's API routes.
-  pathPrefix: "/mobu"
-
   # -- One of 'production' or 'development'. 'production' configures structured
   # JSON logging, and 'development' configures unstructured human readable
   # logging.
-  profile: production
+  logProfile: production
+
+  # -- Prefix for mobu's API routes.
+  pathPrefix: "/mobu"
 
   # -- The environment to report to Sentry
   sentryEnvironment: null
