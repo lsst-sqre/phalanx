@@ -1,4 +1,5 @@
 image:
+  tag: "tickets/DM-53651"
   pullPolicy: Always
 
 ingress:
