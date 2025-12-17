@@ -15,7 +15,7 @@ Replicates data from the APDB to the PPDB
 | config.additionalS3ProfileUrl | string | `"https://sdfembs3.sdf.slac.stanford.edu"` | S3 profile URL for additional S3 profile |
 | config.apdbConfig | string | `nil` | APDB config file resource |
 | config.apdbIndexUri | string | `"/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"` | APDB index URI |
-| config.checkInterval | int | `30` | Time to wait before checking for new chunks, if no chunk appears |
+| config.checkInterval | int | `300` | Time to wait before checking for new chunks, if no chunk appears |
 | config.disableBucketValidation | int | `1` | Disable bucket validation in LSST S3 tools |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
