@@ -86,8 +86,23 @@ kafka-connect-manager:
   enabled: false
 
 kafdrop:
+  enabled: true
   ingress:
     enabled: true
+
+kafdrop-remote:
+  enabled: true
+  server:
+    servlet:
+      contextPath: /kafdrop-remote
+  kafka:
+    user: kafdrop-remote
+    topicPrefix: summit
+  schemaregistry: "http://sasquatch-schema-registry-remote.sasquatch:8081"
+  ingress:
+    enabled: true
+    hostname: usdf-rsp-int.slac.stanford.edu
+    path: /kafdrop-remote
 
 rest-proxy:
   enabled: false
