@@ -70,7 +70,7 @@ atqueue:
 atscheduler:
   classifier: scheduler2
   image:
-    revision: 6
+    revision: 9
     repository: ts-dockerhub.lsst.org/scheduler
     pullPolicy: Always
   env:
@@ -187,7 +187,7 @@ mtqueue:
 mtscheduler:
   classifier: scheduler1
   image:
-    revision: 6
+    revision: 9
     repository: ts-dockerhub.lsst.org/scheduler
     pullPolicy: Always
   env:
@@ -282,7 +282,7 @@ ocsqueue:
 ocsscheduler:
   classifier: scheduler3
   image:
-    revision: 6
+    revision: 9
     repository: ts-dockerhub.lsst.org/scheduler
     pullPolicy: Always
   env:
