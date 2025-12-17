@@ -96,7 +96,6 @@ resources:
       cpu: "2m"
       memory: "256Mi"
 
-# -- Config for the CronJob that publishes metrics periodically
 periodicMetrics:
   # -- Cron schedule string for publishing periodic metrics (in UTC)
   schedule: "* * * * *"
@@ -119,7 +118,14 @@ autoscaling:
 
 nodeSelector: {}
 
-tolerations: []
+# -- Tolerations for the noteburst pods
+# @default -- Tolerate GKE arm64 taint
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
+
 affinity: {}
 config:
   # -- Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
