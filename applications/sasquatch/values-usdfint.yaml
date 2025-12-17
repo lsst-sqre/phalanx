@@ -82,8 +82,17 @@ customInfluxDBIngress:
   enabled: true
   hostname: usdf-rsp-int.slac.stanford.edu
 
-kafka-connect-manager:
-  enabled: false
+telegraf:
+  enabled: true
+  registry:
+    url: "http://sasquatch-schema-registry-remote.sasquatch:8081"
+  kafkaConsumers:
+    test:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "summit.lsst.sal.Test" ]
+      debug: true
 
 kafdrop:
   enabled: true
