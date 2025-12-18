@@ -30,7 +30,6 @@ applications:
   plot-navigator: true
   portal: true
   postgres: true
-  repertoire: true
   rubintv: true
   s3proxy: true
   sasquatch: true

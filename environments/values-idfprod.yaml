@@ -24,7 +24,6 @@ applications:
   nublado: true
   portal: true
   qserv-kafka: true
-  repertoire: true
   sasquatch: true
   semaphore: true
   sia: true

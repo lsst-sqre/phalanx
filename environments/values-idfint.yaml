@@ -25,7 +25,6 @@ applications:
   nublado: true
   portal: true
   qserv-kafka: true
-  repertoire: true
   rubin-rag: true
   sasquatch-backpack: true
   sasquatch: true
