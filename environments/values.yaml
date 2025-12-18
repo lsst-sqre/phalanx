@@ -94,7 +94,7 @@ applications:
   # -- Enable the fastapi-bootcamp application
   fastapi-bootcamp: false
 
-  # -- Switch to enable the fov-quicklook application in specific environments (off by default)
+  # -- Enable the fov-quicklook application
   fov-quicklook: false
 
   # -- Enable the Gafaelfawr application. This is required by Phalanx since
@@ -116,8 +116,9 @@ applications:
   # -- Enable the nvr-control application
   nvr-control: false
 
-  # -- Enable the repertoire application
-  repertoire: false
+  # -- Enable the Repertoire application. This provides service discovery for
+  # many other Phalanx applications, all of which assume that it is running.
+  repertoire: true
 
   # -- Enable the rubin-rag application
   rubin-rag: false

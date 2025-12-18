@@ -33,7 +33,6 @@ applications:
   obssys: true
   portal: true
   rapid-analysis: true
-  repertoire: true
   rubintv: true
   rubin-too-producer: true
   sasquatch: true
