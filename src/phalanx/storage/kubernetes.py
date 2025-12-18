@@ -81,3 +81,18 @@ class KubernetesStorage:
             Namespace in which the rollout is happening.
         """
         self._kubectl.run("-n", namespace, "rollout", "status", name)
+
+    def restart(self, name: str, namespace: str) -> None:
+        """Restart a kubernetes workload and wait for it to be ready again.
+
+        Parameters
+        ----------
+        name
+            Name of the workload. This should be the type of object (usually
+            either ``deployment`` or ``statefulset``, followed by a slash and
+            the name of the object.
+        namespace
+            Namespace in which the workload exists.
+        """
+        self._kubectl.run("-n", namespace, "rollout", "restart", name)
+        self.wait_for_rollout(name=name, namespace=namespace)
