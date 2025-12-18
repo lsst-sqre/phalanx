@@ -1,8 +1,5 @@
 sentry:
   enabled: true
-image:
-  tag: "tickets-DM-53456-ctr"
-  pullPolicy: Always
 controller:
   googleServiceAccount: "nublado-controller@science-platform-demo-9e05.iam.gserviceaccount.com"
   slackAlerts: true
@@ -55,18 +52,9 @@ controller:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         TMPDIR: "/tmp"
-      initContainers:
-        - name: "inithome"
-          image:
-            repository: "ghcr.io/lsst-sqre/nublado"
-            tag: "10.0.0"
-          command: ["nublado", "inithome"]
-          privileged: true
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
       nodeSelector:
         node_pool: "user-lab-pool"
+      standardInithome: true
       tolerations:
         - key: "kubernetes.io/arch"
           value: arm64

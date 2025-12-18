@@ -30,9 +30,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fileserver.deleteTimeout | string | `"2m"` | Timeout for deleting a user's file server from Kubernetes, in Safir `parse_timedelta` format |
 | controller.config.fileserver.enabled | bool | `false` | Enable user file servers |
 | controller.config.fileserver.idleTimeout | string | `"1d"` | Timeout for idle user fileservers, in Safir `parse_timedelta` format |
-| controller.config.fileserver.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for file server image |
-| controller.config.fileserver.image.repository | string | `"ghcr.io/lsst-sqre/worblehat"` | File server image to use |
-| controller.config.fileserver.image.tag | string | `"0.2.0"` | Tag of file server image to use |
 | controller.config.fileserver.namespace | string | `"fileservers"` | Namespace for user file servers |
 | controller.config.fileserver.nodeSelector | object | `{}` | Node selector rules for user file server pods |
 | controller.config.fileserver.pathPrefix | string | `"/files"` | Path prefix for user file servers |
@@ -42,12 +39,8 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fileserver.volumeMounts | list | `[]` | Volumes that should be made available via WebDAV |
 | controller.config.fsadmin.affinity | object | `{}` | Affinity rules for fsadmin pods |
 | controller.config.fsadmin.application | string | `"nublado-fileservers"` | Argo CD application in which to collect fsadmins |
-| controller.config.fsadmin.command | list | `["tail","-f","/dev/null"]` | Command to run in fsadmin container |
 | controller.config.fsadmin.extraVolumeMounts | list | `[]` | Extra volumes that should be mounted to fsadmin |
 | controller.config.fsadmin.extraVolumes | list | `[]` | Extra volumes that should be made available to fsadmin |
-| controller.config.fsadmin.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for file system admin image |
-| controller.config.fsadmin.image.repository | string | `"ghcr.io/lsst-sqre/nublado"` | File system admin image to use |
-| controller.config.fsadmin.image.tag | string | `"10.0.0"` | Tag of file system admin image |
 | controller.config.fsadmin.mountPrefix | string | `nil` | Mount prefix, to be prepended to mountpoints in order to collect them in one place |
 | controller.config.fsadmin.nodeSelector | object | `{}` | Node selector rules for fsadmin pods |
 | controller.config.fsadmin.resources | object | See `values.yaml` | Resource requests and limits for fsadmin |
@@ -67,9 +60,11 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.application | string | `"nublado-users"` | Argo CD application in which to collect user lab objects |
 | controller.config.lab.defaultSize | string | `"large"` | Default size selected on the spawner form. This must be either `null` or the name of one of the sizes listed in `sizes`. If `null`, the first listed size will be the default. |
 | controller.config.lab.deleteTimeout | string | `"1m"` | Timeout for deleting a user's lab resources from Kubernetes in Safir `parse_timedelta` format |
+| controller.config.lab.emptyDirSource | string | `"memory"` | Select where `/tmp` and `/lab_startup` in the lab will come from. Choose between `disk` (node-local ephemeral storage) and `memory` (tmpfs capped at 25% of the available memory for `/tmp`). |
 | controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab |
 | controller.config.lab.extraAnnotations | object | `{}` | Extra annotations to add to user lab pods |
 | controller.config.lab.files | object | See `values.yaml` | Files to be mounted as ConfigMaps inside the user lab pod. `contents` contains the file contents. Set `modify` to true to make the file writable in the pod. |
+| controller.config.lab.homeVolumeName | string | `"home"` | Home volume name.  The controller needs to know which volume contains user homes. |
 | controller.config.lab.homedirPrefix | string | `"/home"` | Prefix of home directory path to add before the username. This is the path inside the container, not the path of the volume. |
 | controller.config.lab.homedirSchema | string | `"username"` | Schema for home directory construction. Choose between `username` (paths like `/home/rachel`) and `initialThenUsername` (paths like `/home/r/rachel`). |
 | controller.config.lab.homedirSuffix | string | `""` | Portion of the home directory path after the username. This is intended for environments that want the JupyterLab home directory to be a subdirectory of the user's home directory in some external environment. |
@@ -86,7 +81,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.secrets | list | `[]` | Secrets to set in the user pods. Each should have a `secretKey` key pointing to a secret in the same namespace as the controller (generally `nublado-secret`) and `secretRef` pointing to a field in that key. |
 | controller.config.lab.sizes | list | See `values.yaml` | Available lab sizes. Sizes must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI suffixes for memory are supported. Sizes will be shown in the order defined here, and the first defined size will be the default. |
 | controller.config.lab.spawnTimeout | int | `600` | How long to wait for Kubernetes to spawn a lab in seconds. This should generally be shorter than the spawn timeout set in JupyterHub. |
-| controller.config.lab.tmpSource | string | `"memory"` | Select where `/tmp` in the lab will come from. Choose between `disk` (node-local ephemeral storage) and `memory` (tmpfs capped at 25% of the available memory). |
+| controller.config.lab.standardInithome | bool | `false` | Use standard inithome (requires administrative access to home volume) or not? |
 | controller.config.lab.tolerations | list | Tolerate GKE arm64 taint | Tolerations for user lab pods |
 | controller.config.lab.volumeMounts | list | `[]` | Volumes that should be mounted in lab pods. |
 | controller.config.lab.volumes | list | `[]` | Volumes that will be in lab pods or init containers. This supports NFS, HostPath, and PVC volume types (differentiated in source.type). |
@@ -138,7 +133,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | hub.resources | object | See `values.yaml` | Resource limits and requests for the Hub |
 | hub.timeout.startup | int | `90` | Timeout for JupyterLab to start in seconds. Currently this sometimes takes over 60 seconds for reasons we don't understand. |
 | hub.useSubdomains | bool | `false` | Whether to put each user's lab in a separate domain. This is strongly recommended for security, but requires wildcard DNS and cert-manager support and requires subdomain support be enabled in Gafaelfawr. |
-| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Nublado image |
+| image.pullPolicy | string | `"Always"` | Pull policy for the Nublado image |
 | image.repository | string | `"ghcr.io/lsst-sqre/nublado"` | Nublado image to use |
 | image.tag | string | The appVersion of the chart | Tag of Nublado image to use |
 | jupyterhub.cull.enabled | bool | `true` | Enable the lab culler. |
