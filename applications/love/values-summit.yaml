@@ -60,6 +60,7 @@ love-commander:
 x-manager-producer:
   &base-manager-producer
   image:
+    revision: 9
     repository: ts-dockerhub.lsst.org/love-manager
     pullPolicy: Always
   env:
@@ -112,7 +113,7 @@ love-manager:
   manager:
     frontend:
       image:
-        revision: 6
+        revision: 9
         repository: ts-dockerhub.lsst.org/love-manager
         pullPolicy: Always
       env:
