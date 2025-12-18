@@ -212,7 +212,7 @@ love-nginx:
   initContainers:
     frontend:
       image:
-        revision: 6
+        revision: 9
         repository: ts-dockerhub.lsst.org/love-frontend-k8s
         pullPolicy: Always
     manager:
