@@ -6,6 +6,7 @@ from pathlib import Path
 
 from .services.application import ApplicationService
 from .services.environment import EnvironmentService
+from .services.sasquatch import SasquatchService
 from .services.secrets import SecretsService
 from .services.vault import VaultService
 from .storage.argocd import ArgoCDStorage
@@ -13,6 +14,7 @@ from .storage.config import ConfigStorage
 from .storage.helm import HelmStorage
 from .storage.kubernetes import KubernetesStorage
 from .storage.onepassword import OnepasswordStorage
+from .storage.sasquatch import SasquatchStorage
 from .storage.vault import VaultStorage
 
 __all__ = ["Factory"]
@@ -67,6 +69,14 @@ class Factory:
             kubernetes_storage=self.create_kubernetes_storage(),
             helm_storage=HelmStorage(config_storage),
             vault_storage=VaultStorage(),
+        )
+
+    def create_sasquatch_service(
+        self, environment_name: str
+    ) -> SasquatchService:
+        """Create service for manipulating Sasquatch in a Phalanx env."""
+        return SasquatchService(
+            environment_name, SasquatchStorage(environment_name)
         )
 
     def create_kubernetes_storage(self) -> KubernetesStorage:

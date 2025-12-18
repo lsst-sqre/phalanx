@@ -73,6 +73,26 @@ with kubectl config set-context before continuing.
 """
 """Warning message displayed by :command:`phalanx environment install`."""
 
+_SASQUATCH_WARNING = """\
+WARNING: This may delete Sasquatch pods and PVCs, stop Strimzi reconciliation,
+and make other changes to the sasquatch installation in the kubernetes
+cluster associated with this conext:
+
+{context}
+
+This should be used for recovering a sasquatch Kafka cluster from backups.
+If you don't want to do this, or want to do this in a different cluster, answer
+no.
+"""
+"""Warning message displayed by sasquatch recovery commands."""
+
+
+def _sasquatch_warn(kube_context: str) -> None:
+    print(_SASQUATCH_WARNING.format(kube_context))
+    click.confirm(
+        "Are you certain you want to continue?", abort=True, default=False
+    )
+
 
 def _find_config() -> Path:
     """Find the root of the Phalanx configuration tree.
@@ -1087,3 +1107,210 @@ def vault_export_secrets(
     factory = Factory(config)
     vault_service = factory.create_vault_service()
     vault_service.export_secrets(environment, output)
+
+
+@main.group()
+def recover() -> None:
+    """Commands for Phalanx cluster disaster recovery."""
+
+
+@recover.group()
+def sasquatch() -> None:
+    """Commands for recovering a Sasquatch Kafka cluster from disk backups."""
+
+
+@sasquatch.command("get-original-cluster-id")
+@click.argument("kube-context")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def sasquatch_get_original_cluster_id(
+    kube_context: str, config: Path | None
+) -> None:
+    """Get the Strimzi cluster ID of the original backed-up Sasquatch cluster.
+
+    When a Strimzi Kafka CR is used to create a Kafka Cluster, a random cluster
+    ID is created. When we're trying to restore a Strimzi Kafka cluster using
+    data on backed-up persistent volumes, the original cluster ID is referenced
+    in the data on disk. There is no way to set the cluster ID at resource
+    creation. Instead, we have to pause Strimzi reconciliation on the Kafka CR,
+    set the cluster ID in the *status* of the Kafka CR, and then unpause
+    reconciliation.
+
+    We can get the original cluster ID out of the logs of failing pods, or we
+    can start a pod with an original volume attached and get it out of a
+    properties file in that volume. This command uses the new pod strategy
+    because that is the most consistent and automatable.
+
+    For more information on this and other Strimzi Kafka cluster recovery
+    issues, see:
+    https://strimzi.io/docs/operators/latest/deploying#assembly-cluster-recovery-volume-str
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    sasquatch_service = factory.create_sasquatch_service(kube_context)
+    cluster_id = sasquatch_service.cluster_id_on_disk()
+    print(cluster_id)
+
+
+@sasquatch.command("pause-reconciliation")
+@click.argument("kube-context")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def sasquatch_pause_reconciliation(
+    kube_context: str, config: Path | None
+) -> None:
+    """Pause Strimzi Kafka CR reconciliation.
+
+    We need to pause the Strimzi Kafka CR reconciliation loop when we are
+    restoring a cluster from backed-up persistent volumes. We need to manually
+    change the cluster ID, which we can't do while the reconciliation loop is
+    running.
+
+    For more info on Strimzi Kafka cluster recovery, see:
+    https://strimzi.io/docs/operators/latest/deploying#assembly-cluster-recovery-volume-str
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    sasquatch_service = factory.create_sasquatch_service(kube_context)
+    sasquatch_service.pause_reconciliation()
+
+
+@sasquatch.command("resume-reconciliation")
+@click.argument("kube-context")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def sasquatch_resume_reconciliation(
+    kube_context: str, config: Path | None
+) -> None:
+    """Resume Strimzi Kafka CR reconciliation.
+
+    When we're done making configuration changes, we need to unpause Strimzi
+    resource reconciliation.
+
+    For more info on Strimzi Kafka cluster recovery, see:
+    https://strimzi.io/docs/operators/latest/deploying#assembly-cluster-recovery-volume-str
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    sasquatch_service = factory.create_sasquatch_service(kube_context)
+    sasquatch_service.resume_reconciliation()
+
+
+@sasquatch.command("set-cluster-id")
+@click.argument("kube-context")
+@click.argument("cluster-id")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def sasquatch_set_cluster_id(
+    kube_context: str, cluster_id: str, config: Path | None
+) -> None:
+    """Configure a Strimzi Kafka cluster with an explicitly specified ID.
+
+    Make sure Strimzi reconciliation is paused on the target cluster when you
+    do this, or else it won't take effect.
+
+    When we're recovering a Strimzi Kafka cluster from backed-up persistent
+    storage, We need to manually change the cluster ID to match the original
+    cluster ID.
+
+    For more info on Strimzi Kafka cluster recovery, see:
+    https://strimzi.io/docs/operators/latest/deploying#assembly-cluster-recovery-volume-str
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    sasquatch_service = factory.create_sasquatch_service(kube_context)
+    sasquatch_service.set_cluster_id(cluster_id)
+
+
+@sasquatch.command("retain-pvs")
+@click.argument("kube-context")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def sasquatch_retain_pvs(kube_context: str, config: Path | None) -> None:
+    """Set all of the sasquatch bound PersistentVolumes to be retained."""
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    sasquatch_service = factory.create_sasquatch_service(kube_context)
+    sasquatch_service.retain_pvs()
+
+
+@sasquatch.command("delete-pvcs")
+@click.argument("kube-context")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def sasquatch_delete_pvcs(kube_context: str, config: Path | None) -> None:
+    """Delete the Sasquatch PVCs and remove the associations on the PVs.
+
+    This will first change the reclaimPolicy on associated PVs to Retain. This
+    needs to be done when the PVCs are not attached to any pods.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    sasquatch_service = factory.create_sasquatch_service(kube_context)
+    sasquatch_service.delete_pvcs()
+
+
+@sasquatch.command("recover")
+@click.argument("kube-context")
+@click.option(
+    "--delete-pvcs",
+    is_flag=True,
+    help=(
+        "Whether to delete Strimzi-created PVCs and have Strimzi recreate"
+        " them during reconciliation. This may be necessary in certain"
+        " restore scenarios, like when restoring a full cluster backup with"
+        " Backup for GKE on Google clusters."
+    ),
+)
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def sasquatch_recover(
+    kube_context: str, *, delete_pvcs: bool, config: Path | None
+) -> None:
+    """Recover a Phalanx Sasquatch installation with restored disks."""
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    sasquatch_service = factory.create_sasquatch_service(kube_context)
+    sasquatch_service.recover(delete_pvcs=delete_pvcs)

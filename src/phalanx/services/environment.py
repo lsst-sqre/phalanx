@@ -35,6 +35,8 @@ class EnvironmentService:
         Interface to Helm actions.
     vault_storage
         Factory class for Vault clients.
+    strimzi_storage
+        Factory class for Strimzi Kafka cluster manipulation.
     """
 
     def __init__(

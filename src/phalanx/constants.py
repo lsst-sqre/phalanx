@@ -35,6 +35,15 @@ PULL_SECRET_DESCRIPTION = (
 )
 """Description to put in the static secrets YAML file for ``pull-secret``."""
 
+SASQUATCH_KAFKA_POD = "sasquatch-kafka-0"
+"""The name of a Strimzi Kafka pod."""
+
+SASQUATCH_KAFKA_PVC_NAME = "data-0-sasquatch-kafka-0"
+"""The name of a Strimzi Kafka PVC."""
+
+SASQUATCH_NAMESPACE = "sasquatch"
+"""The namespace of the Sasquatch installation."""
+
 VAULT_APPROLE_SECRET_TEMPLATE = """\
 apiVersion: v1
 kind: Secret
