@@ -5,11 +5,11 @@ image:
   repository: "ghcr.io/lsst-sqre/nublado"
 
   # -- Pull policy for the Nublado image
-  pullPolicy: "IfNotPresent"
+  pullPolicy: "Always"
 
   # -- Tag of Nublado image to use
   # @default -- The appVersion of the chart
-  tag: null
+  tag: "tickets-DM-53638"
 
 controller:
   # -- Affinity rules for the Nublado controller
@@ -83,16 +83,6 @@ controller:
       # format
       idleTimeout: 1d
 
-      image:
-        # -- File server image to use
-        repository: "ghcr.io/lsst-sqre/worblehat"
-
-        # -- Pull policy for file server image
-        pullPolicy: "IfNotPresent"
-
-        # -- Tag of file server image to use
-        tag: "0.2.0"
-
       # -- Namespace for user file servers
       namespace: "fileservers"
 
@@ -139,24 +129,11 @@ controller:
       # -- Argo CD application in which to collect fsadmins
       application: "nublado-fileservers"
 
-      # -- Command to run in fsadmin container
-      command: ["tail", "-f", "/dev/null"]
-
       # -- Extra volumes that should be made available to fsadmin
       extraVolumes: []
 
       # -- Extra volumes that should be mounted to fsadmin
       extraVolumeMounts: []
-
-      image:
-        # -- File system admin image to use
-        repository: "ghcr.io/lsst-sqre/nublado"
-
-        # -- Pull policy for file system admin image
-        pullPolicy: "IfNotPresent"
-
-        # -- Tag of file system admin image
-        tag: "10.0.0"
 
       # -- Mount prefix, to be prepended to mountpoints in order to
       # collect them in one place
@@ -247,6 +224,11 @@ controller:
       # Safir `parse_timedelta` format
       deleteTimeout: 1m
 
+      # -- Select where `/tmp` and `/lab_startup` in the lab will come
+      # from. Choose between `disk` (node-local ephemeral storage) and
+      # `memory` (tmpfs capped at 25% of the available memory for `/tmp`).
+      emptyDirSource: "memory"
+
       # -- Environment variables to set for every user lab
       # @default -- See `values.yaml`
       env:
@@ -311,6 +293,10 @@ controller:
       # be a subdirectory of the user's home directory in some external
       # environment.
       homedirSuffix: ""
+
+      # -- Home volume name.  The controller needs to know which volume
+      # contains user homes.
+      homeVolumeName: "home"
 
       # -- Containers run as init containers with each user pod. Each should
       # set `name`, `image` (a Docker image and pull policy specification),
@@ -449,10 +435,9 @@ controller:
       # should generally be shorter than the spawn timeout set in JupyterHub.
       spawnTimeout: 600
 
-      # -- Select where `/tmp` in the lab will come from. Choose between
-      # `disk` (node-local ephemeral storage) and `memory` (tmpfs capped at
-      # 25% of the available memory).
-      tmpSource: "memory"
+      # -- Use standard inithome (requires administrative access to home
+      # volume) or not?
+      standardInithome: false
 
       # -- Tolerations for user lab pods
       # @default -- Tolerate GKE arm64 taint

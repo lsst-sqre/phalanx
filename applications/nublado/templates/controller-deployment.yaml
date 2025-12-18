@@ -64,6 +64,15 @@ spec:
             - name: "KAFKA_CLUSTER_CA_PATH"
               value: "/etc/nublado-kafka/ca.crt"
             {{- end }}
+            # We can't get these through the DownwardAPI; the point is to
+            # make our internal initContainers always use the same image
+            # as the running Controller.
+            - name: "NUBLADO_CONTROLLER_PULL_POLICY"
+              value: "{{ .Values.image.pullPolicy }}"
+            - name: "NUBLADO_CONTROLLER_REPOSITORY"
+              value: "{{ .Values.image.repository }}"
+            - name: "NUBLADO_CONTROLLER_TAG"
+              value: "{{ .Values.image.tag | default .Chart.AppVersion }}"
             {{- if .Values.controller.slackAlerts }}
             - name: "NUBLADO_SLACK_WEBHOOK"
               valueFrom:
