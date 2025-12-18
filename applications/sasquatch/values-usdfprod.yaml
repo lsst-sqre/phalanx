@@ -31,6 +31,7 @@ strimzi-kafka:
   mirrormaker2:
     enabled: true
     source:
+      alias: "source"
       bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
       topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*, lsst.backpack.*, lsst.ATCamera.*, lsst.CCCamera.*, lsst.MTCamera.*, lsst.obsenv.*, lsst.cp.*"
     resources:

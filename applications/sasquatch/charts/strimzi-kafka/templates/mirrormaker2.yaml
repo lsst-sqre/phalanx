@@ -6,13 +6,13 @@ kind: KafkaMirrorMaker2
 metadata:
   name:  {{ .Values.cluster.name }}
 spec:
-  version: {{ .Values.kafka.version | quote }}
+  version: {{ .Values.kafka.version }}
   replicas:  {{ .Values.mirrormaker2.replicas }}
-  # In the unidirectional (active/passive) replication scenario
-  # it is recommended to deploy MirrorMaker2 on the target (passive) cluster.
+  # In Sasquatch MirrorMaker2 is deployed on the target cluster
+  # and replicates data from the source cluster.
   connectCluster: "target"
   clusters:
-  - alias: "source"
+  - alias: {{ .Values.mirrormaker2.source.alias }}
     bootstrapServers: {{ .Values.mirrormaker2.source.bootstrapServer }}
     tls: {}
     # The external kafka listeneres in Sasquatch use scram-sha-512 authentication
@@ -43,7 +43,7 @@ spec:
       # by the brokers and offset data committed.
       offset.flush.timeout.ms: 10000
   mirrors:
-  - sourceCluster: "source"
+  - sourceCluster: {{ .Values.mirrormaker2.source.alias }}
     targetCluster: "target"
     sourceConnector:
       tasksMax: 128
@@ -59,8 +59,8 @@ spec:
         # Policy to define the remote topic naming convention.
         # The default is to preserve topic names in the target cluster.
         # To add the source cluster alias as a prefix to the topic name, use replication.policy.separator="." and replication.policy.class="org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
-        replication.policy.separator: {{ default "." .Values.mirrormaker2.replication.policy.separator }}
-        replication.policy.class: {{ default "org.apache.kafka.connect.mirror.IdentityReplicationPolicy" .Values.mirrormaker2.replication.policy.class }}
+        replication.policy.separator: {{ .Values.mirrormaker2.replication.policy.separator }}
+        replication.policy.class: {{ .Values.mirrormaker2.replication.policy.class }}
         # Handling high volumes of messages
         # By increasing the batch size, produce requests are delayed and more messages are
         # added to the batch and sent to brokers at the same time.
@@ -85,25 +85,12 @@ spec:
         # Increase request timeout
         producer.request.timeout.ms: 240000
         consumer.request.timeout.ms: 240000
+        consumer.auto.offset.reset: {{ .Values.mirrormaker2.replication.offset }}
     heartbeatConnector:
       autoRestart:
         enabled: true
       config:
         heartbeats.topic.replication.factor: 3
-    checkpointConnector:
-      autoRestart:
-        enabled: true
-      config:
-        checkpoints.topic.replication.factor: 3
-        # Frequency of checks for new consumer groups.
-        refresh.groups.interval.seconds: 300
-        # Enables synchronization of consumer group offsets to the target cluster.
-        sync.group.offsets.enabled: false
-        # The frequency to sync group offsets.
-        sync.group.offsets.interval.seconds: 60
-        # The frequency of checks for offset tracking.
-        emit.checkpoints.interval.seconds: 60
-        replication.policy.class: {{ default "org.apache.kafka.connect.mirror.IdentityReplicationPolicy" .Values.mirrormaker2.replication.policy.class }}
     # Topic replication from the source cluster defined as a comma-separated list
     # or regular expression pattern.
     topicsPattern: {{ .Values.mirrormaker2.source.topicsPattern }}
