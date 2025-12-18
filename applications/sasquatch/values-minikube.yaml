@@ -1,0 +1,61 @@
+strimzi-kafka:
+  kafka:
+    replicas: 1
+    minInsyncReplicas: 1
+    listeners:
+      plain:
+        enabled: true
+      tls:
+        enabled: true
+      external:
+        enabled: false
+  controller:
+    enabled: true
+    nodeIds: "[1]"
+    resources:
+      requests:
+        memory: 500Mi
+        cpu: 100m
+      limits:
+        memory: 4Gi
+        cpu: "1"
+  broker:
+    enabled: true
+    nodeIds: "[0]"
+    resources:
+      requests:
+        memory: 500Mi
+        cpu: 500m
+      limits:
+        memory: 8Gi
+        cpu: 2
+    storage:
+      size: 5G
+  connect:
+    enabled: false
+  mirrormaker2:
+    enabled: false
+
+schema-registry:
+  enabled: true
+
+influxdb:
+  enabled: false
+
+telegraf:
+  enabled: false
+
+kapacitor:
+  enabled: false
+
+kafdrop:
+  enabled: false
+
+rest-proxy:
+  enabled: false
+
+chronograf:
+  enabled: false
+
+squareEvents:
+  enabled: false
