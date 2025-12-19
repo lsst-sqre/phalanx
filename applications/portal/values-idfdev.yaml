@@ -20,6 +20,7 @@ config:
 redis:
   persistence:
     enabled: true
+    size: "5GiB"
     storageClass: "standard-rwo"
   resources:
     limits:
