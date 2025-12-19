@@ -22,8 +22,6 @@ spec:
     targetRevision: {{ or (index .Values "revisions" "qserv-kafka") .Values.targetRevision | quote }}
     helm:
       parameters:
-        - name: "global.baseUrl"
-          value: "https://{{ .Values.fqdn }}"
         - name: "global.environmentName"
           value: {{ .Values.name | quote }}
         - name: "global.host"

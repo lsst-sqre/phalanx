@@ -39,7 +39,6 @@ data:
   QSERV_KAFKA_REDIS_MAX_CONNECTIONS: {{ .Values.config.redisMaxConnections | quote }}
   QSERV_KAFKA_REDIS_URL: "redis://qserv-kafka-redis.{{ .Release.Namespace }}:6379/0"
   QSERV_KAFKA_RESULT_TIMEOUT: {{ .Values.config.resultTimeout | quote }}
-  QSERV_KAFKA_REWRITE_BASE_URL: {{ .Values.global.baseUrl | quote }}
   QSERV_KAFKA_SLACK_ENABLED: {{ .Values.config.slack.enabled | quote }}
   QSERV_KAFKA_TAP_SERVICE: {{ .Values.config.tapService | quote }}
   REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}

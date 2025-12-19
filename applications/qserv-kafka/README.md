@@ -50,7 +50,6 @@ Qserv Kafka bridge
 | frontend.podAnnotations | object | `{}` | Annotations for the qserv-kafka frontend pod |
 | frontend.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka frontend pod |
 | frontend.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the qserv-kafka frontend pod |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.repertoireUrl | string | Set by Argo CD | Base URL for Repertoire discovery API |
