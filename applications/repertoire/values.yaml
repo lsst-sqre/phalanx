@@ -156,12 +156,19 @@ config:
     datalinker:
       - type: "data"
         name: "datalink"
-        template: "https://{{base_hostname}}/api/datalinker"
+        template: "https://{{base_hostname}}/api/datalink"
         versions:
           datalink-links-1.1:
-            template: "https://{{base_hostname}}/api/datalinker/links"
+            template: "https://{{base_hostname}}/api/datalink/links"
             ivoaStandardId: "ivo://ivoa.net/std/DataLink#links-1.1"
-        openapi: "https://{{base_hostname}}/api/datalinker/openapi.json"
+        openapi: "https://{{base_hostname}}/api/datalink/openapi.json"
+      - type: "internal"
+        name: "datalink"
+        template: "https://{{base_hostname}}/api/datalink"
+        versions:
+          datalink-links-1.1:
+            template: "https://{{base_hostname}}/api/datalink/links"
+        openapi: "https://{{base_hostname}}/api/datalink/openapi.json"
     gafaelfawr:
       - type: "internal"
         name: "gafaelfawr"
