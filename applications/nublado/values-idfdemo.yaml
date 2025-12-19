@@ -69,9 +69,23 @@ controller:
             type: nfs
             serverPath: "/home-share"
             server: "10.235.176.36"
+        - name: "rubin"
+          source:
+            type: nfs
+            serverPath: "/home-share/_reloc/rubin"
+            server: "10.235.176.36"
+        - name: "deleted-sundays"
+          source:
+            type: nfs
+            serverPath: "/home-share/_reloc/rubin"
+            server: "10.235.176.36"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
+        - containerPath: "/rubin"
+          volumeName: "rubin"
+        - containerPath: "/deleted-sundays"
+          volumeName: "deleted-sundays"
 hub:
 #   useSubdomains: true
   landingPage: "/lab/tree/notebooks/tutorials/welcome.md"
