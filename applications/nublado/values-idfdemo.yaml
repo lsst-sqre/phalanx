@@ -72,8 +72,9 @@ controller:
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
-# hub:
+hub:
 #   useSubdomains: true
+  landingPage: "/lab/tree/notebooks/tutorials/welcome.md"
 jupyterhub:
   cull:
     timeout: 43200  # 12 hours
