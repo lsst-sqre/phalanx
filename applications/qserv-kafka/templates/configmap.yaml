@@ -20,6 +20,9 @@ data:
   QSERV_KAFKA_QSERV_DATABASE_OVERFLOW: {{ .Values.config.qservDatabaseOverflow | quote }}
   QSERV_KAFKA_QSERV_DATABASE_POOL_SIZE: {{ .Values.config.qservDatabasePoolSize | quote }}
   QSERV_KAFKA_QSERV_DATABASE_URL: {{ .Values.config.qservDatabaseUrl | quote }}
+  {{- if not .Values.config.qservDeleteQueries }}
+  QSERV_KAFKA_QSERV_DELETE_QUERIES: "false"
+  {{- end }}
   QSERV_KAFKA_QSERV_POLL_INTERVAL: {{ .Values.config.qservPollInterval | quote }}
   QSERV_KAFKA_QSERV_REST_MAX_CONNECTIONS: {{ .Values.config.qservRestMaxConnections | quote }}
   {{- if not .Values.config.qservRestSendApiVersion }}
@@ -36,7 +39,6 @@ data:
   QSERV_KAFKA_REDIS_MAX_CONNECTIONS: {{ .Values.config.redisMaxConnections | quote }}
   QSERV_KAFKA_REDIS_URL: "redis://qserv-kafka-redis.{{ .Release.Namespace }}:6379/0"
   QSERV_KAFKA_RESULT_TIMEOUT: {{ .Values.config.resultTimeout | quote }}
-  QSERV_KAFKA_REWRITE_BASE_URL: {{ .Values.global.baseUrl | quote }}
   QSERV_KAFKA_SLACK_ENABLED: {{ .Values.config.slack.enabled | quote }}
   QSERV_KAFKA_TAP_SERVICE: {{ .Values.config.tapService | quote }}
   REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}
