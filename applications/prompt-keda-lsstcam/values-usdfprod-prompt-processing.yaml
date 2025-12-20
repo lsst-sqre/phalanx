@@ -1,7 +1,7 @@
 prompt-keda:
   image:
     pullPolicy: IfNotPresent
-    tag: 12.2.0
+    tag: 12.2.1
 
   alerts:
     username: kafka-admin
