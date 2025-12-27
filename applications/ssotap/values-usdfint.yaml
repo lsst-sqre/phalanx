@@ -2,3 +2,13 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-usdf-prod-sso"
+    type: "containerized"
+    database: "TAP_SCHEMA"
+    username: "TAP_SCHEMA"
+    useVaultPassword: false
+
+  uws:
+    type: "containerized"
+    database: "postgres"
+    username: "postgres"
+    useVaultPassword: false
