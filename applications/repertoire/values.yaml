@@ -308,8 +308,7 @@ config:
           - dp02_dc2
           - dp1
           - ivoa_obscore
-        database: "tap"
-        databaseUser: "tap"
+        databaseUrl: "postgresql://tap@127.0.0.1:5432/tap"
         databasePasswordKey: "tap-database-password"
 
       ssotap:
@@ -317,16 +316,14 @@ config:
         schemas:
           - dp03_1yr
           - dp03_10yr
-        database: "ssotap"
-        databaseUser: "ssotap"
+        databaseUrl: "postgresql://ssotap@127.0.0.1:5432/ssotap"
         databasePasswordKey: "ssotap-database-password"
 
       livetap:
         enabled: false
         schemas:
           - oga_live_obscore
-        database: "livetap"
-        databaseUser: "livetap"
+        databaseUrl: "postgresql://livetap@127.0.0.1:5432/livetap"
         databasePasswordKey: "livetap-database-password"
 
 cloudsql:
