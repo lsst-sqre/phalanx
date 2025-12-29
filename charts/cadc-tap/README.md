@@ -79,15 +79,28 @@ IVOA TAP service
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `false` | Specifies whether a service account should be created. |
 | tapSchema.affinity | object | `{}` | Affinity rules for the TAP schema database pod |
+| tapSchema.database | string | `"TAP_SCHEMA"` | Database name |
+| tapSchema.external | object | `{"host":"","port":5432}` | External PostgreSQL configuration (only used if type is "external") |
+| tapSchema.external.host | string | `""` | Hostname of external PostgreSQL server |
+| tapSchema.external.port | int | `5432` | Port of external PostgreSQL server |
 | tapSchema.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP schema image |
 | tapSchema.image.repository | string | `"lsstsqre/tap-schema-mock"` | TAP schema image to ue. This must be overridden by each environment with the TAP schema for that environment. |
 | tapSchema.image.tag | string | `"DP1-v1.2.0"` | Tag of TAP schema image |
 | tapSchema.nodeSelector | object | `{}` | Node selection rules for the TAP schema database pod |
+| tapSchema.password | string | `"TAP_SCHEMA"` | Database password (only used for containerized) |
+| tapSchema.passwordKey | string | `"tap-schema-password"` | Secret key containing the database password |
 | tapSchema.podAnnotations | object | `{}` | Annotations for the TAP schema database pod |
 | tapSchema.resources | object | See `values.yaml` | Resource limits and requests for the TAP schema database pod |
 | tapSchema.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the TAP schema database pod |
+| tapSchema.type | string | "containerized" | Database backend type: "containerized", "cloudsql", or "external" |
+| tapSchema.useVaultPassword | bool | `false` | Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external) |
+| tapSchema.username | string | `"TAP_SCHEMA"` | Database username |
 | tolerations | list | Tolerate GKE arm64 taint | Tolerations for the TAP pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
+| uws.database | string | `"postgres"` | Database name |
+| uws.external | object | `{"host":"","port":5432}` | External PostgreSQL configuration (only used if type is "external") |
+| uws.external.host | string | `""` | Hostname of external PostgreSQL server |
+| uws.external.port | int | `5432` | Port of external PostgreSQL server |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
 | uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
 | uws.image.tag | string | `"3.10.2"` | Tag of UWS database image to use |
@@ -95,3 +108,6 @@ IVOA TAP service
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |
 | uws.resources | object | See `values.yaml` | Resource limits and requests for the UWS database pod |
 | uws.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the UWS database pod |
+| uws.type | string | "containerized" | Database backend type: "containerized", "cloudsql", or "external" |
+| uws.useVaultPassword | bool | `false` | Whether UWS database requires a password in Vault (true for cloudsql/external) |
+| uws.username | string | `"postgres"` | Database username |
