@@ -1,3 +1,7 @@
+image:
+  tag: "tickets-DM-53642"
+  pullPolicy: "Always"
+
 config:
   availableDatasets:
     - "dp02"
