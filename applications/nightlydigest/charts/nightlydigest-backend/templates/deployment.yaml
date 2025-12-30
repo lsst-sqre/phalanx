@@ -37,11 +37,17 @@ spec:
               path: /health
               port: http
             timeoutSeconds: 120
+            periodSeconds: 10
+            initialDelaySeconds: 30
+            failureThreshold: 4
           readinessProbe:
             httpGet:
               path: /health
               port: http
             timeoutSeconds: 120
+            periodSeconds: 10
+            initialDelaySeconds: 30
+            failureThreshold: 4
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
