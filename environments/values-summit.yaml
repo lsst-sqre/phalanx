@@ -23,6 +23,7 @@ applications:
   love: true
   mobu: true
   narrativelog: true
+  nightlydigest: true
   nightreport: true
   nublado: true
   nvr-control: true
