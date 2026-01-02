@@ -133,7 +133,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | hub.resources | object | See `values.yaml` | Resource limits and requests for the Hub |
 | hub.timeout.startup | int | `90` | Timeout for JupyterLab to start in seconds. Currently this sometimes takes over 60 seconds for reasons we don't understand. |
 | hub.useSubdomains | bool | `false` | Whether to put each user's lab in a separate domain. This is strongly recommended for security, but requires wildcard DNS and cert-manager support and requires subdomain support be enabled in Gafaelfawr. |
-| image.pullPolicy | string | `"Always"` | Pull policy for the Nublado image |
+| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Nublado image |
 | image.repository | string | `"ghcr.io/lsst-sqre/nublado"` | Nublado image to use |
 | image.tag | string | The appVersion of the chart | Tag of Nublado image to use |
 | jupyterhub.cull.enabled | bool | `true` | Enable the lab culler. |

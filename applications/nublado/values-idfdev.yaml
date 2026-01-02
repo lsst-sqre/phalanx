@@ -1,5 +1,7 @@
 sentry:
   enabled: true
+image:
+  tag: "11.0.0"
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true

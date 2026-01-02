@@ -5,11 +5,11 @@ image:
   repository: "ghcr.io/lsst-sqre/nublado"
 
   # -- Pull policy for the Nublado image
-  pullPolicy: "Always"
+  pullPolicy: "IfNotPresent"
 
   # -- Tag of Nublado image to use
   # @default -- The appVersion of the chart
-  tag: "tickets-DM-53638"
+  tag: null
 
 controller:
   # -- Affinity rules for the Nublado controller
