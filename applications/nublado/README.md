@@ -81,7 +81,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.secrets | list | `[]` | Secrets to set in the user pods. Each should have a `secretKey` key pointing to a secret in the same namespace as the controller (generally `nublado-secret`) and `secretRef` pointing to a field in that key. |
 | controller.config.lab.sizes | list | See `values.yaml` | Available lab sizes. Sizes must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI suffixes for memory are supported. Sizes will be shown in the order defined here, and the first defined size will be the default. |
 | controller.config.lab.spawnTimeout | int | `600` | How long to wait for Kubernetes to spawn a lab in seconds. This should generally be shorter than the spawn timeout set in JupyterHub. |
-| controller.config.lab.standardInithome | bool | `false` | Use standard inithome (requires administrative access to home volume) or not? |
+| controller.config.lab.standardInithome | bool | `true` | Whether to use standard inithome container (requires administrative access to home volume) or not. |
 | controller.config.lab.tolerations | list | Tolerate GKE arm64 taint | Tolerations for user lab pods |
 | controller.config.lab.volumeMounts | list | `[]` | Volumes that should be mounted in lab pods. |
 | controller.config.lab.volumes | list | `[]` | Volumes that will be in lab pods or init containers. This supports NFS, HostPath, and PVC volume types (differentiated in source.type). |

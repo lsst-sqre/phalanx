@@ -11,16 +11,7 @@ controller:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
         FIREFLY_URL: "/portal/app"
-      initContainers:
-        - name: "inithome"
-          command: ["nublado", "inithome"]
-          image:
-            repository: "ghcr.io/lsst-sqre/nublado"
-            tag: "10.0.0"
-          privileged: true
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
+        RSP_SITE_TYPE: "3dparty"
       sizes:
         - size: small
           resources:

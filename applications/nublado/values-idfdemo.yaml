@@ -1,7 +1,5 @@
 sentry:
   enabled: true
-image:
-  tag: "11.0.0"
 controller:
   googleServiceAccount: "nublado-controller@science-platform-demo-9e05.iam.gserviceaccount.com"
   slackAlerts: true
@@ -56,7 +54,6 @@ controller:
         TMPDIR: "/tmp"
       nodeSelector:
         node_pool: "user-lab-pool"
-      standardInithome: true
       tolerations:
         - key: "kubernetes.io/arch"
           value: arm64
@@ -79,7 +76,7 @@ controller:
         - name: "deleted-sundays"
           source:
             type: nfs
-            serverPath: "/home-share/_reloc/rubin"
+            serverPath: "/home-share/_reloc/deleted-sundays"
             server: "10.235.176.36"
       volumeMounts:
         - containerPath: "/home"

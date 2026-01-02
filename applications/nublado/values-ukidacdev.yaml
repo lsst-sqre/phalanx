@@ -10,16 +10,7 @@ controller:
         AUTO_REPO_URLS: "https://github.com/lsst-uk/rsp-uk-notebooks"
         AUTO_REPO_BRANCH: "main"
         AUTO_REPO_SPECS: "https://github.com/lsst-uk/rsp-uk-notebooks@main"
-      initContainers:
-        - name: "inithome"
-          command: ["nublado", "inithome"]
-          image:
-            repository: "ghcr.io/lsst-sqre/nublado"
-            tag: "10.0.0"
-          privileged: true
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
+        RSP_SITE_TYPE: "3dparty"
       pullSecret: "pull-secret"
       volumes:
         - name: "data"

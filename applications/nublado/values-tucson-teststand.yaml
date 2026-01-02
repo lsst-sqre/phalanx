@@ -33,16 +33,6 @@ controller:
           secretKey: "kafka_credentials.txt"
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
-      initContainers:
-        - name: "inithome"
-          command: ["nublado", "inithome"]
-          image:
-            repository: "ghcr.io/lsst-sqre/nublado"
-            tag: "10.0.0"
-          privileged: true
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
       volumes:
         - name: "home"
           source:

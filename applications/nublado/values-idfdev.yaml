@@ -1,7 +1,5 @@
 sentry:
   enabled: true
-image:
-  tag: "11.0.0"
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
@@ -46,10 +44,8 @@ controller:
         TMPDIR: "/tmp"
         TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
-      initContainers: []
       nodeSelector:
         node_pool: "user-lab-pool"
-      standardInithome: true
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"

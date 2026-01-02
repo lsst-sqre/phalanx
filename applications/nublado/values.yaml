@@ -435,9 +435,9 @@ controller:
       # should generally be shorter than the spawn timeout set in JupyterHub.
       spawnTimeout: 600
 
-      # -- Use standard inithome (requires administrative access to home
-      # volume) or not?
-      standardInithome: false
+      # -- Whether to use standard inithome container (requires
+      # administrative access to home volume) or not.
+      standardInithome: true
 
       # -- Tolerations for user lab pods
       # @default -- Tolerate GKE arm64 taint
