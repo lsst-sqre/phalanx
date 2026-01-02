@@ -90,6 +90,16 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "friends"
+    "write:files":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
 
   initialAdmins:
     - "afausti"

@@ -54,24 +54,6 @@ controller:
         TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
-        - name: "inithome"
-          command: ["nublado", "inithome"]
-          image:
-            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/nublado"
-            tag: "10.0.0"
-          privileged: true
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
-        - name: "landingpage"
-          image:
-            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/rsp-landing-page-provisioner"
-            tag: "0.9.3"
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
-            - containerPath: "/rubin"
-              volumeName: "rubin"
       nodeSelector:
         node_pool: "user-lab-pool"
       secrets:
