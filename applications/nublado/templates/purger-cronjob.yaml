@@ -49,7 +49,7 @@ spec:
                   key: "slack-webhook"
             {{- end }}
             {{- end }}
-            command: [ "rsp_purger", "execute" ]
+            command: [ "nublado", "purger", "execute" ]
             securityContext:
               allowPrivilegeEscalation: true
               runAsNonRoot: false
