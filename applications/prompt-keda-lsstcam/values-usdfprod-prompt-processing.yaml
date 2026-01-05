@@ -32,6 +32,8 @@ prompt-keda:
           pipelines: *std-main-pipelines
         - survey: BLOCK-419  # FBS Pre-Operations Survey (a version without elevation, rotation, or filter change constraints)
           pipelines: *std-main-pipelines
+        - survey: BLOCK-421  # FBS Pre-Operations Survey (a version without FAM triplets)
+          pipelines: *std-main-pipelines
         - survey: BLOCK-T637  # Exposure time test
           pipelines: *std-main-pipelines
         - survey: BLOCK-T427  # Daytime checkout
@@ -54,6 +56,8 @@ prompt-keda:
         - survey: BLOCK-417
           pipelines: *std-pre-pipelines
         - survey: BLOCK-419
+          pipelines: *std-pre-pipelines
+        - survey: BLOCK-421
           pipelines: *std-pre-pipelines
         - survey: BLOCK-T637
           pipelines: *std-pre-pipelines
