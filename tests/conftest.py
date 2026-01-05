@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterator
+from unittest.mock import Mock
 
 import jinja2
 import pytest
@@ -11,6 +12,7 @@ from phalanx.factory import Factory
 
 from .support.data import phalanx_test_path
 from .support.helm import MockHelmCommand, patch_helm
+from .support.kubernetes import patch_kubectl
 from .support.onepassword import MockOnepasswordClient, patch_onepassword
 from .support.vault import MockVaultClient, patch_vault
 
@@ -59,3 +61,9 @@ def templates() -> jinja2.Environment:
         undefined=jinja2.StrictUndefined,
         autoescape=jinja2.select_autoescape(disabled_extensions=["tmpl"]),
     )
+
+
+@pytest.fixture
+def mock_kubernetes_kubectl() -> Iterator[Mock]:
+    """Mock the kubectl Command in the kubernetes storage."""
+    yield from patch_kubectl()

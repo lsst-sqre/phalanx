@@ -1,0 +1,550 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "batch/v1",
+            "kind": "CronJob",
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"CronJob\",\"metadata\":{\"annotations\":{},\"labels\":{\"app.kubernetes.io/instance\":\"gafaelfawr\",\"app.kubernetes.io/managed-by\":\"Helm\",\"app.kubernetes.io/name\":\"gafaelfawr\",\"argocd.argoproj.io/instance\":\"gafaelfawr\",\"helm.sh/chart\":\"gafaelfawr-1.0.0\"},\"name\":\"gafaelfawr-maintenance\",\"namespace\":\"gafaelfawr\"},\"spec\":{\"concurrencyPolicy\":\"Forbid\",\"jobTemplate\":{\"spec\":{\"activeDeadlineSeconds\":300,\"template\":{\"metadata\":{\"labels\":{\"app.kubernetes.io/component\":\"maintenance\",\"app.kubernetes.io/instance\":\"gafaelfawr\",\"app.kubernetes.io/name\":\"gafaelfawr\",\"gafaelfawr-redis-client\":\"true\",\"gafaelfawr-redis-ephemeral-client\":\"true\"}},\"spec\":{\"containers\":[{\"command\":[\"gafaelfawr\",\"maintenance\"],\"env\":[{\"name\":\"GAFAELFAWR_AFTER_LOGOUT_URL\",\"value\":\"https://roundtable-dev.lsst.cloud\"},{\"name\":\"GAFAELFAWR_BASE_URL\",\"value\":\"https://roundtable-dev.lsst.cloud\"},{\"name\":\"GAFAELFAWR_BASE_INTERNAL_URL\",\"value\":\"http://gafaelfawr.gafaelfawr.svc.cluster.local:8080\"},{\"name\":\"GAFAELFAWR_BOOTSTRAP_TOKEN\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"bootstrap-token\",\"name\":\"gafaelfawr\"}}},{\"name\":\"GAFAELFAWR_DATABASE_PASSWORD\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"database-password\",\"name\":\"gafaelfawr\"}}},{\"name\":\"GAFAELFAWR_DATABASE_URL\",\"value\":\"postgresql://gafaelfawr@localhost/gafaelfawr\"},{\"name\":\"GAFAELFAWR_GITHUB_CLIENT_SECRET\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"github-client-secret\",\"name\":\"gafaelfawr\"}}},{\"name\":\"GAFAELFAWR_OIDC_SERVER_CLIENTS\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"oidc-server-secrets\",\"name\":\"gafaelfawr\"}}},{\"name\":\"GAFAELFAWR_OIDC_SERVER_ISSUER\",\"value\":\"https://roundtable-dev.lsst.cloud\"},{\"name\":\"GAFAELFAWR_OIDC_SERVER_KEY\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"signing-key\",\"name\":\"gafaelfawr\"}}},{\"name\":\"GAFAELFAWR_REDIRECT_URL\",\"value\":\"https://roundtable-dev.lsst.cloud/login\"},{\"name\":\"GAFAELFAWR_REDIS_PASSWORD\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"redis-password\",\"name\":\"gafaelfawr\"}}},{\"name\":\"GAFAELFAWR_REDIS_EPHEMERAL_URL\",\"value\":\"redis://gafaelfawr-redis-ephemeral.gafaelfawr:6379/0\"},{\"name\":\"GAFAELFAWR_REDIS_PERSISTENT_URL\",\"value\":\"redis://gafaelfawr-redis.gafaelfawr:6379/0\"},{\"name\":\"GAFAELFAWR_SESSION_SECRET\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"session-secret\",\"name\":\"gafaelfawr\"}}},{\"name\":\"SENTRY_DSN\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"sentry-dsn\",\"name\":\"gafaelfawr\"}}},{\"name\":\"SENTRY_ENVIRONMENT\",\"value\":\"roundtable-dev\"},{\"name\":\"SENTRY_TRACES_SAMPLE_RATE\",\"value\":\"0\"}],\"image\":\"ghcr.io/lsst-sqre/gafaelfawr:15.1.0\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"gafaelfawr\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"1Gi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"175Mi\"}},\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"all\"]},\"readOnlyRootFilesystem\":true},\"volumeMounts\":[{\"mountPath\":\"/etc/gafaelfawr\",\"name\":\"config\",\"readOnly\":true}]}],\"initContainers\":[{\"command\":[\"/cloud_sql_proxy\",\"-ip_address_types=PRIVATE\",\"-log_debug_stdout=true\",\"-structured_logs=true\",\"-instances=roundtable-dev-abe2:us-central1:roundtable-dev-572a252e=tcp:5432\"],\"image\":\"gcr.io/cloudsql-docker/gce-proxy:1.37.11\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"cloud-sql-proxy\",\"resources\":{\"limits\":{\"cpu\":\"100m\",\"memory\":\"30Mi\"},\"requests\":{\"cpu\":\"5m\",\"memory\":\"15Mi\"}},\"restartPolicy\":\"Always\",\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"all\"]},\"readOnlyRootFilesystem\":true,\"runAsGroup\":65532,\"runAsNonRoot\":true,\"runAsUser\":65532}}],\"restartPolicy\":\"Never\",\"securityContext\":{\"runAsGroup\":1000,\"runAsNonRoot\":true,\"runAsUser\":1000},\"serviceAccountName\":\"gafaelfawr\",\"tolerations\":[{\"effect\":\"NoSchedule\",\"key\":\"kubernetes.io/arch\",\"operator\":\"Equal\",\"value\":\"arm64\"}],\"volumes\":[{\"configMap\":{\"name\":\"gafaelfawr\"},\"name\":\"config\"}]}},\"ttlSecondsAfterFinished\":86400}},\"schedule\":\"5 * * * *\"}}\n"
+                },
+                "creationTimestamp": "2025-12-10T20:49:54Z",
+                "generation": 3,
+                "labels": {
+                    "app.kubernetes.io/instance": "gafaelfawr",
+                    "app.kubernetes.io/managed-by": "Helm",
+                    "app.kubernetes.io/name": "gafaelfawr",
+                    "app.kubernetes.io/version": "14.1.0",
+                    "argocd.argoproj.io/instance": "gafaelfawr",
+                    "gkebackup-backup-uid": "e1bef93a-0da6-4b7a-a617-12b9c84809cb",
+                    "gkebackup-restore-uid": "dcd8ca6a-1f52-4a88-9fd7-e764c41b5358",
+                    "helm.sh/chart": "gafaelfawr-1.0.0"
+                },
+                "name": "gafaelfawr-maintenance",
+                "namespace": "gafaelfawr",
+                "resourceVersion": "1767730152698111022",
+                "uid": "2ee7cc09-dd49-4bd2-ac8d-e2b20fd2bd55"
+            },
+            "spec": {
+                "concurrencyPolicy": "Forbid",
+                "failedJobsHistoryLimit": 1,
+                "jobTemplate": {
+                    "metadata": {},
+                    "spec": {
+                        "activeDeadlineSeconds": 300,
+                        "template": {
+                            "metadata": {
+                                "labels": {
+                                    "app.kubernetes.io/component": "maintenance",
+                                    "app.kubernetes.io/instance": "gafaelfawr",
+                                    "app.kubernetes.io/name": "gafaelfawr",
+                                    "gafaelfawr-redis-client": "true",
+                                    "gafaelfawr-redis-ephemeral-client": "true"
+                                }
+                            },
+                            "spec": {
+                                "containers": [
+                                    {
+                                        "command": [
+                                            "gafaelfawr",
+                                            "maintenance"
+                                        ],
+                                        "env": [
+                                            {
+                                                "name": "GAFAELFAWR_AFTER_LOGOUT_URL",
+                                                "value": "https://roundtable-dev.lsst.cloud"
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_BASE_URL",
+                                                "value": "https://roundtable-dev.lsst.cloud"
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_BASE_INTERNAL_URL",
+                                                "value": "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080"
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_BOOTSTRAP_TOKEN",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "bootstrap-token",
+                                                        "name": "gafaelfawr"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_DATABASE_PASSWORD",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "database-password",
+                                                        "name": "gafaelfawr"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_DATABASE_URL",
+                                                "value": "postgresql://gafaelfawr@localhost/gafaelfawr"
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_GITHUB_CLIENT_SECRET",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "github-client-secret",
+                                                        "name": "gafaelfawr"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_OIDC_SERVER_CLIENTS",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "oidc-server-secrets",
+                                                        "name": "gafaelfawr"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_OIDC_SERVER_ISSUER",
+                                                "value": "https://roundtable-dev.lsst.cloud"
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_OIDC_SERVER_KEY",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "signing-key",
+                                                        "name": "gafaelfawr"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_REDIRECT_URL",
+                                                "value": "https://roundtable-dev.lsst.cloud/login"
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_REDIS_PASSWORD",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "redis-password",
+                                                        "name": "gafaelfawr"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_REDIS_EPHEMERAL_URL",
+                                                "value": "redis://gafaelfawr-redis-ephemeral.gafaelfawr:6379/0"
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_REDIS_PERSISTENT_URL",
+                                                "value": "redis://gafaelfawr-redis.gafaelfawr:6379/0"
+                                            },
+                                            {
+                                                "name": "GAFAELFAWR_SESSION_SECRET",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "session-secret",
+                                                        "name": "gafaelfawr"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "SENTRY_DSN",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "sentry-dsn",
+                                                        "name": "gafaelfawr"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "SENTRY_ENVIRONMENT",
+                                                "value": "roundtable-dev"
+                                            },
+                                            {
+                                                "name": "SENTRY_TRACES_SAMPLE_RATE",
+                                                "value": "0"
+                                            }
+                                        ],
+                                        "image": "ghcr.io/lsst-sqre/gafaelfawr:15.1.0",
+                                        "imagePullPolicy": "IfNotPresent",
+                                        "name": "gafaelfawr",
+                                        "resources": {
+                                            "limits": {
+                                                "cpu": "1",
+                                                "memory": "1Gi"
+                                            },
+                                            "requests": {
+                                                "cpu": "100m",
+                                                "memory": "175Mi"
+                                            }
+                                        },
+                                        "securityContext": {
+                                            "allowPrivilegeEscalation": false,
+                                            "capabilities": {
+                                                "drop": [
+                                                    "all"
+                                                ]
+                                            },
+                                            "readOnlyRootFilesystem": true
+                                        },
+                                        "terminationMessagePath": "/dev/termination-log",
+                                        "terminationMessagePolicy": "File",
+                                        "volumeMounts": [
+                                            {
+                                                "mountPath": "/etc/gafaelfawr",
+                                                "name": "config",
+                                                "readOnly": true
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "dnsPolicy": "ClusterFirst",
+                                "initContainers": [
+                                    {
+                                        "command": [
+                                            "/cloud_sql_proxy",
+                                            "-ip_address_types=PRIVATE",
+                                            "-log_debug_stdout=true",
+                                            "-structured_logs=true",
+                                            "-instances=roundtable-dev-abe2:us-central1:roundtable-dev-572a252e=tcp:5432"
+                                        ],
+                                        "image": "gcr.io/cloudsql-docker/gce-proxy:1.37.11",
+                                        "imagePullPolicy": "IfNotPresent",
+                                        "name": "cloud-sql-proxy",
+                                        "resources": {
+                                            "limits": {
+                                                "cpu": "100m",
+                                                "memory": "30Mi"
+                                            },
+                                            "requests": {
+                                                "cpu": "5m",
+                                                "memory": "15Mi"
+                                            }
+                                        },
+                                        "restartPolicy": "Always",
+                                        "securityContext": {
+                                            "allowPrivilegeEscalation": false,
+                                            "capabilities": {
+                                                "drop": [
+                                                    "all"
+                                                ]
+                                            },
+                                            "readOnlyRootFilesystem": true,
+                                            "runAsGroup": 65532,
+                                            "runAsNonRoot": true,
+                                            "runAsUser": 65532
+                                        },
+                                        "terminationMessagePath": "/dev/termination-log",
+                                        "terminationMessagePolicy": "File"
+                                    }
+                                ],
+                                "restartPolicy": "Never",
+                                "schedulerName": "default-scheduler",
+                                "securityContext": {
+                                    "runAsGroup": 1000,
+                                    "runAsNonRoot": true,
+                                    "runAsUser": 1000
+                                },
+                                "serviceAccount": "gafaelfawr",
+                                "serviceAccountName": "gafaelfawr",
+                                "terminationGracePeriodSeconds": 30,
+                                "tolerations": [
+                                    {
+                                        "effect": "NoSchedule",
+                                        "key": "kubernetes.io/arch",
+                                        "operator": "Equal",
+                                        "value": "arm64"
+                                    }
+                                ],
+                                "volumes": [
+                                    {
+                                        "configMap": {
+                                            "defaultMode": 420,
+                                            "name": "gafaelfawr"
+                                        },
+                                        "name": "config"
+                                    }
+                                ]
+                            }
+                        },
+                        "ttlSecondsAfterFinished": 86400
+                    }
+                },
+                "schedule": "5 * * * *",
+                "successfulJobsHistoryLimit": 3,
+                "suspend": true
+            },
+            "status": {
+                "lastScheduleTime": "2026-01-06T20:05:00Z",
+                "lastSuccessfulTime": "2026-01-06T20:05:11Z"
+            }
+        },
+        {
+            "apiVersion": "batch/v1",
+            "kind": "CronJob",
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"CronJob\",\"metadata\":{\"annotations\":{},\"labels\":{\"app.kubernetes.io/component\":\"ingest-lsst-texmf\",\"app.kubernetes.io/instance\":\"ook\",\"app.kubernetes.io/managed-by\":\"Helm\",\"app.kubernetes.io/name\":\"ook\",\"app.kubernetes.io/part-of\":\"ook\",\"app.kubernetes.io/version\":\"0.21.0\",\"argocd.argoproj.io/instance\":\"ook\",\"helm.sh/chart\":\"ook-1.0.0\"},\"name\":\"ook-ingest-lsst-texmf\",\"namespace\":\"ook\"},\"spec\":{\"concurrencyPolicy\":\"Forbid\",\"failedJobsHistoryLimit\":1,\"jobTemplate\":{\"spec\":{\"backoffLimit\":0,\"template\":{\"metadata\":{\"labels\":{\"app.kubernetes.io/component\":\"ingest-lsst-texmf\",\"app.kubernetes.io/instance\":\"ook\",\"app.kubernetes.io/name\":\"ook\",\"app.kubernetes.io/part-of\":\"ook\"}},\"spec\":{\"containers\":[{\"command\":[\"ook\",\"ingest-lsst-texmf\",\"--git-ref\",\"main\"],\"env\":[{\"name\":\"KAFKA_CERT_TEMP_DIR\",\"value\":\"/tmp/kafka_certs\"},{\"name\":\"KAFKA_SECURITY_PROTOCOL\",\"value\":\"SSL\"},{\"name\":\"KAFKA_BOOTSTRAP_SERVERS\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"bootstrapServers\",\"name\":\"ook-kafka\"}}},{\"name\":\"KAFKA_CLUSTER_CA_PATH\",\"value\":\"/etc/kafkacluster/ca.crt\"},{\"name\":\"KAFKA_CLIENT_CERT_PATH\",\"value\":\"/etc/kafkauser/user.crt\"},{\"name\":\"KAFKA_CLIENT_KEY_PATH\",\"value\":\"/etc/kafkauser/user.key\"},{\"name\":\"ALGOLIA_APP_ID\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"ALGOLIA_APP_ID\",\"name\":\"ook\"}}},{\"name\":\"ALGOLIA_API_KEY\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"ALGOLIA_API_KEY\",\"name\":\"ook\"}}},{\"name\":\"OOK_DATABASE_PASSWORD\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"OOK_DATABASE_PASSWORD\",\"name\":\"ook\"}}},{\"name\":\"OOK_GITHUB_APP_ID\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"OOK_GITHUB_APP_ID\",\"name\":\"ook\"}}},{\"name\":\"OOK_GITHUB_APP_PRIVATE_KEY\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"OOK_GITHUB_APP_PRIVATE_KEY\",\"name\":\"ook\"}}},{\"name\":\"OOK_SLACK_WEBHOOK\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"OOK_SLACK_WEBHOOK\",\"name\":\"ook\"}}}],\"envFrom\":[{\"configMapRef\":{\"name\":\"ook\"}}],\"image\":\"ghcr.io/lsst-sqre/ook:0.21.0\",\"imagePullPolicy\":\"Always\",\"name\":\"ook\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"256Mi\"},\"requests\":{\"cpu\":\"120m\",\"memory\":\"120Mi\"}},\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"all\"]},\"readOnlyRootFilesystem\":true},\"volumeMounts\":[{\"mountPath\":\"/etc/kafkacluster/ca.crt\",\"name\":\"kafka\",\"subPath\":\"ssl.truststore.crt\"},{\"mountPath\":\"/etc/kafkauser/user.crt\",\"name\":\"kafka\",\"subPath\":\"ssl.keystore.crt\"},{\"mountPath\":\"/etc/kafkauser/user.key\",\"name\":\"kafka\",\"subPath\":\"ssl.keystore.key\"},{\"mountPath\":\"/tmp/kafka_certs\",\"name\":\"tmp\"}]}],\"initContainers\":[{\"command\":[\"/cloud_sql_proxy\",\"-ip_address_types=PRIVATE\",\"-log_debug_stdout=true\",\"-structured_logs=true\",\"-instances=roundtable-dev-abe2:us-central1:roundtable-dev-572a252e=tcp:5432\"],\"image\":\"gcr.io/cloudsql-docker/gce-proxy:1.37.11\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"cloud-sql-proxy\",\"restartPolicy\":\"Always\",\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"all\"]},\"readOnlyRootFilesystem\":true,\"runAsGroup\":65532,\"runAsNonRoot\":true,\"runAsUser\":65532}}],\"restartPolicy\":\"Never\",\"securityContext\":{\"runAsGroup\":1000,\"runAsNonRoot\":true,\"runAsUser\":1000},\"serviceAccountName\":\"ook\",\"volumes\":[{\"name\":\"kafka\",\"secret\":{\"secretName\":\"ook-kafka\"}},{\"name\":\"ook\",\"secret\":{\"secretName\":\"ook\"}},{\"emptyDir\":{},\"name\":\"tmp\"}]}},\"ttlSecondsAfterFinished\":86400}},\"schedule\":\"0 10 * * *\"}}\n"
+                },
+                "creationTimestamp": "2025-12-10T20:49:54Z",
+                "generation": 3,
+                "labels": {
+                    "app.kubernetes.io/component": "ingest-lsst-texmf",
+                    "app.kubernetes.io/instance": "ook",
+                    "app.kubernetes.io/managed-by": "Helm",
+                    "app.kubernetes.io/name": "ook",
+                    "app.kubernetes.io/part-of": "ook",
+                    "app.kubernetes.io/version": "0.21.0",
+                    "argocd.argoproj.io/instance": "ook",
+                    "gkebackup-backup-uid": "e1bef93a-0da6-4b7a-a617-12b9c84809cb",
+                    "gkebackup-restore-uid": "dcd8ca6a-1f52-4a88-9fd7-e764c41b5358",
+                    "helm.sh/chart": "ook-1.0.0"
+                },
+                "name": "ook-ingest-lsst-texmf",
+                "namespace": "ook",
+                "resourceVersion": "1767730153162719007",
+                "uid": "da06137c-d669-46b4-bb8f-05b47893f062"
+            },
+            "spec": {
+                "concurrencyPolicy": "Forbid",
+                "failedJobsHistoryLimit": 1,
+                "jobTemplate": {
+                    "metadata": {},
+                    "spec": {
+                        "backoffLimit": 0,
+                        "template": {
+                            "metadata": {
+                                "labels": {
+                                    "app.kubernetes.io/component": "ingest-lsst-texmf",
+                                    "app.kubernetes.io/instance": "ook",
+                                    "app.kubernetes.io/name": "ook",
+                                    "app.kubernetes.io/part-of": "ook"
+                                }
+                            },
+                            "spec": {
+                                "containers": [
+                                    {
+                                        "command": [
+                                            "ook",
+                                            "ingest-lsst-texmf",
+                                            "--git-ref",
+                                            "main"
+                                        ],
+                                        "env": [
+                                            {
+                                                "name": "KAFKA_CERT_TEMP_DIR",
+                                                "value": "/tmp/kafka_certs"
+                                            },
+                                            {
+                                                "name": "KAFKA_SECURITY_PROTOCOL",
+                                                "value": "SSL"
+                                            },
+                                            {
+                                                "name": "KAFKA_BOOTSTRAP_SERVERS",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "bootstrapServers",
+                                                        "name": "ook-kafka"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "KAFKA_CLUSTER_CA_PATH",
+                                                "value": "/etc/kafkacluster/ca.crt"
+                                            },
+                                            {
+                                                "name": "KAFKA_CLIENT_CERT_PATH",
+                                                "value": "/etc/kafkauser/user.crt"
+                                            },
+                                            {
+                                                "name": "KAFKA_CLIENT_KEY_PATH",
+                                                "value": "/etc/kafkauser/user.key"
+                                            },
+                                            {
+                                                "name": "ALGOLIA_APP_ID",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "ALGOLIA_APP_ID",
+                                                        "name": "ook"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "ALGOLIA_API_KEY",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "ALGOLIA_API_KEY",
+                                                        "name": "ook"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "OOK_DATABASE_PASSWORD",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "OOK_DATABASE_PASSWORD",
+                                                        "name": "ook"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "OOK_GITHUB_APP_ID",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "OOK_GITHUB_APP_ID",
+                                                        "name": "ook"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "OOK_GITHUB_APP_PRIVATE_KEY",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "OOK_GITHUB_APP_PRIVATE_KEY",
+                                                        "name": "ook"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": "OOK_SLACK_WEBHOOK",
+                                                "valueFrom": {
+                                                    "secretKeyRef": {
+                                                        "key": "OOK_SLACK_WEBHOOK",
+                                                        "name": "ook"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "envFrom": [
+                                            {
+                                                "configMapRef": {
+                                                    "name": "ook"
+                                                }
+                                            }
+                                        ],
+                                        "image": "ghcr.io/lsst-sqre/ook:0.21.0",
+                                        "imagePullPolicy": "Always",
+                                        "name": "ook",
+                                        "resources": {
+                                            "limits": {
+                                                "cpu": "1",
+                                                "memory": "256Mi"
+                                            },
+                                            "requests": {
+                                                "cpu": "120m",
+                                                "memory": "120Mi"
+                                            }
+                                        },
+                                        "securityContext": {
+                                            "allowPrivilegeEscalation": false,
+                                            "capabilities": {
+                                                "drop": [
+                                                    "all"
+                                                ]
+                                            },
+                                            "readOnlyRootFilesystem": true
+                                        },
+                                        "terminationMessagePath": "/dev/termination-log",
+                                        "terminationMessagePolicy": "File",
+                                        "volumeMounts": [
+                                            {
+                                                "mountPath": "/etc/kafkacluster/ca.crt",
+                                                "name": "kafka",
+                                                "subPath": "ssl.truststore.crt"
+                                            },
+                                            {
+                                                "mountPath": "/etc/kafkauser/user.crt",
+                                                "name": "kafka",
+                                                "subPath": "ssl.keystore.crt"
+                                            },
+                                            {
+                                                "mountPath": "/etc/kafkauser/user.key",
+                                                "name": "kafka",
+                                                "subPath": "ssl.keystore.key"
+                                            },
+                                            {
+                                                "mountPath": "/tmp/kafka_certs",
+                                                "name": "tmp"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "dnsPolicy": "ClusterFirst",
+                                "initContainers": [
+                                    {
+                                        "command": [
+                                            "/cloud_sql_proxy",
+                                            "-ip_address_types=PRIVATE",
+                                            "-log_debug_stdout=true",
+                                            "-structured_logs=true",
+                                            "-instances=roundtable-dev-abe2:us-central1:roundtable-dev-572a252e=tcp:5432"
+                                        ],
+                                        "image": "gcr.io/cloudsql-docker/gce-proxy:1.37.11",
+                                        "imagePullPolicy": "IfNotPresent",
+                                        "name": "cloud-sql-proxy",
+                                        "resources": {},
+                                        "restartPolicy": "Always",
+                                        "securityContext": {
+                                            "allowPrivilegeEscalation": false,
+                                            "capabilities": {
+                                                "drop": [
+                                                    "all"
+                                                ]
+                                            },
+                                            "readOnlyRootFilesystem": true,
+                                            "runAsGroup": 65532,
+                                            "runAsNonRoot": true,
+                                            "runAsUser": 65532
+                                        },
+                                        "terminationMessagePath": "/dev/termination-log",
+                                        "terminationMessagePolicy": "File"
+                                    }
+                                ],
+                                "restartPolicy": "Never",
+                                "schedulerName": "default-scheduler",
+                                "securityContext": {
+                                    "runAsGroup": 1000,
+                                    "runAsNonRoot": true,
+                                    "runAsUser": 1000
+                                },
+                                "serviceAccount": "ook",
+                                "serviceAccountName": "ook",
+                                "terminationGracePeriodSeconds": 30,
+                                "volumes": [
+                                    {
+                                        "name": "kafka",
+                                        "secret": {
+                                            "defaultMode": 420,
+                                            "secretName": "ook-kafka"
+                                        }
+                                    },
+                                    {
+                                        "name": "ook",
+                                        "secret": {
+                                            "defaultMode": 420,
+                                            "secretName": "ook"
+                                        }
+                                    },
+                                    {
+                                        "emptyDir": {},
+                                        "name": "tmp"
+                                    }
+                                ]
+                            }
+                        },
+                        "ttlSecondsAfterFinished": 86400
+                    }
+                },
+                "schedule": "0 10 * * *",
+                "successfulJobsHistoryLimit": 3,
+                "suspend": true
+            },
+            "status": {
+                "lastScheduleTime": "2026-01-06T10:00:00Z",
+                "lastSuccessfulTime": "2026-01-06T10:00:22Z"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

@@ -25,10 +25,16 @@ class Command:
     command
         Base command. If this is not a full path, the command will be found on
         the user's PATH.
+    common_args
+        A list of arguments that should be appended at the end of every
+        invocation of the command.
     """
 
-    def __init__(self, command: str) -> None:
+    def __init__(
+        self, command: str, common_args: list[str] | None = None
+    ) -> None:
         self._command = command
+        self._common_args = common_args or []
 
     def capture(
         self, *args: str, cwd: Path | None = None
@@ -61,7 +67,7 @@ class Command:
         """
         try:
             result = subprocess.run(
-                [self._command, *args],
+                [self._command, *self._common_args, *args],
                 capture_output=True,
                 check=True,
                 cwd=cwd,
@@ -117,7 +123,7 @@ class Command:
         subprocess.SubprocessError
             Raised if the command could not be executed at all.
         """
-        cmdline = [self._command, *args]
+        cmdline = [self._command, *args, *self._common_args]
         stdin_bytes = stdin.encode() if stdin is not None else None
         stdout = subprocess.DEVNULL if quiet else None
         check = not ignore_fail

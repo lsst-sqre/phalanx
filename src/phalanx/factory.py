@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from .services.application import ApplicationService
+from .services.cluster import PhalanxClusterService
 from .services.environment import EnvironmentService
 from .services.secrets import SecretsService
 from .services.vault import VaultService
@@ -69,15 +70,42 @@ class Factory:
             vault_storage=VaultStorage(),
         )
 
-    def create_kubernetes_storage(self) -> KubernetesStorage:
+    def create_phalanx_cluster_service(
+        self, context: str
+    ) -> PhalanxClusterService:
+        """Create a service for manipulating Kubernetes clusters directly.
+
+        Parameters
+        ----------
+        context
+            The Kubernetes context to pass to all kubectl commands.
+
+        Returns
+        -------
+        PhalanxClusterService
+           A service object for manipulating resources in a Phalanx cluster.
+        """
+        storage = self.create_kubernetes_storage(context)
+        return PhalanxClusterService(storage)
+
+    def create_kubernetes_storage(
+        self, context: str | None = None
+    ) -> KubernetesStorage:
         """Create storage object for interacting with Kubernetes.
+
+        Parameters
+        ----------
+        context
+            The Kubernetes context to pass to all kubectl commands. If this is
+            None, then commands will be run against the current context in the
+            kube config file.
 
         Returns
         -------
         KubernetesStorage
             Storage object for interacting with Kubernetes.
         """
-        return KubernetesStorage()
+        return KubernetesStorage(context)
 
     def create_onepassword_storage(self) -> OnepasswordStorage:
         """Create storage object for interacting with 1Password.
