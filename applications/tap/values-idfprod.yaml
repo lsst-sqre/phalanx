@@ -1,12 +1,4 @@
 cadc-tap:
-  tapSchema:
-    image:
-      repository: "lsstsqre/tap-schema-idfprod-tap"
-    type: "containerized"
-    database: "TAP_SCHEMA"
-    username: "TAP_SCHEMA"
-    useVaultPassword: false
-
   replicaCount: 4
 
   config:
