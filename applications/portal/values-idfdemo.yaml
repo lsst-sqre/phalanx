@@ -1,5 +1,17 @@
 replicaCount: 2
 
+image:
+  tag: "portal-2025.5.0-test1"
+
+tolerations:
+  - key: "kubernetes.io/arch"
+    value: arm64
+    operator: "Equal"
+    effect: NoSchedule
+
+nodeSelector:
+  node_pool: "arm-core-pool"
+
 config:
   alertMessage: |
     This is a test alert message.
@@ -8,8 +20,8 @@ config:
     cleanupInterval: "1h"
     sharedWorkarea:
       nfs:
-        path: "/home-tiered-share/_reloc/firefly/shared-workarea"
-        server: "10.234.16.4"
+        path: "/home-share/_reloc/firefly/shared-workarea"
+        server: "10.235.176.36"
     privateWorkarea:
       pvc:
         size: "20Gi"
@@ -24,6 +36,13 @@ redis:
   resources:
     limits:
       memory: "128Mi"
+  tolerations:
+    - key: "kubernetes.io/arch"
+      value: arm64
+      operator: "Equal"
+      effect: NoSchedule
+  nodeSelector:
+    node_pool: "arm-core-pool"
 
 resources:
   limits:
