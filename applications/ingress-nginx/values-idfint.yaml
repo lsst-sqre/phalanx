@@ -1,6 +1,4 @@
 ingress-nginx:
   controller:
-    config:
-      proxy-body-size: "2g"
     service:
       loadBalancerIP: "35.238.192.49"
