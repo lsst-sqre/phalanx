@@ -1,7 +1,5 @@
 """Tests for the environment documentation pages."""
 
-from __future__ import annotations
-
 import re
 from pathlib import Path
 

@@ -1,7 +1,5 @@
 """Interface to Argo CD operations."""
 
-from __future__ import annotations
-
 from datetime import timedelta
 
 from pydantic import SecretStr

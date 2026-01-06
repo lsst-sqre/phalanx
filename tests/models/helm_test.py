@@ -1,7 +1,5 @@
 """Tests for the Helm models."""
 
-from __future__ import annotations
-
 from pathlib import Path
 
 from phalanx.models.helm import HelmStarter

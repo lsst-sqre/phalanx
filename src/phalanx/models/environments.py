@@ -1,7 +1,5 @@
 """Pydantic models for Phalanx environments."""
 
-from __future__ import annotations
-
 from collections import defaultdict
 from enum import Enum
 from typing import Self, override
@@ -24,6 +22,7 @@ from .secrets import Secret
 
 __all__ = [
     "ArgoCDDetails",
+    "ArgoCDRBAC",
     "ControlSystemConfig",
     "Environment",
     "EnvironmentBaseConfig",

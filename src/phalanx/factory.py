@@ -1,7 +1,5 @@
 """Factory for Phalanx support code components."""
 
-from __future__ import annotations
-
 from pathlib import Path
 
 from .services.application import ApplicationService

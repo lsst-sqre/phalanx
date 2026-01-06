@@ -1,7 +1,5 @@
 """Tests for the vault command-line subcommand."""
 
-from __future__ import annotations
-
 import re
 from base64 import b64encode
 from datetime import UTC, datetime, timedelta

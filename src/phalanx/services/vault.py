@@ -1,7 +1,5 @@
 """Service to manage Vault authentication."""
 
-from __future__ import annotations
-
 import json
 from contextlib import suppress
 from datetime import UTC, datetime, timedelta
