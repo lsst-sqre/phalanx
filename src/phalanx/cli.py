@@ -1148,3 +1148,105 @@ def resume_crons(config: Path | None, context: str) -> None:
     factory = Factory(config)
     cluster_service = factory.create_phalanx_cluster_service(context)
     cluster_service.resume_cronjobs()
+
+
+@recover.command("scale-down-workloads")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def scale_down_workloads(config: Path | None, context: str) -> None:
+    """Scale down all Phalanx workloads to 0, except ArgoCD.
+
+    This will also add an annotation to all scaled down workloads with the
+    previous replica count, so that they can be accurately scaled up again.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_phalanx_cluster_service(context)
+    cluster_service.scale_down_workloads()
+
+
+@recover.command("scale-up-workloads")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def scale_up_workloads(config: Path | None, context: str) -> None:
+    """Scale up all Phalanx workloads to their previous values, except ArgoCD.
+
+    This scale up any workload with a previous replica count annotation to the
+    value in that annotation. It will then remove that annotation.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_phalanx_cluster_service(context)
+    cluster_service.scale_up_workloads()
+
+
+@recover.command("scale-down")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def scale_down(config: Path | None, context: str) -> None:
+    """Scale down all Phalanx workloads except ArgoCD and suspend all crons."""
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_phalanx_cluster_service(context)
+    cluster_service.suspend_cronjobs()
+    cluster_service.scale_down_workloads()
+
+
+@recover.command("scale-up")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def scale_up(config: Path | None, context: str) -> None:
+    """Scale up all Phalanx workloads and resume all crons."""
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_phalanx_cluster_service(context)
+    cluster_service.scale_up_workloads()
+    cluster_service.resume_cronjobs()

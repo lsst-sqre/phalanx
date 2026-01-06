@@ -63,3 +63,10 @@ VAULT_WRITE_TOKEN_LIFETIME = "3650d"
 
 VAULT_WRITE_TOKEN_WARNING_LIFETIME = timedelta(days=7)
 """Remaining lifetime at which to warn that a token is about to expire."""
+
+PREVIOUS_REPLICA_COUNT_ANNOTATION = "phalanx.lsst.org/previous-replica-count"
+"""Annotation that holds the original number of replicas.
+
+This annotation will be set when we do an explicit scale down during a recovery
+process.
+"""

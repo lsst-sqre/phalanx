@@ -3,6 +3,7 @@
 import subprocess
 from collections.abc import Iterable
 
+from .models.kubernetes import Workload
 from .models.secrets import Secret
 
 __all__ = [
@@ -12,6 +13,7 @@ __all__ = [
     "GitRemoteError",
     "InvalidApplicationConfigError",
     "InvalidEnvironmentConfigError",
+    "InvalidScaleStateError",
     "InvalidSecretConfigError",
     "MalformedOnepasswordSecretError",
     "MissingOnepasswordSecretsError",
@@ -297,3 +299,21 @@ class VaultPathConflictError(UsageError):
 
     def __init__(self, path: str) -> None:
         super().__init__(f"Vault path {path} cannot be copied onto itself")
+
+
+class InvalidScaleStateError(UsageError):
+    """A workload in the cluster is in an invalid state to be scaled.
+
+    Parameters
+    ----------
+    workload
+        The workload that is in the invalid state.
+    """
+
+    def __init__(self, workload: Workload) -> None:
+        msg = (
+            "Workload is in an invalid state to be scaled. If it has a"
+            " previous annotation, then it must have a replica count of zero."
+            f" Workload: {workload.kind} {workload.namespace} {workload.name}"
+        )
+        super().__init__(msg)
