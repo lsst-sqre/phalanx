@@ -650,6 +650,20 @@ kafdrop:
   ingress:
     enabled: true
 
+kafdrop-remote:
+  enabled: true
+  server:
+    servlet:
+      contextPath: /kafdrop-remote
+  kafka:
+    user: kafdrop-remote
+    topicPrefix: summit
+  schemaregistry: "http://sasquatch-schema-registry-remote.sasquatch:8081"
+  ingress:
+    enabled: true
+    hostname: usdf-rsp.slac.stanford.edu
+    path: /kafdrop-remote
+
 chronograf:
   ingress:
     enabled: true
