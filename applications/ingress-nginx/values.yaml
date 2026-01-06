@@ -22,7 +22,7 @@ ingress-nginx:
 
       # -- Maximum size of the client request body (needs to be large enough
       # to allow table uploads)
-      proxy-body-size: "100m"
+      proxy-body-size: "2g"
 
       # -- Maximum size of the buffer used to read HTTP headers from the
       # backend or auth subrequest handler. This needs to be larger than the
