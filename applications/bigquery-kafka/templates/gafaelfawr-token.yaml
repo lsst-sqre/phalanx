@@ -1,0 +1,10 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: "bigquery-kafka-token"
+  labels:
+    {{- include "bigquery-kafka.labels" . | nindent 4 }}
+spec:
+  service: "bot-bigquery-kafka"
+  scopes:
+    - "admin:userinfo"

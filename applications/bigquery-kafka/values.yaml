@@ -1,0 +1,322 @@
+# Default values for bigquery-kafka.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+config:
+  # -- Database backend to use (QSERV or BIGQUERY)
+  enabledBackend: "BIGQUERY"
+
+  # -- GCP project ID containing the BigQuery datasets to query
+  # @default -- None, must be set
+  bigqueryProject: null
+
+  # -- BigQuery processing location
+  bigqueryLocation: "US"
+
+  # -- GCP service account email for Workload Identity
+  # Format: {name}@{project-id}.iam.gserviceaccount.com
+  # @default -- None, must be set for BigQuery backend
+  gcpServiceAccount: null
+
+  # -- Kafka consumer group ID
+  consumerGroupId: "bigquery"
+
+  # -- Kafka topic for query cancellation requests
+  jobCancelTopic: "lsst.ppdbtap.job-delete"
+
+  # -- Maximum batch size for query execution requests. This should generally
+  # be the same as `redisMaxConnections` minus a few for overhead.
+  jobRunBatchSize: 10
+
+  # -- Maximum size of a batch read from Kafka in bytes. Wide queries can be
+  # up to 500KiB in size, so this should be at least 500KiB * 10.
+  # @default -- 10MiB
+  jobRunMaxBytes: 10485760
+
+  # -- Kafka topic for query execution requests
+  jobRunTopic: "lsst.ppdbtap.job-run"
+
+  # -- Kafka topic for query status
+  jobStatusTopic: "lsst.ppdbtap.job-status"
+
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- Maximum number of arq jobs each worker can process simultaneously
+  maxWorkerJobs: 2
+
+  metrics:
+    # -- Whether to enable sending metrics
+    enabled: false
+
+    # -- Name under which to log metrics. Generally there is no reason to
+    # change this.
+    application: "bigquerykafka"
+
+    events:
+      # -- Topic prefix for events. It may sometimes be useful to change this
+      # in development environments.
+      topicPrefix: "lsst.square.metrics.events"
+
+    schemaManager:
+      # -- URL of the Confluent-compatible schema registry server
+      # @default -- Sasquatch in the local cluster
+      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
+
+      # -- Suffix to add to all registered subjects. This is sometimes useful
+      # for experimentation during development.
+      suffix: ""
+
+  sentry:
+    # -- Set to true to enable the Sentry integration.
+    enabled: false
+
+    # -- The percentage of requests that should be traced. This
+    # should be a float between 0 and 1
+    tracesSampleRate: 0.0
+
+  slack:
+    # -- Set to true to enable the Slack integration. If true, the
+    # slack-webhook secret must be provided.
+    enabled: false
+
+  # -- Interval at which the backend is polled for query status in Safir
+  # `parse_timedelta` format
+  backendPollInterval: "1s"
+
+  # -- How long to wait between retries after a backend API network failure in
+  # Safir `parse_timedelta` format
+  backendRetryDelay: "1s"
+
+  # -- How many times to retry after a backend API network failure
+  backendRetryCount: 3
+
+  # -- Timeout for backend API calls
+  # `parse_timedelta` format. Used for both QServ REST API and BigQuery API.
+  backendApiTimeout: "30s"
+
+  # -- Maximum bytes that can be billed for a single BigQuery query. Queries
+  # exceeding this will fail. Set to null for no limit.
+  # @default -- None (no limit)
+  bigqueryMaxBytesBilled: null
+
+  # -- Size of the Redis connection pool. This should be set to
+  # `jobRunBatchSize` plus some extra connections for the monitor, cancel
+  # jobs.
+  redisMaxConnections: 15
+
+  # -- How long to wait for result processing (retrieval and upload) before
+  # timing out, in seconds. This doubles as the timeout forcibly terminating
+  # result worker pods.
+  # @default -- 3600 (1 hour)
+  resultTimeout: 3600
+
+  # -- Name of the TAP service for which this BigQuery Kafka instance is managing
+  # queries. This must match the name of the TAP service for the corresponding
+  # query quota in the Gafaelfawr configuration.
+  tapService: "bigquery"
+
+image:
+  # -- Image to use in the bigquery-kafka deployment
+  repository: "ghcr.io/lsst-sqre/qserv-kafka"
+
+  # -- Pull policy for the bigquery-kafka image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+frontend:
+  # -- Affinity rules for the bigquery-kafka frontend pod
+  affinity: {}
+
+  debug:
+    # -- Set to true to allow containers to run as root and to create and mount
+    # a debug PVC. Useful ro run debug containers to diagnose issues such as
+    # memory leaks.
+    enabled: false
+
+    # Set to true to disable the [pymalloc
+    # allocator](https://bloomberg.github.io/memray/python_allocators.html#how-does-this-affect-memory-profiling).
+    # You may want to do this when debugging memory leaks.
+    disablePymalloc: false
+
+  # -- Node selection rules for the bigquery-kafka frontend pod
+  nodeSelector: {}
+
+  # -- Annotations for the bigquery-kafka frontend pod
+  podAnnotations: {}
+
+  # -- Resource limits and requests for the bigquery-kafka frontend pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "450Mi"
+    requests:
+      cpu: "100m"
+      memory: "145Mi"
+
+  # -- Tolerations for the bigquery-kafka frontend pod
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
+
+redis:
+  config:
+    # -- Name of secret containing Redis password
+    secretName: "bigquery-kafka"
+
+    # -- Key inside secret from which to get the Redis password (do not
+    # change)
+    secretKey: "redis-password"
+
+  persistence:
+    # -- Whether to persist Redis storage. Setting this to false will use
+    # `emptyDir` and lose track of all queries on restart. Only use this for a
+    # test deployment.
+    enabled: true
+
+    # -- Access mode of storage to request
+    accessMode: "ReadWriteOnce"
+
+    # -- Amount of persistent storage to request
+    size: "100Mi"
+
+    # -- Class of storage to request
+    storageClass: null
+
+    # -- Use an existing PVC, not dynamic provisioning. If this is set, the
+    # size, storageClass, and accessMode settings are ignored.
+    volumeClaimName: null
+
+  # -- Resource limits and requests for the Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "100Mi"
+    requests:
+      cpu: "10m"
+      memory: "20Mi"
+
+  # -- Tolerations for the bigquery-kafka Redis pod
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
+
+resultWorker:
+  # -- Affinity rules for the bigquery-kafka worker pods
+  affinity: {}
+
+  # -- Whether to allow containers to run as root. Set to true to allow use of
+  # debug containers to diagnose issues such as memory leaks.
+  allowRootDebug: false
+
+  autoscaling:
+    # -- Enable autoscaling of bigquery-kafka result workers
+    enabled: true
+
+    # -- Minimum number of bigquery-kafka worker pods
+    minReplicas: 1
+
+    # -- Maximum number of bigquery-kafka worker pods. Each replica will open
+    # database connections up to the configured pool size and overflow limits,
+    # so make sure the combined connections are under the postgres connection
+    # limit.
+    maxReplicas: 10
+
+    # -- Target CPU utilization of bigquery-kafka worker pods.
+    targetCPUUtilizationPercentage: 75
+
+  # -- Node selection rules for the bigquery-kafka worker pods
+  nodeSelector: {}
+
+  # -- Annotations for the bigquery-kafka worker pods
+  podAnnotations: {}
+
+  # -- Number of result worker pods to start if autoscaling is disabled
+  replicaCount: 1
+
+  # -- Resource limits and requests for the bigquery-kafka worker pods
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "500Mi"
+    requests:
+      cpu: "1"
+      memory: "145Mi"
+
+  # -- Tolerations for the bigquery-kafka worker pods
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
+
+periodicMetrics:
+  # -- Affinity rules for the bigquery-kafka metrics job
+  affinity: {}
+
+  # -- Resource limits and requests for the bigquery-kafka periodic metrics pods
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "200m"
+      memory: "100Mi"
+    requests:
+      cpu: "100m"
+      memory: "50Mi"
+
+  # -- Node selection rules for the bigquery-kafka metrics job
+  nodeSelector: {}
+
+  # -- Annotations for the bigquery-kafka metrics job
+  podAnnotations: {}
+
+  # -- How often to run the periodic metrics job
+  schedule: "* * * * *"
+
+  # -- Tolerations for the bigquery-kafka metrics job
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD Application
+  environmentName: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base URL for Repertoire discovery API
+  # @default -- Set by Argo CD
+  repertoireUrl: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
