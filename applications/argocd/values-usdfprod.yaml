@@ -9,6 +9,66 @@ argo-cd:
         value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server,.stanford.edu,.slac.stanford.edu,.sdf.slac.stanford.edu"
 
   configs:
+    styles: |
+      .sidebar {
+        border: 10px solid;
+        border-top-style: none;
+        border-bottom-style: none;
+        border-left-style: none;
+        border-color: #77151d;
+      }
+
+
+      .application-details__status-panel {
+        border: 2px solid;
+        border-left-style: none;
+        border-right-style: none;
+        border-top-style: none;
+        border-color: #77151d;
+      }
+
+      .theme-dark .application-details__status-panel .row,
+      .theme-dark .application-details__tree,
+      .theme-dark .page__content-wrapper .flex-top-bar,
+      .theme-dark .flex-top-bar__actions,
+      .theme-dark .top-bar,
+      .theme-dark .flex-top-bar__tools,
+      .theme-dark .applications-list {
+        background: #190f0f;
+      }
+
+      .top-bar .row {
+        background: #77151d;
+      }
+
+
+      .top-bar__breadcrumbs a
+      .argo-dropdown div{
+        color: #FFFFFF;
+        background: #ffffff;
+      }
+
+      .theme-light .top-bar__breadcrumbs {
+        color: #FFFFFF;
+      }
+
+      .theme-light .top-bar__title {
+        color: #009dc4;
+      }
+
+      .ui-banner {
+        padding: 16px 0;
+      }
+
+
+      .ui-banner-text {
+        color: #DCE0DF;
+      }
+
+      .ui-banner,
+      .sidebar {
+        background:#282733;
+      }
     cm:
       url: "https://usdf-rsp.slac.stanford.edu/argo-cd"
       oidc.config: |
