@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  tag: "portal-2025.5.0-test1"
+  tag: "portal-2025.5.0-test2"
 
 tolerations:
   - key: "kubernetes.io/arch"
