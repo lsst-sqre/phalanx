@@ -31,6 +31,15 @@ spec:
         operations:
           - Read
           - Describe
+      - resource:
+          type: topic
+          name: "summit.lsst.sal.ScriptQueue.logevent_nextVisit"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - Read
+          - Describe
       {{- range $topic := .Values.topics }}
       - resource:
           type: topic
