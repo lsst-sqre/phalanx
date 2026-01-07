@@ -31,3 +31,12 @@ spec:
         operations:
           - Read
           - Describe
+      - resource:
+          type: topic
+          name: "summit.lsst.sal"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operations:
+          - Read
+          - Describe
