@@ -141,6 +141,10 @@ argo-cd:
       tls: true
 
   configs:
+
+    # -- Add css to configure ArgoCD styling
+    styles: null
+
     cm:
       # -- Keep label-based tracking for now until Nublado is updated.
       application.resourceTrackingMethod: "label"
@@ -148,6 +152,12 @@ argo-cd:
       # -- Configure resource comparison
       resource.compareoptions: |
         ignoreAggregatedRoles: true
+
+      # -- Enable top banner for env labelling
+      ui.bannerposition: "top"
+
+      # -- Persist env banner
+      ui.bannerpermanent: "true"
 
     params:
       # -- Do not use TLS (this is terminated at the ingress)

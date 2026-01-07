@@ -21,6 +21,7 @@ argo-cd:
         requestedScopes: ["openid", "profile", "email", "groups"]
         # Optional set of OIDC claims to request on the ID token.
         requestedIDTokenClaims: {"groups": {"essential": true}}
+      ui.bannercontent: "usdfint"
     rbac:
       policy.csv: |
         p, role:developer, applications, *, */*, allow
