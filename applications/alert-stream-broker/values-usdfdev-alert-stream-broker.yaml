@@ -18,9 +18,9 @@ alert-stream-broker:
 
       bootstrap:
         host: usdf-alert-stream-dev.lsst.cloud
-        ip: "134.79.23.185"
         annotations:
           metallb.io/address-pool: 'sdf-dmz'
+          metallb.universe.tf/loadBalancerIPs: 134.79.23.185
       brokers:
         - host: usdf-alert-stream-dev-broker-0.lsst.cloud
           ip: "134.79.23.214"
