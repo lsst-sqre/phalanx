@@ -29,7 +29,7 @@ Publish observing schedule
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | kafka.bootstrap | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka bootstrap server |
 | kafka.group_id | string | `"obsloctap-consumer"` | Name of Kafka consumer group |
-| kafka.schema_url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Kafka Avro schema server URL |
+| kafka.schema_url | string | `"http://sasquatch-schema-registry-remote.sasquatch:8081"` | Kafka Avro schema server URL |
 | kafka.username | string | `"obsloctap"` | Username for SASL_PLAIN authentication |
 | obsloctap.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the obsloctap image |
 | obsloctap.image.repository | string | `"ghcr.io/lsst-dm/obsloctap"` | obsloctap image to use |
