@@ -292,7 +292,7 @@ config:
   tap:
 
     # -- Default schema version for all TAP services (can be overridden per-app)
-    schemaVersion: "w.2025.49"
+    schemaVersion: "w.2026.01"
 
     # -- Template for schema artifact URLs (use {schemaVersion} placeholder)
     # @default -- lsst/sdm_schemas on GitHub
