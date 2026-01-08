@@ -1,0 +1,2 @@
+serviceAnnotations:
+  metallb.io/address-pool: sdf-rubin-ingest

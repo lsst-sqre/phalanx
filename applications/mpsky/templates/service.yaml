@@ -4,11 +4,13 @@ metadata:
   name: "mpsky"
   labels:
     {{- include "mpsky.labels" . | nindent 4 }}
+  {{- with .Values.serviceAnnotations }}
   annotations:
-    metallb.io/address-pool: sdf-services
-    metallb.io/loadBalancerIPs: 172.24.5.145
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: "LoadBalancer"
+  allocateLoadBalancerNodePorts:  {{ .Values.service.nodePorts }}
   ports:
     - port: 80
       targetPort: 8080

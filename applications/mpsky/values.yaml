@@ -39,6 +39,13 @@ resources: {}
 # -- Tolerations for the mpsky deployment pod
 tolerations: []
 
+# -- Annotations for the mpsky service
+serviceAnnotations: {}
+
+service:
+  # -- Configures allocation of node ports.  For USDF should be set to false.
+  nodePorts: false
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
