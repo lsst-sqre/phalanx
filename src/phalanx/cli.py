@@ -1087,3 +1087,66 @@ def vault_export_secrets(
     factory = Factory(config)
     vault_service = factory.create_vault_service()
     vault_service.export_secrets(environment, output)
+
+
+@main.group()
+def recover() -> None:
+    """Commands for Phalanx cluster disaster recovery."""
+
+
+@recover.command("suspend-crons")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def suspend_crons(config: Path | None, context: str) -> None:
+    """Stop all ArgoCD-managed CronJobs from running.
+
+    This is needed when trying to restore a back up of a cluster to a new
+    cluster while the old cluster still exists. If CronJobs are running in both
+    clusters, then any state in external data stores like CloudSql databases
+    could get out of sync and corrupted.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_phalanx_cluster_service(context)
+    cluster_service.suspend_cronjobs()
+
+
+@recover.command("resume-crons")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def resume_crons(config: Path | None, context: str) -> None:
+    """Un-suspend all ArgoCD-managed CronJobs.
+
+    This may be needed when trying to restore a back up of a cluster to a new
+    cluster while the old cluster still exists. If CronJobs are running in both
+    clusters, then any state in external data stores like CloudSql databases
+    could get out of sync and corrupted.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_phalanx_cluster_service(context)
+    cluster_service.resume_cronjobs()

@@ -37,6 +37,9 @@ This API is only intended for use within the Phalanx code itself.
 .. automodapi:: phalanx.models.helm
    :include-all-objects:
 
+.. automodapi:: phalanx.models.kubernetes
+   :include-all-objects:
+
 .. automodapi:: phalanx.models.secrets
    :include-all-objects:
 
@@ -44,6 +47,9 @@ This API is only intended for use within the Phalanx code itself.
    :include-all-objects:
 
 .. automodapi:: phalanx.services.application
+   :include-all-objects:
+
+.. automodapi:: phalanx.services.cluster
    :include-all-objects:
 
 .. automodapi:: phalanx.services.environment
