@@ -109,7 +109,7 @@ influxdb:
   enabled: false
 
 influxdb-enterprise-standby:
-  enabled: true
+  enabled: false
   license:
     secret:
       name: sasquatch
@@ -436,7 +436,7 @@ telegraf:
         [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "exposure", "patch", "visit", "run", "pipeline" ]
 
 telegraf-standby:
-  enabled: true
+  enabled: false
   influxdb:
     urls:
       - "http://sasquatch-influxdb-enterprise-standby-data.sasquatch:8086"
