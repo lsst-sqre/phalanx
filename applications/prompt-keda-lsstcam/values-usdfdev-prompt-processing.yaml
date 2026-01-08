@@ -32,7 +32,7 @@ prompt-keda:
 
   raw_microservice: http://embargo-butler-presence.autoingest.svc.cluster.local:8080/presence
 
-  mpSky_service: http://172.24.5.145/ephemerides/
+  mpSky_service: http://usdf-mpsky.sdf.slac.stanford.edu/ephemerides/
 
   iers_cache: s3://rubin-pp-dev-users/iers-cache.zip
 

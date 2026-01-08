@@ -101,7 +101,7 @@ prompt-keda:
 
   raw_microservice: http://172.24.5.158:8080/presence
 
-  mpSky_service: http://172.24.5.145/ephemerides/
+  mpSky_service: http://usdf-mpsky.sdf.slac.stanford.edu/ephemerides/
 
   iers_cache: s3://rubin-summit-users/iers-cache.zip
 
