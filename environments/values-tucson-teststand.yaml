@@ -39,6 +39,3 @@ controlSystem:
   imageTag: "c0042"
   siteTag: "tucson"
   s3EndpointUrl: "https://s3.tu.lsst.org"
-
-revisions:
-  strimzi: strimzi-0.47.0
