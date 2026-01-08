@@ -1,7 +1,5 @@
 """Interface to Helm operations."""
 
-from __future__ import annotations
-
 import sys
 from datetime import timedelta
 from urllib.parse import urlparse

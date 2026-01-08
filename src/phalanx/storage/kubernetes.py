@@ -1,7 +1,5 @@
 """Storage layer for direct Kubernetes operations."""
 
-from __future__ import annotations
-
 from ..models.kubernetes import CronJob, Resources
 from ..models.vault import VaultCredentials
 from .command import Command

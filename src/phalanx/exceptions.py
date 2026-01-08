@@ -1,7 +1,5 @@
 """Exceptions for the Phalanx command-line tool."""
 
-from __future__ import annotations
-
 import subprocess
 from collections.abc import Iterable
 

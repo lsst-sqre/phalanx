@@ -1,7 +1,5 @@
 """Tests for the Phalanx configuration itself."""
 
-from __future__ import annotations
-
 import re
 from collections.abc import Iterator
 from pathlib import Path

@@ -1,7 +1,5 @@
 """Tests for the secrets command-line subcommand."""
 
-from __future__ import annotations
-
 import os
 import re
 from base64 import b64decode, b64encode

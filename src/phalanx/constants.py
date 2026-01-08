@@ -4,8 +4,6 @@ Things that arguably could be configurable but haven't yet been made into
 actual configuration options.
 """
 
-from __future__ import annotations
-
 from datetime import timedelta
 
 __all__ = [

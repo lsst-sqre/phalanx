@@ -1,7 +1,5 @@
 """Store, retrieve, and manipulate data stored in Vault."""
 
-from __future__ import annotations
-
 from contextlib import suppress
 from datetime import timedelta
 

@@ -1,7 +1,5 @@
 """Test fixtures."""
 
-from __future__ import annotations
-
 from collections.abc import Iterator
 from unittest.mock import Mock
 
