@@ -66,7 +66,7 @@ controller:
               cpu: 1.0
               memory: "8Gi"
             requests:
-              cpu: 0.025
+              cpu: 0.125
               memory: "1Gi"
         - size: "large"
           resources:
@@ -74,7 +74,7 @@ controller:
               cpu: 4.0
               memory: "32Gi"
             requests:
-              cpu: 0.05
+              cpu: 0.5
               memory: "4Gi"
         - size: "huge"
           resources:
@@ -82,7 +82,7 @@ controller:
               cpu: 8.0
               memory: "64Gi"
             requests:
-              cpu: 0.1
+              cpu: 1.0
               memory: "8Gi"
       tolerations:
         - key: "nublado.lsst.io/permitted"
