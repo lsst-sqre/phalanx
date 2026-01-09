@@ -96,7 +96,7 @@ spec:
                 -Dtapschemauser.driverClassName=org.postgresql.Driver
                 -Dtapschemauser.url=jdbc:postgresql://localhost:5432/{{ .Values.tapSchema.database }}
                 {{- end }}
-                -Dtapschemauser.maxActive=100
+                -Dtapschemauser.maxActive=8
                 -Duws.username={{ .Values.uws.username }}
                 {{- if or (eq .Values.uws.type "cloudsql") (eq .Values.uws.type "external") }}
                 -Duws.password=$UWS_DB_PASSWORD
