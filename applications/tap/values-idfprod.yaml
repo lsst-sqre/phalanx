@@ -1,8 +1,4 @@
 cadc-tap:
-  tapSchema:
-    image:
-      repository: "lsstsqre/tap-schema-idfprod-tap"
-
   replicaCount: 4
 
   config:
