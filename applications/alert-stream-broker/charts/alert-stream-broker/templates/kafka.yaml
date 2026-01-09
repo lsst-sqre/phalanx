@@ -110,6 +110,7 @@ spec:
         authentication:
           type: scram-sha-512
         configuration:
+          allocateLoadBalancerNodePorts: false
           {{- /*
 
           This is complicated looking, but that's just because these are all
