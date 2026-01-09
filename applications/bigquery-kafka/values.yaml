@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 
 config:
-  # -- Database backend to use (QSERV or BIGQUERY)
-  enabledBackend: "BIGQUERY"
+  # -- Database backend to use (Qserv or BigQuery)
+  backend: "BigQuery"
 
   # -- GCP project ID containing the BigQuery datasets to query
   # @default -- None, must be set
