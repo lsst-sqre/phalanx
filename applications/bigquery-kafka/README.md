@@ -18,7 +18,7 @@ BigQuery Kafka bridge
 | config.bigqueryMaxBytesBilled | int | 100 GB | Maximum bytes that can be billed for a single BigQuery query. Queries exceeding this will fail. Set to null for no limit. |
 | config.bigqueryProject | string | None, must be set | GCP project ID containing the BigQuery datasets to query |
 | config.consumerGroupId | string | `"bigquery"` | Kafka consumer group ID |
-| config.enabledBackend | string | `"BIGQUERY"` | Database backend to use (QSERV or BIGQUERY) |
+| config.backend | string | `"BigQuery"` | Database backend to use (Qserv or BigQuery) |
 | config.gcpServiceAccount | string | None, must be set for BigQuery backend | GCP service account email for Workload Identity Format: {name}@{project-id}.iam.gserviceaccount.com |
 | config.jobCancelTopic | string | `"lsst.ppdbtap.job-delete"` | Kafka topic for query cancellation requests |
 | config.jobRunBatchSize | int | `10` | Maximum batch size for query execution requests. This should generally be the same as `redisMaxConnections` minus a few for overhead. |

@@ -9,7 +9,7 @@ data:
   METRICS_ENABLED: {{ .Values.config.metrics.enabled | quote }}
   METRICS_EVENTS_TOPIC_PREFIX: {{ .Values.config.metrics.events.topicPrefix | quote }}
   QSERV_KAFKA_CONSUMER_GROUP_ID: {{ .Values.config.consumerGroupId | quote }}
-  QSERV_KAFKA_ENABLED_BACKEND: {{ .Values.config.enabledBackend | quote }}
+  QSERV_KAFKA_BACKEND: {{ .Values.config.backend | quote }}
   {{- if .Values.config.bigqueryProject }}
   QSERV_KAFKA_BIGQUERY_PROJECT: {{ .Values.config.bigqueryProject | quote }}
   {{- end }}

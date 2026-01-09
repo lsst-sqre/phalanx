@@ -12,5 +12,5 @@ spec:
   user:
     kind: "KafkaUser"
     apiGroup: "kafka.strimzi.io"
-    name: "ppdbtap-kafka"
+    name: "bigquery"
     namespace: "sasquatch"
