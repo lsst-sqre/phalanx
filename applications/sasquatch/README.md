@@ -607,7 +607,7 @@ Rubin Observatory's telemetry service
 | rest-proxy.affinity | object | `{}` | Affinity configuration |
 | rest-proxy.configurationOverrides | object | See `values.yaml` | Kafka REST configuration options |
 | rest-proxy.customEnv | object | `{}` | Kafka REST additional env variables |
-| rest-proxy.heapOptions | string | `"-Xms4096M -Xmx4096M"` | Kafka REST proxy JVM Heap Option |
+| rest-proxy.heapOptions | string | `"-Xms8192M -Xmx8192M"` | Kafka REST proxy JVM Heap Option |
 | rest-proxy.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | rest-proxy.image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository |
 | rest-proxy.image.tag | string | `"8.1.1"` | Kafka REST proxy image tag |
