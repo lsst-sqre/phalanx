@@ -140,7 +140,13 @@ rest-proxy:
       - lsst.verify
       - lsst.lf
       - lsst.prompt
-
+  resources:
+    limits:
+      cpu: "1"
+      memory: "8Gi"
+    requests:
+      cpu: "1"
+      memory: "4Gi"
 chronograf:
   ingress:
     enabled: true
