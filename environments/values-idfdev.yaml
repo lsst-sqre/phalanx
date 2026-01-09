@@ -23,6 +23,7 @@ applications:
   hoverdrive: true
   jira-data-proxy: true
   mobu: true
+  muster: true
   noteburst: true
   nublado: true
   portal: true

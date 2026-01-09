@@ -110,6 +110,9 @@ applications:
   # -- Enable the hoverdrive application
   hoverdrive: false
 
+  # -- Enable the muster application
+  muster: false
+
   # -- Enable the qserv-kafka application
   qserv-kafka: false
 

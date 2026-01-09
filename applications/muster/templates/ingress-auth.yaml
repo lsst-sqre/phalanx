@@ -1,0 +1,30 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "muster-auth"
+  labels:
+    {{- include "muster.labels" . | nindent 4 }}
+config:
+  scopes:
+    all:
+      - "read:image"
+  service: "muster"
+template:
+  metadata:
+    name: "muster-auth"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.config.pathPrefix }}/auth/fail"
+              pathType: "Exact"
+              backend:
+                service:
+                  name: "muster"
+                  port:
+                    number: 8080
