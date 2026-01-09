@@ -40,6 +40,7 @@
 | applications.love | bool | `false` | Enable the love control system application |
 | applications.mobu | bool | `false` | Enable the mobu application |
 | applications.mpsky | bool | `false` | Enable the mpsky application |
+| applications.muster | bool | `false` | Enable the muster application |
 | applications.narrativelog | bool | `false` | Enable the narrativelog application |
 | applications.next-visit-fan-out | bool | `false` | Enable the next-visit-fan-out application |
 | applications.noteburst | bool | `false` | Enable the noteburst application (required by times-square) |
