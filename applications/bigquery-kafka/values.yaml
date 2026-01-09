@@ -101,8 +101,8 @@ config:
 
   # -- Maximum bytes that can be billed for a single BigQuery query. Queries
   # exceeding this will fail. Set to null for no limit.
-  # @default -- None (no limit)
-  bigqueryMaxBytesBilled: null
+  # @default -- 100 GB
+  bigqueryMaxBytesBilled: 100000000000
 
   # -- Size of the Redis connection pool. This should be set to
   # `jobRunBatchSize` plus some extra connections for the monitor, cancel
