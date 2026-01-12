@@ -4,7 +4,7 @@ knative:
 
 kafka:
   schemaRegistryUrl: http://10.104.198.135:8081
-  sasquatchAddress: 172.24.10.24:9094
+  sasquatchAddress: 172.24.10.28:9094
   consumerGroup: test-group-3
   nextVisitTopic: test.next-visit-job
   # Dev processes very old images, set to ~20 years
