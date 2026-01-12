@@ -73,10 +73,10 @@ kafka:
 resources:
   requests:
     memory: 8Gi
-    cpu: 1
+    cpu: 2
   limits:
     memory: 8Gi
-    cpu: 1
+    cpu: 4
 
 # -- Node selector configuration
 nodeSelector: {}
