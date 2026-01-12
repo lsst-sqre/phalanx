@@ -28,10 +28,22 @@ strimzi-kafka:
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
   mirrormaker2:
-    enabled: false
+    enabled: true
     source:
-      bootstrapServer: sasquatch-base-kafka-bootstrap.lsst.codes:9094
-      topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*"
+      alias: "summit"
+      bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
+      topicsPattern: "registry-schemas, lsst.sal.ScriptQueue.logevent_nextVisit, lsst.sal.MTCamera.logevent_endReadout, lsst.sal.Scheduler.logevent_predictedSchedule, lsst.sal.Test.*"
+    replication:
+      policy:
+        separator: "."
+        class: "org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
+    resources:
+      requests:
+        cpu: 1
+        memory: 2Gi
+      limits:
+        cpu: 2
+        memory: 4Gi
   users:
     replicator:
       enabled: true
