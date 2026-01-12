@@ -9,6 +9,10 @@ cadc-tap:
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
 
+      image:
+        pullPolicy: "Always"
+        tag: "tickets-DM-53795"
+
     kafka:
       enabled: true
 
