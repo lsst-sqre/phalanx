@@ -1,26 +1,33 @@
 """Service for manipulating Phalanx Kubernetes clusters directly."""
 
-from phalanx.constants import PREVIOUS_REPLICA_COUNT_ANNOTATION
-from phalanx.models.kubernetes import Workload
+from phalanx.constants import (
+    GKE_LOAD_BALANCER_SERVICE_FINALIZERS,
+    PREVIOUS_LOAD_BALANCER_IP_ANNOTATION,
+    PREVIOUS_REPLICA_COUNT_ANNOTATION,
+)
+from phalanx.models.kubernetes import Service, Workload
 
-from ..exceptions import InvalidScaleStateError
+from ..exceptions import (
+    InvalidLoadBalancerServiceStateError,
+    InvalidScaleStateError,
+)
 from ..storage.kubernetes import KubernetesStorage
 
-__all__ = ["PhalanxClusterService"]
+__all__ = ["GKEPhalanxClusterService"]
 
 
-class PhalanxClusterService:
-    """Kubernetes operations on a Phalanx cluster.
+class GKEPhalanxClusterService:
+    """Kubernetes operations on a GKE Phalanx cluster.
 
     These operations are not in the EnviromentService because:
 
-    * They do not necessarily correspond 1-1 to a
-      Phalanx enviroment.
-    * They are often part of tasks that involve
-      multiple clusters, so passing an explicit context is
-      less error prone, and allows the operations to be
-      automated without having to manually change the kubectl
-      current context.
+    * They do not necessarily correspond 1-1 to a Phalanx enviroment.
+    * They are often part of tasks that involve multiple clusters, so passing
+      an explicit context is less error prone, and allows the operations to be
+      automated without having to manually change the kubectl current context.
+    * Some of the operations are specific to Google Cloud GKE clusters, like
+      waiting for an associated cloud load balancer to be destroyed when
+      converting a Service from LoadBalancer to ClusterIP.
 
     For example, when recovering a GCP cluster from backups while the old
     cluster still exists, you will need to work with two clusters, both of
@@ -63,7 +70,7 @@ class PhalanxClusterService:
         """
         workloads = self._get_workloads_except_argocd()
         for workload in workloads:
-            self._check_state(workload)
+            self._check_workload_state(workload)
             self._kubernetes.annotate(
                 workload,
                 key=PREVIOUS_REPLICA_COUNT_ANNOTATION,
@@ -85,7 +92,7 @@ class PhalanxClusterService:
         """
         workloads = self._get_workloads_except_argocd()
         for workload in workloads:
-            self._check_state(workload)
+            self._check_workload_state(workload)
             if workload.previous_replica_count is None:
                 continue
             self._kubernetes.scale(workload, workload.previous_replica_count)
@@ -93,6 +100,99 @@ class PhalanxClusterService:
                 workload,
                 key=PREVIOUS_REPLICA_COUNT_ANNOTATION,
             )
+
+    def release_service_ips(self) -> list[Service]:
+        """Release all IPs on LoadBalancer Services for all Phalanx apps.
+
+        This will clear any spec.loadBalancerIPs, then change the Service type
+        from LoadBalancer to ClusterIP, then back to LoadBalancer.
+
+        This can be used when recovering a Phalanx cluster to another GKE
+        cluster while the old cluster is still running.
+
+        Returns
+        -------
+        list[Service]
+            A list of Services with refreshed IPs.
+
+        Raises
+        ------
+        InvalidLoadBalancerServiceStateError
+            If the workload resource does not have exactly one of
+            spec.loadBalancerIP or an annotation for the previous
+            loadBalancerIP set.
+
+        """
+        new_services = []
+        services = self._kubernetes.get_phalanx_load_balancer_services()
+        for service in services:
+            self._check_service_state(service)
+            self._kubernetes.annotate(
+                service,
+                key=PREVIOUS_LOAD_BALANCER_IP_ANNOTATION,
+                value=str(service.spec_load_balancer_ip),
+            )
+            self._kubernetes.remove_service_load_balancer_ip(service)
+            self._refresh_service_ingress(service)
+            new_service = self._kubernetes.get_service(
+                name=service.name, namespace=service.namespace
+            )
+            new_services.append(new_service)
+
+        return new_services
+
+    def restore_service_ips(self) -> list[Service]:
+        """Restore all IPs on LoadBalancer Services for all Phalanx apps.
+
+        This is only intended to be run after a release operation because it
+        depends on an annotation set during that operation.
+
+        Raises
+        ------
+        InvalidLoadBalancerServiceStateError
+            If the workload resource does not have exactly one of
+            spec.loadBalancerIP or an annotation for the previous
+            loadBalancerIP set.
+
+        """
+        new_services = []
+        services = self._kubernetes.get_phalanx_load_balancer_services()
+        for service in services:
+            if not service.previous_loadbalancer_ip:
+                continue
+            self._check_service_state(service)
+            self._kubernetes.add_service_load_balancer_ip(
+                service, service.previous_loadbalancer_ip
+            )
+            self._kubernetes.deannotate(
+                service,
+                key=PREVIOUS_LOAD_BALANCER_IP_ANNOTATION,
+            )
+            self._refresh_service_ingress(service)
+            new_service = self._kubernetes.get_service(
+                name=service.name, namespace=service.namespace
+            )
+            new_services.append(new_service)
+
+        return new_services
+
+    def _refresh_service_ingress(self, service: Service) -> None:
+        """Destroy and recreate the ingress associated with a Service."""
+        self._kubernetes.set_service_to_cluster_ip(service)
+        self._kubernetes.wait_for_resource_no_finalizers(
+            service, GKE_LOAD_BALANCER_SERVICE_FINALIZERS
+        )
+        self._kubernetes.set_service_to_load_balancer(service)
+        self._kubernetes.wait_for_service_ingress(service)
+
+    def _check_service_state(self, service: Service) -> None:
+        """Ensure a LoadBalancer Service is not in an incorrect state."""
+        exactly_one = (
+            service.spec_load_balancer_ip,
+            service.previous_loadbalancer_ip,
+        )
+        if all(exactly_one) or not any(exactly_one):
+            raise InvalidLoadBalancerServiceStateError(service)
 
     def _get_workloads_except_argocd(self) -> list[Workload]:
         """Get all Phalanx workloads in the cluster except ArgoCD workloads.
@@ -111,7 +211,7 @@ class PhalanxClusterService:
             if workload.namespace != "argocd"
         ]
 
-    def _check_state(self, workload: Workload) -> None:
+    def _check_workload_state(self, workload: Workload) -> None:
         """Make sure the workload is in an OK state to be scaled.
 
         Parameters

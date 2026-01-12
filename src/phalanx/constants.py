@@ -9,6 +9,7 @@ from datetime import timedelta
 __all__ = [
     "HELM_DOCLINK_ANNOTATION",
     "ONEPASSWORD_ENCODED_WARNING",
+    "PREVIOUS_LOAD_BALANCER_IP_ANNOTATION",
     "PULL_SECRET_DESCRIPTION",
     "VAULT_APPROLE_SECRET_TEMPLATE",
     "VAULT_TOKEN_SECRET_TEMPLATE",
@@ -70,3 +71,18 @@ PREVIOUS_REPLICA_COUNT_ANNOTATION = "phalanx.lsst.org/previous-replica-count"
 This annotation will be set when we do an explicit scale down during a recovery
 process.
 """
+
+PREVIOUS_LOAD_BALANCER_IP_ANNOTATION = (
+    "phalanx.lsst.org/previous-load-balancer-ip"
+)
+"""Annotation that holds the original loadBalancerIP value for a Service.
+
+This annotation will be set when we recover an existing Phalanx cluster to a
+new cluster.
+"""
+
+GKE_LOAD_BALANCER_SERVICE_FINALIZERS = [
+    "service.kubernetes.io/load-balancer-cleanup",
+    "gke.networking.io/l4-netlb-v1",
+]
+"""Finalizers on a GKE Service resource when the service has an ingress."""

@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from subprocess import CompletedProcess
 
 import pytest
+from pytest_mock import MockerFixture
 from syrupy.assertion import SnapshotAssertion
 
 from ..support.cli import run_cli
@@ -180,16 +181,233 @@ def test_scale_up_workloads(
 
 
 @pytest.mark.usefixtures("mock_kubernetes_kubectl")
-def test_down_requires_context() -> None:
+def test_release_service_ips_requires_context() -> None:
+    result = run_cli("recover", "release-service-ips")
+    assert result.exit_code == 2
+
+
+def test_release_service_ips(
+    mock_kubernetes_kubectl: MockCommand,
+    snapshot: SnapshotAssertion,
+    mocker: MockerFixture,
+) -> None:
+    mocker.patch("time.sleep")
+    command = mock_kubernetes_kubectl
+
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "--field-selector",
+            "spec.type=LoadBalancer",
+            "-l",
+            "argocd.argoproj.io/instance",
+            "-o",
+            "json",
+            "--all-namespaces",
+        ),
+        stdout=kubectl_output("service-list.json"),
+    )
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "ingress-nginx-controller",
+            "--namespace",
+            "ingress-nginx",
+            "-o",
+            "json",
+        ),
+        stdout=kubectl_output(
+            "service-ingress-nginx-controller-cluster-ip-with-finalizers.json"
+        ),
+    )
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "ingress-nginx-controller",
+            "--namespace",
+            "ingress-nginx",
+            "-o",
+            "json",
+        ),
+        stdout=kubectl_output(
+            "service-ingress-nginx-controller-cluster-ip-without-finalizers.json"
+        ),
+    )
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "ingress-nginx-controller",
+            "--namespace",
+            "ingress-nginx",
+            "-o",
+            "json",
+        ),
+        stdout=kubectl_output(
+            "service-ingress-nginx-controller-released.json"
+        ),
+    )
+
+    result = run_cli(
+        "recover", "release-service-ips", "--context", "fake-context"
+    )
+
+    assert result.exit_code == 0
+    assert command.mock.capture.call_args_list == snapshot
+    assert command.mock.run.call_args_list == snapshot
+
+
+@pytest.mark.usefixtures("mock_kubernetes_kubectl")
+def test_restore_service_ips_requires_context() -> None:
+    result = run_cli("recover", "restore-service-ips")
+    assert result.exit_code == 2
+
+
+def test_restore_service_ips(
+    mock_kubernetes_kubectl: MockCommand,
+    snapshot: SnapshotAssertion,
+    mocker: MockerFixture,
+) -> None:
+    mocker.patch("time.sleep")
+    command = mock_kubernetes_kubectl
+
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "--field-selector",
+            "spec.type=LoadBalancer",
+            "-l",
+            "argocd.argoproj.io/instance",
+            "-o",
+            "json",
+            "--all-namespaces",
+        ),
+        stdout=kubectl_output("service-list-released.json"),
+    )
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "ingress-nginx-controller",
+            "--namespace",
+            "ingress-nginx",
+            "-o",
+            "json",
+        ),
+        stdout=kubectl_output(
+            "service-ingress-nginx-controller-released-cluster-ip-with-finalizers.json"
+        ),
+    )
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "ingress-nginx-controller",
+            "--namespace",
+            "ingress-nginx",
+            "-o",
+            "json",
+        ),
+        stdout=kubectl_output(
+            "service-ingress-nginx-controller-released-cluster-ip-without-finalizers.json"
+        ),
+    )
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "ingress-nginx-controller",
+            "--namespace",
+            "ingress-nginx",
+            "-o",
+            "json",
+        ),
+        stdout=kubectl_output("service-ingress-nginx-controller.json"),
+    )
+
+    result = run_cli(
+        "recover", "restore-service-ips", "--context", "fake-context"
+    )
+
+    assert result.exit_code == 0
+    assert command.mock.capture.call_args_list == snapshot
+    assert command.mock.run.call_args_list == snapshot
+
+
+@pytest.mark.usefixtures("mock_kubernetes_kubectl")
+def test_scale_down_requires_context() -> None:
     result = run_cli("recover", "scale-down")
     assert result.exit_code == 2
 
 
 def test_scale_down(
-    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+    mock_kubernetes_kubectl: MockCommand,
+    snapshot: SnapshotAssertion,
+    mocker: MockerFixture,
 ) -> None:
+    mocker.patch("time.sleep")
     command = mock_kubernetes_kubectl
 
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "--field-selector",
+            "spec.type=LoadBalancer",
+            "-l",
+            "argocd.argoproj.io/instance",
+            "-o",
+            "json",
+            "--all-namespaces",
+        ),
+        stdout=kubectl_output("service-list.json"),
+    )
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "ingress-nginx-controller",
+            "--namespace",
+            "ingress-nginx",
+            "-o",
+            "json",
+        ),
+        stdout=kubectl_output(
+            "service-ingress-nginx-controller-cluster-ip-with-finalizers.json"
+        ),
+    )
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "ingress-nginx-controller",
+            "--namespace",
+            "ingress-nginx",
+            "-o",
+            "json",
+        ),
+        stdout=kubectl_output(
+            "service-ingress-nginx-controller-cluster-ip-without-finalizers.json"
+        ),
+    )
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "ingress-nginx-controller",
+            "--namespace",
+            "ingress-nginx",
+            "-o",
+            "json",
+        ),
+        stdout=kubectl_output(
+            "service-ingress-nginx-controller-released.json"
+        ),
+    )
     command.expect_capture(
         args=(
             "get",
@@ -230,10 +448,7 @@ def test_scale_down(
     result = run_cli("recover", "scale-down", "--context", "fake-context")
     assert result.exit_code == 0
 
-    # Assert exactly these calls to capture were made
     assert command.mock.capture.call_args_list == snapshot
-
-    # Nothing from the argocd namespace should be in here.
     assert command.mock.run.call_args_list == snapshot
 
 
@@ -244,10 +459,67 @@ def test_scale_up_requires_context() -> None:
 
 
 def test_scale_up(
-    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+    mock_kubernetes_kubectl: MockCommand,
+    snapshot: SnapshotAssertion,
+    mocker: MockerFixture,
 ) -> None:
+    mocker.patch("time.sleep")
     command = mock_kubernetes_kubectl
 
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "--field-selector",
+            "spec.type=LoadBalancer",
+            "-l",
+            "argocd.argoproj.io/instance",
+            "-o",
+            "json",
+            "--all-namespaces",
+        ),
+        stdout=kubectl_output("service-list-released.json"),
+    )
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "ingress-nginx-controller",
+            "--namespace",
+            "ingress-nginx",
+            "-o",
+            "json",
+        ),
+        stdout=kubectl_output(
+            "service-ingress-nginx-controller-released-cluster-ip-with-finalizers.json"
+        ),
+    )
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "ingress-nginx-controller",
+            "--namespace",
+            "ingress-nginx",
+            "-o",
+            "json",
+        ),
+        stdout=kubectl_output(
+            "service-ingress-nginx-controller-released-cluster-ip-without-finalizers.json"
+        ),
+    )
+    command.expect_capture(
+        args=(
+            "get",
+            "Service",
+            "ingress-nginx-controller",
+            "--namespace",
+            "ingress-nginx",
+            "-o",
+            "json",
+        ),
+        stdout=kubectl_output("service-ingress-nginx-controller.json"),
+    )
     command.expect_capture(
         args=(
             "get",
@@ -288,8 +560,5 @@ def test_scale_up(
     result = run_cli("recover", "scale-up", "--context", "fake-context")
     assert result.exit_code == 0
 
-    # Assert exactly these calls to capture were made
     assert command.mock.capture.call_args_list == snapshot
-
-    # Nothing from the argocd namespace should be in here.
     assert command.mock.run.call_args_list == snapshot

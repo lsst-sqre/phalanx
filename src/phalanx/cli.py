@@ -42,6 +42,10 @@ __all__ = [
     "environment_template",
     "help",
     "main",
+    "recover_release_service_ips",
+    "recover_restore_service_ips",
+    "recover_scale_down",
+    "recover_scale_up",
     "secrets",
     "secrets_audit",
     "secrets_list",
@@ -1117,7 +1121,7 @@ def recover_suspend_crons(config: Path | None, context: str) -> None:
     if not config:
         config = _find_config()
     factory = Factory(config)
-    cluster_service = factory.create_phalanx_cluster_service(context)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
     cluster_service.suspend_cronjobs()
 
 
@@ -1146,7 +1150,7 @@ def recover_resume_crons(config: Path | None, context: str) -> None:
     if not config:
         config = _find_config()
     factory = Factory(config)
-    cluster_service = factory.create_phalanx_cluster_service(context)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
     cluster_service.resume_cronjobs()
 
 
@@ -1173,7 +1177,7 @@ def recover_scale_down_workloads(config: Path | None, context: str) -> None:
     if not config:
         config = _find_config()
     factory = Factory(config)
-    cluster_service = factory.create_phalanx_cluster_service(context)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
     cluster_service.scale_down_workloads()
 
 
@@ -1200,8 +1204,68 @@ def recover_scale_up_workloads(config: Path | None, context: str) -> None:
     if not config:
         config = _find_config()
     factory = Factory(config)
-    cluster_service = factory.create_phalanx_cluster_service(context)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
     cluster_service.scale_up_workloads()
+
+
+@recover.command("release-service-ips")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_release_service_ips(config: Path | None, context: str) -> None:
+    """Release the IP addresses on all Phalanx LoadBalancer Services."""
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    services = cluster_service.release_service_ips()
+    for service in services:
+        click.echo(
+            f"Service: {service.namespace}/{service.name} now has load"
+            f" balancer ip address: {service.status_load_balancer_ip}"
+        )
+
+
+@recover.command("restore-service-ips")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_restore_service_ips(config: Path | None, context: str) -> None:
+    """Restore the IP addresses on all Phalanx LoadBalancer Services.
+
+    This is meant to be called after release-service-ips was called.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    services = cluster_service.restore_service_ips()
+
+    for service in services:
+        click.echo(
+            f"Service: {service.namespace}/{service.name} now has load"
+            f" balancer ip address: {service.status_load_balancer_ip}"
+        )
 
 
 @recover.command("scale-down")
@@ -1223,7 +1287,8 @@ def recover_scale_down(config: Path | None, context: str) -> None:
     if not config:
         config = _find_config()
     factory = Factory(config)
-    cluster_service = factory.create_phalanx_cluster_service(context)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.release_service_ips()
     cluster_service.suspend_cronjobs()
     cluster_service.scale_down_workloads()
 
@@ -1247,6 +1312,7 @@ def recover_scale_up(config: Path | None, context: str) -> None:
     if not config:
         config = _find_config()
     factory = Factory(config)
-    cluster_service = factory.create_phalanx_cluster_service(context)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.restore_service_ips()
     cluster_service.scale_up_workloads()
     cluster_service.resume_cronjobs()
