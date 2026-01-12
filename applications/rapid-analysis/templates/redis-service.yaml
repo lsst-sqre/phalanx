@@ -9,7 +9,7 @@ metadata:
     {{- toYaml $.Values.redis.serviceAnnotations | nindent 4 }}
   {{- end }}
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   internalTrafficPolicy: Cluster
   selector:
     app.kubernetes.io/instance: {{ include "rapid-analysis.redis.fullname" . }}
