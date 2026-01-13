@@ -8,13 +8,10 @@ from ..constants import PREVIOUS_REPLICA_COUNT_ANNOTATION
 
 __all__ = [
     "CronJob",
-    "CronJobList",
     "Deployment",
-    "DeploymentList",
     "NamespacedResource",
     "ResourceList",
     "StatefulSet",
-    "StatefulSetList",
     "Workload",
 ]
 
@@ -34,10 +31,10 @@ class NamespacedResource(BaseModel):
     """The name of the resource."""
 
 
-class ResourceList(BaseModel):
+class ResourceList[T: NamespacedResource](BaseModel):
     """A list of resources returned from a kubectl command."""
 
-    items: list
+    items: list[T]
     """A list of Kubernetes resources."""
 
     kind: Literal["List"]
@@ -86,24 +83,3 @@ class StatefulSet(Workload):
         ),
     )
     """The original number of replicas if we explicitly scaled down."""
-
-
-class CronJobList(ResourceList):
-    """A list of CronJobs."""
-
-    items: list[CronJob]
-    """A list of Kubernetes CronJobs."""
-
-
-class DeploymentList(ResourceList):
-    """A list of Deployments."""
-
-    items: list[Deployment]
-    """A list of Kubernetes CronJobs."""
-
-
-class StatefulSetList(ResourceList):
-    """A list of Deployments."""
-
-    items: list[StatefulSet]
-    """A list of Kubernetes StatefulSets."""

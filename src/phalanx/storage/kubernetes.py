@@ -2,12 +2,10 @@
 
 from ..models.kubernetes import (
     CronJob,
-    CronJobList,
     Deployment,
-    DeploymentList,
     NamespacedResource,
+    ResourceList,
     StatefulSet,
-    StatefulSetList,
     Workload,
 )
 from ..models.vault import VaultCredentials
@@ -131,7 +129,7 @@ class KubernetesStorage:
             "json",
             "--all-namespaces",
         )
-        cronjobs = CronJobList.model_validate_json(raw.stdout)
+        cronjobs = ResourceList[CronJob].model_validate_json(raw.stdout)
         return cronjobs.items
 
     def get_phalanx_deployments(self) -> list[Deployment]:
@@ -153,8 +151,8 @@ class KubernetesStorage:
             "json",
             "--all-namespaces",
         )
-        cronjobs = DeploymentList.model_validate_json(raw.stdout)
-        return cronjobs.items
+        deployments = ResourceList[Deployment].model_validate_json(raw.stdout)
+        return deployments.items
 
     def get_phalanx_stateful_sets(self) -> list[StatefulSet]:
         """Get the names of all StatefulSets in all Phalanx apps.
@@ -175,8 +173,10 @@ class KubernetesStorage:
             "json",
             "--all-namespaces",
         )
-        cronjobs = StatefulSetList.model_validate_json(raw.stdout)
-        return cronjobs.items
+        statefulsets = ResourceList[StatefulSet].model_validate_json(
+            raw.stdout
+        )
+        return statefulsets.items
 
     def suspend_cronjobs(self, cronjobs: list[CronJob]) -> None:
         """Suspend all given cronjobs.

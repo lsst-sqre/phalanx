@@ -2,11 +2,9 @@
 
 from phalanx.models.kubernetes import (
     CronJob,
-    CronJobList,
     Deployment,
-    DeploymentList,
+    ResourceList,
     StatefulSet,
-    StatefulSetList,
 )
 from tests.support.constants import DATA_DIR
 
@@ -17,7 +15,7 @@ def kubectl_output(filename: str) -> str:
 
 def test_cronjob_list() -> None:
     out = kubectl_output("cronjob_list.json")
-    expected = CronJobList(
+    expected = ResourceList(
         kind="List",
         items=[
             CronJob(
@@ -31,14 +29,14 @@ def test_cronjob_list() -> None:
         ],
     )
 
-    actual = CronJobList.model_validate_json(out)
+    actual = ResourceList[CronJob].model_validate_json(out)
 
     assert expected == actual
 
 
 def test_deployment_list() -> None:
     out = kubectl_output("deployment_list.json")
-    expected = DeploymentList(
+    expected = ResourceList(
         kind="List",
         items=[
             Deployment(
@@ -62,14 +60,14 @@ def test_deployment_list() -> None:
         ],
     )
 
-    actual = DeploymentList.model_validate_json(out)
+    actual = ResourceList[Deployment].model_validate_json(out)
 
     assert expected == actual
 
 
 def test_statefulset_list() -> None:
     out = kubectl_output("statefulset_list.json")
-    expected = StatefulSetList(
+    expected = ResourceList(
         kind="List",
         items=[
             StatefulSet(
@@ -93,6 +91,6 @@ def test_statefulset_list() -> None:
         ],
     )
 
-    actual = StatefulSetList.model_validate_json(out)
+    actual = ResourceList[StatefulSet].model_validate_json(out)
 
     assert expected == actual
