@@ -23,4 +23,4 @@ cadc-tap:
     qserv:
       host: "ccqserv201.in2p3.fr:30040"
       image:
-        tag: "2.14.0"
+        tag: "2.15.1"

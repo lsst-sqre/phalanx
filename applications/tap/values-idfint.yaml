@@ -17,15 +17,6 @@ cadc-tap:
       enabled: true
       rules: "ivoa.ObsCore:access_url, dp02_dc2_catalogs.ObsCore:access_url, dp1.ObsCore:access_url"
 
-  tapSchema:
-    tapadm:
-      maxActive: 2
-    tapuser:
-      maxActive: 2
-
-  uws:
-    maxActive: 4
-
   cloudsql:
     enabled: true
     instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"

@@ -96,6 +96,8 @@ spec:
                 -Dtapschemauser.driverClassName=org.postgresql.Driver
                 -Dtapschemauser.url=jdbc:postgresql://localhost:5432/{{ .Values.tapSchema.database }}
                 {{- end }}
+                -Dtapschemauser.maxActive={{ .Values.tapSchema.tapuser.maxActive }}
+                -Dtapuser.maxActive={{ .Values.tapSchema.tapuser.maxActive }}
                 -Dtapadm.maxActive={{ .Values.tapSchema.tapadm.maxActive }}
                 -Dtapuser.maxActive={{ .Values.tapSchema.tapuser.maxActive }}
                 -Duws.username={{ .Values.uws.username }}
