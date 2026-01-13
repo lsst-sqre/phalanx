@@ -91,6 +91,10 @@ IVOA TAP service
 | tapSchema.passwordKey | string | `"tap-schema-password"` | Secret key containing the database password |
 | tapSchema.podAnnotations | object | `{}` | Annotations for the TAP schema database pod |
 | tapSchema.resources | object | See `values.yaml` | Resource limits and requests for the TAP schema database pod |
+| tapSchema.tapadm | object | `{"maxActive":2}` | Connection pool configuration for jdbc/tapadm |
+| tapSchema.tapadm.maxActive | int | `2` | Maximum active connections (maxIdle will be set to this value) |
+| tapSchema.tapuser | object | `{"maxActive":3}` | Connection pool configuration for jdbc/tapuser (query planning and tap_upload) |
+| tapSchema.tapuser.maxActive | int | `3` | Maximum active connections (maxIdle will be set to this value) |
 | tapSchema.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the TAP schema database pod |
 | tapSchema.type | string | "containerized" | Database backend type: "containerized", "cloudsql", or "external" |
 | tapSchema.useVaultPassword | bool | `false` | Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external) |
@@ -104,6 +108,7 @@ IVOA TAP service
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
 | uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
 | uws.image.tag | string | `"3.10.2"` | Tag of UWS database image to use |
+| uws.maxActive | int | `5` | Maximum active connections (maxIdle will be set to this value) |
 | uws.nodeSelector | object | `{}` | Node selection rules for the UWS database pod |
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |
 | uws.resources | object | See `values.yaml` | Resource limits and requests for the UWS database pod |

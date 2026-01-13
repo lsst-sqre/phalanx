@@ -44,6 +44,17 @@ cadc-tap:
     # -- Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external)
     useVaultPassword: true
 
+    # -- Connection pool configuration for jdbc/tapadm
+    tapadm:
+      # -- Maximum active connections (maxIdle will be set to this value)
+      maxActive: 1
+
+    # -- Connection pool configuration for jdbc/tapuser (query planning and tap_upload)
+    tapuser:
+      # -- Maximum active connections (maxIdle will be set to this value)
+      maxActive: 2
+
+
   uws:
     # -- Database backend type: "containerized", "cloudsql", or "external"
     type: "cloudsql"
@@ -56,6 +67,10 @@ cadc-tap:
 
     # -- Whether the UWS database requires a password in Vault (true for cloudsql/external)
     useVaultPassword: true
+
+    # -- Connection pool configuration
+    # -- Maximum active connections (maxIdle will be set to this value)
+    maxActive: 3
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

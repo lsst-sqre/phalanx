@@ -21,10 +21,15 @@ IVOA TAP service for Solar System Objects
 | cadc-tap.ingress.path | string | `"ssotap"` | Ingress path that should be routed to this service |
 | cadc-tap.serviceAccount.name | string | `"ssotap"` | Name of the Kubernetes `ServiceAccount`, used for CloudSQL access |
 | cadc-tap.tapSchema.database | string | `"ssotap"` | Database name |
+| cadc-tap.tapSchema.tapadm | object | `{"maxActive":1}` | Connection pool configuration for jdbc/tapadm |
+| cadc-tap.tapSchema.tapadm.maxActive | int | `1` | Maximum active connections (maxIdle will be set to this value) |
+| cadc-tap.tapSchema.tapuser | object | `{"maxActive":2}` | Connection pool configuration for jdbc/tapuser (query planning and tap_upload) |
+| cadc-tap.tapSchema.tapuser.maxActive | int | `2` | Maximum active connections (maxIdle will be set to this value) |
 | cadc-tap.tapSchema.type | string | "cloudsql" | Database backend type: "containerized", "cloudsql", or "external" |
 | cadc-tap.tapSchema.useVaultPassword | bool | `true` | Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external) |
 | cadc-tap.tapSchema.username | string | `"ssotap"` | Database username |
 | cadc-tap.uws.database | string | `"ssotap"` | Database name |
+| cadc-tap.uws.maxActive | int | `3` | Maximum active connections (maxIdle will be set to this value) |
 | cadc-tap.uws.type | string | `"cloudsql"` | Database backend type: "containerized", "cloudsql", or "external" |
 | cadc-tap.uws.useVaultPassword | bool | `true` | Whether the UWS database requires a password in Vault (true for cloudsql/external) |
 | cadc-tap.uws.username | string | `"ssotap"` | Database username |

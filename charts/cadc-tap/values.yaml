@@ -220,6 +220,16 @@ tapSchema:
   # -- Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external)
   useVaultPassword: false
 
+  # -- Connection pool configuration for jdbc/tapadm
+  tapadm:
+    # -- Maximum active connections (maxIdle will be set to this value)
+    maxActive: 2
+
+  # -- Connection pool configuration for jdbc/tapuser (query planning and tap_upload)
+  tapuser:
+    # -- Maximum active connections (maxIdle will be set to this value)
+    maxActive: 3
+
   # -- External PostgreSQL configuration (only used if type is "external")
   external:
 
@@ -281,6 +291,10 @@ uws:
 
   # -- Whether UWS database requires a password in Vault (true for cloudsql/external)
   useVaultPassword: false
+
+  # -- Connection pool configuration
+  # -- Maximum active connections (maxIdle will be set to this value)
+  maxActive: 5
 
   # -- External PostgreSQL configuration (only used if type is "external")
   external:
