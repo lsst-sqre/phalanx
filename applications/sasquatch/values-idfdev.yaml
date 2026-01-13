@@ -1,5 +1,6 @@
 strimzi-kafka:
   kafka:
+    version: 4.1.0
     listeners:
       tls:
         enabled: true
