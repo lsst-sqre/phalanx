@@ -19,16 +19,20 @@ strimzi-kafka:
       bootstrap:
         annotations:
           metallb.io/address-pool: sdf-rubin-ingest
+          metallb.io/loadBalancerIPs: 172.24.10.54
       brokers:
         - broker: 3
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.55
         - broker: 4
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.56
         - broker: 5
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.57
     storage:
       size: 1000Gi
       storageClassName: wekafs--sdf-k8s01
