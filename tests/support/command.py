@@ -50,7 +50,7 @@ class MockCommand:
                 "json",
                 "--all-namespaces",
             ),
-            stdout=kubectl_output("deployment_list_scaled_down.json"),
+            stdout=kubectl_output("deployment-list_scaled-down.json"),
 
         command.expect_capture(
             args=(
@@ -62,7 +62,7 @@ class MockCommand:
                 "json",
                 "--all-namespaces",
             ),
-            stdout=kubectl_output("statefulset_list_scaled_down.json"),
+            stdout=kubectl_output("statefulset-list-scaled-down.json"),
         )
 
         # Some method that uses a command instance in the kubernetes module

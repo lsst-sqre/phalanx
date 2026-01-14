@@ -14,7 +14,7 @@ def kubectl_output(filename: str) -> str:
 
 
 def test_cronjob_list() -> None:
-    out = kubectl_output("cronjob_list.json")
+    out = kubectl_output("cronjob-list.json")
     expected = ResourceList(
         kind="List",
         items=[
@@ -35,7 +35,7 @@ def test_cronjob_list() -> None:
 
 
 def test_deployment_list() -> None:
-    out = kubectl_output("deployment_list.json")
+    out = kubectl_output("deployment-list.json")
     expected = ResourceList(
         kind="List",
         items=[
@@ -66,7 +66,7 @@ def test_deployment_list() -> None:
 
 
 def test_statefulset_list() -> None:
-    out = kubectl_output("statefulset_list.json")
+    out = kubectl_output("statefulset-list.json")
     expected = ResourceList(
         kind="List",
         items=[

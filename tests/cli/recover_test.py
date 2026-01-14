@@ -2,9 +2,9 @@
 
 from dataclasses import dataclass
 from subprocess import CompletedProcess
-from unittest.mock import call
 
 import pytest
+from syrupy.assertion import SnapshotAssertion
 
 from ..support.cli import run_cli
 from ..support.command import MockCommand
@@ -32,7 +32,9 @@ def test_suspend_crons_requires_context() -> None:
     assert result.exit_code == 2
 
 
-def test_suspend_crons(mock_kubernetes_kubectl: MockCommand) -> None:
+def test_suspend_crons(
+    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+) -> None:
     command = mock_kubernetes_kubectl
     command.expect_capture(
         args=(
@@ -44,32 +46,13 @@ def test_suspend_crons(mock_kubernetes_kubectl: MockCommand) -> None:
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("cronjob_list.json"),
+        stdout=kubectl_output("cronjob-list.json"),
     )
 
     result = run_cli("recover", "suspend-crons", "--context", "fake-context")
     assert result.exit_code == 0
 
-    assert command.mock.run.call_args_list == [
-        call(
-            "patch",
-            "CronJob",
-            "gafaelfawr-maintenance",
-            "--namespace",
-            "gafaelfawr",
-            "--patch",
-            '{"spec" : {"suspend" : true }}',
-        ),
-        call(
-            "patch",
-            "CronJob",
-            "ook-ingest-lsst-texmf",
-            "--namespace",
-            "ook",
-            "--patch",
-            '{"spec" : {"suspend" : true }}',
-        ),
-    ]
+    assert command.mock.run.call_args_list == snapshot
 
 
 @pytest.mark.usefixtures("mock_kubernetes_kubectl")
@@ -78,7 +61,9 @@ def test_resume_crons_requires_context() -> None:
     assert result.exit_code == 2
 
 
-def test_resume_crons(mock_kubernetes_kubectl: MockCommand) -> None:
+def test_resume_crons(
+    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+) -> None:
     command = mock_kubernetes_kubectl
     command.expect_capture(
         args=(
@@ -90,32 +75,13 @@ def test_resume_crons(mock_kubernetes_kubectl: MockCommand) -> None:
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("cronjob_list.json"),
+        stdout=kubectl_output("cronjob-list.json"),
     )
 
     result = run_cli("recover", "resume-crons", "--context", "fake-context")
     assert result.exit_code == 0
 
-    assert command.mock.run.call_args_list == [
-        call(
-            "patch",
-            "CronJob",
-            "gafaelfawr-maintenance",
-            "--namespace",
-            "gafaelfawr",
-            "--patch",
-            '{"spec" : {"suspend" : false }}',
-        ),
-        call(
-            "patch",
-            "CronJob",
-            "ook-ingest-lsst-texmf",
-            "--namespace",
-            "ook",
-            "--patch",
-            '{"spec" : {"suspend" : false }}',
-        ),
-    ]
+    assert command.mock.run.call_args_list == snapshot
 
 
 @pytest.mark.usefixtures("mock_kubernetes_kubectl")
@@ -124,7 +90,9 @@ def test_scale_down_workloads_requires_context() -> None:
     assert result.exit_code == 2
 
 
-def test_scale_down_workloads(mock_kubernetes_kubectl: MockCommand) -> None:
+def test_scale_down_workloads(
+    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+) -> None:
     command = mock_kubernetes_kubectl
 
     command.expect_capture(
@@ -137,7 +105,7 @@ def test_scale_down_workloads(mock_kubernetes_kubectl: MockCommand) -> None:
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("deployment_list.json"),
+        stdout=kubectl_output("deployment-list.json"),
     )
     command.expect_capture(
         args=(
@@ -149,7 +117,7 @@ def test_scale_down_workloads(mock_kubernetes_kubectl: MockCommand) -> None:
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("statefulset_list.json"),
+        stdout=kubectl_output("statefulset-list.json"),
     )
 
     result = run_cli(
@@ -158,94 +126,10 @@ def test_scale_down_workloads(mock_kubernetes_kubectl: MockCommand) -> None:
     assert result.exit_code == 0
 
     # Assert exactly these calls to capture were made
-    assert command.mock.capture.call_args_list == [
-        call(
-            "get",
-            "Deployment",
-            "-l",
-            "argocd.argoproj.io/instance",
-            "-o",
-            "json",
-            "--all-namespaces",
-        ),
-        call(
-            "get",
-            "StatefulSet",
-            "-l",
-            "argocd.argoproj.io/instance",
-            "-o",
-            "json",
-            "--all-namespaces",
-        ),
-    ]
+    assert command.mock.capture.call_args_list == snapshot
 
     # Nothing from the argocd namespace should be in here.
-    assert command.mock.run.call_args_list == [
-        call(
-            "annotate",
-            "Deployment",
-            "gafaelfawr",
-            "phalanx.lsst.org/previous-replica-count=1",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "Deployment/gafaelfawr",
-            "--replicas",
-            "0",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "Deployment",
-            "gafaelfawr-operator",
-            "phalanx.lsst.org/previous-replica-count=1",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "Deployment/gafaelfawr-operator",
-            "--replicas",
-            "0",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "StatefulSet",
-            "gafaelfawr-redis",
-            "phalanx.lsst.org/previous-replica-count=1",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "StatefulSet/gafaelfawr-redis",
-            "--replicas",
-            "0",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "StatefulSet",
-            "gafaelfawr-redis-ephemeral",
-            "phalanx.lsst.org/previous-replica-count=1",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "StatefulSet/gafaelfawr-redis-ephemeral",
-            "--replicas",
-            "0",
-            "--namespace",
-            "gafaelfawr",
-        ),
-    ]
+    assert command.mock.run.call_args_list == snapshot
 
 
 @pytest.mark.usefixtures("mock_kubernetes_kubectl")
@@ -254,7 +138,9 @@ def test_scale_up_workloads_requires_context() -> None:
     assert result.exit_code == 2
 
 
-def test_scale_up_workloads(mock_kubernetes_kubectl: MockCommand) -> None:
+def test_scale_up_workloads(
+    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+) -> None:
     command = mock_kubernetes_kubectl
 
     command.expect_capture(
@@ -267,7 +153,7 @@ def test_scale_up_workloads(mock_kubernetes_kubectl: MockCommand) -> None:
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("deployment_list_scaled_down.json"),
+        stdout=kubectl_output("deployment-list-scaled-down.json"),
     )
     command.expect_capture(
         args=(
@@ -279,7 +165,7 @@ def test_scale_up_workloads(mock_kubernetes_kubectl: MockCommand) -> None:
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("statefulset_list_scaled_down.json"),
+        stdout=kubectl_output("statefulset-list-scaled-down.json"),
     )
     result = run_cli(
         "recover", "scale-up-workloads", "--context", "fake-context"
@@ -287,94 +173,10 @@ def test_scale_up_workloads(mock_kubernetes_kubectl: MockCommand) -> None:
     assert result.exit_code == 0
 
     # Assert exactly these calls to capture were made
-    assert command.mock.capture.call_args_list == [
-        call(
-            "get",
-            "Deployment",
-            "-l",
-            "argocd.argoproj.io/instance",
-            "-o",
-            "json",
-            "--all-namespaces",
-        ),
-        call(
-            "get",
-            "StatefulSet",
-            "-l",
-            "argocd.argoproj.io/instance",
-            "-o",
-            "json",
-            "--all-namespaces",
-        ),
-    ]
+    assert command.mock.capture.call_args_list == snapshot
 
     # Nothing from the argocd namespace should be in here.
-    assert command.mock.run.call_args_list == [
-        call(
-            "scale",
-            "Deployment/gafaelfawr",
-            "--replicas",
-            "1",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "Deployment",
-            "gafaelfawr",
-            "phalanx.lsst.org/previous-replica-count-",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "Deployment/gafaelfawr-operator",
-            "--replicas",
-            "2",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "Deployment",
-            "gafaelfawr-operator",
-            "phalanx.lsst.org/previous-replica-count-",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "StatefulSet/gafaelfawr-redis",
-            "--replicas",
-            "4",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "StatefulSet",
-            "gafaelfawr-redis",
-            "phalanx.lsst.org/previous-replica-count-",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "StatefulSet/gafaelfawr-redis-ephemeral",
-            "--replicas",
-            "5",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "StatefulSet",
-            "gafaelfawr-redis-ephemeral",
-            "phalanx.lsst.org/previous-replica-count-",
-            "--namespace",
-            "gafaelfawr",
-        ),
-    ]
+    assert command.mock.run.call_args_list == snapshot
 
 
 @pytest.mark.usefixtures("mock_kubernetes_kubectl")
@@ -383,7 +185,9 @@ def test_down_requires_context() -> None:
     assert result.exit_code == 2
 
 
-def test_scale_down(mock_kubernetes_kubectl: MockCommand) -> None:
+def test_scale_down(
+    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+) -> None:
     command = mock_kubernetes_kubectl
 
     command.expect_capture(
@@ -396,7 +200,7 @@ def test_scale_down(mock_kubernetes_kubectl: MockCommand) -> None:
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("cronjob_list.json"),
+        stdout=kubectl_output("cronjob-list.json"),
     )
     command.expect_capture(
         args=(
@@ -408,7 +212,7 @@ def test_scale_down(mock_kubernetes_kubectl: MockCommand) -> None:
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("deployment_list.json"),
+        stdout=kubectl_output("deployment-list.json"),
     )
     command.expect_capture(
         args=(
@@ -420,128 +224,17 @@ def test_scale_down(mock_kubernetes_kubectl: MockCommand) -> None:
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("statefulset_list.json"),
+        stdout=kubectl_output("statefulset-list.json"),
     )
 
     result = run_cli("recover", "scale-down", "--context", "fake-context")
     assert result.exit_code == 0
 
     # Assert exactly these calls to capture were made
-    assert command.mock.capture.call_args_list == [
-        call(
-            "get",
-            "CronJob",
-            "-l",
-            "argocd.argoproj.io/instance",
-            "-o",
-            "json",
-            "--all-namespaces",
-        ),
-        call(
-            "get",
-            "Deployment",
-            "-l",
-            "argocd.argoproj.io/instance",
-            "-o",
-            "json",
-            "--all-namespaces",
-        ),
-        call(
-            "get",
-            "StatefulSet",
-            "-l",
-            "argocd.argoproj.io/instance",
-            "-o",
-            "json",
-            "--all-namespaces",
-        ),
-    ]
+    assert command.mock.capture.call_args_list == snapshot
 
     # Nothing from the argocd namespace should be in here.
-    assert command.mock.run.call_args_list == [
-        call(
-            "patch",
-            "CronJob",
-            "gafaelfawr-maintenance",
-            "--namespace",
-            "gafaelfawr",
-            "--patch",
-            '{"spec" : {"suspend" : true }}',
-        ),
-        call(
-            "patch",
-            "CronJob",
-            "ook-ingest-lsst-texmf",
-            "--namespace",
-            "ook",
-            "--patch",
-            '{"spec" : {"suspend" : true }}',
-        ),
-        call(
-            "annotate",
-            "Deployment",
-            "gafaelfawr",
-            "phalanx.lsst.org/previous-replica-count=1",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "Deployment/gafaelfawr",
-            "--replicas",
-            "0",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "Deployment",
-            "gafaelfawr-operator",
-            "phalanx.lsst.org/previous-replica-count=1",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "Deployment/gafaelfawr-operator",
-            "--replicas",
-            "0",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "StatefulSet",
-            "gafaelfawr-redis",
-            "phalanx.lsst.org/previous-replica-count=1",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "StatefulSet/gafaelfawr-redis",
-            "--replicas",
-            "0",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "StatefulSet",
-            "gafaelfawr-redis-ephemeral",
-            "phalanx.lsst.org/previous-replica-count=1",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "StatefulSet/gafaelfawr-redis-ephemeral",
-            "--replicas",
-            "0",
-            "--namespace",
-            "gafaelfawr",
-        ),
-    ]
+    assert command.mock.run.call_args_list == snapshot
 
 
 @pytest.mark.usefixtures("mock_kubernetes_kubectl")
@@ -550,7 +243,9 @@ def test_scale_up_requires_context() -> None:
     assert result.exit_code == 2
 
 
-def test_scale_up(mock_kubernetes_kubectl: MockCommand) -> None:
+def test_scale_up(
+    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+) -> None:
     command = mock_kubernetes_kubectl
 
     command.expect_capture(
@@ -563,7 +258,7 @@ def test_scale_up(mock_kubernetes_kubectl: MockCommand) -> None:
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("deployment_list_scaled_down.json"),
+        stdout=kubectl_output("deployment-list-scaled-down.json"),
     )
     command.expect_capture(
         args=(
@@ -575,7 +270,7 @@ def test_scale_up(mock_kubernetes_kubectl: MockCommand) -> None:
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("statefulset_list_scaled_down.json"),
+        stdout=kubectl_output("statefulset-list-scaled-down.json"),
     )
     command.expect_capture(
         args=(
@@ -587,125 +282,14 @@ def test_scale_up(mock_kubernetes_kubectl: MockCommand) -> None:
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("cronjob_list.json"),
+        stdout=kubectl_output("cronjob-list.json"),
     )
 
     result = run_cli("recover", "scale-up", "--context", "fake-context")
     assert result.exit_code == 0
 
     # Assert exactly these calls to capture were made
-    assert command.mock.capture.call_args_list == [
-        call(
-            "get",
-            "Deployment",
-            "-l",
-            "argocd.argoproj.io/instance",
-            "-o",
-            "json",
-            "--all-namespaces",
-        ),
-        call(
-            "get",
-            "StatefulSet",
-            "-l",
-            "argocd.argoproj.io/instance",
-            "-o",
-            "json",
-            "--all-namespaces",
-        ),
-        call(
-            "get",
-            "CronJob",
-            "-l",
-            "argocd.argoproj.io/instance",
-            "-o",
-            "json",
-            "--all-namespaces",
-        ),
-    ]
+    assert command.mock.capture.call_args_list == snapshot
 
     # Nothing from the argocd namespace should be in here.
-    assert command.mock.run.call_args_list == [
-        call(
-            "scale",
-            "Deployment/gafaelfawr",
-            "--replicas",
-            "1",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "Deployment",
-            "gafaelfawr",
-            "phalanx.lsst.org/previous-replica-count-",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "Deployment/gafaelfawr-operator",
-            "--replicas",
-            "2",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "Deployment",
-            "gafaelfawr-operator",
-            "phalanx.lsst.org/previous-replica-count-",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "StatefulSet/gafaelfawr-redis",
-            "--replicas",
-            "4",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "StatefulSet",
-            "gafaelfawr-redis",
-            "phalanx.lsst.org/previous-replica-count-",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "scale",
-            "StatefulSet/gafaelfawr-redis-ephemeral",
-            "--replicas",
-            "5",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "annotate",
-            "StatefulSet",
-            "gafaelfawr-redis-ephemeral",
-            "phalanx.lsst.org/previous-replica-count-",
-            "--namespace",
-            "gafaelfawr",
-        ),
-        call(
-            "patch",
-            "CronJob",
-            "gafaelfawr-maintenance",
-            "--namespace",
-            "gafaelfawr",
-            "--patch",
-            '{"spec" : {"suspend" : false }}',
-        ),
-        call(
-            "patch",
-            "CronJob",
-            "ook-ingest-lsst-texmf",
-            "--namespace",
-            "ook",
-            "--patch",
-            '{"spec" : {"suspend" : false }}',
-        ),
-    ]
+    assert command.mock.run.call_args_list == snapshot

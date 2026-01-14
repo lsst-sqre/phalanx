@@ -5,9 +5,10 @@ repos:
       - id: check-merge-conflict
       - id: check-toml
       - id: trailing-whitespace
+        exclude: __snapshots__
 
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.37.1
+    rev: v1.38.0
     hooks:
       - id: yamllint
         args:
@@ -53,7 +54,7 @@ repos:
       - id: ruff-format
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.9.24
+    rev: 0.9.25
     hooks:
       - id: uv-lock
 
