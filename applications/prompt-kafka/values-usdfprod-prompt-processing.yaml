@@ -30,6 +30,7 @@ butler-writer:
     retention: -1
 
 kafdrop:
+  enabled: true
   ingress:
     enabled: true
     hostname: usdfprod-prompt-processing.slac.stanford.edu
