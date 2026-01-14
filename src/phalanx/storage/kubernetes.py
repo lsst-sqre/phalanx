@@ -1,6 +1,13 @@
 """Storage layer for direct Kubernetes operations."""
 
-from ..models.kubernetes import CronJob, Resources
+from ..models.kubernetes import (
+    CronJob,
+    Deployment,
+    NamespacedResource,
+    ResourceList,
+    StatefulSet,
+    Workload,
+)
 from ..models.vault import VaultCredentials
 from .command import Command
 
@@ -107,6 +114,11 @@ class KubernetesStorage:
         """Get the names of all CronJobs in all Phalanx apps.
 
         We say a CronJob is in a Phalanx app if it has an ArgoCD label.
+
+        Returns
+        -------
+        list[CronJob]
+            A list of all of the CronJobs provisioned by Phalanx apps.
         """
         raw = self._kubectl.capture(
             "get",
@@ -117,8 +129,54 @@ class KubernetesStorage:
             "json",
             "--all-namespaces",
         )
-        cronjobs = Resources.model_validate_json(raw.stdout)
+        cronjobs = ResourceList[CronJob].model_validate_json(raw.stdout)
         return cronjobs.items
+
+    def get_phalanx_deployments(self) -> list[Deployment]:
+        """Get the names of all Deployments in all Phalanx apps.
+
+        We say a Deployment is in a Phalanx app if it has an ArgoCD label.
+
+        Returns
+        -------
+        list[Deployment]
+            A list of all of the Deployments provisioned by Phalanx apps.
+        """
+        raw = self._kubectl.capture(
+            "get",
+            "Deployment",
+            "-l",
+            "argocd.argoproj.io/instance",
+            "-o",
+            "json",
+            "--all-namespaces",
+        )
+        deployments = ResourceList[Deployment].model_validate_json(raw.stdout)
+        return deployments.items
+
+    def get_phalanx_stateful_sets(self) -> list[StatefulSet]:
+        """Get the names of all StatefulSets in all Phalanx apps.
+
+        We say a StatefulSet is in a Phalanx app if it has an ArgoCD label.
+
+        Returns
+        -------
+        list[StatefulSet]
+            A list of all of the StatefulSets provisioned by Phalanx apps.
+        """
+        raw = self._kubectl.capture(
+            "get",
+            "StatefulSet",
+            "-l",
+            "argocd.argoproj.io/instance",
+            "-o",
+            "json",
+            "--all-namespaces",
+        )
+        statefulsets = ResourceList[StatefulSet].model_validate_json(
+            raw.stdout
+        )
+        return statefulsets.items
 
     def suspend_cronjobs(self, cronjobs: list[CronJob]) -> None:
         """Suspend all given cronjobs.
@@ -161,3 +219,66 @@ class KubernetesStorage:
                 "--patch",
                 patch,
             )
+
+    def annotate(
+        self, resource: NamespacedResource, key: str, value: str
+    ) -> None:
+        """Add an annotation to a namespaced resource.
+
+        Parameters
+        ----------
+        resource
+            The Kubernetes resource to annotate.
+        key
+            The name of the annotation.
+        value
+            The value of the annotation.
+        """
+        self._kubectl.run(
+            "annotate",
+            resource.kind,
+            resource.name,
+            f"{key}={value}",
+            "--namespace",
+            resource.namespace,
+        )
+
+    def deannotate(self, resource: NamespacedResource, key: str) -> None:
+        """Remove an annotation from a namespaced resource.
+
+        Parameters
+        ----------
+        resource
+            The Kubernetes resource from which to remove the annotation.
+        key
+            The name of the annotation.
+        """
+        self._kubectl.run(
+            "annotate",
+            resource.kind,
+            resource.name,
+            f"{key}-",
+            "--namespace",
+            resource.namespace,
+        )
+
+    def scale(self, workload: Workload, replicas: int) -> None:
+        """Scale the replica count of a workload.
+
+        Parameters
+        ----------
+        workload
+            The Kubernetes workload to scale.
+        replicas
+            The desired replica count.
+        """
+        resource = f"{workload.kind}/{workload.name}"
+
+        self._kubectl.run(
+            "scale",
+            resource,
+            "--replicas",
+            str(replicas),
+            "--namespace",
+            workload.namespace,
+        )
