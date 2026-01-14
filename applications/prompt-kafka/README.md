@@ -22,6 +22,7 @@ Kafka environment for Prompt Processing
 | strimzi-registry-operator.operatorNamespace | string | `"prompt-kafka"` | Namespace where the strimzi-registry-operator is deployed |
 | butler-writer.cluster.name | string | `"prompt-kafka"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Prompt Kafka chart. |
 | kafdrop.affinity | object | `{}` | Affinity configuration |
+| kafdrop.cluster.name | string | `"prompt-kafka"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | kafdrop.cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |
 | kafdrop.existingSecret | string | Do not use a secret | Existing Kubernetes secret use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |
 | kafdrop.host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
