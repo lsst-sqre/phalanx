@@ -1106,7 +1106,7 @@ def recover() -> None:
     required=True,
 )
 @_report_usage_errors
-def suspend_crons(config: Path | None, context: str) -> None:
+def recover_suspend_crons(config: Path | None, context: str) -> None:
     """Stop all ArgoCD-managed CronJobs from running.
 
     This is needed when trying to restore a back up of a cluster to a new
@@ -1135,7 +1135,7 @@ def suspend_crons(config: Path | None, context: str) -> None:
     required=True,
 )
 @_report_usage_errors
-def resume_crons(config: Path | None, context: str) -> None:
+def recover_resume_crons(config: Path | None, context: str) -> None:
     """Un-suspend all ArgoCD-managed CronJobs.
 
     This may be needed when trying to restore a back up of a cluster to a new
@@ -1164,7 +1164,7 @@ def resume_crons(config: Path | None, context: str) -> None:
     required=True,
 )
 @_report_usage_errors
-def scale_down_workloads(config: Path | None, context: str) -> None:
+def recover_scale_down_workloads(config: Path | None, context: str) -> None:
     """Scale down all Phalanx workloads to 0, except ArgoCD.
 
     This will also add an annotation to all scaled down workloads with the
@@ -1191,7 +1191,7 @@ def scale_down_workloads(config: Path | None, context: str) -> None:
     required=True,
 )
 @_report_usage_errors
-def scale_up_workloads(config: Path | None, context: str) -> None:
+def recover_scale_up_workloads(config: Path | None, context: str) -> None:
     """Scale up all Phalanx workloads to their previous values, except ArgoCD.
 
     This scale up any workload with a previous replica count annotation to the
@@ -1218,7 +1218,7 @@ def scale_up_workloads(config: Path | None, context: str) -> None:
     required=True,
 )
 @_report_usage_errors
-def scale_down(config: Path | None, context: str) -> None:
+def recover_scale_down(config: Path | None, context: str) -> None:
     """Scale down all Phalanx workloads except ArgoCD and suspend all crons."""
     if not config:
         config = _find_config()
@@ -1242,7 +1242,7 @@ def scale_down(config: Path | None, context: str) -> None:
     required=True,
 )
 @_report_usage_errors
-def scale_up(config: Path | None, context: str) -> None:
+def recover_scale_up(config: Path | None, context: str) -> None:
     """Scale up all Phalanx workloads and resume all crons."""
     if not config:
         config = _find_config()
