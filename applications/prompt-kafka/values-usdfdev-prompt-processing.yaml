@@ -13,18 +13,21 @@ strimzi-kafka:
     storage:
       size: 100Gi
       storageClassName: wekafs--sdf-k8s01
+
+butler-writer:
+  enabled: true
   topics:
-    butlerWriter:
-      enabled: true
-      partitions: 1
-      replicas: 3
-      retention: 1209600000 # milliseconds, = 2 weeks
-    butlerWriterIngestionEvents:
-      enabled: true
-      partitions: 1
-      replicas: 3
-      retention: 1209600000 # milliseconds, = 2 weeks
+  - name: butler-writer
+    partitions: 1
+    replicas: 3
+    retention: 1209600000 # milliseconds, = 2 weeks
+  - name: butler-writer-ingestion-events
+    partitions: 1
+    replicas: 3
+    retention: 1209600000 # milliseconds, = 2 weeks
+
 kafdrop:
+  enabled: true
   ingress:
     enabled: true
     hostname: usdfdev-prompt-processing.slac.stanford.edu

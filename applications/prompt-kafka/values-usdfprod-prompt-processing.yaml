@@ -13,21 +13,24 @@ strimzi-kafka:
     storage:
       size: 100Gi
       storageClassName: wekafs--sdf-k8s01
+
+butler-writer:
+  enabled: true
   topics:
-    butlerWriter:
-      enabled: true
-      partitions: 1
-      replicas: 3
-      retention: 1209600000 # milliseconds, = 2 weeks
-    butlerWriterIngestionEvents:
-      enabled: true
-      partitions: 1
-      replicas: 3
-      # Keep forever.  These messages are small (about 200 bytes * 1000 per
-      # day), and being able to replay the log will be useful for disaster
-      # recovery downstream.
-      retention: -1
+  - name: butler-writer
+    partitions: 1
+    replicas: 3
+    retention: 1209600000 # milliseconds, = 2 weeks
+  - name: butler-writer-ingestion-events
+    partitions: 1
+    replicas: 3
+    # Keep forever.  These messages are small (about 200 bytes * 1000 per
+    # day), and being able to replay the log will be useful for disaster
+    # recovery downstream.
+    retention: -1
+
 kafdrop:
+  enabled: true
   ingress:
     enabled: true
     hostname: usdfprod-prompt-processing.slac.stanford.edu
