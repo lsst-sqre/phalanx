@@ -1,0 +1,5 @@
+apiVersion: v2
+name: butler-writer
+version: 1.0.0
+description: Prompt Kafka configuration for Butler Writer
+type: application

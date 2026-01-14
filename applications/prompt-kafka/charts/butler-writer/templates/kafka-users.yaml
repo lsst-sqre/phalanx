@@ -1,9 +1,7 @@
----
-{{- if .Values.users.kafdrop.enabled }}
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
-  name: kafdrop
+  name: butler-writer
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:
@@ -13,7 +11,7 @@ spec:
       valueFrom:
         secretKeyRef:
           name: prompt-kafka
-          key: kafdrop-password
+          key: butler-writer-password
   authorization:
     type: simple
     acls:
@@ -24,9 +22,22 @@ spec:
         operation: All
       - resource:
           type: topic
-          name: "*"
+          name: butler-writer
           patternType: literal
         type: allow
         host: "*"
         operation: All
-{{- end }}
+      - resource:
+          type: topic
+          name: butler-writer-ingestion-events
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
+          type: transactionalId
+          name: butler-writer-output
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
