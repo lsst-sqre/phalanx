@@ -93,6 +93,7 @@ prompt-keda:
       - "preloaded_dia_object"
       - "preloaded_dia_source"
       - "preloaded_ss_object"
+      - "prompt_provenance"
 
   s3:
     imageBucket: rubin-summit
