@@ -12,6 +12,7 @@ data:
     siteDescription: {{ .Values.config.siteDescription | quote }}
     docsBaseUrl: {{ .Values.config.docsBaseUrl | quote }}
     showPreview: {{ .Values.config.showPreview }}
+    repertoireUrl: {{ .Values.global.repertoireUrl | quote }}
     {{- if .Values.config.semaphoreUrl }}
     semaphoreUrl: {{ .Values.config.semaphoreUrl | quote }}
     {{- end}}
