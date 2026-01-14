@@ -115,10 +115,8 @@ spec:
         authentication:
           type: scram-sha-512
         configuration:
+          allocateLoadBalancerNodePorts: false
           bootstrap:
-            {{- if .Values.kafka.externalListener.bootstrap.loadBalancerIP }}
-            loadBalancerIP: {{ .Values.kafka.externalListener.bootstrap.loadBalancerIP }}
-            {{- end }}
             {{- if .Values.kafka.externalListener.bootstrap.annotations }}
             annotations: {{ .Values.kafka.externalListener.bootstrap.annotations }}
             {{- end }}
@@ -126,7 +124,6 @@ spec:
           brokers:
             {{- range $broker := .Values.kafka.externalListener.brokers }}
             - broker: {{ $broker.broker }}
-              loadBalancerIP: {{ $broker.loadBalancerIP }}
               advertisedHost: {{ $broker.host }}
               advertisedPort: 9094
               annotations:
