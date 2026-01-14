@@ -59,7 +59,7 @@ prompt-keda:
 
   imageNotifications:
     kafkaClusterAddress: s3-file-notifications-kafka-external-bootstrap.s3-file-notifications:9094
-    topic: prompt-processing-dev
+    topic: prompt-processing-dev-20260114
 
   apdb:
     config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_latiss-dev.yaml
