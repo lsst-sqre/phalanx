@@ -52,6 +52,7 @@ dev = [
     "pytest",
     "pytest-cov",
     "pytest-sugar",
+    "syrupy",
 ]
 docs = [
     "autodoc-pydantic",
