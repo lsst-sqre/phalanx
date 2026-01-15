@@ -17,12 +17,10 @@ A subchart to deploy Strimzi Kafka components for Prompt Processing.
 | kafka.config."replica.fetch.max.bytes" | int | `10485760` | The number of bytes of messages to attempt to fetch for each partition |
 | kafka.externalListener.bootstrap.annotations | object | `{}` | Annotations that will be added to the Ingress, Route, or Service resource |
 | kafka.externalListener.bootstrap.host | string | Do not configure TLS | Name used for TLS hostname verification |
-| kafka.externalListener.bootstrap.loadBalancerIP | string | Do not request a load balancer IP | Request this load balancer IP. See `values.yaml` for more discussion |
 | kafka.externalListener.brokers | list | `[]` | Brokers configuration. _host_ is used in the brokers' advertised.brokers configuration and for TLS hostname verification.  The format is a list of maps. |
 | kafka.externalListener.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker |
 | kafka.externalListener.tls.enabled | bool | `false` | Whether TLS encryption is enabled |
 | kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled |
-| kafka.listeners.noauth.enabled | bool | `false` | Whether internal noauth listener is enabled |
 | kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled |
 | kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled |
 | kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |

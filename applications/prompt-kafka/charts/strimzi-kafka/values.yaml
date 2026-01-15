@@ -53,9 +53,6 @@ kafka:
     enabled: false
 
   listeners:
-    noauth:
-      # -- Whether internal noauth listener is enabled
-      enabled: false
 
     plain:
       # -- Whether internal plaintext listener is enabled
@@ -92,10 +89,6 @@ kafka:
       # provisioned. This is important because it lets us configure a DNS
       # record, associating a hostname with that pinned IP address.
       #
-      # -- Request this load balancer IP. See `values.yaml` for more
-      # discussion
-      # @default -- Do not request a load balancer IP
-      loadBalancerIP: ""
 
       # -- Name used for TLS hostname verification
       # @default -- Do not configure TLS
@@ -112,12 +105,10 @@ kafka:
     # For example:
     # brokers:
     #   - broker: 0
-    #     loadBalancerIP: "192.168.1.1"
     #     host: broker-0.example
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
     #   - broker: 1
-    #     loadBalancerIP: "192.168.1.2"
     #     host: broker-1.example
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz

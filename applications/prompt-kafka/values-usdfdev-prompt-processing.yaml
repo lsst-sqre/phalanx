@@ -13,21 +13,45 @@ strimzi-kafka:
     storage:
       size: 100Gi
       storageClassName: wekafs--sdf-k8s01
+    listeners:
+      external:
+        enabled: true
+    externalListener:
+      bootstrap:
+        annotations:
+          metallb.io/address-pool: sdf-rubin-ingest
+          metallb.io/loadBalancerIPs: 172.24.10.42
+      brokers:
+        - broker: 3
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.43
+        - broker: 4
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.44
+        - broker: 5
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.84
 
 butler-writer:
   enabled: true
   topics:
-  - name: butler-writer
-    partitions: 1
-    replicas: 3
-    retention: 1209600000 # milliseconds, = 2 weeks
-  - name: butler-writer-ingestion-events
-    partitions: 1
-    replicas: 3
-    retention: 1209600000 # milliseconds, = 2 weeks
+    - name: butler-writer
+      partitions: 1
+      replicas: 3
+      retention: 1209600000  # milliseconds, = 2 weeks
+    - name: butler-writer-ingestion-events
+      partitions: 1
+      replicas: 3
+      retention: 1209600000  # milliseconds, = 2 weeks
 
 kafdrop:
   enabled: true
   ingress:
     enabled: true
     hostname: usdfdev-prompt-processing.slac.stanford.edu
+
+prompt-publication:
+  enabled: true

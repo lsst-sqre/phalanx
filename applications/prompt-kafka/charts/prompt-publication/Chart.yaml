@@ -1,0 +1,5 @@
+apiVersion: v2
+name: prompt-publication
+version: 1.0.0
+description: Prompt Kafka configuration for Prompt Publication Consumer
+type: application
