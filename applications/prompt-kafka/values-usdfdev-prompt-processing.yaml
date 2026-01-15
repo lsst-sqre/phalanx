@@ -20,16 +20,20 @@ strimzi-kafka:
       bootstrap:
         annotations:
           metallb.io/address-pool: sdf-rubin-ingest
+          metallb.io/loadBalancerIPs: 172.24.10.42
       brokers:
         - broker: 3
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.43
         - broker: 4
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.44
         - broker: 5
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.84
 
 butler-writer:
   enabled: true
