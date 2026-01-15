@@ -11,7 +11,7 @@ from ..models.kubernetes import (
     CronJob,
     Deployment,
     NamespacedResource,
-    ResourceList,
+    NamespacedResourceList,
     Service,
     ServiceExternalTrafficPolicy,
     ServiceIPPatch,
@@ -140,7 +140,9 @@ class KubernetesStorage:
             "json",
             "--all-namespaces",
         )
-        cronjobs = ResourceList[CronJob].model_validate_json(raw.stdout)
+        cronjobs = NamespacedResourceList[CronJob].model_validate_json(
+            raw.stdout
+        )
         return cronjobs.items
 
     def get_phalanx_deployments(self) -> list[Deployment]:
@@ -162,7 +164,9 @@ class KubernetesStorage:
             "json",
             "--all-namespaces",
         )
-        deployments = ResourceList[Deployment].model_validate_json(raw.stdout)
+        deployments = NamespacedResourceList[Deployment].model_validate_json(
+            raw.stdout
+        )
         return deployments.items
 
     def get_phalanx_stateful_sets(self) -> list[StatefulSet]:
@@ -184,7 +188,7 @@ class KubernetesStorage:
             "json",
             "--all-namespaces",
         )
-        statefulsets = ResourceList[StatefulSet].model_validate_json(
+        statefulsets = NamespacedResourceList[StatefulSet].model_validate_json(
             raw.stdout
         )
         return statefulsets.items
@@ -328,7 +332,11 @@ class KubernetesStorage:
             "json",
             "--all-namespaces",
         )
-        return ResourceList[Service].model_validate_json(raw.stdout).items
+        return (
+            NamespacedResourceList[Service]
+            .model_validate_json(raw.stdout)
+            .items
+        )
 
     def get_service(self, name: str, namespace: str) -> Service:
         """Get a Service by namespace and name.

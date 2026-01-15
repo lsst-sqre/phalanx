@@ -16,7 +16,7 @@ __all__ = [
     "CronJob",
     "Deployment",
     "NamespacedResource",
-    "ResourceList",
+    "NamespacedResourceList",
     "Service",
     "ServiceExternalTrafficPolicy",
     "ServiceIPPatch",
@@ -79,7 +79,7 @@ class NamespacedResource(BaseModel):
         return f"{self.kind}/{self.name}"
 
 
-class ResourceList[T: NamespacedResource](BaseModel):
+class NamespacedResourceList[T: NamespacedResource](BaseModel):
     """A list of resources returned from a kubectl command."""
 
     items: list[T]

@@ -6,6 +6,7 @@ from .services.application import ApplicationService
 from .services.cluster import GKEPhalanxClusterService
 from .services.environment import EnvironmentService
 from .services.gke_backup import GKEBackupService
+from .services.gke_recovery import GKERecoveryService
 from .services.secrets import SecretsService
 from .services.vault import VaultService
 from .storage.argocd import ArgoCDStorage
@@ -53,8 +54,16 @@ class Factory:
         """
         return ConfigStorage(self._path)
 
-    def create_environment_service(self) -> EnvironmentService:
+    def create_environment_service(
+        self, context: str | None
+    ) -> EnvironmentService:
         """Create service for manipulating Phalanx environments.
+
+        Parameters
+        ----------
+        context
+            The Kubernetes context to pass to all commands. If this is None,
+            then the current context will be used.
 
         Returns
         -------
@@ -64,10 +73,45 @@ class Factory:
         config_storage = self.create_config_storage()
         return EnvironmentService(
             config_storage=config_storage,
-            argocd_storage=ArgoCDStorage(),
-            kubernetes_storage=self.create_kubernetes_storage(),
-            helm_storage=HelmStorage(config_storage),
+            argocd_storage=ArgoCDStorage(context),
+            kubernetes_storage=self.create_kubernetes_storage(context),
+            helm_storage=HelmStorage(config_storage, context=context),
             vault_storage=VaultStorage(),
+        )
+
+    def create_gke_recovery_service(
+        self, old_context: str, new_context: str
+    ) -> GKERecoveryService:
+        """Create a service for recovering GKE Phalanx clusters from backups.
+
+        Parameters
+        ----------
+        old_context
+            The Kubernetes context to pass to all commands against the old
+            cluster.
+        new_context
+            The Kubernetes context to pass to all commands against the new
+            cluster.
+
+        Returns
+        -------
+        GKERecovery
+           A service object for doing cluster recovery.
+        """
+        config_storage = self.create_config_storage()
+        new_environment = EnvironmentService(
+            config_storage=config_storage,
+            argocd_storage=ArgoCDStorage(new_context),
+            kubernetes_storage=self.create_kubernetes_storage(new_context),
+            helm_storage=HelmStorage(config_storage, new_context),
+            vault_storage=VaultStorage(),
+        )
+        old_cluster = self.create_gke_phalanx_cluster_service(old_context)
+        new_cluster = self.create_gke_phalanx_cluster_service(new_context)
+        return GKERecoveryService(
+            old_cluster=old_cluster,
+            new_cluster=new_cluster,
+            new_environment=new_environment,
         )
 
     def create_gke_phalanx_cluster_service(

@@ -1417,3 +1417,88 @@ def recover_create_gke_backup_plan(
     )
     plan_name = backup_service.create_backup_plan(source_cluster)
     click.echo(f"Backup plan created: {plan_name}")
+
+
+@recover.command("restore")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--old-context",
+    help="Context to pass when running commands against the old cluster.",
+    required=True,
+)
+@click.option(
+    "--new-context",
+    help="Context to pass when running commands against the new cluster.",
+    required=True,
+)
+@click.option(
+    "-e",
+    "--environment",
+    "--env",
+    type=str,
+    metavar="ENV",
+    required=True,
+    help="The Phalanx environment of the cluster to recover.",
+)
+@click.option(
+    "--git-branch",
+    default=None,
+    envvar="GITHUB_HEAD_REF",
+    help="Override Git branch for Argo CD.",
+)
+@click.option(
+    "--vault-role-id",
+    default=None,
+    envvar="VAULT_ROLE_ID",
+    help="Role ID for vault-secrets-operator.",
+)
+@click.option(
+    "--vault-secret-id",
+    default=None,
+    envvar="VAULT_SECRET_ID",
+    help="Secret ID for vault-secrets-operator.",
+)
+@click.option(
+    "--vault-token",
+    default=None,
+    envvar="VAULT_TOKEN",
+    help="Read-only token for vault-secrets-operator.",
+)
+@_report_usage_errors
+def recover_restore(
+    config: Path | None,
+    old_context: str,
+    new_context: str,
+    environment: str,
+    git_branch: str | None = None,
+    vault_role_id: str | None = None,
+    vault_secret_id: str | None = None,
+    vault_token: str | None = None,
+) -> None:
+    """Dan's just testing stuff for now."""
+    _require_command("argocd")
+    if vault_role_id and vault_secret_id:
+        vault_credentials: VaultCredentials = VaultAppRoleCredentials(
+            role_id=vault_role_id, secret_id=vault_secret_id
+        )
+    elif vault_token:
+        vault_credentials = VaultTokenCredentials(token=vault_token)
+    else:
+        msg = (
+            "Either VAULT_TOKEN or both VAULT_ROLE_ID and VAULT_SECRET_ID"
+            " must be set"
+        )
+        raise click.UsageError(msg)
+
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+
+    new_environment = factory.create_environment_service(new_context)
+    new_environment.start_recover(environment, vault_credentials, git_branch)

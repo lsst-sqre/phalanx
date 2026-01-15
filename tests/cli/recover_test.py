@@ -606,3 +606,15 @@ def test_scale_up(
 
     assert command.mock.capture.call_args_list == snapshot
     assert command.mock.run.call_args_list == snapshot
+
+
+@pytest.mark.usefixtures("mock_kubernetes_kubectl")
+def restore_requires_both_contexts() -> None:
+    result = run_cli("recover", "restore")
+    assert result.exit_code == 2
+
+    result = run_cli("recover", "restore", "--old-context", "fake-old-context")
+    assert result.exit_code == 2
+
+    result = run_cli("recover", "restore", "--new-context", "fake-new-context")
+    assert result.exit_code == 2

@@ -4,6 +4,8 @@ from datetime import timedelta
 
 from pydantic import SecretStr
 
+from phalanx.models.argocd import ApplicationList
+
 from ..exceptions import CommandFailedError
 from ..models.applications import Project
 from .command import Command
@@ -14,12 +16,19 @@ __all__ = ["ArgoCDStorage"]
 class ArgoCDStorage:
     """Interface to Argo CD operations.
 
-    Calls the :command:`argocd` command-line client. Used primarily by the
-    installer.
+    Calls the :command:`argocd` command-line client. Used by the installer and
+    for cluster recovery.
+
+    Parameters
+    ----------
+    context
+        The kubectl context to specify for all argocd commands. If this is
+        None, then the current context will be used.
     """
 
-    def __init__(self) -> None:
-        self._argocd = Command("argocd")
+    def __init__(self, context: str | None = None) -> None:
+        common_args = ["--kube-context", context] if context else []
+        self._argocd = Command("argocd", common_args=common_args)
 
     def create_environment(
         self,
@@ -136,10 +145,46 @@ class ArgoCDStorage:
             "argocd",
         )
 
+    def set_helm_value(self, application: str, key: str, value: str) -> None:
+        """Set a helm value for an ArgoCD project.
+
+        This is only used in the cluster recovery process, where we want to
+        change some helm values the first time we sync an application, after
+        the app-of-apps has already been synced.
+
+        Parameters
+        ----------
+        application
+            Application to change.
+        key
+            The helm key to change.
+        value:
+            The Helm value to set.
+
+        Raises
+        ------
+        CommandFailedError
+            Raised if Argo CD fails.
+        """
+        self._argocd.run(
+            "app",
+            "set",
+            application,
+            "--helm-set",
+            f"{key}={value}",
+            "--port-forward",
+            "--port-forward-namespace",
+            "argocd",
+        )
+
     def sync(
-        self, application: str, *, timeout: timedelta = timedelta(minutes=2)
+        self,
+        application: str,
+        *,
+        timeout: timedelta = timedelta(minutes=2),
+        kind: str | None = None,
     ) -> None:
-        """Sync a specific Argo CD application.
+        """Sync all or part of a specific Argo CD application.
 
         Parameters
         ----------
@@ -147,6 +192,8 @@ class ArgoCDStorage:
             Name of the application.
         timeout
             How long to wait for the sync to complete.
+        kind
+            If given, only this kind of resource will be synced.
 
         Raises
         ------
@@ -173,6 +220,9 @@ class ArgoCDStorage:
             "--port-forward-namespace",
             "argocd",
         ]
+        if kind:
+            args += ["--resource", f"*:{kind}:*"]
+
         try:
             self._argocd.run(*args)
         except CommandFailedError:
@@ -184,7 +234,7 @@ class ArgoCDStorage:
         *,
         timeout: timedelta = timedelta(seconds=30),
     ) -> None:
-        """Sync all Argo CD applications under an app of apps.
+        """Sync all or part of all Argo CD applications under an app of apps.
 
         Parameters
         ----------
@@ -203,7 +253,7 @@ class ArgoCDStorage:
             raise `~phalanx.exceptions.CommandFailedError` instead. This
             exception means the Argo CD timeout didn't work for some reason.
         """
-        self._argocd.run(
+        args = [
             "app",
             "sync",
             "-l",
@@ -213,4 +263,37 @@ class ArgoCDStorage:
             "--port-forward",
             "--port-forward-namespace",
             "argocd",
-        )
+        ]
+        self._argocd.run(*args)
+
+    def list_applications(self, app_of_apps_name: str) -> ApplicationList:
+        """List all of the applications managed by an app of apps.
+
+        Parameters
+        ----------
+        app_of_apps_name
+            Name of the parent app of apps.
+
+        Raises
+        ------
+        CommandFailedError
+            Raised if Argo CD fails.
+        CommandTimedOutError
+            Raised if the command timed out. The timeout is also passed to
+            Argo CD as an option, so normally the command should fail and
+            raise `~phalanx.exceptions.CommandFailedError` instead. This
+            exception means the Argo CD timeout didn't work for some reason.
+        """
+        args = [
+            "app",
+            "list",
+            "-l",
+            f"argocd.argoproj.io/instance={app_of_apps_name}",
+            "--port-forward",
+            "--port-forward-namespace",
+            "argocd",
+            "-o",
+            "json",
+        ]
+        output = self._argocd.capture(*args)
+        return ApplicationList.model_validate_json(output.stdout)
