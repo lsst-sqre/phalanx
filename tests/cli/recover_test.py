@@ -339,6 +339,50 @@ def test_restore_service_ips(
 
 
 @pytest.mark.usefixtures("mock_kubernetes_kubectl")
+def test_pause_kafka_requires_context() -> None:
+    result = run_cli("recover", "pause-sasquatch-kafka-reconciliation")
+    assert result.exit_code == 2
+
+
+def test_pause_kafka(
+    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+) -> None:
+    command = mock_kubernetes_kubectl
+
+    result = run_cli(
+        "recover",
+        "pause-sasquatch-kafka-reconciliation",
+        "--context",
+        "fake-context",
+    )
+    assert result.exit_code == 0
+
+    assert command.mock.run.call_args_list == snapshot
+
+
+@pytest.mark.usefixtures("mock_kubernetes_kubectl")
+def test_resume_kafka_requires_context() -> None:
+    result = run_cli("recover", "resume-sasquatch-kafka-reconciliation")
+    assert result.exit_code == 2
+
+
+def test_resume_kafka(
+    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+) -> None:
+    command = mock_kubernetes_kubectl
+
+    result = run_cli(
+        "recover",
+        "resume-sasquatch-kafka-reconciliation",
+        "--context",
+        "fake-context",
+    )
+    assert result.exit_code == 0
+
+    assert command.mock.run.call_args_list == snapshot
+
+
+@pytest.mark.usefixtures("mock_kubernetes_kubectl")
 def test_scale_down_requires_context() -> None:
     result = run_cli("recover", "scale-down")
     assert result.exit_code == 2

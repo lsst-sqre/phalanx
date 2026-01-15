@@ -1268,6 +1268,67 @@ def recover_restore_service_ips(config: Path | None, context: str) -> None:
         )
 
 
+@recover.command("pause-sasquatch-kafka-reconciliation")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_pause_sasquatch_kafka_reconciliation(
+    config: Path | None, context: str
+) -> None:
+    """Pause Strimzi reconciliation of the Sasquatch Kafka cluster.
+
+    During some recovery operations, we want to modify resources that are
+    managed by the Strimzi operator. The Strimzi operator will automatically
+    revert any changes we make, so we have to pause Strimzi reconciliation if
+    we want our changes to persist.
+
+    https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.pause_sasquatch_kafka_reconciliation()
+
+
+@recover.command("resume-sasquatch-kafka-reconciliation")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_resume_sasquatch_kafka_reconciliation(
+    config: Path | None, context: str
+) -> None:
+    """Resume Strimzi reconciliation of the Sasquatch Kafka cluster.
+
+    https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.resume_sasquatch_kafka_reconciliation()
+
+
 @recover.command("scale-down")
 @click.option(
     "-c",
@@ -1288,6 +1349,7 @@ def recover_scale_down(config: Path | None, context: str) -> None:
         config = _find_config()
     factory = Factory(config)
     cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.pause_sasquatch_kafka_reconciliation()
     cluster_service.release_service_ips()
     cluster_service.suspend_cronjobs()
     cluster_service.scale_down_workloads()
@@ -1313,6 +1375,7 @@ def recover_scale_up(config: Path | None, context: str) -> None:
         config = _find_config()
     factory = Factory(config)
     cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.resume_sasquatch_kafka_reconciliation()
     cluster_service.restore_service_ips()
     cluster_service.scale_up_workloads()
     cluster_service.resume_cronjobs()
