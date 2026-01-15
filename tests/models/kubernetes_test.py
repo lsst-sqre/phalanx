@@ -1,9 +1,16 @@
 """Tests for Kubernetes resource models."""
 
+from ipaddress import AddressValueError, IPv4Address
+
+import pytest
+
 from phalanx.models.kubernetes import (
     CronJob,
     Deployment,
     ResourceList,
+    Service,
+    ServiceIPPatch,
+    ServiceIPSpecPatch,
     StatefulSet,
 )
 from tests.support.constants import DATA_DIR
@@ -94,3 +101,42 @@ def test_statefulset_list() -> None:
     actual = ResourceList[StatefulSet].model_validate_json(out)
 
     assert expected == actual
+
+
+def test_loadbalancer_service_list() -> None:
+    out = kubectl_output("service-list.json")
+    expected = ResourceList[Service](
+        items=[
+            Service(
+                kind="Service",
+                namespace="ingress-nginx",
+                name="ingress-nginx-controller",
+                finalizers=[
+                    "gke.networking.io/l4-netlb-v1",
+                    "service.kubernetes.io/load-balancer-cleanup",
+                ],
+                previous_loadbalancer_ip=None,
+                spec_load_balancer_ip=IPv4Address("35.225.112.77"),
+                status_load_balancer_ip=IPv4Address("35.225.112.77"),
+            )
+        ],
+        kind="List",
+    )
+
+    actual = ResourceList[Service].model_validate_json(out)
+
+    assert expected == actual
+
+
+def test_loadbalancer_service_patch() -> None:
+    # This should work
+    _ = ServiceIPPatch(
+        spec=ServiceIPSpecPatch(load_balancer_ip=IPv4Address("1.2.3.4"))
+    )
+
+    with pytest.raises(AddressValueError):
+        _ = ServiceIPPatch(
+            spec=ServiceIPSpecPatch(
+                load_balancer_ip=IPv4Address("something malicious injection")
+            )
+        )

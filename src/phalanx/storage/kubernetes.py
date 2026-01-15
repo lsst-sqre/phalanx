@@ -1,10 +1,19 @@
 """Storage layer for direct Kubernetes operations."""
 
+import time
+from ipaddress import IPv4Address
+from math import ceil
+
+from phalanx.exceptions import ResourceNoFinalizersTimeoutError
+
 from ..models.kubernetes import (
     CronJob,
     Deployment,
     NamespacedResource,
     ResourceList,
+    Service,
+    ServiceIPPatch,
+    ServiceIPSpecPatch,
     StatefulSet,
     Workload,
 )
@@ -272,7 +281,7 @@ class KubernetesStorage:
         replicas
             The desired replica count.
         """
-        resource = f"{workload.kind}/{workload.name}"
+        resource = workload.get_kind_name()
 
         self._kubectl.run(
             "scale",
@@ -281,4 +290,206 @@ class KubernetesStorage:
             str(replicas),
             "--namespace",
             workload.namespace,
+        )
+
+    def get_phalanx_load_balancer_services(self) -> list[Service]:
+        """Get all Services of type LoadBalancer for all Phalanx apps.
+
+        We say a Service is in a Phalanx app if it has an ArgoCD label.
+
+        Returns
+        -------
+        list[Service]
+            A list of all of the LoadBalancer Services provisioned by Phalanx
+            apps.
+        """
+        raw = self._kubectl.capture(
+            "get",
+            "Service",
+            "--field-selector",
+            "spec.type=LoadBalancer",
+            "-l",
+            "argocd.argoproj.io/instance",
+            "-o",
+            "json",
+            "--all-namespaces",
+        )
+        return ResourceList[Service].model_validate_json(raw.stdout).items
+
+    def get_service(self, name: str, namespace: str) -> Service:
+        """Get a Service by namespace and name.
+
+        Returns
+        -------
+        Service
+            A Service.
+        """
+        raw = self._kubectl.capture(
+            "get",
+            "Service",
+            name,
+            "--namespace",
+            namespace,
+            "-o",
+            "json",
+        )
+        return Service.model_validate_json(raw.stdout)
+
+    def get_resource(
+        self, kind: str, name: str, namespace: str
+    ) -> NamespacedResource:
+        """Get a resource by namespace and name.
+
+        Returns
+        -------
+        NamespacedResource
+            A namespaced resource.
+        """
+        raw = self._kubectl.capture(
+            "get",
+            kind,
+            name,
+            "--namespace",
+            namespace,
+            "-o",
+            "json",
+        )
+        return Service.model_validate_json(raw.stdout)
+
+    def wait_for_service_ingress(self, service: Service) -> None:
+        """Wait for a LoadBalancer Service to have an associated ingress.
+
+        Parameters
+        ----------
+        service
+            The service to wait for.
+        """
+        self._kubectl.run(
+            "wait",
+            "--for=jsonpath={.status.loadBalancer.ingress}",
+            service.get_kind_name(),
+            "--namespace",
+            service.namespace,
+            "--timeout",
+            "5m",
+        )
+
+    def wait_for_resource_no_finalizers(
+        self, resource: NamespacedResource, finalizers: list[str]
+    ) -> None:
+        """Wait for a resource to NOT have the given finalizers.
+
+        This is useful for waiting for some controller to do some
+        reconcilliation triggered by changing a resource.
+
+        Parameters
+        ----------
+        resource
+            The service to wait for.
+
+        Raises
+        ------
+        ResourceNoFinalizersTimeoutError
+            The associated finalizers are not removed after waiting.
+        """
+        timeout_seconds = 60 * 5  # 5 minutes
+        wait_seconds = 5
+        retries = ceil(timeout_seconds / wait_seconds)
+
+        for _ in range(retries):
+            resource = self.get_resource(
+                kind=resource.kind,
+                name=resource.name,
+                namespace=resource.namespace,
+            )
+            if set(resource.finalizers).isdisjoint(set(finalizers)):
+                return
+            time.sleep(wait_seconds)
+
+        raise ResourceNoFinalizersTimeoutError(
+            resource, finalizers, timeout_seconds
+        )
+
+    def remove_service_load_balancer_ip(self, service: Service) -> None:
+        """Remove the IP address associated with a LoadBalancerService.
+
+        If the services is associated with a cloud load balancer with a static
+        IP, and you want the IP to be released in the cloud, you also need to
+        modify the type of the load balancer to be a ClusterIP.
+
+        Parameters
+        ----------
+        service
+            The LoadBalancer Service to remove the IP from.
+        """
+        patch = '{"spec" : {"loadBalancerIP" : null }}'
+
+        self._kubectl.run(
+            "patch",
+            "Service",
+            service.name,
+            "--namespace",
+            service.namespace,
+            "--patch",
+            patch,
+        )
+
+    def add_service_load_balancer_ip(
+        self, service: Service, ip: IPv4Address
+    ) -> None:
+        """Assign an IP address associated with a LoadBalancerService.
+
+        Parameters
+        ----------
+        service
+            The LoadBalancer Service to assign the IP to.
+        ip
+            The IP address to set the spec.loadBalancerIP field to.
+        """
+        patch = ServiceIPPatch(spec=ServiceIPSpecPatch(load_balancer_ip=ip))
+
+        self._kubectl.run(
+            "patch",
+            "Service",
+            service.name,
+            "--namespace",
+            service.namespace,
+            "--patch",
+            patch.model_dump_json(by_alias=True),
+        )
+
+    def set_service_to_cluster_ip(self, service: Service) -> None:
+        """Set the type of a Service to ClusterIP.
+
+        Parameters
+        ----------
+        service
+            The service to change.
+        """
+        self._kubectl.run(
+            "patch",
+            "Service",
+            service.name,
+            "--namespace",
+            service.namespace,
+            "--patch",
+            '{"spec": {"type": "ClusterIP" } }',
+        )
+
+    def set_service_to_load_balancer(self, service: Service) -> None:
+        """Set the type of a Service to LoadBalancer.
+
+        Parameters
+        ----------
+        service
+            The service to change.
+        """
+        self._kubectl.run(
+            "patch",
+            "Service",
+            service.name,
+            "--namespace",
+            service.namespace,
+            "--patch",
+            '{"spec": {"type": "LoadBalancer" } }',
         )

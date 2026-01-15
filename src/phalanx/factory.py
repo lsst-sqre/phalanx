@@ -3,7 +3,7 @@
 from pathlib import Path
 
 from .services.application import ApplicationService
-from .services.cluster import PhalanxClusterService
+from .services.cluster import GKEPhalanxClusterService
 from .services.environment import EnvironmentService
 from .services.secrets import SecretsService
 from .services.vault import VaultService
@@ -68,9 +68,9 @@ class Factory:
             vault_storage=VaultStorage(),
         )
 
-    def create_phalanx_cluster_service(
+    def create_gke_phalanx_cluster_service(
         self, context: str
-    ) -> PhalanxClusterService:
+    ) -> GKEPhalanxClusterService:
         """Create a service for manipulating Kubernetes clusters directly.
 
         Parameters
@@ -80,11 +80,11 @@ class Factory:
 
         Returns
         -------
-        PhalanxClusterService
+        GKEPhalanxClusterService
            A service object for manipulating resources in a Phalanx cluster.
         """
         storage = self.create_kubernetes_storage(context)
-        return PhalanxClusterService(storage)
+        return GKEPhalanxClusterService(storage)
 
     def create_kubernetes_storage(
         self, context: str | None = None

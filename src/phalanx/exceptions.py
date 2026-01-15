@@ -3,7 +3,8 @@
 import subprocess
 from collections.abc import Iterable
 
-from .models.kubernetes import Workload
+from .constants import PREVIOUS_LOAD_BALANCER_IP_ANNOTATION
+from .models.kubernetes import NamespacedResource, Service, Workload
 from .models.secrets import Secret
 
 __all__ = [
@@ -13,6 +14,7 @@ __all__ = [
     "GitRemoteError",
     "InvalidApplicationConfigError",
     "InvalidEnvironmentConfigError",
+    "InvalidLoadBalancerServiceStateError",
     "InvalidScaleStateError",
     "InvalidSecretConfigError",
     "MalformedOnepasswordSecretError",
@@ -20,6 +22,7 @@ __all__ = [
     "NoOnepasswordConfigError",
     "NoOnepasswordCredentialsError",
     "NoVaultCredentialsError",
+    "ResourceNoFinalizersTimeoutError",
     "UnknownEnvironmentError",
     "UnresolvedSecretsError",
     "UsageError",
@@ -315,5 +318,44 @@ class InvalidScaleStateError(UsageError):
             "Workload is in an invalid state to be scaled. If it has a"
             " previous annotation, then it must have a replica count of zero."
             f" Workload: {workload.kind} {workload.namespace} {workload.name}"
+        )
+        super().__init__(msg)
+
+
+class InvalidLoadBalancerServiceStateError(UsageError):
+    """A LoadBalancer Service is in an invalid state to have its IP modified.
+
+    Parameters
+    ----------
+    service
+        The workload that is in the invalid state.
+    """
+
+    def __init__(self, service: Service) -> None:
+        msg = (
+            f"Service: {service.name} in namespace: {service.namespace} is in"
+            f" an invalid state to have its IP changed. It must have exactly"
+            f" one of spec.loadBalancerIP or the"
+            f" {PREVIOUS_LOAD_BALANCER_IP_ANNOTATION} annotation set."
+            f" loadBalancerIP: {service.spec_load_balancer_ip},"
+            f" {PREVIOUS_LOAD_BALANCER_IP_ANNOTATION}: "
+            f" {service.previous_loadbalancer_ip}"
+        )
+        super().__init__(msg)
+
+
+class ResourceNoFinalizersTimeoutError(UsageError):
+    """We waited too long for a resource to not have finalizers."""
+
+    def __init__(
+        self,
+        resource: NamespacedResource,
+        finalizers: list[str],
+        timeout_secs: int,
+    ) -> None:
+        msg = (
+            f"Resource: {resource.get_kind_name()} in namespace: "
+            f" {resource.namespace} still has finalizers: {finalizers} after "
+            f" {timeout_secs} seconds."
         )
         super().__init__(msg)
