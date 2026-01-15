@@ -5,15 +5,21 @@ from phalanx.constants import (
     PREVIOUS_LOAD_BALANCER_IP_ANNOTATION,
     PREVIOUS_REPLICA_COUNT_ANNOTATION,
 )
-from phalanx.models.kubernetes import Service, Workload
 
 from ..exceptions import (
     InvalidLoadBalancerServiceStateError,
     InvalidScaleStateError,
 )
+from ..models.kubernetes import NamespacedResource, Service, Workload
 from ..storage.kubernetes import KubernetesStorage
 
 __all__ = ["GKEPhalanxClusterService"]
+
+
+_SASQUATCH_KAFKA = NamespacedResource(
+    kind="Kafka", namespace="sasquatch", name="sasquatch"
+)
+"""The Sasquatch Kafka resource."""
 
 
 class GKEPhalanxClusterService:
@@ -175,6 +181,33 @@ class GKEPhalanxClusterService:
             new_services.append(new_service)
 
         return new_services
+
+    def pause_sasquatch_kafka_reconciliation(self) -> None:
+        """Pause Strimzi reconciliation of the Sasquatch Kafka cluster.
+
+        During some recovery operations, we want to modify resources that are
+        managed by the Strimzi operator. The Strimzi operator will
+        automatically revert any changes we make, so we have to pause Strimzi
+        reconciliation if we want our changes to persist.
+
+        https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str
+        """
+        self._kubernetes.annotate(
+            _SASQUATCH_KAFKA,
+            key="strimzi.io/pause-reconciliation",
+            value="true",
+            overwrite=True,
+        )
+
+    def resume_sasquatch_kafka_reconciliation(self) -> None:
+        """Resume Strimzi reconciliation of the Sasquatch Kafka cluster.
+
+        https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str
+        """
+        self._kubernetes.deannotate(
+            _SASQUATCH_KAFKA,
+            key="strimzi.io/pause-reconciliation",
+        )
 
     def _refresh_service_ingress(self, service: Service) -> None:
         """Destroy and recreate the ingress associated with a Service."""

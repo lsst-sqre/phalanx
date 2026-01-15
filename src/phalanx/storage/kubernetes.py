@@ -230,7 +230,12 @@ class KubernetesStorage:
             )
 
     def annotate(
-        self, resource: NamespacedResource, key: str, value: str
+        self,
+        resource: NamespacedResource,
+        key: str,
+        value: str,
+        *,
+        overwrite: bool = False,
     ) -> None:
         """Add an annotation to a namespaced resource.
 
@@ -242,15 +247,22 @@ class KubernetesStorage:
             The name of the annotation.
         value
             The value of the annotation.
+        overwrite
+            Whether or not to overwrite the annotation if it already exists.
         """
-        self._kubectl.run(
+        args = [
             "annotate",
             resource.kind,
             resource.name,
             f"{key}={value}",
             "--namespace",
             resource.namespace,
-        )
+        ]
+
+        if overwrite:
+            args.append("--overwrite")
+
+        self._kubectl.run(*args)
 
     def deannotate(self, resource: NamespacedResource, key: str) -> None:
         """Remove an annotation from a namespaced resource.

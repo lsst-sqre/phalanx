@@ -1,4 +1,21 @@
 # serializer version: 1
+# name: test_pause_kafka
+  _CallList([
+    _Call(
+      tuple(
+        'annotate',
+        'Kafka',
+        'sasquatch',
+        'strimzi.io/pause-reconciliation=true',
+        '--namespace',
+        'sasquatch',
+        '--overwrite',
+      ),
+      dict({
+      }),
+    ),
+  ])
+# ---
 # name: test_release_service_ips
   _CallList([
     _Call(
@@ -281,6 +298,22 @@
     ),
   ])
 # ---
+# name: test_resume_kafka
+  _CallList([
+    _Call(
+      tuple(
+        'annotate',
+        'Kafka',
+        'sasquatch',
+        'strimzi.io/pause-reconciliation-',
+        '--namespace',
+        'sasquatch',
+      ),
+      dict({
+      }),
+    ),
+  ])
+# ---
 # name: test_scale_down
   _CallList([
     _Call(
@@ -380,6 +413,19 @@
 # ---
 # name: test_scale_down.1
   _CallList([
+    _Call(
+      tuple(
+        'annotate',
+        'Kafka',
+        'sasquatch',
+        'strimzi.io/pause-reconciliation=true',
+        '--namespace',
+        'sasquatch',
+        '--overwrite',
+      ),
+      dict({
+      }),
+    ),
     _Call(
       tuple(
         'annotate',
@@ -797,6 +843,18 @@
 # ---
 # name: test_scale_up.1
   _CallList([
+    _Call(
+      tuple(
+        'annotate',
+        'Kafka',
+        'sasquatch',
+        'strimzi.io/pause-reconciliation-',
+        '--namespace',
+        'sasquatch',
+      ),
+      dict({
+      }),
+    ),
     _Call(
       tuple(
         'patch',
