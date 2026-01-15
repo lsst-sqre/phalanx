@@ -13,21 +13,38 @@ strimzi-kafka:
     storage:
       size: 100Gi
       storageClassName: wekafs--sdf-k8s01
+    listeners:
+      external:
+        enabled: true
+    externalListener:
+      bootstrap:
+        annotations:
+          metallb.io/address-pool: sdf-rubin-ingest
+      brokers:
+        - broker: 3
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
+        - broker: 4
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
+        - broker: 5
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
 
 butler-writer:
   enabled: true
   topics:
-  - name: butler-writer
-    partitions: 1
-    replicas: 3
-    retention: 1209600000 # milliseconds, = 2 weeks
-  - name: butler-writer-ingestion-events
-    partitions: 1
-    replicas: 3
-    # Keep forever.  These messages are small (about 200 bytes * 1000 per
-    # day), and being able to replay the log will be useful for disaster
-    # recovery downstream.
-    retention: -1
+    - name: butler-writer
+      partitions: 1
+      replicas: 3
+      retention: 1209600000  # milliseconds, = 2 weeks
+    - name: butler-writer-ingestion-events
+      partitions: 1
+      replicas: 3
+      # Keep forever.  These messages are small (about 200 bytes * 1000 per
+      # day), and being able to replay the log will be useful for disaster
+      # recovery downstream.
+      retention: -1
 
 kafdrop:
   enabled: true
