@@ -34,3 +34,6 @@ kafdrop:
   ingress:
     enabled: true
     hostname: usdfprod-prompt-processing.slac.stanford.edu
+
+prompt-publication:
+  enabled: true
