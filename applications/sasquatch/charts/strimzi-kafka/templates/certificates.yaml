@@ -14,7 +14,8 @@ spec:
   issuerRef:
     name: {{ .Values.kafka.externalListener.tls.certIssuerName }}
     kind: ClusterIssuer
-
+  privateKey:
+    encoding: PKCS8
   dnsNames:
     - {{ .Values.kafka.externalListener.bootstrap.host }}
     {{- range $broker := .Values.kafka.externalListener.brokers }}
