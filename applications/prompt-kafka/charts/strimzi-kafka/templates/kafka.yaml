@@ -77,14 +77,6 @@ spec:
     version: {{ .Values.kafka.version | quote }}
     replicas: {{ .Values.kafka.replicas }}
     listeners:
-      {{- if .Values.kafka.listeners.noauth.enabled }}
-      # internal listener without tls encryption and without authentication
-      # used by ceph bucket notifications as authentication does not work with
-      - name: noauth
-        port: 9095
-        type: internal
-        tls: false
-      {{- end }}
       {{- if .Values.kafka.listeners.plain.enabled }}
       # internal listener without tls encryption and with scram-sha-512 authentication
       # used by clients inside the Kubernetes cluster
@@ -118,7 +110,10 @@ spec:
           allocateLoadBalancerNodePorts: false
           bootstrap:
             {{- if .Values.kafka.externalListener.bootstrap.annotations }}
-            annotations: {{ .Values.kafka.externalListener.bootstrap.annotations }}
+            annotations:
+              {{- range $key, $value  := .Values.kafka.externalListener.bootstrap.annotations }}
+              {{ $key }}: {{ $value }}
+              {{- end}}
             {{- end }}
           {{- if .Values.kafka.externalListener.brokers }}
           brokers:
