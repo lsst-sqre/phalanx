@@ -1,4 +1,11 @@
 controller:
+  tolerations:
+    - key: edu.stanford.slac.sdf.project/rsp
+      effect: NoSchedule
+      operator: Equal
+      value: "true"
+  nodeSelector:
+    edu.stanford.slac.sdf.project/rsp: "true"
   config:
     logLevel: "DEBUG"
     images:
@@ -9,6 +16,19 @@ controller:
       pin:
         - "r29_2_0_rsp2244"
     lab:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/c
+                    operator: NotIn
+                    values:
+                      - "true"
+                  - key: "edu.stanford.slac.sdf.project/rsp"
+                    operator: In
+                    values:
+                      - "true"
       extraAnnotations:
         edu.stanford.slac.sdf.project/rsp: "true"
       env:
@@ -29,6 +49,8 @@ controller:
         LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
       homedirSchema: "initialThenUsername"
       homeVolumeName: "sdf-home"
+      nodeSelector:
+        edu.stanford.slac.sdf.project/rsp: "true"
       nss:
         # Add rubin_users group (there is not yet a simpler way to do this).
         baseGroup: |
