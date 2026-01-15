@@ -99,28 +99,32 @@ ccoods:
               brokers:
                   - sasquatch-kafka-bootstrap.sasquatch:9092
               topics:
-                - lsst.s3.raw.comcam
-              group_id: CCOODS-S3
-              max_messages: 250
+                - lsst.s3.wf.lsstcam
+              group_id: MTOODS-S3
+              max_messages: 16
+              max_wait_time: 0.25
           butler:
-              instrument: lsst.obs.lsst.LsstComCam
-              repo_directory : s3://butler@rubinobs-butler-comcam
+              guider_max_age_seconds: 90
+              instrument: lsst.obs.lsst.LsstCam
+              repo_directory : s3://butler@rubinobs-butler-lsstcam
               s3profile: butler
               collections:
-                  - LSSTComCam/raw/all
+                  - LSSTCam/raw/all
               collection_cleaner:
                   collections_to_clean:
-                      - collection: LSSTComCam/raw/all
+                      - collections:
+                          - LSSTCam/raw/all
                         files_older_than:
                             <<: *interval
-                            days: 30
-                      - collection: LSSTComCam/quickLook
+                            days: 360
+                      - collections:
+                          - LSSTCam/raw/guider
                         files_older_than:
                             <<: *interval
-                            days: 7
+                            days: 360
                   cleaning_interval:
                       <<: *interval
-                      hours: 1
+                      days: 360
 
 gcheaderservice101:
   enabled: true
