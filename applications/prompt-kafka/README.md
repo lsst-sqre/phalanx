@@ -46,6 +46,7 @@ Kafka environment for Prompt Processing
 | kafdrop.service.annotations | object | `{}` | Additional annotations to add to the service |
 | kafdrop.service.port | int | `9000` | Service port |
 | kafdrop.tolerations | list | `[]` | Tolerations configuration |
+| prompt-publication.cluster.name | string | `"prompt-kafka"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Prompt Kafka chart. |
 | strimzi-kafka.cluster.monitorLabel | object | `{}` | Site wide label required for gathering Prometheus metrics if they are enabled |
 | strimzi-kafka.cluster.name | string | `"prompt-kafka"` | Name used for the Kafka cluster, and used by Strimzi for many annotations |
 | strimzi-kafka.cruiseControl.enabled | bool | `false` |  |
