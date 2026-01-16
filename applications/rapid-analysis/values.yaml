@@ -65,6 +65,11 @@ pvcMountpoint: []
 # _name_ (The name ot the persistent volume),
 # _containerPath_ (The path inside the container to mount),
 # _subPath_ (persistent volume subpath, optional)
+configMountpoint: []
+# -- This section holds the information necessary to claim persistent volumes.
+# If the section is used, each object listed can have the following attributes defined:
+# _name_ (The name of the persistent volume and the configMap),
+# _items_ (Files in the configmap to mount),
 pvcMountpointClaim: []
 # -- Adds an extra string to the release name.
 nameOverride: ""

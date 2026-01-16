@@ -44,21 +44,27 @@ scripts:
 - name: LSSTCam/runButlerWatcher.py
   mounts:
   - sdf-scratch
+  - config-repos
 - name: LSSTCam/runHeadNode.py
   mounts:
   - sdf-scratch
+  - config-repos
 - name: LSSTCam/runMetadataServer.py
   mounts:
   - sdf-scratch
+  - config-repos
 - name: LSSTCam/runOneOffExpRecord.py
   mounts:
   - sdf-scratch
+  - config-repos
 - name: LSSTCam/runOneOffPostIsr.py
   mounts:
   - sdf-scratch
+  - config-repos
 - name: LSSTCam/runOneOffVisitImage.py
   mounts:
   - sdf-scratch
+  - config-repos
   resources:
     requests:
       cpu: 1
@@ -69,9 +75,11 @@ scripts:
 - name: LSSTCam/runMetadataServerRaPerformance.py
   mounts:
   - sdf-scratch
+  - config-repos
 - name: LSSTCam/runPerformanceMonitor.py
   mounts:
   - sdf-scratch
+  - config-repos
   resources:
     requests:
       cpu: 1
@@ -82,6 +90,7 @@ scripts:
 - name: LSSTCam/runPlotter.py
   mounts:
   - sdf-scratch
+  - config-repos
   resources:
     requests:
       cpu: 1
@@ -92,13 +101,15 @@ scripts:
 - name: LSSTCam/runButlerCanary.py
   mounts:
   - sdf-scratch
+  - config-repos
   env:
     DAF_BUTLER_CACHE_EXPIRATION_MODE: disabled
 - name: LSSTCam/runTransferAlarm.py
   image:
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   mounts:
   - sdf-scratch
+  - config-repos
 ###
 ### LSSTCam StatefulSets
 ###
@@ -107,6 +118,7 @@ lsstcamWorkerSet:
   replicas: 820
   mounts:
   - sdf-scratch
+  - config-repos
   resources:
     requests:
       cpu: 1.0
@@ -118,6 +130,7 @@ lsstcamGather2aSet:
   name: LSSTCam/runStep1bWorker.py
   mounts:
   - sdf-scratch
+  - config-repos
   replicas: 5
   resources:
     requests:
@@ -130,6 +143,7 @@ lsstcamAosWorkerSet:
   name: LSSTCam/runAosWorker.py
   mounts:
   - sdf-scratch
+  - config-repos
   replicas: 36
   env:
     LIMITS_CPU: 2
@@ -144,6 +158,7 @@ lsstcamGather2aAosSet:
   name: LSSTCam/runStep1bAosWorker.py
   mounts:
   - sdf-scratch
+  - config-repos
   replicas: 4
   resources:
     requests:
@@ -177,6 +192,12 @@ pvcMountpointClaim:
   containerPath: /sdf/scratch
   claimSize: 1Gi
   accessMode: ReadWriteMany
+configMountpoint:
+- name: config-repos
+  path: "/config"
+  items:
+  - key: "data-repos.yaml"
+    path: "data-repos.yaml"
 resources:
   requests:
     cpu: 0.5
