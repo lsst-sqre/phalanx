@@ -2,6 +2,7 @@
 
 from phalanx.constants import (
     GKE_LOAD_BALANCER_SERVICE_FINALIZERS,
+    PREVIOUS_EXTERNAL_TRAFFIC_POLICY_ANNOTATION,
     PREVIOUS_LOAD_BALANCER_IP_ANNOTATION,
     PREVIOUS_REPLICA_COUNT_ANNOTATION,
 )
@@ -9,6 +10,7 @@ from phalanx.constants import (
 from ..exceptions import (
     InvalidLoadBalancerServiceStateError,
     InvalidScaleStateError,
+    ServiceMissingTrafficPolicyError,
 )
 from ..models.kubernetes import NamespacedResource, Service, Workload
 from ..storage.kubernetes import KubernetesStorage
@@ -124,22 +126,34 @@ class GKEPhalanxClusterService:
         Raises
         ------
         InvalidLoadBalancerServiceStateError
-            If the workload resource does not have exactly one of
+            If the service resource does not have exactly one of
             spec.loadBalancerIP or an annotation for the previous
             loadBalancerIP set.
 
+        ServiceMissingTrafficPolicyError
+            If the service resource does not have an externalTrafficPolicy.
         """
         new_services = []
         services = self._kubernetes.get_phalanx_load_balancer_services()
         for service in services:
             self._check_service_state(service)
+            if not service.external_traffic_policy:
+                continue
             self._kubernetes.annotate(
                 service,
                 key=PREVIOUS_LOAD_BALANCER_IP_ANNOTATION,
-                value=str(service.spec_load_balancer_ip),
+                value=str(service.load_balancer_ip),
+            )
+            self._kubernetes.annotate(
+                service,
+                key=PREVIOUS_EXTERNAL_TRAFFIC_POLICY_ANNOTATION,
+                value=service.external_traffic_policy.value,
             )
             self._kubernetes.remove_service_load_balancer_ip(service)
             self._refresh_service_ingress(service)
+            self._kubernetes.update_service_external_traffic_policy(
+                service, service.external_traffic_policy
+            )
             new_service = self._kubernetes.get_service(
                 name=service.name, namespace=service.namespace
             )
@@ -156,7 +170,7 @@ class GKEPhalanxClusterService:
         Raises
         ------
         InvalidLoadBalancerServiceStateError
-            If the workload resource does not have exactly one of
+            If the service resource does not have exactly one of
             spec.loadBalancerIP or an annotation for the previous
             loadBalancerIP set.
 
@@ -164,7 +178,10 @@ class GKEPhalanxClusterService:
         new_services = []
         services = self._kubernetes.get_phalanx_load_balancer_services()
         for service in services:
-            if not service.previous_loadbalancer_ip:
+            if (
+                not service.previous_loadbalancer_ip
+                or not service.previous_external_traffic_policy
+            ):
                 continue
             self._check_service_state(service)
             self._kubernetes.add_service_load_balancer_ip(
@@ -174,7 +191,14 @@ class GKEPhalanxClusterService:
                 service,
                 key=PREVIOUS_LOAD_BALANCER_IP_ANNOTATION,
             )
+            self._kubernetes.deannotate(
+                service,
+                key=PREVIOUS_EXTERNAL_TRAFFIC_POLICY_ANNOTATION,
+            )
             self._refresh_service_ingress(service)
+            self._kubernetes.update_service_external_traffic_policy(
+                service, service.previous_external_traffic_policy
+            )
             new_service = self._kubernetes.get_service(
                 name=service.name, namespace=service.namespace
             )
@@ -221,11 +245,14 @@ class GKEPhalanxClusterService:
     def _check_service_state(self, service: Service) -> None:
         """Ensure a LoadBalancer Service is not in an incorrect state."""
         exactly_one = (
-            service.spec_load_balancer_ip,
+            service.load_balancer_ip,
             service.previous_loadbalancer_ip,
         )
         if all(exactly_one) or not any(exactly_one):
             raise InvalidLoadBalancerServiceStateError(service)
+
+        if not service.external_traffic_policy:
+            raise ServiceMissingTrafficPolicyError(service)
 
     def _get_workloads_except_argocd(self) -> list[Workload]:
         """Get all Phalanx workloads in the cluster except ArgoCD workloads.
