@@ -65,7 +65,7 @@ ccheaderservice-sim:
 ccoods:
   enabled: true
   image:
-    revision: 0
+    revision: 6
     repository: ts-dockerhub.lsst.org/ccoods
     pullPolicy: Always
   env:
@@ -75,7 +75,7 @@ ccoods:
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   s3Credentials:
   - lfa-credentials.ini
-  - oods-comcam-credentials.ini
+  - oods-lsstcam-credentials.ini
   <<: *butler-secret
   resources:
     limits:
