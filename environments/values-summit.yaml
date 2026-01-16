@@ -27,7 +27,6 @@ applications:
   nightreport: true
   nublado: true
   nvr-control: true
-  obsenv-management: true
   obssys: true
   portal: true
   rapid-analysis: true
