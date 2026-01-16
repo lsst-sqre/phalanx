@@ -98,6 +98,9 @@ spec:
             - name: user-secrets
               mountPath: {{ default "/home/saluser/.lsst" $.Values.butlerSecret.containerPath }}
               readOnly: true
+            - name: config
+              mountPath: "/config"
+              readOnly: true
           {{- if $.Values.nfsMountpoint }}
           {{- range $values := $.Values.nfsMountpoint }}
           {{- if (has $values.name $script.mounts) }}
