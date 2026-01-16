@@ -1,0 +1,8 @@
+# serializer version: 1
+# name: test_audit
+  '''
+  No read AppRole (idfdev)
+  No write token (token-idfdev)
+  
+  '''
+# ---

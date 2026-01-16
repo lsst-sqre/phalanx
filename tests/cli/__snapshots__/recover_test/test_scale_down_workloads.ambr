@@ -1,0 +1,31 @@
+# serializer version: 1
+# name: test_scale_down_workloads
+  _CallList([
+    _Call(
+      tuple(
+        'get',
+        'Deployment',
+        '-l',
+        'argocd.argoproj.io/instance',
+        '-o',
+        'json',
+        '--all-namespaces',
+      ),
+      dict({
+      }),
+    ),
+    _Call(
+      tuple(
+        'get',
+        'StatefulSet',
+        '-l',
+        'argocd.argoproj.io/instance',
+        '-o',
+        'json',
+        '--all-namespaces',
+      ),
+      dict({
+      }),
+    ),
+  ])
+# ---

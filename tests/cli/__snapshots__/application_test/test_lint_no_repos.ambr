@@ -1,0 +1,21 @@
+# serializer version: 1
+# name: test_lint_no_repos
+  list([
+    list([
+      'dependency',
+      'update',
+      '--skip-refresh',
+    ]),
+    list([
+      'lint',
+      'postgres',
+      '--strict',
+      '--values',
+      'postgres/values.yaml',
+      '--values',
+      'postgres/values-idfdev.yaml',
+      '--set',
+      'global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.repertoireUrl=https://data-dev.lsst.cloud/repertoire,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1',
+    ]),
+  ])
+# ---
