@@ -28,7 +28,6 @@ applications:
   nightreport: true
   nublado: true
   nvr-control: true
-  obsenv-management: true
   obsloctap: true
   obssys: true
   portal: true
