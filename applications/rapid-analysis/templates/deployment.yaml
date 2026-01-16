@@ -94,9 +94,6 @@ spec:
             - name: user-secrets
               mountPath: {{ default "/home/saluser/.lsst" $.Values.butlerSecret.containerPath }}
               readOnly: true
-            - name: config
-              mountPath: "/config"
-              readOnly: true
           {{- if $.Values.nfsMountpoint }}
           {{- range $values := $.Values.nfsMountpoint }}
           {{- if (has $values.name $script.mounts) }}
@@ -114,6 +111,15 @@ spec:
               {{- if ($values.subPath) }}
               subPath: {{ $values.subPath }}
               {{- end }}
+          {{- end }}
+          {{- end }}
+          {{- end }}
+          {{- if $.Values.configMountpoint }}
+          {{- range $values := $.Values.configMountpoint }}
+          {{- if (has $values.name $script.mounts) }}
+            - name: {{ $values.name }}
+              mountPath: {{ $values.path }}
+              readOnly: true
           {{- end }}
           {{- end }}
           {{- end }}
@@ -141,15 +147,6 @@ spec:
         - name: rapid-analysis-secrets
           secret:
             secretName: rapid-analysis-secrets
-        - name: rubintv-aws-creds
-          secret:
-            secretName: rubintv-secrets
-        - name: config
-          configMap:
-            name: config-repos
-            items:
-            - key: "data-repos.yaml"
-              path: "data-repos.yaml"
       {{- if $.Values.nfsMountpoint }}
       {{- range $values := $.Values.nfsMountpoint }}
       {{- if (has $values.name $script.mounts) }}
@@ -167,6 +164,16 @@ spec:
         - name: {{ $values.name }}
           persistentVolumeClaim:
             claimName: {{ $values.name }}
+      {{- end }}
+      {{- end }}
+      {{- end }}
+      {{- if $.Values.configMountpoint }}
+      {{- range $values := $.Values.configMountpoint }}
+      {{- if (has $values.name $script.mounts) }}
+        - name: {{ $values.name }}
+          configMap:
+            name: {{ $values.name }}
+            items: {{ toYaml $values.items | nindent 12 }}
       {{- end }}
       {{- end }}
       {{- end }}
