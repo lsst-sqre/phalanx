@@ -1,35 +1,4 @@
 # serializer version: 1
-# name: test_build_jinja_contexts
-  dict({
-    'admin:jupyterlab': list([
-      '``g_admins``',
-    ]),
-    'admin:provision': list([
-      '``g_admins``',
-    ]),
-    'exec:admin': list([
-      '``g_admins``',
-    ]),
-    'exec:internal-tools': list([
-      '``g_users``',
-    ]),
-    'exec:notebook': list([
-      '``g_users``',
-    ]),
-    'exec:portal': list([
-      '``g_users``',
-    ]),
-    'read:image': list([
-      '``g_users``',
-    ]),
-    'read:tap': list([
-      '``g_users``',
-    ]),
-    'write:sasquatch': list([
-      '``g_admins``',
-    ]),
-  })
-# ---
 # name: test_build_jinja_contexts.1
   dict({
     'admin:provision': list([

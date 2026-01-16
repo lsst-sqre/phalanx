@@ -1,0 +1,12 @@
+# serializer version: 1
+# name: test_add_helm_repos
+  list([
+    list([
+      'repo',
+      'add',
+      '--force-update',
+      'argoproj',
+      'https://argoproj.github.io/argo-helm',
+    ]),
+  ])
+# ---

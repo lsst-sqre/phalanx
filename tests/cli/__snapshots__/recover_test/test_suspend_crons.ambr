@@ -1,0 +1,31 @@
+# serializer version: 1
+# name: test_suspend_crons
+  _CallList([
+    _Call(
+      tuple(
+        'patch',
+        'CronJob',
+        'gafaelfawr-maintenance',
+        '--namespace',
+        'gafaelfawr',
+        '--patch',
+        '{"spec" : {"suspend" : true }}',
+      ),
+      dict({
+      }),
+    ),
+    _Call(
+      tuple(
+        'patch',
+        'CronJob',
+        'ook-ingest-lsst-texmf',
+        '--namespace',
+        'ook',
+        '--patch',
+        '{"spec" : {"suspend" : true }}',
+      ),
+      dict({
+      }),
+    ),
+  ])
+# ---
