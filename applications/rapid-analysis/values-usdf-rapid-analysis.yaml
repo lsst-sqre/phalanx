@@ -134,7 +134,7 @@ lsstcamWorkerSet:
     limits:
       cpu: 1.0
       memory: 8G
-lsstcamGather2aSet:
+lsstcamGather1bSet:
   name: LSSTCam/runStep1bWorker.py
   mounts:
   - sdf-scratch
@@ -162,7 +162,7 @@ lsstcamAosWorkerSet:
     limits:
       cpu: 2.0
       memory: 8G
-lsstcamGather2aAosSet:
+lsstcamGather1bAosSet:
   name: LSSTCam/runStep1bAosWorker.py
   mounts:
   - sdf-scratch
