@@ -9,6 +9,7 @@ from phalanx.models.kubernetes import (
     Deployment,
     ResourceList,
     Service,
+    ServiceExternalTrafficPolicy,
     ServiceIPPatch,
     ServiceIPSpecPatch,
     StatefulSet,
@@ -116,7 +117,9 @@ def test_loadbalancer_service_list() -> None:
                     "service.kubernetes.io/load-balancer-cleanup",
                 ],
                 previous_loadbalancer_ip=None,
-                spec_load_balancer_ip=IPv4Address("35.225.112.77"),
+                previous_external_traffic_policy=None,
+                external_traffic_policy=ServiceExternalTrafficPolicy.LOCAL,
+                load_balancer_ip=IPv4Address("35.225.112.77"),
                 status_load_balancer_ip=IPv4Address("35.225.112.77"),
             )
         ],

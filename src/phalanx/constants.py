@@ -9,6 +9,7 @@ from datetime import timedelta
 __all__ = [
     "HELM_DOCLINK_ANNOTATION",
     "ONEPASSWORD_ENCODED_WARNING",
+    "PREVIOUS_EXTERNAL_TRAFFIC_POLICY_ANNOTATION",
     "PREVIOUS_LOAD_BALANCER_IP_ANNOTATION",
     "PULL_SECRET_DESCRIPTION",
     "VAULT_APPROLE_SECRET_TEMPLATE",
@@ -79,6 +80,16 @@ PREVIOUS_LOAD_BALANCER_IP_ANNOTATION = (
 
 This annotation will be set when we recover an existing Phalanx cluster to a
 new cluster.
+"""
+
+PREVIOUS_EXTERNAL_TRAFFIC_POLICY_ANNOTATION = (
+    "phalanx.lsst.org/previous-external-traffic-policy"
+)
+"""Annotation that holds the original Service externalTrafficPolicy value.
+
+When we convert a LoadBalancer service to a ClusterIP service, then back to a
+LoadBalancer service, spec.externalTrafficPolicy always gets set to "Cluster",
+even if it was set to "Local" originally.
 """
 
 GKE_LOAD_BALANCER_SERVICE_FINALIZERS = [

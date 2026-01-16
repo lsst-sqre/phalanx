@@ -7,6 +7,7 @@ from typing import Literal
 from pydantic import AliasPath, BaseModel, ConfigDict, Field
 
 from ..constants import (
+    PREVIOUS_EXTERNAL_TRAFFIC_POLICY_ANNOTATION,
     PREVIOUS_LOAD_BALANCER_IP_ANNOTATION,
     PREVIOUS_REPLICA_COUNT_ANNOTATION,
 )
@@ -17,6 +18,7 @@ __all__ = [
     "NamespacedResource",
     "ResourceList",
     "Service",
+    "ServiceExternalTrafficPolicy",
     "ServiceIPPatch",
     "ServiceIPSpecPatch",
     "ServiceType",
@@ -35,6 +37,16 @@ class ServiceType(Enum):
 
     LOAD_BALANCER = "LoadBalancer"
     """LoadBalacner Service type."""
+
+
+class ServiceExternalTrafficPolicy(Enum):
+    """Valid values for the spec.externalTrafficPolicy field of a Service."""
+
+    CLUSTER = "Cluster"
+    """Cluster externalTrafficPolicy."""
+
+    LOCAL = "Local"
+    """Local externalTrafficPolicy."""
 
 
 class NamespacedResource(BaseModel):
@@ -135,7 +147,25 @@ class Service(NamespacedResource):
     )
     """The original loadBalancerIP, if we previously released it."""
 
-    spec_load_balancer_ip: IPv4Address | None = Field(
+    previous_external_traffic_policy: ServiceExternalTrafficPolicy | None = (
+        Field(
+            default=None,
+            validation_alias=AliasPath(
+                "metadata",
+                "annotations",
+                PREVIOUS_EXTERNAL_TRAFFIC_POLICY_ANNOTATION,
+            ),
+        )
+    )
+    """The original externalTrafficPolicy, if we previously released the IP."""
+
+    external_traffic_policy: ServiceExternalTrafficPolicy | None = Field(
+        default=None,
+        validation_alias=AliasPath("spec", "externalTrafficPolicy"),
+    )
+    """The externalTrafficPolicy set in the spec"""
+
+    load_balancer_ip: IPv4Address | None = Field(
         default=None,
         validation_alias=AliasPath("spec", "loadBalancerIP"),
     )

@@ -1,5 +1,6 @@
 """Storage layer for direct Kubernetes operations."""
 
+import json
 import time
 from ipaddress import IPv4Address
 from math import ceil
@@ -12,6 +13,7 @@ from ..models.kubernetes import (
     NamespacedResource,
     ResourceList,
     Service,
+    ServiceExternalTrafficPolicy,
     ServiceIPPatch,
     ServiceIPSpecPatch,
     StatefulSet,
@@ -470,6 +472,34 @@ class KubernetesStorage:
             patch.model_dump_json(by_alias=True),
         )
 
+    def update_service_external_traffic_policy(
+        self, service: Service, policy: ServiceExternalTrafficPolicy
+    ) -> None:
+        """Update the Service spec.externalTrafficPolicy value.
+
+        When we convert a LoadBalancer service to a ClusterIP service, then
+        back to a LoadBalancer service, spec.externalTrafficPolicy always gets
+        set to "Cluster", even if it was set to "Local" originally.
+
+        Parameters
+        ----------
+        service
+            The LoadBalancer Service to assign the IP to.
+        policy
+            The value to set the spec.externalTrafficPolicy field to.
+        """
+        patch = {"spec": {"externalTrafficPolicy": policy.value}}
+
+        self._kubectl.run(
+            "patch",
+            "Service",
+            service.name,
+            "--namespace",
+            service.namespace,
+            "--patch",
+            json.dumps(patch),
+        )
+
     def set_service_to_cluster_ip(self, service: Service) -> None:
         """Set the type of a Service to ClusterIP.
 
@@ -503,5 +533,5 @@ class KubernetesStorage:
             "--namespace",
             service.namespace,
             "--patch",
-            '{"spec": {"type": "LoadBalancer" } }',
+            '{"spec": {"type": "LoadBalancer"}}',
         )

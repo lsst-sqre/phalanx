@@ -31,7 +31,7 @@
         "clusterIPs": [
             "10.128.29.7"
         ],
-        "externalTrafficPolicy": "Cluster",
+        "externalTrafficPolicy": "Local",
         "internalTrafficPolicy": "Cluster",
         "ipFamilies": [
             "IPv4"

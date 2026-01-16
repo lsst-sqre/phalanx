@@ -23,6 +23,7 @@ __all__ = [
     "NoOnepasswordCredentialsError",
     "NoVaultCredentialsError",
     "ResourceNoFinalizersTimeoutError",
+    "ServiceMissingTrafficPolicyError",
     "UnknownEnvironmentError",
     "UnresolvedSecretsError",
     "UsageError",
@@ -337,9 +338,27 @@ class InvalidLoadBalancerServiceStateError(UsageError):
             f" an invalid state to have its IP changed. It must have exactly"
             f" one of spec.loadBalancerIP or the"
             f" {PREVIOUS_LOAD_BALANCER_IP_ANNOTATION} annotation set."
-            f" loadBalancerIP: {service.spec_load_balancer_ip},"
+            f" loadBalancerIP: {service.load_balancer_ip},"
             f" {PREVIOUS_LOAD_BALANCER_IP_ANNOTATION}: "
             f" {service.previous_loadbalancer_ip}"
+        )
+        super().__init__(msg)
+
+
+class ServiceMissingTrafficPolicyError(UsageError):
+    """A Service does not have an externalTrafficPolicy set.
+
+    Parameters
+    ----------
+    service
+        The workload that is in the invalid state.
+    """
+
+    def __init__(self, service: Service) -> None:
+        msg = (
+            f"Service: {service.name} in namespace: {service.namespace} does"
+            f" not have spec.externalTrafficPolicy set. It must be a"
+            f" service of type LoadBalancer with that attribute set."
         )
         super().__init__(msg)
 

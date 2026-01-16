@@ -7,6 +7,7 @@
             "metadata": {
                 "annotations": {
                     "phalanx.lsst.org/previous-load-balancer-ip": "35.225.112.77",
+                    "phalanx.lsst.org/previous-external-traffic-policy": "Cluster",
                     "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"labels\":{\"app.kubernetes.io/component\":\"controller\",\"app.kubernetes.io/instance\":\"ingress-nginx\",\"app.kubernetes.io/managed-by\":\"Helm\",\"app.kubernetes.io/name\":\"ingress-nginx\",\"app.kubernetes.io/part-of\":\"ingress-nginx\",\"app.kubernetes.io/version\":\"1.14.1\",\"argocd.argoproj.io/instance\":\"ingress-nginx\",\"helm.sh/chart\":\"ingress-nginx-4.14.1\"},\"name\":\"ingress-nginx-controller\",\"namespace\":\"ingress-nginx\"},\"spec\":{\"externalTrafficPolicy\":\"Local\",\"ipFamilies\":[\"IPv4\"],\"ipFamilyPolicy\":\"SingleStack\",\"loadBalancerIP\":\"35.225.112.77\",\"ports\":[{\"appProtocol\":\"http\",\"name\":\"http\",\"port\":80,\"protocol\":\"TCP\",\"targetPort\":\"http\"},{\"appProtocol\":\"https\",\"name\":\"https\",\"port\":443,\"protocol\":\"TCP\",\"targetPort\":\"https\"}],\"selector\":{\"app.kubernetes.io/component\":\"controller\",\"app.kubernetes.io/instance\":\"ingress-nginx\",\"app.kubernetes.io/name\":\"ingress-nginx\"},\"type\":\"LoadBalancer\"}}\n"
                 },
                 "creationTimestamp": "2021-02-16T01:37:52Z",
