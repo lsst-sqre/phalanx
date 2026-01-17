@@ -198,7 +198,7 @@ gcheaderservice103:
 lasertracker1:
   enabled: true
   image:
-    revision: 0
+    revision: 11
     repository: ts-dockerhub.lsst.org/lasertracker
     pullPolicy: Always
   env:
