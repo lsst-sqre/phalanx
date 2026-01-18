@@ -75,7 +75,8 @@ influxdb-enterprise:
         name: sasquatch
         key: influxdb-enterprise-shared-secret
   data:
-    replicas: 2
+    replicas: 1
+    ordinalStart: 1
     config:
       antiEntropy:
         enabled: true
