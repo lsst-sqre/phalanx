@@ -6,6 +6,8 @@ metadata:
     {{- include "influxdb-enterprise.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.data.replicas | default 3 }}
+  ordinals:
+    start: {{ .Values.data.ordinalStart | default 0 }}
   podManagementPolicy: Parallel
   serviceName: {{ include "influxdb-enterprise.fullname" . }}-data
   selector:

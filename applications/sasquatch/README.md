@@ -208,6 +208,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.data.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the data ingress |
 | influxdb-enterprise.data.ingress.path | string | `"/influxdb-enterprise-data(/\|$)(.*)"` | Path of the data service |
 | influxdb-enterprise.data.nodeSelector | object | `{}` | Node selection rules for data pods |
+| influxdb-enterprise.data.ordinalStart | int | `0` | Starting ordinal for data pods |
 | influxdb-enterprise.data.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode for the persistent volume claim |
 | influxdb-enterprise.data.persistence.annotations | object | `{}` | Annotations to add to the persistent volume claim |
 | influxdb-enterprise.data.persistence.enabled | bool | `false` | Whether to persist data to a persistent volume |
@@ -305,6 +306,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.data.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the data ingress |
 | influxdb-enterprise-active.data.ingress.path | string | `"/influxdb-enterprise-data(/\|$)(.*)"` | Path of the data service |
 | influxdb-enterprise-active.data.nodeSelector | object | `{}` | Node selection rules for data pods |
+| influxdb-enterprise-active.data.ordinalStart | int | `0` | Starting ordinal for data pods |
 | influxdb-enterprise-active.data.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode for the persistent volume claim |
 | influxdb-enterprise-active.data.persistence.annotations | object | `{}` | Annotations to add to the persistent volume claim |
 | influxdb-enterprise-active.data.persistence.enabled | bool | `false` | Whether to persist data to a persistent volume |
@@ -402,6 +404,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.data.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the data ingress |
 | influxdb-enterprise-standby.data.ingress.path | string | `"/influxdb-enterprise-data(/\|$)(.*)"` | Path of the data service |
 | influxdb-enterprise-standby.data.nodeSelector | object | `{}` | Node selection rules for data pods |
+| influxdb-enterprise-standby.data.ordinalStart | int | `0` | Starting ordinal for data pods |
 | influxdb-enterprise-standby.data.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode for the persistent volume claim |
 | influxdb-enterprise-standby.data.persistence.annotations | object | `{}` | Annotations to add to the persistent volume claim |
 | influxdb-enterprise-standby.data.persistence.enabled | bool | `false` | Whether to persist data to a persistent volume |

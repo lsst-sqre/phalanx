@@ -224,6 +224,9 @@ data:
   # -- Number of data replicas to run
   replicas: 1
 
+  # -- Starting ordinal for data pods
+  ordinalStart: 0
+
   startupProbe:
     # -- Whether to enable a startup probe to check if the data node is ready
     enabled: false

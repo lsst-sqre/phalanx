@@ -39,6 +39,7 @@ Run InfluxDB Enterprise on Kubernetes
 | data.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the data ingress |
 | data.ingress.path | string | `"/influxdb-enterprise-data(/\|$)(.*)"` | Path of the data service |
 | data.nodeSelector | object | `{}` | Node selection rules for data pods |
+| data.ordinalStart | int | `0` | Starting ordinal for data pods |
 | data.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode for the persistent volume claim |
 | data.persistence.annotations | object | `{}` | Annotations to add to the persistent volume claim |
 | data.persistence.enabled | bool | `false` | Whether to persist data to a persistent volume |
