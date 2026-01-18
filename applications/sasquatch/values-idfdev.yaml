@@ -79,7 +79,7 @@ influxdb-enterprise:
     ordinalStart: 1
     config:
       antiEntropy:
-        enabled: true
+        enabled: false
     ingress:
       enabled: true
       hostname: data-dev.lsst.cloud
