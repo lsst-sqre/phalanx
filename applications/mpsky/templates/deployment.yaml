@@ -27,17 +27,24 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ['/entrypoint.sh', '--host', '0.0.0.0', '--port', '8080', '--verbose' ]
+          command:
+            - mpsky
+            - serve
+            - --host
+            - 0.0.0.0
+            - --port
+            - "8080"
+            - --verbose
+            - --cache-datastore
+            - "https://epyc.astro.washington.edu/~mjuric/mpsky-data"
+            - --max-loaded-nights
+            - "7"
+            - --max-ondisk-nights
+            - "3"
           ports:
             - name: "http"
               containerPort: 8080
               protocol: "TCP"
-#          readinessProbe:
-#            httpGet:
-#              path: "/"
-#              port: "http"
-#            periodSeconds: 20
-#            failureThreshold: 3
           livenessProbe:
             httpGet:
               path: "/"
@@ -67,5 +74,7 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
       volumes:
+        # this is where we store cached ephemerides
+        # cache files
         - name: tmp
           emptyDir: {}
