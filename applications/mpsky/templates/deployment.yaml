@@ -32,10 +32,17 @@ spec:
             - name: "http"
               containerPort: 8080
               protocol: "TCP"
-          readinessProbe:
+#          readinessProbe:
+#            httpGet:
+#              path: "/"
+#              port: "http"
+#            periodSeconds: 20
+#            failureThreshold: 3
+          livenessProbe:
             httpGet:
               path: "/"
               port: "http"
+            initialDelaySeconds: 60
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           securityContext:
