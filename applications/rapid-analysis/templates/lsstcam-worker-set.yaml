@@ -16,6 +16,9 @@ spec:
       {{- include "rapid-analysis.selectorLabels" $ | nindent 6 }}
   replicas: {{ ($script.replicas | int) }}
   podManagementPolicy: Parallel
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 10
   template:
     metadata:
       {{- with $.Values.podAnnotations }}
