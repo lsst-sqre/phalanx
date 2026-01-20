@@ -317,19 +317,19 @@ dependencies:
   condition: partsens-ess402.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: partsens-402-sim
+  alias: partsens-ess402-sim
   version: 1.0.0
-  condition: partsens-402-sim.enabled
+  condition: partsens-ess402-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: partsens-403.enabled
+  alias: partsens-ess403.enabled
   version: 1.0.0
-  condition: partsens-403.enabled
+  condition: partsens-ess403.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: partsens-403-sim
+  alias: partsens-ess403-sim
   version: 1.0.0
-  condition: partsens-403-sim.enabled
+  condition: partsens-ess403-sim.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: ringss-ess304
