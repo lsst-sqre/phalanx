@@ -495,6 +495,22 @@ partsens-ess402-sim:
       cpu: 190m
       memory: 540Mi
 
+partsens-ess403-sim:
+  enabled: true
+  classifier: ess403
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 403 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
 ringss-ess304-sim:
   enabled: true
   classifier: ess304
