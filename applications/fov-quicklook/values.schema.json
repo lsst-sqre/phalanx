@@ -152,6 +152,13 @@
         "$ref": "#/definitions/context_menu_template"
       },
       "default": []
+    },
+    "ccd_data_types": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ccd_data_type_config"
+      },
+      "default": []
     }
   },
   "required": [
@@ -166,6 +173,60 @@
   ],
   "additionalProperties": false,
   "definitions": {
+    "ccd_data_type_config": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the data type (used in URLs, cache paths)"
+        },
+        "name": {
+          "type": "string",
+          "description": "Butler dataset type name for queries (e.g., 'raw', 'post_isr_image')"
+        },
+        "display_name": {
+          "type": "string",
+          "description": "Display name for the UI (e.g., 'Raw', 'Post-ISR')"
+        },
+        "collections": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Butler collection names"
+        },
+        "data_id_dimension": {
+          "type": "string",
+          "default": "exposure",
+          "description": "Data identifier dimension for Butler queries"
+        },
+        "order_by": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["-exposure"],
+          "description": "Order by clauses for queries"
+        },
+        "partial": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to use partial loading for this data type"
+        },
+        "repository_name": {
+          "type": "string",
+          "default": "embargo",
+          "description": "Butler repository name (e.g., 'embargo', 'main')"
+        },
+        "instrument": {
+          "type": "string",
+          "default": "LSSTCam",
+          "description": "Butler instrument name"
+        }
+      },
+      "required": ["id", "name", "display_name", "collections"],
+      "additionalProperties": false
+    },
     "image_config": {
       "type": "object",
       "properties": {
