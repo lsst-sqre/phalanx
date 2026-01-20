@@ -307,14 +307,14 @@ dependencies:
   condition: partsens-401.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: partsens-401-sim
+  alias: partsens-ess401-sim
   version: 1.0.0
-  condition: partsens-401-sim.enabled
+  condition: partsens-ess401-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: partsens-402
+  alias: partsens-ess402
   version: 1.0.0
-  condition: partsens-402.enabled
+  condition: partsens-ess402.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: partsens-402-sim
