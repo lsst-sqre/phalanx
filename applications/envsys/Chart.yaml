@@ -302,6 +302,36 @@ dependencies:
   condition: mtdome-ess120-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: partsens-ess401
+  version: 1.0.0
+  condition: partsens-ess401.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: partsens-ess401-sim
+  version: 1.0.0
+  condition: partsens-ess401-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: partsens-ess402
+  version: 1.0.0
+  condition: partsens-ess402.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: partsens-ess402-sim
+  version: 1.0.0
+  condition: partsens-ess402-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: partsens-ess403
+  version: 1.0.0
+  condition: partsens-ess403.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: partsens-ess403-sim
+  version: 1.0.0
+  condition: partsens-ess403-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: ringss-ess304
   version: 1.0.0
   condition: ringss-ess304.enabled
@@ -310,6 +340,46 @@ dependencies:
   alias: ringss-ess304-sim
   version: 1.0.0
   condition: ringss-ess304-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tea-ess123
+  version: 1.0.0
+  condition: tea-ess123.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tea-ess123-sim
+  version: 1.0.0
+  condition: tea-ess123-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tea-ess124
+  version: 1.0.0
+  condition: tea-ess124.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tea-ess124-sim
+  version: 1.0.0
+  condition: tea-ess124-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tea-ess125
+  version: 1.0.0
+  condition: tea-ess125.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tea-ess125-sim
+  version: 1.0.0
+  condition: tea-ess125-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tea-ess126
+  version: 1.0.0
+  condition: tea-ess126.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tea-ess126-sim
+  version: 1.0.0
+  condition: tea-ess126-sim.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: tma-ess121
