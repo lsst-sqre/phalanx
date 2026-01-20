@@ -511,6 +511,72 @@ ringss-ess304-sim:
       cpu: 190m
       memory: 360Mi
 
+tea-ess123:
+  enabled: true
+  classifier: ess123
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 123 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
+tea-ess124:
+  enabled: true
+  classifier: ess124
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 124 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
+tea-ess125:
+  enabled: true
+  classifier: ess125
+  image:
+    revision: 11
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 125 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
+tea-ess126:
+  enabled: true
+  classifier: ess126
+  image:
+    revision: 11
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 126 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
 tma-ess121-sim:
   enabled: true
   classifier: ess121
