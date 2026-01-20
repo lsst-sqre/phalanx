@@ -64,7 +64,7 @@ nightlydigest-backend:
     - name: AWS_SHARED_CREDENTIALS_FILE
       value: /etc/secrets/aws-credentials-butler.ini
     - name: S3_ENDPOINT_URL
-      value: https://s3.cp.lsst.org
+      value: https://s3dfrgw.slac.stanford.edu
     - name: LSST_DISABLE_BUCKET_VALIDATION
       value: "1"
     - name: SIMS_SKYBRIGHTNESS_DATA
