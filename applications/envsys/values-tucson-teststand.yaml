@@ -463,6 +463,38 @@ mtdome-ess120-sim:
       cpu: 190m
       memory: 480Mi
 
+partsens-ess401-sim:
+  enabled: true
+  classifier: ess401
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 401 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
+partsens-ess402-sim:
+  enabled: true
+  classifier: ess402
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 402 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
 ringss-ess304-sim:
   enabled: true
   classifier: ess304
