@@ -472,6 +472,57 @@ mtdome-ess120:
       cpu: 190m
       memory: 540Mi
 
+partsens-ess401:
+  enabled: true
+  classifier: ess401
+  image:
+    revision: 11
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 401
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
+partsens-ess402:
+  enabled: true
+  classifier: ess402
+  image:
+    revision: 11
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 402
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
+partsens-ess403:
+  enabled: true
+  classifier: ess403
+  image:
+    revision: 11
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 403
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
 ringss-ess304:
   enabled: true
   classifier: ess304

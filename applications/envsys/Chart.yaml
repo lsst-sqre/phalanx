@@ -302,6 +302,21 @@ dependencies:
   condition: mtdome-ess120-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: partsens-401
+  version: 1.0.0
+  condition: partsens-401.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: partsens-402.enabled
+  version: 1.0.0
+  condition: partsens-402.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: partsens-403.enabled
+  version: 1.0.0
+  condition: partsens-403.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: ringss-ess304
   version: 1.0.0
   condition: ringss-ess304.enabled
