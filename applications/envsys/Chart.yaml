@@ -322,7 +322,7 @@ dependencies:
   condition: partsens-ess402-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: partsens-ess403.enabled
+  alias: partsens-ess403
   version: 1.0.0
   condition: partsens-ess403.enabled
   repository: file://../../charts/csc
