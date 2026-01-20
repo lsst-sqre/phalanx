@@ -710,6 +710,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafka.metadataVersion | string | `nil` | The KRaft metadata version used by the Kafka cluster. If the property is not set, it defaults to the metadata version that corresponds to the version property. |
 | strimzi-kafka.kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
 | strimzi-kafka.kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
+| strimzi-kafka.kafka.pauseReconciliation | bool | `false` | If Strimzi reconciliation of this resource should be paused: https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str |
 | strimzi-kafka.kafka.replicas | int | `3` | Number of Kafka broker replicas to run |
 | strimzi-kafka.kafka.version | string | `"4.0.0"` | Version of Kafka to deploy |
 | strimzi-kafka.kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |

@@ -24,6 +24,10 @@ kafka:
   # Cannot be greater than the number of replicas.
   minInsyncReplicas: 2
 
+  # -- If Strimzi reconciliation of this resource should be paused:
+  # https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str
+  pauseReconciliation: false
+
   config:
     # -- Number of minutes for a consumer group's offsets to be retained
     # @default -- 4320 minutes (3 days)
