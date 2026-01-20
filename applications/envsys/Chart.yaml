@@ -302,9 +302,9 @@ dependencies:
   condition: mtdome-ess120-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: partsens-401
+  alias: partsens-ess401
   version: 1.0.0
-  condition: partsens-401.enabled
+  condition: partsens-ess401.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: partsens-ess401-sim
