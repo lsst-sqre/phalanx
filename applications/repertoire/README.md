@@ -32,7 +32,7 @@ Service discovery
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.pathPrefix | string | `"/repertoire"` | URL path prefix |
-| config.rules | object | See `values.yaml` | Rules for determining the expected URLs of deployed services that use the main hostname. See the [Repertoire documentation](https://repertoire.lsst.io/) for more information. |
+| config.rules | object | See `values.yaml` | Rules for determining the expected URLs of deployed services that use the main hostname. See the [Repertoire documentation](https://phalanx.lsst.io/applications/repertoire/add-service.html) for more information. |
 | config.sentry.enabled | bool | `false` | Whether to enable the Sentry integration |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
 | config.subdomainRules | object | See `values.yaml` | Rules for determining the expected URLs of deployed services that use a subdomain. See the [Repertoire documentation](https://repertoire.lsst.io/) for more information. |

@@ -146,7 +146,8 @@ config:
 
   # -- Rules for determining the expected URLs of deployed services that use
   # the main hostname. See the [Repertoire
-  # documentation](https://repertoire.lsst.io/) for more information.
+  # documentation](https://phalanx.lsst.io/applications/repertoire/add-service.html)
+  # for more information.
   # @default -- See `values.yaml`
   rules:
     argocd:
@@ -240,6 +241,14 @@ config:
           - "dp02"
           - "dp1"
         template: "https://{{base_hostname}}/api/tap"
+    times-square:
+      - type: "internal"
+        name: "times-square"
+        template: "https://{{base_hostname}}/times-square/api"
+        openapi: "https://{{base_hostname}}/times-square/api/openapi.json"
+        versions:
+          v1:
+            template: "https://{{base_hostname}}/times-square/api/v1"
     vo-cutouts:
       - type: "data"
         name: "cutout"
