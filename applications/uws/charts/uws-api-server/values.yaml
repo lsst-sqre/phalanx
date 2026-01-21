@@ -63,6 +63,10 @@ workingVolume:
   mountPath: "/uws"
   # -- A possible sub path for the working volume mount
   subPath: ""
+# -- Potential resource specifications for specific butler (camera) jobs.
+# Each specialization should be labelled by the lower cased butler name
+# followed by a standard resources object.
+jobResources: {}
 # -- Central data volumes to be mounted in job containers.
 # Each object listed can have the following attributes defined:
 # _name_ (A label identifier for the data volume mount)
