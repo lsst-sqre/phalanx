@@ -13,6 +13,6 @@ spec:
   user:
     kind: "KafkaUser"
     apiGroup: "kafka.strimzi.io"
-    name: "tap-tls"
+    name: "tap"
     namespace: "sasquatch"
 {{- end }}
