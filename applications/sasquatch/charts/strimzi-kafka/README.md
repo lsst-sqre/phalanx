@@ -74,7 +74,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
 | kafkaExporter.showAllOffsets | bool | `true` | Whether to show all offsets or just offsets from connected groups |
 | kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
-| maintenanceTimeWindows | string | `"0 0 11-12 ? * *"` | 08:00–10:00 CLT (UTC−3) |
+| maintenanceTimeWindows | string | `"0 0 12-13 ? * *"` | 09:00–11:00 CLT (UTC−3) |
 | mirrormaker2.enabled | bool | `false` | Enable replication from the source cluster |
 | mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
 | mirrormaker2.replication.offset | string | earliest | Offset reset policy for the Mirror Maker consumer. Options are 'earliest' and 'latest'. |
