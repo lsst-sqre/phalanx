@@ -33,9 +33,9 @@ IVOA TAP service
 | config.gcsBucketType | string | `"GCS"` | GCS bucket type (GCS or S3) |
 | config.gcsBucketUrl | string | `"https://storage.googleapis.com"` | Base URL for results stored in GCS bucket |
 | config.jvmMaxHeapSize | string | `"31G"` | Java heap size, which will set the maximum size of the heap. Otherwise Java would determine it based on how much memory is available and black maths. |
-| config.kafka | object | `{"enabled":false,"kafkaUserName":"tap-tls","topics":{"jobDelete":"lsst.tap.job-delete","jobRun":"lsst.tap.job-run","jobStatus":"lsst.tap.job-status"}}` | Kafka configuration |
+| config.kafka | object | `{"enabled":false,"kafkaUserName":"tap","topics":{"jobDelete":"lsst.tap.job-delete","jobRun":"lsst.tap.job-run","jobStatus":"lsst.tap.job-status"}}` | Kafka configuration |
 | config.kafka.enabled | bool | `false` | Whether kafka is enabled |
-| config.kafka.kafkaUserName | string | "tap-tls" | Name of the KafkaUser to use for authentication |
+| config.kafka.kafkaUserName | string | "tap" | Name of the KafkaUser to use for authentication |
 | config.kafka.topics | object | `{"jobDelete":"lsst.tap.job-delete","jobRun":"lsst.tap.job-run","jobStatus":"lsst.tap.job-status"}` | Kafka topics |
 | config.kafka.topics.jobDelete | string | `"lsst.tap.job-delete"` | Job Delete topic |
 | config.kafka.topics.jobRun | string | `"lsst.tap.job-run"` | Job Run topic |
@@ -91,7 +91,7 @@ IVOA TAP service
 | tapSchema.external.port | int | `5432` | Port of external PostgreSQL server |
 | tapSchema.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP schema image |
 | tapSchema.image.repository | string | `"lsstsqre/tap-schema-mock"` | TAP schema image to ue. This must be overridden by each environment with the TAP schema for that environment. |
-| tapSchema.image.tag | string | `"w.2025.48"` | Tag of TAP schema image |
+| tapSchema.image.tag | string | `"w.2026.01"` | Tag of TAP schema image |
 | tapSchema.nodeSelector | object | `{}` | Node selection rules for the TAP schema database pod |
 | tapSchema.password | string | `"TAP_SCHEMA"` | Database password (only used for containerized) |
 | tapSchema.passwordKey | string | `"tap-schema-password"` | Secret key containing the database password |

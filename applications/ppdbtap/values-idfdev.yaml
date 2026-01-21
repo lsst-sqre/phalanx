@@ -8,7 +8,7 @@ cadc-tap:
     backend: "bigquery"
     kafka:
       enabled: true
-      kafkaUserName: "ppdbtap-tls"
+      kafkaUserName: "ppdbtap"
       topics:
         jobRun: "lsst.ppdbtap.job-run"
         jobStatus: "lsst.ppdbtap.job-status"
