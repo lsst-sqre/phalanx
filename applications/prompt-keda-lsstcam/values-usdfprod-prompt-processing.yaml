@@ -9,8 +9,7 @@ prompt-keda:
     topic: lsst-alerts-v10.0
 
   worker:
-    # TODO: need to adjust this once we know how leaky the LSSTCam pipeline is
-    restart: 7
+    restart: 10
 
   instrument:
     pipelines:
