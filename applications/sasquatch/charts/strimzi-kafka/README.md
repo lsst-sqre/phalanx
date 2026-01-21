@@ -61,6 +61,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled |
 | kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled |
 | kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled |
+| kafka.maintenanceTimeWindows | string | `"0 0 12-13 ? * *"` | 09:00–11:00 CLT (UTC−3) |
 | kafka.metadataVersion | string | `nil` | The KRaft metadata version used by the Kafka cluster. If the property is not set, it defaults to the metadata version that corresponds to the version property. |
 | kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
 | kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
@@ -74,7 +75,6 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
 | kafkaExporter.showAllOffsets | bool | `true` | Whether to show all offsets or just offsets from connected groups |
 | kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
-| maintenanceTimeWindows | string | `"0 0 12-13 ? * *"` | 09:00–11:00 CLT (UTC−3) |
 | mirrormaker2.enabled | bool | `false` | Enable replication from the source cluster |
 | mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
 | mirrormaker2.replication.offset | string | earliest | Offset reset policy for the Mirror Maker consumer. Options are 'earliest' and 'latest'. |
