@@ -146,7 +146,8 @@ config:
 
   # -- Rules for determining the expected URLs of deployed services that use
   # the main hostname. See the [Repertoire
-  # documentation](https://repertoire.lsst.io/) for more information.
+  # documentation](https://phalanx.lsst.io/applications/repertoire/add-service.html)
+  # for more information.
   # @default -- See `values.yaml`
   rules:
     argocd:
