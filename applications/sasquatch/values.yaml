@@ -314,9 +314,9 @@ kafdrop-remote:
   kafka:
     # -- Kafka user to use for kafdrop-remote
     user: "kafdrop-remote"
-    # -- Prefix of the remote topics kafdrop-remote has access to.
+    # -- Prefixes of the remote topics kafdrop-remote has access to.
     # @default -- None, must be set if enabled
-    topicPrefix: ""
+    topicPrefixes: null
 
 squareEvents:
   # -- Enable the Square Events subchart with topic and user configurations
