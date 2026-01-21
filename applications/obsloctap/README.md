@@ -27,7 +27,7 @@ Publish observing schedule
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
-| kafka.bootstrap | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka bootstrap server |
+| kafka.bootstrap | string | `"sasquatch-summit-kafka-bootstrap.lsst.codes:9094"` | Kafka bootstrap server |
 | kafka.group_id | string | `"obsloctap-consumer"` | Name of Kafka consumer group |
 | kafka.schema_url | string | `"http://sasquatch-schema-registry-remote.sasquatch:8081"` | Kafka Avro schema server URL |
 | kafka.username | string | `"obsloctap"` | Username for SASL_PLAIN authentication |
