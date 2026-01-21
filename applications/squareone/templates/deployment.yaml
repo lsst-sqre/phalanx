@@ -44,8 +44,6 @@ spec:
             httpGet:
               path: /
               port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
           env:
             - name: "SQUAREONE_CONFIG_PATH"
               value: "/etc/squareone/squareone.config.yaml"
