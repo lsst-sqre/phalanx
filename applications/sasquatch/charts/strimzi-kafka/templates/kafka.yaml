@@ -259,6 +259,8 @@ spec:
           name: kafka-metrics
           key: kafka-metrics-config.yml
     {{- end }}
+  maintenanceTimeWindows:
+    - {{ .Values.kafka.maintenanceTimeWindows | quote }}
   entityOperator:
     topicOperator: {}
     userOperator: {}
