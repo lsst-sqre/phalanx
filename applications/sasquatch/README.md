@@ -720,7 +720,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
 | strimzi-kafka.kafkaExporter.showAllOffsets | bool | `true` | Whether to show all offsets or just offsets from connected groups |
 | strimzi-kafka.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
-| strimzi-kafka.maintenanceTimeWindows | string | `"0 0 11-12 ? * *"` | 08:00–10:00 CLT (UTC−3) |
+| strimzi-kafka.maintenanceTimeWindows | string | `"0 0 12-13 ? * *"` | 09:00–11:00 CLT (UTC−3) |
 | strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication from the source cluster |
 | strimzi-kafka.mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
 | strimzi-kafka.mirrormaker2.replication.offset | string | earliest | Offset reset policy for the Mirror Maker consumer. Options are 'earliest' and 'latest'. |

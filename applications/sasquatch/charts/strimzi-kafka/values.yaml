@@ -113,8 +113,8 @@ kafka:
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
 
-# -- 08:00–10:00 CLT (UTC−3)
-maintenanceTimeWindows: "0 0 11-12 ? * *"
+# -- 09:00–11:00 CLT (UTC−3)
+maintenanceTimeWindows: "0 0 12-13 ? * *"
 # -- Allow specification of JVM options for both controllers and brokers
 jvmOptions: {}
 
