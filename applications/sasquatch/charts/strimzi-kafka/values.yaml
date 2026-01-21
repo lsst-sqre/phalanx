@@ -13,6 +13,9 @@ kafka:
   # -- Version of Kafka to deploy
   version: "4.0.0"
 
+  # -- 09:00–11:00 CLT (UTC−3)
+  maintenanceTimeWindows: "0 0 12-13 ? * *"
+
   # -- The KRaft metadata version used by the Kafka cluster.
   # If the property is not set, it defaults to the metadata version that corresponds to the version property.
   metadataVersion: null
@@ -113,8 +116,6 @@ kafka:
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
 
-# -- 09:00–11:00 CLT (UTC−3)
-maintenanceTimeWindows: "0 0 12-13 ? * *"
 # -- Allow specification of JVM options for both controllers and brokers
 jvmOptions: {}
 
