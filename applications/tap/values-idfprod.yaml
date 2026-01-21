@@ -2,11 +2,6 @@ cadc-tap:
   replicaCount: 4
 
   config:
-    qserv:
-      host: "qserv-prod.slac.stanford.edu:4040"
-      jdbcParams: "?enabledTLSProtocols=TLSv1.3"
-      passwordEnabled: true
-
     kafka:
       enabled: true
 
