@@ -33,6 +33,7 @@ config:
     imageSelector: "weekly"
     # Format reference for imageSelector: "reference" to pin weekly image:
     # imageReference: "docker-registry.slac.stanford.edu/lsstsqre/sciplat-lab:w_2025_41"
+    imageReference: "ghcr.io/lsst-sqre/sciplat-lab:w_2026_02"
 
 # Use SSD for Redis storage.
 redis:
