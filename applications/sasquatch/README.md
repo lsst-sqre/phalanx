@@ -81,7 +81,7 @@ Rubin Observatory's telemetry service
 | influxdb.setDefaultUser.enabled | bool | `true` | Whether the default InfluxDB user is set |
 | influxdb.setDefaultUser.user.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
 | kafdrop-remote.enabled | bool | `false` | Whether to enable the kafdrop-remote, an instance of kafdrop for remote topics |
-| kafdrop-remote.kafka.topicPrefix | string | None, must be set if enabled | Prefix of the remote topics kafdrop-remote has access to. |
+| kafdrop-remote.kafka.topicPrefixes | string | None, must be set if enabled | Prefixes of the remote topics kafdrop-remote has access to. |
 | kafdrop-remote.kafka.user | string | `"kafdrop-remote"` | Kafka user to use for kafdrop-remote |
 | kafdrop.enabled | bool | `true` | Whether to enable the kafdrop subchart |
 | kafka-connect-manager.enabled | bool | `false` | Whether to enable the Kafka Connect Manager |
@@ -484,7 +484,7 @@ Rubin Observatory's telemetry service
 | kafdrop.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
 | kafdrop.jvm.opts | string | `""` | JVM options |
 | kafdrop.kafka.broker | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Bootstrap list of Kafka host/port pairs |
-| kafdrop.kafka.topicPrefix | string | "lsst" | Kafka topic prefix to filter topics by |
+| kafdrop.kafka.topicPrefixes | list | ["lsst"] | Kafka topic prefixes to filter topics by |
 | kafdrop.kafka.user | string | kafdrop | Kafdrop Kafka user |
 | kafdrop.logging.kafdrop.config.level | string | `"WARN"` | Log level for Kafdrop config package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
 | kafdrop.logging.kafdrop.controller.level | string | `"INFO"` | Log level for Kafdrop controller package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
@@ -515,7 +515,7 @@ Rubin Observatory's telemetry service
 | kafdrop-remote.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
 | kafdrop-remote.jvm.opts | string | `""` | JVM options |
 | kafdrop-remote.kafka.broker | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Bootstrap list of Kafka host/port pairs |
-| kafdrop-remote.kafka.topicPrefix | string | "lsst" | Kafka topic prefix to filter topics by |
+| kafdrop-remote.kafka.topicPrefixes | list | ["lsst"] | Kafka topic prefixes to filter topics by |
 | kafdrop-remote.kafka.user | string | kafdrop | Kafdrop Kafka user |
 | kafdrop-remote.logging.kafdrop.config.level | string | `"WARN"` | Log level for Kafdrop config package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
 | kafdrop-remote.logging.kafdrop.controller.level | string | `"INFO"` | Log level for Kafdrop controller package logger (TRACE, DEBUG, INFO, WARN, ERROR) |
