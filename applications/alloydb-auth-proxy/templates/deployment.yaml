@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "alloydb-auth-proxy"
+  labels:
+    {{- include "alloydb-auth-proxy.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "alloydb-auth-proxy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "alloydb-auth-proxy.selectorLabels" . | nindent 8 }}
+        # The imaging caching agent deployed at USDF doesn't work with gcr.io
+        # container registry.  This label disables the proxy.
+        kube-image-keeper.enix.io/image-caching-policy: ignore
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          command: [
+            "/alloydb-auth-proxy",
+            "--public-ip",
+            "--address", "0.0.0.0",
+            "--credentials-file", "/opt/lsst/secrets/gcs-creds",
+            "{{ .Values.config.instance_uri }}"
+          ]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: "secrets"
+              mountPath: "/opt/lsst/secrets"
+          ports:
+            - name: "postgres"
+              containerPort: 5432
+              protocol: "TCP"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+      volumes:
+        - name: "secrets"
+          secret:
+            secretName: "alloydb-auth-proxy"
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
