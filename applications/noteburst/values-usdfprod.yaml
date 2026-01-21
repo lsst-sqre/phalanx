@@ -30,7 +30,7 @@ config:
       - username: "bot-noteburst18"
       - username: "bot-noteburst19"
       - username: "bot-noteburst20"
-    imageSelector: "weekly"
+    imageSelector: "reference"
     # Format reference for imageSelector: "reference" to pin weekly image:
     # imageReference: "docker-registry.slac.stanford.edu/lsstsqre/sciplat-lab:w_2025_41"
     imageReference: "ghcr.io/lsst-sqre/sciplat-lab:w_2026_02"
