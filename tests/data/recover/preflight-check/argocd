@@ -1,0 +1,22 @@
+Some source version
+Source cluster with context: some-old-context reachable with kubectl.
+Some dest version
+Destination cluster with context: some-new-context reachable with kubectl.
+LoadBalancer Service ingress-nginx/ingress-nginx-controller in source cluster with context: some-old-context declares loadBalancerIP:35.225.112.77, and that IP is static in Google Cloud.
+Pre-flight check failed. Please correct these errors before starting the cluster recovery process:
+eups-distributor is unsynced in ArgoCD in source cluster with context: some-old-context
+giftless is unsynced in ArgoCD in source cluster with context: some-old-context
+google-cloud-observability is unsynced in ArgoCD in source cluster with context: some-old-context
+jira-data-proxy is unsynced in ArgoCD in source cluster with context: some-old-context
+mobu is unsynced in ArgoCD in source cluster with context: some-old-context
+onepassword-connect is unsynced in ArgoCD in source cluster with context: some-old-context
+ook is unsynced in ArgoCD in source cluster with context: some-old-context
+repertoire is unsynced in ArgoCD in source cluster with context: some-old-context
+sasquatch is unsynced in ArgoCD in source cluster with context: some-old-context
+squarebot is unsynced in ArgoCD in source cluster with context: some-old-context
+squareone is unsynced in ArgoCD in source cluster with context: some-old-context
+templatebot is unsynced in ArgoCD in source cluster with context: some-old-context
+turborepo-cache is unsynced in ArgoCD in source cluster with context: some-old-context
+unfurlbot is unsynced in ArgoCD in source cluster with context: some-old-context
+vault is unsynced in ArgoCD in source cluster with context: some-old-context
+vault-secrets-operator is unsynced in ArgoCD in source cluster with context: some-old-context

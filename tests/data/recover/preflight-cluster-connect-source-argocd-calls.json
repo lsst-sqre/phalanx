@@ -1,0 +1,16 @@
+[
+  {
+    "args": [
+      "login",
+      "--plaintext",
+      "--username",
+      "admin",
+      "--password",
+      "6f80a0863ae18da19d53e99b9ce67f82f54bc6164f368b6863471002992f0063",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  }
+]

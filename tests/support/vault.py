@@ -294,6 +294,9 @@ class MockVaultClient:
         """
         return {"data": {"keys": list(self._data[path].keys())}}
 
+    def login(self, role_id: str, secret_id: str) -> None:
+        """Log in successfully."""
+
     def lookup_accessor(self, accessor: str) -> dict[str, Any]:
         """Look up a token by accessor.
 

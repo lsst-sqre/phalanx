@@ -1,0 +1,1 @@
+{"spec": {"containers": [{"name": "busybox", "image": "busybox", "command": ["/bin/sh", "-c", "grep cluster.id /disk/kafka-log*/meta.properties | awk -F'=' '{print $2}'"], "volumeMounts": [{"name": "disk", "mountPath": "/disk"}]}], "volumes": [{"name": "disk", "persistentVolumeClaim": {"claimName": "data-0-sasquatch-kafka-0"}}]}}

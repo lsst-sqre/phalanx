@@ -1,0 +1,777 @@
+[
+  {
+    "metadata": {
+      "name": "cert-manager",
+      "namespace": "argocd",
+      "uid": "10c7d943-0eec-46e6-b4bf-bcb436b2c846",
+      "resourceVersion": "1769096593020351004",
+      "generation": 233,
+      "creationTimestamp": "2026-01-22T03:00:58Z",
+      "labels": {
+        "argocd.argoproj.io/instance": "roundtable"
+      },
+      "annotations": {
+        "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"argoproj.io/v1alpha1\",\"kind\":\"Application\",\"metadata\":{\"annotations\":{},\"finalizers\":[\"resources-finalizer.argocd.argoproj.io\"],\"labels\":{\"argocd.argoproj.io/instance\":\"roundtable\"},\"name\":\"cert-manager\",\"namespace\":\"argocd\"},\"spec\":{\"destination\":{\"namespace\":\"cert-manager\",\"server\":\"https://kubernetes.default.svc\"},\"ignoreDifferences\":[{\"group\":\"admissionregistration.k8s.io\",\"jsonPointers\":[\"/webhooks/0/clientConfig/caBundle\"],\"kind\":\"MutatingWebhookConfiguration\"},{\"group\":\"admissionregistration.k8s.io\",\"jsonPointers\":[\"/webhooks/0/clientConfig/caBundle\"],\"kind\":\"ValidatingWebhookConfiguration\"}],\"project\":\"infrastructure\",\"source\":{\"helm\":{\"parameters\":[{\"name\":\"global.vaultSecretsPath\",\"value\":\"secret/phalanx/roundtable-dev\"}],\"valueFiles\":[\"values.yaml\",\"values-roundtable-dev.yaml\"]},\"path\":\"applications/cert-manager\",\"repoURL\":\"https://github.com/lsst-sqre/phalanx.git\",\"targetRevision\":\"main\"}}}\n"
+      },
+      "finalizers": [
+        "resources-finalizer.argocd.argoproj.io"
+      ],
+      "managedFields": [
+        {
+          "manager": "argocd-controller",
+          "operation": "Update",
+          "apiVersion": "argoproj.io/v1alpha1",
+          "time": "2026-01-22T03:00:58Z",
+          "fieldsType": "FieldsV1",
+          "fieldsV1": {
+            "f:metadata": {
+              "f:annotations": {
+                ".": {},
+                "f:kubectl.kubernetes.io/last-applied-configuration": {}
+              },
+              "f:finalizers": {
+                ".": {},
+                "v:\"resources-finalizer.argocd.argoproj.io\"": {}
+              },
+              "f:labels": {
+                ".": {},
+                "f:argocd.argoproj.io/instance": {}
+              }
+            },
+            "f:spec": {
+              ".": {},
+              "f:destination": {
+                ".": {},
+                "f:namespace": {},
+                "f:server": {}
+              },
+              "f:ignoreDifferences": {},
+              "f:project": {},
+              "f:source": {
+                ".": {},
+                "f:helm": {
+                  ".": {},
+                  "f:parameters": {},
+                  "f:valueFiles": {}
+                },
+                "f:path": {},
+                "f:repoURL": {},
+                "f:targetRevision": {}
+              }
+            }
+          }
+        },
+        {
+          "manager": "argocd-server",
+          "operation": "Update",
+          "apiVersion": "argoproj.io/v1alpha1",
+          "time": "2026-01-22T03:29:42Z",
+          "fieldsType": "FieldsV1",
+          "fieldsV1": {
+            "f:status": {
+              "f:sourceHydrator": {},
+              "f:summary": {}
+            }
+          }
+        },
+        {
+          "manager": "argocd-application-controller",
+          "operation": "Update",
+          "apiVersion": "argoproj.io/v1alpha1",
+          "time": "2026-01-22T15:43:13Z",
+          "fieldsType": "FieldsV1",
+          "fieldsV1": {
+            "f:status": {
+              ".": {},
+              "f:controllerNamespace": {},
+              "f:health": {
+                ".": {},
+                "f:lastTransitionTime": {},
+                "f:status": {}
+              },
+              "f:history": {},
+              "f:operationState": {
+                ".": {},
+                "f:finishedAt": {},
+                "f:message": {},
+                "f:operation": {
+                  ".": {},
+                  "f:initiatedBy": {
+                    ".": {},
+                    "f:username": {}
+                  },
+                  "f:retry": {},
+                  "f:sync": {
+                    ".": {},
+                    "f:resources": {},
+                    "f:revision": {},
+                    "f:source": {
+                      ".": {},
+                      "f:helm": {
+                        ".": {},
+                        "f:parameters": {},
+                        "f:valueFiles": {}
+                      },
+                      "f:path": {},
+                      "f:repoURL": {},
+                      "f:targetRevision": {}
+                    },
+                    "f:syncStrategy": {
+                      ".": {},
+                      "f:hook": {}
+                    }
+                  }
+                },
+                "f:phase": {},
+                "f:startedAt": {},
+                "f:syncResult": {
+                  ".": {},
+                  "f:resources": {},
+                  "f:revision": {},
+                  "f:source": {
+                    ".": {},
+                    "f:helm": {
+                      ".": {},
+                      "f:parameters": {},
+                      "f:valueFiles": {}
+                    },
+                    "f:path": {},
+                    "f:repoURL": {},
+                    "f:targetRevision": {}
+                  }
+                }
+              },
+              "f:reconciledAt": {},
+              "f:resourceHealthSource": {},
+              "f:resources": {},
+              "f:sourceType": {},
+              "f:summary": {
+                "f:images": {}
+              },
+              "f:sync": {
+                ".": {},
+                "f:comparedTo": {
+                  ".": {},
+                  "f:destination": {
+                    ".": {},
+                    "f:namespace": {},
+                    "f:server": {}
+                  },
+                  "f:ignoreDifferences": {},
+                  "f:source": {
+                    ".": {},
+                    "f:helm": {
+                      ".": {},
+                      "f:parameters": {},
+                      "f:valueFiles": {}
+                    },
+                    "f:path": {},
+                    "f:repoURL": {},
+                    "f:targetRevision": {}
+                  }
+                },
+                "f:revision": {},
+                "f:status": {}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "spec": {
+      "source": {
+        "repoURL": "https://github.com/lsst-sqre/phalanx.git",
+        "path": "applications/cert-manager",
+        "targetRevision": "main",
+        "helm": {
+          "valueFiles": [
+            "values.yaml",
+            "values-roundtable-dev.yaml"
+          ],
+          "parameters": [
+            {
+              "name": "global.vaultSecretsPath",
+              "value": "secret/phalanx/roundtable-dev"
+            }
+          ]
+        }
+      },
+      "destination": {
+        "server": "https://kubernetes.default.svc",
+        "namespace": "cert-manager"
+      },
+      "project": "infrastructure",
+      "ignoreDifferences": [
+        {
+          "group": "admissionregistration.k8s.io",
+          "kind": "MutatingWebhookConfiguration",
+          "jsonPointers": [
+            "/webhooks/0/clientConfig/caBundle"
+          ]
+        },
+        {
+          "group": "admissionregistration.k8s.io",
+          "kind": "ValidatingWebhookConfiguration",
+          "jsonPointers": [
+            "/webhooks/0/clientConfig/caBundle"
+          ]
+        }
+      ]
+    },
+    "status": {
+      "resources": [
+        {
+          "version": "v1",
+          "kind": "Service",
+          "namespace": "cert-manager",
+          "name": "cert-manager",
+          "status": "Synced"
+        },
+        {
+          "version": "v1",
+          "kind": "Service",
+          "namespace": "cert-manager",
+          "name": "cert-manager-cainjector",
+          "status": "Synced"
+        },
+        {
+          "version": "v1",
+          "kind": "Service",
+          "namespace": "cert-manager",
+          "name": "cert-manager-webhook",
+          "status": "Synced"
+        },
+        {
+          "version": "v1",
+          "kind": "ServiceAccount",
+          "namespace": "cert-manager",
+          "name": "cert-manager",
+          "status": "Synced"
+        },
+        {
+          "version": "v1",
+          "kind": "ServiceAccount",
+          "namespace": "cert-manager",
+          "name": "cert-manager-cainjector",
+          "status": "Synced"
+        },
+        {
+          "version": "v1",
+          "kind": "ServiceAccount",
+          "namespace": "cert-manager",
+          "name": "cert-manager-webhook",
+          "status": "Synced"
+        },
+        {
+          "group": "admissionregistration.k8s.io",
+          "version": "v1",
+          "kind": "MutatingWebhookConfiguration",
+          "name": "cert-manager-webhook",
+          "status": "Synced"
+        },
+        {
+          "group": "admissionregistration.k8s.io",
+          "version": "v1",
+          "kind": "ValidatingWebhookConfiguration",
+          "name": "cert-manager-webhook",
+          "status": "Synced"
+        },
+        {
+          "group": "apiextensions.k8s.io",
+          "version": "v1",
+          "kind": "CustomResourceDefinition",
+          "name": "certificaterequests.cert-manager.io",
+          "status": "Synced"
+        },
+        {
+          "group": "apiextensions.k8s.io",
+          "version": "v1",
+          "kind": "CustomResourceDefinition",
+          "name": "certificates.cert-manager.io",
+          "status": "Synced"
+        },
+        {
+          "group": "apiextensions.k8s.io",
+          "version": "v1",
+          "kind": "CustomResourceDefinition",
+          "name": "challenges.acme.cert-manager.io",
+          "status": "Synced"
+        },
+        {
+          "group": "apiextensions.k8s.io",
+          "version": "v1",
+          "kind": "CustomResourceDefinition",
+          "name": "clusterissuers.cert-manager.io",
+          "status": "Synced"
+        },
+        {
+          "group": "apiextensions.k8s.io",
+          "version": "v1",
+          "kind": "CustomResourceDefinition",
+          "name": "issuers.cert-manager.io",
+          "status": "Synced"
+        },
+        {
+          "group": "apiextensions.k8s.io",
+          "version": "v1",
+          "kind": "CustomResourceDefinition",
+          "name": "orders.acme.cert-manager.io",
+          "status": "Synced"
+        },
+        {
+          "group": "apps",
+          "version": "v1",
+          "kind": "Deployment",
+          "namespace": "cert-manager",
+          "name": "cert-manager",
+          "status": "Synced"
+        },
+        {
+          "group": "apps",
+          "version": "v1",
+          "kind": "Deployment",
+          "namespace": "cert-manager",
+          "name": "cert-manager-cainjector",
+          "status": "Synced"
+        },
+        {
+          "group": "apps",
+          "version": "v1",
+          "kind": "Deployment",
+          "namespace": "cert-manager",
+          "name": "cert-manager-webhook",
+          "status": "Synced"
+        },
+        {
+          "group": "cert-manager.io",
+          "version": "v1",
+          "kind": "ClusterIssuer",
+          "name": "letsencrypt-dns",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRole",
+          "name": "cert-manager-cainjector",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRole",
+          "name": "cert-manager-cluster-view",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-approve:cert-manager-io",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-certificates",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-certificatesigningrequests",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-challenges",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-clusterissuers",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-ingress-shim",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-issuers",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-orders",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRole",
+          "name": "cert-manager-edit",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRole",
+          "name": "cert-manager-view",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRole",
+          "name": "cert-manager-webhook:subjectaccessreviews",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-cainjector",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-approve:cert-manager-io",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-certificates",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-certificatesigningrequests",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-challenges",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-clusterissuers",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-ingress-shim",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-issuers",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-orders",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-webhook:subjectaccessreviews",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "Role",
+          "namespace": "cert-manager",
+          "name": "cert-manager-tokenrequest",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "Role",
+          "namespace": "cert-manager",
+          "name": "cert-manager-webhook:dynamic-serving",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "Role",
+          "namespace": "kube-system",
+          "name": "cert-manager-cainjector:leaderelection",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "Role",
+          "namespace": "kube-system",
+          "name": "cert-manager:leaderelection",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "RoleBinding",
+          "namespace": "cert-manager",
+          "name": "cert-manager-tokenrequest",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "RoleBinding",
+          "namespace": "cert-manager",
+          "name": "cert-manager-webhook:dynamic-serving",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "RoleBinding",
+          "namespace": "kube-system",
+          "name": "cert-manager-cainjector:leaderelection",
+          "status": "Synced"
+        },
+        {
+          "group": "rbac.authorization.k8s.io",
+          "version": "v1",
+          "kind": "RoleBinding",
+          "namespace": "kube-system",
+          "name": "cert-manager:leaderelection",
+          "status": "Synced"
+        },
+        {
+          "group": "ricoberger.de",
+          "version": "v1alpha1",
+          "kind": "VaultSecret",
+          "namespace": "cert-manager",
+          "name": "cert-manager",
+          "status": "Synced"
+        }
+      ],
+      "sync": {
+        "status": "Synced",
+        "comparedTo": {
+          "source": {
+            "repoURL": "https://github.com/lsst-sqre/phalanx.git",
+            "path": "applications/cert-manager",
+            "targetRevision": "main",
+            "helm": {
+              "valueFiles": [
+                "values.yaml",
+                "values-roundtable-dev.yaml"
+              ],
+              "parameters": [
+                {
+                  "name": "global.vaultSecretsPath",
+                  "value": "secret/phalanx/roundtable-dev"
+                }
+              ]
+            }
+          },
+          "destination": {
+            "server": "https://kubernetes.default.svc",
+            "namespace": "cert-manager"
+          },
+          "ignoreDifferences": [
+            {
+              "group": "admissionregistration.k8s.io",
+              "kind": "MutatingWebhookConfiguration",
+              "jsonPointers": [
+                "/webhooks/0/clientConfig/caBundle"
+              ]
+            },
+            {
+              "group": "admissionregistration.k8s.io",
+              "kind": "ValidatingWebhookConfiguration",
+              "jsonPointers": [
+                "/webhooks/0/clientConfig/caBundle"
+              ]
+            }
+          ]
+        },
+        "revision": "a8e3abce1871828204fb6382fc0819e80ab1cf9b"
+      },
+      "health": {
+        "status": "Healthy",
+        "lastTransitionTime": "2026-01-22T03:05:25Z"
+      },
+      "history": [
+        {
+          "revision": "a8e3abce1871828204fb6382fc0819e80ab1cf9b",
+          "deployedAt": "2026-01-22T03:05:35Z",
+          "id": 0,
+          "source": {
+            "repoURL": "https://github.com/lsst-sqre/phalanx.git",
+            "path": "applications/cert-manager",
+            "targetRevision": "main",
+            "helm": {
+              "valueFiles": [
+                "values.yaml",
+                "values-roundtable-dev.yaml"
+              ],
+              "parameters": [
+                {
+                  "name": "global.vaultSecretsPath",
+                  "value": "secret/phalanx/roundtable-dev"
+                }
+              ]
+            }
+          },
+          "deployStartedAt": "2026-01-22T03:05:22Z",
+          "initiatedBy": {
+            "username": "admin"
+          }
+        },
+        {
+          "revision": "a8e3abce1871828204fb6382fc0819e80ab1cf9b",
+          "deployedAt": "2026-01-22T03:11:10Z",
+          "id": 1,
+          "source": {
+            "repoURL": "https://github.com/lsst-sqre/phalanx.git",
+            "path": "applications/cert-manager",
+            "targetRevision": "main",
+            "helm": {
+              "valueFiles": [
+                "values.yaml",
+                "values-roundtable-dev.yaml"
+              ],
+              "parameters": [
+                {
+                  "name": "global.vaultSecretsPath",
+                  "value": "secret/phalanx/roundtable-dev"
+                }
+              ]
+            }
+          },
+          "deployStartedAt": "2026-01-22T03:10:55Z",
+          "initiatedBy": {
+            "username": "admin"
+          }
+        }
+      ],
+      "reconciledAt": "2026-01-22T15:43:12Z",
+      "operationState": {
+        "operation": {
+          "sync": {
+            "revision": "a8e3abce1871828204fb6382fc0819e80ab1cf9b",
+            "syncStrategy": {
+              "hook": {}
+            },
+            "resources": [
+              {
+                "group": "ricoberger.de",
+                "kind": "VaultSecret",
+                "name": "cert-manager",
+                "namespace": "cert-manager"
+              }
+            ],
+            "source": {
+              "repoURL": "https://github.com/lsst-sqre/phalanx.git",
+              "path": "applications/cert-manager",
+              "targetRevision": "main",
+              "helm": {
+                "valueFiles": [
+                  "values.yaml",
+                  "values-roundtable-dev.yaml"
+                ],
+                "parameters": [
+                  {
+                    "name": "global.vaultSecretsPath",
+                    "value": "secret/phalanx/roundtable-dev"
+                  }
+                ]
+              }
+            }
+          },
+          "initiatedBy": {
+            "username": "admin"
+          },
+          "retry": {}
+        },
+        "phase": "Succeeded",
+        "message": "successfully synced (all tasks run)",
+        "syncResult": {
+          "resources": [
+            {
+              "group": "ricoberger.de",
+              "version": "v1alpha1",
+              "kind": "VaultSecret",
+              "namespace": "cert-manager",
+              "name": "cert-manager",
+              "status": "Synced",
+              "message": "vaultsecret.ricoberger.de/cert-manager unchanged",
+              "hookPhase": "Running",
+              "syncPhase": "Sync"
+            }
+          ],
+          "revision": "a8e3abce1871828204fb6382fc0819e80ab1cf9b",
+          "source": {
+            "repoURL": "https://github.com/lsst-sqre/phalanx.git",
+            "path": "applications/cert-manager",
+            "targetRevision": "main",
+            "helm": {
+              "valueFiles": [
+                "values.yaml",
+                "values-roundtable-dev.yaml"
+              ],
+              "parameters": [
+                {
+                  "name": "global.vaultSecretsPath",
+                  "value": "secret/phalanx/roundtable-dev"
+                }
+              ]
+            }
+          }
+        },
+        "startedAt": "2026-01-22T03:29:41Z",
+        "finishedAt": "2026-01-22T03:29:41Z"
+      },
+      "sourceType": "Helm",
+      "summary": {
+        "images": [
+          "quay.io/jetstack/cert-manager-cainjector:v1.19.2",
+          "quay.io/jetstack/cert-manager-controller:v1.19.2",
+          "quay.io/jetstack/cert-manager-webhook:v1.19.2"
+        ]
+      },
+      "resourceHealthSource": "appTree",
+      "controllerNamespace": "argocd",
+      "sourceHydrator": {}
+    }
+  }
+]
