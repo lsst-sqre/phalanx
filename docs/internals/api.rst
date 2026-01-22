@@ -31,6 +31,9 @@ This API is only intended for use within the Phalanx code itself.
 .. automodapi:: phalanx.models.applications
    :include-all-objects:
 
+.. automodapi:: phalanx.models.argocd
+   :include-all-objects:
+
 .. automodapi:: phalanx.models.environments
    :include-all-objects:
 
@@ -55,6 +58,15 @@ This API is only intended for use within the Phalanx code itself.
 .. automodapi:: phalanx.services.environment
    :include-all-objects:
 
+.. automodapi:: phalanx.services.gke_recovery
+   :include-all-objects:
+
+.. automodapi:: phalanx.services.google_cloud
+   :include-all-objects:
+
+.. automodapi:: phalanx.services.recovery_environment
+   :include-all-objects:
+
 .. automodapi:: phalanx.services.secrets
    :include-all-objects:
 
@@ -68,6 +80,9 @@ This API is only intended for use within the Phalanx code itself.
    :include-all-objects:
 
 .. automodapi:: phalanx.storage.config
+   :include-all-objects:
+
+.. automodapi:: phalanx.storage.google_cloud_api
    :include-all-objects:
 
 .. automodapi:: phalanx.storage.helm

@@ -13,9 +13,14 @@ from ..constants import (
 )
 
 __all__ = [
+    "Condition",
+    "ConditionStatus",
     "CronJob",
     "Deployment",
     "NamespacedResource",
+    "NamespacedResourceList",
+    "PersistentVolume",
+    "Resource",
     "ResourceList",
     "Service",
     "ServiceExternalTrafficPolicy",
@@ -25,6 +30,7 @@ __all__ = [
     "ServiceTypePatch",
     "ServiceTypeSpecPatch",
     "StatefulSet",
+    "Status",
     "Workload",
 ]
 
@@ -49,16 +55,42 @@ class ServiceExternalTrafficPolicy(Enum):
     """Local externalTrafficPolicy."""
 
 
-class NamespacedResource(BaseModel):
-    """Properties common to a namespaced Kubernetes resource."""
+class ConditionStatus(Enum):
+    """Valid values for the spec.type field of a Service."""
+
+    TRUE = "True"
+    """True condition status."""
+
+    FALSE = "False"
+    """False condition status."""
+
+    UNKNOWN = "Unknown"
+    """Unknown condition status."""
+
+
+class Condition(BaseModel):
+    """A Kubernetes condition."""
+
+    type: str
+    """The type of condition."""
+
+    status: ConditionStatus
+    """The status of the condition."""
+
+
+class Status(BaseModel):
+    """The status field of a Kubernetes resource."""
+
+    conditions: list[Condition] = []
+
+
+class Resource(BaseModel):
+    """Properties common to all Kubernetes resources."""
 
     model_config = ConfigDict(validate_by_name=True)
 
     kind: str
     """The kind of Kubernetes resource."""
-
-    namespace: str = Field(validation_alias=AliasPath("metadata", "namespace"))
-    """The namespace the resource is in."""
 
     name: str = Field(validation_alias=AliasPath("metadata", "name"))
     """The name of the resource."""
@@ -67,6 +99,28 @@ class NamespacedResource(BaseModel):
         default=[], validation_alias=AliasPath("metadata", "finalizers")
     )
     """Finalizers on this resource."""
+
+    status: Status | None = None
+    """Information about the status of this resource."""
+
+    def is_ready(self) -> bool:
+        """Return whether or not this resource is ready."""
+        if not self.status:
+            return False
+        for condition in self.status.conditions:
+            if (
+                condition.type == "Ready"
+                and condition.status == ConditionStatus.TRUE
+            ):
+                return True
+        return False
+
+
+class NamespacedResource(Resource):
+    """Properties common to all namespaced Kubernetes resources."""
+
+    namespace: str = Field(validation_alias=AliasPath("metadata", "namespace"))
+    """The namespace the resource is in."""
 
     def get_kind_name(self) -> str:
         """Get the kind-qualified name of this resource.
@@ -79,7 +133,17 @@ class NamespacedResource(BaseModel):
         return f"{self.kind}/{self.name}"
 
 
-class ResourceList[T: NamespacedResource](BaseModel):
+class NamespacedResourceList[T: NamespacedResource](BaseModel):
+    """A list of namespaced resources returned from a kubectl command."""
+
+    items: list[T]
+    """A list of Kubernetes resources."""
+
+    kind: Literal["List"]
+    """The kind field will always be List."""
+
+
+class ResourceList[T: Resource](BaseModel):
     """A list of resources returned from a kubectl command."""
 
     items: list[T]
@@ -87,6 +151,13 @@ class ResourceList[T: NamespacedResource](BaseModel):
 
     kind: Literal["List"]
     """The kind field will always be List."""
+
+
+class PersistentVolume(Resource):
+    """A PersistentVolume kuberentes resource."""
+
+    kind: Literal["PersistentVolume"]
+    """The kind field will always be PersistentVolume."""
 
 
 class CronJob(NamespacedResource):

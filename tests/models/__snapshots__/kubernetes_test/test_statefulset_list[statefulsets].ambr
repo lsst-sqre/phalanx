@@ -1,0 +1,4 @@
+# serializer version: 1
+# name: test_statefulset_list[statefulsets]
+  NamespacedResourceList[StatefulSet](items=[StatefulSet(kind='StatefulSet', name='gafaelfawr-redis', finalizers=[], status=Status(conditions=[]), namespace='gafaelfawr', replicas=1, previous_replica_count=None, pervious_replica_count=None), StatefulSet(kind='StatefulSet', name='gafaelfawr-redis-ephemeral', finalizers=[], status=Status(conditions=[]), namespace='gafaelfawr', replicas=1, previous_replica_count=None, pervious_replica_count=None), StatefulSet(kind='StatefulSet', name='argocd', finalizers=[], status=Status(conditions=[]), namespace='argocd', replicas=1, previous_replica_count=None, pervious_replica_count=None)], kind='List')
+# ---
