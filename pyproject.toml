@@ -32,6 +32,10 @@ dependencies = [
     "pyyaml",
     "rubin-gafaelfawr",
     "safir>5",
+    "google-cloud-gke-backup<1",
+    "google-cloud-compute-v1beta<1",
+    "google-cloud-container>=2,<3",
+    "requests==2.32.4"
 ]
 
 [project.scripts]
