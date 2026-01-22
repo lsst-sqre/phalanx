@@ -1,0 +1,176 @@
+{
+    "apiVersion": "kafka.strimzi.io/v1",
+    "kind": "Kafka",
+    "metadata": {
+        "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kafka.strimzi.io/v1beta2\",\"kind\":\"Kafka\",\"metadata\":{\"annotations\":{\"strimzi.io/kraft\":\"enabled\",\"strimzi.io/node-pools\":\"enabled\"},\"labels\":{\"argocd.argoproj.io/instance\":\"sasquatch\"},\"name\":\"sasquatch\",\"namespace\":\"sasquatch\"},\"spec\":{\"entityOperator\":{\"template\":{\"topicOperatorContainer\":{\"env\":[{\"name\":\"STRIMZI_MAX_QUEUE_SIZE\",\"value\":\"8192\"}]}},\"topicOperator\":{},\"userOperator\":{}},\"kafka\":{\"authorization\":{\"superUsers\":[\"kafka-admin\"],\"type\":\"simple\"},\"config\":{\"default.replication.factor\":3,\"log.retention.minutes\":4320,\"message.max.bytes\":10485760,\"min.insync.replicas\":2,\"offsets.retention.minutes\":4320,\"offsets.topic.replication.factor\":3,\"replica.fetch.max.bytes\":10485760,\"transaction.state.log.min.isr\":2,\"transaction.state.log.replication.factor\":3},\"listeners\":[{\"authentication\":{\"type\":\"scram-sha-512\"},\"name\":\"plain\",\"port\":9092,\"tls\":false,\"type\":\"internal\"},{\"authentication\":{\"type\":\"tls\"},\"name\":\"tls\",\"port\":9093,\"tls\":true,\"type\":\"internal\"},{\"authentication\":{\"type\":\"scram-sha-512\"},\"configuration\":{\"allocateLoadBalancerNodePorts\":true,\"bootstrap\":{\"loadBalancerIP\":\"34.71.118.138\"},\"brokerCertChainAndKey\":{\"certificate\":\"tls.crt\",\"key\":\"tls.key\",\"secretName\":\"sasquatch-external-tls\"},\"brokers\":[{\"advertisedHost\":\"sasquatch-dev-kafka-0.lsst.cloud\",\"advertisedPort\":9094,\"allocateLoadBalancerNodePorts\":null,\"annotations\":null,\"broker\":0,\"loadBalancerIP\":\"34.46.163.104\"},{\"advertisedHost\":\"sasquatch-dev-kafka-1.lsst.cloud\",\"advertisedPort\":9094,\"allocateLoadBalancerNodePorts\":null,\"annotations\":null,\"broker\":1,\"loadBalancerIP\":\"35.202.38.197\"},{\"advertisedHost\":\"sasquatch-dev-kafka-2.lsst.cloud\",\"advertisedPort\":9094,\"allocateLoadBalancerNodePorts\":null,\"annotations\":null,\"broker\":2,\"loadBalancerIP\":\"34.45.111.124\"}]},\"name\":\"external\",\"port\":9094,\"tls\":true,\"type\":\"loadbalancer\"}],\"version\":\"4.1.0\"},\"maintenanceTimeWindows\":[\"0 0 12-13 ? * *\"]}}\n",
+            "strimzi.io/kraft": "enabled",
+            "strimzi.io/node-pools": "enabled",
+            "strimzi.io/skip-broker-scaledown-check": "true"
+        },
+        "creationTimestamp": "2026-02-05T02:31:44Z",
+        "generation": 1,
+        "labels": {
+            "argocd.argoproj.io/instance": "sasquatch"
+        },
+        "name": "sasquatch",
+        "namespace": "sasquatch",
+        "resourceVersion": "1778643869030127022",
+        "uid": "14c90cd2-4f94-42f6-b960-93e1aa8d0eba"
+    },
+    "spec": {
+        "entityOperator": {
+            "template": {
+                "topicOperatorContainer": {
+                    "env": [
+                        {
+                            "name": "STRIMZI_MAX_QUEUE_SIZE",
+                            "value": "8192"
+                        }
+                    ]
+                }
+            },
+            "topicOperator": {},
+            "userOperator": {}
+        },
+        "kafka": {
+            "authorization": {
+                "superUsers": [
+                    "kafka-admin"
+                ],
+                "type": "simple"
+            },
+            "config": {
+                "default.replication.factor": 3,
+                "log.retention.minutes": 4320,
+                "message.max.bytes": 10485760,
+                "min.insync.replicas": 2,
+                "offsets.retention.minutes": 4320,
+                "offsets.topic.replication.factor": 3,
+                "replica.fetch.max.bytes": 10485760,
+                "transaction.state.log.min.isr": 2,
+                "transaction.state.log.replication.factor": 3
+            },
+            "listeners": [
+                {
+                    "authentication": {
+                        "type": "scram-sha-512"
+                    },
+                    "name": "plain",
+                    "port": 9092,
+                    "tls": false,
+                    "type": "internal"
+                },
+                {
+                    "authentication": {
+                        "type": "tls"
+                    },
+                    "name": "tls",
+                    "port": 9093,
+                    "tls": true,
+                    "type": "internal"
+                },
+                {
+                    "authentication": {
+                        "type": "scram-sha-512"
+                    },
+                    "configuration": {
+                        "allocateLoadBalancerNodePorts": true,
+                        "bootstrap": {
+                            "loadBalancerIP": "34.71.118.138"
+                        },
+                        "brokerCertChainAndKey": {
+                            "certificate": "tls.crt",
+                            "key": "tls.key",
+                            "secretName": "sasquatch-external-tls"
+                        },
+                        "brokers": [
+                            {
+                                "advertisedHost": "sasquatch-dev-kafka-0.lsst.cloud",
+                                "advertisedPort": 9094,
+                                "broker": 0,
+                                "loadBalancerIP": "34.46.163.104"
+                            },
+                            {
+                                "advertisedHost": "sasquatch-dev-kafka-1.lsst.cloud",
+                                "advertisedPort": 9094,
+                                "broker": 1,
+                                "loadBalancerIP": "35.202.38.197"
+                            },
+                            {
+                                "advertisedHost": "sasquatch-dev-kafka-2.lsst.cloud",
+                                "advertisedPort": 9094,
+                                "broker": 2,
+                                "loadBalancerIP": "34.45.111.124"
+                            }
+                        ]
+                    },
+                    "name": "external",
+                    "port": 9094,
+                    "tls": true,
+                    "type": "loadbalancer"
+                }
+            ],
+            "version": "4.1.0"
+        },
+        "maintenanceTimeWindows": [
+            "0 0 12-13 ? * *"
+        ]
+    },
+    "status": {
+        "clusterId": "cQRNRigtTGCIIM3UPJIZlg",
+        "conditions": [
+            {
+                "lastTransitionTime": "2026-05-13T03:44:28.989720841Z",
+                "status": "True",
+                "type": "Ready"
+            }
+        ],
+        "kafkaMetadataVersion": "4.1-IV1",
+        "kafkaNodePools": [
+            {
+                "name": "controller"
+            },
+            {
+                "name": "kafka"
+            }
+        ],
+        "kafkaVersion": "4.1.0",
+        "listeners": [
+            {
+                "addresses": [
+                    {
+                        "host": "sasquatch-kafka-bootstrap.sasquatch.svc",
+                        "port": 9092
+                    }
+                ],
+                "bootstrapServers": "sasquatch-kafka-bootstrap.sasquatch.svc:9092",
+                "name": "plain"
+            },
+            {
+                "addresses": [
+                    {
+                        "host": "sasquatch-kafka-bootstrap.sasquatch.svc",
+                        "port": 9093
+                    }
+                ],
+                "bootstrapServers": "sasquatch-kafka-bootstrap.sasquatch.svc:9093",
+                "certificates": ["some-certificate"],
+                "name": "tls"
+            },
+            {
+                "addresses": [
+                    {
+                        "host": "34.71.118.138",
+                        "port": 9094
+                    }
+                ],
+                "bootstrapServers": "34.71.118.138:9094",
+                "certificates": ["some-other-certificate"],
+                "name": "external"
+            }
+        ],
+        "observedGeneration": 1,
+        "operatorLastSuccessfulVersion": "0.51.0"
+    }
+}

@@ -1,0 +1,2073 @@
+[
+  {
+    "metadata": {
+      "name": "argocd"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "argocd-cm",
+          "status": "Synced"
+        },
+        {
+          "kind": "ConfigMap",
+          "name": "argocd-cmd-params-cm",
+          "status": "Synced"
+        },
+        {
+          "kind": "ConfigMap",
+          "name": "argocd-gpg-keys-cm",
+          "status": "Synced"
+        },
+        {
+          "kind": "ConfigMap",
+          "name": "argocd-notifications-cm",
+          "status": "Synced"
+        },
+        {
+          "kind": "ConfigMap",
+          "name": "argocd-rbac-cm",
+          "status": "Synced"
+        },
+        {
+          "kind": "ConfigMap",
+          "name": "argocd-redis-health-configmap",
+          "status": "Synced"
+        },
+        {
+          "kind": "ConfigMap",
+          "name": "argocd-ssh-known-hosts-cm",
+          "status": "Synced"
+        },
+        {
+          "kind": "ConfigMap",
+          "name": "argocd-tls-certs-cm",
+          "status": "Synced"
+        },
+        {
+          "kind": "Secret",
+          "name": "argocd-notifications-secret",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "argocd-application-controller-metrics",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "argocd-applicationset-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "argocd-dex-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "argocd-notifications-controller-metrics",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "argocd-redis",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "argocd-redis-metrics",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "argocd-repo-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "argocd-repo-server-metrics",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "argocd-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "argocd-server-metrics",
+          "status": "Synced"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "argocd-application-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "argocd-applicationset-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "argocd-dex-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "argocd-notifications-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "argocd-redis-secret-init",
+          "status": null
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "argocd-repo-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "argocd-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "applications.argoproj.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "applicationsets.argoproj.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "appprojects.argoproj.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "argocd-applicationset-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "argocd-dex-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "argocd-notifications-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "argocd-redis",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "argocd-repo-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "argocd-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "StatefulSet",
+          "name": "argocd-application-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "Ingress",
+          "name": "argocd-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "argocd-application-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "argocd-notifications-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "argocd-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "argocd-application-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "argocd-notifications-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "argocd-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "Role",
+          "name": "argocd-application-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "Role",
+          "name": "argocd-applicationset-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "Role",
+          "name": "argocd-dex-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "Role",
+          "name": "argocd-notifications-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "Role",
+          "name": "argocd-redis-secret-init",
+          "status": null
+        },
+        {
+          "kind": "Role",
+          "name": "argocd-repo-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "Role",
+          "name": "argocd-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "argocd-application-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "argocd-applicationset-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "argocd-dex-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "argocd-notifications-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "argocd-redis-secret-init",
+          "status": null
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "argocd-repo-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "argocd-server",
+          "status": "Synced"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "argocd-secret",
+          "status": "Synced"
+        }
+      ],
+      "sync": {
+        "status": "Synced"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "cert-manager"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "Service",
+          "name": "cert-manager",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "cert-manager-cainjector",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "cert-manager-webhook",
+          "status": "Synced"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "cert-manager",
+          "status": "Synced"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "cert-manager-cainjector",
+          "status": "Synced"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "cert-manager-webhook",
+          "status": "Synced"
+        },
+        {
+          "kind": "MutatingWebhookConfiguration",
+          "name": "cert-manager-webhook",
+          "status": "Synced"
+        },
+        {
+          "kind": "ValidatingWebhookConfiguration",
+          "name": "cert-manager-webhook",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "certificaterequests.cert-manager.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "certificates.cert-manager.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "challenges.acme.cert-manager.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "clusterissuers.cert-manager.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "issuers.cert-manager.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "orders.acme.cert-manager.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "cert-manager",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "cert-manager-cainjector",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "cert-manager-webhook",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterIssuer",
+          "name": "letsencrypt-dns",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "cert-manager-cainjector",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "cert-manager-cluster-view",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-approve:cert-manager-io",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-certificates",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-certificatesigningrequests",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-challenges",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-clusterissuers",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-ingress-shim",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-issuers",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "cert-manager-controller-orders",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "cert-manager-edit",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "cert-manager-view",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "cert-manager-webhook:subjectaccessreviews",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-cainjector",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-approve:cert-manager-io",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-certificates",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-certificatesigningrequests",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-challenges",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-clusterissuers",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-ingress-shim",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-issuers",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-controller-orders",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "cert-manager-webhook:subjectaccessreviews",
+          "status": "Synced"
+        },
+        {
+          "kind": "Role",
+          "name": "cert-manager-tokenrequest",
+          "status": "Synced"
+        },
+        {
+          "kind": "Role",
+          "name": "cert-manager-webhook:dynamic-serving",
+          "status": "Synced"
+        },
+        {
+          "kind": "Role",
+          "name": "cert-manager-cainjector:leaderelection",
+          "status": "Synced"
+        },
+        {
+          "kind": "Role",
+          "name": "cert-manager:leaderelection",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "cert-manager-tokenrequest",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "cert-manager-webhook:dynamic-serving",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "cert-manager-cainjector:leaderelection",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "cert-manager:leaderelection",
+          "status": "Synced"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "cert-manager",
+          "status": "Synced"
+        }
+      ],
+      "sync": {
+        "status": "Synced"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "eups-distributor"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "Service",
+          "name": "eups-distributor",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "eups-distributor",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "eups-distributor",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Issuer",
+          "name": "letsencrypt-dns-eups-dot-codes",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "eups-distributor",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "eups-distributor-dot-codes",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "NetworkPolicy",
+          "name": "eups-distributor",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "eups-distributor",
+          "status": "Synced"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "gafaelfawr"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "gafaelfawr",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "gafaelfawr",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "gafaelfawr-redis",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "gafaelfawr-redis-ephemeral",
+          "status": "Synced"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "gafaelfawr",
+          "status": "Synced"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "gafaelfawr-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "KafkaAccess",
+          "name": "gafaelfawr-kafka",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "gafaelfawringresses.gafaelfawr.lsst.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "gafaelfawrservicetokens.gafaelfawr.lsst.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "gafaelfawr",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "gafaelfawr-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "StatefulSet",
+          "name": "gafaelfawr-redis",
+          "status": "Synced"
+        },
+        {
+          "kind": "StatefulSet",
+          "name": "gafaelfawr-redis-ephemeral",
+          "status": "Synced"
+        },
+        {
+          "kind": "CronJob",
+          "name": "gafaelfawr-maintenance",
+          "status": "Synced"
+        },
+        {
+          "kind": "Ingress",
+          "name": "gafaelfawr",
+          "status": "Synced"
+        },
+        {
+          "kind": "NetworkPolicy",
+          "name": "gafaelfawr",
+          "status": "Synced"
+        },
+        {
+          "kind": "NetworkPolicy",
+          "name": "gafaelfawr-redis",
+          "status": "Synced"
+        },
+        {
+          "kind": "NetworkPolicy",
+          "name": "gafaelfawr-redis-ephemeral",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "gafaelfawr-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "gafaelfawr-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "gafaelfawr",
+          "status": "Synced"
+        }
+      ],
+      "sync": {
+        "status": "Synced"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "giftless"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "giftless-ro",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ConfigMap",
+          "name": "giftless-rw",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "giftless-ro",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "giftless-rw",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "git-lfs-ro",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "git-lfs-rw",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "giftless-ro",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "giftless-rw",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "giftless-ro",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "giftless-rw",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "giftless-rw-anon-verify",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "google-cloud-observability"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "Service",
+          "name": "google-cloud-observability-kube-state-metrics",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "google-cloud-observability-kube-state-metrics",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "google-cloud-observability-kube-state-metrics",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ClusterPodMonitoring",
+          "name": "custom-kube-state-metrics",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "google-cloud-observability-kube-state-metrics",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "google-cloud-observability-kube-state-metrics",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "ingress-nginx"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "ingress-nginx-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "ingress-nginx-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "ingress-nginx-controller-admission",
+          "status": "Synced"
+        },
+        {
+          "kind": "Service",
+          "name": "ingress-nginx-controller-metrics",
+          "status": "Synced"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "ingress-nginx",
+          "status": "Synced"
+        },
+        {
+          "kind": "ValidatingWebhookConfiguration",
+          "name": "ingress-nginx-admission",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "ingress-nginx-controller",
+          "status": "Synced"
+        },
+        {
+          "kind": "IngressClass",
+          "name": "nginx",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "ingress-nginx",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "ingress-nginx",
+          "status": "Synced"
+        },
+        {
+          "kind": "Role",
+          "name": "ingress-nginx",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "ingress-nginx",
+          "status": "Synced"
+        }
+      ],
+      "sync": {
+        "status": "Synced"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "jira-data-proxy"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "jira-data-proxy",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "jira-data-proxy",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "jira-data-proxy",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "jira-data-proxy",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "NetworkPolicy",
+          "name": "jira-data-proxy",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "jira-data-proxy",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "mobu"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "mobu",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "mobu",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "StatefulSet",
+          "name": "mobu",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "mobu",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrServiceToken",
+          "name": "mobu-gafaelfawr-token",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "NetworkPolicy",
+          "name": "mobu",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "mobu",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "onepassword-connect"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "Service",
+          "name": "onepassword-connect",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "onepassworditems.onepassword.com",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "onepassword-connect",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Ingress",
+          "name": "onepassword-connect",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "onepassword-connect-secret",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "ook"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "ook",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "ook",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "ook",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaAccess",
+          "name": "ook-kafka",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "ook",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "CronJob",
+          "name": "ook-ingest-lsst-texmf",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "ook",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "ook-admin",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "ook-apibrowser",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "NetworkPolicy",
+          "name": "ook",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "ook",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "repertoire"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "repertoire",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "repertoire",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "repertoire",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "repertoire",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "repertoire-influxdb",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "NetworkPolicy",
+          "name": "repertoire",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "repertoire",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "sasquatch"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "sasquatch-telegraf-app-metrics",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "sasquatch-kafdrop",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "sasquatch-kafdrop",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "sasquatch-telegraf-app-metrics",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "sasquatch-kafdrop",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Kafka",
+          "name": "sasquatch",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaNodePool",
+          "name": "controller",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaNodePool",
+          "name": "kafka",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "lsst.ppdbtap.job-delete",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "lsst.ppdbtap.job-run",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "lsst.ppdbtap.job-status",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "lsst.square-events.ook.ingest",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "lsst.square-events.squarebot.slack.app.mention",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "lsst.square-events.squarebot.slack.interaction.block-actions",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "lsst.square-events.squarebot.slack.interaction.view-submission",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "lsst.square-events.squarebot.slack.message.channels",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "lsst.square-events.squarebot.slack.message.groups",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "lsst.square-events.squarebot.slack.message.im",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "lsst.square-events.squarebot.slack.message.mpim",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "lsst.square.metrics.events.bigquerykafka",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "lsst.square.metrics.events.gafaelfawr",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaTopic",
+          "name": "registry-schemas",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaUser",
+          "name": "app-metrics-gafaelfawr",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaUser",
+          "name": "bigquery",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaUser",
+          "name": "kafdrop",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaUser",
+          "name": "kafka-admin",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaUser",
+          "name": "ook",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaUser",
+          "name": "ppdbtap-tls",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaUser",
+          "name": "sasquatch-schema-registry",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaUser",
+          "name": "squarebot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaUser",
+          "name": "telegraf",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaUser",
+          "name": "templatebot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaUser",
+          "name": "unfurlbot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "sasquatch",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "StrimziSchemaRegistry",
+          "name": "sasquatch-schema-registry",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "squarebot"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "squarebot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "squarebot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "squarebot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaAccess",
+          "name": "squarebot-kafka",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "squarebot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "squarebot-anonymous",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "NetworkPolicy",
+          "name": "squarebot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "squarebot",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "squareone"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "squareone",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ConfigMap",
+          "name": "squareone-mdx-content",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "squareone",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "squareone",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "squareone-times-square",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Ingress",
+          "name": "squareone",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "squareone-secret",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "strimzi"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "strimzi-cluster-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "strimzi-cluster-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "kafkabridges.kafka.strimzi.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "kafkaconnectors.kafka.strimzi.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "kafkaconnects.kafka.strimzi.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "kafkamirrormaker2s.kafka.strimzi.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "kafkanodepools.kafka.strimzi.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "kafkarebalances.kafka.strimzi.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "kafkas.kafka.strimzi.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "kafkatopics.kafka.strimzi.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "kafkausers.kafka.strimzi.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "strimzipodsets.core.strimzi.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "strimzi-cluster-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "strimzi-cluster-operator-global",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "strimzi-cluster-operator-leader-election",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "strimzi-cluster-operator-namespaced",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "strimzi-cluster-operator-watched",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "strimzi-entity-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "strimzi-kafka-broker",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "strimzi-kafka-client",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "strimzi-cluster-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "strimzi-cluster-operator-kafka-broker-delegation",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "strimzi-cluster-operator-kafka-client-delegation",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "strimzi-cluster-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "strimzi-cluster-operator-entity-operator-delegation",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "strimzi-cluster-operator-watched",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "strimzi-cluster-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "strimzi-cluster-operator-entity-operator-delegation",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "strimzi-cluster-operator-leader-election",
+          "status": "Synced"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "strimzi-cluster-operator-watched",
+          "status": "Synced"
+        }
+      ],
+      "sync": {
+        "status": "Synced"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "strimzi-access-operator"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ServiceAccount",
+          "name": "strimzi-access-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "kafkaaccesses.access.strimzi.io",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "strimzi-access-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "strimzi-access-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "strimzi-access-operator",
+          "status": "Synced"
+        }
+      ],
+      "sync": {
+        "status": "Synced"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "strimzi-registry-operator"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ServiceAccount",
+          "name": "strimzi-registry-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "strimzischemaregistries.roundtable.lsst.codes",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "strimzi-registry-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "strimzi-registry-operator",
+          "status": "Synced"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "strimzi-registry-operator",
+          "status": "Synced"
+        }
+      ],
+      "sync": {
+        "status": "Synced"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "templatebot"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "templatebot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "templatebot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaAccess",
+          "name": "templatebot-kafka",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "templatebot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "NetworkPolicy",
+          "name": "templatebot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "templatebot",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "turborepo-cache"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "turborepo-cache",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ConfigMap",
+          "name": "turborepo-cache-proxy",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "turborepo-cache",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "turborepo-cache-proxy",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "turborepo-cache",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "turborepo-cache",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "turborepo-cache-proxy",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrIngress",
+          "name": "turborepo-cache-proxy",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "NetworkPolicy",
+          "name": "turborepo-cache-proxy",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "turborepo-cache",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "unfurlbot"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "unfurlbot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "unfurlbot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "unfurlbot-redis",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "KafkaAccess",
+          "name": "unfurlbot-kafka",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Deployment",
+          "name": "unfurlbot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "StatefulSet",
+          "name": "unfurlbot-redis",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "GafaelfawrServiceToken",
+          "name": "unfurlbot-gafaelfawr-token",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "NetworkPolicy",
+          "name": "unfurlbot",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "NetworkPolicy",
+          "name": "unfurlbot-redis",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "VaultSecret",
+          "name": "unfurlbot",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "vault"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "ConfigMap",
+          "name": "vault-config",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "vault",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "vault-active",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "vault-internal",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Service",
+          "name": "vault-standby",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "vault",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "StatefulSet",
+          "name": "vault",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Ingress",
+          "name": "vault",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "PodDisruptionBudget",
+          "name": "vault",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "vault-server-binding",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "Role",
+          "name": "vault-discovery-role",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "RoleBinding",
+          "name": "vault-discovery-rolebinding",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  },
+  {
+    "metadata": {
+      "name": "vault-secrets-operator"
+    },
+    "spec": {
+      "source": {
+        "target_revision": "main"
+      }
+    },
+    "status": {
+      "resources": [
+        {
+          "kind": "Service",
+          "name": "vault-secrets-operator",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ServiceAccount",
+          "name": "vault-secrets-operator",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "CustomResourceDefinition",
+          "name": "vaultsecrets.ricoberger.de",
+          "status": "Synced"
+        },
+        {
+          "kind": "Deployment",
+          "name": "vault-secrets-operator",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ClusterRole",
+          "name": "vault-secrets-operator",
+          "status": "OutOfSync"
+        },
+        {
+          "kind": "ClusterRoleBinding",
+          "name": "vault-secrets-operator",
+          "status": "OutOfSync"
+        }
+      ],
+      "sync": {
+        "status": "OutOfSync"
+      }
+    }
+  }
+]

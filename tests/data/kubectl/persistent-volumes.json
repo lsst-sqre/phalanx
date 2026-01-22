@@ -1,0 +1,159 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "PersistentVolume",
+            "metadata": {
+                "annotations": {
+                    "gkebackup.gke.io/volumebackup": "projects/176818997517/locations/us-central1/backupPlans/phalanx-20260205-020454/backups/phalanx-20260205-020456/volumeBackups/vb-13b5c599-eda8-4f16-b59a-f1b4a8195835",
+                    "gkebackup.gke.io/volumerestore": "projects/176818997517/locations/us-central1/restorePlans/phalanx-20260205-021407/restores/phalanx-20260205-021409/volumeRestores/vr-d8a798b5e6c49bcf",
+                    "pv.kubernetes.io/migrated-to": "pd.csi.storage.gke.io",
+                    "pv.kubernetes.io/provisioned-by": "kubernetes.io/gce-pd"
+                },
+                "creationTimestamp": "2026-02-05T02:15:22Z",
+                "finalizers": [
+                    "kubernetes.io/pv-protection",
+                    "external-attacher/pd-csi-storage-gke-io"
+                ],
+                "labels": {
+                    "topology.kubernetes.io/region": "us-central1",
+                    "topology.kubernetes.io/zone": "us-central1-b"
+                },
+                "name": "pvc-118e7c925552962f",
+                "resourceVersion": "1770267600485695003",
+                "uid": "24d49431-bd21-4156-95f4-7b3736e47f07"
+            },
+            "spec": {
+                "accessModes": [
+                    "ReadWriteOnce"
+                ],
+                "capacity": {
+                    "storage": "500Gi"
+                },
+                "claimRef": {
+                    "apiVersion": "v1",
+                    "kind": "PersistentVolumeClaim",
+                    "name": "sasquatch-backup-artifacts",
+                    "namespace": "sasquatch",
+                    "resourceVersion": "1770257662285855013",
+                    "uid": "9e441239-23c0-4714-809c-318d394b4e9e"
+                },
+                "gcePersistentDisk": {
+                    "fsType": "ext4",
+                    "pdName": "pvc-2db2e3ab-46cd-45e0-9521-d49b98443bf6"
+                },
+                "nodeAffinity": {
+                    "required": {
+                        "nodeSelectorTerms": [
+                            {
+                                "matchExpressions": [
+                                    {
+                                        "key": "topology.kubernetes.io/zone",
+                                        "operator": "In",
+                                        "values": [
+                                            "us-central1-b"
+                                        ]
+                                    },
+                                    {
+                                        "key": "topology.kubernetes.io/region",
+                                        "operator": "In",
+                                        "values": [
+                                            "us-central1"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "persistentVolumeReclaimPolicy": "Retain",
+                "storageClassName": "standard",
+                "volumeMode": "Filesystem"
+            },
+            "status": {
+                "lastPhaseTransitionTime": "2026-02-05T02:15:23Z",
+                "phase": "Bound"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "PersistentVolume",
+            "metadata": {
+                "annotations": {
+                    "gkebackup.gke.io/volumebackup": "projects/176818997517/locations/us-central1/backupPlans/phalanx-20260205-020454/backups/phalanx-20260205-020456/volumeBackups/vb-095cfb40-b05a-49e5-9fad-78b203caffbe",
+                    "gkebackup.gke.io/volumerestore": "projects/176818997517/locations/us-central1/restorePlans/phalanx-20260205-021407/restores/phalanx-20260205-021409/volumeRestores/vr-bcc39b825fb3e68a",
+                    "pv.kubernetes.io/migrated-to": "pd.csi.storage.gke.io",
+                    "pv.kubernetes.io/provisioned-by": "kubernetes.io/gce-pd"
+                },
+                "creationTimestamp": "2026-02-05T02:15:34Z",
+                "finalizers": [
+                    "kubernetes.io/pv-protection",
+                    "external-attacher/pd-csi-storage-gke-io"
+                ],
+                "labels": {
+                    "topology.kubernetes.io/region": "us-central1",
+                    "topology.kubernetes.io/zone": "us-central1-b"
+                },
+                "name": "pvc-119844bd61b11cd",
+                "resourceVersion": "1770259690073311000",
+                "uid": "51ad000a-9f75-406a-a18d-9e82f7f9d074"
+            },
+            "spec": {
+                "accessModes": [
+                    "ReadWriteOnce"
+                ],
+                "capacity": {
+                    "storage": "500Gi"
+                },
+                "claimRef": {
+                    "apiVersion": "v1",
+                    "kind": "PersistentVolumeClaim",
+                    "name": "data-0-sasquatch-kafka-2",
+                    "namespace": "sasquatch",
+                    "resourceVersion": "1770257662198287003",
+                    "uid": "ab9e11a2-a41f-45a1-8732-acf6a535e327"
+                },
+                "gcePersistentDisk": {
+                    "fsType": "ext4",
+                    "pdName": "pvc-1a7eaa36-17b9-4924-8e74-9c6818da90e5"
+                },
+                "nodeAffinity": {
+                    "required": {
+                        "nodeSelectorTerms": [
+                            {
+                                "matchExpressions": [
+                                    {
+                                        "key": "topology.kubernetes.io/zone",
+                                        "operator": "In",
+                                        "values": [
+                                            "us-central1-b"
+                                        ]
+                                    },
+                                    {
+                                        "key": "topology.kubernetes.io/region",
+                                        "operator": "In",
+                                        "values": [
+                                            "us-central1"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "persistentVolumeReclaimPolicy": "Retain",
+                "storageClassName": "standard",
+                "volumeMode": "Filesystem"
+            },
+            "status": {
+                "lastPhaseTransitionTime": "2026-02-05T02:15:38Z",
+                "phase": "Bound"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

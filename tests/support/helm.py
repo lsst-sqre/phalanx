@@ -3,6 +3,7 @@
 import shutil
 import subprocess
 from collections.abc import Iterator
+from datetime import timedelta
 from pathlib import Path
 from shutil import which
 from typing import Protocol
@@ -94,6 +95,7 @@ class MockHelmCommand:
         *args: str,
         cwd: Path | None = None,
         quiet: bool = False,
+        timeout: timedelta | None = None,
     ) -> None:
         """Mock running a Helm command.
 
@@ -109,6 +111,9 @@ class MockHelmCommand:
             (Currently ignored.)
         quiet
             Whether to suppress Helm's standard output. (Currently ignored.)
+        timeout
+            If process isn't completed in this many seconds, an exception is
+            raised. (Currently ignored.)
         """
         self.call_args_list.append(list(args))
 

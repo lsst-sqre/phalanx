@@ -9,6 +9,7 @@ from collections.abc import Callable
 from datetime import timedelta
 from functools import wraps
 from pathlib import Path
+from uuid import uuid4
 
 import click
 import yaml
@@ -42,6 +43,8 @@ __all__ = [
     "environment_template",
     "help",
     "main",
+    "recover_preflight_check",
+    "recover_restore",
     "recover_scale_down",
     "recover_scale_up",
     "secrets",
@@ -1138,3 +1141,279 @@ def recover_scale_up(config: Path | None, context: str) -> None:
     factory = Factory(config)
     cluster_service = factory.create_gke_phalanx_cluster_service(context)
     cluster_service.scale_up_all()
+
+
+@recover.command("restore")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--old-context",
+    help="Context to pass when running commands against the old cluster.",
+    required=True,
+)
+@click.option(
+    "--new-context",
+    help="Context to pass when running commands against the new cluster.",
+    required=True,
+)
+@click.option(
+    "-e",
+    "--environment",
+    "--env",
+    type=str,
+    metavar="ENV",
+    required=True,
+    help="The Phalanx environment of the cluster to recover.",
+)
+@click.option(
+    "--git-branch",
+    envvar="GITHUB_HEAD_REF",
+    help="Override Git branch for Argo CD.",
+    required=True,
+)
+@click.option(
+    "--vault-role-id",
+    envvar="VAULT_ROLE_ID",
+    help="Role ID for vault-secrets-operator.",
+    required=True,
+)
+@click.option(
+    "--vault-secret-id",
+    envvar="VAULT_SECRET_ID",
+    help="Secret ID for vault-secrets-operator.",
+    required=True,
+)
+@click.option(
+    "--gke-region",
+    help="The GKE region of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--gke-project",
+    help="The GKE project of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--source-cluster",
+    help="The name of the GKE cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--destination-cluster",
+    help="The name of the GKE cluster to restore the backup into.",
+    required=True,
+)
+@click.option(
+    "--run-id",
+    help=(
+        "The phalanx run id label value that marks which Google Cloud"
+        " resources to clean up."
+    ),
+    required=False,
+    default=None,
+)
+@_report_usage_errors
+def recover_restore(
+    config: Path | None,
+    old_context: str,
+    new_context: str,
+    environment: str,
+    git_branch: str,
+    vault_role_id: str,
+    vault_secret_id: str,
+    gke_region: str,
+    gke_project: str,
+    source_cluster: str,
+    destination_cluster: str,
+    run_id: str | None = None,
+) -> None:
+    """Perform a recovery of one GKE cluster with data from another.
+
+    This requires admin permissions to the Kubernetes API in both the source
+    and destination clusters. It also requires permissions to certain parts of
+    the Google Cloud API. It expects that you will have already authenticated
+    to Google Cloud, probably with ``gcloud auth application-default login``.
+    """
+    _require_command("argocd")
+    _require_command("helm")
+    _require_command("kubectl")
+    vault_credentials: VaultCredentials = VaultAppRoleCredentials(
+        role_id=vault_role_id, secret_id=vault_secret_id
+    )
+
+    run_id = run_id or str(uuid4())
+    click.echo(
+        f"All Google Cloud Backup for GKE resources will have the label:"
+        f" `phalanx-run-id: {run_id}`"
+    )
+
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+
+    gke_recovery = factory.create_gke_recovery_service(
+        source_cluster=source_cluster,
+        destination_cluster=destination_cluster,
+        git_branch=git_branch,
+        environment=environment,
+        vault_credentials=vault_credentials,
+        old_context=old_context,
+        new_context=new_context,
+        gke_project=gke_project,
+        gke_region=gke_region,
+        run_id=run_id,
+    )
+
+    errors = gke_recovery.preflight_check()
+    if errors:
+        click.secho(
+            "Pre-flight check failed. Please correct these errors before"
+            " starting the cluster recovery process:",
+            fg="red",
+        )
+        for error in errors:
+            click.secho(error, fg="red")
+        sys.exit(1)
+
+    gke_recovery.recover()
+    click.echo(
+        f"Recovery finished! All Google Cloud Backup for GKE resources will"
+        f" have the label: phalanx-run-id: {run_id}"
+    )
+
+
+@recover.command("preflight-check")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--old-context",
+    help="Context to pass when running commands against the old cluster.",
+    required=True,
+)
+@click.option(
+    "--new-context",
+    help="Context to pass when running commands against the new cluster.",
+    required=True,
+)
+@click.option(
+    "-e",
+    "--environment",
+    "--env",
+    type=str,
+    metavar="ENV",
+    required=True,
+    help="The Phalanx environment of the cluster to recover.",
+)
+@click.option(
+    "--git-branch",
+    envvar="GITHUB_HEAD_REF",
+    help="Override Git branch for Argo CD.",
+    required=True,
+)
+@click.option(
+    "--vault-role-id",
+    envvar="VAULT_ROLE_ID",
+    help="Role ID for vault-secrets-operator.",
+    required=True,
+)
+@click.option(
+    "--vault-secret-id",
+    envvar="VAULT_SECRET_ID",
+    help="Secret ID for vault-secrets-operator.",
+    required=True,
+)
+@click.option(
+    "--gke-region",
+    help="The GKE region of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--gke-project",
+    help="The GKE project of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--source-cluster",
+    help="The name of the GKE cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--destination-cluster",
+    help="The name of the GKE cluster to restore the backup into.",
+    required=True,
+)
+@click.option(
+    "--run-id",
+    help=(
+        "The phalanx run id label value that marks which Google Cloud"
+        " resources to clean up."
+    ),
+    required=False,
+    default=None,
+)
+@_report_usage_errors
+def recover_preflight_check(
+    config: Path | None,
+    old_context: str,
+    new_context: str,
+    environment: str,
+    git_branch: str,
+    vault_role_id: str,
+    vault_secret_id: str,
+    gke_region: str,
+    gke_project: str,
+    source_cluster: str,
+    destination_cluster: str,
+    run_id: str | None = None,
+) -> None:
+    """Check that everything is in good state to begin cluster recovery.
+
+    This requires admin permissions to the Kubernetes API in both the source
+    and destination clusters. It also requires permissions to certain parts of
+    the Google Cloud API. It expects that you will have already authenticated
+    to Google Cloud, probably with ``gcloud auth application-default login``.
+    """
+    _require_command("argocd")
+    _require_command("helm")
+    _require_command("kubectl")
+    vault_credentials: VaultCredentials = VaultAppRoleCredentials(
+        role_id=vault_role_id, secret_id=vault_secret_id
+    )
+
+    run_id = run_id or str(uuid4())
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+
+    gke_recovery = factory.create_gke_recovery_service(
+        source_cluster=source_cluster,
+        destination_cluster=destination_cluster,
+        git_branch=git_branch,
+        environment=environment,
+        vault_credentials=vault_credentials,
+        old_context=old_context,
+        new_context=new_context,
+        gke_project=gke_project,
+        gke_region=gke_region,
+        run_id=run_id,
+    )
+    errors = gke_recovery.preflight_check()
+    if errors:
+        click.secho(
+            "Pre-flight check failed. Please correct these errors before"
+            " starting the cluster recovery process:",
+            fg="red",
+        )
+        for error in errors:
+            click.secho(error, fg="red")
+        sys.exit(1)

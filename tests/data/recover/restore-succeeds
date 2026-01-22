@@ -1,0 +1,24 @@
+All Google Cloud Backup for GKE resources will have the label: `phalanx-run-id: some-run-id`
+Source cluster with context: some-old-context reachable with kubectl.
+Destination cluster with context: some-new-context reachable with kubectl.
+LoadBalancer Service ingress-nginx/ingress-nginx-controller in source cluster with context: some-old-context declares loadBalancerIP:35.225.112.77, and that IP is static in Google Cloud.
+Setting all PVs to Retain in old cluster
+Backing up old cluster and restoring PVCs and PVs to new cluster
+Backing up source cluster: some-source-cluster...
+Backup plan created: <MagicMock name='BackupForGKEClient().create_backup_plan().result().name' id='140714042168320'>
+Waiting for backup to finish: <MagicMock name='BackupForGKEClient().create_backup().result().name' id='140714042166640'>...
+Waiting for condition: "GKE backup <MagicMock name='BackupForGKEClient().create_backup().result().name' id='140714042166640'> completed successfully", 720 times with 5 seconds in between.
+Backup of source cluster some-source-cluster finished: <MagicMock name='BackupForGKEClient().create_backup().result().name' id='140714042166640'>
+Restoring destination cluster: some-destination-cluster...
+Restore plan created: <MagicMock name='BackupForGKEClient().create_restore_plan().result().name' id='140714042164624'>
+Restore created: <MagicMock name='BackupForGKEClient().create_restore().result().name' id='140714043288816'>
+Waiting for restore to finish: <MagicMock name='BackupForGKEClient().create_restore().result().name' id='140714043288816'>...
+Waiting for condition: "<MagicMock name='BackupForGKEClient().create_restore().result().name' id='140714043288816'> is successfully restored", 720 times with 5 seconds in between.
+Restore to cluster some-destination-cluster finished: <MagicMock name='BackupForGKEClient().create_restore().result().name' id='140714043288816'>
+Backup and restore of PVCs of clusters some-source-cluster -> some-destination-cluster Finished! Run id: some-run-id
+Setting all PVs to Retain in new cluster
+Sasquatch Kafka cluster id: some-cluster-id
+Waiting for condition: "All ArgoCD Applications contain statuses with resources", 120 times with 5 seconds in between.
+Waiting for condition: "cert-manager synced", 30 times with 10 seconds in between.
+Waiting for condition: "Sasquatch Kafka is ready", 120 times with 10 seconds in between.
+Recovery finished! All Google Cloud Backup for GKE resources will have the label: phalanx-run-id: some-run-id

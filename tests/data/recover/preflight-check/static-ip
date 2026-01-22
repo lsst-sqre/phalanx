@@ -1,0 +1,6 @@
+Some source version
+Source cluster with context: some-old-context reachable with kubectl.
+Some dest version
+Destination cluster with context: some-new-context reachable with kubectl.
+Pre-flight check failed. Please correct these errors before starting the cluster recovery process:
+LoadBalancer Service: ingress-nginx/ingress-nginx-controller in source cluster with context:  some-old-context declares loadBalancerIP: 1.1.1.1, but that IP is not static in Google Cloud.

@@ -6,7 +6,19 @@
       "name": "gafaelfawr",
       "namespace": "gafaelfawr",
       "previous_replica_count": null,
-      "replicas": 1
+      "replicas": 1,
+      "status": {
+        "conditions": [
+          {
+            "status": "True",
+            "type": "Available"
+          },
+          {
+            "status": "True",
+            "type": "Progressing"
+          }
+        ]
+      }
     },
     {
       "finalizers": [],
@@ -14,7 +26,19 @@
       "name": "gafaelfawr-operator",
       "namespace": "gafaelfawr",
       "previous_replica_count": null,
-      "replicas": 1
+      "replicas": 1,
+      "status": {
+        "conditions": [
+          {
+            "status": "True",
+            "type": "Available"
+          },
+          {
+            "status": "True",
+            "type": "Progressing"
+          }
+        ]
+      }
     },
     {
       "finalizers": [],
@@ -22,7 +46,19 @@
       "name": "argocd",
       "namespace": "argocd",
       "previous_replica_count": null,
-      "replicas": 1
+      "replicas": 1,
+      "status": {
+        "conditions": [
+          {
+            "status": "True",
+            "type": "Available"
+          },
+          {
+            "status": "True",
+            "type": "Progressing"
+          }
+        ]
+      }
     }
   ],
   "kind": "List"
