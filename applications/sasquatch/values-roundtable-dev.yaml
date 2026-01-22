@@ -7,6 +7,9 @@ strimzi-kafka:
         enabled: true
       external:
         enabled: false
+  users:
+    telegraf:
+      enabled: true
   controller:
     enabled: true
     affinity:
@@ -58,12 +61,18 @@ kafdrop:
   kafka:
     topicPrefixes:
       - "lsst.square-events.squarebot.slack.interaction"
+      - "lsst.square.metrics.events"
 
 rest-proxy:
   enabled: false
 
 chronograf:
   enabled: false
+
+app-metrics:
+  enabled: true
+  apps:
+    - gafaelfawr
 
 squareEvents:
   enabled: true
