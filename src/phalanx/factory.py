@@ -5,10 +5,12 @@ from pathlib import Path
 from .services.application import ApplicationService
 from .services.cluster import GKEPhalanxClusterService
 from .services.environment import EnvironmentService
+from .services.gke_backup import GKEBackupService
 from .services.secrets import SecretsService
 from .services.vault import VaultService
 from .storage.argocd import ArgoCDStorage
 from .storage.config import ConfigStorage
+from .storage.gke_backup import GKEBackupStorage
 from .storage.helm import HelmStorage
 from .storage.kubernetes import KubernetesStorage
 from .storage.onepassword import OnepasswordStorage
@@ -85,6 +87,29 @@ class Factory:
         """
         storage = self.create_kubernetes_storage(context)
         return GKEPhalanxClusterService(storage)
+
+    def create_gke_backup_service(
+        self, region: str, project: str
+    ) -> GKEBackupService:
+        """Create a service for using Google Cloud Backup for GKE.
+
+        This service is scoped to running operations in a single region and
+        project.
+
+        Parameters
+        ----------
+        region
+            The Google Cloud region to run comands against.
+        project
+            The Google Cloud project to run comands against.
+
+        Returns
+        -------
+        GKEBackupService
+           A service object for manipulating resources in a Phalanx cluster.
+        """
+        storage = GKEBackupStorage(region=region, project=project)
+        return GKEBackupService(storage)
 
     def create_kubernetes_storage(
         self, context: str | None = None

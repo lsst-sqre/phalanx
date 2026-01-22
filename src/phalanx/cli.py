@@ -1379,3 +1379,41 @@ def recover_scale_up(config: Path | None, context: str) -> None:
     cluster_service.restore_service_ips()
     cluster_service.scale_up_workloads()
     cluster_service.resume_cronjobs()
+
+
+@recover.command("create-gke-backup-plan")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--gke-region",
+    help="The GKE region of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--gke-project",
+    help="The GKE project of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--source-cluster",
+    help="The name of the GKE cluster to be backed up.",
+    required=True,
+)
+@_report_usage_errors
+def recover_create_gke_backup_plan(
+    config: Path | None, gke_region: str, gke_project: str, source_cluster: str
+) -> None:
+    """Create a GKE backup plan to back up a cluster."""
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    backup_service = factory.create_gke_backup_service(
+        region=gke_region, project=gke_project
+    )
+    plan_name = backup_service.create_backup_plan(source_cluster)
+    click.echo(f"Backup plan created: {plan_name}")

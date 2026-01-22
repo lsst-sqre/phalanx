@@ -12,6 +12,7 @@ __all__ = [
     "CommandFailedError",
     "CommandTimedOutError",
     "GitRemoteError",
+    "GoogleCloudAPIError",
     "InvalidApplicationConfigError",
     "InvalidEnvironmentConfigError",
     "InvalidLoadBalancerServiceStateError",
@@ -378,3 +379,7 @@ class ResourceNoFinalizersTimeoutError(UsageError):
             f" {timeout_secs} seconds."
         )
         super().__init__(msg)
+
+
+class GoogleCloudAPIError(Exception):
+    """An error happened calling a Google Cloud API."""
