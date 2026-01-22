@@ -128,10 +128,10 @@ context_menu_templates: []
 # -- CCD data type configurations for the quicklook system
 # Each entry defines how to access different types of Butler data
 ccd_data_types:
-  # -- Raw data from LSSTCam
-  - id: raw
-    name: raw
-    display_name: Raw
+  # -- Embargo / Raw data from LSSTCam
+  - id: raw-embargo
+    name: raw-embargo
+    display_name: Raw (Embargo)
     collections:
       - LSSTCam/raw/all
     data_id_dimension: exposure
@@ -141,10 +141,10 @@ ccd_data_types:
     partial: false
     repository_name: embargo
     instrument: LSSTCam
-  # -- Post-ISR (Instrument Signature Removal) processed images
-  - id: post_isr_image
-    name: post_isr_image
-    display_name: Post-ISR
+  # -- Embargo / Post-ISR (Instrument Signature Removal) processed images
+  - id: post_isr_image-embargo
+    name: post_isr_image-embargo
+    display_name: Post-ISR (Embargo)
     collections:
       - LSSTCam/runs/nightlyValidation
     data_id_dimension: exposure
@@ -153,10 +153,10 @@ ccd_data_types:
     partial: true
     repository_name: embargo
     instrument: LSSTCam
-  # -- Preliminary visit images
-  - id: preliminary_visit_image
-    name: preliminary_visit_image
-    display_name: Preliminary
+  # -- Embargo / Preliminary visit images
+  - id: preliminary_visit_image-embargo
+    name: preliminary_visit_image-embargo
+    display_name: Preliminary (Embargo)
     collections:
       - LSSTCam/runs/nightlyValidation
     data_id_dimension: visit
@@ -164,4 +164,41 @@ ccd_data_types:
       - -visit
     partial: true
     repository_name: embargo
+    instrument: LSSTCam
+  # -- main / Raw data from LSSTCam
+  - id: raw-main
+    name: raw-main
+    display_name: Raw (Main)
+    collections:
+      - LSSTCam/raw/all
+    data_id_dimension: exposure
+    order_by:
+      - -day_obs
+      - -exposure
+    partial: false
+    repository_name: main
+    instrument: LSSTCam
+  # -- Post-ISR (Instrument Signature Removal) processed images
+  - id: post_isr_image-main
+    name: post_isr_image-main
+    display_name: Post-ISR (Main)
+    collections:
+      - LSSTCam/runs/nightlyValidation
+    data_id_dimension: exposure
+    order_by:
+      - -exposure
+    partial: true
+    repository_name: main
+    instrument: LSSTCam
+  # -- Preliminary visit images
+  - id: preliminary_visit_image-main
+    name: preliminary_visit_image-main
+    display_name: Preliminary (Main)
+    collections:
+      - LSSTCam/runs/nightlyValidation
+    data_id_dimension: visit
+    order_by:
+      - -visit
+    partial: true
+    repository_name: main
     instrument: LSSTCam
