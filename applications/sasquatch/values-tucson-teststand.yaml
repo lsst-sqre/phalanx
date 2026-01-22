@@ -1,5 +1,7 @@
 strimzi-kafka:
   cluster:
+    privateKey:
+      encoding: PKCS8
     monitorLabel:
       lsst.io/monitor: "true"
   kafka:
