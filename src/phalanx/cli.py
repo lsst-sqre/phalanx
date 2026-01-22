@@ -9,6 +9,7 @@ from collections.abc import Callable
 from datetime import timedelta
 from functools import wraps
 from pathlib import Path
+from uuid import uuid4
 
 import click
 import yaml
@@ -1379,3 +1380,117 @@ def recover_scale_up(config: Path | None, context: str) -> None:
     cluster_service.restore_service_ips()
     cluster_service.scale_up_workloads()
     cluster_service.resume_cronjobs()
+
+
+@recover.command("gke-backup-and-restore-pvcs")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--gke-region",
+    help="The GKE region of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--gke-project",
+    help="The GKE project of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--source-cluster",
+    help="The name of the GKE cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--destination-cluster",
+    help="The name of the GKE cluster to restore the backup into.",
+    required=True,
+)
+@click.option(
+    "--run-id",
+    help=(
+        "The phalanx run id label value that marks which Google Cloud"
+        " resources to clean up."
+    ),
+    required=False,
+    default=None,
+)
+@_report_usage_errors
+def recover_gke_backup_and_restore_pvcs(
+    config: Path | None,
+    gke_region: str,
+    gke_project: str,
+    source_cluster: str,
+    destination_cluster: str,
+    run_id: str | None = None,
+) -> None:
+    """Create a GKE cluster backup plan use it to take a backup.
+
+    This is meant to take a one-time backup of a GKE cluster for the cluster
+    recovery process. Every use of this command will create a new backup plan,
+    which should destroyed when the cluster recovery process is completed.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    run_id = run_id or str(uuid4())
+    click.echo(
+        f"All Google Cloud resources will have the label: `phalanx-run-id:"
+        f" {run_id}`"
+    )
+    backup_service = factory.create_gke_backup_service(
+        region=gke_region, project=gke_project, phalanx_run_id=run_id
+    )
+    backup_service.backup_and_restore_pvcs(
+        source_cluster=source_cluster, destination_cluster=destination_cluster
+    )
+
+
+@recover.command("cleanup-gke-backup")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--gke-region",
+    help="The GKE region of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--gke-project",
+    help="The GKE project of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--run-id",
+    help=(
+        "The phalanx run id label value that marks which Google Cloud"
+        " resources to clean up."
+    ),
+    required=True,
+)
+@_report_usage_errors
+def recover_cleanup_gke_backup(
+    config: Path | None, gke_region: str, gke_project: str, run_id: str
+) -> None:
+    """Delete all Google Cloud resources created from running a backup command.
+
+    All resources that have a label that matches the given phalanx-run-id will
+    be deleted.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    backup_service = factory.create_gke_backup_service(
+        region=gke_region,
+        project=gke_project,
+        phalanx_run_id=str(run_id),
+    )
+    backup_service.cleanup_run()
