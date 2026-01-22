@@ -109,6 +109,19 @@ class GKEPhalanxClusterService:
                 key=PREVIOUS_REPLICA_COUNT_ANNOTATION,
             )
 
+    def scale_up_all(self) -> None:
+        """Scale up all Phalanx workloads and resume all crons."""
+        self._kubernetes.resume_sasquatch_kafka_reconciliation()
+        self.restore_service_ips()
+        self.scale_up_workloads()
+        self.resume_cronjobs()
+
+    def scale_down_all(self) -> None:
+        """Scale down all Phalanx workloads except ArgoCD and crons."""
+        self._kubernetes.pause_sasquatch_kafka_reconciliation()
+        self.release_service_ips()
+        self.suspend_cronjobs()
+        self.scale_down_workloads()
     def release_service_ips(self) -> list[Service]:
         """Release all IPs on LoadBalancer Services for all Phalanx apps.
 
@@ -206,32 +219,6 @@ class GKEPhalanxClusterService:
 
         return new_services
 
-    def pause_sasquatch_kafka_reconciliation(self) -> None:
-        """Pause Strimzi reconciliation of the Sasquatch Kafka cluster.
-
-        During some recovery operations, we want to modify resources that are
-        managed by the Strimzi operator. The Strimzi operator will
-        automatically revert any changes we make, so we have to pause Strimzi
-        reconciliation if we want our changes to persist.
-
-        https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str
-        """
-        self._kubernetes.annotate(
-            _SASQUATCH_KAFKA,
-            key="strimzi.io/pause-reconciliation",
-            value="true",
-            overwrite=True,
-        )
-
-    def resume_sasquatch_kafka_reconciliation(self) -> None:
-        """Resume Strimzi reconciliation of the Sasquatch Kafka cluster.
-
-        https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str
-        """
-        self._kubernetes.deannotate(
-            _SASQUATCH_KAFKA,
-            key="strimzi.io/pause-reconciliation",
-        )
 
     def _refresh_service_ingress(self, service: Service) -> None:
         """Destroy and recreate the ingress associated with a Service."""
