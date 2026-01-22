@@ -8,7 +8,8 @@ from syrupy.assertion import SnapshotAssertion
 from syrupy.extensions.single_file import SingleFileAmberSnapshotExtension
 
 from phalanx.factory import Factory
-from phalanx.storage import kubernetes
+from phalanx.storage import gke_backup, kubernetes
+from tests.support.gke_backup import MockBackupForGKEClient
 
 from .support.command import MockCommand
 from .support.data import phalanx_test_path
@@ -74,3 +75,10 @@ def mock_kubernetes_kubectl() -> Iterator[MockCommand]:
     """Mock the kubectl Command in the kubernetes storage."""
     mock_command = MockCommand()
     yield from mock_command.patch_command_class(kubernetes)
+
+
+@pytest.fixture
+def mock_gke_backup_client() -> Iterator[MockBackupForGKEClient]:
+    """Mock the BackupForGKEClient in the gke_backup module."""
+    mock = MockBackupForGKEClient()
+    yield from mock.patch(gke_backup)

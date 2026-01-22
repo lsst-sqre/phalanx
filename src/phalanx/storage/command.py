@@ -63,9 +63,10 @@ class Command:
         subprocess.SubprocessError
             Raised if the command could not be executed at all.
         """
+        args = args + tuple(self._common_args)
         try:
             result = subprocess.run(
-                [self._command, *self._common_args, *args],
+                [self._command, *args],
                 capture_output=True,
                 check=True,
                 cwd=cwd,
@@ -121,7 +122,8 @@ class Command:
         subprocess.SubprocessError
             Raised if the command could not be executed at all.
         """
-        cmdline = [self._command, *args, *self._common_args]
+        args = args + tuple(self._common_args)
+        cmdline = [self._command, *args]
         stdin_bytes = stdin.encode() if stdin is not None else None
         stdout = subprocess.DEVNULL if quiet else None
         check = not ignore_fail

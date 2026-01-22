@@ -1,12 +1,12 @@
 """Service for manipulating Phalanx Kubernetes clusters directly."""
 
-from phalanx.constants import (
+from ..constants import (
     GKE_LOAD_BALANCER_SERVICE_FINALIZERS,
     PREVIOUS_EXTERNAL_TRAFFIC_POLICY_ANNOTATION,
     PREVIOUS_LOAD_BALANCER_IP_ANNOTATION,
     PREVIOUS_REPLICA_COUNT_ANNOTATION,
+    SASQUATCH_NAMESPACE,
 )
-
 from ..exceptions import (
     InvalidLoadBalancerServiceStateError,
     InvalidScaleStateError,
@@ -19,7 +19,7 @@ __all__ = ["GKEPhalanxClusterService"]
 
 
 _SASQUATCH_KAFKA = NamespacedResource(
-    kind="Kafka", namespace="sasquatch", name="sasquatch"
+    kind="Kafka", namespace=SASQUATCH_NAMESPACE, name="sasquatch"
 )
 """The Sasquatch Kafka resource."""
 
@@ -77,6 +77,17 @@ class GKEPhalanxClusterService:
             but its current replica count is not zero.
         """
         workloads = self._get_workloads_except_argocd()
+        sasquatch_workloads = [
+            workload
+            for workload in workloads
+            if workload.namespace == SASQUATCH_NAMESPACE
+        ]
+
+        for workload in sasquatch_workloads:
+            workloads.remove(workload)
+
+        # Scale down other workloads before sasquatch so we don't get errors
+        # about metrics.
         for workload in workloads:
             self._check_workload_state(workload)
             self._kubernetes.annotate(
@@ -85,6 +96,19 @@ class GKEPhalanxClusterService:
                 value=str(workload.replicas),
             )
             self._kubernetes.scale(workload, 0)
+
+        for workload in sasquatch_workloads:
+            self._check_workload_state(workload)
+            self._kubernetes.annotate(
+                workload,
+                key=PREVIOUS_REPLICA_COUNT_ANNOTATION,
+                value=str(workload.replicas),
+            )
+            self._kubernetes.scale(workload, 0)
+        for workload in sasquatch_workloads:
+            self._kubernetes.wait_for_rollout(
+                namespace=workload.namespace, name=workload.get_kind_name()
+            )
 
     def scale_up_workloads(self) -> None:
         """Scale up (almost) all Phalanx workloads to their previous counts.
@@ -98,7 +122,29 @@ class GKEPhalanxClusterService:
             but its current replica count is not zero.
 
         """
+        # Scale up all sasquatch workloads so we don't have apps starting
+        # without metrics
         workloads = self._get_workloads_except_argocd()
+        sasquatch_workloads = [
+            workload
+            for workload in workloads
+            if workload.namespace == SASQUATCH_NAMESPACE
+        ]
+
+        for workload in sasquatch_workloads:
+            workloads.remove(workload)
+
+        for workload in sasquatch_workloads:
+            self._check_workload_state(workload)
+            if workload.previous_replica_count is None:
+                continue
+            self._kubernetes.scale(workload, workload.previous_replica_count)
+            self._kubernetes.deannotate(
+                workload,
+                key=PREVIOUS_REPLICA_COUNT_ANNOTATION,
+            )
+
+        # Scale up all of the other workloads
         for workload in workloads:
             self._check_workload_state(workload)
             if workload.previous_replica_count is None:
@@ -108,6 +154,33 @@ class GKEPhalanxClusterService:
                 workload,
                 key=PREVIOUS_REPLICA_COUNT_ANNOTATION,
             )
+
+    def scale_up_all(self) -> None:
+        """Scale up all Phalanx workloads and resume all crons."""
+        self.resume_sasquatch_kafka_reconciliation()
+        self.restore_service_ips()
+        self.scale_up_workloads()
+        self.resume_cronjobs()
+
+    def scale_down_all(self) -> None:
+        """Scale down all Phalanx workloads except ArgoCD and crons."""
+        self.pause_sasquatch_kafka_reconciliation()
+        self.release_service_ips()
+        self.suspend_cronjobs()
+        self.scale_down_workloads()
+
+    def get_phalanx_load_balancer_services(self) -> list[Service]:
+        """Get all Services of type LoadBalancer for all Phalanx apps.
+
+        We say a Service is in a Phalanx app if it has an ArgoCD label.
+
+        Returns
+        -------
+        list[Service]
+            A list of all of the LoadBalancer Services provisioned by Phalanx
+            apps.
+        """
+        return self._kubernetes.get_phalanx_load_balancer_services()
 
     def release_service_ips(self) -> list[Service]:
         """Release all IPs on LoadBalancer Services for all Phalanx apps.
@@ -233,6 +306,39 @@ class GKEPhalanxClusterService:
             key="strimzi.io/pause-reconciliation",
         )
 
+    def retain_pvs(self) -> None:
+        """Set the persistentVolumeReclaimPolicy to Retain for all PVs."""
+        self._kubernetes.retain_pvs()
+
+    def get_sasquatch_kafka_cluster_id(self) -> str:
+        """Get the Strimzi cluster id from a Kafka node PVC.
+
+        When recovering a Strimzi Kafka cluster from backed-up
+        PersistentVolumes, the cluster id generated from applying a Strimzi
+        Kafka resource will not match the cluster id in the data in the
+        recovered volumes. We need to get the cluster id from the data on the
+        volume before we let strimzi reconcile the Kafka resource, or the Kafka
+        pods will not be able to start.
+
+        Command is from the Strimzi recovery docs here:
+        https://strimzi.io/docs/operators/latest/full/deploying#proc-cluster-recovery-volume-str
+
+        This method assumes a lot about what various resources are called.
+        """
+        return self._kubernetes.get_sasquatch_kafka_cluster_id()
+
+    def set_sasquatch_cluster_id(self, cluster_id: str) -> None:
+        """Configure a Strimzi Kafka cluster with an explicitly specified ID.
+
+        When we're recovering a Strimzi Kafka cluster from backed-up persistent
+        storage, We need to manually change the cluster ID to match the
+        original cluster ID.
+
+        For more info on Strimzi Kafka cluster recovery, see:
+        https://strimzi.io/docs/operators/latest/deploying#assembly-cluster-recovery-volume-str
+        """
+        self._kubernetes.set_sasquatch_cluster_id(cluster_id)
+
     def _refresh_service_ingress(self, service: Service) -> None:
         """Destroy and recreate the ingress associated with a Service."""
         self._kubernetes.set_service_to_cluster_ip(service)
@@ -283,3 +389,11 @@ class GKEPhalanxClusterService:
         if workload.previous_replica_count:
             if workload.replicas != 0:
                 raise InvalidScaleStateError(workload)
+
+    def kube_version(self):
+        """Get the version of the kubectl client and kubernetes server.
+
+        Useful for checking that kubectl can connect to a cluster using a given
+        context.
+        """
+        self._kubernetes.version()
