@@ -191,6 +191,9 @@ influxdb-enterprise-active:
       failureThreshold: 15
       initialDelaySeconds: 900
       periodSeconds: 60
+    config:
+      hintedHandoff:
+        max-size: 1099511627776 # 1TiB
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
