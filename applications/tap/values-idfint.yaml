@@ -1,16 +1,7 @@
 cadc-tap:
-  tapSchema:
-    image:
-      repository: "lsstsqre/tap-schema-idfint-tap"
-
   replicaCount: 4
 
   config:
-    qserv:
-      host: "qserv-int.slac.stanford.edu:4090"
-      jdbcParams: "?enabledTLSProtocols=TLSv1.3"
-      passwordEnabled: true
-
     sentryEnabled: true
     sentryTracesSampleRate: "0.1"
 

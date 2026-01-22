@@ -1,28 +1,36 @@
 suite: UWS Deployment
 templates:
   - uws-db-deployment.yaml
-
 tests:
-  - it: should not be created when cloudsql is enabled
+  - it: should not be created when uws type is cloudsql
     set:
       global:
         host: "example.com"
-      cloudsql:
-        enabled: true
-        instanceConnectionName: "science-platform--xyz:test"
-        serviceAccount: "sa@xyz"
-        database: "mydb"
-      serviceAccount:
-        create: true
-        name: "sa"
+      uws:
+        type: "cloudsql"
     asserts:
       - hasDocuments:
           count: 0
 
-  - it: should create a UWS deployment when cloudsql is note enabled (off by default)
+  - it: should not be created when uws type is external
     set:
       global:
         host: "example.com"
+      uws:
+        type: "external"
+        external:
+          host: "external-db"
+          port: 5432
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should create a UWS deployment when uws type is containerized (default)
+    set:
+      global:
+        host: "example.com"
+      uws:
+        type: "containerized"
     asserts:
       - hasDocuments:
           count: 1

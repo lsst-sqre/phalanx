@@ -20,6 +20,33 @@ cadc-tap:
     # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
     name: "tap"
 
+  tapSchema:
+    # -- Database backend type: "containerized", "cloudsql", or "external"
+    # @default -- "cloudsql"
+    type: "cloudsql"
+
+    # -- Database name
+    database: "tap"
+
+    # -- Database username
+    username: "tap"
+
+    # -- Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external)
+    useVaultPassword: true
+
+  uws:
+    # -- Database backend type: "containerized", "cloudsql", or "external"
+    type: "cloudsql"
+
+    # -- Database name
+    database: "tap"
+
+    # -- Database username
+    username: "tap"
+
+    # -- Whether the UWS database requires a password in Vault (true for cloudsql/external)
+    useVaultPassword: true
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
