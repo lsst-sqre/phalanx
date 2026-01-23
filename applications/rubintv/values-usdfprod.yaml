@@ -81,5 +81,5 @@ rubintv:
         ephemeral-storage: 256Mi
       limits:
         cpu: 2
-        memory: 8Gis
+        memory: 8Gi
         ephemeral-storage: 512Mi
