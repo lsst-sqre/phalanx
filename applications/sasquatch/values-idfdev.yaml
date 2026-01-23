@@ -11,17 +11,17 @@ strimzi-kafka:
       tls:
         enabled: true
       bootstrap:
-        loadBalancerIP: "35.222.7.174"
+        loadBalancerIP: "34.71.118.138"
         host: sasquatch-dev-kafka-bootstrap.lsst.cloud
       brokers:
         - broker: 0
-          loadBalancerIP: "35.193.196.189"
+          loadBalancerIP: "34.46.163.104"
           host: sasquatch-dev-kafka-0.lsst.cloud
         - broker: 1
-          loadBalancerIP: "35.232.19.196"
+          loadBalancerIP: "35.202.38.197"
           host: sasquatch-dev-kafka-1.lsst.cloud
         - broker: 2
-          loadBalancerIP: "34.172.163.125"
+          loadBalancerIP: "34.45.111.124"
           host: sasquatch-dev-kafka-2.lsst.cloud
   users:
     replicator:
@@ -58,8 +58,6 @@ customInfluxDBIngress:
 
 influxdb-enterprise:
   enabled: true
-  image:
-    tag: "1.12.2"
   license:
     secret:
       name: sasquatch
@@ -81,15 +79,6 @@ influxdb-enterprise:
     config:
       antiEntropy:
         enabled: true
-      cluster:
-        max-concurrent-queries: 100
-        query-timeout: "180s"
-        log-queries-after: "10s"
-        log-timedout-queries: true
-        termination-query-log: true
-        max-select-point: 50000000
-        max-select-series: 200000
-        max-select-buckets: 20000
     ingress:
       enabled: true
       hostname: data-dev.lsst.cloud
@@ -195,6 +184,9 @@ backpack:
 tap:
   enabled: true
 
+ppdbtap:
+  enabled: true
+
 # Send alerts to squadcast
 kapacitor:
   enabled: true
@@ -204,6 +196,16 @@ kapacitor:
 grafana:
   enabled: true
   influxdb:
+    url: "http://sasquatch-trickster.sasquatch"
     databases:
       - lsst.square.metrics
       - lsst.example
+
+trickster:
+  enabled: true
+  config:
+    logging:
+      log_level: "debug"
+
+redis:
+  enabled: true

@@ -1,16 +1,16 @@
 """Tests for the environment command-line subcommand."""
 
-from __future__ import annotations
-
 import subprocess
 from pathlib import Path
+
+from syrupy.assertion import SnapshotAssertion
 
 from ..support.cli import run_cli
 from ..support.data import phalanx_test_path
 from ..support.helm import MockHelmCommand
 
 
-def test_lint(mock_helm: MockHelmCommand) -> None:
+def test_lint(mock_helm: MockHelmCommand, snapshot: SnapshotAssertion) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "lint":
@@ -33,17 +33,7 @@ def test_lint(mock_helm: MockHelmCommand) -> None:
     expected = "==> Linting top-level chart for idfdev\n"
     assert result.output == expected
     assert result.exit_code == 0
-    assert mock_helm.call_args_list == [
-        [
-            "lint",
-            "environments",
-            "--strict",
-            "--values",
-            "environments/values.yaml",
-            "--values",
-            "environments/values-idfdev.yaml",
-        ]
-    ]
+    assert mock_helm.call_args_list == snapshot
 
     # Lint all environments.
     mock_helm.reset_mock()
@@ -54,35 +44,7 @@ def test_lint(mock_helm: MockHelmCommand) -> None:
     )
     assert result.output == expected
     assert result.exit_code == 0
-    assert mock_helm.call_args_list == [
-        [
-            "lint",
-            "environments",
-            "--strict",
-            "--values",
-            "environments/values.yaml",
-            "--values",
-            "environments/values-idfdev.yaml",
-        ],
-        [
-            "lint",
-            "environments",
-            "--strict",
-            "--values",
-            "environments/values.yaml",
-            "--values",
-            "environments/values-minikube.yaml",
-        ],
-        [
-            "lint",
-            "environments",
-            "--strict",
-            "--values",
-            "environments/values.yaml",
-            "--values",
-            "environments/values-usdfdev-prompt-processing.yaml",
-        ],
-    ]
+    assert mock_helm.call_args_list == snapshot
 
     def callback_error(*command: str) -> subprocess.CompletedProcess:
         return subprocess.CompletedProcess(

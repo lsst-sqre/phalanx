@@ -27,6 +27,7 @@ Qserv Kafka bridge
 | config.qservDatabaseOverflow | int | `20` | Extra database connections that may be opened in excess of the pool size to handle surges in load. This is used primarily by the frontend for jobs that complete immediately. |
 | config.qservDatabasePoolSize | int | `10` | Database pool size. This is the number of MySQL connections that will be held open regardless of load. This should generally be set to the same as `maxWorkerJobs`. |
 | config.qservDatabaseUrl | string | None, must be set | URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`) |
+| config.qservDeleteQueries | bool | `true` | Whether to delete queries after they complete. If this is set to false, rely on Qserv's internal garbage collection of old queries. |
 | config.qservPollInterval | string | `"1s"` | Interval at which Qserv is polled for query status in Safir `parse_timedelta` format |
 | config.qservRestMaxConnections | int | `15` | Maximum simultaneous connections to open to the REST API. This should be set to `jobRunBatchSize` plus some extra connections for the monitor and cancel jobs. |
 | config.qservRestSendApiVersion | bool | `true` | Whether to send the expected API version in REST API calls to Qserv |
@@ -48,16 +49,21 @@ Qserv Kafka bridge
 | frontend.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka frontend pod |
 | frontend.podAnnotations | object | `{}` | Annotations for the qserv-kafka frontend pod |
 | frontend.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka frontend pod |
-| frontend.tolerations | list | `[]` | Tolerations for the qserv-kafka frontend pod |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| frontend.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the qserv-kafka frontend pod |
+| global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
+| global.repertoireUrl | string | Set by Argo CD | Base URL for Repertoire discovery API |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the qserv-kafka image |
 | image.repository | string | `"ghcr.io/lsst-sqre/qserv-kafka"` | Image to use in the qserv-kafka deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
+| periodicMetrics.affinity | object | `{}` | Affinity rules for the qserv-kafka metrics job |
+| periodicMetrics.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka metrics job |
+| periodicMetrics.podAnnotations | object | `{}` | Annotations for the qserv-kafka metrics job |
 | periodicMetrics.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka periodic metrics pods |
 | periodicMetrics.schedule | string | `"* * * * *"` | How often to run the periodic metrics job |
+| periodicMetrics.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the qserv-kafka metrics job |
 | redis.config.secretKey | string | `"redis-password"` | Key inside secret from which to get the Redis password (do not change) |
 | redis.config.secretName | string | `"qserv-kafka"` | Name of secret containing Redis password |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
@@ -66,6 +72,7 @@ Qserv Kafka bridge
 | redis.persistence.storageClass | string | `nil` | Class of storage to request |
 | redis.persistence.volumeClaimName | string | `nil` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
+| redis.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the qserv-kafka Redis pod |
 | resultWorker.affinity | object | `{}` | Affinity rules for the qserv-kafka worker pods |
 | resultWorker.allowRootDebug | bool | `false` | Whether to allow containers to run as root. Set to true to allow use of debug containers to diagnose issues such as memory leaks. |
 | resultWorker.autoscaling.enabled | bool | `true` | Enable autoscaling of qserv-kafka result workers |
@@ -76,4 +83,4 @@ Qserv Kafka bridge
 | resultWorker.podAnnotations | object | `{}` | Annotations for the qserv-kafka worker pods |
 | resultWorker.replicaCount | int | `1` | Number of result worker pods to start if autoscaling is disabled |
 | resultWorker.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka worker pods |
-| resultWorker.tolerations | list | `[]` | Tolerations for the qserv-kafka worker pods |
+| resultWorker.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the qserv-kafka worker pods |

@@ -13,7 +13,7 @@ image:
   repository: "ghcr.io/lsst/ppdb-replication"
 
   # -- Pull policy for the ppdb-replication image
-  pullPolicy: "IfNotPresent"
+  pullPolicy: "Always"
 
   # -- Tag of dax_ppdb image to use
   # @default -- The appVersion of the chart
@@ -87,7 +87,7 @@ config:
   maxWaitTime: 3600
 
   # -- Time to wait before checking for new chunks, if no chunk appears
-  checkInterval: 30
+  checkInterval: 300
 
   # -- Time to wait between uploader file scans
   waitInterval: 300

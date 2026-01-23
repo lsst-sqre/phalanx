@@ -21,7 +21,7 @@ applications:
   portal: true
   postgres: true
   ppdb-replication: true
-  repertoire: true
+  qserv-kafka: true
   sasquatch: true
   schedview-snapshot: true
   schedview-static-pages: true

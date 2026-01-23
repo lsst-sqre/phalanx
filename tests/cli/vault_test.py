@@ -1,7 +1,5 @@
 """Tests for the vault command-line subcommand."""
 
-from __future__ import annotations
-
 import re
 from base64 import b64encode
 from datetime import UTC, datetime, timedelta
@@ -9,6 +7,7 @@ from pathlib import Path
 
 import jinja2
 import yaml
+from syrupy.assertion import SnapshotAssertion
 
 from phalanx.constants import (
     VAULT_APPROLE_SECRET_TEMPLATE,
@@ -18,15 +17,13 @@ from phalanx.factory import Factory
 from phalanx.models.vault import VaultAppRole, VaultToken
 
 from ..support.cli import run_cli
-from ..support.data import (
-    assert_json_dirs_match,
-    phalanx_test_path,
-    read_output_data,
-)
+from ..support.data import assert_json_dirs_match, phalanx_test_path
 from ..support.vault import MockVaultClient
 
 
-def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
+def test_audit(
+    factory: Factory, mock_vault: MockVaultClient, snapshot: SnapshotAssertion
+) -> None:
     config_storage = factory.create_config_storage()
     environment = config_storage.load_environment_config("idfdev")
     _, vault_path = environment.vault_path_prefix.split("/", 1)
@@ -37,7 +34,7 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
         "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
     )
     assert result.exit_code == 1
-    assert result.output == read_output_data("idfdev", "audit-both-missing")
+    assert result.output == snapshot
 
     # Create an AppRole with the wrong policy and the wrong list of policies.
     mock_vault.create_or_update_policy(f"{vault_path}/read", "blah blah blah")
@@ -48,7 +45,7 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
         "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
     )
     assert result.exit_code == 1
-    assert result.output == read_output_data("idfdev", "audit-approle-policy")
+    assert result.output == snapshot
 
     # Use the Phalanx Vault service to recreate the AppRole, which should fix
     # all of the problems, and then add an extra policy.
@@ -63,7 +60,7 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
         "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
     )
     assert result.exit_code == 1
-    assert result.output == read_output_data("idfdev", "audit-approle-extra")
+    assert result.output == snapshot
 
     # Fix the AppRole again, and create a write token with the wrong policies
     # and a write policy with the wrong contents.
@@ -78,7 +75,7 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
         "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
     )
     assert result.exit_code == 1
-    assert result.output == read_output_data("idfdev", "audit-token-policy")
+    assert result.output == snapshot
 
     # Create a new token that expires in six days and use that to fix the
     # policy. This should also revoke the old token. Also create a new token
@@ -96,7 +93,7 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
     )
     assert result.exit_code == 1
     output = re.sub(r"[\d-]{10} [\d:]{8}", "<timestamp>", result.output)
-    assert output == read_output_data("idfdev", "audit-token-expired")
+    assert output == snapshot
 
 
 def test_audit_clean(factory: Factory, mock_vault: MockVaultClient) -> None:
@@ -112,7 +109,10 @@ def test_audit_clean(factory: Factory, mock_vault: MockVaultClient) -> None:
 
 
 def test_copy_secrets(
-    factory: Factory, tmp_path: Path, mock_vault: MockVaultClient
+    factory: Factory,
+    tmp_path: Path,
+    mock_vault: MockVaultClient,
+    snapshot: SnapshotAssertion,
 ) -> None:
     input_path = phalanx_test_path()
     vault_input_path = input_path / "vault" / "idfdev"
@@ -127,7 +127,7 @@ def test_copy_secrets(
         env={"VAULT_TOKEN": "sometoken"},
     )
     assert result.exit_code == 0
-    assert result.output == read_output_data("idfdev", "copy-output")
+    assert result.output == snapshot
     result = run_cli(
         "vault",
         "export-secrets",

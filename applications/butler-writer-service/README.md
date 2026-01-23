@@ -19,11 +19,14 @@ Write proxy for the Butler that buffers concurrent requests.
 | image.repository | string | `"ghcr.io/lsst-dm/prompt_processing_butler_writer"` | Image to use for the Butler writer service |
 | image.tag | string | None, must be set | Docker container version to use for the Butler writer service |
 | kafka.clusterAddress | string | None, must be set | Address of Kafka broker containing Prompt Processing output events, for consumption by the Butler writer service. |
+| kafka.debug | bool | `false` | Enable additional Kafka debug logging |
+| kafka.outputTopic | string | None, must be set | Kafka topic where the Butler writer service will output information about ingested datasets, for consumption by the Prompt Publication Service. |
 | kafka.topic | string | None, must be set | Kafka topic containing Prompt Processing output events, for consumption by the Butler writer service. |
 | kafka.username | string | None, must be set | Username for Kafka broker containing Prompt Processing output events, for consumption by the Butler writer service. |
 | logLevel | string | `"INFO"` | Global logging level to use in the writer service. |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` | Node selection rules for the pod |
+| outputDatasetListDirectory | string | None, must be set | Directory path URI (in lsst.resources.ResourcePath format) where the Butler writer service will output lists of ingested datasets, for consumption by the Prompt Publication Service. |
 | outputRepo | string | None, must be set | URI to the repo the writer should write to. |
 | podAnnotations | object | `{}` | Pod annotations for the writer |
 | resources.cpuLimit | int | `1` | The maximum cpu cores for the Butler writer service. |

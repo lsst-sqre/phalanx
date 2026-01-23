@@ -1,6 +1,6 @@
 image:
   pullPolicy: IfNotPresent
-  tag: 2.2.1
+  tag: 3.0.0
 
 outputRepo: s3://embargo@rubin-summit-users/
 
@@ -8,6 +8,9 @@ kafka:
   clusterAddress: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
   username: butler-writer
   topic: butler-writer
+  outputTopic: butler-writer-ingestion-events
+
+outputDatasetListDirectory: s3://embargo@rubin-summit-users/publication/prompt_processing/
 
 s3:
   endpointUrl: https://sdfembs3.sdf.slac.stanford.edu

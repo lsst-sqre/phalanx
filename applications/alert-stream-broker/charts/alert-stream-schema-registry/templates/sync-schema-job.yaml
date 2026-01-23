@@ -27,6 +27,6 @@ spec:
         image: {{ .Values.schemaSync.image.repository }}@{{ .Values.schemaSync.image.digest }}
         imagePullPolicy: "{{ .Values.schemaSync.image.pullPolicy}}"
         command:
-          - "syncAllSchemasToRegistry.py"
+          - "syncAllSchemasToRegistry"
           - "--schema-registry-url=http://{{ .Values.name }}:{{ .Values.port }}"
           - "--subject={{ .Values.schemaSync.subject }}"

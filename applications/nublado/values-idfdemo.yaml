@@ -5,9 +5,6 @@ controller:
   slackAlerts: true
   nodeSelector:
     node_pool: "arm-core-pool"
-  # image:
-  #   tag: tickets-DM-53011
-  #   pullPolicy: Always
   config:
     dropdownMenu:
       release:
@@ -55,18 +52,8 @@ controller:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "https://demo.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         TMPDIR: "/tmp"
-      initContainers:
-        - name: "inithome"
-          image:
-            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "9.0.0"
-          privileged: true
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
       nodeSelector:
         node_pool: "user-lab-pool"
-      pullSecret: pull-secret
       tolerations:
         - key: "kubernetes.io/arch"
           value: arm64
@@ -81,11 +68,26 @@ controller:
             type: nfs
             serverPath: "/home-share"
             server: "10.235.176.36"
+        - name: "rubin"
+          source:
+            type: nfs
+            serverPath: "/home-share/_reloc/rubin"
+            server: "10.235.176.36"
+        - name: "deleted-sundays"
+          source:
+            type: nfs
+            serverPath: "/home-share/_reloc/deleted-sundays"
+            server: "10.235.176.36"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
-# hub:
+        - containerPath: "/rubin"
+          volumeName: "rubin"
+        - containerPath: "/deleted-sundays"
+          volumeName: "deleted-sundays"
+hub:
 #   useSubdomains: true
+  landingPage: "/lab/tree/notebooks/tutorials/welcome.md"
 jupyterhub:
   cull:
     timeout: 43200  # 12 hours

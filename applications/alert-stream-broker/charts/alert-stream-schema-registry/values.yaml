@@ -16,7 +16,10 @@ clusterName: alert-broker
 # -- Name of the topic used by the Schema Registry to store data.
 schemaTopic: registry-schemas
 
-compatibilityLevel: None
+# -- Compatibility level for the Schema Registry.
+# Options are: none, backward, backward_transitive, forward,
+# forward_transitive, full, and full_transitive.
+compatibilityLevel: none
 
 # -- Hostname for an ingress which sends traffic to the Schema Registry.
 hostname: usdf-alert-schemas-dev.slac.stanford.edu
@@ -32,7 +35,7 @@ schemaSync:
     repository: lsstdm/lsst_alert_packet
     # -- Version of the container to use. If container isn't updating in Argo, switch to digest.
     # tag: tickets-DM-42606
-    digest: sha256:da82c66a4b832c68ee1833f0e4024cabbb14e3eb443fdf61a4c3049ebc70633a
+    digest: sha256:9979a57878b93511e6fe4a19b90ff1a8341c7f83f46b7a8244fa824b26ce0f27
     pullPolicy: Always
 
   # -- Subject name to use when inserting data into the Schema Registry

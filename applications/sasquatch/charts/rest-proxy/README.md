@@ -13,10 +13,10 @@ A subchart to deploy Confluent REST proxy for Sasquatch.
 | affinity | object | `{}` | Affinity configuration |
 | configurationOverrides | object | See `values.yaml` | Kafka REST configuration options |
 | customEnv | object | `{}` | Kafka REST additional env variables |
-| heapOptions | string | `"-Xms4096M -Xmx4096M"` | Kafka REST proxy JVM Heap Option |
+| heapOptions | string | `"-Xms8192M -Xmx8192M"` | Kafka REST proxy JVM Heap Option |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository |
-| image.tag | string | `"8.1.0"` | Kafka REST proxy image tag |
+| image.tag | string | `"8.1.1"` | Kafka REST proxy image tag |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
 | ingress.anonymous | bool | false | Whether to enable anonymous access to the REST proxy |
 | ingress.enabled | bool | `false` | Whether to enable the ingress for the REST proxy |

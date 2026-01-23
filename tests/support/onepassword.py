@@ -1,7 +1,5 @@
 """Mock 1Password Connect API for testing."""
 
-from __future__ import annotations
-
 import uuid
 from collections.abc import Iterator
 from unittest.mock import patch

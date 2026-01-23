@@ -1,0 +1,11 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: {{ include "nightlydigest-backend.name" . }}-gafaelfawr-token
+  labels:
+    {{- include "nightlydigest-backend.labels" . | nindent 4 }}
+spec:
+  service: "bot-nightlydigest-backend"
+  scopes:
+    - "read:image"
+    - "exec:internal-tools"

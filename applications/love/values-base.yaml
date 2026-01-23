@@ -87,7 +87,7 @@ love-manager:
         AUTH_LDAP_3_SERVER_URI: ldap://ipa3.ls.lsst.org
         DB_HOST: postgresdb01.ls.lsst.org
         LOVE_SITE: base
-        NIGHTREPORT_MAIL_ADDRESS: saranda@lsst.org
+        NIGHTREPORT_MAIL_ADDRESS: sebastian.aranda@noirlab.edu
       autoscaling:
         enabled: true
         minReplicas: 2
@@ -675,8 +675,29 @@ love-producer:
   - name: raocps
     csc: OCPS:101 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: partsensess401
+    csc: ESS:401
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: partsensess402
+    csc: ESS:402
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: partsensess403
+    csc: ESS:403
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ringssess304
     csc: ESS:304 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tea-ess123
+    csc: ESS:123
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tea-ess124
+    csc: ESS:124
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tea-ess125
+    csc: ESS:125
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tea-ess126
+    csc: ESS:126
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: test42
     csc: Test:42 --log-level 10

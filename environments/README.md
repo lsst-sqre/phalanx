@@ -25,8 +25,7 @@
 | applications.exposure-checker | bool | `false` | Enable the exposure-checker application |
 | applications.exposurelog | bool | `false` | Enable the exposurelog application |
 | applications.fastapi-bootcamp | bool | `false` | Enable the fastapi-bootcamp application |
-| applications.flink | bool | `false` | Enable the flink application |
-| applications.fov-quicklook | bool | `false` | Switch to enable the fov-quicklook application in specific environments (off by default) |
+| applications.fov-quicklook | bool | `false` | Enable the fov-quicklook application |
 | applications.gafaelfawr | bool | `true` | Enable the Gafaelfawr application. This is required by Phalanx since most other applications use `GafaelfawrIngress` |
 | applications.ghostwriter | bool | `false` | Enable the ghostwriter application |
 | applications.giftless | bool | `false` | Enable the giftless application |
@@ -41,12 +40,12 @@
 | applications.love | bool | `false` | Enable the love control system application |
 | applications.mobu | bool | `false` | Enable the mobu application |
 | applications.mpsky | bool | `false` | Enable the mpsky application |
+| applications.muster | bool | `false` | Enable the muster application |
 | applications.narrativelog | bool | `false` | Enable the narrativelog application |
 | applications.next-visit-fan-out | bool | `false` | Enable the next-visit-fan-out application |
 | applications.noteburst | bool | `false` | Enable the noteburst application (required by times-square) |
 | applications.nublado | bool | `false` | Enable the nublado application (v3 of the Notebook Aspect) |
 | applications.nvr-control | bool | `false` | Enable the nvr-control application |
-| applications.obsenv-management | bool | `false` | Enable the obsenv-management application |
 | applications.obsloctap | bool | `false` | Enable the obsloctap application |
 | applications.obssys | bool | `false` | Enable the obssys control system application |
 | applications.octavius | bool | `false` | Enable the octavius application |
@@ -63,7 +62,7 @@
 | applications.prompt-keda-lsstcam | bool | `false` | Enable the prompt-keda-lsstcam application |
 | applications.prompt-redis | bool | `false` | Enable the prompt-redis application |
 | applications.qserv-kafka | bool | `false` | Enable the qserv-kafka application |
-| applications.repertoire | bool | `false` | Enable the repertoire application |
+| applications.repertoire | bool | `true` | Enable the Repertoire application. This provides service discovery for many other Phalanx applications, all of which assume that it is running. |
 | applications.rubin-rag | bool | `false` | Enable the rubin-rag application |
 | applications.rubin-too-producer | bool | `false` | Enable the rubin-too-producer application |
 | applications.rubintv | bool | `false` | Enable the rubintv application |

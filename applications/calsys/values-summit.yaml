@@ -43,7 +43,7 @@ cbp:
 electrometer101:
   enabled: true
   image:
-    revision: 4
+    revision: 11
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -65,7 +65,7 @@ electrometer101:
 electrometer102:
   enabled: true
   image:
-    revision: 4
+    revision: 11
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -87,7 +87,7 @@ electrometer102:
 electrometer103:
   enabled: true
   image:
-    revision: 4
+    revision: 11
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -109,7 +109,7 @@ electrometer103:
 electrometer201:
   enabled: true
   image:
-    revision: 4
+    revision: 11
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:

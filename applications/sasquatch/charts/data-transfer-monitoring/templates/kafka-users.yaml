@@ -31,3 +31,12 @@ spec:
         operations:
           - Read
           - Describe
+      - resource:
+          type: topic
+          name: "summit.lsst.sal.MTCamera.logevent_endReadout"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - Read
+          - Describe

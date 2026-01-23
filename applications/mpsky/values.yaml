@@ -17,7 +17,7 @@ image:
   # -- Tag of image to use
   # @default -- The appVersion of the chart
   #tag: null
-  tag: return-oe
+  tag: auto-load
 
 ingress:
   # -- Additional annotations for the ingress rule
@@ -38,6 +38,13 @@ resources: {}
 
 # -- Tolerations for the mpsky deployment pod
 tolerations: []
+
+# -- Annotations for the mpsky service
+serviceAnnotations: {}
+
+service:
+  # -- Configures allocation of node ports.  For USDF should be set to false.
+  nodePorts: false
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

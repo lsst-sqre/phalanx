@@ -110,45 +110,6 @@ spec:
             value: auxtel-acq-take-seq-nominal
           - name: reportname
             value: at_acq_take_seq_nominal.xml
-      - name: auxtel-stop
-        depends: auxtel-acq-take-seq-nominal
-        templateRef:
-          name: integration-test-job-template
-          template: inttest-template
-        arguments:
-          parameters:
-          - name: integrationtest
-            value: "-A Test_Report_AuxTel_Stop.list"
-          - name: jobname
-            value: auxtel-stop
-          - name: reportname
-            value: at_stop.xml
-      - name: auxtel-shutdown
-        depends: auxtel-stop
-        templateRef:
-          name: integration-test-job-template
-          template: inttest-template
-        arguments:
-          parameters:
-          - name: integrationtest
-            value: "-A Test_Report_AuxTel_Shutdown.list"
-          - name: jobname
-            value: auxtel-shutdown
-          - name: reportname
-            value: at_shutdown.xml
-      - name: enable-atcs
-        depends: auxtel-shutdown
-        templateRef:
-          name: integration-test-job-template
-          template: inttest-template
-        arguments:
-          parameters:
-          - name: integrationtest
-            value: "-A Test_Report_Enable_ATCS.list"
-          - name: jobname
-            value: enable-atcs
-          - name: reportname
-            value: enable_atcs.xml
       - name: bigcam-image-verification
         depends: call-cleanup-reports
         templateRef:

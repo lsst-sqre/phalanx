@@ -1,0 +1,17 @@
+# serializer version: 1
+# name: test_resume_kafka
+  _CallList([
+    _Call(
+      tuple(
+        'annotate',
+        'Kafka',
+        'sasquatch',
+        'strimzi.io/pause-reconciliation-',
+        '--namespace',
+        'sasquatch',
+      ),
+      dict({
+      }),
+    ),
+  ])
+# ---

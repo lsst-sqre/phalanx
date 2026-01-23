@@ -29,6 +29,7 @@ spec:
             {{- include "fov-quicklook.env.db" . | nindent 12 }}
             {{- include "fov-quicklook.env.log-level" . | nindent 12 }}
             {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
+            {{- include "fov-quicklook.env.ccd_data_types" . | nindent 12 }}
             {{- include "fov-quicklook.butler-settings.env" . | nindent 12 }}
           volumeMounts:
             {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}

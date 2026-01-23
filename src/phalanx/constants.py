@@ -4,13 +4,13 @@ Things that arguably could be configurable but haven't yet been made into
 actual configuration options.
 """
 
-from __future__ import annotations
-
 from datetime import timedelta
 
 __all__ = [
     "HELM_DOCLINK_ANNOTATION",
     "ONEPASSWORD_ENCODED_WARNING",
+    "PREVIOUS_EXTERNAL_TRAFFIC_POLICY_ANNOTATION",
+    "PREVIOUS_LOAD_BALANCER_IP_ANNOTATION",
     "PULL_SECRET_DESCRIPTION",
     "VAULT_APPROLE_SECRET_TEMPLATE",
     "VAULT_TOKEN_SECRET_TEMPLATE",
@@ -65,3 +65,35 @@ VAULT_WRITE_TOKEN_LIFETIME = "3650d"
 
 VAULT_WRITE_TOKEN_WARNING_LIFETIME = timedelta(days=7)
 """Remaining lifetime at which to warn that a token is about to expire."""
+
+PREVIOUS_REPLICA_COUNT_ANNOTATION = "phalanx.lsst.org/previous-replica-count"
+"""Annotation that holds the original number of replicas.
+
+This annotation will be set when we do an explicit scale down during a recovery
+process.
+"""
+
+PREVIOUS_LOAD_BALANCER_IP_ANNOTATION = (
+    "phalanx.lsst.org/previous-load-balancer-ip"
+)
+"""Annotation that holds the original loadBalancerIP value for a Service.
+
+This annotation will be set when we recover an existing Phalanx cluster to a
+new cluster.
+"""
+
+PREVIOUS_EXTERNAL_TRAFFIC_POLICY_ANNOTATION = (
+    "phalanx.lsst.org/previous-external-traffic-policy"
+)
+"""Annotation that holds the original Service externalTrafficPolicy value.
+
+When we convert a LoadBalancer service to a ClusterIP service, then back to a
+LoadBalancer service, spec.externalTrafficPolicy always gets set to "Cluster",
+even if it was set to "Local" originally.
+"""
+
+GKE_LOAD_BALANCER_SERVICE_FINALIZERS = [
+    "service.kubernetes.io/load-balancer-cleanup",
+    "gke.networking.io/l4-netlb-v1",
+]
+"""Finalizers on a GKE Service resource when the service has an ingress."""

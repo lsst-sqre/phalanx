@@ -15,9 +15,14 @@ Run InfluxDB Enterprise on Kubernetes
 | bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
 | data.affinity | object | See `values.yaml` | Affinity rules for data pods |
 | data.config.antiEntropy.enabled | bool | `false` | Enable the anti-entropy service, which copies and repairs shards |
-| data.config.cluster.log-queries-after | string | `"15s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
-| data.config.cluster.max-concurrent-queries | int | `1000` | Maximum number of running queries allowed on the instance (0 is unlimited) |
-| data.config.cluster.query-timeout | string | `"300s"` | Maximum duration a query is allowed to run before it is killed |
+| data.config.cluster.log-queries-after | string | `"10s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
+| data.config.cluster.log-timedout-queries | bool | `true` | Whether to log timed out queries |
+| data.config.cluster.max-concurrent-queries | int | `50` | Maximum number of running queries allowed |
+| data.config.cluster.max-select-buckets | int | `20000` | Maximum number of GROUP BY time() buckets a single select query can retrieve |
+| data.config.cluster.max-select-point | int | `50000000` | Maximum number of points a single select query can process before it is killed |
+| data.config.cluster.max-select-series | int | `200000` | Maximum number of series a single select query can process before it is killed |
+| data.config.cluster.query-timeout | string | `"180s"` | Maximum duration a query is allowed to run before it is killed |
+| data.config.cluster.termination-query-log | bool | `true` | Whether to log queries that are terminated due to resource limits |
 | data.config.continuousQueries.enabled | bool | `false` | Whether continuous queries are enabled |
 | data.config.data.cache-max-memory-size | int | `0` | Maximum size a shared cache can reach before it starts rejecting writes |
 | data.config.data.trace-logging-enabled | bool | `true` | Whether to enable verbose logging of additional debug information within the TSM engine and WAL |

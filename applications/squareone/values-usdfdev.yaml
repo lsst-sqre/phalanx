@@ -12,6 +12,9 @@ config:
     - label: "Times Square"
       href: "/times-square/"
       internal: true
+    - label: "FOV Quicklook"
+      href: "/fov-quicklook/"
+      internal: false
     - label: "Argo CD"
       href: "/argo-cd/"
       internal: false

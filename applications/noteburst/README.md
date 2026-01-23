@@ -48,7 +48,6 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | ingress.path | string | `"/noteburst"` | Path prefix where noteburst is hosted |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` |  |
-| periodicMetrics | object | `{"resources":{"limits":{"cpu":"250m","memory":"512Mi"},"requests":{"cpu":"2m","memory":"128Mi"}},"schedule":"* * * * *"}` | Config for the CronJob that publishes metrics periodically |
 | periodicMetrics.resources | object | `{"limits":{"cpu":"250m","memory":"512Mi"},"requests":{"cpu":"2m","memory":"128Mi"}}` | Resources for the periodic metrics cron job |
 | periodicMetrics.schedule | string | `"* * * * *"` | Cron schedule string for publishing periodic metrics (in UTC) |
 | podAnnotations | object | `{}` | Annotations for API and worker pods |
@@ -70,4 +69,4 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` |  |
-| tolerations | list | `[]` |  |
+| tolerations | list | Tolerate GKE arm64 taint | Tolerations for the noteburst pods |

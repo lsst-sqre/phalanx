@@ -19,7 +19,6 @@ applications:
   mobu: true
   onepassword-connect: true
   ook: true
-  repertoire: true
   sasquatch: true
   squarebot: true
   squareone: true

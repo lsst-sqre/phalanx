@@ -11,18 +11,19 @@ Kafka environment for Prompt Processing
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| kafdrop.enabled | bool | `false` | Whether Kafdrop is enabled |
+| kafdrop.enabled | bool | `true` | Whether Kafdrop is enabled |
 | strimzi-kafka.kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled |
-| strimzi-kafka.kafka.listeners.noauth.enabled | bool | `true` | Whether internal no authentication listener is enabled |
 | strimzi-kafka.kafka.listeners.plain.enabled | bool | `true` | Whether internal plaintext listener is enabled |
 | strimzi-kafka.kafka.listeners.tls.enabled | bool | `true` | Whether internal TLS listener is enabled |
 | strimzi-kafka.kafka.version | string | `"4.0.0"` | Version of Kafka to deploy |
 | strimzi-registry-operator.clusterName | string | `"prompt-kafka"` | Name of the Strimzi Kafka cluster |
 | strimzi-registry-operator.clusterNamespace | string | `"prompt-kafka"` | Namespace where the Strimzi Kafka cluster is deployed |
 | strimzi-registry-operator.operatorNamespace | string | `"prompt-kafka"` | Namespace where the strimzi-registry-operator is deployed |
+| butler-writer.cluster.name | string | `"prompt-kafka"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Prompt Kafka chart. |
 | kafdrop.affinity | object | `{}` | Affinity configuration |
+| kafdrop.cluster.name | string | `"prompt-kafka"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | kafdrop.cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |
-| kafdrop.existingSecret | string | Do not use a secret | Existing Kubernetes secrect use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |
+| kafdrop.existingSecret | string | Do not use a secret | Existing Kubernetes secret use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |
 | kafdrop.host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
 | kafdrop.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | kafdrop.image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository |
@@ -39,12 +40,13 @@ Kafka environment for Prompt Processing
 | kafdrop.podAnnotations | object | `{}` | Pod annotations |
 | kafdrop.replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
 | kafdrop.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafdrop |
-| kafdrop.schemaRegistry | string | `"prompt-kafka-schema-registry:8081"` | The endpoint of Schema Registry |
+| kafdrop.schemaRegistry | string | `"http://prompt-kafka-schema-registry:8081"` | The endpoint of Schema Registry |
 | kafdrop.server.port | int | `9000` | The web server port to listen on |
 | kafdrop.server.servlet.contextPath | string | `"/kafdrop"` | The context path to serve requests on |
 | kafdrop.service.annotations | object | `{}` | Additional annotations to add to the service |
 | kafdrop.service.port | int | `9000` | Service port |
 | kafdrop.tolerations | list | `[]` | Tolerations configuration |
+| prompt-publication.cluster.name | string | `"prompt-kafka"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Prompt Kafka chart. |
 | strimzi-kafka.cluster.monitorLabel | object | `{}` | Site wide label required for gathering Prometheus metrics if they are enabled |
 | strimzi-kafka.cluster.name | string | `"prompt-kafka"` | Name used for the Kafka cluster, and used by Strimzi for many annotations |
 | strimzi-kafka.cruiseControl.enabled | bool | `false` |  |
@@ -56,12 +58,10 @@ Kafka environment for Prompt Processing
 | strimzi-kafka.kafka.config."replica.fetch.max.bytes" | int | `10485760` | The number of bytes of messages to attempt to fetch for each partition |
 | strimzi-kafka.kafka.externalListener.bootstrap.annotations | object | `{}` | Annotations that will be added to the Ingress, Route, or Service resource |
 | strimzi-kafka.kafka.externalListener.bootstrap.host | string | Do not configure TLS | Name used for TLS hostname verification |
-| strimzi-kafka.kafka.externalListener.bootstrap.loadBalancerIP | string | Do not request a load balancer IP | Request this load balancer IP. See `values.yaml` for more discussion |
 | strimzi-kafka.kafka.externalListener.brokers | list | `[]` | Brokers configuration. _host_ is used in the brokers' advertised.brokers configuration and for TLS hostname verification.  The format is a list of maps. |
 | strimzi-kafka.kafka.externalListener.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker |
 | strimzi-kafka.kafka.externalListener.tls.enabled | bool | `false` | Whether TLS encryption is enabled |
 | strimzi-kafka.kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled |
-| strimzi-kafka.kafka.listeners.noauth.enabled | bool | `false` | Whether internal noauth listener is enabled |
 | strimzi-kafka.kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled |
 | strimzi-kafka.kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled |
 | strimzi-kafka.kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |

@@ -1,7 +1,5 @@
 """Helper functions for running command-line tests."""
 
-from __future__ import annotations
-
 from click.testing import CliRunner, Result
 
 from phalanx.cli import main

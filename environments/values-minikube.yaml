@@ -13,4 +13,7 @@ vaultPathPrefix: "secret/phalanx/minikube"
 applications:
   mobu: true
   postgres: true
-  repertoire: true
+  sasquatch: true
+  strimzi: true
+  strimzi-access-operator: true
+  strimzi-registry-operator: true

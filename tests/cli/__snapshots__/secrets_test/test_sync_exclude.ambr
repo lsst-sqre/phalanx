@@ -1,0 +1,16 @@
+# serializer version: 1
+# name: test_sync_exclude
+  '''
+  Updated Vault secret for gafaelfawr database-password
+  Updated Vault secret for gafaelfawr session-secret
+  Updated Vault secret for gafaelfawr signing-key
+  Updated Vault secret for gafaelfawr slack-webhook
+  Updated Vault secret for nublado aws-credentials.ini
+  Updated Vault secret for nublado butler-gcs-idf-creds.json
+  Updated Vault secret for nublado butler-hmac-idf-creds.json
+  Updated Vault secret for nublado postgres-credentials.txt
+  Updated Vault secret for nublado proxy_token
+  Updated Vault secret for postgres nublado3_password
+  
+  '''
+# ---

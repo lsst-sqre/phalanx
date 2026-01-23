@@ -123,16 +123,14 @@ spec:
             {{- end }}
 
       volumes:
+          {{- range $vol := .Values.consumekafka.pvcMountpoint }}
+          - name: {{ $vol.name | quote }}
+            persistentVolumeClaim:
+              claimName: {{ $vol.name | quote }}
+          {{- end }}
           - name: tmp-volume
             emptyDir:
               sizeLimit: 500Mi
-          {{- range $vol := .Values.consumekafka.pvcMountpoint }}
-          - name: {{ $vol.name | quote }}
-            {{ with $vol.persistentVolumeClaim }}
-            persistentVolumeClaim:
-              claimName: {{ .name | quote }}
-            {{- end }}
-          {{- end }}
           {{- range $vol := .Values.consumekafka.nfsMountpoint }}
           - name: {{ $vol.name | quote }}
             nfs:

@@ -20,7 +20,6 @@ applications:
   mobu: true
   nublado: true
   portal: true
-  repertoire: true
   squareone: true
   ssotap: true
   tap: true

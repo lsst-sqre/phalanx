@@ -60,6 +60,7 @@ love-commander:
 x-manager-producer:
   &base-manager-producer
   image:
+    revision: 11
     repository: ts-dockerhub.lsst.org/love-manager
     pullPolicy: Always
   env:
@@ -112,7 +113,7 @@ love-manager:
   manager:
     frontend:
       image:
-        revision: 6
+        revision: 11
         repository: ts-dockerhub.lsst.org/love-manager
         pullPolicy: Always
       env:
@@ -211,7 +212,7 @@ love-nginx:
   initContainers:
     frontend:
       image:
-        revision: 6
+        revision: 11
         repository: ts-dockerhub.lsst.org/love-frontend-k8s
         pullPolicy: Always
     manager:
@@ -788,8 +789,29 @@ love-producer:
   - name: test42
     csc: Test:42
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: partsensess401
+    csc: ESS:401
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: partsensess402
+    csc: ESS:402
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: partsensess403
+    csc: ESS:403
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ringssess304
     csc: ESS:304
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tea-ess123
+    csc: ESS:123
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tea-ess124
+    csc: ESS:124
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tea-ess125
+    csc: ESS:125
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tea-ess126
+    csc: ESS:126
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess104
     csc: ESS:104

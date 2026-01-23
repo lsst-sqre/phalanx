@@ -22,6 +22,7 @@ prompt-keda:
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml']
     centralRepo: s3://rubin-pp-dev-users/central_repo_2
     repoWait: 5
+    localRepoConfig: s3://rubin-pp-dev-users/central_repo_2/config/compression.yaml
     exportTypes: |-
       - ".*_(config|metadata|log)"
       - "packages"
@@ -47,6 +48,7 @@ prompt-keda:
       - "preloaded_dia_object"
       - "preloaded_dia_source"
       - "preloaded_ss_object"
+      - "prompt_provenance"
 
   s3:
     imageBucket: rubin-pp-dev
@@ -57,7 +59,7 @@ prompt-keda:
 
   imageNotifications:
     kafkaClusterAddress: s3-file-notifications-kafka-external-bootstrap.s3-file-notifications:9094
-    topic: prompt-processing-dev
+    topic: prompt-processing-dev-20260114
 
   apdb:
     config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_latiss-dev.yaml

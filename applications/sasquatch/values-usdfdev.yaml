@@ -140,7 +140,6 @@ rest-proxy:
       - lsst.verify
       - lsst.lf
       - lsst.prompt
-
 chronograf:
   ingress:
     enabled: true

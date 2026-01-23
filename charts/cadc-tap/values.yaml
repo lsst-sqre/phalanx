@@ -94,7 +94,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.10.2"
+      tag: "3.12.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -104,7 +104,7 @@ config:
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
   # -- Datalink payload URL
-  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/DP1-v1.2.0/datalink-snippets.zip"
+  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/w.2026.01/datalink-snippets.zip"
 
   # -- Name of GCS bucket in which to store results
   gcsBucket: "async-results.lsst.codes"
@@ -201,6 +201,45 @@ mockdb:
   affinity: {}
 
 tapSchema:
+  # -- Database backend type: "containerized", "cloudsql", or "external"
+  # @default -- "containerized"
+  type: "containerized"
+
+  # -- Database name
+  database: "TAP_SCHEMA"
+
+  # -- Database username
+  username: "TAP_SCHEMA"
+
+  # -- Database password (only used for containerized)
+  password: "TAP_SCHEMA"
+
+  # -- Secret key containing the database password
+  passwordKey: "tap-schema-password"
+
+  # -- Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external)
+  useVaultPassword: false
+
+  # -- Connection pool configuration for jdbc/tapadm
+  tapadm:
+    # -- Maximum active connections (maxIdle will be set to this value)
+    maxActive: 2
+
+  # -- Connection pool configuration for jdbc/tapuser (query planning and tap_upload)
+  tapuser:
+    # -- Maximum active connections (maxIdle will be set to this value)
+    maxActive: 3
+
+  # -- External PostgreSQL configuration (only used if type is "external")
+  external:
+
+    # -- Hostname of external PostgreSQL server
+    host: ""
+
+    # -- Port of external PostgreSQL server
+    port: 5432
+
+  # Legacy image config for containerized TAP_SCHEMA (when useCloudSQL=false)
   image:
     # -- TAP schema image to ue. This must be overridden by each environment
     # with the TAP schema for that environment.
@@ -240,6 +279,32 @@ tapSchema:
   affinity: {}
 
 uws:
+  # -- Database backend type: "containerized", "cloudsql", or "external"
+  # @default -- "containerized"
+  type: "containerized"
+
+  # -- Database name
+  database: "postgres"
+
+  # -- Database username
+  username: "postgres"
+
+  # -- Whether UWS database requires a password in Vault (true for cloudsql/external)
+  useVaultPassword: false
+
+  # -- Connection pool configuration
+  # -- Maximum active connections (maxIdle will be set to this value)
+  maxActive: 5
+
+  # -- External PostgreSQL configuration (only used if type is "external")
+  external:
+
+    # -- Hostname of external PostgreSQL server
+    host: ""
+
+    # -- Port of external PostgreSQL server
+    port: 5432
+
   image:
     # -- UWS database image to use
     repository: "ghcr.io/lsst-sqre/lsst-tap-uws-db"
@@ -248,7 +313,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "3.10.2"
+    tag: "3.12.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
@@ -287,7 +352,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.10"
+    tag: "1.37.11"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"

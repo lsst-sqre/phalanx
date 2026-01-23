@@ -24,10 +24,16 @@ strimzi-kafka:
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
   mirrormaker2:
-    enabled: false
+    enabled: true
     source:
-      bootstrapServer: sasquatch-base-kafka-bootstrap.lsst.codes:9094
-      topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*"
+      alias: "summit"
+      bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
+      topicsPattern: "registry-schemas, lsst.sal.Test.*"
+    replication:
+      policy:
+        separator: "."
+        class: "org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
+      offset: latest
     resources:
       requests:
         cpu: 2
@@ -36,6 +42,8 @@ strimzi-kafka:
         cpu: 4
         memory: 8Gi
   users:
+    replicator:
+      enabled: true
     telegraf:
       enabled: true
   controller:
@@ -43,13 +51,31 @@ strimzi-kafka:
   broker:
     enabled: true
     storage:
-      size: 500Gi
+      size: 1.5Ti
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: 2
+      limits:
+        memory: 16Gi
+        cpu: 2
 
 schema-registry:
   enabled: true
   ingress:
     enabled: true
+    anonymous: true
 
+schema-registry-remote:
+  enabled: true
+  topic:
+    name: summit.registry-schemas
+    create: false
+  ingress:
+    enabled: true
+    hostname: usdf-rsp-int.slac.stanford.edu
+    path: /schema-registry-remote(/|$)(.*)
+    anonymous: true
 
 influxdb:
   ingress:
@@ -63,12 +89,37 @@ customInfluxDBIngress:
   enabled: true
   hostname: usdf-rsp-int.slac.stanford.edu
 
-kafka-connect-manager:
-  enabled: false
+telegraf:
+  enabled: true
+  registry:
+    url: "http://sasquatch-schema-registry-remote.sasquatch:8081"
+  kafkaConsumers:
+    test:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "summit.lsst.sal.Test" ]
+      debug: true
 
 kafdrop:
+  enabled: true
   ingress:
     enabled: true
+
+kafdrop-remote:
+  enabled: true
+  server:
+    servlet:
+      contextPath: /kafdrop-remote
+  kafka:
+    user: kafdrop-remote
+    topicPrefixes:
+      - summit
+  schemaregistry: "http://sasquatch-schema-registry-remote.sasquatch:8081"
+  ingress:
+    enabled: true
+    hostname: usdf-rsp-int.slac.stanford.edu
+    path: /kafdrop-remote
 
 rest-proxy:
   enabled: false
@@ -119,4 +170,7 @@ backup:
       retentionDays: 7
 
 consdb:
+  enabled: true
+
+tap:
   enabled: true

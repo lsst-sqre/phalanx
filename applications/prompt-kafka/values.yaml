@@ -8,9 +8,6 @@ strimzi-kafka:
     version: "4.0.0"
 
     listeners:
-      noauth:
-        # -- Whether internal no authentication listener is enabled
-        enabled: true
 
       tls:
         # -- Whether internal TLS listener is enabled
@@ -36,4 +33,4 @@ strimzi-registry-operator:
 
 kafdrop:
   # -- Whether Kafdrop is enabled
-  enabled: false
+  enabled: true

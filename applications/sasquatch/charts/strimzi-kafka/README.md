@@ -61,9 +61,11 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled |
 | kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled |
 | kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled |
+| kafka.maintenanceTimeWindows | string | `"0 0 12-13 ? * *"` | 09:00–11:00 CLT (UTC−3) |
 | kafka.metadataVersion | string | `nil` | The KRaft metadata version used by the Kafka cluster. If the property is not set, it defaults to the metadata version that corresponds to the version property. |
 | kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
 | kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
+| kafka.pauseReconciliation | bool | `false` | If Strimzi reconciliation of this resource should be paused: https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str |
 | kafka.replicas | int | `3` | Number of Kafka broker replicas to run |
 | kafka.version | string | `"4.0.0"` | Version of Kafka to deploy |
 | kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
@@ -73,12 +75,14 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
 | kafkaExporter.showAllOffsets | bool | `true` | Whether to show all offsets or just offsets from connected groups |
 | kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
-| mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster |
+| mirrormaker2.enabled | bool | `false` | Enable replication from the source cluster |
 | mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
-| mirrormaker2.replication.policy.class | string | `"org.apache.kafka.connect.mirror.IdentityReplicationPolicy"` | Replication policy. |
-| mirrormaker2.replication.policy.separator | string | `""` | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
+| mirrormaker2.replication.offset | string | earliest | Offset reset policy for the Mirror Maker consumer. Options are 'earliest' and 'latest'. |
+| mirrormaker2.replication.policy.class | string | org.apache.kafka.connect.mirror.IdentityReplicationPolicy | Replication policy. |
+| mirrormaker2.replication.policy.separator | string | No separator, topic names are preserved when IdentityReplicationPolicy is used. | Convention used for the replicated topic name when the DefaultReplicationPolicy replication policy is used. |
 | mirrormaker2.resources | object | `{"limits":{"cpu":1,"memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for MirrorMaker2 |
-| mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
+| mirrormaker2.source.alias | string | None, must be set if enabled | Source cluster alias. Used to identify the source cluster in MirrorMaker2 configuration. The alias is also added as a prefix to the replicated topics when the DefaultReplicationPolicy replication policy is used. |
+| mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source cluster bootstrap server address |
 | mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
 | registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |

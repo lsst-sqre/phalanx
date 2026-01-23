@@ -5,6 +5,7 @@ config:
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre
+      - lsst
   githubCiApp:
     acceptedGithubOrgs:
       - lsst-sqre

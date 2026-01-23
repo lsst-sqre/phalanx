@@ -463,6 +463,54 @@ mtdome-ess120-sim:
       cpu: 190m
       memory: 480Mi
 
+partsens-ess401-sim:
+  enabled: true
+  classifier: ess401
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 401 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
+partsens-ess402-sim:
+  enabled: true
+  classifier: ess402
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 402 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
+partsens-ess403-sim:
+  enabled: true
+  classifier: ess403
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 403 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
 ringss-ess304-sim:
   enabled: true
   classifier: ess304
@@ -478,6 +526,72 @@ ringss-ess304-sim:
     limits:
       cpu: 190m
       memory: 360Mi
+
+tea-ess123-sim:
+  enabled: true
+  classifier: ess123
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 123 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
+tea-ess124-sim:
+  enabled: true
+  classifier: ess124
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 124 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
+tea-ess125-sim:
+  enabled: true
+  classifier: ess125
+  image:
+    revision: 11
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 125 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
+tea-ess126-sim:
+  enabled: true
+  classifier: ess126
+  image:
+    revision: 11
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 126 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
 
 tma-ess121-sim:
   enabled: true

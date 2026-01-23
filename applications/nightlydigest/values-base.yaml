@@ -18,6 +18,7 @@ nightlydigest-nginx:
     storageClass: rook-ceph-block
     accessMode: ReadWriteOnce
     claimSize: 2Gi
+    subPath: nightlydigest
   resources:
     requests:
       cpu: 50m
@@ -58,14 +59,33 @@ nightlydigest-backend:
       value: rubinobs.atlassian.net
     - name: EXTERNAL_INSTANCE_URL
       value: https://base-lsp.lsst.codes
+    - name: RUBIN_SIM_DATA_DIR
+      value: &rsd /project/scheduler
+    - name: AWS_SHARED_CREDENTIALS_FILE
+      value: /etc/secrets/aws-credentials-butler.ini
+    - name: S3_ENDPOINT_URL
+      value: https://s3dfrgw.slac.stanford.edu
+    - name: LSST_DISABLE_BUCKET_VALIDATION
+      value: "1"
+    - name: SIMS_SKYBRIGHTNESS_DATA
+      value: /project/scheduler/skybrightness_pre_full
   envSecrets:
     - name: JIRA_API_TOKEN
       secretName: nightlydigest
       secretKey: jira-api-token
+    - name: ACCESS_TOKEN
+      secretName: nightlydigest-backend-gafaelfawr-token
+      secretKey: token
+  nfsMountpoints:
+    - name: project-shared
+      mountPath: *rsd
+      readOnly: true
+      server: nfs-project.ls.lsst.org
+      serverPath: *rsd
   resources:
     requests:
       cpu: 150m
-      memory: 1Gi
+      memory: 3Gi
     limits:
       cpu: 1000m
-      memory: 3Gi
+      memory: 10Gi

@@ -1,9 +1,11 @@
 strimzi-kafka:
   cluster:
+    privateKey:
+      encoding: PKCS8
     monitorLabel:
       lsst.io/monitor: "true"
   kafka:
-    version: 3.9.1
+    version: 4.1.0
     metadataVersion: "3.8-IV0"
     config:
       auto.create.topics.enable: false
@@ -104,9 +106,9 @@ customInfluxDBIngress:
 
 telegraf:
   enabled: true
-  kafkaVersion: "3.9.1"
+  kafkaVersion: "4.1.0"
   image:
-    tag: 1.35.4-alpine
+    tag: 1.36.1-alpine
   kafkaConsumers:
     auxtel:
       enabled: true

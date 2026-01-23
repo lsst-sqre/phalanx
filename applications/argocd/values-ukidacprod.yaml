@@ -2,6 +2,7 @@ argo-cd:
   configs:
     cm:
       url: "https://rsp.lsst.ac.uk/argo-cd"
+      ui.bannercontent: "ukidacprod"
     secret:
       createSecret: false
 

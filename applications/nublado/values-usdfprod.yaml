@@ -1,4 +1,11 @@
 controller:
+  tolerations:
+    - key: edu.stanford.slac.sdf.project/rsp
+      effect: NoSchedule
+      operator: Equal
+      value: "true"
+  nodeSelector:
+    edu.stanford.slac.sdf.project/rsp: "true"
   config:
     logLevel: "DEBUG"
     images:
@@ -9,6 +16,21 @@ controller:
       pin:
         - "r29_2_0_rsp2244"
     lab:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/c
+                    operator: NotIn
+                    values:
+                      - "true"
+                  - key: "edu.stanford.slac.sdf.project/rsp"
+                    operator: In
+                    values:
+                      - "true"
+      extraAnnotations:
+        edu.stanford.slac.sdf.project/rsp: "true"
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
@@ -26,8 +48,9 @@ controller:
         LSST_DISABLE_BUCKET_VALIDATION: "1"
         LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
       homedirSchema: "initialThenUsername"
+      homeVolumeName: "sdf-home"
       nodeSelector:
-        node-role.kubernetes.io/rsp-notebook: "true"
+        edu.stanford.slac.sdf.project/rsp: "true"
       nss:
         # Add rubin_users group (there is not yet a simpler way to do this).
         baseGroup: |
@@ -78,6 +101,7 @@ controller:
           secretKey: "aws-credentials.ini"
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
+      standardInithome: false
       volumes:
         - name: "sdf-home"
           source:

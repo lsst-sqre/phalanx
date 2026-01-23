@@ -21,6 +21,7 @@ argo-cd:
         requestedScopes: ["openid", "profile", "email", "groups"]
         # Optional set of OIDC claims to request on the ID token.
         requestedIDTokenClaims: {"groups": {"essential": true}}
+      ui.bannercontent: "usdfdev"
     rbac:
       policy.csv: |
         p, role:developer, applications, *, */*, allow
@@ -37,15 +38,18 @@ argo-cd:
         p, role:developer, logs, get, infrastructure/*, allow
 
         g, afausti@slac.stanford.edu, role:admin
+        g, atani@slac.stanford.edu, role:admin
         g, athor@slac.stanford.edu, role:admin
         g, cslater@slac.stanford.edu, role:admin
         g, danfuchs@slac.stanford.edu, role:admin
         g, dspeck@slac.stanford.edu, role:admin
         g, ebellm@slac.stanford.edu, role:admin
+        g, eiger@slac.stanford.edu, role:admin
         g, frossie@slac.stanford.edu, role:admin
         g, gpdf@slac.stanford.edu, role:admin
         g, jsick@slac.stanford.edu, role:admin
         g, ktl@slac.stanford.edu, role:admin
+        g, mokun@slac.stanford.edu, role:admin
         g, pav@slac.stanford.edu, role:admin
         g, ppascual@slac.stanford.edu, role:admin
         g, reinking@slac.stanford.edu, role:admin
@@ -53,6 +57,7 @@ argo-cd:
         g, sierrav@slac.stanford.edu, role:admin
         g, svoutsin@slac.stanford.edu, role:admin
         g, ytl@slac.stanford.edu, role:admin
+        g, jeremym@slac.stanford.edu, role:admin
 
         g, ameisner@slac.stanford.edu, role:developer
         g, bbrond@slac.stanford.edu, role:developer
@@ -61,21 +66,21 @@ argo-cd:
         g, fritzm@slac.stanford.edu, role:developer
         g, gmegias@slac.stanford.edu, role:developer
         g, hchiang2@slac.stanford.edu, role:developer
-        g, jeremym@slac.stanford.edu, role:developer
         g, kadrlica@slac.stanford.edu, role:developer
         g, koike@slac.stanford.edu, role:developer
+        g, lguy@slac.stanford.edu, role:developer
         g, mfl@slac.stanford.edu, role:developer
         g, mjuric@slac.stanford.edu, role:developer
         g, mreuter@slac.stanford.edu, role:developer
         g, neilsen@slac.stanford.edu, role:developer
         g, omullan@slac.stanford.edu, role:developer
+        g, rw264@slac.stanford.edu, role:developer
         g, salnikov@slac.stanford.edu, role:developer
         g, saranda@slac.stanford.edu, role:developer
         g, smart@slac.stanford.edu, role:developer
         g, spothi@slac.stanford.edu, role:developer
         g, vbecker@slac.stanford.edu, role:developer
         g, youtsumi@slac.stanford.edu, role:developer
-        g, lguy@slac.stanford.edu, role:developer
       scopes: "[email]"
 
   server:

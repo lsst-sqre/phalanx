@@ -22,12 +22,14 @@ spec:
           patternType: literal
         operations:
           - All
+      {{- range .Values.kafka.topicPrefixes }}
       - resource:
           type: topic
-          name:  {{ .Values.kafka.topicPrefix }}
+          name:  {{ . }}
           patternType: prefix
         type: allow
         host: "*"
         operations:
           - Read
           - Describe
+      {{- end }}

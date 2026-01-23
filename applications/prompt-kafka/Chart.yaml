@@ -17,3 +17,9 @@ dependencies:
   - name: kafdrop
     condition: kafdrop.enabled
     version: 1.0.0
+  - name: butler-writer
+    condition: butler-writer.enabled
+    version: 1.0.0
+  - name: prompt-publication
+    condition: prompt-publication.enabled
+    version: 1.0.0

@@ -1,7 +1,5 @@
 """Retrieve secrets stored in 1Password via 1Password Connect."""
 
-from __future__ import annotations
-
 import os
 from collections import defaultdict
 

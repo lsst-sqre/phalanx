@@ -8,7 +8,8 @@ config:
   apdbConfig: "s3://embargo@rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcam.yaml"
 
   # -- PPDB config file resource
-  ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-50563/ppdb-config/ppdb_lsstcam_v9_0_0.yaml"
+  # TODO: Use a group rather than user path for these configurations
+  ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-53599/ppdb-config/ppdb_lsstcam.yaml"
 
   # -- Volumes specific to the environment
   volumes:

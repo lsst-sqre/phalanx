@@ -1,7 +1,5 @@
 """Service to manipulate Phalanx secrets."""
 
-from __future__ import annotations
-
 import binascii
 import os
 from base64 import b64decode

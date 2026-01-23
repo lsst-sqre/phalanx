@@ -1,7 +1,5 @@
 """Cross-referencing roles and directives for Phalanx topics."""
 
-from __future__ import annotations
-
 from sphinx.application import Sphinx
 
 __all__ = ["setup"]

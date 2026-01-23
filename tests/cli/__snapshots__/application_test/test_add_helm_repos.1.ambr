@@ -1,0 +1,26 @@
+# serializer version: 1
+# name: test_add_helm_repos.1
+  list([
+    list([
+      'repo',
+      'add',
+      '--force-update',
+      'argoproj',
+      'https://argoproj.github.io/argo-helm',
+    ]),
+    list([
+      'repo',
+      'add',
+      '--force-update',
+      'jupyterhub',
+      'https://jupyterhub.github.io/helm-chart/',
+    ]),
+    list([
+      'repo',
+      'add',
+      '--force-update',
+      'lsst-sqre',
+      'https://lsst-sqre.github.io/charts/',
+    ]),
+  ])
+# ---

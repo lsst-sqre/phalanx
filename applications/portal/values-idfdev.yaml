@@ -20,10 +20,11 @@ config:
 redis:
   persistence:
     enabled: true
+    size: "5Gi"
     storageClass: "standard-rwo"
   resources:
     limits:
-      memory: "128Mi"
+      memory: "512Mi"
 
 resources:
   limits:

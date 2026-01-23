@@ -54,23 +54,6 @@ controller:
         TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
-        - name: "inithome"
-          image:
-            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/inithome"
-            tag: "9.0.0"
-          privileged: true
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
-        - name: "landingpage"
-          image:
-            repository: "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/rsp-landing-page-provisioner"
-            tag: "0.9.3"
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
-            - containerPath: "/rubin"
-              volumeName: "rubin"
       nodeSelector:
         node_pool: "user-lab-pool"
       secrets:
@@ -81,25 +64,25 @@ controller:
           resources:
             limits:
               cpu: 1.0
-              memory: "4Gi"
+              memory: "8Gi"
             requests:
-              cpu: 0.25
+              cpu: 0.125
               memory: "1Gi"
         - size: "large"
           resources:
             limits:
               cpu: 4.0
-              memory: "16Gi"
+              memory: "32Gi"
             requests:
-              cpu: 0.25
+              cpu: 0.5
               memory: "4Gi"
         - size: "huge"
           resources:
             limits:
               cpu: 8.0
-              memory: "32Gi"
+              memory: "64Gi"
             requests:
-              cpu: 2.0
+              cpu: 1.0
               memory: "8Gi"
       tolerations:
         - key: "nublado.lsst.io/permitted"
@@ -136,6 +119,8 @@ hub:
   landingPage: "/lab/tree/notebooks/tutorials/welcome.md"
 
 jupyterhub:
+  cull:
+    timeout: 108000  # 30 hours
   hub:
     config:
       JupyterHub:

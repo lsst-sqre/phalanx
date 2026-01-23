@@ -117,6 +117,15 @@ spec:
           mountPath: "/secrets-user"
         - name: "rubintv-secrets"
           mountPath: "/secrets-rubintv"
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+            ephemeral-storage: 256Mi
+          limits:
+            cpu: 2
+            memory: 2Gi
+            ephemeral-storage: 512Mi
       volumes:
       - name: "user-secrets"
         emptyDir: {}

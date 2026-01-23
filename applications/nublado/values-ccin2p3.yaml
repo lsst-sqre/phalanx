@@ -19,6 +19,7 @@ controller:
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
         DAF_BUTLER_REPOSITORY_INDEX: "/pbs/throng/lsst/software/rsp/butler-repos.yaml"
+        RSP_SITE_TYPE: "3dparty"
       homedirSchema: "username"
       homedirPrefix: "/sps/lsst/users"
       homedirSuffix: "rsp_home"
@@ -35,6 +36,7 @@ controller:
               volumeName: "throng"
             - containerPath: "/sps"
               volumeName: "sps"
+      standardInithome: false
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
