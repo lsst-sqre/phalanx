@@ -62,7 +62,7 @@ nightlydigest-backend:
     - name: RUBIN_SIM_DATA_DIR
       value: &rsd /sdf/data/rubin/shared/rubin_sim_data
     - name: AWS_SHARED_CREDENTIALS_FILE
-      value: /etc/secrets/aws-credentials-butler.ini
+      value: /etc/secrets/aws-credentials-rubin-scheduler-prenight.ini
     - name: S3_ENDPOINT_URL
       value: https://s3dfrgw.slac.stanford.edu
     - name: LSST_DISABLE_BUCKET_VALIDATION
