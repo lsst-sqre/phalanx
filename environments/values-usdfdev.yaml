@@ -30,6 +30,7 @@ applications:
   noteburst: true
   nublado: true
   obsloctap: true
+  octavius: true
   plot-navigator: true
   portal: true
   postgres: true
