@@ -1,0 +1,123 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "octavius-db"
+  labels:
+    {{- include "octavius.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "octavius.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "octavius.selectorLabels" . | nindent 8 }}
+        component: database
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          env:
+            {{- if .Values.config.slackAlerts }}
+            - name: "OCTAVIUS_SLACK_WEBHOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "octavius"
+                  key: "slack-webhook"
+            {{- end }}
+            # Uvicorn keepalive timeout, in seconds. This should be longer
+            # than any keepalive timeouts on any downstream proxies. The
+            # keepalive timeout for ingress-nginx connections is 60s.
+            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
+              value: "61"
+            - name: "MONGO_INITDB_ROOT_USERNAME"
+              valueFrom:
+                secretKeyRef:
+                  name: octavius
+                  key: "mongo-root-username"
+            - name: "MONGO_INITDB_ROOT_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: octavius
+                  key: "mongo-root-password"
+            - name: "MONGO_INITDB_DATABASE"
+              valueFrom:
+                secretKeyRef:
+                  name: octavius
+                  key: "mongo-init-db"
+            - name: "AUTH_DB"
+              valueFrom:
+                secretKeyRef:
+                  name: octavius
+                  key: "mongo-auth-db"
+
+          envFrom:
+            - configMapRef:
+                name: "octavius"
+          image: "{{ .Values.imageDB.repository }}:{{ .Values.imageDB.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imageDB.pullPolicy }}
+          lifecycle:
+            # Number of seconds k8s should wait before sending SIGTERM on
+            # graceful restarts/deployments/shutdowns. We need this because it
+            # takes ingress-nginx some time to configure itself to stop
+            # sending traffic to the pods scheduled for termination. If
+            # Uvicorn gets the SIGTERM and starts closing connections, we
+            # could end up with a TCP race condition if ingress-nginx still
+            # tries to send data over those connections.
+            #
+            # Note that terminationGracePeriodSeconds includes the time that
+            # is spent in the preStop hook. If you’re adding a preStop hook
+            # and your terminationGracePeriodSeconds is super fine-tuned, then
+            # you should update your terminationGracePeriodSeconds to add the
+            # amount of time you’ll be spending in your preStop hook.
+            preStop:
+              sleep:
+                seconds: 10
+          ports:
+            - name: "db"
+              containerPort: 27017
+              protocol: "TCP"
+          readinessProbe:
+            tcpSocket:
+              port: 27017
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongo-data
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+      volumes:
+        - name: mongo-data
+          persistentVolumeClaim:
+            claimName: octavius-mongo-pvc
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
