@@ -323,7 +323,7 @@ mtcamhexapod-sim:
 mtdome:
   enabled: true
   image:
-    revision: 7
+    revision: 11
     repository: ts-dockerhub.lsst.org/mtdome
     pullPolicy: Always
   resources:
@@ -337,7 +337,7 @@ mtdome:
 mtdome-sim:
   enabled: false
   image:
-    revision: 7
+    revision: 11
     repository: ts-dockerhub.lsst.org/mtdome
     pullPolicy: Always
   env:

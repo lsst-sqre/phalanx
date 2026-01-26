@@ -34,7 +34,7 @@ prompt-keda:
       # @default -- None, must be set
       preprocessing: ""
     # -- Skymap to use with the instrument
-    skymap: lsst_cells_v1
+    skymap: lsst_cells_v2
     # -- Number of arcseconds to pad the spatial region in preloading.
     preloadPadding: 50
     # -- URI to the shared repo used for pipeline inputs and outputs.

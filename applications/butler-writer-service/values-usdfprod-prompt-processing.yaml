@@ -1,6 +1,6 @@
 image:
   pullPolicy: IfNotPresent
-  tag: 3.0.0
+  tag: 3.1.0
 
 outputRepo: s3://embargo@rubin-summit-users/
 
