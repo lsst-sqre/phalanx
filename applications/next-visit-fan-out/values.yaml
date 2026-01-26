@@ -285,21 +285,21 @@ detectorConfig:
     186: True
     187: True
     188: True
-  LSSTCam-TEST-2025050100367:
-    30: True
-    158: True
-  LSSTCam-TEST-2025050100395:
-    30: True
-    158: True
-  LSSTCam-TEST-2025050100463:
-    30: True
-    66: True
-  LSSTCam-TEST-2025050100499:
-    30: True
-    66: True
-  LSSTCam-TEST-2025050100553:
+  LSSTCam-TEST-2026010100039:
     30: True
     173: True
+  LSSTCam-TEST-2026010100047:
+    30: True
+    66: True
+  LSSTCam-TEST-2026010100048:
+    30: True
+    66: True
+  LSSTCam-TEST-2026010100050:
+    30: True
+    158: True
+  LSSTCam-TEST-2026010100267:
+    30: True
+    158: True
   HSC:
     0: True
     1: True
