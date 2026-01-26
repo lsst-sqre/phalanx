@@ -6,7 +6,7 @@ config:
   internalDatabase: true
 
   oidcServer:
-    enabled: true
+    enabled: false
 
   updateSchema: true
 
