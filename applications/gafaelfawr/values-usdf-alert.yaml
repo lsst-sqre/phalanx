@@ -6,6 +6,7 @@ redis:
     storageClass: "wekafs--sdf-k8s01"
 
 config:
+  updateSchema: true
   internalDatabase: true
 
   oidcServer:
