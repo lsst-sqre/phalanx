@@ -1,0 +1,14 @@
+fqdn: "usdf-alert.slac.stanford.edu"
+name: "usdf-alert"
+appOfAppsName: "science-platform"
+vaultUrl: "https://vault.slac.stanford.edu"
+vaultPathPrefix: "secret/rubin/usdf-alert"
+
+applications:
+  # This environment uses an ingress managed in a separate Kubernetes cluster,
+  # despite that configuration not being officially supported by Phalanx.
+  cert-manager: false
+  gafaelfawr: true
+  ingress-nginx: false
+
+  postgres: true
