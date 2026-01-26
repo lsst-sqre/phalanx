@@ -6,9 +6,9 @@ config:
   internalDatabase: true
 
   oidcServer:
-    enabled: false
+    enabled: true
 
-  updateSchema: true
+  updateSchema: false
 
   github:
     clientId: "10172b4db1b67ee31620"
