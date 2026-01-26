@@ -118,6 +118,15 @@ spec:
           {{- end }}
           {{- end }}
           {{- end }}
+          {{- if $.Values.configMountpoint }}
+          {{- range $values := $.Values.configMountpoint }}
+          {{- if (has $values.name $script.mounts) }}
+            - name: {{ $values.name }}
+              mountPath: {{ $values.path }}
+              readOnly: true
+          {{- end }}
+          {{- end }}
+          {{- end }}
           {{- if $.Values.pvcMountpointClaim }}
           {{- range $values := $.Values.pvcMountpointClaim }}
           {{- if (has $values.name $script.mounts) }}
@@ -159,6 +168,16 @@ spec:
         - name: {{ $values.name }}
           persistentVolumeClaim:
             claimName: {{ $values.name }}
+      {{- end }}
+      {{- end }}
+      {{- end }}
+      {{- if $.Values.configMountpoint }}
+      {{- range $values := $.Values.configMountpoint }}
+      {{- if (has $values.name $script.mounts) }}
+        - name: {{ $values.name }}
+          configMap:
+            name: {{ $values.name }}
+            items: {{ toYaml $values.items | nindent 12 }}
       {{- end }}
       {{- end }}
       {{- end }}
