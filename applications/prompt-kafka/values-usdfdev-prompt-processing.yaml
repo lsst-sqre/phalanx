@@ -18,19 +18,23 @@ strimzi-kafka:
         enabled: true
     externalListener:
       bootstrap:
+        host: usdf-prompt-kafka-bootstrap-dev.sdf.slac.stanford.edu
         annotations:
           metallb.io/address-pool: sdf-rubin-ingest
           metallb.io/loadBalancerIPs: 172.24.10.42
       brokers:
         - broker: 3
+          host: usdf-prompt-kafka-broker-3-dev.sdf.slac.stanford.edu
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
             metallb.io/loadBalancerIPs: 172.24.10.43
         - broker: 4
+          host: usdf-prompt-kafka-broker-4-dev.sdf.slac.stanford.edu
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
             metallb.io/loadBalancerIPs: 172.24.10.44
         - broker: 5
+          host: usdf-prompt-kafka-broker-5-dev.sdf.slac.stanford.edu
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
             metallb.io/loadBalancerIPs: 172.24.10.84
