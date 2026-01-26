@@ -33,3 +33,4 @@ argo-cd:
   server:
     ingress:
       hostname: "usdf-alert.slac.stanford.edu"
+      tls: false
