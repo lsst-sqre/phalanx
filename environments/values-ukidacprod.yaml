@@ -2,7 +2,7 @@ name: "ukidacprod"
 fqdn: "rsp.lsst.ac.uk"
 appOfAppsName: "science-platform"
 vaultUrl: "https://vault-rsp.lsst.ac.uk"
-vaultPathPrefix: "secrets/phalanx/ukidacprod"
+vaultPathPrefix: "secret/phalanx/ukidacprod"
 applications:
   mobu: true
   nublado: true
