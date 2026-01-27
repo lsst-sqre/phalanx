@@ -193,6 +193,11 @@ config:
         name: "mobu"
         template: "https://{{base_hostname}}/mobu"
         openapi: "https://{{base_hostname}}/mobu/openapi.json"
+    muster:
+      - type: "internal"
+        name: "muster"
+        template: "https://{{base_hostname}}/muster"
+        openapi: "https://{{base_hostname}}/muster/openapi.json"
     noteburst:
       - type: "internal"
         name: "noteburst"
