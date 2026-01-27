@@ -90,7 +90,8 @@ config:
       count: 1
       users:
         - username: "bot-mobu-muster"
-      scopes: []
+      scopes:
+        - "read:image"
       business:
         type: "Muster"
         options:
