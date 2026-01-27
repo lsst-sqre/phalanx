@@ -6,7 +6,6 @@ prompt-keda:
     tag: latest
 
   instrument:
-    skymap: lsst_cells_v1 # TODO: Remove when dev is updated with new LSSTCam templates.
     pipelines:
       # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
       # if the result (including any comments) is longer than 72 characters.
