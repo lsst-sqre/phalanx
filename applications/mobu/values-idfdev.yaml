@@ -1,3 +1,6 @@
+image:
+  tag: "t-DM-53856"
+  pullPolicy: "Always"
 config:
   logLevel: DEBUG
   logMonkeysToFile: false
