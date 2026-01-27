@@ -9,8 +9,7 @@ prompt-keda:
     topic: lsst-alerts-v10.0
 
   worker:
-    # TODO: need to adjust this once we know how leaky the LSSTCam pipeline is
-    restart: 7
+    restart: 10
 
   instrument:
     pipelines:
@@ -109,8 +108,6 @@ prompt-keda:
   imageNotifications:
     kafkaClusterAddress: s3-file-notifications-kafka-external-bootstrap.s3-file-notifications:9094
     topic: rubin-summit-notification-7
-    # TODO: need to adjust this based on observed nextVisit lead time (depends on scheduler) and PP prep time
-    # The shorter this is, the less capacity is wasted on canceled visits
     imageTimeout: 120
 
   apdb:
@@ -133,10 +130,6 @@ prompt-keda:
   keda:
     minReplicaCount: 3
     maxReplicaCount: 1700
-
-    # TODO: may need to reduce if we don't have enough capacity
-    # redisStreams:
-    #   expiration: 600
 
   initializer:
     podAnnotations: {
