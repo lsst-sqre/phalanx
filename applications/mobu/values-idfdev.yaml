@@ -93,6 +93,8 @@ config:
       scopes: []
       business:
         type: "Muster"
+        options:
+          idle_time: 300
         restart: true
     - name: "sia"
       count: 1
