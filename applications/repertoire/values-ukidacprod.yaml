@@ -1,2 +1,3 @@
-  config:
-    slackAlerts: true
+config:
+  slackAlerts: true
+
