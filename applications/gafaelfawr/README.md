@@ -74,7 +74,7 @@ Authentication and identity system
 | config.oidcServer.issuer | string | Base URL of this Phalanx environment | Issuer (`iss` claim) of generated ID tokens |
 | config.oidcServer.keyId | string | `"gafaelfawr"` | Key ID (`kid` claim) of generated ID tokens, and the key ID served with the OAuth key metadata |
 | config.proxies | list | [`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`] | List of netblocks used for internal Kubernetes IP addresses, used to determine the true client IP for logging |
-| config.quota | object | `{}` | Quota settings (see [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)). |
+| config.quota | object | Quota for Muster checks | Quota settings (see [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)). |
 | config.sentry.enabled | bool | `false` | Set to true to enable the Sentry integration. |
 | config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1 |
 | config.slackAlerts | bool | `false` | Whether to send certain serious alerts to Slack. If `true`, the `slack-webhook` secret must also be set. |
