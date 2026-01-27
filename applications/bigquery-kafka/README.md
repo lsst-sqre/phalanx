@@ -10,6 +10,7 @@ BigQuery Kafka bridge
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| config.backend | string | `"BigQuery"` | Database backend to use (Qserv or BigQuery) |
 | config.backendApiTimeout | string | `"30s"` | Timeout for backend API calls `parse_timedelta` format. Used for both QServ REST API and BigQuery API. |
 | config.backendPollInterval | string | `"1s"` | Interval at which the backend is polled for query status in Safir `parse_timedelta` format |
 | config.backendRetryCount | int | `3` | How many times to retry after a backend API network failure |
@@ -18,7 +19,6 @@ BigQuery Kafka bridge
 | config.bigqueryMaxBytesBilled | int | 100 GB | Maximum bytes that can be billed for a single BigQuery query. Queries exceeding this will fail. Set to null for no limit. |
 | config.bigqueryProject | string | None, must be set | GCP project ID containing the BigQuery datasets to query |
 | config.consumerGroupId | string | `"bigquery"` | Kafka consumer group ID |
-| config.backend | string | `"BigQuery"` | Database backend to use (Qserv or BigQuery) |
 | config.gcpServiceAccount | string | None, must be set for BigQuery backend | GCP service account email for Workload Identity Format: {name}@{project-id}.iam.gserviceaccount.com |
 | config.jobCancelTopic | string | `"lsst.ppdbtap.job-delete"` | Kafka topic for query cancellation requests |
 | config.jobRunBatchSize | int | `10` | Maximum batch size for query execution requests. This should generally be the same as `redisMaxConnections` minus a few for overhead. |
