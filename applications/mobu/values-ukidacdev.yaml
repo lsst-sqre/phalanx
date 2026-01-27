@@ -10,6 +10,7 @@ config:
       business:
         type: "TAPQueryRunner"
         options:
+          dataset: "dp02"
           queries:
             - "SELECT TOP 10 * FROM  video.hsc_g_f"
             - "SELECT TOP 10 * FROM  TAP_SCHEMA.tables"

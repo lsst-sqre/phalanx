@@ -54,8 +54,6 @@ spec:
                   name: "mobu"
                   key: "ALERT_HOOK"
             {{- end }}
-            - name: "MOBU_ENVIRONMENT_URL"
-              value: {{ .Values.global.baseUrl }}
             - name: "MOBU_GAFAELFAWR_TOKEN"
               valueFrom:
                 secretKeyRef:
