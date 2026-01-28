@@ -79,6 +79,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | mirrormaker2.enabled | bool | `false` | Enable replication from the source cluster |
 | mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
 | mirrormaker2.replication.offset | string | earliest | Offset reset policy for the Mirror Maker consumer. Options are 'earliest' and 'latest'. |
+| mirrormaker2.replication.offsetSyncsTopicLocation | string | source | The location (source/target) of the offset-syncs topic. |
 | mirrormaker2.replication.policy.class | string | org.apache.kafka.connect.mirror.IdentityReplicationPolicy | Replication policy. |
 | mirrormaker2.replication.policy.separator | string | No separator, topic names are preserved when IdentityReplicationPolicy is used. | Convention used for the replicated topic name when the DefaultReplicationPolicy replication policy is used. |
 | mirrormaker2.resources | object | `{"limits":{"cpu":1,"memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for MirrorMaker2 |

@@ -412,6 +412,9 @@ mirrormaker2:
     # Options are 'earliest' and 'latest'.
     # @default -- earliest
     offset: earliest
+    # -- The location (source/target) of the offset-syncs topic.
+    # @default -- source
+    offsetSyncsTopicLocation: source
 
   # -- Kubernetes resources for MirrorMaker2
   resources:
