@@ -62,3 +62,13 @@ To do this, run:
    tox run -e docs
 
 This also allows you to preview the new documentation, which will be generated in :file:`docs/_build/html`.
+
+Some tests use `syrupy`_ to automatically create "snapshots" of expected output.
+If your changes change this expected output, the tests will fail.
+If the changes to the output are in fact correct, you can regenerate these snapshots by running:
+
+.. code-block:: sh
+
+   tox run -e py -- --snapshot-update
+
+More info on working with `syrupy`_ can be found in the `syrupy docs`_.

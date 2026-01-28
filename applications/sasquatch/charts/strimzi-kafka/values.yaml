@@ -13,6 +13,9 @@ kafka:
   # -- Version of Kafka to deploy
   version: "4.0.0"
 
+  # -- 09:00–11:00 CLT (UTC−3)
+  maintenanceTimeWindows: "0 0 12-13 ? * *"
+
   # -- The KRaft metadata version used by the Kafka cluster.
   # If the property is not set, it defaults to the metadata version that corresponds to the version property.
   metadataVersion: null
@@ -23,6 +26,10 @@ kafka:
   # -- The minimum number of in-sync replicas that must be available for the producer to successfully send records
   # Cannot be greater than the number of replicas.
   minInsyncReplicas: 2
+
+  # -- If Strimzi reconciliation of this resource should be paused:
+  # https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str
+  pauseReconciliation: false
 
   config:
     # -- Number of minutes for a consumer group's offsets to be retained
@@ -367,14 +374,19 @@ users:
     enabled: false
 
 mirrormaker2:
-  # -- Enable replication in the target (passive) cluster
+  # -- Enable replication from the source cluster
   enabled: false
 
   # -- Number of Mirror Maker replicas to run
   replicas: 3
 
   source:
-    # -- Source (active) cluster to replicate from
+    # -- Source cluster alias. Used to identify the source cluster in
+    # MirrorMaker2 configuration. The alias is also added as a prefix to
+    # the replicated topics when the DefaultReplicationPolicy replication policy is used.
+    # @default -- None, must be set if enabled
+    alias: ""
+    # -- Source cluster bootstrap server address
     # @default -- None, must be set if enabled
     bootstrapServer: ""
 
@@ -384,13 +396,18 @@ mirrormaker2:
 
   replication:
     policy:
-      # -- Convention used to rename topics when the DefaultReplicationPolicy
-      # replication policy is used. Default is "" when the
-      # IdentityReplicationPolicy replication policy is used.
+      # -- Convention used for the replicated topic name when the DefaultReplicationPolicy
+      # replication policy is used.
+      # @default -- No separator, topic names are preserved when IdentityReplicationPolicy is used.
       separator: ""
 
       # -- Replication policy.
+      # @default -- org.apache.kafka.connect.mirror.IdentityReplicationPolicy
       class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
+    # -- Offset reset policy for the Mirror Maker consumer.
+    # Options are 'earliest' and 'latest'.
+    # @default -- earliest
+    offset: earliest
 
   # -- Kubernetes resources for MirrorMaker2
   resources:

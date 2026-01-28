@@ -23,14 +23,13 @@ applications:
   love: true
   mobu: true
   narrativelog: true
+  nightlydigest: true
   nightreport: true
   nublado: true
   nvr-control: true
-  obsenv-management: true
   obssys: true
   portal: true
   rapid-analysis: true
-  repertoire: true
   rubintv: true
   rubintv-dev: true
   rubin-too-producer: true
@@ -47,3 +46,6 @@ controlSystem:
   imageTag: "c0042"
   siteTag: "summit"
   s3EndpointUrl: "https://s3.cp.lsst.org"
+
+revisions:
+  strimzi: strimzi-0.47.0

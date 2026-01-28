@@ -7,6 +7,14 @@ argo-cd:
       # -- Set the global logging format. Either: `text` or `json`
       format: "json"
 
+    # Global argo-cd tolerations
+    # @default -- Tolerate GKE arm64 taint
+    tolerations:
+      - key: "kubernetes.io/arch"
+        operator: "Equal"
+        value: "arm64"
+        effect: "NoSchedule"
+
   redis:
     metrics:
       # -- Enable Redis metrics service
@@ -133,6 +141,10 @@ argo-cd:
       tls: true
 
   configs:
+
+    # -- Add css to configure ArgoCD styling
+    styles: null
+
     cm:
       # -- Keep label-based tracking for now until Nublado is updated.
       application.resourceTrackingMethod: "label"
@@ -140,6 +152,12 @@ argo-cd:
       # -- Configure resource comparison
       resource.compareoptions: |
         ignoreAggregatedRoles: true
+
+      # -- Enable top banner for env labelling
+      ui.bannerposition: "top"
+
+      # -- Persist env banner
+      ui.bannerpermanent: "true"
 
     params:
       # -- Do not use TLS (this is terminated at the ingress)

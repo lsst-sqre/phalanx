@@ -1,0 +1,23 @@
+config:
+  s3_tile_path_prefix: "fov-quicklook/prod/"
+  max_object_storage_usage: 450_000_000_000
+admin_page: true
+db_storage_class: wekafs--sdf-k8s01
+log_level: warning
+context_menu_templates:
+  - name: "UUID"
+    template: "%(uuid)"
+    is_url: false
+  - name: "Data ID for Butler"
+    template: "{'exposure': %(exposure), 'detector': %(detector)}"
+    is_url: false
+  - name: "Butler Snippet"
+    template: |
+      from lsst.daf.butler import Butler
+      butler = Butler('embargo')
+      dataId = {'exposure': %(exposure), 'detector': %(detector)}
+      data = butler.get('%(dataType)', dataId)
+    is_url: false
+  - name: "LSSTCam/Calexp mosaic"
+    template: "https://usdf-rsp.slac.stanford.edu/rubintv/summit-usdf/lsstcam/event?key=lsstcam/%(day_obs|iso8601)/calexp_mosaic/%(exposure|sequence|zeropadding(6))/lsstcam_calexp_mosaic_%(day_obs|iso8601)_%(exposure|sequence|zeropadding(6)).jpg"
+    is_url: true

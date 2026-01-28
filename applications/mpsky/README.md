@@ -21,4 +21,6 @@ Solar System Ephemerides
 | podAnnotations | object | `{}` | Annotations for the mpsky deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the mpsky deployment pod |
+| service.nodePorts | bool | `false` | Configures allocation of node ports.  For USDF should be set to false. |
+| serviceAnnotations | object | `{}` | Annotations for the mpsky service |
 | tolerations | list | `[]` | Tolerations for the mpsky deployment pod |

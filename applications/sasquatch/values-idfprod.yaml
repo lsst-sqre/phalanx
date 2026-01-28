@@ -42,6 +42,13 @@ influxdb:
   ingress:
     enabled: false
     hostname: data.lsst.cloud
+  resources:
+    requests:
+      memory: 16Gi
+      cpu: 1
+    limits:
+      memory: 16Gi
+      cpu: 2
 
 customInfluxDBIngress:
   enabled: true
@@ -95,6 +102,7 @@ app-metrics:
 
 backup:
   enabled: true
+  schedule: "0 5 * * *"
   persistence:
     size: 500Gi
     storageClass: standard

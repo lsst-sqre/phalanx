@@ -8,6 +8,7 @@ argo-cd:
         clientID: argocd
         clientSecret: $dex.clientSecret
         requestedScopes: ["openid", "profile", "email", "groups"]
+      ui.bannercontent: "base"
     rbac:
       policy.csv: |
         g, k8s-manke-admins, role:admin

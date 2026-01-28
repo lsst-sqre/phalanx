@@ -19,6 +19,7 @@ tests:
             githubCiApp: null
             githubRefreshApp: null
             logLevel: INFO
+            logProfile: production
             metrics:
               application: mobu
               enabled: false
@@ -28,7 +29,6 @@ tests:
                 registryUrl: http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081
                 suffix: ""
             pathPrefix: /mobu
-            profile: production
             sentryEnvironment: null
             sentryTracesSampleConfig: 0
             slackAlerts: true

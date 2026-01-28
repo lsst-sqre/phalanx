@@ -49,6 +49,8 @@ instrument:
   # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
   # @default -- Matches `centralRepo`
   readRepo: ""
+  # -- Optional config overrides for local butler repo.
+  localRepoConfig: ""
   # -- The average time to wait (in seconds) before retrying a failed connection to the shared repo.
   repoWait: 30
   # -- Dataset types to export.
@@ -197,7 +199,7 @@ initializer:
     suspend: false
 
   # -- Maximum time for a single attempt to initialize the central repo (seconds).
-  timeout: 120
+  timeout: 300
   # -- Maximum number of times to attempt initializing the central repo.
   # If the initializer fails, the PP service cannot run!
   retries: 6

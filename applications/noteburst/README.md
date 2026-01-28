@@ -17,14 +17,12 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| config.hubPathPrefix | string | `"/nb"` | URL path prefix for the JupyterHub service |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.metrics.application | string | `"noteburst"` | Name under which to log metrics. Generally there is no reason to change this. |
 | config.metrics.enabled | bool | `false` | Whether to enable sending metrics |
 | config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
-| config.nubladoControllerPathPrefix | string | `"/nublado"` | URL path prefix for the Nublado JupyterLab Controller service |
 | config.sentry.enabled | bool | `false` | Whether to enable sentry at all |
 | config.sentry.tracesSampleRate | int | `0` | A number between 0 and 1, controlling the percentage chance a given transaction will be sent to Sentry. 0 represents 0% while 1 represents 100%. This has no effect on error reporting, only tracing. |
 | config.worker.identities | list | `[]` | Science Platform user identities that workers can acquire. Each item is an object with username and uuid keys |
@@ -40,6 +38,7 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
+| global.repertoireUrl | string | Set by Argo CD | Base URL for Repertoire discovery API |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"ghcr.io/lsst-sqre/noteburst"` | Noteburst image repository |
@@ -49,7 +48,6 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | ingress.path | string | `"/noteburst"` | Path prefix where noteburst is hosted |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` |  |
-| periodicMetrics | object | `{"resources":{"limits":{"cpu":"250m","memory":"512Mi"},"requests":{"cpu":"2m","memory":"128Mi"}},"schedule":"* * * * *"}` | Config for the CronJob that publishes metrics periodically |
 | periodicMetrics.resources | object | `{"limits":{"cpu":"250m","memory":"512Mi"},"requests":{"cpu":"2m","memory":"128Mi"}}` | Resources for the periodic metrics cron job |
 | periodicMetrics.schedule | string | `"* * * * *"` | Cron schedule string for publishing periodic metrics (in UTC) |
 | podAnnotations | object | `{}` | Annotations for API and worker pods |
@@ -71,4 +69,4 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` |  |
-| tolerations | list | `[]` |  |
+| tolerations | list | Tolerate GKE arm64 taint | Tolerations for the noteburst pods |

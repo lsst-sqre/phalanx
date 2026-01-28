@@ -1,3 +1,4 @@
+{{- if eq .Values.tapSchema.type "containerized" }}
 kind: Service
 apiVersion: v1
 metadata:
@@ -13,3 +14,4 @@ spec:
   selector:
     {{- include "cadc-tap.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: "schema-db"
+{{- end }}

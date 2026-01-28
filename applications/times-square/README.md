@@ -18,7 +18,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.37.10"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.12"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.resources | object | See `values.yaml` | Resource requests and limits for Cloud SQL pod |
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `times-square` Kubernetes service accounts and has the `cloudsql.client` role |
@@ -66,7 +66,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
 | redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
-| redis.tolerations | list | `[]` | Tolerations for the Redis pod |
+| redis.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the Redis pod |
 | replicaCount.api | int | `1` | Number of API deployment pods to start |
 | replicaCount.worker | int | `1` | Number of worker deployment pods to start |
 | resources | object | see `values.yaml` | Resource limits and requests for the times-square deployment pod |
@@ -75,4 +75,4 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account. If Cloud SQL is in use, the annotation specifying the Google service account will also be added. |
 | serviceAccount.create | bool | `false` | Force creation of a service account. Normally, no service account is used or mounted. If Cloud SQL is enabled, a service account is always created regardless of this value. |
 | serviceAccount.name | string | Name based on the fullname template | Name of the service account to use |
-| tolerations | list | `[]` | Tolerations for the times-square deployment pod |
+| tolerations | list | Tolerate GKE arm64 taint | Tolerations for the times-square deployment pod |

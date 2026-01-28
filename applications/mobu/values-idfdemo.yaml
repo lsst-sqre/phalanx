@@ -1,4 +1,9 @@
 config:
   logLevel: DEBUG
-  profile: development
+  logProfile: development
   autostart: []
+
+image:
+  tag: tickets-DM-52819
+nodeSelector:
+  node_pool: arm-core-pool

@@ -1,0 +1,73 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: nighttime-imaging-workflow
+  labels:
+    workflows.argoproj.io/type: "integration-test"
+    argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
+spec:
+  serviceAccountName: {{ .Values.serviceAccount }}
+  artifactRepositoryRef:
+    configMap: integration-test-controller-configmap
+    key: artifactRepository
+  volumes:
+  - name: testreports
+    persistentVolumeClaim:
+      claimName: {{ .Values.persistentVolume.claimName }}
+  imagePullSecrets:
+  - name: pull-secret
+  podMetadata:
+    labels:
+      argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
+  arguments:
+    parameters:
+    - name: date-key
+      value: "20251209"
+  entrypoint: run-tests
+  templates:
+  - name: run-tests
+    dag:
+      tasks:
+      - name: call-cleanup-reports
+        templateRef:
+          name: cleanup-reports-workflow
+          template: cleanup-reports
+      - name: auxtel-stop
+        depends: call-cleanup-reports
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Stop.list"
+          - name: jobname
+            value: auxtel-stop
+          - name: reportname
+            value: at_stop.xml
+      - name: auxtel-shutdown
+        depends: auxtel-stop
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Shutdown.list"
+          - name: jobname
+            value: auxtel-shutdown
+          - name: reportname
+            value: at_shutdown.xml
+      - name: enable-atcs
+        depends: auxtel-shutdown
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_Enable_ATCS.list"
+          - name: jobname
+            value: enable-atcs
+          - name: reportname
+            value: enable_atcs.xml

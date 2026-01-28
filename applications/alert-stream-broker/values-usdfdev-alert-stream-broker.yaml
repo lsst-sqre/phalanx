@@ -18,9 +18,9 @@ alert-stream-broker:
 
       bootstrap:
         host: usdf-alert-stream-dev.lsst.cloud
-        ip: "134.79.23.185"
         annotations:
           metallb.io/address-pool: 'sdf-dmz'
+          metallb.universe.tf/loadBalancerIPs: 134.79.23.185
       brokers:
         - host: usdf-alert-stream-dev-broker-0.lsst.cloud
           ip: "134.79.23.214"
@@ -79,31 +79,31 @@ alert-stream-broker:
 
     # The actual community broker users
     - username: "alerce-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
       groups: ["alerce-idfint"]
 
     - username: "ampel-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
       groups: ["ampel-idfint"]
 
     - username: "antares-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
       groups: ["antares-idfint"]
 
     - username: "babamul-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
       groups: ["babamul-idfint"]
 
     - username: "fink-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
       groups: ["fink-idfint"]
 
     - username: "lasair-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
       groups: ["lasair-idfint"]
 
     - username: "pittgoogle-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "alerts-mock-data-challenge"]
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
       groups: ["pittgoogle-idfint"]
 
   testTopicName: alert-stream-test
@@ -124,11 +124,11 @@ alert-stream-broker:
   lsstcamMaxBytesRetained90: "755000000000"
   lsstcamMaxMillisecondsRetained90: "2629740000"
 
-  lsstcamTopicName74: lsst-alerts-v7.4
-  lsstcamTopicPartitions74: 45
-  lsstcamTopicReplicas74: 1
-  lsstcamMaxBytesRetained74: "300000000000"
-  lsstcamMaxMillisecondsRetained74: "2629740000"
+  lsstcamTopicName100: lsst-alerts-v10.0
+  lsstcamTopicPartitions100: 45
+  lsstcamTopicReplicas100: 1
+  lsstcamMaxBytesRetained100: "300000000000"
+  lsstcamMaxMillisecondsRetained100: "2629740000"
 
   lsstcamTopicNameMDC: alerts-mock-data-challenge
   lsstcamTopicPartitionsMDC: 45
@@ -148,7 +148,7 @@ alert-database:
   ingester:
     # The image can use either a tag or a digest to determine which is being used.
     image:
-      tag: tickets-DM-52309
+      tag: v3.4.0
 
     logLevel: verbose
 
@@ -161,7 +161,7 @@ alert-database:
       port: 9092
       topic:
         - lsst-alerts-v9.0
-        - lsst-alerts-v7.4
+        - lsst-alerts-v10.0
 
   server:
     serviceAccountName: alert-database-reader

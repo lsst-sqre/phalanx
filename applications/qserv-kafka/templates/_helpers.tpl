@@ -11,9 +11,6 @@ Common labels
 {{- define "qserv-kafka.labels" -}}
 helm.sh/chart: {{ include "qserv-kafka.chart" . }}
 {{ include "qserv-kafka.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 

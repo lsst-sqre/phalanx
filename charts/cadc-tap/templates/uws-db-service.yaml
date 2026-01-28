@@ -1,4 +1,4 @@
-{{ if (not .Values.cloudsql.enabled) -}}
+{{- if eq .Values.uws.type "containerized" }}
 kind: Service
 apiVersion: v1
 metadata:

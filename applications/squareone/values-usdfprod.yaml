@@ -12,5 +12,8 @@ config:
     - label: "Times Square"
       href: "/times-square/"
       internal: true
+    - label: "FOV Quicklook"
+      href: "/fov-quicklook/"
+      internal: false
 ingress:
   timesSquareScope: "exec:notebook"

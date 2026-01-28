@@ -4,6 +4,7 @@ kind: ConfigMap
 metadata:
   name: csc-env-config
 data:
+    EXTERNAL_INSTANCE_URL: {{ .Values.global.baseUrl }}
     LSST_SITE: {{ $.Values.global.controlSystem.siteTag }}
     LSST_TOPIC_SUBNAME: {{ $.Values.global.controlSystem.topicName }}
     LSST_KAFKA_BROKER_ADDR: {{ $.Values.global.controlSystem.kafkaBrokerAddress }}

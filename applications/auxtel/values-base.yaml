@@ -127,10 +127,10 @@ atoods:
   resources:
     limits:
       cpu: 400m
-      memory: 1000Mi
+      memory: 1600Mi
     requests:
       cpu: 40m
-      memory: 480Mi
+      memory: 800Mi
   configfile:
     path: /etc
     filename: atoods.yaml
@@ -158,11 +158,13 @@ atoods:
                   - LATISS/raw/all
               collection_cleaner:
                   collections_to_clean:
-                      - collection: LATISS/raw/all
+                      - collections:
+                          - LATISS/raw/all
                         files_older_than:
                             <<: *interval
                             days: 20
-                      - collection: LATISS/runs/quickLook
+                      - collections:
+                          - LATISS/runs/quickLook
                         files_older_than:
                             <<: *interval
                             days: 2

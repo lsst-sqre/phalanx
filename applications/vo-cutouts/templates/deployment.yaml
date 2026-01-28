@@ -46,6 +46,13 @@ spec:
                   name: "vo-cutouts"
                   key: "slack-webhook"
             {{- end }}
+            {{- if .Values.config.sentry.enabled }}
+            - name: "SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: "vo-cutouts"
+                  key: "sentry-dsn"
+            {{- end }}
             # Uvicorn keepalive timeout, in seconds. This should be longer
             # than any keepalive timeouts on any downstream proxies. The
             # keepalive timeout for ingress-nginx connections is 60s.

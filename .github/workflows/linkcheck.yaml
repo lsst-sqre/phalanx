@@ -23,14 +23,10 @@ jobs:
     timeout-minutes: 60
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           # Ensure the documentation gets the right version.
           fetch-depth: 0
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version-file: ".python-version"
 
       - uses: astral-sh/setup-uv@v7
 

@@ -17,6 +17,10 @@ global:
   # @default -- Set by Argo CD
   host: null
 
+  # -- Base URL for Repertoire discovery API
+  # @default -- Set by Argo CD
+  repertoireUrl: null
+
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: null
@@ -92,7 +96,6 @@ resources:
       cpu: "2m"
       memory: "256Mi"
 
-# -- Config for the CronJob that publishes metrics periodically
 periodicMetrics:
   # -- Cron schedule string for publishing periodic metrics (in UTC)
   schedule: "* * * * *"
@@ -115,17 +118,18 @@ autoscaling:
 
 nodeSelector: {}
 
-tolerations: []
+# -- Tolerations for the noteburst pods
+# @default -- Tolerate GKE arm64 taint
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
+
 affinity: {}
 config:
   # -- Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
   logLevel: "INFO"
-
-  # -- URL path prefix for the JupyterHub service
-  hubPathPrefix: "/nb"
-
-  # -- URL path prefix for the Nublado JupyterLab Controller service
-  nubladoControllerPathPrefix: "/nublado"
 
   sentry:
     # -- Whether to enable sentry at all

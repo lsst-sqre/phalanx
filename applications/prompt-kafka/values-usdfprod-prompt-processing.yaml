@@ -3,21 +3,58 @@ strimzi-kafka:
     butlerWriter:
       enabled: true
     kafdrop:
-      enabled: false
+      enabled: true
   kraft:
     enabled: true
   kafkaController:
     enabled: true
   kafka:
-    version: "3.9.1"
+    version: "4.0.0"
     storage:
       size: 100Gi
       storageClassName: wekafs--sdf-k8s01
+    listeners:
+      external:
+        enabled: true
+    externalListener:
+      bootstrap:
+        annotations:
+          metallb.io/address-pool: sdf-rubin-ingest
+          metallb.io/loadBalancerIPs: 172.24.10.85
+      brokers:
+        - broker: 3
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.86
+        - broker: 4
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.87
+        - broker: 5
+          annotations:
+            metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.88
+
+butler-writer:
+  enabled: true
   topics:
-    butlerWriter:
-      enabled: true
+    - name: butler-writer
       partitions: 1
       replicas: 3
-      retention: 1209600000 # milliseconds, = 2 weeks
+      retention: 1209600000  # milliseconds, = 2 weeks
+    - name: butler-writer-ingestion-events
+      partitions: 1
+      replicas: 3
+      # Keep forever.  These messages are small (about 200 bytes * 1000 per
+      # day), and being able to replay the log will be useful for disaster
+      # recovery downstream.
+      retention: -1
+
 kafdrop:
-  enabled: false
+  enabled: true
+  ingress:
+    enabled: true
+    hostname: usdfprod-prompt-processing.slac.stanford.edu
+
+prompt-publication:
+  enabled: true

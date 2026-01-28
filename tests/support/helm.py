@@ -1,7 +1,5 @@
 """Mock Helm command for testing."""
 
-from __future__ import annotations
-
 import shutil
 import subprocess
 from collections.abc import Iterator

@@ -47,6 +47,6 @@ Consolidated Database of Image Metadata
 | pq.image.pullPolicy | string | `"Always"` | Pull policy for the consdb-hinfo image |
 | pq.image.repository | string | `"ghcr.io/lsst-dm/consdb-pq"` | Image to use in the consdb-pq deployment |
 | pq.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
-| pq.replicaCount | int | `1` | Number of consdb-hinfo deployment pods to start |
+| pq.replicaCount | int | `2` | Number of consdb-pqserver deployment pods to start |
 | resources | object | `{}` | Resource limits and requests for the consdb deployment pod |
 | tolerations | list | `[]` | Tolerations for the consdb deployment pod |

@@ -1,16 +1,15 @@
 prompt-keda:
   image:
     pullPolicy: IfNotPresent
-    tag: 11.3.0
+    tag: 13.0.0
 
   alerts:
     username: kafka-admin
     server: usdf-alert-stream-dev.lsst.cloud:9094
-    topic: lsst-alerts-v9.0
+    topic: lsst-alerts-v10.0
 
   worker:
-    # TODO: need to adjust this once we know how leaky the LSSTCam pipeline is
-    restart: 7
+    restart: 10
 
   instrument:
     pipelines:
@@ -20,20 +19,22 @@ prompt-keda:
       # Block-style mappings can have lines of any length.
       main: |-
         - survey: BLOCK-407  # FBS Pre-Operations Survey (independent of environmental conditions)
-          pipelines:
+          pipelines: &std-main-pipelines
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         - survey: BLOCK-408  # FBS Pre-Operations Survey (triggered by environmental conditions)
-          pipelines:
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
-        - survey: BLOCK-365  # FBS SV Field Survey
-          pipelines:
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
+          pipelines: *std-main-pipelines
+        - survey: BLOCK-416  # FBS Pre-Operations Survey (with a constrained LSST configuration)
+          pipelines: *std-main-pipelines
+        - survey: BLOCK-417  # FBS Pre-Operations Survey (with a constrained LSST configuration)
+          pipelines: *std-main-pipelines
+        - survey: BLOCK-419  # FBS Pre-Operations Survey (a version without elevation, rotation, or filter change constraints)
+          pipelines: *std-main-pipelines
+        - survey: BLOCK-421  # FBS Pre-Operations Survey (a version without FAM triplets)
+          pipelines: *std-main-pipelines
+        - survey: BLOCK-T637  # Exposure time test
+          pipelines: *std-main-pipelines
         - survey: BLOCK-T427  # Daytime checkout
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
         # Produces nextVisits but not images
@@ -45,17 +46,27 @@ prompt-keda:
       preprocessing: |-
         # Run to enable solar system processing in SingleFrame
         - survey: BLOCK-407
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
+          pipelines: &std-pre-pipelines
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml
         - survey: BLOCK-408
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
-        - survey: BLOCK-365
-          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml']
+          pipelines: *std-pre-pipelines
+        - survey: BLOCK-416
+          pipelines: *std-pre-pipelines
+        - survey: BLOCK-417
+          pipelines: *std-pre-pipelines
+        - survey: BLOCK-419
+          pipelines: *std-pre-pipelines
+        - survey: BLOCK-421
+          pipelines: *std-pre-pipelines
+        - survey: BLOCK-T637
+          pipelines: *std-pre-pipelines
         - {survey: "", pipelines: []}
         # Don't preprocess anything unknown
         - {pipelines: []}
     preloadPadding: 50.1
     centralRepo: s3://rubin-summit-users
     readRepo: s3://rubin-summit-users/butler-readonly.yaml
+    localRepoConfig: s3://rubin-summit-users/config/prompt_processing.yaml
     exportTypes: |-
       - ".*_(config|metadata|log)"
       - "packages"
@@ -81,6 +92,7 @@ prompt-keda:
       - "preloaded_dia_object"
       - "preloaded_dia_source"
       - "preloaded_ss_object"
+      - "prompt_provenance"
 
   s3:
     imageBucket: rubin-summit
@@ -89,15 +101,13 @@ prompt-keda:
 
   raw_microservice: http://172.24.5.158:8080/presence
 
-  mpSky_service: http://172.24.5.145/ephemerides/
+  mpSky_service: http://usdf-mpsky.sdf.slac.stanford.edu/ephemerides/
 
   iers_cache: s3://rubin-summit-users/iers-cache.zip
 
   imageNotifications:
     kafkaClusterAddress: s3-file-notifications-kafka-external-bootstrap.s3-file-notifications:9094
-    topic: rubin-summit-notification-6
-    # TODO: need to adjust this based on observed nextVisit lead time (depends on scheduler) and PP prep time
-    # The shorter this is, the less capacity is wasted on canceled visits
+    topic: rubin-summit-notification-7
     imageTimeout: 120
 
   apdb:
@@ -120,10 +130,6 @@ prompt-keda:
   keda:
     minReplicaCount: 3
     maxReplicaCount: 1700
-
-    # TODO: may need to reduce if we don't have enough capacity
-    # redisStreams:
-    #   expiration: 600
 
   initializer:
     podAnnotations: {

@@ -380,16 +380,30 @@ data:
       auth-enabled: true
 
     cluster:
-      # -- Maximum number of running queries allowed on the instance (0 is
-      # unlimited)
-      max-concurrent-queries: 1000
+      # -- Maximum number of running queries allowed
+      max-concurrent-queries: 50
 
       # -- Maximum duration a query is allowed to run before it is killed
-      query-timeout: "300s"
+      query-timeout: "180s"
 
       # -- Maximum duration a query can run before InfluxDB logs it as a slow
       # query
-      log-queries-after: "15s"
+      log-queries-after: "10s"
+
+      # -- Whether to log timed out queries
+      log-timedout-queries: true
+
+      # -- Whether to log queries that are terminated due to resource limits
+      termination-query-log: true
+
+      # -- Maximum number of points a single select query can process before it is killed
+      max-select-point: 50000000
+
+      # -- Maximum number of series a single select query can process before it is killed
+      max-select-series: 200000
+
+      # -- Maximum number of GROUP BY time() buckets a single select query can retrieve
+      max-select-buckets: 20000
 
     hintedHandoff:
       # -- Maximum size of the hinted-handoff queue in bytes

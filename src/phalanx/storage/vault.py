@@ -1,7 +1,5 @@
 """Store, retrieve, and manipulate data stored in Vault."""
 
-from __future__ import annotations
-
 from contextlib import suppress
 from datetime import timedelta
 
@@ -72,6 +70,8 @@ class VaultClient:
                 )
             case VaultTokenCredentials():
                 self._vault.token = credentials.token
+            case _:
+                pass
 
     def create_approle(
         self,

@@ -53,6 +53,16 @@ spec:
             - name: "DAF_BUTLER_REPOSITORIES"
               value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
 
+            # Not currently used since Sentry isn't necessarily available, but
+            # setting it keeps consistency and shouldn't do any harm.
+            {{- if .Values.config.sentry.enabled }}
+            - name: "SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: "vo-cutouts"
+                  key: "sentry-dsn"
+            {{- end }}
+
             # lsst-resources writes temp files into the current working
             # directory unless you explicitly specify one.
             - name: "TMPDIR"

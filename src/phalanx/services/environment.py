@@ -1,7 +1,5 @@
 """Service for manipulating Phalanx environments."""
 
-from __future__ import annotations
-
 from datetime import timedelta
 
 from pydantic import SecretStr
@@ -105,6 +103,9 @@ class EnvironmentService:
         self._install_app_of_apps(environment, git_branch, argocd_password)
         self._sync_argocd()
         self._sync_infrastructure_applications(environment)
+        if "sasquatch" in environment.applications:
+            self._sync_sasquatch(environment)
+            self._restart_gafaelfawr()
         self._sync_remaining_applications(environment)
 
     def lint(self, environment: str | None = None) -> bool:
@@ -290,6 +291,9 @@ class EnvironmentService:
     ) -> None:
         """Sync infrastructure applications that other applications depend on.
 
+        Gafaelfawr initially will not send metrics because there is no
+        sasquatch is not synced yet, so we will have to restart it later.
+
         Parameters
         ----------
         environment
@@ -304,6 +308,49 @@ class EnvironmentService:
             ):
                 if application in environment.applications:
                     self._argocd.sync(application)
+
+    def _sync_sasquatch(self, environment: Environment) -> None:
+        """Sync Sasquatch and Strimzi.
+
+        These should be synced before most other apps so that apps that publish
+        metrics will start correctly and not have to be restarted later.
+
+        Parameters
+        ----------
+        environment
+            The environment configuration object.
+        """
+        with action_group("Sync sasquatch"):
+            for application in (
+                "strimzi",
+                "strimzi-access-operator",
+                "strimzi-registry-operator",
+                "sasquatch",
+            ):
+                if application in environment.applications:
+                    self._argocd.sync(application)
+
+    def _restart_gafaelfawr(self) -> None:
+        """Restart gafaelfawr.
+
+        There is a chicken-and-egg problem with gafaelfawr and sasquatch.
+        Gafaelfawr needs sasquatch to publish metrics, but sasquatch needs
+        gafaelfawr to provision GafaelfawrIngresses. Gafaelfawr will start
+        without sasquatch, but it must be restarted after sasquatch is
+        available so that it publishes metrics.
+
+        Parameters
+        ----------
+        environment
+            The environment configuration object.
+        """
+        with action_group("Restart gafaelfawr"):
+            self._kubernetes.restart(
+                namespace="gafaelfawr", name="deployment/gafaelfawr"
+            )
+            self._kubernetes.restart(
+                namespace="gafaelfawr", name="deployment/gafaelfawr-operator"
+            )
 
     def _sync_remaining_applications(self, environment: Environment) -> None:
         """Sync remaining applications that were not already synced.

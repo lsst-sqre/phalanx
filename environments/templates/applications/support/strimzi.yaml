@@ -23,4 +23,9 @@ spec:
     helm:
       valueFiles:
         - "values-{{ .Values.name }}.yaml"
+  ignoreDifferences:
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      jsonPointers:
+        - /spec/versions
 {{- end -}}

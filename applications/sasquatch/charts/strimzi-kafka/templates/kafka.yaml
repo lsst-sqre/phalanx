@@ -158,6 +158,9 @@ metadata:
   annotations:
     strimzi.io/kraft: enabled
     strimzi.io/node-pools: enabled
+    {{- if .Values.kafka.pauseReconciliation }}
+    strimzi.io/pause-reconciliation: "true"
+    {{- end }}
 spec:
   kafka:
     version: {{ .Values.kafka.version | quote }}
@@ -256,6 +259,8 @@ spec:
           name: kafka-metrics
           key: kafka-metrics-config.yml
     {{- end }}
+  maintenanceTimeWindows:
+    - {{ .Values.kafka.maintenanceTimeWindows | quote }}
   entityOperator:
     topicOperator: {}
     userOperator: {}

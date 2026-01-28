@@ -17,6 +17,7 @@ spec:
   template:
     metadata:
       labels:
+        app.kubernetes.io/name: sasquatch-telegraf
         app.kubernetes.io/instance: sasquatch-telegraf-{{ $key }}
       annotations:
         checksum/config: {{ include "configmap" (dict "key" $key "value" $value "influxdbUrl" $.Values.influxdb.url ) | sha256sum }}

@@ -6,17 +6,21 @@ use_gafaelfawr: true
 
 image:
   # -- Image to use in the fov-quicklook deployment
-  repository: ghcr.io/michitaro/rubin-fov-viewer
+  repository: ghcr.io/lsst-sqre/fov-quicklook
 
   # -- Pull policy for the fov-quicklook image
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: latest
+  tag: main
 
 config:
   # -- URL path prefix
   pathPrefix: /fov-quicklook
+  # -- path prefix for object storage for tiles
+  s3_tile_path_prefix: "fov-quicklook/prod"
+  # -- Maximum allowed storage usage for object storage in bytes
+  max_object_storage_usage: 100_000_000_000
 
 # -- S3 configuration for the tile storage
 s3_tile:
@@ -32,13 +36,14 @@ coordinator:
     # -- Resource requests for the coordinator
     requests:
       cpu: 100m
-      memory: 256Mi
+      memory: 512Mi
     # -- Resource limits for the coordinator
     limits:
       cpu: 4000m
-      memory: 256Mi
+      memory: 512Mi
 
 frontend:
+  replicas: 2
   resources:
     # -- Resource requests for the frontend
     requests:
@@ -64,22 +69,99 @@ generator:
   resources:
     # -- Resource requests for the generator
     requests:
-      cpu: 8000m
-      memory: 32Gi
+      cpu: 2000m
+      memory: 8Gi
     # -- Resource limits for the generator
     limits:
-      cpu: 16000m
-      memory: 32Gi
-  workdir:
-    # -- Work directory type for the generator
-    medium: Memory
-    # -- Size limit for the shared memory work directory
-    sizeLimit: 32Gi
-  mergedDir:
-    # -- Size limit for the merged directory
-    sizeLimit: 32Gi
+      cpu: 12000m
+      memory: 8Gi
   # -- Number of replicas for the generator
-  replicas: 9
+  replicas: 8
+  # -- Number of concurrent tile generations
+  concurrency: 20
+  # -- Local storage configuration for the generator
+  local_storage:
+    sizeLimit: 32Gi
+
+# -- Butler settings for the fov-quicklook application
+butler_settings:
+  envs:
+    - name: DAF_BUTLER_REPOSITORY_INDEX
+      value: /var/run/fov-quicklook/config/data-repos.yaml
+    - name: AWS_SHARED_CREDENTIALS_FILE
+      value: "/var/run/fov-quicklook/secrets/aws-credentials.ini"
+    - name: PGUSER
+      value: "rubin"
+    - name: PGPASSFILE
+      value: "/var/run/fov-quicklook/secrets/postgres-credentials.txt"
+    - name: S3_ENDPOINT_URL
+      value: "https://s3dfrgw.slac.stanford.edu"
+    - name: LSST_DISABLE_BUCKET_VALIDATION
+      value: "1"
+    - name: LSST_RESOURCES_S3_PROFILE_embargo
+      value: "https://sdfembs3.sdf.slac.stanford.edu"
+  volumes:
+    - name: aws-credentials
+      secret:
+        secretName: fov-quicklook
+    - name: postgres-credentials
+      secret:
+        secretName: fov-quicklook
+    - name: butler-config
+      configMap:
+        name: fov-quicklook-butler-config
+  volume_mounts:
+    - name: aws-credentials
+      mountPath: /var/run/fov-quicklook/secrets/aws-credentials.ini
+      subPath: aws-credentials.ini
+    - name: postgres-credentials
+      mountPath: /var/run/fov-quicklook/secrets/postgres-credentials.txt
+      subPath: postgres-credentials.txt
+    - name: butler-config
+      mountPath: /var/run/fov-quicklook/config
+  data_repos:
+    embargo: "s3://embargo@rubin-summit-users/butler.yaml"
 
 # -- Context menu templates for the frontend
 context_menu_templates: []
+
+# -- CCD data type configurations for the quicklook system
+# Each entry defines how to access different types of Butler data
+ccd_data_types:
+  # -- Raw data from LSSTCam
+  - id: raw
+    name: raw
+    display_name: Raw
+    collections:
+      - LSSTCam/raw/all
+    data_id_dimension: exposure
+    order_by:
+      - -day_obs
+      - -exposure
+    partial: false
+    repository_name: embargo
+    instrument: LSSTCam
+  # -- Post-ISR (Instrument Signature Removal) processed images
+  - id: post_isr_image
+    name: post_isr_image
+    display_name: Post-ISR
+    collections:
+      - LSSTCam/runs/nightlyValidation
+    data_id_dimension: exposure
+    order_by:
+      - -exposure
+    partial: true
+    repository_name: embargo
+    instrument: LSSTCam
+  # -- Preliminary visit images
+  - id: preliminary_visit_image
+    name: preliminary_visit_image
+    display_name: Preliminary
+    collections:
+      - LSSTCam/runs/nightlyValidation
+    data_id_dimension: visit
+    order_by:
+      - -visit
+    partial: true
+    repository_name: embargo
+    instrument: LSSTCam

@@ -1,0 +1,13 @@
+config:
+  qservDatabaseUrl: "mysql+asyncmy://qsmaster@sdfqserv001.sdf.slac.stanford.edu:4040/"
+  qservRestSendApiVersion: false
+  qservRestUrl: "https://sdfqserv001.sdf.slac.stanford.edu:4048/"
+  qservRestUsername: "qsmaster"
+redis:
+  resources:
+    limits:
+      cpu: "1"
+      memory: "500Mi"
+    requests:
+      cpu: "10m"
+      memory: "200Mi"

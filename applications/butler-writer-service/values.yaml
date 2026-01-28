@@ -23,6 +23,20 @@ kafka:
   # -- Kafka topic containing Prompt Processing output events, for consumption by the Butler writer service.
   # @default -- None, must be set
   topic: ""
+  # -- Kafka topic where the Butler writer service will output information
+  # about ingested datasets, for consumption by the Prompt Publication
+  # Service.
+  # @default -- None, must be set
+  outputTopic: ""
+  # -- Enable additional Kafka debug logging
+  debug: false
+
+
+# -- Directory path URI (in lsst.resources.ResourcePath format) where the Butler
+# writer service will output lists of ingested datasets, for consumption by the
+# Prompt Publication Service.
+# @default -- None, must be set
+outputDatasetListDirectory: ""
 
 s3:
   # -- S3 endpoint where datasets are buffered.

@@ -50,13 +50,13 @@ config:
   # main mobu log.
   logLevel: INFO
 
-  # -- Prefix for mobu's API routes.
-  pathPrefix: "/mobu"
-
   # -- One of 'production' or 'development'. 'production' configures structured
   # JSON logging, and 'development' configures unstructured human readable
   # logging.
-  profile: production
+  logProfile: production
+
+  # -- Prefix for mobu's API routes.
+  pathPrefix: "/mobu"
 
   # -- The environment to report to Sentry
   sentryEnvironment: null
@@ -118,7 +118,12 @@ podAnnotations: {}
 terminationGracePeriodSeconds: null
 
 # -- Tolerations for the mobu frontend pod
-tolerations: []
+# @default -- Tolerate GKE arm64 taint
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
@@ -127,14 +132,18 @@ global:
   # @default -- Set by Argo CD
   baseUrl: null
 
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD
+  environmentName: null
+
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null
 
+  # -- Base URL for Repertoire discovery API
+  # @default -- Set by Argo CD
+  repertoireUrl: null
+
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: null
-  #
-  # -- Name of the Phalanx environment
-  # @default -- Set by Argo CD
-  environmentName: null

@@ -1,5 +1,16 @@
 # Default values for Nublado.
 
+image:
+  # -- Nublado image to use
+  repository: "ghcr.io/lsst-sqre/nublado"
+
+  # -- Pull policy for the Nublado image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of Nublado image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
 controller:
   # -- Affinity rules for the Nublado controller
   affinity: {}
@@ -9,17 +20,6 @@ controller:
   # Kubernetes service account and has the Artifact Registry reader role
   # @default -- None, must be set when using Google Artifact Registry
   googleServiceAccount: null
-
-  image:
-    # -- Nublado controller image to use
-    repository: "ghcr.io/lsst-sqre/nublado-controller"
-
-    # -- Pull policy for the controller image
-    pullPolicy: "IfNotPresent"
-
-    # -- Tag of Nublado controller image to use
-    # @default -- The appVersion of the chart
-    tag: null
 
   ingress:
     # -- Additional annotations to add for the Nublado controller ingress
@@ -83,16 +83,6 @@ controller:
       # format
       idleTimeout: 1d
 
-      image:
-        # -- File server image to use
-        repository: "ghcr.io/lsst-sqre/worblehat"
-
-        # -- Pull policy for file server image
-        pullPolicy: "IfNotPresent"
-
-        # -- Tag of file server image to use
-        tag: "0.1.0"
-
       # -- Namespace for user file servers
       namespace: "fileservers"
 
@@ -118,7 +108,12 @@ controller:
           memory: "10Gi"
 
       # -- Tolerations for user file server pods
-      tolerations: []
+      # @default -- Tolerate GKE arm64 taint
+      tolerations:
+        - key: "kubernetes.io/arch"
+          operator: "Equal"
+          value: "arm64"
+          effect: "NoSchedule"
 
       # -- Volumes that should be made available via WebDAV
       volumeMounts: []
@@ -139,16 +134,6 @@ controller:
 
       # -- Extra volumes that should be mounted to fsadmin
       extraVolumeMounts: []
-
-      image:
-        # -- fsadmin image to use
-        repository: "ghcr.io/lsst-sqre/nublado-fsadmin"
-
-        # -- Pull policy for fsadmin image
-        pullPolicy: "IfNotPresent"
-
-        # -- Tag of fsadmin image to use
-        tag: "8.17.1"
 
       # -- Mount prefix, to be prepended to mountpoints in order to
       # collect them in one place
@@ -239,6 +224,11 @@ controller:
       # Safir `parse_timedelta` format
       deleteTimeout: 1m
 
+      # -- Select where `/tmp` and `/lab_startup` in the lab will come
+      # from. Choose between `disk` (node-local ephemeral storage) and
+      # `memory` (tmpfs capped at 25% of the available memory for `/tmp`).
+      emptyDirSource: "memory"
+
       # -- Environment variables to set for every user lab
       # @default -- See `values.yaml`
       env:
@@ -303,6 +293,10 @@ controller:
       # be a subdirectory of the user's home directory in some external
       # environment.
       homedirSuffix: ""
+
+      # -- Home volume name.  The controller needs to know which volume
+      # contains user homes.
+      homeVolumeName: "home"
 
       # -- Containers run as init containers with each user pod. Each should
       # set `name`, `image` (a Docker image and pull policy specification),
@@ -441,13 +435,17 @@ controller:
       # should generally be shorter than the spawn timeout set in JupyterHub.
       spawnTimeout: 600
 
-      # -- Select where `/tmp` in the lab will come from. Choose between
-      # `disk` (node-local ephemeral storage) and `memory` (tmpfs capped at
-      # 25% of the available memory).
-      tmpSource: "memory"
+      # -- Whether to use standard inithome container (requires
+      # administrative access to home volume) or not.
+      standardInithome: true
 
       # -- Tolerations for user lab pods
-      tolerations: []
+      # @default -- Tolerate GKE arm64 taint
+      tolerations:
+        - key: "kubernetes.io/arch"
+          operator: "Equal"
+          value: "arm64"
+          effect: "NoSchedule"
 
       # -- Volumes that will be in lab pods or init containers. This supports
       # NFS, HostPath, and PVC volume types (differentiated in source.type).
@@ -562,7 +560,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.17.1"
+      tag: "11.2.1"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
@@ -573,6 +571,14 @@ jupyterhub:
       requests:
         cpu: "100m"
         memory: "128Mi"
+
+    # -- Tolerations for Hub pod
+    # @default -- Tolerate GKE arm64 taint
+    tolerations:
+      - key: "kubernetes.io/arch"
+        operator: "Equal"
+        value: "arm64"
+        effect: "NoSchedule"
 
     db:
       # -- Type of database to use
@@ -692,6 +698,15 @@ jupyterhub:
           cpu: "250m"
           memory: "200Mi"
 
+      # -- Tolerations for proxy pod
+      # @default -- Tolerate GKE arm64 taint
+      tolerations:
+        - key: "kubernetes.io/arch"
+          operator: "Equal"
+          value: "arm64"
+          effect: "NoSchedule"
+
+
   scheduling:
     userScheduler:
       # -- Whether the user scheduler should be enabled
@@ -718,7 +733,7 @@ cloudsql:
     pullPolicy: "IfNotPresent"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.10"
+    tag: "1.37.12"
 
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
@@ -747,7 +762,12 @@ cloudsql:
   serviceAccount: null
 
   # -- Tolerations for the Cloud SQL Auth Proxy pod
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 # JupyterHub proxy configuration handled directly by this chart rather than by
 # Zero to JupyterHub.
@@ -798,17 +818,6 @@ purger:
     requests:
       cpu: "0.05"
       memory: "120Mi"
-
-  image:
-    # -- purger image to use
-    repository: "ghcr.io/lsst-sqre/nublado-purger"
-
-    # -- Pull policy for the purger image
-    pullPolicy: "IfNotPresent"
-
-    # -- Tag of purger image to use
-    # @default -- The appVersion of the chart
-    tag: null
 
   # -- Crontab entry for when to run.
   schedule: "05 03 * * *"
@@ -924,16 +933,6 @@ cronjob:
     # -- GID for the cloning cronjob(s)
     gid: 1000
 
-  image:
-    # -- Repository cloner image to use
-    repository: "ghcr.io/lsst-sqre/repo-cloner"
-
-    # -- Pull policy for the repo cloner image
-    pullPolicy: "IfNotPresent"
-
-    # -- Tag of repo cloner image to use
-    tag: "0.1.0"
-
   # -- Affinity rules for the cloning cronjob(s).
   affinity: {}
 
@@ -948,7 +947,12 @@ cronjob:
       memory: "50Mi"
 
   # -- Tolerations for the cloning cronjob(s).
-  tolerations: []
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
 
 sentry:
   # -- Whether to report errors to Sentry. Applies to all Nublado components

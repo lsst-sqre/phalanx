@@ -36,6 +36,8 @@ strimzi-kafka:
           host: sasquatch-summit-kafka-8.lsst.codes
     metricsConfig:
       enabled: true
+      interval: 30s
+      scrapeTimeout: 25s
   kafkaExporter:
     enabled: true
     logging: debug
@@ -124,6 +126,10 @@ influxdb-enterprise:
     replicas: 2
     startupProbe:
       enabled: true
+    config:
+      cluster:
+        # Adjusted because of the query load from dashboards at the Summit
+        max-concurrent-queries: 300
     ingress:
       enabled: true
       hostname: summit-lsp.lsst.codes
@@ -176,6 +182,10 @@ influxdb-enterprise-standby:
     replicas: 1
     startupProbe:
       enabled: true
+    config:
+      cluster:
+        # Adjusted because of the query load from dashboards at the Summit
+        max-concurrent-queries: 300
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
@@ -394,7 +404,7 @@ telegraf:
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: |
-        [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
+        [ "Agent", "Aspic", "Axis", "Bay", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
       topicRegexps: |
         [ "lsst.MTCamera" ]
 
@@ -481,6 +491,7 @@ control-system:
     - lsst.s3.raw.latiss
     - lsst.s3.raw.comcam
     - lsst.s3.raw.lsstcam
+    - lsst.s3.wf.lsstcam
 
 consdb:
   enabled: true

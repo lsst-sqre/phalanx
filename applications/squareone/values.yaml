@@ -52,7 +52,13 @@ autoscaling:
 
 nodeSelector: {}
 
-tolerations: []
+# Tolerations for squareone pod
+# @default -- Tolerate GKE arm64 taint
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
 
 affinity: {}
 
@@ -119,6 +125,43 @@ config:
     - label: "Argo CD"
       href: "/argo-cd/"
       internal: false
+
+  # -- URL to an external header logo image (HTTPS only). Takes priority over
+  # headerLogoFile and headerLogoData.
+  # @default null uses Squareone's default built-in logo
+  headerLogoUrl: null
+
+  # -- Filename of a logo image in the content/{environment}/ directory
+  # (e.g., "header-logo.png"). The file will be base64-encoded automatically.
+  # Used only if headerLogoUrl is null. Supported formats: .png, .jpg, .jpeg,
+  # .svg, .webp, .gif. Note: unlike MDX files, logo files do NOT fall back to
+  # idfprod if not found in the environment directory.
+  # @default null uses Squareone's default built-in logo
+  headerLogoFile: null
+
+  # -- Base64-encoded image data for header logo (without data URL prefix).
+  # Must be used with headerLogoMimeType. Used only if both headerLogoUrl and
+  # headerLogoFile are null.
+  # @default null uses Squareone's default built-in logo
+  headerLogoData: null
+
+  # -- MIME type for base64-encoded logo data (e.g., 'image/png',
+  # 'image/svg+xml'). Required when headerLogoData is provided.
+  # @default -- See `values.yaml`
+  headerLogoMimeType: null
+
+  # -- Height of header logo in pixels
+  # @default -- See `values.yaml`
+  headerLogoHeight: 50
+
+  # -- Width of header logo in pixels. If not provided, maintains aspect ratio
+  # based on height.
+  # @default null maintains aspect ratio
+  headerLogoWidth: null
+
+  # -- Alternative text for header logo for accessibility
+  # @default -- See `values.yaml`
+  headerLogoAlt: "Logo"
 
 # Global parameters are set by parameters injected by the Argo CD Application
 # and should not be set in the individual environment values files.

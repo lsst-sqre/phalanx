@@ -22,7 +22,7 @@ ingress-nginx:
 
       # -- Maximum size of the client request body (needs to be large enough
       # to allow table uploads)
-      proxy-body-size: "100m"
+      proxy-body-size: "2g"
 
       # -- Maximum size of the buffer used to read HTTP headers from the
       # backend or auth subrequest handler. This needs to be larger than the
@@ -100,6 +100,14 @@ ingress-nginx:
     podLabels:
       gafaelfawr.lsst.io/ingress: "true"
       hub.jupyter.org/network-access-proxy-http: "true"
+
+    # -- Tolerations for the ingress-nginx-controller deployment pod
+    # @default -- Tolerate GKE arm64 taint
+    tolerations:
+      - key: "kubernetes.io/arch"
+        operator: "Equal"
+        value: "arm64"
+        effect: "NoSchedule"
 
 vaultCertificate:
   # -- Whether to get the ingress TLS certificate from Vault instead of Let's

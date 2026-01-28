@@ -3,6 +3,16 @@ cadc-tap:
     image:
       repository: "gabrimaine/tap-schema-ccin2p3"
       tag: 2.4.1
+    type: "containerized"
+    database: "TAP_SCHEMA"
+    username: "TAP_SCHEMA"
+    useVaultPassword: false
+
+  uws:
+    type: "containerized"
+    database: "postgres"
+    username: "postgres"
+    useVaultPassword: false
 
   config:
     gcsBucket: "lsstrsp:async-results.lsst.codes"
@@ -13,4 +23,4 @@ cadc-tap:
     qserv:
       host: "ccqserv201.in2p3.fr:30040"
       image:
-        tag: "2.14.0"
+        tag: "2.15.1"

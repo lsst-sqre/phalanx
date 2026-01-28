@@ -11,7 +11,10 @@ config:
   timesSquareUrl: "https://data-dev.lsst.cloud/times-square/api"
   coManageRegistryUrl: "https://id-dev.lsst.cloud"
   plausibleDomain: "data-dev.lsst.cloud"
-
+  headerLogoFile: "demo-logo.png"
+  headerLogoHeight: 50
+  headerLogoWidth: 240
+  headerLogoMimeType: "image/png"
 
   enableSentry: true
   sentryTracesSampleRate: 1.0

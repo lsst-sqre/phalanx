@@ -1,7 +1,14 @@
+nodeSelector:
+  node_pool: "arm-core-pool"
+image:
+  tag: "tickets-DM-52819B"
+
 # Use the CSI storage class so that we can use snapshots.
 redis:
   persistence:
     storageClass: "standard-rwo"
+  nodeSelector:
+    node_pool: "arm-core-pool"
 
 config:
   logLevel: "DEBUG"
@@ -53,6 +60,26 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "friends"
+    "exec:portal":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+    "exec:portal-admin":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "exec:internal-tools":
       - github:
           organization: "lsst-sqre"
@@ -83,6 +110,26 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "friends"
+    "read:tap":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+    "write:files":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
 
   initialAdmins:
     - "afausti"
@@ -97,3 +144,17 @@ cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-demo-9e05:us-central1:science-platform-demo-a4dbbf96"
   serviceAccount: "gafaelfawr@science-platform-demo-9e05.iam.gserviceaccount.com"
+  nodeSelector:
+    node_pool: "arm-core-pool"
+
+maintenance:
+  nodeSelector:
+    node_pool: "arm-core-pool"
+
+operator:
+  nodeSelector:
+    node_pool: "arm-core-pool"
+
+redis-ephemeral:
+  nodeSelector:
+    node_pool: "arm-core-pool"

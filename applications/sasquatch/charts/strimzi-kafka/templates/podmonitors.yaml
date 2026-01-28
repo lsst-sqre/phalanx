@@ -76,6 +76,8 @@ spec:
   podMetricsEndpoints:
   - path: /metrics
     port: tcp-prometheus
+    interval: {{ .Values.kafka.metricsConfig.interval | default "30s" }}
+    scrapeTimeout: {{ .Values.kafka.metricsConfig.scrapeTimeout | default "20s" }}
     relabelings:
     - separator: ;
       regex: __meta_kubernetes_pod_label_(strimzi_io_.+)

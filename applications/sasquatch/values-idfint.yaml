@@ -26,6 +26,7 @@ strimzi-kafka:
   mirrormaker2:
     enabled: true
     source:
+      alias: "idfdev"
       bootstrapServer: sasquatch-dev-kafka-bootstrap.lsst.cloud:9094
       topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*"
   users:
@@ -120,6 +121,7 @@ app-metrics:
 
 backup:
   enabled: true
+  schedule: "0 5 * * *"
   persistence:
     size: 500Gi
     storageClass: standard

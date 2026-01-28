@@ -1,16 +1,7 @@
 cadc-tap:
-  tapSchema:
-    image:
-      repository: "lsstsqre/tap-schema-idfprod-tap"
-
   replicaCount: 4
 
   config:
-    qserv:
-      host: "qserv-prod.slac.stanford.edu:4040"
-      jdbcParams: "?enabledTLSProtocols=TLSv1.3"
-      passwordEnabled: true
-
     kafka:
       enabled: true
 

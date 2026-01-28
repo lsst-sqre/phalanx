@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-sitcom/rubintv_production
-  tag: tickets-DM-52681
+  tag: w_2025_48
   pullPolicy: Always
 location: SUMMIT
 siteTag: summit
@@ -10,7 +10,7 @@ env:
   LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   BUTLER_ROLLOUT_PAUSE: 1.0
-  RA_PULL_DIRECTORIES: "TARTS donut_viz drp_pipe ts_wep summit_utils summit_extras rubintv_production"
+  RA_PULL_DIRECTORIES: "TARTS donut_viz drp_pipe ts_wep ts_ofc summit_utils summit_extras rubintv_production"
   TARTS_DATA_DIR: /project/rubintv/aos_data/TARTS
 securityContext:
   uid: 73006
@@ -644,13 +644,13 @@ lsstcamAosWorkerSet:
   - project-shared
   replicas: 36  # 4 deep keeps up for all data except when there's IT trouble
   env:
-    LIMITS_CPU: 2
+    LIMITS_CPU: 4
   resources:
     requests:
       cpu: 1.0
       memory: 4G
     limits:
-      cpu: 2.0
+      cpu: 4.0
       memory: 8G
 lsstcamGather1bSet:
   name: LSSTCam/runStep1bWorker.py

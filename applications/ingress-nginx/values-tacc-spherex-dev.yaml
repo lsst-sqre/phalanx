@@ -1,0 +1,10 @@
+ingress-nginx:
+  controller:
+    config:
+      error-log-level: "error"
+      large-client-header-buffers: "4 64k"
+      proxy-buffer-size: "64k"
+    service:
+      loadBalancerIP: "129.114.35.187"
+    #nodeSelector:
+    #  kubernetes.io/hostname: master02

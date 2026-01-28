@@ -1,0 +1,32 @@
+# serializer version: 1
+# name: test_lint
+  list([
+    list([
+      'repo',
+      'add',
+      '--force-update',
+      'lsst-sqre',
+      'https://lsst-sqre.github.io/charts/',
+    ]),
+    list([
+      'repo',
+      'update',
+    ]),
+    list([
+      'dependency',
+      'update',
+      '--skip-refresh',
+    ]),
+    list([
+      'lint',
+      'gafaelfawr',
+      '--strict',
+      '--values',
+      'gafaelfawr/values.yaml',
+      '--values',
+      'gafaelfawr/values-idfdev.yaml',
+      '--set',
+      'global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.repertoireUrl=https://data-dev.lsst.cloud/repertoire,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1',
+    ]),
+  ])
+# ---

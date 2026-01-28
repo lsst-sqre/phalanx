@@ -10,17 +10,9 @@ controller:
         AUTO_REPO_URLS: "https://github.com/lsst-uk/rsp-uk-notebooks"
         AUTO_REPO_BRANCH: "main"
         AUTO_REPO_SPECS: "https://github.com/lsst-uk/rsp-uk-notebooks@main"
-        DAF_BUTLER_REPOSITORY_INDEX: "/data/butler/data-repos.yaml"
-      initContainers:
-        - name: "inithome"
-          image:
-            repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "8.17.1"
-          privileged: true
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
+        RSP_SITE_TYPE: "3dparty"
       pullSecret: "pull-secret"
+      standardInithome: true
       volumes:
         - name: "data"
           source:

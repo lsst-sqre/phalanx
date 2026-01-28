@@ -1,11 +1,23 @@
-resources:
-  operator:
-    limits:
-      cpu: 1
-    requests:
-      cpu: 1
-  metricServer:
-    limits:
-      cpu: 1
-    requests:
-      cpu: 1
+keda:
+
+  podLabels:
+    keda: {
+      env: "prod"
+    }
+    metricsAdapter: {
+      env: "prod"
+    }
+    webhooks: {
+      env: "prod"
+    }
+  resources:
+    operator:
+      limits:
+        cpu: 1
+      requests:
+        cpu: 1
+    metricServer:
+      limits:
+        cpu: 1
+      requests:
+        cpu: 1

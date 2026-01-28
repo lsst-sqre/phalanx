@@ -10,8 +10,6 @@ See `GitHub's documentation
 for other possibly useful commands that could be added.
 """
 
-from __future__ import annotations
-
 import os
 from collections.abc import Iterator
 from contextlib import contextmanager

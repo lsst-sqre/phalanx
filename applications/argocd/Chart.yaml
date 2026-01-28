@@ -8,5 +8,5 @@ sources:
   - https://github.com/argoproj/argo-helm
 dependencies:
   - name: argo-cd
-    version: 9.0.5
+    version: 9.3.6
     repository: https://argoproj.github.io/argo-helm

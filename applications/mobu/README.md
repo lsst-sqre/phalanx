@@ -19,19 +19,20 @@ Continuous integration testing
 | config.githubCiApp | string | disabled. | Configuration for the GitHub CI app integration. See [the Mobu documentation](https://mobu.lsst.io/operations/github_ci_app.html#add-phalanx-configuration) |
 | config.githubRefreshApp | string | disabled. | Configuration for the GitHub refresh app integration. See [the Mobu documentation](https://mobu.lsst.io/operations/github_refresh_app.html#add-phalanx-configuration) |
 | config.logLevel | string | `"INFO"` | Log level. Set to 'DEBUG' to include the output from all flocks in the main mobu log. |
+| config.logProfile | string | `"production"` | One of 'production' or 'development'. 'production' configures structured JSON logging, and 'development' configures unstructured human readable logging. |
 | config.metrics.application | string | `"mobu"` | Name under which to log metrics. Generally there is no reason to change this. |
 | config.metrics.enabled | bool | `false` | Whether to enable sending metrics |
 | config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.pathPrefix | string | `"/mobu"` | Prefix for mobu's API routes. |
-| config.profile | string | `"production"` | One of 'production' or 'development'. 'production' configures structured JSON logging, and 'development' configures unstructured human readable logging. |
 | config.sentryEnvironment | string | `nil` | The environment to report to Sentry |
 | config.sentryTracesSampleConfig | float | `0` | Sentry tracing config: a float to specify a percentage, or "errors" to send all transactions with errors. |
 | config.slackAlerts | bool | `true` | Whether to send alerts and status to Slack. |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.environmentName | string | Set by Argo CD | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
+| global.repertoireUrl | string | Set by Argo CD | Base URL for Repertoire discovery API |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the mobu image |
 | image.repository | string | `"ghcr.io/lsst-sqre/mobu"` | mobu image to use |
@@ -42,4 +43,4 @@ Continuous integration testing
 | replicaCount | int | `1` | Number of mobu instances to start. Starting more than one should only be used temporarily in specific circumstances. See [the Mobu documentation](https://mobu.lsst.io/user-guide/multiple-replicas.html) |
 | resources | object | See `values.yaml` | Resource limits and requests for the mobu frontend pod |
 | terminationGracePeriodSeconds | string | Use the Kubernetes default | Number of seconds for Kubernetes to send SIGKILL after sending SIGTERM |
-| tolerations | list | `[]` | Tolerations for the mobu frontend pod |
+| tolerations | list | Tolerate GKE arm64 taint | Tolerations for the mobu frontend pod |

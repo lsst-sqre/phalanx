@@ -1,21 +1,22 @@
 """Test integration with Sphinx Jinja templating."""
 
-from __future__ import annotations
-
 import os
 from pathlib import Path
 
 import yaml
+from syrupy.assertion import SnapshotAssertion
 
 from phalanx.constants import HELM_DOCLINK_ANNOTATION
 from phalanx.docs.jinja import build_jinja_contexts
 from phalanx.factory import Factory
 from phalanx.models.environments import IdentityProvider
 
-from ..support.data import phalanx_test_path, read_output_json
+from ..support.data import phalanx_test_path
 
 
-def test_build_jinja_contexts(factory: Factory) -> None:
+def test_build_jinja_contexts(
+    factory: Factory, snapshot: SnapshotAssertion
+) -> None:
     config_dir = phalanx_test_path()
     cwd = Path.cwd()
 
@@ -73,11 +74,11 @@ def test_build_jinja_contexts(factory: Factory) -> None:
 
         # Check some of the more complex data.
         scopes = {s.scope: s.groups_as_rst() for s in idfdev.gafaelfawr.scopes}
-        assert scopes == read_output_json("idfdev", "gafaelfawr-scopes")
+        assert scopes == snapshot
         scopes = {
             s.scope: s.groups_as_rst() for s in minikube.gafaelfawr.scopes
         }
-        assert scopes == read_output_json("minikube", "gafaelfawr-scopes")
+        assert scopes == snapshot
 
         # Check some of the additional application data that isn't used by the
         # command-line tests, only by the documentation.

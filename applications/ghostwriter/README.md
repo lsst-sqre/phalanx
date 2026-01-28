@@ -26,4 +26,4 @@ URL rewriter/personalizer
 | podAnnotations | object | `{}` | Annotations for the ghostwriter deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the ghostwriter deployment pod |
-| tolerations | list | `[]` | Tolerations for the ghostwriter deployment pod |
+| tolerations | list | Tolerate GKE arm64 taint | Tolerations for the ghostwriter deployment pod |

@@ -9,18 +9,18 @@ config:
   #github:
   #  clientId: "Ov23liKfYDkoJPekZaON"
 
-  databaseUrl: "postgresql://gafaelfawr@129.114.35.51/gafaelfawr01"
+  databaseUrl: "postgresql://gafaelfawr@192.168.115.125/gafaelfawr01"
   updateSchema: true
 
   oidcServer:
     enabled: true
 
   oidc:
-    clientId: "tacc-rsp-develop"
-    audience: "tacc-rsp-develop"
-    loginUrl: "https://tacc.develop.tapis.io/v3/oauth2/authorize"
-    tokenUrl: "https://tacc.develop.tapis.io/v3/oauth2/tokens/oidc"
-    issuer: "https://tacc.develop.tapis.io/v3/tokens"
+    clientId: "rsp-tacc"
+    audience: "rsp-tacc"
+    loginUrl: "https://tacc.tapis.io/v3/oauth2/authorize"
+    tokenUrl: "https://tacc.tapis.io/v3/oauth2/tokens/oidc"
+    issuer: "https://tacc.tapis.io/v3/tokens"
     usernameClaim: "tapis/username"
 
   ldap:

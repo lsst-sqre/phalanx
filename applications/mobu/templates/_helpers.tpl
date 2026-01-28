@@ -12,9 +12,6 @@ Common labels
 {{- define "mobu.labels" -}}
 helm.sh/chart: {{ include "mobu.chart" . }}
 {{ include "mobu.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 

@@ -6,8 +6,6 @@ objects without adding special object tagging. This module collects utility
 functions to make this easier.
 """
 
-from __future__ import annotations
-
 from collections import defaultdict
 from typing import Any
 

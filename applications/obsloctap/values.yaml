@@ -24,6 +24,10 @@ consumekafka:
     # @default -- The appVersion of the chart
     tag: ""
   logLevel: INFO
+  # -- PVC claims for USDF in USDF values
+  pvcMountpoint: []
+  # -- NFS mountpoints for base since no PVC
+  nfsMountpoint: []
 
 rubinsim:
   # for rubin sim
@@ -64,7 +68,7 @@ kafka:
   # -- Kafka bootstrap server
   bootstrap: "sasquatch-kafka-bootstrap.sasquatch:9092"
   # -- Kafka Avro schema server URL
-  schema_url: "http://sasquatch-schema-registry.sasquatch:8081"
+  schema_url: "http://sasquatch-schema-registry-remote.sasquatch:8081"
   # -- Username for SASL_PLAIN authentication
   username: "obsloctap"
   # -- Name of Kafka consumer group

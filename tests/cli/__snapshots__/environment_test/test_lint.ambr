@@ -1,0 +1,14 @@
+# serializer version: 1
+# name: test_lint
+  list([
+    list([
+      'lint',
+      'environments',
+      '--strict',
+      '--values',
+      'environments/values.yaml',
+      '--values',
+      'environments/values-idfdev.yaml',
+    ]),
+  ])
+# ---

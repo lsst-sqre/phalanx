@@ -1,0 +1,32 @@
+# serializer version: 1
+# name: test_lint.1
+  list([
+    list([
+      'lint',
+      'environments',
+      '--strict',
+      '--values',
+      'environments/values.yaml',
+      '--values',
+      'environments/values-idfdev.yaml',
+    ]),
+    list([
+      'lint',
+      'environments',
+      '--strict',
+      '--values',
+      'environments/values.yaml',
+      '--values',
+      'environments/values-minikube.yaml',
+    ]),
+    list([
+      'lint',
+      'environments',
+      '--strict',
+      '--values',
+      'environments/values.yaml',
+      '--values',
+      'environments/values-usdfdev-prompt-processing.yaml',
+    ]),
+  ])
+# ---

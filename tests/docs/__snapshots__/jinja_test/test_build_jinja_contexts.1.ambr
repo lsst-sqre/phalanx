@@ -1,0 +1,26 @@
+# serializer version: 1
+# name: test_build_jinja_contexts.1
+  dict({
+    'admin:provision': list([
+      ':fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__',
+    ]),
+    'exec:admin': list([
+      ':fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__',
+    ]),
+    'exec:internal-tools': list([
+      ':fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__',
+    ]),
+    'exec:notebook': list([
+      ':fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__',
+    ]),
+    'exec:portal': list([
+      ':fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__',
+    ]),
+    'read:image': list([
+      ':fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__',
+    ]),
+    'read:tap': list([
+      ':fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__',
+    ]),
+  })
+# ---

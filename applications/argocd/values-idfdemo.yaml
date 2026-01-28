@@ -1,4 +1,7 @@
 argo-cd:
+  global:
+    nodeSelector:
+      node_pool: "arm-core-pool"
   configs:
     cm:
       url: "https://demo.lsst.cloud/argo-cd"
@@ -16,6 +19,7 @@ argo-cd:
               orgs:
                 - name: lsst
                 - name: lsst-sqre
+      ui.bannercontent: "idfdemo"
     rbac:
       policy.csv: |
         g, lsst-sqre:square, role:admin

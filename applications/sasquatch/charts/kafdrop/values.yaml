@@ -24,9 +24,10 @@ kafka:
   # -- Kafdrop Kafka user
   # @default -- kafdrop
   user: "kafdrop"
-  # -- Kafka topic prefix to filter topics by
-  # @default -- "lsst"
-  topicPrefix: "lsst"
+  # -- Kafka topic prefixes to filter topics by
+  # @default -- ["lsst"]
+  topicPrefixes:
+    - "lsst"
 
 
 jvm:

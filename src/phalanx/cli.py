@@ -1,7 +1,5 @@
 """Phalanx command-line interface."""
 
-from __future__ import annotations
-
 import json
 import os
 import re
@@ -44,6 +42,10 @@ __all__ = [
     "environment_template",
     "help",
     "main",
+    "recover_release_service_ips",
+    "recover_restore_service_ips",
+    "recover_scale_down",
+    "recover_scale_up",
     "secrets",
     "secrets_audit",
     "secrets_list",
@@ -1087,3 +1089,293 @@ def vault_export_secrets(
     factory = Factory(config)
     vault_service = factory.create_vault_service()
     vault_service.export_secrets(environment, output)
+
+
+@main.group()
+def recover() -> None:
+    """Commands for Phalanx cluster disaster recovery."""
+
+
+@recover.command("suspend-crons")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_suspend_crons(config: Path | None, context: str) -> None:
+    """Stop all ArgoCD-managed CronJobs from running.
+
+    This is needed when trying to restore a back up of a cluster to a new
+    cluster while the old cluster still exists. If CronJobs are running in both
+    clusters, then any state in external data stores like CloudSql databases
+    could get out of sync and corrupted.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.suspend_cronjobs()
+
+
+@recover.command("resume-crons")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_resume_crons(config: Path | None, context: str) -> None:
+    """Un-suspend all ArgoCD-managed CronJobs.
+
+    This may be needed when trying to restore a back up of a cluster to a new
+    cluster while the old cluster still exists. If CronJobs are running in both
+    clusters, then any state in external data stores like CloudSql databases
+    could get out of sync and corrupted.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.resume_cronjobs()
+
+
+@recover.command("scale-down-workloads")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_scale_down_workloads(config: Path | None, context: str) -> None:
+    """Scale down all Phalanx workloads to 0, except ArgoCD.
+
+    This will also add an annotation to all scaled down workloads with the
+    previous replica count, so that they can be accurately scaled up again.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.scale_down_workloads()
+
+
+@recover.command("scale-up-workloads")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_scale_up_workloads(config: Path | None, context: str) -> None:
+    """Scale up all Phalanx workloads to their previous values, except ArgoCD.
+
+    This scale up any workload with a previous replica count annotation to the
+    value in that annotation. It will then remove that annotation.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.scale_up_workloads()
+
+
+@recover.command("release-service-ips")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_release_service_ips(config: Path | None, context: str) -> None:
+    """Release the IP addresses on all Phalanx LoadBalancer Services."""
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    services = cluster_service.release_service_ips()
+    for service in services:
+        click.echo(
+            f"Service: {service.namespace}/{service.name} now has load"
+            f" balancer ip address: {service.status_load_balancer_ip}"
+        )
+
+
+@recover.command("restore-service-ips")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_restore_service_ips(config: Path | None, context: str) -> None:
+    """Restore the IP addresses on all Phalanx LoadBalancer Services.
+
+    This is meant to be called after release-service-ips was called.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    services = cluster_service.restore_service_ips()
+
+    for service in services:
+        click.echo(
+            f"Service: {service.namespace}/{service.name} now has load"
+            f" balancer ip address: {service.status_load_balancer_ip}"
+        )
+
+
+@recover.command("pause-sasquatch-kafka-reconciliation")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_pause_sasquatch_kafka_reconciliation(
+    config: Path | None, context: str
+) -> None:
+    """Pause Strimzi reconciliation of the Sasquatch Kafka cluster.
+
+    During some recovery operations, we want to modify resources that are
+    managed by the Strimzi operator. The Strimzi operator will automatically
+    revert any changes we make, so we have to pause Strimzi reconciliation if
+    we want our changes to persist.
+
+    https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.pause_sasquatch_kafka_reconciliation()
+
+
+@recover.command("resume-sasquatch-kafka-reconciliation")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_resume_sasquatch_kafka_reconciliation(
+    config: Path | None, context: str
+) -> None:
+    """Resume Strimzi reconciliation of the Sasquatch Kafka cluster.
+
+    https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.resume_sasquatch_kafka_reconciliation()
+
+
+@recover.command("scale-down")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_scale_down(config: Path | None, context: str) -> None:
+    """Scale down all Phalanx workloads except ArgoCD and suspend all crons."""
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.pause_sasquatch_kafka_reconciliation()
+    cluster_service.release_service_ips()
+    cluster_service.suspend_cronjobs()
+    cluster_service.scale_down_workloads()
+
+
+@recover.command("scale-up")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--context",
+    help="Context to pass to kubectl when running commands.",
+    required=True,
+)
+@_report_usage_errors
+def recover_scale_up(config: Path | None, context: str) -> None:
+    """Scale up all Phalanx workloads and resume all crons."""
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    cluster_service = factory.create_gke_phalanx_cluster_service(context)
+    cluster_service.resume_sasquatch_kafka_reconciliation()
+    cluster_service.restore_service_ips()
+    cluster_service.scale_up_workloads()
+    cluster_service.resume_cronjobs()

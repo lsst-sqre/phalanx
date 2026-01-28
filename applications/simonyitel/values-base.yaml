@@ -344,6 +344,7 @@ mtoods:
               group_id: MTOODS-S3
               max_messages: 250
           butler:
+              guider_max_age_seconds: 90
               instrument: lsst.obs.lsst.LsstCam
               repo_directory : s3://butler@rubinobs-butler-lsstcam
               s3profile: butler
@@ -351,15 +352,18 @@ mtoods:
                   - LSSTCam/raw/all
               collection_cleaner:
                   collections_to_clean:
-                      - collection: LSSTCam/raw/all
+                      - collections:
+                          - LSSTCam/raw/all
                         files_older_than:
                             <<: *interval
                             days: 5
-                      - collection: LSSTCam/raw/guider
+                      - collections:
+                          - LSSTCam/raw/guider
                         files_older_than:
                             <<: *interval
                             days: 5
-                      - collection: LSSTCam/runs/quickLook
+                      - collections:
+                          - LSSTCam/runs/quickLook
                         files_older_than:
                             <<: *interval
                             days: 2

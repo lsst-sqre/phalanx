@@ -8,6 +8,7 @@ spec:
   selector:
     matchLabels:
       {{- include "nightlydigest-backend.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.replicas | default 1 }}
   template:
     metadata:
       {{- with .Values.annotations }}
@@ -19,6 +20,10 @@ spec:
     spec:
       imagePullSecrets:
         - name: "pull-secret"
+      securityContext:
+        runAsUser: 73006
+        runAsGroup: 73006
+        fsGroup: 73006
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -31,10 +36,18 @@ spec:
             httpGet:
               path: /health
               port: http
+            timeoutSeconds: 120
+            periodSeconds: 10
+            initialDelaySeconds: 30
+            failureThreshold: 4
           readinessProbe:
             httpGet:
               path: /health
               port: http
+            timeoutSeconds: 120
+            periodSeconds: 10
+            initialDelaySeconds: 30
+            failureThreshold: 4
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
@@ -48,8 +61,11 @@ spec:
                   name: {{ $env.secretName }}
                   key: {{ $env.secretKey }}
             {{- end }}
-          {{- if .Values.pvcMountpoints}}
           volumeMounts:
+          - name: nightlydigest-backend-secrets
+            mountPath: "/etc/secrets"
+            readOnly: true
+          {{- if .Values.pvcMountpoints}}
           {{- range $vol := .Values.pvcMountpoints }}
           - name: {{ $vol.name }}
             readOnly: {{ $vol.mount.readOnly | default true }}
@@ -59,12 +75,32 @@ spec:
             {{- end }}
           {{- end }}
           {{- end }}
-      {{- if .Values.pvcMountpoints}}
+          {{- if .Values.nfsMountpoints}}
+          {{- range $vol := .Values.nfsMountpoints }}
+          - name: {{ $vol.name }}
+            mountPath: {{ $vol.mountPath }}
+            readOnly: {{ $vol.readOnly | default true }}
+          {{- end }}
+          {{- end }}
       volumes:
+      - name: nightlydigest-backend-secrets
+        secret:
+          secretName: nightlydigest
+          defaultMode: 0400
+      {{- if .Values.pvcMountpoints}}
       {{- range $vol := .Values.pvcMountpoints }}
       - name: {{ $vol.name | quote }}
         persistentVolumeClaim:
           claimName: {{ $vol.storageClassName | quote }}
+      {{- end }}
+      {{- end }}
+      {{- if .Values.nfsMountpoints}}
+      {{- range $vol := .Values.nfsMountpoints }}
+      - name: {{ $vol.name | quote }}
+        nfs:
+          server: {{ $vol.server | quote }}
+          readOnly: {{ $vol.readOnly | default true }}
+          path: {{ $vol.serverPath | quote }}
       {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}

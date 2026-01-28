@@ -1,0 +1,28 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "muster-anonymous"
+  labels:
+    {{- include "muster.labels" . | nindent 4 }}
+config:
+  scopes:
+    anonymous: true
+template:
+  metadata:
+    name: "muster-anonymous"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.config.pathPrefix | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "muster"
+                  port:
+                    number: 8080

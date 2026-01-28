@@ -1,0 +1,538 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "apps/v1",
+            "kind": "StatefulSet",
+            "metadata": {
+                "annotations": {
+                    "phalanx.lsst.org/previous-replica-count": 4,
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"StatefulSet\",\"metadata\":{\"annotations\":{},\"labels\":{\"app.kubernetes.io/instance\":\"gafaelfawr\",\"app.kubernetes.io/managed-by\":\"Helm\",\"app.kubernetes.io/name\":\"redis\",\"argocd.argoproj.io/instance\":\"gafaelfawr\",\"helm.sh/chart\":\"redis-1.1.7\"},\"name\":\"gafaelfawr-redis\",\"namespace\":\"gafaelfawr\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app.kubernetes.io/instance\":\"gafaelfawr\",\"app.kubernetes.io/name\":\"redis\"}},\"serviceName\":\"gafaelfawr-redis\",\"template\":{\"metadata\":{\"labels\":{\"app.kubernetes.io/instance\":\"gafaelfawr\",\"app.kubernetes.io/name\":\"redis\"}},\"spec\":{\"automountServiceAccountToken\":false,\"containers\":[{\"args\":[\"redis-server\",\"--appendonly\",\"yes\",\"--requirepass\",\"$(REDIS_PASSWORD)\"],\"env\":[{\"name\":\"REDIS_PASSWORD\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"redis-password\",\"name\":\"gafaelfawr\"}}}],\"image\":\"redis:8.4.0\",\"imagePullPolicy\":\"IfNotPresent\",\"livenessProbe\":{\"exec\":{\"command\":[\"sh\",\"-c\",\"redis-cli -h $(hostname) incr health:counter\"]},\"initialDelaySeconds\":15,\"periodSeconds\":60},\"name\":\"redis\",\"ports\":[{\"containerPort\":6379}],\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"200Mi\"},\"requests\":{\"cpu\":\"50m\",\"memory\":\"100Mi\"}},\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"all\"]},\"readOnlyRootFilesystem\":true},\"volumeMounts\":[{\"mountPath\":\"/data\",\"name\":\"storage\"}]}],\"securityContext\":{\"fsGroup\":999,\"runAsGroup\":999,\"runAsNonRoot\":true,\"runAsUser\":999},\"tolerations\":[{\"effect\":\"NoSchedule\",\"key\":\"kubernetes.io/arch\",\"operator\":\"Equal\",\"value\":\"arm64\"}]}},\"volumeClaimTemplates\":[{\"metadata\":{\"name\":\"storage\"},\"spec\":{\"accessModes\":[\"ReadWriteOnce\"],\"resources\":{\"requests\":{\"storage\":\"1Gi\"}},\"storageClassName\":\"standard-rwo\"}}]}}\n"
+                },
+                "creationTimestamp": "2025-12-10T20:49:35Z",
+                "generation": 2,
+                "labels": {
+                    "app.kubernetes.io/instance": "gafaelfawr",
+                    "app.kubernetes.io/managed-by": "Helm",
+                    "app.kubernetes.io/name": "redis",
+                    "argocd.argoproj.io/instance": "gafaelfawr",
+                    "gkebackup-backup-uid": "e1bef93a-0da6-4b7a-a617-12b9c84809cb",
+                    "gkebackup-restore-uid": "dcd8ca6a-1f52-4a88-9fd7-e764c41b5358",
+                    "helm.sh/chart": "redis-1.1.7"
+                },
+                "name": "gafaelfawr-redis",
+                "namespace": "gafaelfawr",
+                "resourceVersion": "1765925191545039001",
+                "uid": "44c0747f-643a-4397-b9d5-67fd59a651c9"
+            },
+            "spec": {
+                "persistentVolumeClaimRetentionPolicy": {
+                    "whenDeleted": "Retain",
+                    "whenScaled": "Retain"
+                },
+                "podManagementPolicy": "OrderedReady",
+                "replicas": 0,
+                "revisionHistoryLimit": 10,
+                "selector": {
+                    "matchLabels": {
+                        "app.kubernetes.io/instance": "gafaelfawr",
+                        "app.kubernetes.io/name": "redis"
+                    }
+                },
+                "serviceName": "gafaelfawr-redis",
+                "template": {
+                    "metadata": {
+                        "labels": {
+                            "app.kubernetes.io/instance": "gafaelfawr",
+                            "app.kubernetes.io/name": "redis"
+                        }
+                    },
+                    "spec": {
+                        "automountServiceAccountToken": false,
+                        "containers": [
+                            {
+                                "args": [
+                                    "redis-server",
+                                    "--appendonly",
+                                    "yes",
+                                    "--requirepass",
+                                    "$(REDIS_PASSWORD)"
+                                ],
+                                "env": [
+                                    {
+                                        "name": "REDIS_PASSWORD",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "key": "redis-password",
+                                                "name": "gafaelfawr"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "image": "redis:8.4.0",
+                                "imagePullPolicy": "IfNotPresent",
+                                "livenessProbe": {
+                                    "exec": {
+                                        "command": [
+                                            "sh",
+                                            "-c",
+                                            "redis-cli -h $(hostname) incr health:counter"
+                                        ]
+                                    },
+                                    "failureThreshold": 3,
+                                    "initialDelaySeconds": 15,
+                                    "periodSeconds": 60,
+                                    "successThreshold": 1,
+                                    "timeoutSeconds": 1
+                                },
+                                "name": "redis",
+                                "ports": [
+                                    {
+                                        "containerPort": 6379,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "200Mi"
+                                    },
+                                    "requests": {
+                                        "cpu": "50m",
+                                        "memory": "100Mi"
+                                    }
+                                },
+                                "securityContext": {
+                                    "allowPrivilegeEscalation": false,
+                                    "capabilities": {
+                                        "drop": [
+                                            "all"
+                                        ]
+                                    },
+                                    "readOnlyRootFilesystem": true
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/data",
+                                        "name": "storage"
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {
+                            "fsGroup": 999,
+                            "runAsGroup": 999,
+                            "runAsNonRoot": true,
+                            "runAsUser": 999
+                        },
+                        "terminationGracePeriodSeconds": 30,
+                        "tolerations": [
+                            {
+                                "effect": "NoSchedule",
+                                "key": "kubernetes.io/arch",
+                                "operator": "Equal",
+                                "value": "arm64"
+                            }
+                        ]
+                    }
+                },
+                "updateStrategy": {
+                    "rollingUpdate": {
+                        "partition": 0
+                    },
+                    "type": "RollingUpdate"
+                },
+                "volumeClaimTemplates": [
+                    {
+                        "apiVersion": "v1",
+                        "kind": "PersistentVolumeClaim",
+                        "metadata": {
+                            "name": "storage"
+                        },
+                        "spec": {
+                            "accessModes": [
+                                "ReadWriteOnce"
+                            ],
+                            "resources": {
+                                "requests": {
+                                    "storage": "1Gi"
+                                }
+                            },
+                            "storageClassName": "standard-rwo",
+                            "volumeMode": "Filesystem"
+                        },
+                        "status": {
+                            "phase": "Pending"
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "availableReplicas": 1,
+                "collisionCount": 0,
+                "currentReplicas": 1,
+                "currentRevision": "gafaelfawr-redis-78689995dd",
+                "observedGeneration": 2,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "updateRevision": "gafaelfawr-redis-78689995dd",
+                "updatedReplicas": 1
+            }
+        },
+        {
+            "apiVersion": "apps/v1",
+            "kind": "StatefulSet",
+            "metadata": {
+                "annotations": {
+                    "phalanx.lsst.org/previous-replica-count": 5,
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"StatefulSet\",\"metadata\":{\"annotations\":{},\"labels\":{\"app.kubernetes.io/instance\":\"gafaelfawr\",\"app.kubernetes.io/managed-by\":\"Helm\",\"app.kubernetes.io/name\":\"redis-ephemeral\",\"argocd.argoproj.io/instance\":\"gafaelfawr\",\"helm.sh/chart\":\"redis-ephemeral-1.1.7\"},\"name\":\"gafaelfawr-redis-ephemeral\",\"namespace\":\"gafaelfawr\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app.kubernetes.io/instance\":\"gafaelfawr\",\"app.kubernetes.io/name\":\"redis-ephemeral\"}},\"serviceName\":\"gafaelfawr-redis-ephemeral\",\"template\":{\"metadata\":{\"labels\":{\"app.kubernetes.io/instance\":\"gafaelfawr\",\"app.kubernetes.io/name\":\"redis-ephemeral\"}},\"spec\":{\"automountServiceAccountToken\":false,\"containers\":[{\"args\":[\"redis-server\",\"--requirepass\",\"$(REDIS_PASSWORD)\"],\"env\":[{\"name\":\"REDIS_PASSWORD\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"redis-password\",\"name\":\"gafaelfawr\"}}}],\"image\":\"redis:8.4.0\",\"imagePullPolicy\":\"IfNotPresent\",\"livenessProbe\":{\"exec\":{\"command\":[\"sh\",\"-c\",\"redis-cli -h $(hostname) incr health:counter\"]},\"initialDelaySeconds\":15,\"periodSeconds\":60},\"name\":\"redis\",\"ports\":[{\"containerPort\":6379}],\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"40Mi\"},\"requests\":{\"cpu\":\"50m\",\"memory\":\"15Mi\"}},\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"all\"]},\"readOnlyRootFilesystem\":true},\"volumeMounts\":[{\"mountPath\":\"/data\",\"name\":\"storage\"}]}],\"securityContext\":{\"fsGroup\":999,\"runAsGroup\":999,\"runAsNonRoot\":true,\"runAsUser\":999},\"tolerations\":[{\"effect\":\"NoSchedule\",\"key\":\"kubernetes.io/arch\",\"operator\":\"Equal\",\"value\":\"arm64\"}],\"volumes\":[{\"emptyDir\":{},\"name\":\"storage\"}]}}}}\n"
+                },
+                "creationTimestamp": "2025-12-10T20:49:34Z",
+                "generation": 2,
+                "labels": {
+                    "app.kubernetes.io/instance": "gafaelfawr",
+                    "app.kubernetes.io/managed-by": "Helm",
+                    "app.kubernetes.io/name": "redis-ephemeral",
+                    "argocd.argoproj.io/instance": "gafaelfawr",
+                    "gkebackup-backup-uid": "e1bef93a-0da6-4b7a-a617-12b9c84809cb",
+                    "gkebackup-restore-uid": "dcd8ca6a-1f52-4a88-9fd7-e764c41b5358",
+                    "helm.sh/chart": "redis-ephemeral-1.1.7"
+                },
+                "name": "gafaelfawr-redis-ephemeral",
+                "namespace": "gafaelfawr",
+                "resourceVersion": "1765925191538079004",
+                "uid": "f03e9085-77e2-40f5-aab3-54efcba3bf43"
+            },
+            "spec": {
+                "persistentVolumeClaimRetentionPolicy": {
+                    "whenDeleted": "Retain",
+                    "whenScaled": "Retain"
+                },
+                "podManagementPolicy": "OrderedReady",
+                "replicas": 0,
+                "revisionHistoryLimit": 10,
+                "selector": {
+                    "matchLabels": {
+                        "app.kubernetes.io/instance": "gafaelfawr",
+                        "app.kubernetes.io/name": "redis-ephemeral"
+                    }
+                },
+                "serviceName": "gafaelfawr-redis-ephemeral",
+                "template": {
+                    "metadata": {
+                        "labels": {
+                            "app.kubernetes.io/instance": "gafaelfawr",
+                            "app.kubernetes.io/name": "redis-ephemeral"
+                        }
+                    },
+                    "spec": {
+                        "automountServiceAccountToken": false,
+                        "containers": [
+                            {
+                                "args": [
+                                    "redis-server",
+                                    "--requirepass",
+                                    "$(REDIS_PASSWORD)"
+                                ],
+                                "env": [
+                                    {
+                                        "name": "REDIS_PASSWORD",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "key": "redis-password",
+                                                "name": "gafaelfawr"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "image": "redis:8.4.0",
+                                "imagePullPolicy": "IfNotPresent",
+                                "livenessProbe": {
+                                    "exec": {
+                                        "command": [
+                                            "sh",
+                                            "-c",
+                                            "redis-cli -h $(hostname) incr health:counter"
+                                        ]
+                                    },
+                                    "failureThreshold": 3,
+                                    "initialDelaySeconds": 15,
+                                    "periodSeconds": 60,
+                                    "successThreshold": 1,
+                                    "timeoutSeconds": 1
+                                },
+                                "name": "redis",
+                                "ports": [
+                                    {
+                                        "containerPort": 6379,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "40Mi"
+                                    },
+                                    "requests": {
+                                        "cpu": "50m",
+                                        "memory": "15Mi"
+                                    }
+                                },
+                                "securityContext": {
+                                    "allowPrivilegeEscalation": false,
+                                    "capabilities": {
+                                        "drop": [
+                                            "all"
+                                        ]
+                                    },
+                                    "readOnlyRootFilesystem": true
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/data",
+                                        "name": "storage"
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {
+                            "fsGroup": 999,
+                            "runAsGroup": 999,
+                            "runAsNonRoot": true,
+                            "runAsUser": 999
+                        },
+                        "terminationGracePeriodSeconds": 30,
+                        "tolerations": [
+                            {
+                                "effect": "NoSchedule",
+                                "key": "kubernetes.io/arch",
+                                "operator": "Equal",
+                                "value": "arm64"
+                            }
+                        ],
+                        "volumes": [
+                            {
+                                "emptyDir": {},
+                                "name": "storage"
+                            }
+                        ]
+                    }
+                },
+                "updateStrategy": {
+                    "rollingUpdate": {
+                        "partition": 0
+                    },
+                    "type": "RollingUpdate"
+                }
+            },
+            "status": {
+                "availableReplicas": 1,
+                "collisionCount": 0,
+                "currentReplicas": 1,
+                "currentRevision": "gafaelfawr-redis-ephemeral-78dfdf76b9",
+                "observedGeneration": 2,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "updateRevision": "gafaelfawr-redis-ephemeral-78dfdf76b9",
+                "updatedReplicas": 1
+            }
+        },
+        {
+            "apiVersion": "apps/v1",
+            "kind": "StatefulSet",
+            "metadata": {
+                "annotations": {
+                    "phalanx.lsst.org/previous-replica-count": 6,
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"StatefulSet\",\"metadata\":{\"annotations\":{},\"labels\":{\"app.kubernetes.io/instance\":\"gafaelfawr\",\"app.kubernetes.io/managed-by\":\"Helm\",\"app.kubernetes.io/name\":\"redis\",\"argocd.argoproj.io/instance\":\"gafaelfawr\",\"helm.sh/chart\":\"redis-1.1.7\"},\"name\":\"gafaelfawr-redis\",\"namespace\":\"gafaelfawr\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app.kubernetes.io/instance\":\"gafaelfawr\",\"app.kubernetes.io/name\":\"redis\"}},\"serviceName\":\"gafaelfawr-redis\",\"template\":{\"metadata\":{\"labels\":{\"app.kubernetes.io/instance\":\"gafaelfawr\",\"app.kubernetes.io/name\":\"redis\"}},\"spec\":{\"automountServiceAccountToken\":false,\"containers\":[{\"args\":[\"redis-server\",\"--appendonly\",\"yes\",\"--requirepass\",\"$(REDIS_PASSWORD)\"],\"env\":[{\"name\":\"REDIS_PASSWORD\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"redis-password\",\"name\":\"gafaelfawr\"}}}],\"image\":\"redis:8.4.0\",\"imagePullPolicy\":\"IfNotPresent\",\"livenessProbe\":{\"exec\":{\"command\":[\"sh\",\"-c\",\"redis-cli -h $(hostname) incr health:counter\"]},\"initialDelaySeconds\":15,\"periodSeconds\":60},\"name\":\"redis\",\"ports\":[{\"containerPort\":6379}],\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"200Mi\"},\"requests\":{\"cpu\":\"50m\",\"memory\":\"100Mi\"}},\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"all\"]},\"readOnlyRootFilesystem\":true},\"volumeMounts\":[{\"mountPath\":\"/data\",\"name\":\"storage\"}]}],\"securityContext\":{\"fsGroup\":999,\"runAsGroup\":999,\"runAsNonRoot\":true,\"runAsUser\":999},\"tolerations\":[{\"effect\":\"NoSchedule\",\"key\":\"kubernetes.io/arch\",\"operator\":\"Equal\",\"value\":\"arm64\"}]}},\"volumeClaimTemplates\":[{\"metadata\":{\"name\":\"storage\"},\"spec\":{\"accessModes\":[\"ReadWriteOnce\"],\"resources\":{\"requests\":{\"storage\":\"1Gi\"}},\"storageClassName\":\"standard-rwo\"}}]}}\n"
+                },
+                "creationTimestamp": "2025-12-10T20:49:35Z",
+                "generation": 2,
+                "labels": {
+                    "app.kubernetes.io/instance": "gafaelfawr",
+                    "app.kubernetes.io/managed-by": "Helm",
+                    "app.kubernetes.io/name": "redis",
+                    "argocd.argoproj.io/instance": "gafaelfawr",
+                    "gkebackup-backup-uid": "e1bef93a-0da6-4b7a-a617-12b9c84809cb",
+                    "gkebackup-restore-uid": "dcd8ca6a-1f52-4a88-9fd7-e764c41b5358",
+                    "helm.sh/chart": "redis-1.1.7"
+                },
+                "name": "argocd",
+                "namespace": "argocd",
+                "resourceVersion": "1765925191545039001",
+                "uid": "44c0747f-643a-4397-b9d5-67fd59a651c9"
+            },
+            "spec": {
+                "persistentVolumeClaimRetentionPolicy": {
+                    "whenDeleted": "Retain",
+                    "whenScaled": "Retain"
+                },
+                "podManagementPolicy": "OrderedReady",
+                "replicas": 0,
+                "revisionHistoryLimit": 10,
+                "selector": {
+                    "matchLabels": {
+                        "app.kubernetes.io/instance": "gafaelfawr",
+                        "app.kubernetes.io/name": "redis"
+                    }
+                },
+                "serviceName": "gafaelfawr-redis",
+                "template": {
+                    "metadata": {
+                        "labels": {
+                            "app.kubernetes.io/instance": "gafaelfawr",
+                            "app.kubernetes.io/name": "redis"
+                        }
+                    },
+                    "spec": {
+                        "automountServiceAccountToken": false,
+                        "containers": [
+                            {
+                                "args": [
+                                    "redis-server",
+                                    "--appendonly",
+                                    "yes",
+                                    "--requirepass",
+                                    "$(REDIS_PASSWORD)"
+                                ],
+                                "env": [
+                                    {
+                                        "name": "REDIS_PASSWORD",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "key": "redis-password",
+                                                "name": "gafaelfawr"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "image": "redis:8.4.0",
+                                "imagePullPolicy": "IfNotPresent",
+                                "livenessProbe": {
+                                    "exec": {
+                                        "command": [
+                                            "sh",
+                                            "-c",
+                                            "redis-cli -h $(hostname) incr health:counter"
+                                        ]
+                                    },
+                                    "failureThreshold": 3,
+                                    "initialDelaySeconds": 15,
+                                    "periodSeconds": 60,
+                                    "successThreshold": 1,
+                                    "timeoutSeconds": 1
+                                },
+                                "name": "redis",
+                                "ports": [
+                                    {
+                                        "containerPort": 6379,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "200Mi"
+                                    },
+                                    "requests": {
+                                        "cpu": "50m",
+                                        "memory": "100Mi"
+                                    }
+                                },
+                                "securityContext": {
+                                    "allowPrivilegeEscalation": false,
+                                    "capabilities": {
+                                        "drop": [
+                                            "all"
+                                        ]
+                                    },
+                                    "readOnlyRootFilesystem": true
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/data",
+                                        "name": "storage"
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {
+                            "fsGroup": 999,
+                            "runAsGroup": 999,
+                            "runAsNonRoot": true,
+                            "runAsUser": 999
+                        },
+                        "terminationGracePeriodSeconds": 30,
+                        "tolerations": [
+                            {
+                                "effect": "NoSchedule",
+                                "key": "kubernetes.io/arch",
+                                "operator": "Equal",
+                                "value": "arm64"
+                            }
+                        ]
+                    }
+                },
+                "updateStrategy": {
+                    "rollingUpdate": {
+                        "partition": 0
+                    },
+                    "type": "RollingUpdate"
+                },
+                "volumeClaimTemplates": [
+                    {
+                        "apiVersion": "v1",
+                        "kind": "PersistentVolumeClaim",
+                        "metadata": {
+                            "name": "storage"
+                        },
+                        "spec": {
+                            "accessModes": [
+                                "ReadWriteOnce"
+                            ],
+                            "resources": {
+                                "requests": {
+                                    "storage": "1Gi"
+                                }
+                            },
+                            "storageClassName": "standard-rwo",
+                            "volumeMode": "Filesystem"
+                        },
+                        "status": {
+                            "phase": "Pending"
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "availableReplicas": 1,
+                "collisionCount": 0,
+                "currentReplicas": 1,
+                "currentRevision": "gafaelfawr-redis-78689995dd",
+                "observedGeneration": 2,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "updateRevision": "gafaelfawr-redis-78689995dd",
+                "updatedReplicas": 1
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

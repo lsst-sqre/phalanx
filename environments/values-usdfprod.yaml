@@ -17,10 +17,12 @@ applications:
   consdb: true
   datalinker: true
   exposurelog: true
+  fov-quicklook: true
   jira-data-proxy: true
   livetap: true
   mobu: true
   narrativelog: true
+  nightlydigest: true
   nightreport: true
   noteburst: true
   nublado: true
@@ -28,7 +30,7 @@ applications:
   plot-navigator: true
   portal: true
   postgres: true
-  repertoire: true
+  qserv-kafka: true
   rubintv: true
   s3proxy: true
   sasquatch: true

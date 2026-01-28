@@ -31,6 +31,9 @@ config:
       - username: "bot-noteburst19"
       - username: "bot-noteburst20"
     imageSelector: "weekly"
+    # To pin worker image
+    # imageSelector: "reference"
+    # imageReference: "ghcr.io/lsst-sqre/sciplat-lab:w_2026_02"
 
 # Use SSD for Redis storage.
 redis:

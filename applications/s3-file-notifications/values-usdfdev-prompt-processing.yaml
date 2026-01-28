@@ -4,7 +4,7 @@ strimzi-kafka:
   kafkaController:
     enabled: true
   kafka:
-    version: "3.9.0"
+    version: "4.0.0"
     config:
       log.retention.minutes: 10080
       offsets.retention.minutes: 10080
@@ -17,22 +17,22 @@ strimzi-kafka:
         enabled: true
     externalListener:
       bootstrap:
-        loadBalancerIP: 172.24.10.50
         annotations:
           metallb.io/address-pool: sdf-rubin-ingest
+          metallb.io/loadBalancerIPs: 172.24.10.50
       brokers:
         - broker: 3
-          loadBalancerIP: 172.24.10.51
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.51
         - broker: 4
-          loadBalancerIP: 172.24.10.52
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.52
         - broker: 5
-          loadBalancerIP: 172.24.10.53
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.53
     storage:
       size: 100Gi
       storageClassName: wekafs--sdf-k8s01

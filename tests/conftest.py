@@ -1,18 +1,26 @@
 """Test fixtures."""
 
-from __future__ import annotations
-
 from collections.abc import Iterator
 
 import jinja2
 import pytest
+from syrupy.assertion import SnapshotAssertion
+from syrupy.extensions.single_file import SingleFileAmberSnapshotExtension
 
 from phalanx.factory import Factory
+from phalanx.storage import kubernetes
 
+from .support.command import MockCommand
 from .support.data import phalanx_test_path
 from .support.helm import MockHelmCommand, patch_helm
 from .support.onepassword import MockOnepasswordClient, patch_onepassword
 from .support.vault import MockVaultClient, patch_vault
+
+
+@pytest.fixture
+def snapshot(snapshot: SnapshotAssertion) -> SnapshotAssertion:
+    """Override the default snapshot fixture to do a file per test."""
+    return snapshot.use_extension(SingleFileAmberSnapshotExtension)
 
 
 @pytest.fixture(autouse=True)
@@ -59,3 +67,10 @@ def templates() -> jinja2.Environment:
         undefined=jinja2.StrictUndefined,
         autoescape=jinja2.select_autoescape(disabled_extensions=["tmpl"]),
     )
+
+
+@pytest.fixture
+def mock_kubernetes_kubectl() -> Iterator[MockCommand]:
+    """Mock the kubectl Command in the kubernetes storage."""
+    mock_command = MockCommand()
+    yield from mock_command.patch_command_class(kubernetes)

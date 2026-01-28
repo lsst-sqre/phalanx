@@ -1,72 +1,38 @@
 """Tests for the application command-line subcommand."""
 
-from __future__ import annotations
-
 import shutil
 import subprocess
 from pathlib import Path
-from unittest.mock import ANY
 
 import yaml
 from git.repo import Repo
 from git.util import Actor
+from syrupy.assertion import SnapshotAssertion
 
 from phalanx.factory import Factory
 from phalanx.models.applications import Project
 
 from ..support.cli import run_cli
-from ..support.data import (
-    phalanx_test_path,
-    read_output_data,
-    read_output_json,
-)
+from ..support.data import phalanx_test_path, read_output_json
 from ..support.helm import MockHelmCommand
 
 
-def test_add_helm_repos(mock_helm: MockHelmCommand) -> None:
+def test_add_helm_repos(
+    mock_helm: MockHelmCommand, snapshot: SnapshotAssertion
+) -> None:
     result = run_cli("application", "add-helm-repos", "argocd")
     assert result.output == ""
     assert result.exit_code == 0
-    assert mock_helm.call_args_list == [
-        [
-            "repo",
-            "add",
-            "--force-update",
-            "argoproj",
-            "https://argoproj.github.io/argo-helm",
-        ]
-    ]
+    assert mock_helm.call_args_list == snapshot
 
     mock_helm.reset_mock()
     result = run_cli("application", "add-helm-repos")
     assert result.output == ""
     assert result.exit_code == 0
-    assert mock_helm.call_args_list == [
-        [
-            "repo",
-            "add",
-            "--force-update",
-            "argoproj",
-            "https://argoproj.github.io/argo-helm",
-        ],
-        [
-            "repo",
-            "add",
-            "--force-update",
-            "jupyterhub",
-            "https://jupyterhub.github.io/helm-chart/",
-        ],
-        [
-            "repo",
-            "add",
-            "--force-update",
-            "lsst-sqre",
-            "https://lsst-sqre.github.io/charts/",
-        ],
-    ]
+    assert mock_helm.call_args_list == snapshot
 
 
-def test_create(tmp_path: Path) -> None:
+def test_create(tmp_path: Path, snapshot: SnapshotAssertion) -> None:
     config_path = tmp_path / "phalanx"
     shutil.copytree(str(phalanx_test_path()), str(config_path))
     app_docs_path = config_path / "docs" / "applications"
@@ -124,7 +90,7 @@ def test_create(tmp_path: Path) -> None:
 
     # Check that the environments/values.yaml file was updated correctly.
     env_values = (config_path / "environments" / "values.yaml").read_text()
-    assert env_values == read_output_data("minikube", "values-after-add.yaml")
+    assert env_values == snapshot
 
     # Check that the Argo CD application templates were created.
     argo_path = config_path / "environments" / "templates" / "applications"
@@ -142,9 +108,9 @@ def test_create(tmp_path: Path) -> None:
 
     # Check that the applications were added to the indices.
     index = (app_docs_path / "infrastructure.rst").read_text()
-    assert index == read_output_data("docs", "infrastructure.rst")
+    assert index == snapshot
     index = (app_docs_path / "rsp.rst").read_text()
-    assert index == read_output_data("docs", "rsp.rst")
+    assert index == snapshot
 
     # Enable all of these applications for the minikube environment so that we
     # can load them with the normal tools.
@@ -275,7 +241,7 @@ def test_create_prompt(tmp_path: Path) -> None:
     assert chart["description"] == "Some application"
 
 
-def test_lint(mock_helm: MockHelmCommand) -> None:
+def test_lint(mock_helm: MockHelmCommand, snapshot: SnapshotAssertion) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "lint":
@@ -299,29 +265,7 @@ def test_lint(mock_helm: MockHelmCommand) -> None:
     expected = "==> Linting gafaelfawr (environment idfdev)\n"
     assert result.output == expected
     assert result.exit_code == 0
-    set_args = read_output_json("idfdev", "lint-set-values")
-    assert mock_helm.call_args_list == [
-        [
-            "repo",
-            "add",
-            "--force-update",
-            "lsst-sqre",
-            "https://lsst-sqre.github.io/charts/",
-        ],
-        ["repo", "update"],
-        ["dependency", "update", "--skip-refresh"],
-        [
-            "lint",
-            "gafaelfawr",
-            "--strict",
-            "--values",
-            "gafaelfawr/values.yaml",
-            "--values",
-            "gafaelfawr/values-idfdev.yaml",
-            "--set",
-            ",".join(set_args),
-        ],
-    ]
+    assert mock_helm.call_args_list == snapshot
 
     # Lint both gafaelfawr and portal for all configured environmments. We
     # won't bother to check the --set flag again. The important part is that
@@ -334,51 +278,7 @@ def test_lint(mock_helm: MockHelmCommand) -> None:
     )
     assert result.output == expected
     assert result.exit_code == 0
-    assert mock_helm.call_args_list == [
-        [
-            "repo",
-            "add",
-            "--force-update",
-            "lsst-sqre",
-            "https://lsst-sqre.github.io/charts/",
-        ],
-        ["repo", "update"],
-        ["dependency", "update", "--skip-refresh"],
-        [
-            "lint",
-            "gafaelfawr",
-            "--strict",
-            "--values",
-            "gafaelfawr/values.yaml",
-            "--values",
-            "gafaelfawr/values-idfdev.yaml",
-            "--set",
-            ",".join(set_args),
-        ],
-        [
-            "lint",
-            "gafaelfawr",
-            "--strict",
-            "--values",
-            "gafaelfawr/values.yaml",
-            "--values",
-            "gafaelfawr/values-minikube.yaml",
-            "--set",
-            ANY,
-        ],
-        ["dependency", "update", "--skip-refresh"],
-        [
-            "lint",
-            "portal",
-            "--strict",
-            "--values",
-            "portal/values.yaml",
-            "--values",
-            "portal/values-idfdev.yaml",
-            "--set",
-            ",".join(set_args),
-        ],
-    ]
+    assert mock_helm.call_args_list == snapshot
 
     def callback_error(*command: str) -> subprocess.CompletedProcess:
         return subprocess.CompletedProcess(
@@ -398,7 +298,9 @@ def test_lint(mock_helm: MockHelmCommand) -> None:
     assert result.exit_code == 1
 
 
-def test_lint_no_repos(mock_helm: MockHelmCommand) -> None:
+def test_lint_no_repos(
+    mock_helm: MockHelmCommand, snapshot: SnapshotAssertion
+) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "lint":
@@ -417,32 +319,21 @@ def test_lint_no_repos(mock_helm: MockHelmCommand) -> None:
     expected = "==> Linting postgres (environment idfdev)\n"
     assert result.output == expected
     assert result.exit_code == 0
-    set_args = read_output_json("idfdev", "lint-set-values")
-    assert mock_helm.call_args_list == [
-        ["dependency", "update", "--skip-refresh"],
-        [
-            "lint",
-            "postgres",
-            "--strict",
-            "--values",
-            "postgres/values.yaml",
-            "--values",
-            "postgres/values-idfdev.yaml",
-            "--set",
-            ",".join(set_args),
-        ],
-    ]
+    assert mock_helm.call_args_list == snapshot
 
 
-def test_lint_all(mock_helm: MockHelmCommand) -> None:
+def test_lint_all(
+    mock_helm: MockHelmCommand, snapshot: SnapshotAssertion
+) -> None:
     result = run_cli("application", "lint-all")
     assert result.output == ""
     assert result.exit_code == 0
-    expected_calls = read_output_json("idfdev", "lint-all-calls")
-    assert mock_helm.call_args_list == expected_calls
+    assert mock_helm.call_args_list == snapshot
 
 
-def test_lint_all_git(tmp_path: Path, mock_helm: MockHelmCommand) -> None:
+def test_lint_all_git(
+    tmp_path: Path, mock_helm: MockHelmCommand, snapshot: SnapshotAssertion
+) -> None:
     upstream_path = tmp_path / "upstream"
     shutil.copytree(str(phalanx_test_path()), str(upstream_path))
     upstream_repo = Repo.init(str(upstream_path), initial_branch="main")
@@ -485,8 +376,7 @@ def test_lint_all_git(tmp_path: Path, mock_helm: MockHelmCommand) -> None:
     )
     assert result.output == ""
     assert result.exit_code == 0
-    expected_calls = read_output_json("idfdev", "lint-git-calls")
-    assert mock_helm.call_args_list == expected_calls
+    assert mock_helm.call_args_list == snapshot
 
 
 def test_template(mock_helm: MockHelmCommand) -> None:

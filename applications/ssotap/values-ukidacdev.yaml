@@ -3,10 +3,22 @@ cadc-tap:
     image:
       repository: "lsstuk/tap-schema-ukidacdev-sso"
       tag: "29.2.1"
+    type: "containerized"
+    database: "TAP_SCHEMA"
+    username: "TAP_SCHEMA"
+    useVaultPassword: false
+
+  uws:
+    type: "containerized"
+    database: "postgres"
+    username: "postgres"
+    useVaultPassword: false
+
   config:
     gcsBucket: "async"
     gcsBucketUrl: "https://somerville.ed.ac.uk:6780"
     gcsBucketType: "S3"
+
     pg:
       host: "192.41.122.118:5432"
       database: "dp03_catalogs_10yr"

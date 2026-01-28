@@ -18,6 +18,7 @@ nightlydigest-nginx:
     storageClass: sdf-data-rubin
     accessMode: ReadWriteMany
     claimSize: 1Gi
+    subPath: nightlydigest-dev
   resources:
     requests:
       cpu: 50m
@@ -48,6 +49,7 @@ nightlydigest-nginx:
     }
 
 nightlydigest-backend:
+  replicas: 4
   image:
     repository: ts-dockerhub.lsst.org/nightlydigest-backend
     tag: c0042
@@ -59,10 +61,19 @@ nightlydigest-backend:
       value: https://usdf-rsp-dev.slac.stanford.edu
     - name: RUBIN_SIM_DATA_DIR
       value: &rsd /sdf/data/rubin/shared/rubin_sim_data
+    - name: AWS_SHARED_CREDENTIALS_FILE
+      value: /etc/secrets/aws-credentials-rubin-scheduler-prenight.ini
+    - name: S3_ENDPOINT_URL
+      value: https://s3dfrgw.slac.stanford.edu
+    - name: LSST_DISABLE_BUCKET_VALIDATION
+      value: "1"
   envSecrets:
     - name: JIRA_API_TOKEN
       secretName: nightlydigest
       secretKey: jira-api-token
+    - name: ACCESS_TOKEN
+      secretName: nightlydigest-backend-gafaelfawr-token
+      secretKey: token
   pvcMountpoints:
     - name: sdf-data-rubin
       storageClassName: sdf-data-rubin
@@ -75,7 +86,7 @@ nightlydigest-backend:
   resources:
     requests:
       cpu: 150m
-      memory: 200Mi
+      memory: 3Gi
     limits:
       cpu: 1000m
-      memory: 1500Mi
+      memory: 10Gi

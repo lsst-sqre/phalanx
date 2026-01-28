@@ -23,11 +23,9 @@ applications:
   narrativelog: true
   nightreport: true
   nublado: true
-  obsenv-management: true
   obssys: true
   portal: true
   rapid-analysis: true
-  repertoire: true
   rubintv: true
   sasquatch: true
   simonyitel: true
@@ -40,3 +38,6 @@ controlSystem:
   imageTag: "c0042"
   siteTag: "tucson"
   s3EndpointUrl: "https://s3.tu.lsst.org"
+
+revisions:
+  strimzi: strimzi-0.49.0

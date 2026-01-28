@@ -13,6 +13,7 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Intended Audience :: Developers",
     "Operating System :: POSIX",
     "Private :: Do Not Upload",
@@ -28,7 +29,8 @@ dependencies = [
     "jinja2",
     "onepasswordconnectsdk",
     "pydantic>2",
-    "PyYAML",
+    "pyyaml",
+    "rubin-gafaelfawr",
     "safir>5",
 ]
 
@@ -50,6 +52,8 @@ dev = [
     "pytest",
     "pytest-cov",
     "pytest-sugar",
+    "pytest-mock",
+    "syrupy",
 ]
 docs = [
     "autodoc-pydantic",
@@ -99,12 +103,22 @@ exclude_lines = [
 ]
 
 [tool.mypy]
-disallow_untyped_defs = true
 disallow_incomplete_defs = true
+disallow_untyped_defs = true
+enable_error_code = [
+    "deprecated",
+    "exhaustive-match",
+    "explicit-override",
+    "ignore-without-code",
+    "redundant-expr",
+    "redundant-self",
+    "truthy-iterable",
+    "unused-awaitable",
+]
 ignore_missing_imports = true
 local_partial_types = true
-no_implicit_reexport = true
 plugins = ["pydantic.mypy"]
+no_implicit_reexport = true
 show_error_codes = true
 strict_equality = true
 warn_redundant_casts = true

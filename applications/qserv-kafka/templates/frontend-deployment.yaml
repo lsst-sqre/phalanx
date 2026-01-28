@@ -77,14 +77,14 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.frontend.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       securityContext:
         runAsNonRoot: {{ not .Values.frontend.debug.enabled }}
         runAsUser: 1000
         runAsGroup: 1000
+      {{- with .Values.frontend.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         - name: "kafka"
           secret:

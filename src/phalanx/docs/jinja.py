@@ -1,7 +1,5 @@
 """Helper functions for Sphinx Jinja templating."""
 
-from __future__ import annotations
-
 from pathlib import Path
 from typing import Any
 

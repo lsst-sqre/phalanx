@@ -4,8 +4,14 @@ env:
   # Version of Argo CD to use for the installer.
   ARGO_CD_VERSION: "3.0.6"
 
+  # Version of helm to use for linting.
+  HELM_VERSION: "v3.19.2"
+
   # Version of helm-docs to use for linting.
   HELM_DOCS_VERSION: "1.14.2"
+
+  # Version of the Helm unittest plugin for Helm tests.
+  HELM_UNITTEST_VERSION: "v1.0.2"
 
   # Version of Vault client to use for the installer.
   VAULT_VERSION: "1.19.5"
@@ -23,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-go@v6
         with:
@@ -34,10 +40,6 @@ jobs:
           go install github.com/norwoodj/helm-docs/cmd/helm-docs@v${{ env.HELM_DOCS_VERSION }}
         env:
           GOBIN: /usr/local/bin/
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version-file: ".python-version"
 
       - uses: astral-sh/setup-uv@v7
 
@@ -52,15 +54,14 @@ jobs:
       matrix:
         python:
           - "3.13"
+          - "3.14"
 
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python }}
+      - uses: actions/checkout@v6
 
       - uses: astral-sh/setup-uv@v7
+        with:
+          python-version: ${{ matrix.python }}
 
       - name: Run Python tests
         run: uv run --only-group=tox tox run -e typing,py,coverage-report
@@ -69,27 +70,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - uses: azure/setup-helm@v4
         with:
+          version: ${{ env.HELM_VERSION }}
           # Used to query GitHub for the latest Helm release.
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install helm-unittest plugin
-        run: helm plugin install https://github.com/helm-unittest/helm-unittest
+        run: helm plugin install https://github.com/helm-unittest/helm-unittest --version ${{ env.HELM_UNITTEST_VERSION }}
 
       - name: Run helm unittest
         run: helm unittest {applications,charts}/*/tests/..
 
       - name: Run helm unittest for sub-charts
         run: helm unittest applications/*/charts/*/tests/..
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version-file: ".python-version"
 
       - uses: astral-sh/setup-uv@v7
 
@@ -108,7 +106,7 @@ jobs:
       minikube: ${{ steps.filter.outputs.minikube }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: dorny/paths-filter@v3
         id: filter
@@ -116,6 +114,7 @@ jobs:
           filters: |
             docs:
               - ".github/workflows/docs.yaml"
+              - ".python-version"
               - "docs/**"
               - "applications/*/Chart.yaml"
               - "applications/*/values.yaml"
@@ -128,10 +127,11 @@ jobs:
               - "docs/**"
             minikube:
               - ".github/workflows/ci.yaml"
-              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/Chart.yaml"
-              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/templates/**"
-              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/values.yaml"
-              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator}/values-minikube.yaml"
+              - ".python-version"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator,sasquatch,strimzi,strimzi-access-operator,strimzi-registry-operator}/Chart.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator,sasquatch,strimzi,strimzi-access-operator,strimzi-registry-operator}/templates/**"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator,sasquatch,strimzi,strimzi-access-operator,strimzi-registry-operator}/values.yaml"
+              - "applications/{argocd,cert-manager,gafaelfawr,ingress-nginx,mobu,postgres,repertoire,vault-secrets-operator,sasquatch,strimzi,strimzi-access-operator,strimzi-registry-operator}/values-minikube.yaml"
               - "environments/templates/applications/infrastructure/*"
               - "environments/values-minikube.yaml"
               - "src/phalanx/**"
@@ -150,11 +150,7 @@ jobs:
           && !startsWith(github.head_ref, 'dependabot/'))
 
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version-file: ".python-version"
+      - uses: actions/checkout@v6
 
       - uses: astral-sh/setup-uv@v7
 
@@ -207,14 +203,10 @@ jobs:
       || (github.event_name == 'workflow_dispatch')
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           # Ensure the documentation gets the right version.
           fetch-depth: 0
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version-file: ".python-version"
 
       - uses: astral-sh/setup-uv@v7
 
@@ -241,5 +233,6 @@ jobs:
           (github.event_name == 'push' && github.ref_name == 'main')
           || (github.event_name == 'workflow_dispatch')
           || (github.event_name == 'pull_request'
-              && startsWith(github.head_ref, 'tickets/')
+              && (startsWith(github.head_ref, 'tickets/')
+                  || startsWith(github.head_ref, 't/'))
               && needs.changes.outputs.docs-specific == 'true')

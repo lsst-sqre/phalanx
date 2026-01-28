@@ -17,13 +17,13 @@ Authentication and identity system
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as a separate service (behind a `NetworkPolicy`) for other, lower-traffic services. |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.37.10"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.12"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.nodeSelector | object | `{}` | Node selection rules for the standalone Cloud SQL Proxy pod |
 | cloudsql.podAnnotations | object | `{}` | Annotations for the standalone Cloud SQL Proxy pod |
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
-| cloudsql.tolerations | list | `[]` | Tolerations for the standalone Cloud SQL Proxy pod |
+| cloudsql.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the standalone Cloud SQL Proxy pod |
 | config.afterLogoutUrl | string | Top-level page of this Phalanx environment | Where to send the user after they log out |
 | config.allowSubdomains | bool | `false` | Whether to expose cookies to subdomains. DO NOT SET TO TRUE unless all subdomains of the environment base URL are guaranteed to only reference services protected by Gafaelfawr. |
 | config.baseInternalUrl | string | FQDN under `svc.cluster.local` | URL for direct connections to the Gafaelfawr service, bypassing the Ingress. Must use a service name of `gafaelfawr` and port 8080. |
@@ -87,7 +87,7 @@ Authentication and identity system
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Gafaelfawr image |
 | image.repository | string | `"ghcr.io/lsst-sqre/gafaelfawr"` | Gafaelfawr image to use |
 | image.tag | string | The appVersion of the chart | Tag of Gafaelfawr image to use |
-| ingress.additionalHosts | list | `[]` | Defines additional FQDNs for Gafaelfawr.  This doesn't work for cookie or browser authentication, but for token-based services like git-lfs or the webdav server it does. |
+| ingress.additionalHosts | list | `[]` | Defines additional FQDNs for Gafaelfawr. This doesn't work for cookie or browser authentication, but for token-based services like git-lfs or the webdav server it does. |
 | maintenance.affinity | object | `{}` | Affinity rules for Gafaelfawr maintenance and audit pods |
 | maintenance.auditSchedule | string | `"30 3 * * *"` | Cron schedule string for Gafaelfawr data consistency audit (in UTC) |
 | maintenance.cleanupSeconds | int | 86400 (1 day) | How long to keep old jobs around before deleting them |
@@ -96,13 +96,13 @@ Authentication and identity system
 | maintenance.nodeSelector | object | `{}` | Node selection rules for Gafaelfawr maintenance and audit pods |
 | maintenance.podAnnotations | object | `{}` | Annotations for Gafaelfawr maintenance and audit pods |
 | maintenance.resources | object | See `values.yaml` | Resource limits and requests for Gafaelfawr maintenance and audit pods |
-| maintenance.tolerations | list | `[]` | Tolerations for Gafaelfawr maintenance and audit pods |
+| maintenance.tolerations | list | Tolerate GKE arm64 taint | Tolerations for Gafaelfawr maintenance and audit pods |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
 | operator.affinity | object | `{}` | Affinity rules for the token management pod |
 | operator.nodeSelector | object | `{}` | Node selection rules for the token management pod |
 | operator.podAnnotations | object | `{}` | Annotations for the token management pod |
 | operator.resources | object | See `values.yaml` | Resource limits and requests for the Gafaelfawr Kubernetes operator. The limits are artificially higher since the operator pod is also where we manually run `gafaelfawr audit --fix`, which requires more CPU and memory. |
-| operator.tolerations | list | `[]` | Tolerations for the token management pod |
+| operator.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the token management pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
 | redis-ephemeral.affinity | object | `{}` | Affinity rules for the ephemeral Redis pod |
 | redis-ephemeral.config.secretKey | string | `"redis-password"` | Key inside secret from which to get the Redis password (do not change) |
@@ -111,7 +111,7 @@ Authentication and identity system
 | redis-ephemeral.persistence.enabled | bool | `false` | Whether to persist Redis storage of ephemeral data. This should always be false. |
 | redis-ephemeral.podAnnotations | object | `{}` | Pod annotations for the ephemeral Redis pod |
 | redis-ephemeral.resources | object | See `values.yaml` | Resource limits and requests for the ephemeral Redis pod |
-| redis-ephemeral.tolerations | list | `[]` | Tolerations for the ephemeral Redis pod |
+| redis-ephemeral.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the ephemeral Redis pod |
 | redis.affinity | object | `{}` | Affinity rules for the persistent Redis pod |
 | redis.config.secretKey | string | `"redis-password"` | Key inside secret from which to get the Redis password (do not change) |
 | redis.config.secretName | string | `"gafaelfawr"` | Name of secret containing Redis password (do not change) |
@@ -124,7 +124,7 @@ Authentication and identity system
 | redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, accessMode, and k8up settings are ignored. |
 | redis.podAnnotations | object | `{}` | Pod annotations for the persistent Redis pod |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the persistent Redis pod |
-| redis.tolerations | list | `[]` | Tolerations for the persistent Redis pod |
+| redis.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the persistent Redis pod |
 | replicaCount | int | `1` | Number of web frontend pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the Gafaelfawr frontend pod |
-| tolerations | list | `[]` | Tolerations for the Gafaelfawr frontend pod |
+| tolerations | list | Tolerate GKE arm64 taint | Tolerations for the Gafaelfawr frontend pod |

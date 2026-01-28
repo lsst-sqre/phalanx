@@ -44,6 +44,10 @@ dependencies:
   - name: kafdrop
     condition: kafdrop.enabled
     version: 1.0.0
+  - name: kafdrop
+    alias: kafdrop-remote
+    condition: kafdrop-remote.enabled
+    version: 1.0.0
   - name: schema-registry
     condition: registry.enabled
     version: 1.0.0
@@ -91,6 +95,9 @@ dependencies:
   - name: obsloctap
     condition: obsloctap.enabled
     version: 1.0.0
+  - name: ppdbtap
+    condition: ppdbtap.enabled
+    version: 1.0.0
   - name: consdb
     condition: consdb.enabled
     version: 1.0.0
@@ -100,6 +107,14 @@ dependencies:
   - name: grafana
     condition: grafana.enabled
     version: 1.0.0
+  - name: trickster
+    condition: trickster.enabled
+    version: 2.0.0
+    repository: oci://ghcr.io/trickstercache/charts
+  - name: redis
+    condition: redis.enabled
+    version: 1.1.7
+    repository: "https://lsst-sqre.github.io/charts/"
 
 annotations:
   phalanx.lsst.io/docs: |
