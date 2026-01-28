@@ -245,7 +245,7 @@ mtaircompressor2:
 
 mtaos:
   image:
-    revision: 11
+    revision: 12
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
   env:
