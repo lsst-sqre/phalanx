@@ -732,6 +732,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.mirrormaker2.source.alias | string | None, must be set if enabled | Source cluster alias. Used to identify the source cluster in MirrorMaker2 configuration. The alias is also added as a prefix to the replicated topics when the DefaultReplicationPolicy replication policy is used. |
 | strimzi-kafka.mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source cluster bootstrap server address |
 | strimzi-kafka.mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
+| strimzi-kafka.mirrormaker2.target.alias | string | target | Target cluster alias. Used to identify the target cluster in MirrorMaker2 configuration. |
 | strimzi-kafka.registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | strimzi-kafka.registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | strimzi-kafka.registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |

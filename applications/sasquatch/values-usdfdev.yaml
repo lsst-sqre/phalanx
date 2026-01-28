@@ -33,6 +33,8 @@ strimzi-kafka:
       alias: "summit"
       bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
       topicsPattern: "registry-schemas, lsst.sal.ScriptQueue.logevent_nextVisit, lsst.sal.MTCamera.logevent_endReadout, lsst.sal.Scheduler.logevent_predictedSchedule, lsst.sal.Test.*"
+    target:
+      alias: "usdf-dev"
     replication:
       policy:
         separator: "."

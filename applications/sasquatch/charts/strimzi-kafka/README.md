@@ -86,6 +86,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | mirrormaker2.source.alias | string | None, must be set if enabled | Source cluster alias. Used to identify the source cluster in MirrorMaker2 configuration. The alias is also added as a prefix to the replicated topics when the DefaultReplicationPolicy replication policy is used. |
 | mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source cluster bootstrap server address |
 | mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
+| mirrormaker2.target.alias | string | target | Target cluster alias. Used to identify the target cluster in MirrorMaker2 configuration. |
 | registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
