@@ -38,4 +38,5 @@ spec:
           baseHostname: {{ .Values.fqdn | quote }}
           butlerConfigs:
             {{ toYaml .Values.butlerServerRepositories | nindent 12 }}
+          environmentName: {{ .Values.fqdn | quote }}
 {{- end -}}
