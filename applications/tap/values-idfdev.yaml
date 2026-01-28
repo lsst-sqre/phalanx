@@ -1,9 +1,9 @@
 cadc-tap:
-  tapSchema:
-    image:
-      repository: "lsstsqre/tap-schema-idfdev-tap"
-
   config:
+    qserv:
+      image:
+        tag: "tickets-DM-53451"
+
     kafka:
       enabled: true
 
