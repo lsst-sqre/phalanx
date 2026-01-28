@@ -59,6 +59,10 @@ config:
         weeks in late 2024.
       docsUrl: "https://dp1.lsst.io/"
 
+  # -- Human-readable name of the environment for reporting purposes
+  # @default -- Set by Argo CD
+  environmentName: null
+
   hips:
     # -- Known HiPS datasets. Each should be a mapping of a label to an object
     # containing the key `paths`, whose values are paths to the roots of HiPS

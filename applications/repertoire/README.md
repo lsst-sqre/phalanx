@@ -25,6 +25,7 @@ Service discovery
 | config.baseHostname | string | Set by Argo CD | Base hostname of the Phalanx environment (do not set) |
 | config.butlerConfigs | object | Set by Argo CD | Butler configuration mapping (do not set) |
 | config.datasets | object | See `values.yaml` | Known datasets. Each member of the list is a dictionary with key `description`. Datasets are only shown if also listed in `availableDatasets`. |
+| config.environmentName | string | Set by Argo CD | Human-readable name of the environment for reporting purposes |
 | config.hips.datasets | object | See `values.yaml` | Known HiPS datasets. Each should be a mapping of a label to an object containing the key `paths`, whose values are paths to the roots of HiPS surveys relative to the result of processing `sourceTemplate`. |
 | config.hips.legacy.dataset | string | `nil` | If set, specifies the dataset that should be shown at the legacy HiPS list route that does not include the dataset name. If not set, no legacy HiPS list will be created. |
 | config.hips.legacy.pathPrefix | string | `"/api/hips"` | Path prefix at which the legacy HiPS list should be served |
