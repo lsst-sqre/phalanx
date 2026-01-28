@@ -99,6 +99,10 @@ kafka:
       # resource
       annotations: {}
 
+      # -- Whether to allocate NodePort automatically for the Service with type LoadBalancer.
+      # @default -- true
+      allocateLoadBalancerNodePorts: true
+
     # -- Brokers configuration. _host_ is used in the brokers'
     # advertised.brokers configuration and for TLS hostname verification.  The
     # format is a list of maps.

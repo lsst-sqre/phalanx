@@ -18,6 +18,7 @@ strimzi-kafka:
       bootstrap:
         annotations:
           metallb.io/address-pool: sdf-rubin-ingest
+        allocateLoadBalancerNodePorts: false
       brokers:
         - broker: 0
           annotations:

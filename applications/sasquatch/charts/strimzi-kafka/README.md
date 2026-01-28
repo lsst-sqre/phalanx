@@ -52,6 +52,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |
 | kafka.config."offsets.retention.minutes" | int | 4320 minutes (3 days) | Number of minutes for a consumer group's offsets to be retained |
 | kafka.config."replica.fetch.max.bytes" | int | `10485760` | The number of bytes of messages to attempt to fetch for each partition |
+| kafka.externalListener.bootstrap.allocateLoadBalancerNodePorts | bool | true | Whether to allocate NodePort automatically for the Service with type LoadBalancer. |
 | kafka.externalListener.bootstrap.annotations | object | `{}` | Annotations that will be added to the Ingress, Route, or Service resource |
 | kafka.externalListener.bootstrap.host | string | Do not configure TLS | Name used for TLS hostname verification |
 | kafka.externalListener.bootstrap.loadBalancerIP | string | Do not request a load balancer IP | Request this load balancer IP. See `values.yaml` for more discussion |
