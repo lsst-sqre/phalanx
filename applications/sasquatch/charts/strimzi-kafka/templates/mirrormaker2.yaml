@@ -52,6 +52,10 @@ spec:
       config:
         replication.factor: 3
         offset-syncs.topic.replication.factor: 3
+        # The location (source/target) of the offset-syncs topic.
+        # Default is source. If MirrorMaker2 is enabled on multiple target clusters replicating from the same source cluster,
+        # set this to target.
+        offset-syncs.topic.location: {{ .Values.mirrormaker2.replication.offsetSyncsTopicLocation }}
         # Dot not replicate topic ACLs configuration.
         sync.topic.acls.enabled: "false"
         # The frequency to check for new topics.
