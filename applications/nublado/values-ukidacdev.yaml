@@ -28,6 +28,11 @@ controller:
             serverPath: "/datasets"
             server: "192.41.122.94"
             type: "nfs"
+        - name: "rubin"
+          source:
+            serverPath: "/data/butler/rubin"
+            server: "192.41.122.94"
+            type: "nfs"
       volumeMounts:
         - containerPath: "/data"
           volumeName: "data"
@@ -35,6 +40,8 @@ controller:
           volumeName: "home"
         - containerPath: "/datasets"
           volumeName: "datasets"
+        - containerPath: "/rubin"
+          volumeName: "rubin"
 
 proxy:
   ingress:
