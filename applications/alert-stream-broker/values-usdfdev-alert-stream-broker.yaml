@@ -23,13 +23,13 @@ alert-stream-broker:
                       - alert-broker
               topologyKey: "kubernetes.io/hostname"
 
-      # -- Kubernetes requests and limits for the Kafka Broker
+      # -- Kubernetes requests and limits for the Kafka Brokers
       resources:
         requests:
-          memory: 32Gi
+          memory: 16Gi
           cpu: "4"
         limits:
-          memory: 64Gi
+          memory: 32Gi
           cpu: "8"
 
     controller:
