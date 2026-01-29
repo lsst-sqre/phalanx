@@ -87,4 +87,3 @@ spec:
         - name: secret-volume
           secret:
             secretName: "s3proxy"
-            secretKey: "aws-credentials.ini"
