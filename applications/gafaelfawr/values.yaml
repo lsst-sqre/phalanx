@@ -225,7 +225,11 @@ config:
 
   # -- Quota settings (see
   # [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)).
-  quota: {}
+  # @default -- Quota for Muster checks
+  quota:
+    default:
+      api:
+        muster-quota: 1
 
   # -- Usernames to add as administrators when initializing a new database.
   # Used only if there are no administrators.
