@@ -128,10 +128,6 @@ spec:
           */}}
           bootstrap:
 
-            {{- if .Values.kafka.externalListener.bootstrap.ip }}
-            loadBalancerIP: {{ .Values.kafka.externalListener.bootstrap.ip }}
-            {{- end }}
-
             {{- with .Values.kafka.externalListener.bootstrap.annotations }}
             annotations:
               {{- toYaml . | nindent 14 }}
@@ -141,7 +137,6 @@ spec:
           brokers:
           {{- range $broker := .Values.kafka.externalListener.brokers }}
             - broker: {{ $broker.broker }}
-              loadBalancerIP: {{ $broker.ip }}
               advertisedHost: {{ $broker.host }}
               advertisedPort: 9094
               annotations:

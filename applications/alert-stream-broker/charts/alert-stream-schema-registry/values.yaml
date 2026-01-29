@@ -34,8 +34,8 @@ schemaSync:
     # syncLatestSchemaToRegistry.py program.
     repository: lsstdm/lsst_alert_packet
     # -- Version of the container to use. If container isn't updating in Argo, switch to digest.
-    # tag: tickets-DM-42606
-    digest: sha256:9979a57878b93511e6fe4a19b90ff1a8341c7f83f46b7a8244fa824b26ce0f27
+    tag: tickets-DM-53520
+    #digest: sha256:23adb95fbebf229883a3593217fb7a350c0011152355f8c3d6bf9db366874676
     pullPolicy: Always
 
   # -- Subject name to use when inserting data into the Schema Registry
