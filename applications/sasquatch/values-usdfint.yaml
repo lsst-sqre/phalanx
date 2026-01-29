@@ -30,11 +30,14 @@ strimzi-kafka:
       alias: "summit"
       bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
       topicsPattern: "registry-schemas, lsst.sal.Test.*"
+    target:
+      alias: "usdf-int"
     replication:
       policy:
         separator: "."
         class: "org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
       offset: latest
+      offsetSyncsTopicLocation: target
     resources:
       requests:
         cpu: 2
