@@ -37,6 +37,7 @@ strimzi-kafka:
         separator: "."
         class: "org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
       offset: latest
+      offsetSyncsTopicLocation: target
     resources:
       requests:
         cpu: 2

@@ -39,6 +39,7 @@ strimzi-kafka:
       policy:
         separator: "."
         class: "org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
+      offsetSyncsTopicLocation: target
     resources:
       requests:
         cpu: 1
