@@ -10,6 +10,49 @@ alert-stream-broker:
 
     prometheusScrapingEnabled: true
 
+    broker:
+      # -- Affinity for broker pod assignment
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app.kubernetes.io/name"
+                    operator: In
+                    values:
+                      - alert-broker
+              topologyKey: "kubernetes.io/hostname"
+
+      # -- Kubernetes requests and limits for the Kafka Brokers
+      resources:
+        requests:
+          memory: 16Gi
+          cpu: "4"
+        limits:
+          memory: 32Gi
+          cpu: "8"
+
+    controller:
+      # -- Affinity for broker pod assignment
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app.kubernetes.io/name"
+                    operator: In
+                    values:
+                      - alert-broker
+              topologyKey: "kubernetes.io/hostname"
+      # -- Kubernetes requests and limits for the Kafka Controllers
+      resources:
+        requests:
+          memory: 4Gi
+          cpu: "2"
+        limits:
+          memory: 16Gi
+          cpu: "4"
+
     # Addresses based on the state as of 2023; these were assigned by
     # Square and now we're pinning them.
     externalListener:

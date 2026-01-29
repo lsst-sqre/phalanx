@@ -10,26 +10,29 @@ Kafka broker cluster for distributing alerts
 | clusterName | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
 | clusterPort | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal TLS listener. |
 | fullnameOverride | string | `""` | Override for the full name used for Kubernetes resources; by default one will be created based on the chart name and helm release name. |
+| kafka.broker.affinity | list | `[]` | Affinity for broker pod assignment |
+| kafka.broker.resources | list | `[]` | Kubernetes resources for the brokers |
+| kafka.broker.tolerations | list | `[]` | Tolerations for broker pod assignment |
 | kafka.config | object | `{"auto.create.topics.enable":"false","log.retention.bytes":"42949672960","log.retention.hours":168,"offsets.retention.minutes":43200}` | Configuration overrides for the Kafka server. |
 | kafka.config."auto.create.topics.enable" | string | `"false"` | Turns of automatic topic creation to prevent accidental topic use. |
 | kafka.config."log.retention.bytes" | string | `"42949672960"` | Maximum retained number of bytes for a broker's data. This is a string to avoid YAML type conversion issues for large numbers. |
 | kafka.config."log.retention.hours" | int | `168` | Number of hours for a brokers data to be retained. |
 | kafka.config."offsets.retention.minutes" | int | `43200` | Number of minutes for a consumer group's offsets to be retained. |
+| kafka.controller.affinity | list | `[]` | Affinity for controller pod assignment |
+| kafka.controller.resources | list | `[]` | Kubernetes resources for the controllers |
+| kafka.controller.tolerations | list | `[]` | Tolerations for controller pod assignment |
 | kafka.externalListener.bootstrap.annotations | object | `{}` |  |
 | kafka.externalListener.bootstrap.host | string | `""` | Hostname that should be used by clients who want to connect to the broker through the bootstrap address. |
 | kafka.externalListener.bootstrap.ip | string | `""` | IP address that should be used by the broker's external bootstrap load balancer for access from the internet. The format of this is a string like "192.168.1.1". |
 | kafka.externalListener.brokers | list | `[]` | List of hostname and IP for each broker. The format of this is a list of maps with 'ip' and 'host' keys. For example:     - ip: "192.168.1.1"      host: broker-0.example    - ip: "192.168.1.2"      host: broker-1.example  Each replica should get a host and IP. If these are unset, then IP addresses will be chosen automatically by the Kubernetes cluster's LoadBalancer controller, and hostnames will be unset, which will break TLS connections. |
 | kafka.externalListener.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of the certificate issuer. |
 | kafka.externalListener.tls.enabled | bool | `false` | Whether TLS encryption is enabled. |
-| kafka.nodePool.affinities | list | `[{"key":"kafka","value":"ok"}]` | List of node affinities to set for the broker's nodes. The key should be a label key, and the value should be a label value, and then the broker will prefer running Kafka and Zookeeper on nodes with those key-value pairs. |
-| kafka.nodePool.tolerations | list | `[{"effect":"NoSchedule","key":"kafka","value":"ok"}]` | List of taint tolerations when scheduling the broker's pods onto nodes. The key should be a taint key, the value should be a taint value, and effect should be a taint effect that can be tolerated (ignored) when scheduling the broker's Kafka and Zookeeper pods. |
 | kafka.prometheusScrapingEnabled | bool | `false` | Enable Prometheus to scrape metrics. |
 | kafka.replicas | int | `6` | Number of Kafka broker replicas to run. |
 | kafka.storage.size | string | `"1000Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | kafka.storage.storageClassName | string | `"standard"` | Name of a StorageClass to use when requesting persistent volumes. |
 | kafka.version | string | `"3.7.0"` | Version of Kafka to deploy. |
 | kafkaController.enabled | bool | `false` | Enable Kafka Controller |
-| kafkaController.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka Controller |
 | kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers |
 | kafkaController.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
 | kafkaExporter | object | `{"enableSaramaLogging":false,"enabled":false,"groupRegex":".*","logLevel":"warning","topicRegex":".*"}` | Kafka JMX Exporter for more detailed diagnostic metrics. |
