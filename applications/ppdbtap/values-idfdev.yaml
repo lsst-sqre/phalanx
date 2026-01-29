@@ -1,8 +1,8 @@
 cadc-tap:
   tapSchema:
     image:
-      repository: "stvoutsin/tap-schema-idfdev-ppdbtap"
-      tag: "0.0.3"
+      repository: "lsstsqre/tap-schema-idfint-ppdbtap"
+      tag: "tickets-DM-51914"
 
   config:
     backend: "bigquery"
@@ -21,6 +21,7 @@ cadc-tap:
     bigquery:
       project: "ppdb-dev-438721"
       dataset: "ppdb_dm50643_1"
+      schema: "ppdb_lsstcam"
       image:
         tag: "tickets-DM-53451"
         pullPolicy: "Always"
