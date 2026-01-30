@@ -5,12 +5,14 @@ import time
 from ipaddress import IPv4Address
 from math import ceil
 
-from phalanx.exceptions import ResourceNoFinalizersTimeoutError
-
+from ..constants import SASQUATCH_NAMESPACE
+from ..exceptions import ResourceNoFinalizersTimeoutError
 from ..models.kubernetes import (
     CronJob,
     Deployment,
     NamespacedResource,
+    NamespacedResourceList,
+    PersistentVolume,
     ResourceList,
     Service,
     ServiceExternalTrafficPolicy,
@@ -140,8 +142,39 @@ class KubernetesStorage:
             "json",
             "--all-namespaces",
         )
-        cronjobs = ResourceList[CronJob].model_validate_json(raw.stdout)
+        cronjobs = NamespacedResourceList[CronJob].model_validate_json(
+            raw.stdout
+        )
         return cronjobs.items
+
+    def get_pvs(self) -> list[PersistentVolume]:
+        """Get all of the PersistentVolumes in the cluster.
+
+        Returns
+        -------
+        list[PersistentVolume]
+            A list of all of the PersistentVolumes in the cluster.
+        """
+        raw = self._kubectl.capture(
+            "get",
+            "PersistentVolume",
+            "-o",
+            "json",
+        )
+        pvs = ResourceList[PersistentVolume].model_validate_json(raw.stdout)
+        return pvs.items
+
+    def retain_pvs(self) -> None:
+        """Set the persistentVolumeReclaimPolicy to Retain for all PVs."""
+        pvs = self.get_pvs()
+        for pv in pvs:
+            self._kubectl.run(
+                "patch",
+                "PersistentVolume",
+                pv.name,
+                "-p",
+                '{"spec": {"persistentVolumeReclaimPolicy" : "Retain"}}',
+            )
 
     def get_phalanx_deployments(self) -> list[Deployment]:
         """Get the names of all Deployments in all Phalanx apps.
@@ -162,7 +195,9 @@ class KubernetesStorage:
             "json",
             "--all-namespaces",
         )
-        deployments = ResourceList[Deployment].model_validate_json(raw.stdout)
+        deployments = NamespacedResourceList[Deployment].model_validate_json(
+            raw.stdout
+        )
         return deployments.items
 
     def get_phalanx_stateful_sets(self) -> list[StatefulSet]:
@@ -184,7 +219,7 @@ class KubernetesStorage:
             "json",
             "--all-namespaces",
         )
-        statefulsets = ResourceList[StatefulSet].model_validate_json(
+        statefulsets = NamespacedResourceList[StatefulSet].model_validate_json(
             raw.stdout
         )
         return statefulsets.items
@@ -328,7 +363,11 @@ class KubernetesStorage:
             "json",
             "--all-namespaces",
         )
-        return ResourceList[Service].model_validate_json(raw.stdout).items
+        return (
+            NamespacedResourceList[Service]
+            .model_validate_json(raw.stdout)
+            .items
+        )
 
     def get_service(self, name: str, namespace: str) -> Service:
         """Get a Service by namespace and name.
@@ -349,7 +388,7 @@ class KubernetesStorage:
         )
         return Service.model_validate_json(raw.stdout)
 
-    def get_resource(
+    def get_namespaced_resource(
         self, kind: str, name: str, namespace: str
     ) -> NamespacedResource:
         """Get a resource by namespace and name.
@@ -411,7 +450,7 @@ class KubernetesStorage:
         retries = ceil(timeout_seconds / wait_seconds)
 
         for _ in range(retries):
-            resource = self.get_resource(
+            resource = self.get_namespaced_resource(
                 kind=resource.kind,
                 name=resource.name,
                 namespace=resource.namespace,
@@ -535,3 +574,95 @@ class KubernetesStorage:
             "--patch",
             '{"spec": {"type": "LoadBalancer"}}',
         )
+
+    def get_sasquatch_kafka_cluster_id(self) -> str:
+        """Get the Strimzi cluster id from a Kafka node PVC.
+
+        When recovering a Strimzi Kafka cluster from backed-up
+        PersistentVolumes, the cluster id generated from applying a Strimzi
+        Kafka resource will not match the cluster id in the data in the
+        recovered volumes. We need to get the cluster id from the data on the
+        volume before we let strimzi reconcile the Kafka resource, or the Kafka
+        pods will not be able to start.
+
+        Command is from the Strimzi recovery docs here:
+        https://strimzi.io/docs/operators/latest/full/deploying#proc-cluster-recovery-volume-str
+
+        This method assumes a lot about what various resources are called.
+        """
+        pvc_name = "data-0-sasquatch-kafka-0"
+        command = (
+            r"grep cluster.id /disk/kafka-log*/meta.properties"
+            r" | awk -F'=' '{print $2}'"
+        )
+        overrides = {
+            "spec": {
+                "containers": [
+                    {
+                        "name": "busybox",
+                        "image": "busybox",
+                        "command": ["/bin/sh", "-c", command],
+                        "volumeMounts": [
+                            {"name": "disk", "mountPath": "/disk"}
+                        ],
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "disk",
+                        "persistentVolumeClaim": {"claimName": pvc_name},
+                    }
+                ],
+            }
+        }
+
+        result = self._kubectl.capture(
+            "run",
+            "tmp",
+            "-itq",
+            "--rm",
+            "--restart",
+            "Never",
+            "--image",
+            "foo",
+            "--overrides",
+            json.dumps(overrides),
+            "--namespace",
+            SASQUATCH_NAMESPACE,
+        )
+        return result.stdout.strip()
+
+    def set_sasquatch_cluster_id(self, cluster_id: str) -> None:
+        """Configure a Strimzi Kafka cluster with an explicitly specified ID.
+
+        When we're recovering a Strimzi Kafka cluster from backed-up persistent
+        storage, We need to manually change the cluster ID to match the
+        original cluster ID.
+
+        For more info on Strimzi Kafka cluster recovery, see:
+        https://strimzi.io/docs/operators/latest/deploying#assembly-cluster-recovery-volume-str
+        """
+        # Patch the kafka resource
+        patch = {"status": {"clusterId": cluster_id}}
+
+        self._kubectl.run(
+            "--namespace",
+            SASQUATCH_NAMESPACE,
+            "patch",
+            "Kafka",
+            "sasquatch",
+            "--type",
+            "merge",
+            "--subresource",
+            "status",
+            "--patch",
+            json.dumps(patch),
+        )
+
+    def version(self) -> None:
+        """Get the version of the kubectl client and kubernetes server.
+
+        Useful for checking that kubectl can connect to a cluster using a given
+        context.
+        """
+        self._kubectl.run("version")

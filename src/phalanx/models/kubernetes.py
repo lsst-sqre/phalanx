@@ -16,6 +16,9 @@ __all__ = [
     "CronJob",
     "Deployment",
     "NamespacedResource",
+    "NamespacedResourceList",
+    "PersistentVolume",
+    "Resource",
     "ResourceList",
     "Service",
     "ServiceExternalTrafficPolicy",
@@ -49,16 +52,13 @@ class ServiceExternalTrafficPolicy(Enum):
     """Local externalTrafficPolicy."""
 
 
-class NamespacedResource(BaseModel):
-    """Properties common to a namespaced Kubernetes resource."""
+class Resource(BaseModel):
+    """Properties common to all Kubernetes resources."""
 
     model_config = ConfigDict(validate_by_name=True)
 
     kind: str
     """The kind of Kubernetes resource."""
-
-    namespace: str = Field(validation_alias=AliasPath("metadata", "namespace"))
-    """The namespace the resource is in."""
 
     name: str = Field(validation_alias=AliasPath("metadata", "name"))
     """The name of the resource."""
@@ -67,6 +67,13 @@ class NamespacedResource(BaseModel):
         default=[], validation_alias=AliasPath("metadata", "finalizers")
     )
     """Finalizers on this resource."""
+
+
+class NamespacedResource(Resource):
+    """Properties common to all namespaced Kubernetes resources."""
+
+    namespace: str = Field(validation_alias=AliasPath("metadata", "namespace"))
+    """The namespace the resource is in."""
 
     def get_kind_name(self) -> str:
         """Get the kind-qualified name of this resource.
@@ -79,7 +86,17 @@ class NamespacedResource(BaseModel):
         return f"{self.kind}/{self.name}"
 
 
-class ResourceList[T: NamespacedResource](BaseModel):
+class NamespacedResourceList[T: NamespacedResource](BaseModel):
+    """A list of namespaced resources returned from a kubectl command."""
+
+    items: list[T]
+    """A list of Kubernetes resources."""
+
+    kind: Literal["List"]
+    """The kind field will always be List."""
+
+
+class ResourceList[T: Resource](BaseModel):
     """A list of resources returned from a kubectl command."""
 
     items: list[T]
@@ -87,6 +104,13 @@ class ResourceList[T: NamespacedResource](BaseModel):
 
     kind: Literal["List"]
     """The kind field will always be List."""
+
+
+class PersistentVolume(Resource):
+    """A PersistentVolume kuberentes resource."""
+
+    kind: Literal["PersistentVolume"]
+    """The kind field will always be PersistentVolume."""
 
 
 class CronJob(NamespacedResource):
