@@ -20,7 +20,7 @@ cadc-tap:
 
     bigquery:
       project: "ppdb-dev-438721"
-      dataset: "ppdb_dm50643_1"
+      dataset: "ppdb_lsstcam"
       schema: "ppdb_lsstcam"
       image:
         tag: "tickets-DM-53451"
