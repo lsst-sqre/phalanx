@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "bigquery-kafka-worker"
+  labels:
+    {{- include "bigquery-kafka.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    # This policy controls inbound and outbound access to the database workers.
+    matchLabels:
+      {{- include "bigquery-kafka.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "worker"
+  policyTypes:
+    # Block all inbound access.
+    - Ingress

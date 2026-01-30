@@ -1,31 +1,31 @@
-# Default values for qserv-kafka.
+# Default values for bigquery-kafka.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 config:
   # -- Database backend to use (Qserv or BigQuery)
-  backend: "Qserv"
+  backend: "BigQuery"
 
-  # -- Timeout for backend API calls
-  backendApiTimeout: "30s"
+  # -- GCP project ID containing the BigQuery datasets to query
+  # @default -- None, must be set
+  bigqueryProject: null
 
-  # -- Interval at which the backend is polled for query status in Safir `parse_timedelta` format
-  backendPollInterval: "1s"
+  # -- BigQuery processing location
+  bigqueryLocation: "US"
 
-  # -- How many times to retry after a backend API network failure
-  backendRetryCount: 3
-
-  # -- How long to wait between retries after a backend API network failure in Safir `parse_timedelta` format
-  backendRetryDelay: "1s"
+  # -- GCP service account email for Workload Identity
+  # Format: {name}@{project-id}.iam.gserviceaccount.com
+  # @default -- None, must be set for BigQuery backend
+  gcpServiceAccount: null
 
   # -- Kafka consumer group ID
-  consumerGroupId: "qserv"
+  consumerGroupId: "bigquery"
 
   # -- Kafka topic for query cancellation requests
-  jobCancelTopic: "lsst.tap.job-delete"
+  jobCancelTopic: "lsst.ppdbtap.job-delete"
 
   # -- Maximum batch size for query execution requests. This should generally
-  # be the same as `qservRestMaxConnections`.
+  # be the same as `redisMaxConnections` minus a few for overhead.
   jobRunBatchSize: 10
 
   # -- Maximum size of a batch read from Kafka in bytes. Wide queries can be
@@ -34,10 +34,10 @@ config:
   jobRunMaxBytes: 10485760
 
   # -- Kafka topic for query execution requests
-  jobRunTopic: "lsst.tap.job-run"
+  jobRunTopic: "lsst.ppdbtap.job-run"
 
   # -- Kafka topic for query status
-  jobStatusTopic: "lsst.tap.job-status"
+  jobStatusTopic: "lsst.ppdbtap.job-status"
 
   # -- Logging level
   logLevel: "INFO"
@@ -55,7 +55,7 @@ config:
 
     # -- Name under which to log metrics. Generally there is no reason to
     # change this.
-    application: "qservkafka"
+    application: "bigquerykafka"
 
     events:
       # -- Topic prefix for events. It may sometimes be useful to change this
@@ -84,50 +84,25 @@ config:
     # slack-webhook secret must be provided.
     enabled: false
 
-  # -- Extra database connections that may be opened in excess of the pool
-  # size to handle surges in load. This is used primarily by the frontend for
-  # jobs that complete immediately.
-  qservDatabaseOverflow: 20
+  # -- Interval at which the backend is polled for query status in Safir
+  # `parse_timedelta` format
+  backendPollInterval: "1s"
 
-  # -- Database pool size. This is the number of MySQL connections that will
-  # be held open regardless of load. This should generally be set to the same
-  # as `maxWorkerJobs`.
-  qservDatabasePoolSize: 10
+  # -- How long to wait between retries after a backend API network failure in
+  # Safir `parse_timedelta` format
+  backendRetryDelay: "1s"
 
-  # -- Timeout in seconds for establishing a database connection to Qserv
-  qservDatabaseConnectTimeout: 10
+  # -- How many times to retry after a backend API network failure
+  backendRetryCount: 3
 
-  # -- Timeout in seconds for reading from the Qserv database
-  qservDatabaseReadTimeout: 60
+  # -- Timeout for backend API calls
+  # `parse_timedelta` format. Used for both QServ REST API and BigQuery API.
+  backendApiTimeout: "30s"
 
-  # -- URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`)
-  # @default -- None, must be set
-  qservDatabaseUrl: null
-
-  # -- Whether to delete queries after they complete. If this is set to false,
-  # rely on Qserv's internal garbage collection of old queries.
-  qservDeleteQueries: true
-
-  # -- Maximum simultaneous connections to open to the REST API. This should
-  # be set to `jobRunBatchSize` plus some extra connections for the monitor
-  # and cancel jobs.
-  qservRestMaxConnections: 15
-
-  # -- Whether to send the expected API version in REST API calls to Qserv
-  qservRestSendApiVersion: true
-
-  # -- URL to the Qserv REST API
-  # @default -- None, must be set
-  qservRestUrl: null
-
-  # -- Username for HTTP Basic Authentication for the Qserv REST API. If not
-  # null, the password will be assumed to be the same as the database
-  # password.
-  qservRestUsername: null
-
-  # -- How long to allow for user table upload before timing out in Safir
-  # `parse_timedelta` format.
-  qservUploadTimeout: "5m"
+  # -- Maximum bytes that can be billed for a single BigQuery query. Queries
+  # exceeding this will fail. Set to null for no limit.
+  # @default -- 100 GB
+  bigqueryMaxBytesBilled: 100000000000
 
   # -- Size of the Redis connection pool. This should be set to
   # `jobRunBatchSize` plus some extra connections for the monitor, cancel
@@ -140,16 +115,16 @@ config:
   # @default -- 3600 (1 hour)
   resultTimeout: 3600
 
-  # -- Name of the TAP service for which this Qserv Kafka instance is managing
+  # -- Name of the TAP service for which this BigQuery Kafka instance is managing
   # queries. This must match the name of the TAP service for the corresponding
   # query quota in the Gafaelfawr configuration.
-  tapService: "qserv"
+  tapService: "bigquery"
 
 image:
-  # -- Image to use in the qserv-kafka deployment
+  # -- Image to use in the bigquery-kafka deployment
   repository: "ghcr.io/lsst-sqre/qserv-kafka"
 
-  # -- Pull policy for the qserv-kafka image
+  # -- Pull policy for the bigquery-kafka image
   pullPolicy: "IfNotPresent"
 
   # -- Tag of image to use
@@ -161,7 +136,7 @@ ingress:
   annotations: {}
 
 frontend:
-  # -- Affinity rules for the qserv-kafka frontend pod
+  # -- Affinity rules for the bigquery-kafka frontend pod
   affinity: {}
 
   debug:
@@ -175,13 +150,13 @@ frontend:
     # You may want to do this when debugging memory leaks.
     disablePymalloc: false
 
-  # -- Node selection rules for the qserv-kafka frontend pod
+  # -- Node selection rules for the bigquery-kafka frontend pod
   nodeSelector: {}
 
-  # -- Annotations for the qserv-kafka frontend pod
+  # -- Annotations for the bigquery-kafka frontend pod
   podAnnotations: {}
 
-  # -- Resource limits and requests for the qserv-kafka frontend pod
+  # -- Resource limits and requests for the bigquery-kafka frontend pod
   # @default -- See `values.yaml`
   resources:
     limits:
@@ -191,7 +166,7 @@ frontend:
       cpu: "100m"
       memory: "145Mi"
 
-  # -- Tolerations for the qserv-kafka frontend pod
+  # -- Tolerations for the bigquery-kafka frontend pod
   # @default -- Tolerate GKE arm64 taint
   tolerations:
     - key: "kubernetes.io/arch"
@@ -202,7 +177,7 @@ frontend:
 redis:
   config:
     # -- Name of secret containing Redis password
-    secretName: "qserv-kafka"
+    secretName: "bigquery-kafka"
 
     # -- Key inside secret from which to get the Redis password (do not
     # change)
@@ -237,7 +212,7 @@ redis:
       cpu: "10m"
       memory: "20Mi"
 
-  # -- Tolerations for the qserv-kafka Redis pod
+  # -- Tolerations for the bigquery-kafka Redis pod
   # @default -- Tolerate GKE arm64 taint
   tolerations:
     - key: "kubernetes.io/arch"
@@ -246,7 +221,7 @@ redis:
       effect: "NoSchedule"
 
 resultWorker:
-  # -- Affinity rules for the qserv-kafka worker pods
+  # -- Affinity rules for the bigquery-kafka worker pods
   affinity: {}
 
   # -- Whether to allow containers to run as root. Set to true to allow use of
@@ -254,31 +229,31 @@ resultWorker:
   allowRootDebug: false
 
   autoscaling:
-    # -- Enable autoscaling of qserv-kafka result workers
+    # -- Enable autoscaling of bigquery-kafka result workers
     enabled: true
 
-    # -- Minimum number of qserv-kafka worker pods
+    # -- Minimum number of bigquery-kafka worker pods
     minReplicas: 1
 
-    # -- Maximum number of qserv-kafka worker pods. Each replica will open
+    # -- Maximum number of bigquery-kafka worker pods. Each replica will open
     # database connections up to the configured pool size and overflow limits,
     # so make sure the combined connections are under the postgres connection
     # limit.
     maxReplicas: 10
 
-    # -- Target CPU utilization of qserv-kafka worker pods.
+    # -- Target CPU utilization of bigquery-kafka worker pods.
     targetCPUUtilizationPercentage: 75
 
-  # -- Node selection rules for the qserv-kafka worker pods
+  # -- Node selection rules for the bigquery-kafka worker pods
   nodeSelector: {}
 
-  # -- Annotations for the qserv-kafka worker pods
+  # -- Annotations for the bigquery-kafka worker pods
   podAnnotations: {}
 
   # -- Number of result worker pods to start if autoscaling is disabled
   replicaCount: 1
 
-  # -- Resource limits and requests for the qserv-kafka worker pods
+  # -- Resource limits and requests for the bigquery-kafka worker pods
   # @default -- See `values.yaml`
   resources:
     limits:
@@ -288,7 +263,7 @@ resultWorker:
       cpu: "1"
       memory: "145Mi"
 
-  # -- Tolerations for the qserv-kafka worker pods
+  # -- Tolerations for the bigquery-kafka worker pods
   # @default -- Tolerate GKE arm64 taint
   tolerations:
     - key: "kubernetes.io/arch"
@@ -297,10 +272,10 @@ resultWorker:
       effect: "NoSchedule"
 
 periodicMetrics:
-  # -- Affinity rules for the qserv-kafka metrics job
+  # -- Affinity rules for the bigquery-kafka metrics job
   affinity: {}
 
-  # -- Resource limits and requests for the qserv-kafka periodic metrics pods
+  # -- Resource limits and requests for the bigquery-kafka periodic metrics pods
   # @default -- See `values.yaml`
   resources:
     limits:
@@ -310,16 +285,16 @@ periodicMetrics:
       cpu: "100m"
       memory: "50Mi"
 
-  # -- Node selection rules for the qserv-kafka metrics job
+  # -- Node selection rules for the bigquery-kafka metrics job
   nodeSelector: {}
 
-  # -- Annotations for the qserv-kafka metrics job
+  # -- Annotations for the bigquery-kafka metrics job
   podAnnotations: {}
 
   # -- How often to run the periodic metrics job
   schedule: "* * * * *"
 
-  # -- Tolerations for the qserv-kafka metrics job
+  # -- Tolerations for the bigquery-kafka metrics job
   # @default -- Tolerate GKE arm64 taint
   tolerations:
     - key: "kubernetes.io/arch"
