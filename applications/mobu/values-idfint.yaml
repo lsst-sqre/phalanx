@@ -56,24 +56,6 @@ config:
           repo_ref: "main"
           max_executions: 1
         restart: true
-    - name: "tutorial-weekly"
-      count: 1
-      users:
-        - username: "bot-mobu-tutorial-weekly"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          image:
-            image_class: "latest-weekly"
-          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
-          repo_ref: "main"
-          max_executions: 1
-        restart: true
     - name: "tutorial-2920bld2568"
       count: 1
       users:
