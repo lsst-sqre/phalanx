@@ -149,6 +149,14 @@ alert-stream-broker:
       readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
       groups: ["pittgoogle-idfint"]
 
+    - username: "poi-usdf"
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
+      groups: ["poi-usdf"]
+
+    - username: "snaps-usdf"
+      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
+      groups: ["snaps-usdf"]
+
   testTopicName: alert-stream-test
   topicPartitions: 400
   topicReplicas: 1
