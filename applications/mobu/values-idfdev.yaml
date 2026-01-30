@@ -86,16 +86,16 @@ config:
           repo_ref: "main"
           max_executions: 1
         restart: true
-    - name: "tap"
+    - name: "muster"
       count: 1
       users:
-        - username: "bot-mobu-tap"
-      scopes: ["read:tap"]
+        - username: "bot-mobu-muster"
+      scopes:
+        - "read:image"
       business:
-        type: "TAPQuerySetRunner"
+        type: "Muster"
         options:
-          sync: false
-          query_set: "dp0.2"
+          idle_time: 300
         restart: true
     - name: "sia"
       count: 1
@@ -108,5 +108,18 @@ config:
       business:
         type: "SIAQuerySetRunner"
         options:
+          dataset: "dp02"
           query_set: "dp02"
+        restart: true
+    - name: "tap"
+      count: 1
+      users:
+        - username: "bot-mobu-tap"
+      scopes: ["read:tap"]
+      business:
+        type: "TAPQuerySetRunner"
+        options:
+          dataset: "dp02"
+          query_set: "dp0.2"
+          sync: false
         restart: true
