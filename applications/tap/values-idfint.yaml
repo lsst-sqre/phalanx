@@ -1,19 +1,9 @@
 cadc-tap:
-  tapSchema:
-    image:
-      repository: "lsstsqre/tap-schema-idfint-tap"
-      tag: "w.2026.01"
-    type: "containerized"
-    database: "TAP_SCHEMA"
-    username: "TAP_SCHEMA"
-    useVaultPassword: false
-
   replicaCount: 4
 
   config:
     sentryEnabled: true
     sentryTracesSampleRate: "0.1"
-
     kafka:
       enabled: true
 
