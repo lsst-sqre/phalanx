@@ -21,39 +21,6 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
-    # - name: "firefighter"
-    #   count: 5
-    #   user_spec:
-    #     username_prefix: "bot-mobu-recommended"
-    #   scopes:
-    #     - "exec:notebook"
-    #     - "exec:portal"
-    #     - "read:image"
-    #     - "read:tap"
-    #   business:
-    #     type: "NotebookRunnerCounting"
-    #     options:
-    #       repo_url: "https://github.com/lsst-sqre/system-test.git"
-    #       repo_ref: "prod"
-    #       max_executions: 1
-    #     restart: true
-    # - name: "quickbeam"
-    #   count: 1
-    #   users:
-    #     - username: "bot-mobu-persistent"
-    #   scopes:
-    #     - "exec:notebook"
-    #     - "exec:portal"
-    #     - "read:image"
-    #     - "read:tap"
-    #   business:
-    #     type: "NotebookRunnerCounting"
-    #     options:
-    #       repo_url: "https://github.com/lsst-sqre/system-test.git"
-    #       repo_ref: "prod"
-    #       idle_time: 900
-    #       delete_lab: false
-    #     restart: true
     - name: "tutorial"
       count: 1
       users:
