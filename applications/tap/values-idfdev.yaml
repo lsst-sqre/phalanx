@@ -9,6 +9,10 @@ cadc-tap:
     useVaultPassword: false
 
   config:
+    qserv:
+      image:
+        tag: "tickets-DM-53451"
+
     kafka:
       enabled: true
 
