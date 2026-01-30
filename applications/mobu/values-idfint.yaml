@@ -26,6 +26,7 @@ config:
       users:
         - username: "bot-mobu-quotidian"
       scopes:
+        - "exec:internal-tools"
         - "exec:notebook"
         - "exec:portal"
         - "read:image"
