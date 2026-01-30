@@ -476,7 +476,7 @@ partsens-ess401:
   enabled: true
   classifier: ess401
   image:
-    revision: 11
+    revision: 12
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -493,7 +493,7 @@ partsens-ess402:
   enabled: true
   classifier: ess402
   image:
-    revision: 11
+    revision: 12
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -510,7 +510,7 @@ partsens-ess403:
   enabled: true
   classifier: ess403
   image:
-    revision: 11
+    revision: 12
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -633,7 +633,7 @@ tma-ess122:
   enabled: true
   classifier: ess122
   image:
-    revision: 6
+    revision: 12
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
