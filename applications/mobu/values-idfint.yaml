@@ -31,6 +31,7 @@ config:
         - "exec:portal"
         - "read:image"
         - "read:tap"
+        - "write:sasquatch"
       business:
         type: "NotebookRunnerCounting"
         options:
