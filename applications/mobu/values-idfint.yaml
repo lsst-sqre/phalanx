@@ -21,37 +21,24 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
-    - name: "recommended"
+    - name: "phalanx-quotidian"
       count: 1
       users:
-        - username: "bot-mobu-recommended"
+        - username: "bot-mobu-quotidian"
       scopes:
+        - "exec:internal-tools"
         - "exec:notebook"
         - "exec:portal"
         - "read:image"
         - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_ref: "prod"
-        restart: true
-    - name: "weekly"
-      count: 1
-      users:
-        - username: "bot-mobu-weekly"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
+        - "write:sasquatch"
       business:
         type: "NotebookRunnerCounting"
         options:
           image:
-            image_class: "latest-weekly"
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_ref: "prod"
+            image_class: "latest-daily"
+          repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
+          repo_ref: "main"
         restart: true
     - name: "tutorial"
       count: 1
@@ -65,24 +52,6 @@ config:
       business:
         type: "NotebookRunnerCounting"
         options:
-          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
-          repo_ref: "main"
-          max_executions: 1
-        restart: true
-    - name: "tutorial-weekly"
-      count: 1
-      users:
-        - username: "bot-mobu-tutorial-weekly"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          image:
-            image_class: "latest-weekly"
           repo_url: "https://github.com/lsst/tutorial-notebooks.git"
           repo_ref: "main"
           max_executions: 1
