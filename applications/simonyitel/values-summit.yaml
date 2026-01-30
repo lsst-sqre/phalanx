@@ -65,7 +65,7 @@ ccheaderservice-sim:
 ccoods:
   enabled: true
   image:
-    revision: 6
+    revision: 12
     repository: ts-dockerhub.lsst.org/ccoods
     pullPolicy: Always
   env:
@@ -521,7 +521,7 @@ mtmount-sim:
 mtoods:
   enabled: true
   image:
-    revision: 6
+    revision: 12
     repository: ts-dockerhub.lsst.org/mtoods
     pullPolicy: Always
   env:
