@@ -39,6 +39,9 @@ config:
       count: 1
       users:
         - username: "bot-mobu-quotidian"
+          groups:
+            - name: "g_users"
+              id: 2000003
       scopes:
         - "exec:internal-tools"
         - "exec:notebook"
