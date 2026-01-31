@@ -70,7 +70,7 @@ config:
         options:
           image:
             image_class: "by-tag"
-            tag: "r29_2_0_rsp2568"
+            tag: "exp_r29_2_0_rsp2574_exact"
           repo_url: "https://github.com/lsst/tutorial-notebooks.git"
           repo_ref: "main"
           max_executions: 1
