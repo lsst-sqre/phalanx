@@ -12,7 +12,7 @@ x-butler-secret:
 ccheaderservice:
   enabled: true
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
   env:
@@ -35,7 +35,7 @@ ccheaderservice:
 ccheaderservice-sim:
   enabled: false
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
   env:
@@ -65,7 +65,7 @@ ccheaderservice-sim:
 ccoods:
   enabled: true
   image:
-    revision: 12
+    revision: 0
     repository: ts-dockerhub.lsst.org/ccoods
     pullPolicy: Always
   env:
@@ -129,7 +129,7 @@ ccoods:
 gcheaderservice101:
   enabled: true
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
   env:
@@ -152,7 +152,7 @@ gcheaderservice101:
 gcheaderservice102:
   enabled: true
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
   env:
@@ -175,7 +175,7 @@ gcheaderservice102:
 gcheaderservice103:
   enabled: true
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
   env:
@@ -198,7 +198,7 @@ gcheaderservice103:
 lasertracker1:
   enabled: true
   image:
-    revision: 11
+    revision: 0
     repository: ts-dockerhub.lsst.org/lasertracker
     pullPolicy: Always
   env:
@@ -245,7 +245,7 @@ mtaircompressor2:
 
 mtaos:
   image:
-    revision: 14
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
   env:
@@ -284,7 +284,7 @@ mtcamhexapod:
   enabled: true
   classifier: mthexapod1
   image:
-    revision: 9
+    revision: 0
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
   env:
@@ -307,7 +307,7 @@ mtcamhexapod-sim:
   enabled: false
   classifier: mthexapod1
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
   env:
@@ -323,7 +323,7 @@ mtcamhexapod-sim:
 mtdome:
   enabled: true
   image:
-    revision: 12
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtdome
     pullPolicy: Always
   resources:
@@ -337,7 +337,7 @@ mtdome:
 mtdome-sim:
   enabled: false
   image:
-    revision: 11
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtdome
     pullPolicy: Always
   env:
@@ -352,7 +352,7 @@ mtdome-sim:
 
 mtdometrajectory:
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtdometrajectory
     pullPolicy: Always
   resources:
@@ -366,7 +366,7 @@ mtdometrajectory:
 mtheaderservice:
   enabled: true
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
   env:
@@ -436,7 +436,7 @@ mtm2hexapod:
   enabled: true
   classifier: mthexapod2
   image:
-    revision: 9
+    revision: 0
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
   env:
@@ -459,7 +459,7 @@ mtm2hexapod-sim:
   enabled: false
   classifier: mthexapod2
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
   env:
@@ -475,7 +475,7 @@ mtm2hexapod-sim:
 mtmount:
   enabled: true
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtmount
     pullPolicy: Always
   resources:
@@ -489,7 +489,7 @@ mtmount:
 mtmount-ccw-only:
   enabled: false
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtmount
     pullPolicy: Always
   env:
@@ -505,7 +505,7 @@ mtmount-ccw-only:
 mtmount-sim:
   enabled: false
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtmount
     pullPolicy: Always
   env:
@@ -521,7 +521,7 @@ mtmount-sim:
 mtoods:
   enabled: true
   image:
-    revision: 12
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtoods
     pullPolicy: Always
   env:
@@ -583,7 +583,7 @@ mtoods:
 
 mtptg:
   image:
-    revision: 14
+    revision: 0
     repository: ts-dockerhub.lsst.org/ptkernel
     pullPolicy: Always
   env:
@@ -600,7 +600,7 @@ mtptg:
 mtrotator:
   enabled: true
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtrotator
     pullPolicy: Always
   resources:
@@ -614,7 +614,7 @@ mtrotator:
 mtrotator-sim:
   enabled: false
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtrotator
     pullPolicy: Always
   env:
