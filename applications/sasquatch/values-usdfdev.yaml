@@ -157,7 +157,8 @@ kafdrop-remote:
       contextPath: /kafdrop-remote
   kafka:
     user: kafdrop-remote
-    topicPrefix: summit
+    topicPrefixes:
+      - summit
   schemaregistry: "http://sasquatch-schema-registry-remote.sasquatch:8081"
   ingress:
     enabled: true
