@@ -183,3 +183,8 @@ dependencies:
   version: 1.0.0
   condition: mtvms-m1m3-sim.enabled
   repository: file://../../charts/csc
+- name: csc
+  alias: wfoods
+  version: 1.0.0
+  condition: wfoods.enabled
+  repository: file://../../charts/csc
