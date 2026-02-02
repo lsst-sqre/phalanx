@@ -9,3 +9,6 @@ dependencies:
 - name: "redis"
   version: 1.1.7
   repository: "https://lsst-sqre.github.io/charts/"
+- name: redis-stream-exporter
+  condition: redis-stream-exporter.enabled
+  version: 1.0.0

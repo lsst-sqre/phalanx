@@ -1,0 +1,45 @@
+# Default values for Redis Stream Exporter
+
+# -- Number of Redis Stream Exporter pods to run in the deployment.
+replicaCount: 1
+
+image:
+  # -- Redis Stream Exporter Docker image repository
+  repository: ghcr.io/lsst-dm/redis-stream-exporter
+
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+  # -- Redis Stream Exporter image version
+  tag: main
+
+# -- How long to sleep between redis stream exporter polling cycles
+sleepInterval: 10
+
+# -- Redis authentication settings
+auth:
+  enabled: false
+
+# -- Kubernetes requests and limits for Redis Exporter
+# @default -- See `values.yaml`
+resources:
+  requests:
+    memory: 1Gi
+    cpu: 1
+  limits:
+    memory: 2Gi
+    cpu: 1
+
+# -- Node selector configuration
+nodeSelector: {}
+
+# -- Tolerations configuration
+tolerations: []
+
+# -- Affinity configuration
+affinity: {}
+
+# -- Pod annotations
+podAnnotations:
+  prometheus.io/port: "8000"
+  prometheus.io/scrape: "true"
