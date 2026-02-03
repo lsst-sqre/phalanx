@@ -50,10 +50,10 @@ uws-api-server:
     readOnly: true
   resources:
     limits:
-      cpu: 100m
+      cpu: 120m
       memory: 300Mi
     requests:
-      cpu: 20m
+      cpu: 60m
       memory: 100Mi
 
 atocps:
