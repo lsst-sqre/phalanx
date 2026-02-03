@@ -247,7 +247,7 @@ telegraf:
       max_undelivered_messages: 5000
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
+        [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS", "lsst.sal.WFOODS" ]
     calsys:
       enabled: true
       database: "efd"
