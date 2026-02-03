@@ -151,7 +151,7 @@ Rubin Observatory's telemetry service
 | app-metrics.image.tag | string | The appVersion of the chart | Telegraf image tag |
 | app-metrics.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | app-metrics.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
-| app-metrics.kafkaVersion | string | `"4.0.0"` |  |
+| app-metrics.kafkaVersion | string | `"4.1.0"` |  |
 | app-metrics.nodeSelector | object | `{}` | Node labels for pod assignment |
 | app-metrics.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | app-metrics.podLabels | object | `{}` | Labels for the Telegraf pods |
@@ -714,7 +714,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
 | strimzi-kafka.kafka.pauseReconciliation | bool | `false` | If Strimzi reconciliation of this resource should be paused: https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str |
 | strimzi-kafka.kafka.replicas | int | `3` | Number of Kafka broker replicas to run |
-| strimzi-kafka.kafka.version | string | `"4.0.0"` | Version of Kafka to deploy |
+| strimzi-kafka.kafka.version | string | `"4.1.0"` | Version of Kafka to deploy |
 | strimzi-kafka.kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
 | strimzi-kafka.kafkaExporter.enabled | bool | `false` | Enable Kafka exporter |
 | strimzi-kafka.kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |

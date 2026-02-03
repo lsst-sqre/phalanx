@@ -68,7 +68,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
 | kafka.pauseReconciliation | bool | `false` | If Strimzi reconciliation of this resource should be paused: https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str |
 | kafka.replicas | int | `3` | Number of Kafka broker replicas to run |
-| kafka.version | string | `"4.0.0"` | Version of Kafka to deploy |
+| kafka.version | string | `"4.1.0"` | Version of Kafka to deploy |
 | kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
 | kafkaExporter.enabled | bool | `false` | Enable Kafka exporter |
 | kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
