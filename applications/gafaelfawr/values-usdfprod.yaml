@@ -2,6 +2,13 @@ replicaCount: 2
 
 # Use the CSI storage class so that we can use snapshots.
 redis:
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "100m"
+      memory: "210Mi"
   persistence:
     storageClass: "wekafs--sdf-k8s01"
 
