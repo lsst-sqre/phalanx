@@ -268,7 +268,7 @@ hvac-sim:
       cpu: 160m
       memory: 200Mi
     limits:
-      cpu: 500m
+      cpu: 1
       memory: 2000Mi
 
 m1m3-ess113-sim:
