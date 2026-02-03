@@ -374,7 +374,6 @@ mtoods:
 wfoods:
   enabled: true
   image:
-    revision: 0
     repository: ts-dockerhub.lsst.org/wfoods
     pullPolicy: Always
   env:
@@ -425,15 +424,15 @@ wfoods:
                           - LSSTCam/raw/all
                         files_older_than:
                             <<: *interval
-                            days: 360
+                            days: 5
                       - collections:
                           - LSSTCam/raw/guider
                         files_older_than:
                             <<: *interval
-                            days: 360
+                            days: 5
                   cleaning_interval:
                       <<: *interval
-                      days: 360
+                      hours: 1
 
 mtptg:
   image:

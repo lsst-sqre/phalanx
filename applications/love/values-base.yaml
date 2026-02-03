@@ -726,3 +726,6 @@ love-producer:
   - name: weatherforecast
     csc: WeatherForecast:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: wfoods
+    csc: WFOODS:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
