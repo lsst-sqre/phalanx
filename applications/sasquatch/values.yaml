@@ -330,6 +330,10 @@ tap:
   # -- Whether to enable the tap subchart
   enabled: false
 
+ppdbtap:
+  # -- Whether to enable the ppdbtap subchart
+  enabled: false
+
 obsenv:
   # -- Whether to enable the obsenv subchart
   enabled: false
