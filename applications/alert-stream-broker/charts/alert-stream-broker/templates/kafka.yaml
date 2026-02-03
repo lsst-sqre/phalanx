@@ -16,6 +16,7 @@ spec:
       size: {{ .Values.kafkaController.storage.size }}
       class: {{ .Values.kafkaController.storage.storageClassName }}
       deleteClaim: false
+  template:
     pod:
       {{- with .Values.kafka.controller.affinity }}
       affinity:
@@ -52,6 +53,7 @@ spec:
       class: {{ .Values.kafka.storage.storageClassName }}
       {{- end}}
       deleteClaim: false
+  template:
     pod:
       {{- with .Values.kafka.broker.affinity }}
       affinity:
