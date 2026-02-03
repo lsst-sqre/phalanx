@@ -83,7 +83,7 @@ IVOA TAP service
 | tapSchema.external | object | `{"host":"","port":5432}` | External PostgreSQL configuration (only used if type is "external") |
 | tapSchema.external.host | string | `""` | Hostname of external PostgreSQL server |
 | tapSchema.external.port | int | `5432` | Port of external PostgreSQL server |
-| tapSchema.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP schema image |
+| tapSchema.image.pullPolicy | string | `"Always"` | Pull policy for the TAP schema image |
 | tapSchema.image.repository | string | `"lsstsqre/tap-schema-mock"` | TAP schema image to ue. This must be overridden by each environment with the TAP schema for that environment. |
 | tapSchema.image.tag | string | `"w.2026.01"` | Tag of TAP schema image |
 | tapSchema.nodeSelector | object | `{}` | Node selection rules for the TAP schema database pod |

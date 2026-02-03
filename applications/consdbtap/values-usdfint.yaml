@@ -2,7 +2,7 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-usdf-prod-cdb"
-      tag: "w.2025.50"
+      tag: "tickets-DM-53861"
 
   config:
     datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/w.2025.50/datalink-snippets.zip"
