@@ -563,7 +563,6 @@ tea-ess125-sim:
   enabled: true
   classifier: ess125
   image:
-    revision: 11
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -580,7 +579,6 @@ tea-ess126-sim:
   enabled: true
   classifier: ess126
   image:
-    revision: 11
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
