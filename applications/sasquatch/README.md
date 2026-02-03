@@ -99,6 +99,7 @@ Rubin Observatory's telemetry service
 | kapacitor.strategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
 | obsenv.enabled | bool | `false` | Whether to enable the obsenv subchart |
 | obsloctap.enabled | bool | `false` | Whether to enable the obsloctap subchart |
+| ppdbtap.enabled | bool | `false` | Whether to enable the ppdbtap subchart |
 | prompt-processing.enabled | bool | `false` | Whether to enable the prompt-processing subchart |
 | redis.affinity | object | `{}` | Affinity rules for the ephemeral Redis pod |
 | redis.enabled | bool | `false` | Whether to enable the ephemeral Redis instance for Trickster |
