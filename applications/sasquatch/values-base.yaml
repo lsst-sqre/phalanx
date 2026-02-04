@@ -346,7 +346,7 @@ control-system:
   topics:
     - lsst.s3.raw.latiss
     - lsst.s3.raw.lsstcam
-
+    - lsst.s3.wf.lsstcam
 consdb:
   enabled: true
 
