@@ -163,6 +163,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.prePuller.continuous.enabled | bool | `false` | Whether to run the JupyterHub continuous prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.prePuller.hook.enabled | bool | `false` | Whether to run the JupyterHub hook prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.proxy.chp.extraCommandLineFlags | list | `["--keep-alive-timeout=61000"]` | Extra CLI options to pass to the proxy. The most up-to-date list is [here](https://github.com/jupyterhub/configurable-http-proxy/blob/main/bin/configurable-http-proxy) (not the docs, unfortunately) |
+| jupyterhub.proxy.chp.networkPolicy.egress | list | `[{"to":[{"namespaceSelector":{},"podSelector":{"matchLabels":{"nublado.lsst.io/category":"lab"}}}]}]` | Enable the proxy to send traffic to any pod in any namespace with the `nublado.lsst.io/category: lab` label. |
 | jupyterhub.proxy.chp.networkPolicy.interNamespaceAccessLabels | string | `"accept"` | Enable access to the proxy from other namespaces, since we put each user's lab environment in its own namespace |
 | jupyterhub.proxy.chp.resources | object | See `values.yaml` | Resource limits and requests for proxy pod |
 | jupyterhub.proxy.chp.tolerations | list | Tolerate GKE arm64 taint | Tolerations for proxy pod |

@@ -679,6 +679,16 @@ jupyterhub:
         # each user's lab environment in its own namespace
         interNamespaceAccessLabels: "accept"
 
+        # -- Enable the proxy to send traffic to any pod in any namespace with
+        # the `nublado.lsst.io/category: lab` label.
+        egress:
+          - to:
+              - namespaceSelector: {}
+                podSelector:
+                  matchLabels:
+                    nublado.lsst.io/category: lab
+
+
       # -- Extra CLI options to pass to the proxy. The most up-to-date list is
       # [here](https://github.com/jupyterhub/configurable-http-proxy/blob/main/bin/configurable-http-proxy)
       # (not the docs, unfortunately)
