@@ -75,6 +75,27 @@ config:
           repo_ref: "main"
           max_executions: 1
         restart: true
+    - name: "tutorial-adhoc"
+      # Designed to let us take an arbitrary tag and see whether
+      # tutorials pass on it.  Just change the tag under options.image.tag.
+      count: 1
+      users:
+        - username: "bot-mobu-adhoc"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      business:
+        type: "NotebookRunnerCounting"
+        options:
+          image:
+            image_class: "by-tag"
+            tag: "exp_w_2026_05_trimmed"
+          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
+          repo_ref: "main"
+          max_executions: 1
+        restart: true
     - name: "tap"
       count: 1
       users:
