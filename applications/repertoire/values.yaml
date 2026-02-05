@@ -323,17 +323,17 @@ config:
       tap:
         enabled: false
         schemas:
-          - dp02_dc2
           - dp1
           - ivoa_obscore
+          - dp02_dc2
         databaseUrl: "postgresql://tap@127.0.0.1:5432/tap"
         databasePasswordKey: "tap-database-password"
 
       ssotap:
         enabled: false
         schemas:
-          - dp03_1yr
           - dp03_10yr
+          - dp03_1yr
         databaseUrl: "postgresql://ssotap@127.0.0.1:5432/ssotap"
         databasePasswordKey: "ssotap-database-password"
 
