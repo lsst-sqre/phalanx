@@ -16,4 +16,4 @@ redis:
     requests:
       memory: "8Gi"
     limits:
-      memory: "24Gi"
+      memory: "32Gi"
