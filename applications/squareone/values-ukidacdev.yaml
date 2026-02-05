@@ -1,5 +1,5 @@
 config:
-  siteName: "Rubin Science Platform"
+  siteName: "UK IDAC Dev Rubin Science Platform"
   semaphoreUrl: "https://rsp-test.lsst.ac.uk/semaphore"
 
 ingress:
