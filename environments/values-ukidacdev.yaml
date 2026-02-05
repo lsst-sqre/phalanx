@@ -1,8 +1,8 @@
 name: "ukidacdev"
 fqdn: "rsp-test.lsst.ac.uk"
 appOfAppsName: "science-platform"
-vaultUrl: "https://vault.lsst.ac.uk"
-vaultPathPrefix: "kv-v2/k8s_operator/ukidacdev"
+vaultUrl: "https://vault-rsp.lsst.ac.uk"
+vaultPathPrefix: "secret/phalanx/ukidacdev"
 applications:
   mobu: true
   nublado: true
