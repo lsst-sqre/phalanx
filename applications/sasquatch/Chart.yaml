@@ -115,6 +115,9 @@ dependencies:
     condition: redis.enabled
     version: 1.1.7
     repository: "https://lsst-sqre.github.io/charts/"
+  - name: alert-brokers
+    condition: alert-brokers.enabled
+    version: 1.0.0
 
 annotations:
   phalanx.lsst.io/docs: |
