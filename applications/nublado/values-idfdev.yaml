@@ -89,6 +89,9 @@ jupyterhub:
         # This has to exist for Zero to JupyterHub to configure the proxy
         # correctly.
         subdomain_host: "nb.data-dev.lsst.cloud"
+      ServerApp:
+        tornado_webapp_settings:
+          websocket_max_message_size: 100000000
     db:
       upgrade: true
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
