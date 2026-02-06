@@ -17,6 +17,9 @@ Rubin Observatory's telemetry service
 |-----|------|---------|-------------|
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| alert-brokers.enabled | bool | `false` | Whether to enable the alert-brokers subchart |
+| alert-database.enabled | bool | `false` | Whether to enable the alert-database subchart |
+| alert-stream-schema-sync.enabled | bool | `false` | Whether to enable the alert-stream-schema-sync subchart |
 | app-metrics.apps | list | `[]` | The apps to create configuration for. |
 | app-metrics.enabled | bool | `false` | Enable the app-metrics subchart with topic, user, and telegraf configurations |
 | backpack.enabled | bool | `false` | Whether to enable the backpack subchart |
@@ -138,6 +141,7 @@ Rubin Observatory's telemetry service
 | trickster.replicaCount | int | `3` | Number of Trickster replicas |
 | trickster.resources.limits | object | `{"cpu":"200m","memory":"512Mi"}` | Kubernetes resource limits for Trickster |
 | trickster.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | Kubernetes resource requests and limits for Trickster |
+| alert-brokers.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Prompt Kafka chart. |
 | app-metrics.affinity | object | `{}` | Affinity for pod assignment |
 | app-metrics.apps | list | `[]` | A list of applications that will publish metrics events, and the keys that should be ingested into InfluxDB as tags.  The names should be the same as the app names in Phalanx. |
 | app-metrics.args | list | `[]` | Arguments passed to the Telegraf agent containers |
