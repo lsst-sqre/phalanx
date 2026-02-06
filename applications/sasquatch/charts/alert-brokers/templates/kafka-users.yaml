@@ -1,0 +1,41 @@
+{{- $cluster := "sasquatch" -}}
+{{- if not .Values.users }}
+# DEBUG: No users found in .Values. The keys are: {{ keys .Values | join ", " }}
+{{- end }}
+
+{{- range $user := .Values.users }}
+---
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaUser
+metadata:
+  name: {{ $user.username | quote }}
+  labels:
+    strimzi.io/cluster: {{ $cluster | quote }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: {{ $cluster | quote }}
+          key: {{ printf "%s-password" $user.username | quote }}
+  authorization:
+    type: simple
+    acls:
+      {{- range $topic := $user.topics }}
+      - resource:
+          type: topic
+          name: {{ $topic.name | quote }}
+          patternType: literal
+        operations: {{ $topic.operations }}
+        host: "*"
+      {{- end }}
+      {{- range $group := $user.groups }}
+      - resource:
+          type: group
+          name: {{ $group.name | quote }}
+          patternType: literal
+        operations: {{ $group.operations }}
+        host: "*"
+      {{- end }}
+{{- end }}

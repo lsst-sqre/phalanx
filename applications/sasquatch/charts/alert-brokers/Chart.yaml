@@ -1,0 +1,5 @@
+apiVersion: v2
+name: alert-brokers
+version: 1.0.0
+description: Sasquatch Kafka Broker and User configuration for Alert Brokers
+type: application

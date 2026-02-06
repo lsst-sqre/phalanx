@@ -8,7 +8,7 @@ metadata:
   annotations:
     strimzi.io/next-node-ids: {{ .Values.controller.nodeIds | quote }}
 spec:
-  replicas: {{ .Values.kafka.replicas }}
+  replicas: {{ .Values.controller.replicas }}
   roles:
     - controller
   storage:
@@ -56,7 +56,7 @@ metadata:
   annotations:
     strimzi.io/next-node-ids: {{ .Values.broker.nodeIds | quote }}
 spec:
-  replicas: {{ .Values.kafka.replicas }}
+  replicas: {{ .Values.broker.replicas }}
   roles:
     - broker
   storage:
