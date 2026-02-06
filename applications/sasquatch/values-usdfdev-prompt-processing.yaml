@@ -1,0 +1,234 @@
+alert-brokers:
+  enabled: true
+
+  topics:
+    - name: alert-stream-test
+      partitions: 400
+      replicas: 1
+    - name: alerts-simulated
+      partitions: 45
+      replicas: 1
+    - name: lsst-alerts-v9.0
+      partitions: 45
+      replicas: 1
+      bytesRetained: "755000000000"
+      millisecondsRetained: "2629740000"
+    - name: lsst-alerts-v10.0
+      partitions: 45
+      replicas: 1
+      bytesRetained: "300000000000"
+      millisecondsRetained: "2629740000"
+    - name: alerts-mock-data-challenge
+      partitions: 45
+      replicas: 1
+      bytesRetained: "300000000000"
+      millisecondsRetained: "2629740000"
+
+  users:
+
+    # A user for development purposes by the Rubin team, with access to all
+    # topics in readonly mode.
+    - username: "rubin-devel-idfint"
+      topics:
+        - name: "*"
+          operation: "Read"
+      groups: ["rubin-devel-idfint"]
+
+    # The community broker users
+    - username: "alerce"
+      topics:
+        - name: "alerts-simulated"
+          operation: "Read"
+        - name: "lsst-alerts-v9.0"
+          operation: "Read"
+        - name: "lsst-alerts-v10.0"
+          operation: "Read"
+        - name: "alerts-mock-data-challenge"
+          operation: "Read"
+      groups: ["alerce-idfint"]
+
+    - username: "ampel-idfint"
+      topics:
+        - name: "alerts-simulated"
+          operation: "Read"
+        - name: "lsst-alerts-v9.0"
+          operation: "Read"
+        - name: "lsst-alerts-v10.0"
+          operation: "Read"
+        - name: "alerts-mock-data-challenge"
+          operation: "Read"
+      groups: ["ampel-idfint"]
+
+    - username: "antares-idfint"
+      topics:
+        - name: "alerts-simulated"
+          operation: "Read"
+        - name: "lsst-alerts-v9.0"
+          operation: "Read"
+        - name: "lsst-alerts-v10.0"
+          operation: "Read"
+        - name: "alerts-mock-data-challenge"
+          operation: "Read"
+      groups: ["antares-idfint"]
+
+    - username: "babamul-idfint"
+      topics:
+        - name: "alerts-simulated"
+          operation: "Read"
+        - name: "lsst-alerts-v9.0"
+          operation: "Read"
+        - name: "lsst-alerts-v10.0"
+          operation: "Read"
+        - name: "alerts-mock-data-challenge"
+          operation: "Read"
+      groups: ["babamul-idfint"]
+
+    - username: "fink-idfint"
+      topics:
+        - name: "alerts-simulated"
+          operation: "Read"
+        - name: "lsst-alerts-v9.0"
+          operation: "Read"
+        - name: "lsst-alerts-v10.0"
+          operation: "Read"
+        - name: "alerts-mock-data-challenge"
+          operation: "Read"
+      groups: ["fink-idfint"]
+
+    - username: "lasair-idfint"
+      topics:
+        - name: "alerts-simulated"
+          operation: "Read"
+        - name: "lsst-alerts-v9.0"
+          operation: "Read"
+        - name: "lsst-alerts-v10.0"
+          operation: "Read"
+        - name: "alerts-mock-data-challenge"
+          operation: "Read"
+      groups: ["lasair-idfint"]
+
+    - username: "pittgoogle-idfint"
+      topics:
+        - name: "alerts-simulated"
+          operation: "Read"
+        - name: "lsst-alerts-v9.0"
+          operation: "Read"
+        - name: "lsst-alerts-v10.0"
+          operation: "Read"
+        - name: "alerts-mock-data-challenge"
+          operation: "Read"
+      groups: ["pittgoogle-idfint"]
+
+    - username: "poi-usdf"
+      topics:
+        - name: "alerts-simulated"
+          operation: "Read"
+        - name: "lsst-alerts-v9.0"
+          operation: "Read"
+        - name: "lsst-alerts-v10.0"
+          operation: "Read"
+        - name: "alerts-mock-data-challenge"
+          operation: "Read"
+      groups: ["poi-usdf"]
+
+    - username: "snaps-usdf"
+      topics:
+        - name: "alerts-simulated"
+          operation: "Read"
+        - name: "lsst-alerts-v9.0"
+          operation: "Read"
+        - name: "lsst-alerts-v10.0"
+          operation: "Read"
+        - name: "alerts-mock-data-challenge"
+          operation: "Read"
+      groups: ["snaps-usdf"]
+
+
+chronograf:
+  enabled: false
+
+influxdb:
+  enabled: false
+
+influxdb-enterprise-standby:
+  enabled: false
+
+kafdrop:
+  ingress:
+    enabled: false
+
+kapacitor:
+  enabled: false
+
+schema-registry:
+  enabled: false
+  ingress:
+    enabled: false
+
+strimzi-kafka:
+  kafka:
+    config:
+      # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
+      replica.lag.time.max.ms: 120000
+      log.retention.minutes: 10080
+      offsets.retention.minutes: 10080
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
+    externalListener:
+      tls:
+        enabled: false
+      bootstrap:
+        annotations:
+          metallb.io/address-pool: sdf-dmz
+        allocateLoadBalancerNodePorts: false
+      brokers:
+        - broker: 0
+          annotations:
+            metallb.io/address-pool: sdf-dmz
+        - broker: 1
+          annotations:
+            metallb.io/address-pool: sdf-dmz
+        - broker: 2
+          annotations:
+            metallb.io/address-pool: sdf-dmz
+        - broker: 3
+          annotations:
+            metallb.io/address-pool: sdf-dmz
+        - broker: 4
+          annotations:
+            metallb.io/address-pool: sdf-dmz
+        - broker: 5
+          annotations:
+            metallb.io/address-pool: sdf-dmz
+
+  broker:
+    enabled: true
+    name: kafka
+    nodeIds: "[0,1,2,3,4,5]"
+    storage:
+      size: 35Ti
+      storageClassName: wekafs--sdf-k8s01
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: strimzi.io/cluster
+                  operator: In
+                  values:
+                    - sasquatch
+            topologyKey: kubernetes.io/hostname
+    resources:
+      requests:
+        cpu: 8
+        memory: 32Gi
+      limits:
+        cpu: 8
+        memory: 32Gi
+  cruiseControl:
+    enabled: true
