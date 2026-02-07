@@ -100,6 +100,25 @@ config:
     # @default -- false
     passwordEnabled: false
 
+  bigquery:
+    # -- BigQuery project ID
+    # @default -- None, must be set if backend is `bigquery`
+    project: ""
+
+    # -- BigQuery dataset name
+    # @default -- None, must be set if backend is `bigquery`
+    dataset: ""
+
+    image:
+      # -- TAP image to use
+      repository: "ghcr.io/lsst-sqre/lsst-tap-service"
+
+      # -- Pull policy for the TAP image
+      pullPolicy: "IfNotPresent"
+
+      # -- Tag of TAP image to use
+      tag: "3.11.0"
+
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
@@ -149,6 +168,14 @@ config:
 
       # -- Job Delete topic
       jobDelete: "lsst.tap.job-delete"
+
+    # -- Name of the KafkaUser to use for authentication
+    # @default -- "tap"
+    kafkaUserName: "tap"
+
+    # -- Kafka consumer group ID.
+    # @default -- "tap"
+    consumerGroupId: "tap"
 
     # -- Whether kafka is enabled
     enabled: false

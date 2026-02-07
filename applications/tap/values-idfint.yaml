@@ -6,6 +6,10 @@ cadc-tap:
     sentryTracesSampleRate: "0.1"
     kafka:
       enabled: true
+    qserv:
+      image:
+        tag: "tickets-DM-53451"
+        pullPolicy: "Always"
 
     urlRewrite:
       enabled: true
