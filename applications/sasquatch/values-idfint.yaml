@@ -141,3 +141,6 @@ backpack:
 
 tap:
   enabled: true
+
+ppdbtap:
+  enabled: true
