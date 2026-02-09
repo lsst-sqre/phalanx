@@ -21,3 +21,6 @@ spec:
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"
+  syncPolicy:
+    syncOptions:
+      - "ServerSideApply=true"
