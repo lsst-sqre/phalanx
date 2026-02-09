@@ -3,7 +3,11 @@
 # Declare variables to be passed into your templates.
 
 # -- Number of web deployment pods to start
-replicaCount: 1
+# Required by deployment review for db to be x3 and at least 2 for UI/API
+replicaCount_db: 3
+replicaCount_ui: 2
+replicaCount_api: 2
+
 
 imageAPI:
   # -- Image to use in the octavius deployment

@@ -32,7 +32,9 @@ Object classification tool for postage stamp images
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the octavius deployment pod |
 | podAnnotations | object | `{}` | Annotations for the octavius deployment pod |
-| replicaCount | int | `1` | Number of web deployment pods to start |
+| replicaCount_api | int | `2` |  |
+| replicaCount_db | int | `3` | Number of web deployment pods to start Required by deployment review for db to be x3 and at least 2 for UI/API |
+| replicaCount_ui | int | `2` |  |
 | resources | object | See `values.yaml` | Resource limits and requests for the octavius deployment pod |
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |

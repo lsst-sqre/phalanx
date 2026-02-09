@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "octavius.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount_db }}
   selector:
     matchLabels:
       {{- include "octavius.selectorLabels" . | nindent 6 }}
