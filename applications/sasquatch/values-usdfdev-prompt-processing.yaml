@@ -234,6 +234,9 @@ schema-registry:
     enabled: false
 
 strimzi-kafka:
+  cluster:
+    monitorLabel:
+      prometheus.io/scrape: "true"
   kafka:
     version: "4.1.0"
     config:
@@ -271,6 +274,9 @@ strimzi-kafka:
         - broker: 7
           annotations:
             metallb.io/address-pool: sdf-dmz
+    metricsConfig:
+      enabled: true
+
 
   broker:
     enabled: true
