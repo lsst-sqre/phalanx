@@ -51,7 +51,7 @@ spec:
             {{- end }}
             command: [ "nublado", "purger", "execute" ]
             securityContext:
-              allowPrivilegeEscalation: true
+              runAsUser: 0
               runAsNonRoot: false
               readOnlyRootFilesystem: true
             volumeMounts:
