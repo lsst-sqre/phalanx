@@ -24,9 +24,6 @@ cadc-tap:
       project: "ppdb-prod"
       dataset: "ppdb_lsstcam"
       schema: "ppdb"
-      image:
-        tag: "tickets-DM-53451"
-        pullPolicy: "Always"
 
   cloudsql:
     enabled: true
