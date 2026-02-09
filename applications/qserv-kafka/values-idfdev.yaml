@@ -1,5 +1,3 @@
-image:
-  tag: "tickets-DM-53506"
 config:
   logLevel: "DEBUG"
   metrics:
