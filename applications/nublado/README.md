@@ -92,6 +92,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | controller.config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | controller.config.pathPrefix | string | `"/nublado"` | Path prefix that will be routed to the controller |
+| controller.config.watchReconnectTimeout | string | `"3m"` | How frequently to restart a Kubernetes watch request. These connections can be dropped and throw a 400 error, or even be silently dropped in different Kubernetes enviroments. Setting this value can help prevent those things from happening. |
 | controller.googleServiceAccount | string | None, must be set when using Google Artifact Registry | If Google Artifact Registry is used as the image source, the Google service account that has an IAM binding to the `nublado-controller` Kubernetes service account and has the Artifact Registry reader role |
 | controller.ingress.annotations | object | `{}` | Additional annotations to add for the Nublado controller ingress |
 | controller.nodeSelector | object | `{}` | Node selector rules for the Nublado controller |
