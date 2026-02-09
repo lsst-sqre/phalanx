@@ -7,7 +7,7 @@ butlerServerRepositories:
 gcp:
   projectId: "science-platform-dev-7696"
   region: "us-central1"
-  clusterName: "science-platform-dev"
+  clusterName: "rsp-dev"
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP data-dev.lsst.cloud"
