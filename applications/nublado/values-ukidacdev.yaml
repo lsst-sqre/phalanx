@@ -11,6 +11,7 @@ controller:
         AUTO_REPO_BRANCH: "main"
         AUTO_REPO_SPECS: "https://github.com/lsst-uk/rsp-uk-notebooks@main"
         RSP_SITE_TYPE: "3dparty"
+        DAF_BUTLER_REPOSITORY_INDEX: "/data/butler/data-repos.yaml"
       pullSecret: "pull-secret"
       volumes:
         - name: "data"
