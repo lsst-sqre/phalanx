@@ -20,7 +20,6 @@
 # Reference for rules: https://docs.astral.sh/ruff/rules/
 exclude = ["docs/**"]
 line-length = 79
-target-version = "py312"
 
 [format]
 docstring-code-format = true
@@ -34,6 +33,7 @@ ignore = [
     "ARG003",   # unused class method arguments are often legitimate
     "ARG005",   # unused lambda arguments are often legitimate
     "ASYNC109", # many async functions use asyncio.timeout internally
+    "ASYNC240", # we don't want to run filesystem operations on threads
     "BLE001",   # we want to catch and report Exception in background tasks
     "C414",     # nested sorted is how you sort by multiple keys with reverse
     "D102",     # sometimes we use docstring inheritence
