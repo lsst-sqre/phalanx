@@ -229,7 +229,7 @@ kapacitor:
   enabled: false
 
 schema-registry:
-  enabled: false
+  enabled: true
   ingress:
     enabled: false
 
