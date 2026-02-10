@@ -1,0 +1,37 @@
+# -- Name used by the registry, and by its users.
+name: sasquatch-schema-registry
+
+# -- Port where the registry is listening. NOTE: Not actually configurable in
+# strimzi-registry-operator, so this basically cannot be changed.
+port: 8081
+
+# -- Strimzi "cluster name" of the broker to use as a backend.
+clusterName: sasquatch
+
+# -- Name of the topic used by the Schema Registry to store data.
+schemaTopic: registry-schemas
+
+# -- Compatibility level for the Schema Registry.
+# Options are: none, backward, backward_transitive, forward,
+# forward_transitive, full, and full_transitive.
+compatibilityLevel: none
+
+# -- Hostname for an ingress which sends traffic to the Schema Registry.
+hostname:
+
+tls: true
+
+# -- Configuration for the Job which injects the most recent alert_packet
+# schema into the Schema Registry
+schemaSync:
+  image:
+    # -- Repository of a container which has the alert_packet
+    # syncLatestSchemaToRegistry.py program.
+    repository: lsstdm/lsst_alert_packet
+    # -- Version of the container to use. If container isn't updating in Argo, switch to digest.
+    tag: tickets-DM-53520
+    #digest: sha256:23adb95fbebf229883a3593217fb7a350c0011152355f8c3d6bf9db366874676
+    pullPolicy: Always
+
+  # -- Subject name to use when inserting data into the Schema Registry
+  subject: alert-packet
