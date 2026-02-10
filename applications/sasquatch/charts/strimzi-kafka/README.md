@@ -11,6 +11,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | broker.enabled | bool | `false` | Enable node pool for the kafka brokers |
 | broker.name | string | `"kafka"` | Node pool name |
 | broker.nodeIds | string | `"[0,1,2]"` | IDs to assign to the brokers |
+| broker.replicas | int | `3` | Number of Kafka broker replicas to run |
 | broker.resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Kubernetes resources for the brokers |
 | broker.storage.size | string | `"1.5Ti"` | Storage size for the brokers |
 | broker.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
@@ -40,6 +41,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | controller.backup | bool | `false` | Whether to label the controller PVCs for backup by k8up, enabled on the summit and base environments |
 | controller.enabled | bool | `false` | Enable node pool for the kafka controllers |
 | controller.nodeIds | string | `"[3,4,5]"` | IDs to assign to the controllers |
+| controller.replicas | int | `3` | Number of kafka controllers to run |
 | controller.resources | object | `{"limits":{"cpu":"1","memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for the controllers |
 | controller.storage.size | string | `"20Gi"` | Storage size for the controllers |
 | controller.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
@@ -67,7 +69,6 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
 | kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
 | kafka.pauseReconciliation | bool | `false` | If Strimzi reconciliation of this resource should be paused: https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str |
-| kafka.replicas | int | `3` | Number of Kafka broker replicas to run |
 | kafka.version | string | `"4.1.0"` | Version of Kafka to deploy |
 | kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
 | kafkaExporter.enabled | bool | `false` | Enable Kafka exporter |
