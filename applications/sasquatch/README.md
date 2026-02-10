@@ -139,6 +139,17 @@ Rubin Observatory's telemetry service
 | trickster.resources.limits | object | `{"cpu":"200m","memory":"512Mi"}` | Kubernetes resource limits for Trickster |
 | trickster.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | Kubernetes resource requests and limits for Trickster |
 | alert-brokers.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Prompt Kafka chart. |
+| alert-stream-schema-sync.clusterName | string | `"sasquatch"` | Strimzi "cluster name" of the broker to use as a backend. |
+| alert-stream-schema-sync.compatibilityLevel | string | `"none"` | Compatibility level for the Schema Registry. Options are: none, backward, backward_transitive, forward, forward_transitive, full, and full_transitive. |
+| alert-stream-schema-sync.hostname | string | `nil` | Hostname for an ingress which sends traffic to the Schema Registry. |
+| alert-stream-schema-sync.name | string | `"sasquatch-schema-registry"` | Name used by the registry, and by its users. |
+| alert-stream-schema-sync.port | int | `8081` | Port where the registry is listening. NOTE: Not actually configurable in strimzi-registry-operator, so this basically cannot be changed. |
+| alert-stream-schema-sync.schemaSync | object | `{"image":{"pullPolicy":"Always","repository":"lsstdm/lsst_alert_packet","tag":"tickets-DM-53520"},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
+| alert-stream-schema-sync.schemaSync.image.repository | string | `"lsstdm/lsst_alert_packet"` | Repository of a container which has the alert_packet syncLatestSchemaToRegistry.py program. |
+| alert-stream-schema-sync.schemaSync.image.tag | string | `"tickets-DM-53520"` | Version of the container to use. If container isn't updating in Argo, switch to digest. |
+| alert-stream-schema-sync.schemaSync.subject | string | `"alert-packet"` | Subject name to use when inserting data into the Schema Registry |
+| alert-stream-schema-sync.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry to store data. |
+| alert-stream-schema-sync.tls | bool | `true` |  |
 | app-metrics.affinity | object | `{}` | Affinity for pod assignment |
 | app-metrics.apps | list | `[]` | A list of applications that will publish metrics events, and the keys that should be ingested into InfluxDB as tags.  The names should be the same as the app names in Phalanx. |
 | app-metrics.args | list | `[]` | Arguments passed to the Telegraf agent containers |
