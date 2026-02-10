@@ -18,4 +18,5 @@ applications:
   sasquatch: true
   s3-file-notifications: true
   strimzi: true
+  strimzi-registry-operator: true
   vault-secrets-operator: false
