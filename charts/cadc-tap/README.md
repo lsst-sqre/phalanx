@@ -21,7 +21,7 @@ IVOA TAP service
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
 | cloudsql.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `cadc-tap` Kubernetes service accounts and has the `cloudsql.client` role, access |
-| config.backend | string | None, must be set to `pg` or `qserv` | What type of backend are we connecting to? |
+| config.backend | string | None, must be set to `pg`, `qserv` or `bigquery` | What type of backend are we connecting to? |
 | config.bigquery.dataset | string | None, must be set if backend is `bigquery` | BigQuery dataset name |
 | config.bigquery.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.bigquery.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |

@@ -52,7 +52,7 @@ affinity: {}
 
 config:
   # -- What type of backend are we connecting to?
-  # @default -- None, must be set to `pg` or `qserv`
+  # @default -- None, must be set to `pg`, `qserv` or `bigquery`
   backend: ""
 
   pg:
