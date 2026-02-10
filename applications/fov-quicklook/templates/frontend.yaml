@@ -12,6 +12,9 @@ spec:
       labels:
         app: fov-quicklook-frontend
     spec:
+      securityContext:
+        supplementalGroups:
+          - 4085
       containers:
         - name: fov-quicklook-frontend
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
