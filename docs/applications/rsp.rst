@@ -9,6 +9,7 @@ Argo CD project: ``rsp``
 .. toctree::
    :maxdepth: 1
 
+   bigquery-kafka/index
    butler/index
    consdbtap/index
    datalinker/index
