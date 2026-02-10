@@ -107,6 +107,13 @@ alert-stream-broker:
 
   vaultSecretsPath: "secret/rubin/usdf-alert-stream-broker-dev/alert-stream-broker"
 
+  communityReadonlyTopics: &communityReadonlyTopics
+    - "alerts-simulated"
+    - "lsst-alerts-v9.0"
+    - "lsst-alerts-v10.0"
+    - "alerts-mock-data-challenge"
+    - "lsst-alerts-reprocessed-v10.0"
+
   users:
     # A user for development purposes by the Rubin team, with access to all
     # topics in readonly mode.
@@ -122,39 +129,39 @@ alert-stream-broker:
 
     # The actual community broker users
     - username: "alerce-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["alerce-idfint"]
 
     - username: "ampel-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["ampel-idfint"]
 
     - username: "antares-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["antares-idfint"]
 
     - username: "babamul-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["babamul-idfint"]
 
     - username: "fink-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["fink-idfint"]
 
     - username: "lasair-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["lasair-idfint"]
 
     - username: "pittgoogle-idfint"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["pittgoogle-idfint"]
 
     - username: "poi-usdf"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["poi-usdf"]
 
     - username: "snaps-usdf"
-      readonlyTopics: ["alerts-simulated", "lsst-alerts-v9.0", "lsst-alerts-v10.0", "alerts-mock-data-challenge"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["snaps-usdf"]
 
   testTopicName: alert-stream-test
@@ -186,6 +193,18 @@ alert-stream-broker:
   lsstcamTopicReplicasMDC: 1
   lsstcamMaxBytesRetainedMDC: "300000000000"
   lsstcamMaxMillisecondsRetainedMDC: "2629740000"
+
+  lsstcamTopicNameReprocess: lsst-alerts-reprocessed-v10.0
+  lsstcamTopicPartitionsReprocess: 45
+  lsstcamTopicReplicasReprocess: 1
+  lsstcamMaxBytesRetainedReprocess: "755000000000"
+  lsstcamMaxMillisecondsRetainedReprocess: "2629740000"
+
+  lsstcamTopicNameReprocessTest: lsst-alerts-reprocessed-v10.0-test
+  lsstcamTopicPartitionsReprocessTest: 45
+  lsstcamTopicReplicasReprocessTest: 1
+  lsstcamMaxBytesRetainedReprocessTest: "755000000000"
+  lsstcamMaxMillisecondsRetainedReprocessTest: "2629740000"
 
   # Compression set to snappy to balance alert packet compression speed and size.
   topicCompression: snappy
