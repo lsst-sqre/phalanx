@@ -719,6 +719,13 @@ love-producer:
   - name: mtm1m3ts
     csc: MTM1M3TS:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 50m
+        memory: 160Mi
+      limits:
+        cpu: 500m
+        memory: 300Mi
   - name: mtm2
     csc: MTM2:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
