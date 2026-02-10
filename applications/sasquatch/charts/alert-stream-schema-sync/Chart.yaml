@@ -1,0 +1,9 @@
+apiVersion: v2
+name: alert-stream-schema-sync
+version: 2.1.0
+description: Syncs data into schema registry
+maintainers:
+  - name: bsmart
+    email: drbsmart@uw.edu
+appVersion: 1.0.0
+type: application
