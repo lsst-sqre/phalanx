@@ -19,5 +19,6 @@ Guides
 
 .. toctree::
 
+   databases
    notes
    values
