@@ -465,6 +465,12 @@ controller:
       #   readOnly: true
       #   volumeName: "project"
 
+    # -- How frequently to restart a Kubernetes watch request. These
+    # connections can be dropped and throw a 400 error, or even be silently
+    # dropped in different Kubernetes enviroments. Setting this value can
+    # help prevent those things from happening.
+    watchReconnectTimeout: 3m
+
     metrics:
       # -- Whether to enable sending metrics
       enabled: false
