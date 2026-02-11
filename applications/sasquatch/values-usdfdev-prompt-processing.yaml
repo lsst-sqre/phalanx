@@ -231,7 +231,16 @@ kapacitor:
 schema-registry:
   enabled: true
   ingress:
-    enabled: false
+    enabled: true
+    anonymous: true
+    hostname: usdfdev-prompt-processing.slac.stanford.edu
+    annotations:
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        # Forbid everything except GET since this should be a read-only ingress
+        # to the schema registry.
+        limit_except GET {
+          deny all;
+        }
 
 strimzi-kafka:
   cluster:
