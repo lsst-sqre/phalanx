@@ -2,7 +2,7 @@ auxtel-ess201:
   enabled: true
   classifier: ess201
   image:
-    revision: 6
+    revision: 13
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
