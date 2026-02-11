@@ -66,7 +66,7 @@ config:
 
 kafka:
   # -- Kafka bootstrap server
-  bootstrap: "sasquatch-kafka-bootstrap.sasquatch:9092"
+  bootstrap: "sasquatch-summit-kafka-bootstrap.lsst.codes:9094"
   # -- Kafka Avro schema server URL
   schema_url: "http://sasquatch-schema-registry-remote.sasquatch:8081"
   # -- Username for SASL_PLAIN authentication
