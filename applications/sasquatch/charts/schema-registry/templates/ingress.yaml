@@ -20,7 +20,7 @@ template:
       {{- include "schema-registry.labels" . | nindent 6 }}
     annotations:
       {{- with .Values.ingress.annotations }}
-      {{ toYaml . | indent 6 }}
+      {{ toYaml . | nindent 6 }}
       {{- end }}
   spec:
     rules:
