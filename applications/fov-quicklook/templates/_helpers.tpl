@@ -65,3 +65,10 @@ rules:
   value: {{ .Values.ccd_data_types | toJson | quote }}
 {{- end }}
 {{- end }}
+
+{{- define "fov-quicklook.env.environment" -}}
+{{- if .Values.config.environment }}
+- name: QUICKLOOK_environment
+  value: {{ .Values.config.environment | quote }}
+{{- end }}
+{{- end }}
