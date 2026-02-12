@@ -1,0 +1,38 @@
+{{- if (index .Values "applications" "alloydb-auth-proxy") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "alloydb-auth-proxy"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "alloydb-auth-proxy"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "alloydb-auth-proxy"
+    server: "https://kubernetes.default.svc"
+  project: "rubin"
+  source:
+    path: "applications/alloydb-auth-proxy"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ or (index .Values "revisions" "alloydb-auth-proxy") .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.repertoireUrl"
+          value: "https://{{ .Values.fqdn }}/repertoire"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

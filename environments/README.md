@@ -6,6 +6,7 @@
 |-----|------|---------|-------------|
 | appOfAppsName | string | `"app-of-apps"` | Name of the parent Argo CD app-of-apps that manages all the applications enabled for this environment |
 | applications.alert-stream-broker | bool | `false` | Enable the alert-stream-broker application |
+| applications.alloydb-auth-proxy | bool | `false` | Enable the alloydb-auth-proxy application |
 | applications.argo-workflows | bool | `false` | Enable the argo-workflows application |
 | applications.argocd | bool | `true` | Enable the Argo CD application. This must be enabled for all environments and is present here only because it makes parsing easier |
 | applications.atlantis | bool | `false` | Enable the atlantis application |
