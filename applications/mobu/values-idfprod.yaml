@@ -21,6 +21,23 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
+    - name: "phalanx-recommended"
+      count: 1
+      users:
+        - username: "bot-mobu-phlx-rec"
+      scopes:
+        - "exec:internal-tools"
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+        - "write:sasquatch"
+      business:
+        type: "NotebookRunnerCounting"
+        options:
+          repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
+          repo_ref: "main"
+        restart: true
     - name: "tutorial"
       count: 1
       users:
