@@ -254,6 +254,11 @@
         "max_object_storage_usage": {
           "type": "number",
           "$comment": "Maximum allowed storage usage for object storage in bytes"
+        },
+        "environment": {
+          "type": "string",
+          "enum": ["production", "development", "test"],
+          "$comment": "Application environment mode. Controls dev-only features like generator kill API."
         }
       },
       "required": [
