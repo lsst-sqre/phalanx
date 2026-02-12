@@ -313,7 +313,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "3.14.0"
+    tag: "3.15.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
