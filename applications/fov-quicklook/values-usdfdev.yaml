@@ -3,6 +3,8 @@ config:
   max_object_storage_usage: 450_000_000_000
   environment: development
 admin_page: true
+image:
+  tag: feature-generator-resilience
 db_storage_class: wekafs--sdf-k8s01
 log_level: warning
 debug:
