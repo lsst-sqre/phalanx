@@ -30,6 +30,8 @@ spec:
           value: {{ .Values.vaultPathPrefix | quote }}
         - name: "global.environmentName"
           value: {{ .Values.name | quote }}
+        - name: "global.repertoireUrl"
+          value: "https://{{ .Values.fqdn }}/repertoire"
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"
