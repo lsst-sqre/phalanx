@@ -26,8 +26,11 @@ data:
       cls: lsst.daf.butler.datastores.chainedDatastore.ChainedDatastore
       datastores:
         - datastore:
-            # Most of the files are in a single bucket, except for raws.
-            name: FileDatastore
+            # Most of the files are in a single bucket.
+            # This datastore name and configuration need to match those
+            # of the USDF prompt_prep repo, which stores the files backing
+            # this S3 bucket.
+            name: "FileDatastore@<butlerRoot>"
             cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
             root: s3://slac@rubin-prompt/
             records:
