@@ -223,7 +223,7 @@ alert-database:
     serviceAccountName: alert-database-writer
 
     kafka:
-      cluster: alert-broker
+      cluster: sasquatch
       port: 9092
       topic:
         - lsst-alerts-v9.0
