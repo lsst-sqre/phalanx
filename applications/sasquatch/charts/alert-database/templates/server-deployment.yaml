@@ -68,5 +68,5 @@ spec:
       - name: alert-stream-broker-secrets
         secret:
           defaultMode: 420
-          secretName: alert-stream-broker-secrets
+          secretName: sasquatch
        {{- end }}
