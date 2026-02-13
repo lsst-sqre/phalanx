@@ -52,12 +52,12 @@ spec:
             - name: "AWS_ACCESS_KEY_ID"
               valueFrom:
                 secretKeyRef:
-                  name: alert-stream-broker-secrets
+                  name: sasquatch
                   key: "AWS_ACCESS_KEY_ID"
             - name: "AWS_SECRET_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:
-                  name: alert-stream-broker-secrets
+                  name: sasquatch
                   key: "AWS_SECRET_ACCESS_KEY"
           {{- end }}
 
