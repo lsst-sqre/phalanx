@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "alertDatabase.serverName" . }}
+  labels:
+    {{- include "alertDatabase.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "alertDatabase.serverSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "alertDatabase.serverSelectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: "alert-database-server"
+          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /v1/health
+              port: http
+          command:
+            - "alertdb"
+            - "--listen-host=0.0.0.0"
+            - "--listen-port=3000"
+            - "--backend=s3-remote"
+            - "--endpoint-url={{ required "An endpoint URL is required " .Values.storage.s3.endpointURL }}"
+            - "--bucket-alerts={{ required "An alert bucket name is required " .Values.storage.s3.alertBucket }}"
+            - "--bucket-schemas={{ required "A schema bucket name is required " .Values.storage.s3.schemaBucket }}"
+            {{- if eq .Values.ingester.logLevel "debug" }}
+            - "--debug"
+            {{- end }}
+            {{- if eq .Values.ingester.logLevel "verbose" }}
+            - "--verbose"
+            {{- end }}
+          env:
+          {{- if .Values.ingester.s3.usdf }}
+            - name: "AWS_ENDPOINT_URL"
+              value: {{ .Values.storage.s3.endpointURL}}
+            - name: "AWS_ACCESS_KEY_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: sasquatch
+                  key: "AWS_ACCESS_KEY_ID"
+            - name: "AWS_SECRET_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: sasquatch
+                  key: "AWS_SECRET_ACCESS_KEY"
+          {{- end }}
+      serviceAccountName: "{{ .Values.server.serviceAccountName }}"
+      volumes:
+      {{- if .Values.ingester.s3.usdf }}
+      - name: alert-stream-broker-secrets
+        secret:
+          defaultMode: 420
+          secretName: sasquatch
+       {{- end }}
