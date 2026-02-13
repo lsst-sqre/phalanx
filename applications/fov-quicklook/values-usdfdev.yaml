@@ -6,7 +6,7 @@ admin_page: true
 image:
   tag: feature-generator-resilience
 db_storage_class: wekafs--sdf-k8s01
-log_level: warning
+log_level: info
 debug:
   jupyter: true
   username: koike
