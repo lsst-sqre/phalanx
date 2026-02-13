@@ -1,0 +1,39 @@
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaUser
+metadata:
+  name: {{ .Values.ingester.kafka.user }}
+  labels:
+    strimzi.io/cluster: {{ .Values.ingester.kafka.cluster }}
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      # Allow read and describe on the source topics
+      {{- range $idx, $topic := .Values.ingester.kafka.topic }}
+      - resource:
+          type: topic
+          name: {{ $topic }}
+          patternType: literal
+        operations:
+         - Read
+         - Describe
+        type: allow
+      {{- end }}
+      # Allow all on the __consumer_offsets topic
+      - resource:
+          type: topic
+          name: "__consumer_offsets"
+          patternType: literal
+        operations: [All]
+        type: allow
+      # Allow running as a consumer group
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operations:
+          - Read
+          - Describe
+        type: allow

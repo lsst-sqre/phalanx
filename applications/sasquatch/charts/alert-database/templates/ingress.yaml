@@ -1,0 +1,45 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ template "alertDatabase.fullname" . }}
+  labels:
+    {{- include "alertDatabase.labels" . | nindent 4 }}
+config:
+  scopes:
+    all:
+      - "read:alertdb"
+  service: "alert-stream-broker"
+template:
+  metadata:
+    name: {{ template "alertDatabase.fullname" . }}
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+      {{- with .Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+    labels:
+      {{- include "alertDatabase.labels" . | nindent 6 }}
+  spec:
+    rules:
+      - host: {{ required "ingress.host must be set" .Values.ingress.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.ingress.path }}(/|$)(.*)"
+              pathType: ImplementationSpecific
+              backend:
+                service:
+                  name: {{ template "alertDatabase.fullname" . }}
+                  port:
+                    name: http
+    {{- if .Values.ingress.tls }}
+    tls:
+      {{- range .Values.ingress.tls }}
+      - hosts:
+          {{- range .hosts }}
+          - {{ . | quote }}
+          {{- end }}
+        secretName: {{ .secretName }}
+      {{- end }}
+    {{- end }}
+{{- end }}

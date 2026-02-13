@@ -210,6 +210,29 @@ alert-brokers:
           operations:
             - "Read"
 
+alert-database:
+  enabled: true
+
+  ingester:
+    # The image can use either a tag or a digest to determine which is being used.
+    image:
+      tag: v3.4.0
+
+    logLevel: verbose
+
+    schemaRegistryURL: http://sasquatch-schema-registry.sasquatch-schema-registry:8081/schema-registry
+
+    serviceAccountName: alert-database-writer
+
+    kafka:
+      cluster: sasquatch
+      topic:
+        - lsst-alerts-v9.0
+        - lsst-alerts-v10.0
+
+  ingress:
+    enabled: true
+    host: usdfdev-prompt-processing.slac.stanford.edu
 
 chronograf:
   enabled: false

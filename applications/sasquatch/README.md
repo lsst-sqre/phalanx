@@ -139,6 +139,42 @@ Rubin Observatory's telemetry service
 | trickster.resources.limits | object | `{"cpu":"200m","memory":"512Mi"}` | Kubernetes resource limits for Trickster |
 | trickster.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | Kubernetes resource requests and limits for Trickster |
 | alert-brokers.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Prompt Kafka chart. |
+| alert-database.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| alert-database.ingester.image.imagePullPolicy | string | `"Always"` |  |
+| alert-database.ingester.image.repository | string | `"lsstdm/alert_database_ingester"` |  |
+| alert-database.ingester.image.tag | string | `"v3.4.0"` |  |
+| alert-database.ingester.kafka.cluster | string | `"sasquatch"` | Name of a Strimzi Kafka cluster to connect to. |
+| alert-database.ingester.kafka.port | int | `9093` | Port to connect to on the Strimzi Kafka cluster. It should be an internal listener that expects TLS auth. |
+| alert-database.ingester.kafka.topic | string | `"alerts-simulated"` | Name of the topic which will holds alert data. |
+| alert-database.ingester.kafka.user | string | `"alert-database-ingester"` | The username of the Kafka user identity used to connect to the broker. |
+| alert-database.ingester.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
+| alert-database.ingester.s3.alertBucket | string | `"rubin-alert-archive"` |  |
+| alert-database.ingester.s3.endpointURL | string | `"https://sdfdatas3.slac.stanford.edu/"` |  |
+| alert-database.ingester.s3.schemaBucket | string | `"rubin-alert-archive"` |  |
+| alert-database.ingester.s3.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
+| alert-database.ingester.s3.usdf | bool | `true` |  |
+| alert-database.ingester.schemaRegistryURL | string | `""` | URL of a schema registry instance |
+| alert-database.ingester.serviceAccountName | string | `"alert-database-ingester"` | The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM service account!) which is used by the alert database ingester. |
+| alert-database.ingress.annotations | object | `{}` |  |
+| alert-database.ingress.enabled | bool | `true` | Whether to create an ingress |
+| alert-database.ingress.host | string | None, must be set if the ingress is enabled | Hostname for the ingress |
+| alert-database.ingress.path | string | `"/v1"` | Subpath to host the alert database application under the ingress |
+| alert-database.ingress.tls | list | `[]` | Configures TLS for the ingress if needed. If multiple ingresses share the same hostname, only one of them needs a TLS configuration. |
+| alert-database.nameOverride | string | `""` | Override the base name for resources |
+| alert-database.server.image.imagePullPolicy | string | `"Always"` |  |
+| alert-database.server.image.repository | string | `"lsstdm/alert_database_server"` |  |
+| alert-database.server.image.tag | string | `"v3.1.0"` |  |
+| alert-database.server.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
+| alert-database.server.s3.alertBucket | string | `"rubin-alert-archive"` |  |
+| alert-database.server.s3.endpointURL | string | `"https://sdfdatas3.slac.stanford.edu/ "` | Project ID which has the above GCP IAM service account |
+| alert-database.server.s3.schemaBucket | string | `"rubin-alert-archive"` |  |
+| alert-database.server.s3.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
+| alert-database.server.service.port | int | `3000` |  |
+| alert-database.server.service.type | string | `"ClusterIP"` |  |
+| alert-database.server.serviceAccountName | string | `"alertdb-reader"` | The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM service account!) which is used by the alert database server. |
+| alert-database.storage.s3.alertBucket | string | `"rubin-alert-archive"` | Name of a s3 storage bucket with alert data |
+| alert-database.storage.s3.endpointURL | string | `"https://sdfdatas3.slac.stanford.edu/"` |  |
+| alert-database.storage.s3.schemaBucket | string | `"rubin-alert-archive"` | Name of a s3 storage bucket with schema data |
 | alert-stream-schema-sync.clusterName | string | `"sasquatch"` | Strimzi "cluster name" of the broker to use as a backend. |
 | alert-stream-schema-sync.compatibilityLevel | string | `"none"` | Compatibility level for the Schema Registry. Options are: none, backward, backward_transitive, forward, forward_transitive, full, and full_transitive. |
 | alert-stream-schema-sync.hostname | string | `nil` | Hostname for an ingress which sends traffic to the Schema Registry. |

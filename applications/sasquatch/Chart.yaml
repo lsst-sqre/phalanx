@@ -118,6 +118,9 @@ dependencies:
   - name: alert-brokers
     condition: alert-brokers.enabled
     version: 1.0.0
+  - name: alert-database
+    condition: alert-database.enabled
+    version: 3.0.0
   - name: alert-stream-schema-sync
     condition: alert-stream-schema-sync.enabled
     version: 2.1.0
