@@ -30,7 +30,7 @@ Full focal plane viewer
 | frontend.replicas | int | `2` |  |
 | frontend.resources.limits | object | `{"cpu":"8000m","memory":"512Mi"}` | Resource limits for the frontend |
 | frontend.resources.requests | object | `{"cpu":"100m","memory":"512Mi"}` | Resource requests for the frontend |
-| generator.concurrency | int | `20` | Number of concurrent tile generations |
+| generator.concurrency | int | `10` | Number of concurrent tile generations |
 | generator.local_storage | object | `{"sizeLimit":"32Gi"}` | Local storage configuration for the generator |
 | generator.replicas | int | `8` | Number of replicas for the generator |
 | generator.resources.limits | object | `{"cpu":"12000m","memory":"8Gi"}` | Resource limits for the generator |
