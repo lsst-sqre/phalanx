@@ -5,7 +5,7 @@ version: 1.0.0
 description: "BigQuery Kafka bridge"
 sources:
   - "https://github.com/lsst-sqre/qserv-kafka"
-appVersion: 4.2.0
+appVersion: 4.3.1
 
 dependencies:
   - name: "redis"
