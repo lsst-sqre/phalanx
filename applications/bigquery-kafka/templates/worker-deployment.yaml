@@ -28,7 +28,7 @@ spec:
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      automountServiceAccountToken: false
+      automountServiceAccountToken: true
       serviceAccountName: "bigquery-kafka"
       containers:
         - name: "{{ .Chart.Name }}-worker"

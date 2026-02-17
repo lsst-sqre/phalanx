@@ -47,25 +47,11 @@ Common environment variables
     secretKeyRef:
       name: "bigquery-kafka-token"
       key: "token"
-{{- if eq .Values.config.backend "Qserv" }}
-- name: "QSERV_KAFKA_QSERV_DATABASE_PASSWORD"
-  valueFrom:
-    secretKeyRef:
-      name: "bigquery-kafka"
-      key: "qserv-password"
-{{- end }}
 - name: "QSERV_KAFKA_REDIS_PASSWORD"
   valueFrom:
     secretKeyRef:
       name: "bigquery-kafka"
       key: "redis-password"
-{{- if .Values.config.qservRestUsername }}
-- name: "QSERV_KAFKA_QSERV_REST_PASSWORD"
-  valueFrom:
-    secretKeyRef:
-      name: "bigquery-kafka"
-      key: "qserv-password"
-{{- end }}
 {{- if .Values.config.slack.enabled }}
 - name: "QSERV_KAFKA_SLACK_WEBHOOK"
   valueFrom:

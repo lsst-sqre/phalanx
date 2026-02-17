@@ -19,10 +19,10 @@ spec:
           affinity:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          automountServiceAccountToken: false
+          automountServiceAccountToken: true
           containers:
             - name: periodic-metrics
-              command: ["bigquery-kafka", "publish-periodic-metrics"]
+              command: ["qserv-kafka", "publish-periodic-metrics"]
               env:
               {{- include "bigquery-kafka.envVars" (dict "Values" .Values) | nindent 14 }}
               envFrom:

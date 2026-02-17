@@ -17,4 +17,4 @@ redis:
     enabled: true
 
 resultWorker:
-  allowRootDebug: true
+  allowRootDebug: false
