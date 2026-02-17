@@ -46,7 +46,7 @@ server:
   port: 9000
 
 # -- The endpoint of Schema Registry
-schemaRegistry: "http://prompt-kafka-schema-registry:8081"
+schemaRegistry: ""
 
 # -- Existing Kubernetes secret use to set kafdrop environment variables.
 # Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form

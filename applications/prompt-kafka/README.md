@@ -40,7 +40,7 @@ Kafka environment for Prompt Processing
 | kafdrop.podAnnotations | object | `{}` | Pod annotations |
 | kafdrop.replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
 | kafdrop.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafdrop |
-| kafdrop.schemaRegistry | string | `"http://prompt-kafka-schema-registry:8081"` | The endpoint of Schema Registry |
+| kafdrop.schemaRegistry | string | `""` | The endpoint of Schema Registry |
 | kafdrop.server.port | int | `9000` | The web server port to listen on |
 | kafdrop.server.servlet.contextPath | string | `"/kafdrop"` | The context path to serve requests on |
 | kafdrop.service.annotations | object | `{}` | Additional annotations to add to the service |
