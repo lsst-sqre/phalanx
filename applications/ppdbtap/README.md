@@ -9,6 +9,7 @@ TAP service for the ppdb BigQuery backend
 | cadc-tap.config.backend | string | `"bigquery"` | What type of backend? |
 | cadc-tap.config.bigquery | object | `{"schema":"ppdb"}` | BigQuery configuration |
 | cadc-tap.config.bigquery.schema | string | `"ppdb"` | Schema name for table mappings (default: ppdb) |
+| cadc-tap.config.database | string | `"ppdb"` | Data database name (unused for BigQuery backend, but must be set) |
 | cadc-tap.config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
 | cadc-tap.config.serviceName | string | `"ppdbtap"` | Name of the service from Gafaelfawr's perspective |
 | cadc-tap.config.vaultSecretName | string | `"ppdbtap"` | Vault secret name: the final key in the vault path |

@@ -27,6 +27,7 @@ IVOA TAP service
 | config.bigquery.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
 | config.bigquery.image.tag | string | `"3.15.0"` | Tag of TAP image to use |
 | config.bigquery.project | string | None, must be set if backend is `bigquery` | BigQuery project ID |
+| config.bigquery.schema | string | `""` | Schema name for table mappings (optional) |
 | config.database | string | `"dp02"` | Data Database name |
 | config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/w.2026.01/datalink-snippets.zip"` | Datalink payload URL |
 | config.gcsBucket | string | `"async-results.lsst.codes"` | Name of GCS bucket in which to store results |

@@ -109,6 +109,9 @@ config:
     # @default -- None, must be set if backend is `bigquery`
     dataset: ""
 
+    # -- Schema name for table mappings (optional)
+    schema: ""
+
     image:
       # -- TAP image to use
       repository: "ghcr.io/lsst-sqre/lsst-tap-service"

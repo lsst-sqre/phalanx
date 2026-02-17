@@ -7,6 +7,9 @@ cadc-tap:
     # -- What type of backend?
     backend: "bigquery"
 
+    # -- Data database name (unused for BigQuery backend, but must be set)
+    database: "ppdb"
+
     # -- BigQuery configuration
     bigquery:
       # -- Schema name for table mappings (default: ppdb)
