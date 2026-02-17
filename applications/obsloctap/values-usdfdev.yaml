@@ -31,3 +31,6 @@ controller:
   config:
     safir:
       logLevel: "None"
+
+kafka:
+  sasquatchAddress: 10.100.226.209:9094
