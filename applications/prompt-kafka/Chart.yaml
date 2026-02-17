@@ -12,6 +12,7 @@ dependencies:
   - name: strimzi-kafka
     version: 1.0.0
   - name: strimzi-registry-operator
+    condition: strimzi-registry-operator.enabled
     version: 2.1.0
     repository: https://lsst-sqre.github.io/charts/
   - name: kafdrop

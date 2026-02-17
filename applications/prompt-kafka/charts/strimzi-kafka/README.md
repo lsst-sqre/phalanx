@@ -42,6 +42,7 @@ A subchart to deploy Strimzi Kafka components for Prompt Processing.
 | kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
 | kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
 | kraft.enabled | bool | `false` | Enable KRaft mode for Kafka |
+| registry.enabled | bool | `false` | Whether to enable the Schema Registry |
 | registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |

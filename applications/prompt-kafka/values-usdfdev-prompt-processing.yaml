@@ -37,6 +37,9 @@ strimzi-kafka:
             metallb.io/address-pool: sdf-rubin-ingest
             metallb.io/loadBalancerIPs: 172.24.10.84
 
+strimzi-registry-operator:
+  enabled: false
+
 butler-writer:
   enabled: true
   topics:

@@ -1,3 +1,4 @@
+{{- if .Values.registry.enabled }}
 apiVersion: roundtable.lsst.codes/v1beta1
 kind: StrimziSchemaRegistry
 metadata:
@@ -64,3 +65,4 @@ spec:
         operations:
         - Describe
         type: allow
+{{- end }}
