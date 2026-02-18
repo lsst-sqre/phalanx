@@ -80,5 +80,17 @@ Campaign Management for Rubin Data Release Production
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the frontend image |
 | image.repository | string | `"ghcr.io/lsst-dm/cm-service"` | Image to use for frontend containers |
 | image.tag | string | The appVersion of the chart | Tag of frontend image to use |
-| ingress.annotations | object | `{}` | Additional annotations for the frontend ingress rule |
+| ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | internalDB | bool | `false` | Whether to use the internal (phalanx) database |
+| web.affinity | object | `{}` | Affinity rules for the web pods |
+| web.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the web image |
+| web.image.repository | string | `"ghcr.io/lsst-dm/cm-web"` | Image to use for web containers |
+| web.image.tag | string | The appVersion of the chart | Tag of web image to use |
+| web.nodeSelector | object | `{}` | Node selection rules for the web pods |
+| web.podAnnotations | object | `{}` | Annotations for the web pods |
+| web.replicaCount | int | `1` | Number of web pods to start |
+| web.resources | object | See `values.yaml` | Resource limits and requests for the web pods |
+| web.rootPath | string | `"/gui"` | ASGI Root path for application |
+| web.security.gid | int | `65532` | Effective GID for nonroot user |
+| web.security.uid | int | `65532` | Effective UID for nonroot user |
+| web.tolerations | list | `[]` | Tolerations for the web pods |

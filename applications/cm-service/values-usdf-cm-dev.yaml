@@ -73,3 +73,8 @@ daemon:
     repository: "ghcr.io/lsst-dm/cm-worker"
     tag: "0.7.0"
     pullPolicy: IfNotPresent
+
+web:
+  image:
+    tag: "0.70"
+    pullPolicy: IfNotPresent
