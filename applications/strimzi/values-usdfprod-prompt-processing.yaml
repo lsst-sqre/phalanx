@@ -7,4 +7,5 @@ strimzi-kafka-operator:
   watchNamespaces:
     - "prompt-kafka"
     - "s3-file-notifications"
+    - "sasquatch"
   logLevel: "INFO"
