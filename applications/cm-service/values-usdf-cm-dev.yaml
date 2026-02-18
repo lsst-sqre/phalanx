@@ -62,7 +62,7 @@ config:
     useNativeHttplib: "1"
 
 image:
-  tag: "tickets-DM-53781-canvas"
+  tag: "tickets-DM-54155-web_pod"
   pullPolicy: Always
 
 daemon:
@@ -71,5 +71,10 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "tickets-DM-53781-canvas"
+    tag: "tickets-DM-54155-web_pod"
+    pullPolicy: Always
+
+web:
+  image:
+    tag: "tickets-DM-54155-web_pod"
     pullPolicy: Always

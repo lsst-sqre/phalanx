@@ -98,3 +98,16 @@ data:
   {{- range $key, $val := .Values.config.features }}
   FEATURE_{{ $key }}: {{ $val | quote }}
   {{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ .Chart.Name }}-config-web"
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+data:
+  CM_ENDPOINT: "http://{{ .Chart.Name }}:8080{{ .Values.config.pathPrefix }}"
+  CM_API_VERSION: v2
+  CM_SERVER_PORT: "8080"
+  CM_ROOT_PATH: "{{ .Values.web.rootPath }}"
+  CM_PRODUCTION: "1"

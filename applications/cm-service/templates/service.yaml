@@ -14,3 +14,20 @@ spec:
   selector:
     {{- include "application.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: "frontend"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .Chart.Name }}-web"
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: 8080
+      targetPort: "http"
+      protocol: "TCP"
+      name: "http"
+  selector:
+    {{- include "application.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: "web"

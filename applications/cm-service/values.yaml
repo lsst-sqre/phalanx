@@ -169,7 +169,7 @@ image:
   tag: null
 
 ingress:
-  # -- Additional annotations for the frontend ingress rule
+  # -- Additional annotations for the ingress rule
   annotations: {}
 
 frontend:
@@ -251,6 +251,53 @@ daemon:
   podAnnotations: {}
 
   # -- Tolerations for the daemon pods
+  tolerations: []
+
+web:
+  # -- Number of web pods to start
+  replicaCount: 1
+
+  # -- ASGI Root path for application
+  rootPath: "/gui"
+
+  security:
+    # -- Effective UID for nonroot user
+    uid: 65532
+
+    # -- Effective GID for nonroot user
+    gid: 65532
+
+  image:
+    # -- Image to use for web containers
+    repository: "ghcr.io/lsst-dm/cm-web"
+
+    # -- Pull policy for the web image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of web image to use
+    # @default -- The appVersion of the chart
+    tag: null
+
+  # -- Resource limits and requests for the web pods
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "0.1"
+      memory: "550Mi"
+
+  # -- Affinity rules for the web pods
+  affinity: {}
+
+  # -- Node selection rules for the web pods
+  nodeSelector: {}
+
+  # -- Annotations for the web pods
+  podAnnotations: {}
+
+  # -- Tolerations for the web pods
   tolerations: []
 
 # The following will be set by parameters injected by Argo CD and should not
