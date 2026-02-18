@@ -20,7 +20,7 @@ dependencies:
     version: 3.0.0
 
   - name: strimzi-registry-operator
-    version: 2.1.0
+    version: 2.1.3
     repository: https://lsst-sqre.github.io/charts/
 
 annotations:
