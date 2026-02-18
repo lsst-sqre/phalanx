@@ -211,7 +211,7 @@ alert-brokers:
             - "Read"
 
 alert-database:
-  enabled: false
+  enabled: true
 
   ingester:
     # The image can use either a tag or a digest to determine which is being used.
