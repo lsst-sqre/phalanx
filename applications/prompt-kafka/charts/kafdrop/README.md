@@ -30,7 +30,7 @@ A subchart to deploy the Kafdrop UI.
 | podAnnotations | object | `{}` | Pod annotations |
 | replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
 | resources | object | See `values.yaml` | Kubernetes requests and limits for Kafdrop |
-| schemaRegistry | string | `"http://prompt-kafka-schema-registry:8081"` | The endpoint of Schema Registry |
+| schemaRegistry | string | `""` | The endpoint of Schema Registry |
 | server.port | int | `9000` | The web server port to listen on |
 | server.servlet.contextPath | string | `"/kafdrop"` | The context path to serve requests on |
 | service.annotations | object | `{}` | Additional annotations to add to the service |
