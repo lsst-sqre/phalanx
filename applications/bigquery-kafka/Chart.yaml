@@ -1,8 +1,8 @@
 apiVersion: v2
-name: qserv-kafka
+name: bigquery-kafka
 type: application
 version: 1.0.0
-description: "Qserv Kafka bridge"
+description: "BigQuery Kafka bridge"
 sources:
   - "https://github.com/lsst-sqre/qserv-kafka"
 appVersion: 4.3.1
@@ -14,6 +14,6 @@ dependencies:
 
 annotations:
   phalanx.lsst.io/docs: |
-    - id: "SQR-097"
-      title: "TAP over QServ using an event-based architecture"
-      url: "https://sqr-097.lsst.io/"
+    - id: "SQR-109"
+      title: "BigQuery Kafka-based TAP service"
+      url: "https://sqr-109.lsst.io/"

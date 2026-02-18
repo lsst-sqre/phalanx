@@ -15,6 +15,7 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/idfint"
 
 applications:
+  bigquery-kafka: true
   butler: true
   datalinker: true
   ghostwriter: true
