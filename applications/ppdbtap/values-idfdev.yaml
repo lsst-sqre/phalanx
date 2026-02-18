@@ -1,0 +1,32 @@
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstsqre/tap-schema-idfint-ppdbtap"
+      tag: "tickets-DM-51914"
+      pullPolicy: "Always"
+
+  config:
+    backend: "bigquery"
+    kafka:
+      enabled: true
+      kafkaUserName: "ppdbtap"
+      consumerGroupId: "ppdbtap"
+      topics:
+        jobRun: "lsst.ppdbtap.job-run"
+        jobStatus: "lsst.ppdbtap.job-status"
+        jobDelete: "lsst.ppdbtap.job-delete"
+
+    urlRewrite:
+      enabled: true
+      rules: "ivoa.ObsCore:access_url"
+
+    bigquery:
+      project: "ppdb-dev-438721"
+      dataset: "ppdb_lsstcam"
+      schema: "ppdb"
+
+  cloudsql:
+    enabled: true
+    instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
+    serviceAccount: "ppdbtap@science-platform-dev-7696.iam.gserviceaccount.com"
+    database: "ppdbtap"

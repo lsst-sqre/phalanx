@@ -21,15 +21,23 @@ IVOA TAP service
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
 | cloudsql.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `cadc-tap` Kubernetes service accounts and has the `cloudsql.client` role, access |
-| config.backend | string | None, must be set to `pg` or `qserv` | What type of backend are we connecting to? |
+| config.backend | string | None, must be set to `pg`, `qserv` or `bigquery` | What type of backend are we connecting to? |
+| config.bigquery.dataset | string | None, must be set if backend is `bigquery` | BigQuery dataset name |
+| config.bigquery.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
+| config.bigquery.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
+| config.bigquery.image.tag | string | `"3.15.0"` | Tag of TAP image to use |
+| config.bigquery.project | string | None, must be set if backend is `bigquery` | BigQuery project ID |
+| config.bigquery.schema | string | `""` | Schema name for table mappings (optional) |
 | config.database | string | `"dp02"` | Data Database name |
 | config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/w.2026.01/datalink-snippets.zip"` | Datalink payload URL |
 | config.gcsBucket | string | `"async-results.lsst.codes"` | Name of GCS bucket in which to store results |
 | config.gcsBucketType | string | `"GCS"` | GCS bucket type (GCS or S3) |
 | config.gcsBucketUrl | string | `"https://storage.googleapis.com"` | Base URL for results stored in GCS bucket |
 | config.jvmMaxHeapSize | string | `"31G"` | Java heap size, which will set the maximum size of the heap. Otherwise Java would determine it based on how much memory is available and black maths. |
-| config.kafka | object | `{"enabled":false,"topics":{"jobDelete":"lsst.tap.job-delete","jobRun":"lsst.tap.job-run","jobStatus":"lsst.tap.job-status"}}` | Kafka configuration |
+| config.kafka | object | `{"consumerGroupId":"tap","enabled":false,"kafkaUserName":"tap","topics":{"jobDelete":"lsst.tap.job-delete","jobRun":"lsst.tap.job-run","jobStatus":"lsst.tap.job-status"}}` | Kafka configuration |
+| config.kafka.consumerGroupId | string | "tap" | Kafka consumer group ID. |
 | config.kafka.enabled | bool | `false` | Whether kafka is enabled |
+| config.kafka.kafkaUserName | string | "tap" | Name of the KafkaUser to use for authentication |
 | config.kafka.topics | object | `{"jobDelete":"lsst.tap.job-delete","jobRun":"lsst.tap.job-run","jobStatus":"lsst.tap.job-status"}` | Kafka topics |
 | config.kafka.topics.jobDelete | string | `"lsst.tap.job-delete"` | Job Delete topic |
 | config.kafka.topics.jobRun | string | `"lsst.tap.job-run"` | Job Run topic |
@@ -43,7 +51,7 @@ IVOA TAP service
 | config.qserv.host | string | `"mock-db:3306"` (the mock QServ) | QServ hostname:port to connect to |
 | config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.qserv.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
-| config.qserv.image.tag | string | `"3.14.0"` | Tag of TAP image to use |
+| config.qserv.image.tag | string | `"3.15.0"` | Tag of TAP image to use |
 | config.qserv.jdbcParams | string | `""` | Extra JDBC connection parameters |
 | config.qserv.passwordEnabled | bool | false | Whether the Qserv database is password protected |
 | config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
@@ -107,7 +115,7 @@ IVOA TAP service
 | uws.external.port | int | `5432` | Port of external PostgreSQL server |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
 | uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
-| uws.image.tag | string | `"3.14.0"` | Tag of UWS database image to use |
+| uws.image.tag | string | `"3.15.0"` | Tag of UWS database image to use |
 | uws.maxActive | int | `5` | Maximum active connections (maxIdle will be set to this value) |
 | uws.nodeSelector | object | `{}` | Node selection rules for the UWS database pod |
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |

@@ -25,6 +25,7 @@ applications:
   noteburst: true
   nublado: true
   portal: true
+  ppdbtap: true
   qserv-kafka: true
   rubin-rag: true
   sasquatch-backpack: true

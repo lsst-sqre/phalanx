@@ -1,0 +1,57 @@
+cadc-tap:
+  ingress:
+    # -- Ingress path that should be routed to this service
+    path: "ppdbtap"
+
+  config:
+    # -- What type of backend?
+    backend: "bigquery"
+
+    # -- Data database name (unused for BigQuery backend, but must be set)
+    database: "ppdb"
+
+    # -- BigQuery configuration
+    bigquery:
+      # -- Schema name for table mappings (default: ppdb)
+      schema: "ppdb"
+
+    # -- Vault secret name: the final key in the vault path
+    vaultSecretName: "ppdbtap"
+
+    # -- Name of the service from Gafaelfawr's perspective
+    serviceName: "ppdbtap"
+
+    # -- Whether Sentry is enabled in this environment
+    sentryEnabled: false
+
+  serviceAccount:
+    # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
+    name: "ppdbtap"
+
+  uws:
+    # -- Database backend type: "containerized", "cloudsql", or "external"
+    type: "cloudsql"
+
+    # -- Database name
+    database: "ppdbtap"
+
+    # -- Database username
+    username: "ppdbtap"
+
+    # -- Whether the UWS database requires a password in Vault (true for cloudsql/external)
+    useVaultPassword: true
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

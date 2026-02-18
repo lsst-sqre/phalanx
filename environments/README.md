@@ -54,6 +54,7 @@
 | applications.portal | bool | `false` | Enable the portal application |
 | applications.postgres | bool | `false` | Enable the in-cluster PostgreSQL server. Use of this server is discouraged in favor of using infrastructure SQL, but will remain supported for use cases such as minikube test deployments. |
 | applications.ppdb-replication | bool | `false` | Enable the ppdb-replication application |
+| applications.ppdbtap | bool | `false` | Enable the ppdbtap application |
 | applications.production-tools | bool | `false` | Enable the production-tools application |
 | applications.prompt-kafka | bool | `false` | Enable the prompt-kafka application |
 | applications.prompt-keda-hsc | bool | `false` | Enable the prompt-keda-hsc application |
