@@ -1,0 +1,366 @@
+alert-brokers:
+  enabled: true
+
+  topics:
+    - name: alert-stream-test
+      partitions: 400
+      replicas: 1
+    - name: alerts-simulated
+      partitions: 45
+      replicas: 1
+    - name: lsst-alerts-v9.0
+      partitions: 45
+      replicas: 1
+      bytesRetained: "755000000000"
+      millisecondsRetained: "2629740000"
+    - name: lsst-alerts-v10.0
+      partitions: 45
+      replicas: 1
+      bytesRetained: "300000000000"
+      millisecondsRetained: "2629740000"
+    - name: alerts-mock-data-challenge
+      partitions: 45
+      replicas: 1
+      bytesRetained: "300000000000"
+      millisecondsRetained: "2629740000"
+
+  users:
+
+    # A user for development purposes by the Rubin team, with access to all
+    # topics in readonly mode.
+    - username: "rubin-devel-idfint"
+      topics:
+        - name: "*"
+          operations:
+            - "Read"
+      groups:
+        - name: "rubin-devel-idfint"
+          operations:
+            - "Read"
+
+    # The community broker users
+    - username: "alerce-idfint"
+      topics:
+        - name: "alerts-simulated"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v9.0"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v10.0"
+          operations:
+            - "Read"
+        - name: "alerts-mock-data-challenge"
+          operations:
+            - "Read"
+      groups:
+        - name: "alerce-idfint"
+          operations:
+            - "Read"
+
+    - username: "ampel-idfint"
+      topics:
+        - name: "alerts-simulated"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v9.0"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v10.0"
+          operations:
+            - "Read"
+        - name: "alerts-mock-data-challenge"
+          operations:
+            - "Read"
+      groups:
+        - name: "ampel-idfint"
+          operations:
+            - "Read"
+
+    - username: "antares-idfint"
+      topics:
+        - name: "alerts-simulated"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v9.0"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v10.0"
+          operations:
+            - "Read"
+        - name: "alerts-mock-data-challenge"
+          operations:
+            - "Read"
+      groups:
+        - name: "antares-idfint"
+          operations:
+            - "Read"
+
+    - username: "babamul-idfint"
+      topics:
+        - name: "alerts-simulated"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v9.0"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v10.0"
+          operations:
+            - "Read"
+        - name: "alerts-mock-data-challenge"
+          operations:
+            - "Read"
+      groups:
+        - name: "babamul-idfint"
+          operations:
+            - "Read"
+
+    - username: "fink-idfint"
+      topics:
+        - name: "alerts-simulated"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v9.0"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v10.0"
+          operations:
+            - "Read"
+        - name: "alerts-mock-data-challenge"
+          operations:
+            - "Read"
+      groups:
+        - name: "fink-idfint"
+          operations:
+            - "Read"
+
+    - username: "lasair-idfint"
+      topics:
+        - name: "alerts-simulated"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v9.0"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v10.0"
+          operations:
+            - "Read"
+        - name: "alerts-mock-data-challenge"
+          operations:
+            - "Read"
+      groups:
+        - name: "lasair-idfint"
+          operations:
+            - "Read"
+
+    - username: "pittgoogle-idfint"
+      topics:
+        - name: "alerts-simulated"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v9.0"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v10.0"
+          operations:
+            - "Read"
+        - name: "alerts-mock-data-challenge"
+          operations:
+            - "Read"
+      groups:
+        - name: "pittgoogle-idfint"
+          operations:
+            - "Read"
+
+    - username: "poi-usdf"
+      topics:
+        - name: "alerts-simulated"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v9.0"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v10.0"
+          operations:
+            - "Read"
+        - name: "alerts-mock-data-challenge"
+          operations:
+            - "Read"
+      groups:
+        - name: "poi-usdf"
+          operations:
+            - "Read"
+
+    - username: "snaps-usdf"
+      topics:
+        - name: "alerts-simulated"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v9.0"
+          operations:
+            - "Read"
+        - name: "lsst-alerts-v10.0"
+          operations:
+            - "Read"
+        - name: "alerts-mock-data-challenge"
+          operations:
+            - "Read"
+      groups:
+        - name: "snaps-usdf"
+          operations:
+            - "Read"
+
+alert-database:
+  enabled: false
+
+  ingester:
+    # The image can use either a tag or a digest to determine which is being used.
+    image:
+      tag: v3.4.0
+
+    logLevel: verbose
+
+    schemaRegistryURL: http://sasquatch-schema-registry.sasquatch-schema-registry:8081/schema-registry
+
+    serviceAccountName: alert-database-writer
+
+    kafka:
+      cluster: sasquatch
+      topic:
+        - lsst-alerts-v9.0
+        - lsst-alerts-v10.0
+
+  ingress:
+    enabled: true
+    host: usdfprod-prompt-processing.slac.stanford.edu
+
+chronograf:
+  enabled: false
+
+influxdb:
+  enabled: false
+
+influxdb-enterprise-standby:
+  enabled: false
+
+kafdrop:
+  enabled: false
+  ingress:
+    enabled: false
+
+kapacitor:
+  enabled: false
+
+schema-registry:
+  enabled: true
+  ingress:
+    enabled: true
+    anonymous: true
+    hostname: usdfprod-prompt-processing.slac.stanford.edu
+    annotations:
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        # Forbid everything except GET since this should be a read-only ingress
+        # to the schema registry.
+        limit_except GET {
+          deny all;
+        }
+
+strimzi-kafka:
+  cluster:
+    monitorLabel:
+      prometheus.io/scrape: "true"
+  kafka:
+    version: "4.1.0"
+    config:
+      # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
+      replica.lag.time.max.ms: 120000
+      log.retention.minutes: 10080
+      offsets.retention.minutes: 10080
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
+    externalListener:
+      tls:
+        enabled: false
+      bootstrap:
+        annotations:
+          metallb.io/address-pool: sdf-dmz
+        allocateLoadBalancerNodePorts: false
+      brokers:
+        - broker: 3
+          annotations:
+            metallb.io/address-pool: sdf-dmz
+        - broker: 4
+          annotations:
+            metallb.io/address-pool: sdf-dmz
+        - broker: 5
+          annotations:
+            metallb.io/address-pool: sdf-dmz
+        - broker: 6
+          annotations:
+            metallb.io/address-pool: sdf-dmz
+        - broker: 7
+          annotations:
+            metallb.io/address-pool: sdf-dmz
+    metricsConfig:
+      enabled: true
+
+
+  broker:
+    enabled: true
+    name: kafka
+    replicas: 5
+    nodeIds: "[3,4,5,6,7]"
+    storage:
+      size: 35Ti
+      storageClassName: wekafs--sdf-k8s01
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: strimzi.io/cluster
+                  operator: In
+                  values:
+                    - sasquatch
+            topologyKey: kubernetes.io/hostname
+    resources:
+      requests:
+        cpu: 8
+        memory: 32Gi
+      limits:
+        cpu: 8
+        memory: 32Gi
+
+  controller:
+    enabled: true
+    name: controller
+    replicas: 3
+    nodeIds: "[0,1,2]"
+    storage:
+      size: 100Gi
+      storageClassName: wekafs--sdf-k8s01
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: strimzi.io/cluster
+                  operator: In
+                  values:
+                    - sasquatch
+            topologyKey: kubernetes.io/hostname
+    resources:
+      requests:
+        cpu: 4
+        memory: 8Gi
+      limits:
+        cpu: 4
+        memory: 8Gi
+
+  cruiseControl:
+    enabled: true
