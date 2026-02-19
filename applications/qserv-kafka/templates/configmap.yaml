@@ -8,11 +8,6 @@ data:
   METRICS_APPLICATION: {{ .Values.config.metrics.application | quote }}
   METRICS_ENABLED: {{ .Values.config.metrics.enabled | quote }}
   METRICS_EVENTS_TOPIC_PREFIX: {{ .Values.config.metrics.events.topicPrefix | quote }}
-  QSERV_KAFKA_BACKEND: {{ .Values.config.backend | quote }}
-  QSERV_KAFKA_BACKEND_API_TIMEOUT: {{ .Values.config.backendApiTimeout | quote }}
-  QSERV_KAFKA_BACKEND_POLL_INTERVAL: {{ .Values.config.backendPollInterval | quote }}
-  QSERV_KAFKA_BACKEND_RETRY_COUNT: {{ .Values.config.backendRetryCount | quote }}
-  QSERV_KAFKA_BACKEND_RETRY_DELAY: {{ .Values.config.backendRetryDelay | quote }}
   QSERV_KAFKA_CONSUMER_GROUP_ID: {{ .Values.config.consumerGroupId | quote }}
   QSERV_KAFKA_JOB_CANCEL_TOPIC: {{ .Values.config.jobCancelTopic | quote }}
   QSERV_KAFKA_JOB_RUN_BATCH_SIZE: {{ .Values.config.jobRunBatchSize | quote }}
@@ -22,22 +17,24 @@ data:
   QSERV_KAFKA_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
   QSERV_KAFKA_LOG_PROFILE: {{ .Values.config.logProfile | quote }}
   QSERV_KAFKA_MAX_WORKER_JOBS: {{ .Values.config.maxWorkerJobs | quote }}
-  QSERV_KAFKA_QSERV_DATABASE_CONNECT_TIMEOUT: {{ .Values.config.qservDatabaseConnectTimeout | quote }}
   QSERV_KAFKA_QSERV_DATABASE_OVERFLOW: {{ .Values.config.qservDatabaseOverflow | quote }}
   QSERV_KAFKA_QSERV_DATABASE_POOL_SIZE: {{ .Values.config.qservDatabasePoolSize | quote }}
-  QSERV_KAFKA_QSERV_DATABASE_READ_TIMEOUT: {{ .Values.config.qservDatabaseReadTimeout | quote }}
   QSERV_KAFKA_QSERV_DATABASE_URL: {{ .Values.config.qservDatabaseUrl | quote }}
   {{- if not .Values.config.qservDeleteQueries }}
   QSERV_KAFKA_QSERV_DELETE_QUERIES: "false"
   {{- end }}
+  QSERV_KAFKA_QSERV_POLL_INTERVAL: {{ .Values.config.qservPollInterval | quote }}
   QSERV_KAFKA_QSERV_REST_MAX_CONNECTIONS: {{ .Values.config.qservRestMaxConnections | quote }}
   {{- if not .Values.config.qservRestSendApiVersion }}
   QSERV_KAFKA_QSERV_REST_SEND_API_VERSION: "false"
   {{- end }}
+  QSERV_KAFKA_QSERV_REST_TIMEOUT: {{ .Values.config.qservRestTimeout | quote }}
   QSERV_KAFKA_QSERV_REST_URL: {{ .Values.config.qservRestUrl | quote }}
   {{- if .Values.config.qservRestUsername }}
   QSERV_KAFKA_QSERV_REST_USERNAME: {{ .Values.config.qservRestUsername | quote }}
   {{- end }}
+  QSERV_KAFKA_QSERV_RETRY_COUNT: {{ .Values.config.qservRetryCount | quote }}
+  QSERV_KAFKA_QSERV_RETRY_DELAY: {{ .Values.config.qservRetryDelay | quote }}
   QSERV_KAFKA_QSERV_UPLOAD_TIMEOUT: {{ .Values.config.qservUploadTimeout | quote }}
   QSERV_KAFKA_REDIS_MAX_CONNECTIONS: {{ .Values.config.redisMaxConnections | quote }}
   QSERV_KAFKA_REDIS_URL: "redis://qserv-kafka-redis.{{ .Release.Namespace }}:6379/0"
