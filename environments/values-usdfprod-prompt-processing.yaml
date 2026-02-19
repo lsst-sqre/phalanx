@@ -1,4 +1,4 @@
-fqdn: k8s.slac.stanford.edu
+fqdn: usdfprod-prompt-processing.slac.stanford.edu
 name: usdfprod-prompt-processing
 appOfAppsName: "prompt-processing"
 vaultUrl: "https://vault.slac.stanford.edu"
