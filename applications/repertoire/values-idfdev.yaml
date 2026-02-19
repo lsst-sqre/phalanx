@@ -17,6 +17,8 @@ config:
     enabled: true
   slackAlerts: true
   tap:
+    schemaVersion: "tickets/DM-54182"
+    schemaSourceTemplate: "gs://rubin-sdm-schemas-artifacts/{version}/schemas.tar.gz"
     servers:
       tap:
         enabled: true
