@@ -9,6 +9,7 @@ from collections.abc import Callable
 from datetime import timedelta
 from functools import wraps
 from pathlib import Path
+from uuid import uuid4
 
 import click
 import yaml
@@ -1268,67 +1269,6 @@ def recover_restore_service_ips(config: Path | None, context: str) -> None:
         )
 
 
-@recover.command("pause-sasquatch-kafka-reconciliation")
-@click.option(
-    "-c",
-    "--config",
-    type=click.Path(path_type=Path),
-    default=None,
-    help="Path to root of Phalanx configuration.",
-)
-@click.option(
-    "--context",
-    help="Context to pass to kubectl when running commands.",
-    required=True,
-)
-@_report_usage_errors
-def recover_pause_sasquatch_kafka_reconciliation(
-    config: Path | None, context: str
-) -> None:
-    """Pause Strimzi reconciliation of the Sasquatch Kafka cluster.
-
-    During some recovery operations, we want to modify resources that are
-    managed by the Strimzi operator. The Strimzi operator will automatically
-    revert any changes we make, so we have to pause Strimzi reconciliation if
-    we want our changes to persist.
-
-    https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str
-    """
-    if not config:
-        config = _find_config()
-    factory = Factory(config)
-    cluster_service = factory.create_gke_phalanx_cluster_service(context)
-    cluster_service.pause_sasquatch_kafka_reconciliation()
-
-
-@recover.command("resume-sasquatch-kafka-reconciliation")
-@click.option(
-    "-c",
-    "--config",
-    type=click.Path(path_type=Path),
-    default=None,
-    help="Path to root of Phalanx configuration.",
-)
-@click.option(
-    "--context",
-    help="Context to pass to kubectl when running commands.",
-    required=True,
-)
-@_report_usage_errors
-def recover_resume_sasquatch_kafka_reconciliation(
-    config: Path | None, context: str
-) -> None:
-    """Resume Strimzi reconciliation of the Sasquatch Kafka cluster.
-
-    https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str
-    """
-    if not config:
-        config = _find_config()
-    factory = Factory(config)
-    cluster_service = factory.create_gke_phalanx_cluster_service(context)
-    cluster_service.resume_sasquatch_kafka_reconciliation()
-
-
 @recover.command("scale-down")
 @click.option(
     "-c",
@@ -1349,10 +1289,7 @@ def recover_scale_down(config: Path | None, context: str) -> None:
         config = _find_config()
     factory = Factory(config)
     cluster_service = factory.create_gke_phalanx_cluster_service(context)
-    cluster_service.pause_sasquatch_kafka_reconciliation()
-    cluster_service.release_service_ips()
-    cluster_service.suspend_cronjobs()
-    cluster_service.scale_down_workloads()
+    cluster_service.scale_down_all()
 
 
 @recover.command("scale-up")
@@ -1375,7 +1312,383 @@ def recover_scale_up(config: Path | None, context: str) -> None:
         config = _find_config()
     factory = Factory(config)
     cluster_service = factory.create_gke_phalanx_cluster_service(context)
-    cluster_service.resume_sasquatch_kafka_reconciliation()
-    cluster_service.restore_service_ips()
-    cluster_service.scale_up_workloads()
-    cluster_service.resume_cronjobs()
+    cluster_service.scale_up_all()
+
+
+@recover.command("gke-backup-and-restore-pvcs")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--gke-region",
+    help="The GKE region of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--gke-project",
+    help="The GKE project of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--source-cluster",
+    help="The name of the GKE cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--destination-cluster",
+    help="The name of the GKE cluster to restore the backup into.",
+    required=True,
+)
+@click.option(
+    "--run-id",
+    help=(
+        "The phalanx run id label value that marks which Google Cloud"
+        " resources to clean up."
+    ),
+    required=False,
+    default=None,
+)
+@_report_usage_errors
+def recover_gke_backup_and_restore_pvcs(
+    config: Path | None,
+    gke_region: str,
+    gke_project: str,
+    source_cluster: str,
+    destination_cluster: str,
+    run_id: str | None = None,
+) -> None:
+    """Back up a GKE cluster and restore the PVCs and PVs to another.
+
+    All Google Cloud resources that are created will have a label to identify
+    the run of this command that the were created with. The
+    gke-cleanup-backup-and-restore command can be used to destroy all of those
+    resources.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    run_id = run_id or str(uuid4())
+    click.echo(
+        f"All Google Cloud resources will have the label: `phalanx-run-id:"
+        f" {run_id}`"
+    )
+    backup_service = factory.create_google_cloud_service(
+        region=gke_region, project=gke_project, phalanx_run_id=run_id
+    )
+    backup_service.backup_and_restore_pvcs(
+        source_cluster=source_cluster, destination_cluster=destination_cluster
+    )
+
+
+@recover.command("gke-cleanup-backup-and-restore")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--gke-region",
+    help="The GKE region of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--gke-project",
+    help="The GKE project of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--run-id",
+    help=(
+        "The phalanx run id label value that marks which Google Cloud"
+        " resources to clean up."
+    ),
+    required=True,
+)
+@_report_usage_errors
+def recover_gke_cleanup_backup_and_restore(
+    config: Path | None, gke_region: str, gke_project: str, run_id: str
+) -> None:
+    """Delete all Google Cloud resources created from running a backup command.
+
+    All resources that have a label that matches the given phalanx-run-id will
+    be deleted.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    backup_service = factory.create_google_cloud_service(
+        region=gke_region,
+        project=gke_project,
+        phalanx_run_id=str(run_id),
+    )
+    backup_service.cleanup_run()
+
+
+@recover.command("restore")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--old-context",
+    help="Context to pass when running commands against the old cluster.",
+    required=True,
+)
+@click.option(
+    "--new-context",
+    help="Context to pass when running commands against the new cluster.",
+    required=True,
+)
+@click.option(
+    "-e",
+    "--environment",
+    "--env",
+    type=str,
+    metavar="ENV",
+    required=True,
+    help="The Phalanx environment of the cluster to recover.",
+)
+@click.option(
+    "--git-branch",
+    envvar="GITHUB_HEAD_REF",
+    help="Override Git branch for Argo CD.",
+    required=True,
+)
+@click.option(
+    "--vault-role-id",
+    envvar="VAULT_ROLE_ID",
+    help="Role ID for vault-secrets-operator.",
+    required=True,
+)
+@click.option(
+    "--vault-secret-id",
+    envvar="VAULT_SECRET_ID",
+    help="Secret ID for vault-secrets-operator.",
+    required=True,
+)
+@click.option(
+    "--gke-region",
+    help="The GKE region of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--gke-project",
+    help="The GKE project of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--source-cluster",
+    help="The name of the GKE cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--destination-cluster",
+    help="The name of the GKE cluster to restore the backup into.",
+    required=True,
+)
+@click.option(
+    "--run-id",
+    help=(
+        "The phalanx run id label value that marks which Google Cloud"
+        " resources to clean up."
+    ),
+    required=False,
+    default=None,
+)
+@_report_usage_errors
+def recover_restore(
+    config: Path | None,
+    old_context: str,
+    new_context: str,
+    environment: str,
+    git_branch: str,
+    vault_role_id: str,
+    vault_secret_id: str,
+    gke_region: str,
+    gke_project: str,
+    source_cluster: str,
+    destination_cluster: str,
+    run_id: str | None = None,
+) -> None:
+    """Perform a recovery of one GKE cluster with data from another."""
+    _require_command("argocd")
+    _require_command("helm")
+    _require_command("kubectl")
+    vault_credentials: VaultCredentials = VaultAppRoleCredentials(
+        role_id=vault_role_id, secret_id=vault_secret_id
+    )
+
+    run_id = run_id or str(uuid4())
+    click.echo(
+        f"All Google Cloud Backup for GKE resources will have the label:"
+        f" `phalanx-run-id: {run_id}`"
+    )
+
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+
+    gke_recovery = factory.create_gke_recovery_service(
+        source_cluster=source_cluster,
+        destination_cluster=destination_cluster,
+        git_branch=git_branch,
+        environment=environment,
+        vault_credentials=vault_credentials,
+        old_context=old_context,
+        new_context=new_context,
+        gke_project=gke_project,
+        gke_region=gke_region,
+        run_id=run_id,
+    )
+
+    errors = gke_recovery.preflight_check()
+    if errors:
+        click.secho(
+            "Pre-flight check failed. Please correct these errors before"
+            " starting the cluster recovery process:",
+            fg="red",
+        )
+        for error in errors:
+            click.secho(error, fg="red")
+        sys.exit(1)
+
+    gke_recovery.recover()
+    click.echo(
+        f"Recovery finished! All Google Cloud Backup for GKE resources will"
+        f" have the label: phalanx-run-id: {run_id}"
+    )
+
+
+@recover.command("preflight-check")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--old-context",
+    help="Context to pass when running commands against the old cluster.",
+    required=True,
+)
+@click.option(
+    "--new-context",
+    help="Context to pass when running commands against the new cluster.",
+    required=True,
+)
+@click.option(
+    "-e",
+    "--environment",
+    "--env",
+    type=str,
+    metavar="ENV",
+    required=True,
+    help="The Phalanx environment of the cluster to recover.",
+)
+@click.option(
+    "--git-branch",
+    envvar="GITHUB_HEAD_REF",
+    help="Override Git branch for Argo CD.",
+    required=True,
+)
+@click.option(
+    "--vault-role-id",
+    envvar="VAULT_ROLE_ID",
+    help="Role ID for vault-secrets-operator.",
+    required=True,
+)
+@click.option(
+    "--vault-secret-id",
+    envvar="VAULT_SECRET_ID",
+    help="Secret ID for vault-secrets-operator.",
+    required=True,
+)
+@click.option(
+    "--gke-region",
+    help="The GKE region of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--gke-project",
+    help="The GKE project of the cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--source-cluster",
+    help="The name of the GKE cluster to be backed up.",
+    required=True,
+)
+@click.option(
+    "--destination-cluster",
+    help="The name of the GKE cluster to restore the backup into.",
+    required=True,
+)
+@click.option(
+    "--run-id",
+    help=(
+        "The phalanx run id label value that marks which Google Cloud"
+        " resources to clean up."
+    ),
+    required=False,
+    default=None,
+)
+@_report_usage_errors
+def recover_preflight_check(
+    config: Path | None,
+    old_context: str,
+    new_context: str,
+    environment: str,
+    git_branch: str,
+    vault_role_id: str,
+    vault_secret_id: str,
+    gke_region: str,
+    gke_project: str,
+    source_cluster: str,
+    destination_cluster: str,
+    run_id: str | None = None,
+) -> None:
+    """Check that everything is in good state to beging cluster recovery."""
+    _require_command("argocd")
+    _require_command("helm")
+    _require_command("kubectl")
+    vault_credentials: VaultCredentials = VaultAppRoleCredentials(
+        role_id=vault_role_id, secret_id=vault_secret_id
+    )
+
+    run_id = run_id or str(uuid4())
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+
+    gke_recovery = factory.create_gke_recovery_service(
+        source_cluster=source_cluster,
+        destination_cluster=destination_cluster,
+        git_branch=git_branch,
+        environment=environment,
+        vault_credentials=vault_credentials,
+        old_context=old_context,
+        new_context=new_context,
+        gke_project=gke_project,
+        gke_region=gke_region,
+        run_id=run_id,
+    )
+    errors = gke_recovery.preflight_check()
+    if errors:
+        click.secho(
+            "Pre-flight check failed. Please correct these errors before"
+            " starting the cluster recovery process:",
+            fg="red",
+        )
+        for error in errors:
+            click.secho(error, fg="red")
+        sys.exit(1)

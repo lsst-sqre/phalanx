@@ -2,6 +2,7 @@
 
 import subprocess
 from collections.abc import Iterable
+from datetime import timedelta
 
 from .constants import PREVIOUS_LOAD_BALANCER_IP_ANNOTATION
 from .models.kubernetes import NamespacedResource, Service, Workload
@@ -9,9 +10,15 @@ from .models.secrets import Secret
 
 __all__ = [
     "ApplicationExistsError",
+    "ArgoCDStatusTimedOutError",
     "CommandFailedError",
     "CommandTimedOutError",
     "GitRemoteError",
+    "GoogleCloudAPIError",
+    "GoogleCloudGKEBackupFailedError",
+    "GoogleCloudGKEBackupTimedoutError",
+    "GoogleCloudGKERestoreFailedError",
+    "GoogleCloudGKERestoreTimedoutError",
     "InvalidApplicationConfigError",
     "InvalidEnvironmentConfigError",
     "InvalidLoadBalancerServiceStateError",
@@ -377,4 +384,61 @@ class ResourceNoFinalizersTimeoutError(UsageError):
             f" {resource.namespace} still has finalizers: {finalizers} after "
             f" {timeout_secs} seconds."
         )
+        super().__init__(msg)
+
+
+class GoogleCloudAPIError(Exception):
+    """An error happened calling a Google Cloud API."""
+
+
+class GoogleCloudGKEBackupFailedError(Exception):
+    """An error happened when trying to backup a GKE cluster."""
+
+    def __init__(
+        self,
+        backup_name: str,
+    ) -> None:
+        msg = f"Backup {backup_name} failed."
+        super().__init__(msg)
+
+
+class GoogleCloudGKEBackupTimedoutError(Exception):
+    """Timed out waiting for a GKE backup to complete."""
+
+    def __init__(
+        self, backup_name: str, attempts: int, interval: timedelta
+    ) -> None:
+        seconds = interval.total_seconds() * attempts
+        msg = f"Backup {backup_name} was not complete after {seconds} seconds."
+        super().__init__(msg)
+
+
+class GoogleCloudGKERestoreFailedError(Exception):
+    """An error happened when trying to restore a GKE cluster."""
+
+    def __init__(
+        self,
+        restore: str,
+    ) -> None:
+        msg = f"Backup {restore} failed."
+        super().__init__(msg)
+
+
+class GoogleCloudGKERestoreTimedoutError(Exception):
+    """Timed out waiting for a GKE restore to complete."""
+
+    def __init__(
+        self, restore: str, attempts: int, interval: timedelta
+    ) -> None:
+        seconds = interval.total_seconds() * attempts
+        msg = f"Restore {restore} was not complete after {seconds} seconds."
+        super().__init__(msg)
+
+
+class ArgoCDStatusTimedOutError(Exception):
+    """Timed out waiting for ArgoCD app statuses to appear."""
+
+    def __init__(self, attempts: int, interval: timedelta) -> None:
+        seconds = interval.total_seconds() * attempts
+        msg = f"ArgoCD statuses don't exist after {seconds} seconds."
         super().__init__(msg)

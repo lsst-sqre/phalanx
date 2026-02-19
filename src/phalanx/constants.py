@@ -7,11 +7,14 @@ actual configuration options.
 from datetime import timedelta
 
 __all__ = [
+    "GOOGLE_CLOUD_CERT_MANAGER_FIREWALL_RULE",
+    "GOOGLE_CLOUD_RUN_ID_LABEL",
     "HELM_DOCLINK_ANNOTATION",
     "ONEPASSWORD_ENCODED_WARNING",
     "PREVIOUS_EXTERNAL_TRAFFIC_POLICY_ANNOTATION",
     "PREVIOUS_LOAD_BALANCER_IP_ANNOTATION",
     "PULL_SECRET_DESCRIPTION",
+    "SASQUATCH_NAMESPACE",
     "VAULT_APPROLE_SECRET_TEMPLATE",
     "VAULT_TOKEN_SECRET_TEMPLATE",
     "VAULT_WRITE_TOKEN_LIFETIME",
@@ -97,3 +100,12 @@ GKE_LOAD_BALANCER_SERVICE_FINALIZERS = [
     "gke.networking.io/l4-netlb-v1",
 ]
 """Finalizers on a GKE Service resource when the service has an ingress."""
+
+GOOGLE_CLOUD_RUN_ID_LABEL = "phalanx-run-id"
+"""The label to apply to Google Cloud resources created by the Phalanx CLI."""
+
+SASQUATCH_NAMESPACE = "sasquatch"
+"""The namespace of the sasquatch installation in a Phalanx cluster."""
+
+GOOGLE_CLOUD_CERT_MANAGER_FIREWALL_RULE = "cert-manager-terraform"
+"""The name of the firewall rule in GCP that admits cert-manager traffic."""

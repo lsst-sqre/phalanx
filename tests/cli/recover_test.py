@@ -7,6 +7,8 @@ import pytest
 from pytest_mock import MockerFixture
 from syrupy.assertion import SnapshotAssertion
 
+from tests.support.gke_backup import MockBackupForGKEClient
+
 from ..support.cli import run_cli
 from ..support.command import MockCommand
 from ..support.constants import DATA_DIR
@@ -606,3 +608,22 @@ def test_scale_up(
 
     assert command.mock.capture.call_args_list == snapshot
     assert command.mock.run.call_args_list == snapshot
+
+
+def test_gke_cleanup_backup_and_restore(
+    mock_gke_backup_client: MockBackupForGKEClient,
+) -> None:
+    mock = mock_gke_backup_client
+    mock.expect_call("list_backup_plans", ("blah",), "foo")
+
+
+@pytest.mark.usefixtures("mock_kubernetes_kubectl")
+def restore_requires_both_contexts() -> None:
+    result = run_cli("recover", "restore")
+    assert result.exit_code == 2
+
+    result = run_cli("recover", "restore", "--old-context", "fake-old-context")
+    assert result.exit_code == 2
+
+    result = run_cli("recover", "restore", "--new-context", "fake-new-context")
+    assert result.exit_code == 2
