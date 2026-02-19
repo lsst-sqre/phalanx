@@ -1,4 +1,4 @@
-fqdn: k8s.slac.stanford.edu
+fqdn: usdfdev-prompt-processing.slac.stanford.edu
 name: usdfdev-prompt-processing
 appOfAppsName: "science-platform"
 vaultUrl: "https://vault.slac.stanford.edu"
