@@ -10,7 +10,7 @@ fullnameOverride: ""
 # @default -- See `values.yaml`
 resources:
   limits:
-    cpu: "2"
+    cpu: "1"
     memory: "1024Mi"
   requests:
     cpu: "40m"
