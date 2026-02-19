@@ -1,3 +1,7 @@
+image:
+  tag: "tickets-DM-54211"
+  pullPolicy: "Always"
+
 vaultSecretsEnabled: false
 
 config:
@@ -6,7 +10,7 @@ config:
   bigqueryLocation: "US"
   gcpServiceAccount: "bigquery-kafka@science-platform-dev-7696.iam.gserviceaccount.com"
   metrics:
-    enabled: false
+    enabled: true
   sentry:
     enabled: false
   slack:

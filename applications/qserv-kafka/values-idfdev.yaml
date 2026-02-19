@@ -1,3 +1,7 @@
+image:
+  tag: "tickets-DM-54211"
+  pullPolicy: "Always"
+
 config:
   logLevel: "DEBUG"
   metrics:
