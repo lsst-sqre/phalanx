@@ -1,5 +1,8 @@
 replicaCount: 3
 
+image:
+  tag: "0.30.0" # hold back until 2026-02-26
+
 ingress:
   timesSquareScope: "exec:admin"
 

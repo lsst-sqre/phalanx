@@ -1,6 +1,5 @@
 image:
   pullPolicy: Always
-  tag: "0.31.0"
 
 ingress:
   timesSquareScope: "exec:admin"
