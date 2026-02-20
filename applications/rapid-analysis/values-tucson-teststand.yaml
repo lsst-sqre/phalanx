@@ -3,7 +3,6 @@ image:
   tag: c0039
   pullPolicy: Always
 location: TTS
-siteTag: tts
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
   DEPLOY_BRANCH: deploy-tts

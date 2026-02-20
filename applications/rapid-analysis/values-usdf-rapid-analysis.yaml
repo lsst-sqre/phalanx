@@ -1,0 +1,228 @@
+image:
+  repository: ghcr.io/lsst-sitcom/rubintv_production
+  tag: tickets-DM-50534-w48
+  pullPolicy: IfNotPresent
+location: USDF
+env:
+  DAF_BUTLER_REPOSITORY_INDEX: /config/data-repos.yaml
+  DAF_BUTLER_CONFIG_PATH: /repos/drp_pipe/bps/compression/LSSTCam/nightly-validation/config
+  http_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
+  https_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
+  squid_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
+  no_proxy: .slac.stanford.edu
+  HTTP_PROXY: http://sdfproxy.sdf.slac.stanford.edu:3128
+  HTTPS_PROXY: http://sdfproxy.sdf.slac.stanford.edu:3128
+  SQUID_PROXY: http://sdfproxy.sdf.slac.stanford.edu:3128
+  NO_PROXY: .slac.stanford.edu
+  DEPLOY_BRANCH: deploy-usdf
+  S3_ENDPOINT_URL: https://s3dfrgw.slac.stanford.edu
+  SASQUATCH_EXTRAS: dataset_tag=LSSTCam/rapid_analysis
+  LSST_RESOURCES_S3_PROFILE_embargo: https://sdfembs3.sdf.slac.stanford.edu
+  AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  AWS_RESPONSE_CHECKSUM_VALIDATION: WHEN_REQUIRED
+  HOME: /home/saluser
+  RA_PULL_DIRECTORIES: "drp_pipe"
+  TARTS_DATA_DIR: /sdf/scratch/rubin/rapid-analysis/aos_data/TARTS
+podAnnotations:
+  edu.stanford.slac.sdf.project/usdf-embargo: "true"
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: node-role.kubernetes.io/rapid-analysis
+          operator: Exists
+securityContext:
+  uid: 17951
+  gid: 4085
+scripts:
+###
+### LSSTCam pods
+###
+- name: LSSTCam/runButlerWatcher.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+- name: LSSTCam/runHeadNode.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+- name: LSSTCam/runMetadataServer.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+- name: LSSTCam/runOneOffExpRecord.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+- name: LSSTCam/runOneOffPostIsr.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+- name: LSSTCam/runOneOffVisitImage.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
+- name: LSSTCam/runMetadataServerRaPerformance.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+- name: LSSTCam/runPerformanceMonitor.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
+- name: LSSTCam/runFWHMPlotting.py
+  mounts:
+  - sdf-scratch
+  resources:
+    requests:
+      cpu: 1
+      memory: 4G
+    limits:
+      cpu: 1
+      memory: 6G
+- name: LSSTCam/runPlotter.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+  resources:
+    requests:
+      cpu: 1
+      memory: 8G
+    limits:
+      cpu: 1
+      memory: 12G
+- name: LSSTCam/runButlerCanary.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+  env:
+    DAF_BUTLER_CACHE_EXPIRATION_MODE: disabled
+- name: LSSTCam/runTransferAlarm.py
+  image:
+    pullPolicy: IfNotPresent
+  mounts:
+  - sdf-scratch
+  - config-repos
+###
+### LSSTCam StatefulSets
+###
+lsstcamWorkerSet:
+  name: LSSTCam/runSfmRunner.py
+  replicas: 820
+  mounts:
+  - sdf-scratch
+  - config-repos
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G
+lsstcamGather1bSet:
+  name: LSSTCam/runStep1bWorker.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+  replicas: 5
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "8G"
+    limits:
+      cpu: 1.0
+      memory: "12G"
+lsstcamAosWorkerSet:
+  name: LSSTCam/runAosWorker.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+  replicas: 36
+  env:
+    LIMITS_CPU: 2
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 2.0
+      memory: 8G
+lsstcamGather1bAosSet:
+  name: LSSTCam/runStep1bAosWorker.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+  replicas: 4
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
+vaultPrefixPath: secret/rubin/usdf-rapid-analysis
+butlerSecret:
+  key: butler-secret
+  containerPath: /secrets
+  dbUser: rapid_analysis
+pvcMountpointClaim:
+- name: sdf-group-rubin
+  containerPath: /sdf/group/rubin
+  claimSize: 1Gi
+  accessMode: ReadWriteMany
+- name: sdf-data-rubin
+  containerPath: /sdf/data/rubin
+  claimSize: 1Gi
+  accessMode: ReadWriteMany
+- name: sdf-scratch
+  containerPath: /sdf/scratch
+  claimSize: 1Gi
+  accessMode: ReadWriteMany
+configMountpoint:
+- name: config-repos
+  path: "/config"
+  items:
+  - key: "data-repos.yaml"
+    path: "data-repos.yaml"
+resources:
+  requests:
+    cpu: 0.5
+    memory: 1G
+  limits:
+    cpu: 1.0
+    memory: 2.5G
+redis:
+  enabled: true
+  port: 6379
+  env:
+    MASTER: true
+  serviceAnnotations:
+    metallb.universe.tf/address-pool: sdf-services
+  envSecrets:
+  - name: REDIS_PASSWORD
+    secretName: rapid-analysis-secrets
+    secretKey: redis-password
+  storage:
+    request: 10Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 50Gi

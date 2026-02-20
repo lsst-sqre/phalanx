@@ -7,8 +7,6 @@ image:
   pullPolicy: IfNotPresent
 # -- This is the namespace where the applications will be deployed.
 namespace: rapid-analysis
-# -- A special tag for letting the scripts know where they are running.
-siteTag: ""
 # -- Provide the location where the system is running.
 location: ""
 # -- List of script objects to run for the broadcaster.
@@ -66,6 +64,11 @@ pvcMountpoint: []
 # _containerPath_ (The path inside the container to mount),
 # _subPath_ (persistent volume subpath, optional)
 pvcMountpointClaim: []
+# -- This section holds the information necessary to mount configmaps.
+# If the section is used, each object listed can have the following attributes defined:
+# _name_ (The name of the persistent volume and the configMap),
+# _items_ (Files in the configmap to mount),
+configMountpoint: []
 # -- Adds an extra string to the release name.
 nameOverride: ""
 # -- Specify the deployed application name specifically. Overrides all other names.
