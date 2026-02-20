@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: fix-premultiplied-alpha
+  tag: main
 
 config:
   # -- URL path prefix
