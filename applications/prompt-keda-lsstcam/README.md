@@ -53,6 +53,7 @@ KEDA Prompt Processing instance for LSSTCam
 | prompt-keda.instrument.readRepo | string | Matches `centralRepo` | Optional URI to a separate repo used for pipeline inputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
 | prompt-keda.instrument.repoWait | int | `30` | The average time to wait (in seconds) before retrying a failed connection to the shared repo. |
 | prompt-keda.instrument.skymap | string | `"lsst_cells_v2"` | Skymap to use with the instrument |
+| prompt-keda.instrument.transferScale | int | `4` | Number of parallel processes each worker can use for transfers to and from `centralRepo` and `readRepo`. In practice, this should be set based on expected server bandwidth. |
 | prompt-keda.keda.failedJobsHistoryLimit | int | `5` | How many failed jobs should be kept available in Kubernetes. |
 | prompt-keda.keda.maxReplicaCount | int | `600` | Maximum number of replicas to scale to. |
 | prompt-keda.keda.minReplicaCount | int | `3` | Minimum number of replicas to start with. |
