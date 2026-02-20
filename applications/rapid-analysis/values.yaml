@@ -7,8 +7,6 @@ image:
   pullPolicy: IfNotPresent
 # -- This is the namespace where the applications will be deployed.
 namespace: rapid-analysis
-# -- A special tag for letting the scripts know where they are running.
-siteTag: ""
 # -- Provide the location where the system is running.
 location: ""
 # -- List of script objects to run for the broadcaster.
