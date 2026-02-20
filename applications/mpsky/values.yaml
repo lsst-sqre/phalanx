@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # -- Number of web deployment pods to start
-replicaCount: 0
+replicaCount: 1
 
 image:
   # -- Image to use in the mpsky deployment
