@@ -3,7 +3,6 @@ image:
   tag: w_2025_48
   pullPolicy: Always
 location: SUMMIT
-siteTag: summit
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
   DEPLOY_BRANCH: deploy-summit

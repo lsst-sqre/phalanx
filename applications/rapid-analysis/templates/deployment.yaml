@@ -45,7 +45,7 @@ spec:
           imagePullPolicy: {{ $.Values.image.pullPolicy }}
           env:
             - name: RUN_ARG
-              value: {{ $script.name }} {{ $.Values.siteTag }}
+              value: {{ $script.name }} {{ $.Values.location }}
             - name: RAPID_ANALYSIS_LOCATION
               value: {{ $.Values.location | upper | quote }}
           {{- if $script.env }}
