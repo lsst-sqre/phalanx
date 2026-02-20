@@ -45,6 +45,9 @@ prompt-keda:
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- Matches `centralRepo`
     readRepo: ""
+    # -- Number of parallel processes each worker can use for transfers to and from `centralRepo` and `readRepo`.
+    # In practice, this should be set based on expected server bandwidth.
+    transferScale: 3
     # -- The average time to wait (in seconds) before retrying a failed connection to the shared repo.
     repoWait: 30
     # -- Optional config overrides for local butler repo
