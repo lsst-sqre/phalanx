@@ -245,7 +245,7 @@ mtaircompressor2:
 
 mtaos:
   image:
-    revision: 12
+    revision: 14
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
   env:
@@ -583,7 +583,7 @@ mtoods:
 
 mtptg:
   image:
-    revision: 8
+    revision: 14
     repository: ts-dockerhub.lsst.org/ptkernel
     pullPolicy: Always
   env:
