@@ -58,6 +58,12 @@ config:
         LSST Commissioning Camera of seven ~1 square degree fields, over seven
         weeks in late 2024.
       docsUrl: "https://dp1.lsst.io/"
+    efd:
+      description: "Engineering Field Database."
+    live:
+      description: "Live internal data from the telescope."
+    prompt:
+      description: "Prompt products."
 
   # -- Human-readable name of the environment for reporting purposes
   # @default -- Set by Argo CD
@@ -158,6 +164,12 @@ config:
       - type: "ui"
         name: "argocd"
         template: "https://{{base_hostname}}/argo-cd"
+    consdbtap:
+      - type: "data"
+        name: "tap"
+        datasets:
+          - "efd"
+        template: "https://{{base_hostname}}/api/consdbtap"
     datalinker:
       - type: "data"
         name: "datalink"
@@ -182,12 +194,18 @@ config:
           v1:
             template: "https://{{base_hostname}}/auth/api/v1"
         openapi: "https://{{base_hostname}}/auth/openapi.json"
+      - type: "internal"
+        name: "login"
+        template: "https://{{base_hostname}}/login"
       - type: "ui"
         name: "logout"
         template: "https://{{base_hostname}}/logout"
-      - type: "ui"
-        name: "tokens"
-        template: "https://{{base_hostname}}/auth/tokens"
+    livetap:
+      - type: "data"
+        name: "tap"
+        datasets:
+          - "live"
+        template: "https://{{base_hostname}}/api/livetap"
     mobu:
       - type: "internal"
         name: "mobu"
@@ -220,6 +238,12 @@ config:
       - type: "ui"
         name: "portal"
         template: "https://{{base_hostname}}/portal/app/"
+    ppdbtap:
+      - type: "data"
+        name: "tap"
+        datasets:
+          - "prompt"
+        template: "https://{{base_hostname}}/api/ppdbtap"
     semaphore:
       - type: "internal"
         name: "semaphore"
@@ -237,6 +261,10 @@ config:
             template: "https://{{base_hostname}}/api/sia/{{dataset}}/query"
             ivoaStandardId: "ivo://ivoa.net/std/SIA#query-2.0"
         openapi: "https://{{base_hostname}}/api/sia/openapi.json"
+    squareone:
+      - type: "ui"
+        name: "settings"
+        template: "https://{{base_hostname}}/settings"
     ssotap:
       - type: "data"
         name: "tap"
