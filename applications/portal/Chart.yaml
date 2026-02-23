@@ -3,9 +3,9 @@ name: portal
 version: 1.0.0
 description: Rubin Science Platform Portal Aspect
 sources:
-  - https://github.com/lsst/suit
   - https://github.com/Caltech-IPAC/firefly
-appVersion: "portal-2025.5.2-b1"
+# -  Removed https://github.com/lsst/suit
+appVersion: "2025.5.4"
 
 dependencies:
   - name: redis
