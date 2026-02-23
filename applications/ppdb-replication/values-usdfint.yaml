@@ -11,9 +11,6 @@ config:
   # TODO: Use a group rather than user path for these configurations
   ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-53599/ppdb-config/ppdb_lsstcam.yaml"
 
-  # -- Logging level
-  logLevel: "DEBUG"
-
   # -- Volumes specific to the environment
   volumes:
     - name: sdf-group-rubin
