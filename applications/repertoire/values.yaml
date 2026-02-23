@@ -265,6 +265,9 @@ config:
       - type: "ui"
         name: "settings"
         template: "https://{{base_hostname}}/settings"
+      - type: "ui"
+        name: "squareone"
+        template: "https://{{base_hostname}}/"
     ssotap:
       - type: "data"
         name: "tap"
