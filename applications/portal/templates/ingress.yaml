@@ -25,10 +25,10 @@ template:
       nginx.ingress.kubernetes.io/affinity: "cookie"
       nginx.ingress.kubernetes.io/client-header-buffer-size: "24k"
       nginx.ingress.kubernetes.io/proxy-body-size: "0m"
-      nginx.ingress.kubernetes.io/proxy-cookie-path: "/suit /portal/app"
-      nginx.ingress.kubernetes.io/proxy-redirect-from: "/suit/"
+      nginx.ingress.kubernetes.io/proxy-cookie-path: "/firefly /portal/app"
+      nginx.ingress.kubernetes.io/proxy-redirect-from: "/firefly/"
       nginx.ingress.kubernetes.io/proxy-redirect-to: "/portal/app/"
-      nginx.ingress.kubernetes.io/rewrite-target: "/suit$1$2"
+      nginx.ingress.kubernetes.io/rewrite-target: "/firefly$1$2"
       nginx.ingress.kubernetes.io/session-cookie-change-on-failure: "true"
       nginx.ingress.kubernetes.io/session-cookie-path: "/portal/app"
       nginx.ingress.kubernetes.io/configuration-snippet: |

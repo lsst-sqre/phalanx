@@ -3,9 +3,13 @@ name: portal
 version: 1.0.0
 description: Rubin Science Platform Portal Aspect
 sources:
-  - https://github.com/lsst/suit
   - https://github.com/Caltech-IPAC/firefly
+<<<<<<< HEAD
 appVersion: "portal-2026.4.0"
+=======
+# -  Removed https://github.com/lsst/suit
+appVersion: "2025.5.4"
+>>>>>>> 400b051e7 (SP-2001: Update filesystem mounts for SPHEREx RSP)
 
 dependencies:
   - name: redis
