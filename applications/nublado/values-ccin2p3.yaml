@@ -12,6 +12,8 @@ controller:
         repository: "lsstsqre/sciplat-lab"
     lab:
       defaultSize: "small"
+      enableRubinQueryMenu: false
+      enableTutorialsMenu: false
       env:
         PGPASSFILE: "/etc/nublado/secrets/postgres-credentials.txt"
         PGUSER: "lsstprod_ro"

@@ -6,6 +6,8 @@ controller:
         registry: "registry.hub.docker.com"
         repository: "lsstsqre/sciplat-lab"
     lab:
+      enableRubinQueryMenu: false
+      enableTutorialsMenu: false
       env:
         AUTO_REPO_URLS: "https://github.com/lsst-uk/rsp-uk-notebooks"
         AUTO_REPO_BRANCH: "main"
