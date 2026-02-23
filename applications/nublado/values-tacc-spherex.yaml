@@ -7,6 +7,8 @@ controller:
         repository: "lsstsqre/spherex-lab"
     lab:
       defaultSize: "small"
+      enableRubinQueryMenu: false
+      enableTutorialsMenu: false
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days

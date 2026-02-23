@@ -31,6 +31,7 @@ controller:
                       - "true"
       extraAnnotations:
         edu.stanford.slac.sdf.project/rsp: "true"
+      enableRubinQueryMenu: false
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
