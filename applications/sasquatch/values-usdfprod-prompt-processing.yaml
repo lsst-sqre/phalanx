@@ -289,23 +289,29 @@ strimzi-kafka:
       bootstrap:
         annotations:
           metallb.io/address-pool: sdf-dmz
+          metallb.io/loadBalancerIPs: 134.79.23.209
         allocateLoadBalancerNodePorts: false
       brokers:
         - broker: 3
           annotations:
             metallb.io/address-pool: sdf-dmz
+            metallb.io/loadBalancerIPs: 134.79.23.210
         - broker: 4
           annotations:
             metallb.io/address-pool: sdf-dmz
+            metallb.io/loadBalancerIPs: 134.79.23.211
         - broker: 5
           annotations:
             metallb.io/address-pool: sdf-dmz
+            metallb.io/loadBalancerIPs: 134.79.23.212
         - broker: 6
           annotations:
             metallb.io/address-pool: sdf-dmz
+            metallb.io/loadBalancerIPs: 134.79.23.213
         - broker: 7
           annotations:
             metallb.io/address-pool: sdf-dmz
+            metallb.io/loadBalancerIPs: 134.79.23.215
     metricsConfig:
       enabled: true
 
