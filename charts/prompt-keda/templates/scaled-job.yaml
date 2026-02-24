@@ -21,6 +21,10 @@ spec:
         initContainers:
           {{- include "prompt-keda.dbauth-initcontainer" . | nindent 10 }}
         restartPolicy: Never
+        {{- with .Values.hostAliases }}
+        hostAliases:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         containers:
           - name: {{ include "prompt-keda.fullname" . | trimPrefix "prompt-keda-" }}
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"

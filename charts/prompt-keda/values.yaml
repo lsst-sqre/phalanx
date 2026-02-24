@@ -276,3 +276,6 @@ nodeSelector: {}
 
 # -- Tolerations for the Prompt Processing pod
 tolerations: []
+
+# -- Host Aliases for the Prompt Processing Pod
+hostAliases: []
