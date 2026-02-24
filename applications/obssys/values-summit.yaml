@@ -61,7 +61,7 @@ atqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 5
+      cpu: 6
       memory: 48Gi
     requests:
       cpu: 3
@@ -123,10 +123,10 @@ gis:
   resources:
     limits:
       cpu: 300m
-      memory: 360Mi
+      memory: 512Mi
     requests:
       cpu: 30m
-      memory: 180Mi
+      memory: 256Mi
 
 mtqueue:
   classifier: scriptqueue1
