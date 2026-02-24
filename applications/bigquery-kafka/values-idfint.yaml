@@ -8,9 +8,9 @@ config:
   metrics:
     enabled: true
   sentry:
-    enabled: true
+    enabled: false
   slack:
-    enabled: true
+    enabled: false
 
 redis:
   persistence:
