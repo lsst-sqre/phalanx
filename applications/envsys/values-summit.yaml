@@ -181,10 +181,10 @@ earthquake-ess302:
     RUN_ARG: 302
   resources:
     requests:
-      cpu: 50m
+      cpu: 70m
       memory: 330Mi
     limits:
-      cpu: 500m
+      cpu: 700m
       memory: 660Mi
 
 eas:
@@ -229,10 +229,10 @@ epm-generator-ess305:
     RUN_ARG: 305
   resources:
     requests:
-      cpu: 30m
+      cpu: 35m
       memory: 180Mi
     limits:
-      cpu: 190m
+      cpu: 220m
       memory: 360Mi
 
 epm-generator-ess306:
@@ -246,10 +246,10 @@ epm-generator-ess306:
     RUN_ARG: 306
   resources:
     requests:
-      cpu: 30m
+      cpu: 35m
       memory: 180Mi
     limits:
-      cpu: 190m
+      cpu: 220m
       memory: 360Mi
 
 hvac:
@@ -262,10 +262,10 @@ hvac:
     RUN_ARG: --state enabled
   resources:
     requests:
-      cpu: 120m
+      cpu: 200m
       memory: 200Mi
     limits:
-      cpu: 1
+      cpu: 2
       memory: 30000Mi
 
 m1m3-ess113:
