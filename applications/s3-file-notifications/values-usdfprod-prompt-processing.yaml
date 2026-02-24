@@ -36,6 +36,13 @@ strimzi-kafka:
     storage:
       size: 1000Gi
       storageClassName: wekafs--sdf-k8s01
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: "4"
+      limits:
+        memory: 16Gi
+        cpu: "4"
 
 kafdrop:
   ingress:
