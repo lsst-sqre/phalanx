@@ -38,6 +38,7 @@ spec:
         - name: "{{ .Chart.Name }}-controller"
           command:
             - "uvicorn"
+            - "--factory"
             - "nublado.controller.main:create_app"
             - "--port"
             - "8080"
