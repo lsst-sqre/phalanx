@@ -6,10 +6,10 @@ atmonochromator:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 100m
+      cpu: 120m
       memory: 320Mi
     requests:
-      cpu: 18m
+      cpu: 20m
       memory: 160Mi
 
 atwhitelight:
@@ -20,10 +20,10 @@ atwhitelight:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 80m
+      cpu: 100m
       memory: 350Mi
     requests:
-      cpu: 13m
+      cpu: 20m
       memory: 170Mi
 
 cbp:
@@ -136,10 +136,10 @@ ledprojector:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 100m
+      cpu: 120m
       memory: 360Mi
     requests:
-      cpu: 18m
+      cpu: 19m
       memory: 180Mi
 
 linearstage101:
@@ -152,10 +152,10 @@ linearstage101:
     RUN_ARG: 101
   resources:
     limits:
-      cpu: 100m
+      cpu: 190m
       memory: 512Mi
     requests:
-      cpu: 18m
+      cpu: 19m
       memory: 256Mi
 
 linearstage102:
@@ -168,10 +168,10 @@ linearstage102:
     RUN_ARG: 102
   resources:
     limits:
-      cpu: 100m
+      cpu: 190m
       memory: 512Mi
     requests:
-      cpu: 16m
+      cpu: 19m
       memory: 256Mi
 
 linearstage103:
@@ -184,10 +184,10 @@ linearstage103:
     RUN_ARG: 103
   resources:
     limits:
-      cpu: 100m
+      cpu: 190m
       memory: 512Mi
     requests:
-      cpu: 16m
+      cpu: 19m
       memory: 256Mi
 
 linearstage104:
@@ -200,10 +200,10 @@ linearstage104:
     RUN_ARG: 104
   resources:
     limits:
-      cpu: 100m
+      cpu: 190m
       memory: 400Mi
     requests:
-      cpu: 18m
+      cpu: 19m
       memory: 200Mi
 
 mtreflector:
@@ -214,10 +214,10 @@ mtreflector:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 100m
+      cpu: 200m
       memory: 512Mi
     requests:
-      cpu: 14m
+      cpu: 20m
       memory: 256Mi
 
 simulation-gencam:
