@@ -146,6 +146,29 @@ prompt-keda:
     edu.stanford.slac.sdf.project/usdf-embargo: "true"
   }
 
+  hostAliases:
+  - hostnames:
+    - usdf-alert-stream-dev.lsst.cloud
+    ip: 134.79.23.185
+  - hostnames:
+    - usdf-alert-stream-dev-broker-0.lsst.cloud
+    ip: 134.79.23.214
+  - hostnames:
+    - usdf-alert-stream-dev-broker-1.lsst.cloud
+    ip: 134.79.23.216
+  - hostnames:
+    - usdf-alert-stream-dev-broker-2.lsst.cloud
+    ip: 134.79.23.218
+  - hostnames:
+    - usdf-alert-stream-dev-broker-3.lsst.cloud
+    ip: 134.79.23.220
+  - hostnames:
+    - usdf-alert-stream-dev-broker-4.lsst.cloud
+    ip: 134.79.23.217
+  - hostnames:
+    - usdf-alert-stream-dev-broker-5.lsst.cloud
+    ip: 134.79.23.219
+
   affinity:
     nodeAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
