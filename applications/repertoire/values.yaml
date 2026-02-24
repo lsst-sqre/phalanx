@@ -429,10 +429,10 @@ podAnnotations: {}
 resources:
   limits:
     cpu: "1"
-    memory: "100Mi"
+    memory: "180Mi"
   requests:
     cpu: "10m"
-    memory: "50Mi"
+    memory: "90Mi"
 
 schemaHook:
   # -- Resource limits and requests for the TAP schema update Helm hook job
