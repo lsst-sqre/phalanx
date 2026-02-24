@@ -20,6 +20,16 @@ strimzi-kafka:
         # -- Whether external listener is enabled
         enabled: false
 
+    # -- Kubernetes requests and limits for the Kafka Controller
+    # @default -- See `values.yaml`
+    resources:
+      requests:
+        memory: 4Gi
+        cpu: "2"
+      limits:
+        memory: 8Gi
+        cpu: "4"
+
 kafdrop:
   # -- Whether Kafdrop is enabled
   enabled: true

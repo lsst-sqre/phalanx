@@ -11,6 +11,7 @@ Kafka Cluster to receive S3 File Notifications
 | strimzi-kafka.kafka.listeners.noauth.enabled | bool | `true` | Whether internal no authentication listener is enabled |
 | strimzi-kafka.kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled |
 | strimzi-kafka.kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled |
+| strimzi-kafka.kafka.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka Controller |
 | kafdrop.affinity | object | `{}` | Affinity configuration |
 | kafdrop.cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |
 | kafdrop.existingSecret | string | Do not use a secret | Existing Kubernetes secret use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |
