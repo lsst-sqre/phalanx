@@ -176,11 +176,7 @@
     "ccd_data_type_config": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the data type (used in URLs, cache paths)"
-        },
-        "name": {
+        "data_type": {
           "type": "string",
           "description": "Butler dataset type name for queries (e.g., 'raw', 'post_isr_image')"
         },
@@ -224,7 +220,7 @@
           "description": "Butler instrument name"
         }
       },
-      "required": ["id", "name", "display_name", "collections"],
+      "required": ["data_type", "display_name", "collections"],
       "additionalProperties": false
     },
     "image_config": {

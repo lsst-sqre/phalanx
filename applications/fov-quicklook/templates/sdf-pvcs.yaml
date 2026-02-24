@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sdf-data-rubin
+spec:
+  storageClassName: sdf-data-rubin
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sdf-group-rubin
+spec:
+  storageClassName: sdf-group-rubin
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
