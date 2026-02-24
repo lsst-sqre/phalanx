@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "alertDatabase.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: 24
   selector:
     matchLabels:
       {{- include "alertDatabase.ingesterSelectorLabels" . | nindent 6 }}
