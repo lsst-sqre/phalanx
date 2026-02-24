@@ -205,10 +205,10 @@ lasertracker1:
     RUN_ARG: 1
   resources:
     limits:
-      cpu: 200m
+      cpu: 300m
       memory: 512Mi
     requests:
-      cpu: 45m
+      cpu: 70m
       memory: 256Mi
 
 mtaircompressor1:
@@ -483,7 +483,7 @@ mtmount:
       cpu: 1
       memory: 1000Mi
     requests:
-      cpu: 280m
+      cpu: 400m
       memory: 425Mi
 
 mtmount-ccw-only:
@@ -535,11 +535,11 @@ mtoods:
   <<: *butler-secret
   resources:
     limits:
-      cpu: 1000m
+      cpu: 1500m
       memory: 2100Mi
     requests:
-      cpu: 200m
-      memory: 700Mi
+      cpu: 300m
+      memory: 800Mi
   configfile:
     path: /etc
     filename: mtoods.yaml
@@ -643,10 +643,10 @@ wfoods:
   <<: *butler-secret
   resources:
     limits:
-      cpu: 100m
+      cpu: 500m
       memory: 4000Mi
     requests:
-      cpu: 1m
+      cpu: 50m
       memory: 800Mi
   configfile:
     path: /etc
