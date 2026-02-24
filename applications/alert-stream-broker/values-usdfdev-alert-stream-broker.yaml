@@ -17,7 +17,7 @@ alert-stream-broker:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: "app.kubernetes.io/name"
+                  - key: "strimzi.io/cluster"
                     operator: In
                     values:
                       - alert-broker
@@ -39,7 +39,7 @@ alert-stream-broker:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: "app.kubernetes.io/name"
+                  - key: "strimzi.io/cluster"
                     operator: In
                     values:
                       - alert-broker
