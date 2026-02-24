@@ -108,10 +108,7 @@ alert-stream-broker:
   vaultSecretsPath: "secret/rubin/usdf-alert-stream-broker-dev/alert-stream-broker"
 
   communityReadonlyTopics: &communityReadonlyTopics
-    - "alerts-simulated"
-    - "lsst-alerts-v9.0"
     - "lsst-alerts-v10.0"
-    - "alerts-mock-data-challenge"
     - "lsst-alerts-reprocessed-v10.0"
 
   users:
@@ -168,19 +165,9 @@ alert-stream-broker:
   topicPartitions: 400
   topicReplicas: 1
 
-  simulatedTopicName: alerts-simulated
-  simulatedTopicPartitions: 45
-  simulatedTopicReplicas: 1
-
   latissTopicName: latiss-alerts
   latissTopicPartitions: 45
   latissTopicReplicas: 1
-
-  lsstcamTopicName90: lsst-alerts-v9.0
-  lsstcamTopicPartitions90: 45
-  lsstcamTopicReplicas90: 1
-  lsstcamMaxBytesRetained90: "755000000000"
-  lsstcamMaxMillisecondsRetained90: "2629740000"
 
   lsstcamTopicName100: lsst-alerts-v10.0
   lsstcamTopicPartitions100: 45
@@ -188,23 +175,11 @@ alert-stream-broker:
   lsstcamMaxBytesRetained100: "300000000000"
   lsstcamMaxMillisecondsRetained100: "2629740000"
 
-  lsstcamTopicNameMDC: alerts-mock-data-challenge
-  lsstcamTopicPartitionsMDC: 45
-  lsstcamTopicReplicasMDC: 1
-  lsstcamMaxBytesRetainedMDC: "300000000000"
-  lsstcamMaxMillisecondsRetainedMDC: "2629740000"
-
   lsstcamTopicNameReprocess: lsst-alerts-reprocessed-v10.0
   lsstcamTopicPartitionsReprocess: 45
   lsstcamTopicReplicasReprocess: 1
   lsstcamMaxBytesRetainedReprocess: "755000000000"
   lsstcamMaxMillisecondsRetainedReprocess: "2629740000"
-
-  lsstcamTopicNameReprocessTest: lsst-alerts-reprocessed-v10.0-test
-  lsstcamTopicPartitionsReprocessTest: 45
-  lsstcamTopicReplicasReprocessTest: 1
-  lsstcamMaxBytesRetainedReprocessTest: "755000000000"
-  lsstcamMaxMillisecondsRetainedReprocessTest: "2629740000"
 
   # Compression set to snappy to balance alert packet compression speed and size.
   topicCompression: snappy
@@ -218,7 +193,7 @@ alert-database:
   ingester:
     # The image can use either a tag or a digest to determine which is being used.
     image:
-      tag: v3.4.0
+      tag: v4.0.0
 
     logLevel: verbose
 
@@ -230,7 +205,6 @@ alert-database:
       cluster: alert-broker
       port: 9092
       topic:
-        - lsst-alerts-v9.0
         - lsst-alerts-v10.0
 
   server:
