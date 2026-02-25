@@ -47,6 +47,7 @@ controller:
         TMPDIR: "/tmp"
         TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
+      fileBrowserRoot: "root"
       nodeSelector:
         node_pool: "user-lab-pool"
       tolerations:

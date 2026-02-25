@@ -65,6 +65,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.enableTutorialsMenu | bool | `true` | Whether to enable Tutorials menu and submenus |
 | controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab |
 | controller.config.lab.extraAnnotations | object | `{}` | Extra annotations to add to user lab pods |
+| controller.config.lab.fileBrowserRoot | string | `"home"` | Whether to allow file browser access to the whole directory tree ("root") or just to the user home directory ("home") |
 | controller.config.lab.files | object | See `values.yaml` | Files to be mounted as ConfigMaps inside the user lab pod. `contents` contains the file contents. Set `modify` to true to make the file writable in the pod. |
 | controller.config.lab.homeVolumeName | string | `"home"` | Home volume name.  The controller needs to know which volume contains user homes. |
 | controller.config.lab.homedirPrefix | string | `"/home"` | Prefix of home directory path to add before the username. This is the path inside the container, not the path of the volume. |

@@ -235,6 +235,10 @@ controller:
       # -- Whether to enable Tutorials menu and submenus
       enableTutorialsMenu: true
 
+      # -- Whether to allow file browser access to the whole directory
+      # tree ("root") or just to the user home directory ("home")
+      fileBrowserRoot: "home"
+
       # -- Environment variables to set for every user lab
       # @default -- See `values.yaml`
       env:
