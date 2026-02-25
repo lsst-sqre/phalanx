@@ -79,6 +79,9 @@ applications:
   # -- Eanble the datalinker application
   datalinker: false
 
+  # -- Enable the docverse application
+  docverse: false
+
   # -- Enable the envsys control system application
   envsys: false
 
