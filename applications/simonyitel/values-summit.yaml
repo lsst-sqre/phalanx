@@ -630,11 +630,12 @@ mtrotator-sim:
 wfoods:
   enabled: true
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/wfoods
     pullPolicy: Always
   env:
     CTRL_OODS_CONFIG_FILE: /etc/wfoods.yaml
-    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   s3Credentials:
