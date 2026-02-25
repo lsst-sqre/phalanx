@@ -14,7 +14,7 @@ x-butler-lfa-combo: &butler-lfa-combo
 atqueue:
   classifier: scriptqueue2
   image:
-    revision: 8
+    revision: 0
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
   env:
@@ -61,7 +61,7 @@ atqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 5
+      cpu: 6
       memory: 48Gi
     requests:
       cpu: 3
@@ -70,7 +70,7 @@ atqueue:
 atscheduler:
   classifier: scheduler2
   image:
-    revision: 9
+    revision: 0
     repository: ts-dockerhub.lsst.org/scheduler
     pullPolicy: Always
   env:
@@ -123,15 +123,15 @@ gis:
   resources:
     limits:
       cpu: 300m
-      memory: 360Mi
+      memory: 512Mi
     requests:
       cpu: 30m
-      memory: 180Mi
+      memory: 256Mi
 
 mtqueue:
   classifier: scriptqueue1
   image:
-    revision: 8
+    revision: 0
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
   env:
@@ -187,7 +187,7 @@ mtqueue:
 mtscheduler:
   classifier: scheduler1
   image:
-    revision: 9
+    revision: 0
     repository: ts-dockerhub.lsst.org/scheduler
     pullPolicy: Always
   env:
@@ -227,7 +227,7 @@ mtscheduler:
 ocsqueue:
   classifier: scriptqueue3
   image:
-    revision: 8
+    revision: 0
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
   env:
@@ -282,7 +282,7 @@ ocsqueue:
 ocsscheduler:
   classifier: scheduler3
   image:
-    revision: 9
+    revision: 0
     repository: ts-dockerhub.lsst.org/scheduler
     pullPolicy: Always
   env:
@@ -321,7 +321,7 @@ ocsscheduler:
 
 watcher:
   image:
-    revision: 14
+    revision: 0
     repository: ts-dockerhub.lsst.org/watcher
     pullPolicy: Always
   envSecrets:
