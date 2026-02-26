@@ -4,7 +4,7 @@ appOfAppsName: "roundtable"
 gcp:
   projectId: "roundtable-dev-abe2"
   region: "us-central1"
-  clusterName: "roundtable-dev"
+  clusterName: "roundtable-dev-2"
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP roundtable-dev.lsst.cloud"
