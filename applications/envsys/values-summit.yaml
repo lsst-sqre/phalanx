@@ -268,6 +268,57 @@ hvac:
       cpu: 1
       memory: 30000Mi
 
+louver-h1-ess441:
+  enabled: true
+  classifier: ess441
+  image:
+    revision: 0
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 441
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
+louver-h1h2-ess442:
+  enabled: true
+  classifier: ess442
+  image:
+    revision: 0
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 442
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
+louver-h2-ess443:
+  enabled: true
+  classifier: ess443
+  image:
+    revision: 0
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 443
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 540Mi
+
 m1m3-ess113:
   enabled: true
   classifier: ess113
@@ -420,57 +471,6 @@ mtdome-ess108:
     limits:
       cpu: 190m
       memory: 510Mi
-
-mtdome-ess118:
-  enabled: true
-  classifier: ess118
-  image:
-    revision: 6
-    repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
-  env:
-    RUN_ARG: 118
-  resources:
-    requests:
-      cpu: 19m
-      memory: 180Mi
-    limits:
-      cpu: 190m
-      memory: 540Mi
-
-mtdome-ess119:
-  enabled: true
-  classifier: ess119
-  image:
-    revision: 6
-    repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
-  env:
-    RUN_ARG: 119
-  resources:
-    requests:
-      cpu: 19m
-      memory: 180Mi
-    limits:
-      cpu: 190m
-      memory: 540Mi
-
-mtdome-ess120:
-  enabled: true
-  classifier: ess120
-  image:
-    revision: 6
-    repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
-  env:
-    RUN_ARG: 120
-  resources:
-    requests:
-      cpu: 19m
-      memory: 180Mi
-    limits:
-      cpu: 190m
-      memory: 540Mi
 
 partsens-ess401:
   enabled: true
