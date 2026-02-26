@@ -6,7 +6,7 @@ config:
   bigqueryLocation: "US"
   gcpServiceAccount: "bigquery-kafka@science-platform-int-dc5d.iam.gserviceaccount.com"
   metrics:
-    enabled: false
+    enabled: true
   sentry:
     enabled: false
   slack:
