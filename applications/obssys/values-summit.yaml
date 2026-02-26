@@ -321,7 +321,7 @@ ocsscheduler:
 
 watcher:
   image:
-    revision: 0
+    revision: 1
     repository: ts-dockerhub.lsst.org/watcher
     pullPolicy: Always
   envSecrets:

@@ -548,7 +548,7 @@ tea-ess123:
   enabled: true
   classifier: ess123
   image:
-    revision: 0
+    revision: 1
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -565,7 +565,7 @@ tea-ess124:
   enabled: true
   classifier: ess124
   image:
-    revision: 0
+    revision: 1
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
