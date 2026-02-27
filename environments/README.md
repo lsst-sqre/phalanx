@@ -20,6 +20,7 @@
 | applications.control-system-test | bool | `false` | Enable the control-system-test application |
 | applications.csc-versions | bool | `false` | Enable the csc-versions application |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
+| applications.docverse | bool | `false` | Enable the docverse application |
 | applications.envsys | bool | `false` | Enable the envsys control system application |
 | applications.eups-distributor | bool | `false` | Enable the eups-distributor application |
 | applications.exposure-checker | bool | `false` | Enable the exposure-checker application |
