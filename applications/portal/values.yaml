@@ -11,14 +11,14 @@ fullnameOverride: ""
 
 image:
   # -- Portal image to use
-  repository: "ipac/firefly"
+  repository: "ipac/suit"
 
   # -- Pull policy for the Portal image
   pullPolicy: "IfNotPresent"
 
   # -- Tag of Portal image to use
   # @default -- The appVersion of the chart
-  tag: "2025.5.4"
+  tag: ""
 
 ingress:
   # -- Additional annotations to add to the ingress
