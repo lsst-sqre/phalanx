@@ -54,7 +54,7 @@ atdometrajectory:
 
 atheaderservice:
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
   env:
@@ -91,7 +91,7 @@ athexapod:
 atmcs:
   enabled: true
   image:
-    revision: 4
+    revision: 1
     repository: ts-dockerhub.lsst.org/atmcs
     pullPolicy: Always
   resources:
@@ -182,7 +182,7 @@ atoods:
 atpneumatics:
   enabled: true
   image:
-    revision: 4
+    revision: 1
     repository: ts-dockerhub.lsst.org/at_pneumatics
     pullPolicy: Always
   resources:
@@ -212,7 +212,7 @@ atptg:
 atspectrograph:
   enabled: true
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/atspec
     pullPolicy: Always
   resources:
