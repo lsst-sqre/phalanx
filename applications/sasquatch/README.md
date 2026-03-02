@@ -156,7 +156,7 @@ Rubin Observatory's telemetry service
 | alert-database.ingester.s3.schemaBucket | string | `"rubin-alert-archive"` |  |
 | alert-database.ingester.s3.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
 | alert-database.ingester.s3.usdf | bool | `true` |  |
-| alert-database.ingester.schemaRegistryURL | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | URL of a schema registry instance |
+| alert-database.ingester.schemaRegistryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | URL of a schema registry instance |
 | alert-database.ingester.serviceAccountName | string | `"alert-database-ingester"` | The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM service account!) which is used by the alert database ingester. |
 | alert-database.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
 | alert-database.ingress.enabled | bool | `false` | Whether to create an ingress |
@@ -178,17 +178,11 @@ Rubin Observatory's telemetry service
 | alert-database.storage.s3.alertBucket | string | `"rubin-alert-archive"` | Name of a s3 storage bucket with alert data |
 | alert-database.storage.s3.endpointURL | string | `"https://sdfdatas3.slac.stanford.edu/"` |  |
 | alert-database.storage.s3.schemaBucket | string | `"rubin-alert-archive"` | Name of a s3 storage bucket with schema data |
-| alert-stream-schema-sync.clusterName | string | `"sasquatch"` | Strimzi "cluster name" of the broker to use as a backend. |
-| alert-stream-schema-sync.compatibilityLevel | string | `"none"` | Compatibility level for the Schema Registry. Options are: none, backward, backward_transitive, forward, forward_transitive, full, and full_transitive. |
-| alert-stream-schema-sync.hostname | string | `nil` | Hostname for an ingress which sends traffic to the Schema Registry. |
-| alert-stream-schema-sync.name | string | `"sasquatch-schema-registry"` | Name used by the registry, and by its users. |
-| alert-stream-schema-sync.port | int | `8081` | Port where the registry is listening. NOTE: Not actually configurable in strimzi-registry-operator, so this basically cannot be changed. |
-| alert-stream-schema-sync.schemaSync | object | `{"image":{"pullPolicy":"Always","repository":"lsstdm/lsst_alert_packet","tag":"tickets-DM-53520"},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
+| alert-stream-schema-sync.schemaRegistryUrl | string | `"http://sasquatch-schema-registry:8081"` | URL for Schema Registry |
+| alert-stream-schema-sync.schemaSync | object | `{"image":{"pullPolicy":"IfNotPresent","repository":"lsstdm/lsst_alert_packet","tag":""},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
 | alert-stream-schema-sync.schemaSync.image.repository | string | `"lsstdm/lsst_alert_packet"` | Repository of a container which has the alert_packet syncLatestSchemaToRegistry.py program. |
-| alert-stream-schema-sync.schemaSync.image.tag | string | `"tickets-DM-53520"` | Version of the container to use. If container isn't updating in Argo, switch to digest. |
+| alert-stream-schema-sync.schemaSync.image.tag | string | `""` | Version of the container to use. If container isn't updating in Argo, switch to digest. |
 | alert-stream-schema-sync.schemaSync.subject | string | `"alert-packet"` | Subject name to use when inserting data into the Schema Registry |
-| alert-stream-schema-sync.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry to store data. |
-| alert-stream-schema-sync.tls | bool | `true` |  |
 | app-metrics.affinity | object | `{}` | Affinity for pod assignment |
 | app-metrics.apps | list | `[]` | A list of applications that will publish metrics events, and the keys that should be ingested into InfluxDB as tags.  The names should be the same as the app names in Phalanx. |
 | app-metrics.args | list | `[]` | Arguments passed to the Telegraf agent containers |

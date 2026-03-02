@@ -20,7 +20,7 @@ Archival database of alerts sent through the alert stream.
 | ingester.s3.schemaBucket | string | `"rubin-alert-archive"` |  |
 | ingester.s3.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
 | ingester.s3.usdf | bool | `true` |  |
-| ingester.schemaRegistryURL | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | URL of a schema registry instance |
+| ingester.schemaRegistryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | URL of a schema registry instance |
 | ingester.serviceAccountName | string | `"alert-database-ingester"` | The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM service account!) which is used by the alert database ingester. |
 | ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
 | ingress.enabled | bool | `false` | Whether to create an ingress |

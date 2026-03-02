@@ -33,7 +33,7 @@ spec:
             - "--tls-client-crt-location=/etc/kafka-client-secret/user.crt"
             - "--tls-server-ca-crt-location=/etc/kafka-server-ca-cert/ca.crt"
             - "--kafka-auth-mechanism=mtls"
-            - "--schema-registry-address={{ required "A schema registry URL is required " .Values.ingester.schemaRegistryURL }}"
+            - "--schema-registry-address={{ required "A schema registry URL is required " .Values.ingester.schemaRegistryUrl }}"
             - "--endpoint-url={{ required "An s3 endpoint url is required " .Values.storage.s3.endpointURL }}"
             - "--bucket-alerts={{ required "An alert bucket name is required " .Values.storage.s3.alertBucket }}"
             - "--bucket-schemas={{ required "A schema bucket name is required " .Values.storage.s3.schemaBucket }}"
