@@ -134,6 +134,30 @@ hvac:
   # -- Enable the HVAC CSC
   enabled: false
 
+louver-h1-ess441:
+  # -- Enable the ESS:441 CSC
+  enabled: false
+
+louver-h1-ess441-sim:
+  # -- Enable the ESS:441 simulator CSC
+  enabled: false
+
+louver-h1h2-ess442:
+  # -- Enable the ESS:442 CSC
+  enabled: false
+
+louver-h1h2-ess442-sim:
+  # -- Enable the ESS:442 simulator CSC
+  enabled: false
+
+louver-h2-ess443:
+  # -- Enable the ESS:443 CSC
+  enabled: false
+
+louver-h2-ess443-sim:
+  # -- Enable the ESS:443 simulator CSC
+  enabled: false
+
 m1m3-ess113:
   # -- Enable the ESS:113 CSC
   enabled: false
@@ -204,30 +228,6 @@ mtdome-ess108:
 
 mtdome-ess108-sim:
   # -- Enable the ESS:108 simulator CSC
-  enabled: false
-
-mtdome-ess118:
-  # -- Enable the ESS:118 CSC
-  enabled: false
-
-mtdome-ess118-sim:
-  # -- Enable the ESS:118 simulator CSC
-  enabled: false
-
-mtdome-ess119:
-  # -- Enable the ESS:119 CSC
-  enabled: false
-
-mtdome-ess119-sim:
-  # -- Enable the ESS:119 simulator CSC
-  enabled: false
-
-mtdome-ess120:
-  # -- Enable the ESS:120 CSC
-  enabled: false
-
-mtdome-ess120-sim:
-  # -- Enable the ESS:120 simulator CSC
   enabled: false
 
 ringss-ess304:

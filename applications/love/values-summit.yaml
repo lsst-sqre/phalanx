@@ -600,6 +600,15 @@ love-producer:
   - name: linearstage104
     csc: LinearStage:104
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: louverh1ess441
+    csc: ESS:441
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: louverh1h2ess442
+    csc: ESS:442
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: louverh2ess443
+    csc: ESS:443
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: love
     csc: LOVE:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -663,15 +672,6 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtdomeess108
     csc: ESS:108
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtdomeess118
-    csc: ESS:118
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtdomeess119
-    csc: ESS:119
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtdomeess120
-    csc: ESS:120
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtdometrajectory
     csc: MTDomeTrajectory:0

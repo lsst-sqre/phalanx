@@ -50,6 +50,12 @@ Deployment for the Environmental Awareness Systems CSCs
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | hvac.enabled | bool | `false` | Enable the HVAC CSC |
+| louver-h1-ess441-sim.enabled | bool | `false` | Enable the ESS:441 simulator CSC |
+| louver-h1-ess441.enabled | bool | `false` | Enable the ESS:441 CSC |
+| louver-h1h2-ess442-sim.enabled | bool | `false` | Enable the ESS:442 simulator CSC |
+| louver-h1h2-ess442.enabled | bool | `false` | Enable the ESS:442 CSC |
+| louver-h2-ess443-sim.enabled | bool | `false` | Enable the ESS:443 simulator CSC |
+| louver-h2-ess443.enabled | bool | `false` | Enable the ESS:443 CSC |
 | m1m3-ess113-sim.enabled | bool | `false` | Enable the ESS:113 simulator CSC |
 | m1m3-ess113.enabled | bool | `false` | Enable the ESS:113 CSC |
 | m1m3-ess114-sim.enabled | bool | `false` | Enable the ESS:114 simulator CSC |
@@ -68,12 +74,6 @@ Deployment for the Environmental Awareness Systems CSCs
 | mtdome-ess107.enabled | bool | `false` | Enable the ESS:107 CSC |
 | mtdome-ess108-sim.enabled | bool | `false` | Enable the ESS:108 simulator CSC |
 | mtdome-ess108.enabled | bool | `false` | Enable the ESS:108 CSC |
-| mtdome-ess118-sim.enabled | bool | `false` | Enable the ESS:118 simulator CSC |
-| mtdome-ess118.enabled | bool | `false` | Enable the ESS:118 CSC |
-| mtdome-ess119-sim.enabled | bool | `false` | Enable the ESS:119 simulator CSC |
-| mtdome-ess119.enabled | bool | `false` | Enable the ESS:119 CSC |
-| mtdome-ess120-sim.enabled | bool | `false` | Enable the ESS:120 simulator CSC |
-| mtdome-ess120.enabled | bool | `false` | Enable the ESS:120 CSC |
 | ringss-ess304-sim.enabled | bool | `false` | Enable the ESS:304 simulator CSC |
 | ringss-ess304.enabled | bool | `false` | Enable the ESS:304 CSC |
 | tma-ess104-sim.enabled | bool | `false` | Enable the ESS:104 simulator CSC |
