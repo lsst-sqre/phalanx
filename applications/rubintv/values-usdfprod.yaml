@@ -51,6 +51,8 @@ rubintv:
       value: "rubin"
     - name: DEPLOY_BRANCH
       value: *dbE
+    - name: RA_PULL_DIRECTORIES
+      value: "rubintv_analysis_service"
     pvcMountpoint:
     - name: sdf-group-rubin
       persistentVolumeClaim:
@@ -81,5 +83,5 @@ rubintv:
         ephemeral-storage: 256Mi
       limits:
         cpu: 2
-        memory: 8Gis
+        memory: 8Gi
         ephemeral-storage: 512Mi

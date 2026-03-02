@@ -60,11 +60,6 @@ spec:
                   key: "AWS_SECRET_ACCESS_KEY"
           {{- end }}
 
-          volumeMounts:
-          {{- if .Values.ingester.s3.usdf }}
-          - mountPath: /var/secrets/google
-            name: alert-stream-broker-secrets
-          {{- end }}
 
       serviceAccountName: "{{ .Values.server.serviceAccountName }}"
 

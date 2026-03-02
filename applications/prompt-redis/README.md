@@ -18,3 +18,14 @@ Redis cluster for prompt processing
 | redis.podAnnotations | object | `{}` | Pod annotations for the persistent Redis pod |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the persistent Redis pod |
 | redis.tolerations | list | `[]` | Tolerations for the persistent Redis pod |
+| redis-stream-exporter.affinity | object | `{}` | Affinity configuration |
+| redis-stream-exporter.auth | object | `{"enabled":false}` | Redis authentication settings |
+| redis-stream-exporter.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| redis-stream-exporter.image.repository | string | `"ghcr.io/lsst-dm/redis-stream-exporter"` | Redis Stream Exporter Docker image repository |
+| redis-stream-exporter.image.tag | string | `"main"` | Redis Stream Exporter image version |
+| redis-stream-exporter.nodeSelector | object | `{}` | Node selector configuration |
+| redis-stream-exporter.podAnnotations | object | `{"prometheus.io/port":"8000","prometheus.io/scrape":"true"}` | Pod annotations |
+| redis-stream-exporter.replicaCount | int | `1` | Number of Redis Stream Exporter pods to run in the deployment. |
+| redis-stream-exporter.resources | object | See `values.yaml` | Kubernetes requests and limits for Redis Exporter |
+| redis-stream-exporter.sleepInterval | int | `10` | How long to sleep between redis stream exporter polling cycles |
+| redis-stream-exporter.tolerations | list | `[]` | Tolerations configuration |

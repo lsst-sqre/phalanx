@@ -1,4 +1,4 @@
-apiVersion: kafka.strimzi.io/v1beta2
+apiVersion: kafka.strimzi.io/v1
 kind: KafkaUser
 metadata:
   name: kafdrop
@@ -19,11 +19,13 @@ spec:
           type: group
           name: "*"
           patternType: literal
-        operation: All
+        operations:
+        - All
       - resource:
           type: topic
           name: "*"
           patternType: literal
         type: allow
         host: "*"
-        operation: All
+        operations:
+        - All

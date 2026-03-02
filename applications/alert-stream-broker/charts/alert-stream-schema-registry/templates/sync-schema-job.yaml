@@ -24,7 +24,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: sync-schema-job
-        image: {{ .Values.schemaSync.image.repository }}@{{ .Values.schemaSync.image.digest }}
+        image: "{{ .Values.schemaSync.image.repository }}:{{ .Values.schemaSync.image.tag }}"
         imagePullPolicy: "{{ .Values.schemaSync.image.pullPolicy}}"
         command:
           - "syncAllSchemasToRegistry"

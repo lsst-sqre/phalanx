@@ -33,5 +33,6 @@ config:
       business:
         type: "TAPQuerySetRunner"
         options:
+          dataset: "dp02"
           query_set: "dp0.2"
         restart: true

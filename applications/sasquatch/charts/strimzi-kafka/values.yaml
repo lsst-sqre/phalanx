@@ -11,7 +11,7 @@ cluster:
 
 kafka:
   # -- Version of Kafka to deploy
-  version: "4.0.0"
+  version: "4.1.0"
 
   # -- 09:00–11:00 CLT (UTC−3)
   maintenanceTimeWindows: "0 0 12-13 ? * *"
@@ -98,6 +98,10 @@ kafka:
       # -- Annotations that will be added to the Ingress, Route, or Service
       # resource
       annotations: {}
+
+      # -- Whether to allocate NodePort automatically for the Service with type LoadBalancer.
+      # @default -- true
+      allocateLoadBalancerNodePorts: true
 
     # -- Brokers configuration. _host_ is used in the brokers'
     # advertised.brokers configuration and for TLS hostname verification.  The
@@ -394,6 +398,12 @@ mirrormaker2:
     # comma-separated list or regular expression pattern
     topicsPattern: "registry-schemas, lsst.sal.*"
 
+  target:
+    # -- Target cluster alias. Used to identify the target cluster in
+    # MirrorMaker2 configuration.
+    # @default -- target
+    alias: "target"
+
   replication:
     policy:
       # -- Convention used for the replicated topic name when the DefaultReplicationPolicy
@@ -408,6 +418,9 @@ mirrormaker2:
     # Options are 'earliest' and 'latest'.
     # @default -- earliest
     offset: earliest
+    # -- The location (source/target) of the offset-syncs topic.
+    # @default -- source
+    offsetSyncsTopicLocation: source
 
   # -- Kubernetes resources for MirrorMaker2
   resources:

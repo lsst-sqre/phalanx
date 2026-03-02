@@ -14,6 +14,9 @@ spec:
       labels:
         app: fov-quicklook-coordinator
     spec:
+      securityContext:
+        supplementalGroups:
+          - 4085
       containers:
         - name: fov-quicklook-coordinator
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

@@ -2,7 +2,7 @@ auxtel-ess201:
   enabled: true
   classifier: ess201
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -19,7 +19,7 @@ auxtel-ess202:
   enabled: true
   classifier: ess202
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -36,7 +36,7 @@ auxtel-ess308:
   enabled: true
   classifier: ess308
   image:
-    revision: 7
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -53,7 +53,7 @@ auxtel-ess204:
   enabled: true
   classifier: ess204
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -70,7 +70,7 @@ calibhill-ess301:
   enabled: true
   classifier: ess301
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -87,7 +87,7 @@ camera-ess111:
   enabled: true
   classifier: ess111
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -104,7 +104,7 @@ cleanroom-ess109:
   enabled: true
   classifier: ess109
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -152,7 +152,7 @@ dimm2:
 dream:
   enabled: true
   image:
-    revision: 7
+    revision: 0
     repository: ts-dockerhub.lsst.org/dream
     pullPolicy: Always
   env:
@@ -174,23 +174,23 @@ earthquake-ess302:
   enabled: true
   classifier: ess302
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
     RUN_ARG: 302
   resources:
     requests:
-      cpu: 50m
+      cpu: 70m
       memory: 330Mi
     limits:
-      cpu: 500m
+      cpu: 700m
       memory: 660Mi
 
 eas:
   enabled: true
   image:
-    revision: 11
+    revision: 0
     repository: ts-dockerhub.lsst.org/eas
     pullPolicy: Always
   resources:
@@ -205,7 +205,7 @@ epm-ess303:
   enabled: true
   classifier: ess303
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -222,50 +222,50 @@ epm-generator-ess305:
   enabled: true
   classifier: ess305
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
     RUN_ARG: 305
   resources:
     requests:
-      cpu: 30m
+      cpu: 35m
       memory: 180Mi
     limits:
-      cpu: 190m
+      cpu: 220m
       memory: 360Mi
 
 epm-generator-ess306:
   enabled: true
   classifier: ess306
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
     RUN_ARG: 306
   resources:
     requests:
-      cpu: 30m
+      cpu: 35m
       memory: 180Mi
     limits:
-      cpu: 190m
+      cpu: 220m
       memory: 360Mi
 
 hvac:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/hvac
     pullPolicy: Always
   env:
     RUN_ARG: --state enabled
   resources:
     requests:
-      cpu: 120m
+      cpu: 200m
       memory: 200Mi
     limits:
-      cpu: 1
+      cpu: 2
       memory: 30000Mi
 
 louver-h1-ess441:
@@ -323,7 +323,7 @@ m1m3-ess113:
   enabled: true
   classifier: ess113
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -340,7 +340,7 @@ m1m3-ess114:
   enabled: true
   classifier: ess114
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -357,7 +357,7 @@ m1m3-ess115:
   enabled: true
   classifier: ess115
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -374,7 +374,7 @@ m1m3-ess116:
   enabled: true
   classifier: ess116
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -391,7 +391,7 @@ m1m3-ess117:
   enabled: true
   classifier: ess117
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -408,7 +408,7 @@ m2-ess106:
   enabled: true
   classifier: ess106
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -425,7 +425,7 @@ m2-ess112:
   enabled: true
   classifier: ess112
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -442,7 +442,7 @@ mtdome-ess107:
   enabled: true
   classifier: ess107
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -459,7 +459,7 @@ mtdome-ess108:
   enabled: true
   classifier: ess108
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -476,7 +476,7 @@ partsens-ess401:
   enabled: true
   classifier: ess401
   image:
-    revision: 11
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -493,7 +493,7 @@ partsens-ess402:
   enabled: true
   classifier: ess402
   image:
-    revision: 11
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -510,7 +510,7 @@ partsens-ess403:
   enabled: true
   classifier: ess403
   image:
-    revision: 11
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -527,7 +527,7 @@ ringss-ess304:
   enabled: true
   classifier: ess304
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -548,7 +548,7 @@ tea-ess123:
   enabled: true
   classifier: ess123
   image:
-    revision: 11
+    revision: 1
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -565,7 +565,7 @@ tea-ess124:
   enabled: true
   classifier: ess124
   image:
-    revision: 11
+    revision: 1
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -582,7 +582,7 @@ tea-ess125:
   enabled: true
   classifier: ess125
   image:
-    revision: 11
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -599,7 +599,7 @@ tea-ess126:
   enabled: true
   classifier: ess126
   image:
-    revision: 11
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -616,7 +616,7 @@ tma-ess121:
   enabled: true
   classifier: ess121
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -633,7 +633,7 @@ tma-ess122:
   enabled: true
   classifier: ess122
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -650,7 +650,7 @@ tma-ess104:
   enabled: true
   classifier: ess104
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -667,7 +667,7 @@ tma-ess105:
   enabled: true
   classifier: ess105
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -684,7 +684,7 @@ tma-ess110:
   enabled: true
   classifier: ess110
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:

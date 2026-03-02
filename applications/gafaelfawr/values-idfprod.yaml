@@ -86,6 +86,8 @@ config:
     "write:files":
       - "g_rubin"
       - "g_users"
+    "write:sasquatch":
+      - "g_admins"
 
   initialAdmins:
     - "adam"

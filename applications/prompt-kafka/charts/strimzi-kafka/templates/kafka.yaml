@@ -16,6 +16,12 @@ spec:
       size: {{ .Values.kafkaController.storage.size }}
       class: {{ .Values.kafkaController.storage.storageClassName }}
       deleteClaim: false
+  template:
+    persistentVolumeClaim:
+      metadata:
+        annotations:
+          argocd.argoproj.io/compare-options: IgnoreExtraneous
+          argocd.argoproj.io/sync-options: Prune=false
   {{- with .Values.kafkaController.resources }}
   resources:
     {{- toYaml . | nindent 6 }}
@@ -43,6 +49,12 @@ spec:
       class: {{ .Values.kafka.storage.storageClassName }}
       {{- end}}
       deleteClaim: false
+  template:
+    persistentVolumeClaim:
+      metadata:
+        annotations:
+          argocd.argoproj.io/compare-options: IgnoreExtraneous
+          argocd.argoproj.io/sync-options: Prune=false
   {{- with .Values.kafka.resources }}
   resources:
     {{- toYaml . | nindent 6 }}

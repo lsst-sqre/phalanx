@@ -202,7 +202,7 @@ chronograf:
     repository: "quay.io/influxdb/chronograf"
 
     # -- Docker tag to use for Chronograf
-    tag: 1.10.8
+    tag: 1.10.9
 
   updateStrategy:
     # -- Deployment strategy, use recreate with persistence enabled
@@ -328,6 +328,10 @@ backup:
 
 tap:
   # -- Whether to enable the tap subchart
+  enabled: false
+
+ppdbtap:
+  # -- Whether to enable the ppdbtap subchart
   enabled: false
 
 obsenv:

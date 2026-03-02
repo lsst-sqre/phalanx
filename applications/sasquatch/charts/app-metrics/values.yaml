@@ -27,6 +27,10 @@ globalAppConfig:
   nublado:
     influxTags:
       - "username"
+  bigquerykafka:
+    influxTags:
+      - "username"
+      - "queue"
   qservkafka:
     influxTags:
       - "username"
@@ -112,7 +116,7 @@ debug: false
 
 # Must match the Kafka broker version used in Sasquatch.
 # @default -- the default Kafka version in Sasquatch (see strimzi-kafka subchart values.yaml)
-kafkaVersion: "4.0.0"
+kafkaVersion: "4.1.0"
 
 influxdb:
   # -- URL of the InfluxDB v1 instance to write to

@@ -52,7 +52,6 @@ tests:
           path: "data['config.yaml']"
           value: |
             autostart: []
-            availableServices: []
             gafaelfawrTimeout: null
             githubCiApp:
               acceptedGithubOrgs:

@@ -191,6 +191,9 @@ kafkaExporter:
       memory: "100Mi"
 
 registry:
+  # -- Whether to enable the Schema Registry
+  enabled: false
+
   ingress:
     # -- Whether to enable an ingress for the Schema Registry
     enabled: false
