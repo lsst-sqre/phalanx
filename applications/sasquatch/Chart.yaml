@@ -123,7 +123,7 @@ dependencies:
     version: 1.0.0
   - name: alert-stream-schema-sync
     condition: alert-stream-schema-sync.enabled
-    version: 2.1.0
+    version: 1.0.0
 
 annotations:
   phalanx.lsst.io/docs: |

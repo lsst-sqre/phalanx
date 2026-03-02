@@ -24,9 +24,9 @@ spec:
       restartPolicy: Never
       containers:
       - name: sync-schema-job
-        image: "{{ .Values.schemaSync.image.repository }}:{{ .Values.schemaSync.image.tag }}"
+        image: "{{ .Values.schemaSync.image.repository }}:{{ .Values.schemaSync.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: "{{ .Values.schemaSync.image.pullPolicy}}"
         command:
           - "syncAllSchemasToRegistry"
-          - "--schema-registry-url=http://{{ .Values.name }}:{{ .Values.port }}"
+          - "--schema-registry-url={{ .Values.schemaRegistryUrl }}"
           - "--subject={{ .Values.schemaSync.subject }}"

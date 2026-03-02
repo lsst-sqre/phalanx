@@ -29,7 +29,7 @@ ingester:
       - alerts-simulated
 
   # -- URL of a schema registry instance
-  schemaRegistryURL: "http://sasquatch-schema-registry.sasquatch:8081"
+  schemaRegistryUrl: "http://sasquatch-schema-registry.sasquatch:8081"
 
   s3:
     # -- Name of a service account which has credentials granting access to the

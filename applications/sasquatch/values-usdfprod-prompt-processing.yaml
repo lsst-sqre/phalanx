@@ -234,6 +234,11 @@ alert-database:
     enabled: true
     host: usdfprod-prompt-processing.slac.stanford.edu
 
+alert-stream-schema-sync:
+  schemaSync:
+    image:
+      tag: tickets-DM-53520
+
 chronograf:
   enabled: false
 
