@@ -268,7 +268,7 @@ hvac-sim:
       cpu: 160m
       memory: 200Mi
     limits:
-      cpu: 1
+      cpu: 500m
       memory: 2000Mi
 
 m1m3-ess113-sim:
@@ -563,6 +563,7 @@ tea-ess125-sim:
   enabled: true
   classifier: ess125
   image:
+    revision: 11
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
@@ -579,6 +580,7 @@ tea-ess126-sim:
   enabled: true
   classifier: ess126
   image:
+    revision: 11
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:

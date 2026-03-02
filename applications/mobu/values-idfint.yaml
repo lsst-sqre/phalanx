@@ -21,41 +21,37 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
-    - name: "phalanx-quotidian"
+    - name: "recommended"
       count: 1
       users:
-        - username: "bot-mobu-quotidian"
+        - username: "bot-mobu-recommended"
       scopes:
-        - "exec:internal-tools"
         - "exec:notebook"
         - "exec:portal"
         - "read:image"
         - "read:tap"
-        - "write:sasquatch"
+      business:
+        type: "NotebookRunnerCounting"
+        options:
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_ref: "prod"
+        restart: true
+    - name: "weekly"
+      count: 1
+      users:
+        - username: "bot-mobu-weekly"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
       business:
         type: "NotebookRunnerCounting"
         options:
           image:
-            image_class: "latest-daily"
-          repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
-          repo_ref: "main"
-        restart: true
-    - name: "phalanx-recommended"
-      count: 1
-      users:
-        - username: "bot-mobu-phlx-rec"
-      scopes:
-        - "exec:internal-tools"
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-        - "write:sasquatch"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
-          repo_ref: "main"
+            image_class: "latest-weekly"
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_ref: "prod"
         restart: true
     - name: "tutorial"
       count: 1
@@ -73,12 +69,10 @@ config:
           repo_ref: "main"
           max_executions: 1
         restart: true
-    - name: "tutorial-adhoc"
-      # Designed to let us take an arbitrary tag and see whether
-      # tutorials pass on it.  Just change the tag under options.image.tag.
+    - name: "tutorial-weekly"
       count: 1
       users:
-        - username: "bot-mobu-adhoc"
+        - username: "bot-mobu-tutorial-weekly"
       scopes:
         - "exec:notebook"
         - "exec:portal"
@@ -88,8 +82,7 @@ config:
         type: "NotebookRunnerCounting"
         options:
           image:
-            image_class: "by-tag"
-            tag: "r29_2_0_rsp2590"
+            image_class: "latest-weekly"
           repo_url: "https://github.com/lsst/tutorial-notebooks.git"
           repo_ref: "main"
           max_executions: 1
@@ -102,9 +95,8 @@ config:
       business:
         type: "TAPQuerySetRunner"
         options:
-          dataset: "dp02"
-          query_set: "dp0.2"
           sync: false
+          query_set: "dp0.2"
         restart: true
     - name: "sia"
       count: 1
@@ -114,6 +106,5 @@ config:
       business:
         type: "SIAQuerySetRunner"
         options:
-          dataset: "dp02"
           query_set: "dp02"
         restart: true

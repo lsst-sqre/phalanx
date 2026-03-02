@@ -181,7 +181,3 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD Application
   vaultSecretsPathPrefix: null
-
-  # -- Base URL for Repertoire discovery API
-  # @default -- Set by Argo CD
-  repertoireUrl: null

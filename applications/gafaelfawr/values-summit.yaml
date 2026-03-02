@@ -52,8 +52,6 @@ config:
       - "sqre"
     "read:image":
       - "rsp-summit"
-    "read:sasquatch":
-      - "rsp-summit"
     "read:tap":
       - "rsp-summit"
     "write:sasquatch":

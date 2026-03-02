@@ -110,7 +110,6 @@ chronograf:
 app-metrics:
   enabled: true
   apps:
-    - bigquerykafka
     - gafaelfawr
     - mobu
     - noteburst
@@ -141,7 +140,4 @@ backpack:
   enabled: true
 
 tap:
-  enabled: true
-
-ppdbtap:
   enabled: true

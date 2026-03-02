@@ -3,7 +3,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: cluster-operator-metrics
-  namespace: s3-file-notifications
+  namespace: sasquatch
   labels:
     app: strimzi
     {{- toYaml .Values.cluster.monitorLabel | nindent 4 }}
@@ -13,7 +13,7 @@ spec:
       strimzi.io/kind: cluster-operator
   namespaceSelector:
     matchNames:
-      - s3-file-notifications
+      - sasquatch
   podMetricsEndpoints:
   - path: /metrics
     port: http
@@ -22,7 +22,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: entity-operator-metrics
-  namespace: s3-file-notifications
+  namespace: sasquatch
   labels:
     app: strimzi
     {{- toYaml .Values.cluster.monitorLabel | nindent 4 }}
@@ -32,7 +32,7 @@ spec:
       app.kubernetes.io/name: entity-operator
   namespaceSelector:
     matchNames:
-      - s3-file-notifications
+      - sasquatch
   podMetricsEndpoints:
   - path: /metrics
     port: healthcheck
@@ -41,7 +41,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: bridge-metrics
-  namespace: s3-file-notifications
+  namespace: sasquatch
   labels:
     app: strimzi
     {{- toYaml .Values.cluster.monitorLabel | nindent 4 }}
@@ -51,7 +51,7 @@ spec:
       strimzi.io/kind: KafkaBridge
   namespaceSelector:
     matchNames:
-      - s3-file-notifications
+      - sasquatch
   podMetricsEndpoints:
   - path: /metrics
     port: rest-api
@@ -60,7 +60,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: kafka-resources-metrics
-  namespace: s3-file-notifications
+  namespace: sasquatch
   labels:
     app: strimzi
     {{- toYaml .Values.cluster.monitorLabel | nindent 4 }}
@@ -72,7 +72,7 @@ spec:
         values: ["Kafka", "KafkaConnect", "KafkaMirrorMaker", "KafkaMirrorMaker2"]
   namespaceSelector:
     matchNames:
-      - s3-file-notifications
+      - sasquatch
   podMetricsEndpoints:
   - path: /metrics
     port: tcp-prometheus

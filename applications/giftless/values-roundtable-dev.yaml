@@ -1,6 +1,3 @@
-resources:
-  limits:
-    cpu: 6
 server:
   debug: true
   readonly:

@@ -2,7 +2,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
-  name: ppdbtap
+  name: ppdbtap-tls
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:

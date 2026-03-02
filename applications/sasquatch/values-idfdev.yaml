@@ -147,7 +147,6 @@ chronograf:
 app-metrics:
   enabled: true
   apps:
-    - bigquerykafka
     - gafaelfawr
     - mobu
     - noteburst

@@ -20,7 +20,6 @@
 | applications.control-system-test | bool | `false` | Enable the control-system-test application |
 | applications.csc-versions | bool | `false` | Enable the csc-versions application |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
-| applications.docverse | bool | `false` | Enable the docverse application |
 | applications.envsys | bool | `false` | Enable the envsys control system application |
 | applications.eups-distributor | bool | `false` | Enable the eups-distributor application |
 | applications.exposure-checker | bool | `false` | Enable the exposure-checker application |
@@ -49,13 +48,13 @@
 | applications.nvr-control | bool | `false` | Enable the nvr-control application |
 | applications.obsloctap | bool | `false` | Enable the obsloctap application |
 | applications.obssys | bool | `false` | Enable the obssys control system application |
+| applications.octavius | bool | `false` | Enable the octavius application |
 | applications.onepassword-connect | bool | `false` | Enable the onepassword-connect application |
 | applications.ook | bool | `false` | Enable the ook application |
 | applications.plot-navigator | bool | `false` | Enable the plot-navigator application |
 | applications.portal | bool | `false` | Enable the portal application |
 | applications.postgres | bool | `false` | Enable the in-cluster PostgreSQL server. Use of this server is discouraged in favor of using infrastructure SQL, but will remain supported for use cases such as minikube test deployments. |
 | applications.ppdb-replication | bool | `false` | Enable the ppdb-replication application |
-| applications.ppdbtap | bool | `false` | Enable the ppdbtap application |
 | applications.production-tools | bool | `false` | Enable the production-tools application |
 | applications.prompt-kafka | bool | `false` | Enable the prompt-kafka application |
 | applications.prompt-keda-hsc | bool | `false` | Enable the prompt-keda-hsc application |

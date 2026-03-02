@@ -54,7 +54,7 @@ atdometrajectory:
 
 atheaderservice:
   image:
-    revision: 0
+    revision: 4
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
   env:
@@ -68,10 +68,10 @@ atheaderservice:
     key: aws-secret-access-key
   resources:
     limits:
-      cpu: 1000m
+      cpu: 800m
       memory: 2.4Gi
     requests:
-      cpu: 100m
+      cpu: 80m
       memory: 1.2Gi
 
 athexapod:
@@ -82,16 +82,16 @@ athexapod:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 200m
+      cpu: 90m
       memory: 350Mi
     requests:
-      cpu: 20m
+      cpu: 9m
       memory: 170Mi
 
 atmcs:
   enabled: true
   image:
-    revision: 1
+    revision: 4
     repository: ts-dockerhub.lsst.org/atmcs
     pullPolicy: Always
   resources:
@@ -167,13 +167,11 @@ atoods:
                   - LATISS/raw/all
               collection_cleaner:
                   collections_to_clean:
-                      - collections:
-                          - LATISS/raw/all
+                      - collection: LATISS/raw/all
                         files_older_than:
                             <<: *interval
                             days: 30
-                      - collections:
-                          - LATISS/runs/quickLook
+                      - collection: LATISS/runs/quickLook
                         files_older_than:
                             <<: *interval
                             days: 7
@@ -184,7 +182,7 @@ atoods:
 atpneumatics:
   enabled: true
   image:
-    revision: 1
+    revision: 4
     repository: ts-dockerhub.lsst.org/at_pneumatics
     pullPolicy: Always
   resources:
@@ -214,7 +212,7 @@ atptg:
 atspectrograph:
   enabled: true
   image:
-    revision: 0
+    revision: 4
     repository: ts-dockerhub.lsst.org/atspec
     pullPolicy: Always
   resources:
@@ -235,8 +233,8 @@ pmd1:
     RUN_ARG: 1
   resources:
     limits:
-      cpu: 200m
+      cpu: 100m
       memory: 350Mi
     requests:
-      cpu: 25m
+      cpu: 15m
       memory: 170Mi

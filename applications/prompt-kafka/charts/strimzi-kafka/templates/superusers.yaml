@@ -1,6 +1,6 @@
 {{ range $idx, $username := .Values.superusers }}
 ---
-apiVersion: kafka.strimzi.io/v1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
   name: {{ $username }}
@@ -16,14 +16,12 @@ spec:
           type: group
           name: "*"
           patternType: literal
-        operations:
-        - All
+        operation: All
       - resource:
           type: topic
           name: "*"
           patternType: literal
         type: allow
         host: "*"
-        operations:
-        - All
+        operation: All
 {{ end }}

@@ -358,7 +358,7 @@ telegraf:
       max_undelivered_messages: 5000
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS", "lsst.sal.WFOODS" ]
+        [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
     auxtel:
       enabled: true
       database: "efd"
@@ -386,7 +386,7 @@ telegraf:
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: |
-        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source", "VersionType" ]
+        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source" ]
       topicRegexps: |
         [ "lsst.ATCamera" ]
     cccamera:
@@ -395,7 +395,7 @@ telegraf:
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: |
-        [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source", "VersionType" ]
+        [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source" ]
       topicRegexps: |
         [ "lsst.CCCamera" ]
     mtcamera:
@@ -404,7 +404,7 @@ telegraf:
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: |
-        [ "Agent", "Aspic", "Axis", "Bay", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck", "VersionType" ]
+        [ "Agent", "Aspic", "Axis", "Bay", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
       topicRegexps: |
         [ "lsst.MTCamera" ]
 

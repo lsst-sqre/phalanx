@@ -1,7 +1,7 @@
 prompt-keda:
   image:
     pullPolicy: IfNotPresent
-    tag: 13.5.0
+    tag: 12.2.1
 
   alerts:
     username: kafka-admin
@@ -9,7 +9,8 @@ prompt-keda:
     topic: lsst-alerts-v10.0
 
   worker:
-    restart: 10
+    # TODO: need to adjust this once we know how leaky the LSSTCam pipeline is
+    restart: 7
 
   instrument:
     pipelines:
@@ -20,7 +21,7 @@ prompt-keda:
       main: |-
         - survey: BLOCK-407  # FBS Pre-Operations Survey (independent of environmental conditions)
           pipelines: &std-main-pipelines
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-noForced.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         - survey: BLOCK-408  # FBS Pre-Operations Survey (triggered by environmental conditions)
@@ -47,7 +48,7 @@ prompt-keda:
         # Run to enable solar system processing in SingleFrame
         - survey: BLOCK-407
           pipelines: &std-pre-pipelines
-          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing-noForced.yaml
         - survey: BLOCK-408
           pipelines: *std-pre-pipelines
         - survey: BLOCK-416
@@ -108,6 +109,8 @@ prompt-keda:
   imageNotifications:
     kafkaClusterAddress: s3-file-notifications-kafka-external-bootstrap.s3-file-notifications:9094
     topic: rubin-summit-notification-7
+    # TODO: need to adjust this based on observed nextVisit lead time (depends on scheduler) and PP prep time
+    # The shorter this is, the less capacity is wasted on canceled visits
     imageTimeout: 120
 
   apdb:
@@ -130,6 +133,10 @@ prompt-keda:
   keda:
     minReplicaCount: 3
     maxReplicaCount: 1700
+
+    # TODO: may need to reduce if we don't have enough capacity
+    # redisStreams:
+    #   expiration: 600
 
   initializer:
     podAnnotations: {

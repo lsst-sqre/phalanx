@@ -1,4 +1,4 @@
-apiVersion: kafka.strimzi.io/v1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
   name: butler-writer
@@ -19,29 +19,25 @@ spec:
           type: group
           name: "*"
           patternType: literal
-        operations:
-        - All
+        operation: All
       - resource:
           type: topic
           name: butler-writer
           patternType: literal
         type: allow
         host: "*"
-        operations:
-        - All
+        operation: All
       - resource:
           type: topic
           name: butler-writer-ingestion-events
           patternType: literal
         type: allow
         host: "*"
-        operations:
-        - All
+        operation: All
       - resource:
           type: transactionalId
           name: butler-writer-output
           patternType: literal
         type: allow
         host: "*"
-        operations:
-        - All
+        operation: All

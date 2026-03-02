@@ -1,4 +1,4 @@
-apiVersion: kafka.strimzi.io/v1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
   name: prompt-publication-consumer
@@ -19,8 +19,7 @@ spec:
           type: group
           name: "*"
           patternType: literal
-        operations:
-        - All
+        operation: All
       - resource:
           type: topic
           name: "butler-writer-ingestion-events"
@@ -28,6 +27,6 @@ spec:
         type: allow
         host: "*"
         operations:
-        - Read
-        - Describe
+          - Read
+          - Describe
 

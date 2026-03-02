@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: end-of-night-workflow
+  name: {{ .Values.workflowName }}
   labels:
     workflows.argoproj.io/type: "integration-test"
     argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
