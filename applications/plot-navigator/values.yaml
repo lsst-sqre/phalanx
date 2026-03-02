@@ -7,8 +7,7 @@ image:
   tag: ""
 
 # -- Environment variables (e.g. butler configuration/auth parms) for the nextjs server
-environment:
-  PRODUCTION_TOOLS_HOST: production-tools.plot-navigator.svc.cluster.local
+environment: {}
 
 ingress:
   # -- Additional annotations to add to the ingress

@@ -79,9 +79,6 @@ applications:
   # -- Eanble the datalinker application
   datalinker: false
 
-  # -- Enable the docverse application
-  docverse: false
-
   # -- Enable the envsys control system application
   envsys: false
 
@@ -112,6 +109,9 @@ applications:
 
   # -- Enable the hoverdrive application
   hoverdrive: false
+
+  # -- Enable the octavius application
+  octavius: false
 
   # -- Enable the muster application
   muster: false
@@ -191,9 +191,6 @@ applications:
 
   # -- Enable the portal application
   portal: false
-
-  # -- Enable the ppdbtap application
-  ppdbtap: false
 
   # -- Enable the in-cluster PostgreSQL server. Use of this server is
   # discouraged in favor of using infrastructure SQL, but will remain

@@ -11,10 +11,10 @@ fullnameOverride: ""
 resources:
   limits:
     cpu: "1"
-    memory: "1024Mi"
+    memory: "512Mi"
   requests:
-    cpu: "40m"
-    memory: "220Mi"
+    cpu: "20m"
+    memory: "110Mi"
 
 # -- Affinity rules for the giftless frontend pod
 affinity: {}

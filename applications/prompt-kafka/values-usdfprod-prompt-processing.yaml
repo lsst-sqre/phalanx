@@ -13,8 +13,6 @@ strimzi-kafka:
     storage:
       size: 100Gi
       storageClassName: wekafs--sdf-k8s01
-    config:
-      offsets.retention.minutes: 43200
     listeners:
       external:
         enabled: true

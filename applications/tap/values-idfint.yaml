@@ -4,6 +4,7 @@ cadc-tap:
   config:
     sentryEnabled: true
     sentryTracesSampleRate: "0.1"
+
     kafka:
       enabled: true
 

@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: octavius-api-networkpolicy
+spec:
+  podSelector:
+    matchLabels:
+      {{- $labels := include "octavius.selectorLabels" . | fromYaml }}
+      {{- $_ := set $labels "component" "api" }}
+      {{- toYaml $labels | nindent 6 }}
+  policyTypes:
+    - Ingress
+  ingress:
+    # Allow only frontend to call API
+    - from:
+        - podSelector:
+            matchLabels:
+              {{- $labels := include "octavius.selectorLabels" . | fromYaml }}
+              {{- $_ := set $labels "component" "ui" }}
+              {{- toYaml $labels | nindent 12 }}
+      ports:
+        - protocol: "TCP"
+          port: 8443

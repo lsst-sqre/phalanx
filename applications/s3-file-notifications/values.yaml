@@ -2,18 +2,7 @@
 
 # Override strimzi-kafka subchart configuration.
 strimzi-kafka:
-
-  cluster:
-    # -- Monitoring labels for Prometheus scraping
-    monitorLabel:
-      prometheus.io/scrape: "true"
-
   kafka:
-
-    metricsConfig:
-      # -- Whether to enable metrics
-      enabled: true
-
     listeners:
       noauth:
         # -- Whether internal no authentication listener is enabled

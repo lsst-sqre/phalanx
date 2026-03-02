@@ -16,11 +16,3 @@ hinfo:
 pq:
   image:
     tag: "25.11.2"
-
-resources:
-  requests:
-    cpu: 200m
-    memory: 25Gi
-  limits:
-    cpu: 500m
-    memory: 25Gi

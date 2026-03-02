@@ -6,10 +6,10 @@ atmonochromator:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 120m
+      cpu: 100m
       memory: 320Mi
     requests:
-      cpu: 20m
+      cpu: 18m
       memory: 160Mi
 
 atwhitelight:
@@ -20,10 +20,10 @@ atwhitelight:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 100m
+      cpu: 80m
       memory: 350Mi
     requests:
-      cpu: 20m
+      cpu: 13m
       memory: 170Mi
 
 cbp:
@@ -43,7 +43,7 @@ cbp:
 electrometer101:
   enabled: true
   image:
-    revision: 0
+    revision: 11
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -65,7 +65,7 @@ electrometer101:
 electrometer102:
   enabled: true
   image:
-    revision: 0
+    revision: 11
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -87,7 +87,7 @@ electrometer102:
 electrometer103:
   enabled: true
   image:
-    revision: 0
+    revision: 11
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -109,7 +109,7 @@ electrometer103:
 electrometer201:
   enabled: true
   image:
-    revision: 0
+    revision: 11
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -131,79 +131,79 @@ electrometer201:
 ledprojector:
   enabled: true
   image:
-    revision: 1
+    revision: 4
     repository: ts-dockerhub.lsst.org/ledprojector
     pullPolicy: Always
   resources:
     limits:
-      cpu: 120m
+      cpu: 100m
       memory: 360Mi
     requests:
-      cpu: 19m
+      cpu: 18m
       memory: 180Mi
 
 linearstage101:
   enabled: true
   image:
-    revision: 1
+    revision: 4
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
     RUN_ARG: 101
   resources:
     limits:
-      cpu: 190m
+      cpu: 100m
       memory: 512Mi
     requests:
-      cpu: 19m
+      cpu: 18m
       memory: 256Mi
 
 linearstage102:
   enabled: true
   image:
-    revision: 1
+    revision: 4
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
     RUN_ARG: 102
   resources:
     limits:
-      cpu: 190m
+      cpu: 100m
       memory: 512Mi
     requests:
-      cpu: 19m
+      cpu: 16m
       memory: 256Mi
 
 linearstage103:
   enabled: true
   image:
-    revision: 1
+    revision: 4
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
     RUN_ARG: 103
   resources:
     limits:
-      cpu: 190m
+      cpu: 100m
       memory: 512Mi
     requests:
-      cpu: 19m
+      cpu: 16m
       memory: 256Mi
 
 linearstage104:
   enabled: true
   image:
-    revision: 1
+    revision: 4
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
     RUN_ARG: 104
   resources:
     limits:
-      cpu: 190m
+      cpu: 100m
       memory: 400Mi
     requests:
-      cpu: 19m
+      cpu: 18m
       memory: 200Mi
 
 mtreflector:
@@ -214,17 +214,17 @@ mtreflector:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 200m
+      cpu: 100m
       memory: 512Mi
     requests:
-      cpu: 20m
+      cpu: 14m
       memory: 256Mi
 
 simulation-gencam:
   enabled: true
   classifier: genericcamera1
   image:
-    revision: 0
+    revision: 6
     repository: ts-dockerhub.lsst.org/genericcamera
     pullPolicy: Always
   env:
@@ -250,7 +250,7 @@ simulation-gencam:
 tunablelaser:
   enabled: true
   image:
-    revision: 0
+    revision: 6
     repository: ts-dockerhub.lsst.org/tunablelaser
     pullPolicy: Always
   resources:

@@ -13,7 +13,6 @@ vaultPathPrefix: "secret/phalanx/roundtable-prod"
 applications:
   atlantis: true
   checkerboard: true
-  docverse: true
   eups-distributor: true
   giftless: true
   google-cloud-observability: true

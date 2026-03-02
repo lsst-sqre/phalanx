@@ -22,6 +22,8 @@ spec:
     targetRevision: {{ or (index .Values "revisions" "mobu") .Values.targetRevision | quote }}
     helm:
       parameters:
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
         - name: "global.environmentName"
           value: {{ .Values.name | quote }}
         - name: "global.host"
@@ -33,4 +35,8 @@ spec:
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"
+      valuesObject:
+        config:
+          availableServices:
+            {{- include "enabledServicesYamlList" . | nindent 12 }}
 {{- end -}}

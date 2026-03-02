@@ -25,7 +25,7 @@ Rubin Observatory's telemetry service
 | chronograf.env | object | See `values.yaml` | Additional environment variables for Chronograf |
 | chronograf.envFromSecret | string | `"sasquatch"` | Name of secret to use. The keys `generic_client_id`, `generic_client_secret`, and `token_secret` should be set. |
 | chronograf.image.repository | string | `"quay.io/influxdb/chronograf"` | Docker image to use for Chronograf |
-| chronograf.image.tag | string | `"1.10.9"` | Docker tag to use for Chronograf |
+| chronograf.image.tag | string | `"1.10.8"` | Docker tag to use for Chronograf |
 | chronograf.ingress.className | string | `"nginx"` | Ingress class to use |
 | chronograf.ingress.enabled | bool | `false` | Whether to enable the Chronograf ingress |
 | chronograf.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
@@ -99,7 +99,6 @@ Rubin Observatory's telemetry service
 | kapacitor.strategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
 | obsenv.enabled | bool | `false` | Whether to enable the obsenv subchart |
 | obsloctap.enabled | bool | `false` | Whether to enable the obsloctap subchart |
-| ppdbtap.enabled | bool | `false` | Whether to enable the ppdbtap subchart |
 | prompt-processing.enabled | bool | `false` | Whether to enable the prompt-processing subchart |
 | redis.affinity | object | `{}` | Affinity rules for the ephemeral Redis pod |
 | redis.enabled | bool | `false` | Whether to enable the ephemeral Redis instance for Trickster |
@@ -152,7 +151,7 @@ Rubin Observatory's telemetry service
 | app-metrics.image.tag | string | The appVersion of the chart | Telegraf image tag |
 | app-metrics.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | app-metrics.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
-| app-metrics.kafkaVersion | string | `"4.1.0"` |  |
+| app-metrics.kafkaVersion | string | `"4.0.0"` |  |
 | app-metrics.nodeSelector | object | `{}` | Node labels for pod assignment |
 | app-metrics.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
 | app-metrics.podLabels | object | `{}` | Labels for the Telegraf pods |
@@ -699,7 +698,6 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |
 | strimzi-kafka.kafka.config."offsets.retention.minutes" | int | 4320 minutes (3 days) | Number of minutes for a consumer group's offsets to be retained |
 | strimzi-kafka.kafka.config."replica.fetch.max.bytes" | int | `10485760` | The number of bytes of messages to attempt to fetch for each partition |
-| strimzi-kafka.kafka.externalListener.bootstrap.allocateLoadBalancerNodePorts | bool | true | Whether to allocate NodePort automatically for the Service with type LoadBalancer. |
 | strimzi-kafka.kafka.externalListener.bootstrap.annotations | object | `{}` | Annotations that will be added to the Ingress, Route, or Service resource |
 | strimzi-kafka.kafka.externalListener.bootstrap.host | string | Do not configure TLS | Name used for TLS hostname verification |
 | strimzi-kafka.kafka.externalListener.bootstrap.loadBalancerIP | string | Do not request a load balancer IP | Request this load balancer IP. See `values.yaml` for more discussion |
@@ -715,7 +713,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
 | strimzi-kafka.kafka.pauseReconciliation | bool | `false` | If Strimzi reconciliation of this resource should be paused: https://strimzi.io/docs/operators/latest/full/deploying#proc-pausing-reconciliation-str |
 | strimzi-kafka.kafka.replicas | int | `3` | Number of Kafka broker replicas to run |
-| strimzi-kafka.kafka.version | string | `"4.1.0"` | Version of Kafka to deploy |
+| strimzi-kafka.kafka.version | string | `"4.0.0"` | Version of Kafka to deploy |
 | strimzi-kafka.kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
 | strimzi-kafka.kafkaExporter.enabled | bool | `false` | Enable Kafka exporter |
 | strimzi-kafka.kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
@@ -726,14 +724,12 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication from the source cluster |
 | strimzi-kafka.mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
 | strimzi-kafka.mirrormaker2.replication.offset | string | earliest | Offset reset policy for the Mirror Maker consumer. Options are 'earliest' and 'latest'. |
-| strimzi-kafka.mirrormaker2.replication.offsetSyncsTopicLocation | string | source | The location (source/target) of the offset-syncs topic. |
 | strimzi-kafka.mirrormaker2.replication.policy.class | string | org.apache.kafka.connect.mirror.IdentityReplicationPolicy | Replication policy. |
 | strimzi-kafka.mirrormaker2.replication.policy.separator | string | No separator, topic names are preserved when IdentityReplicationPolicy is used. | Convention used for the replicated topic name when the DefaultReplicationPolicy replication policy is used. |
 | strimzi-kafka.mirrormaker2.resources | object | `{"limits":{"cpu":1,"memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for MirrorMaker2 |
 | strimzi-kafka.mirrormaker2.source.alias | string | None, must be set if enabled | Source cluster alias. Used to identify the source cluster in MirrorMaker2 configuration. The alias is also added as a prefix to the replicated topics when the DefaultReplicationPolicy replication policy is used. |
 | strimzi-kafka.mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source cluster bootstrap server address |
 | strimzi-kafka.mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
-| strimzi-kafka.mirrormaker2.target.alias | string | target | Target cluster alias. Used to identify the target cluster in MirrorMaker2 configuration. |
 | strimzi-kafka.registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | strimzi-kafka.registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | strimzi-kafka.registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |

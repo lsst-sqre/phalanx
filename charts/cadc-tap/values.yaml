@@ -52,7 +52,7 @@ affinity: {}
 
 config:
   # -- What type of backend are we connecting to?
-  # @default -- None, must be set to `pg`, `qserv` or `bigquery`
+  # @default -- None, must be set to `pg` or `qserv`
   backend: ""
 
   pg:
@@ -94,33 +94,11 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.15.0"
+      tag: "3.12.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
     passwordEnabled: false
-
-  bigquery:
-    # -- BigQuery project ID
-    # @default -- None, must be set if backend is `bigquery`
-    project: ""
-
-    # -- BigQuery dataset name
-    # @default -- None, must be set if backend is `bigquery`
-    dataset: ""
-
-    # -- Schema name for table mappings (optional)
-    schema: ""
-
-    image:
-      # -- TAP image to use
-      repository: "ghcr.io/lsst-sqre/lsst-tap-service"
-
-      # -- Pull policy for the TAP image
-      pullPolicy: "IfNotPresent"
-
-      # -- Tag of TAP image to use
-      tag: "3.15.0"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
@@ -171,14 +149,6 @@ config:
 
       # -- Job Delete topic
       jobDelete: "lsst.tap.job-delete"
-
-    # -- Name of the KafkaUser to use for authentication
-    # @default -- "tap"
-    kafkaUserName: "tap"
-
-    # -- Kafka consumer group ID.
-    # @default -- "tap"
-    consumerGroupId: "tap"
 
     # -- Whether kafka is enabled
     enabled: false
@@ -279,7 +249,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "w.2026.01"
+    tag: "DP1-v1.2.0"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
@@ -343,7 +313,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "3.15.0"
+    tag: "3.12.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
@@ -382,7 +352,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.13"
+    tag: "1.37.11"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
