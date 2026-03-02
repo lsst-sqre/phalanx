@@ -32,6 +32,7 @@ spec:
       containers:
         - name: fov-quicklook-generator
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           command: ["python", "-u", "-m", "quicklook.generator.api"]
           ports:
             - containerPort: 9502
