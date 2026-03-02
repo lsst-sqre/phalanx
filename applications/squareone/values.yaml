@@ -170,6 +170,10 @@ global:
   # @default -- Set by Argo CD Application
   baseUrl: null
 
+  # -- Base URL for Repertoire discovery API
+  # @default -- Set by Argo CD
+  repertoireUrl: null
+
   # -- Name of the Phalanx environment
   # @default -- Set by Argo CD Application
   environmentName: null
