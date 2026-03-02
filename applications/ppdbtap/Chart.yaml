@@ -1,0 +1,8 @@
+apiVersion: v2
+name: ppdbtap
+version: 1.0.0
+description: TAP service for the ppdb BigQuery backend
+dependencies:
+  - name: cadc-tap
+    version: "1.0.0"
+    repository: "file://../../charts/cadc-tap"

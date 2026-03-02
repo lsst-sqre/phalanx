@@ -16,7 +16,17 @@ spec:
       size: {{ .Values.kafkaController.storage.size }}
       class: {{ .Values.kafkaController.storage.storageClassName }}
       deleteClaim: false
-  {{- with .Values.kafkaController.resources }}
+  template:
+    pod:
+      {{- with .Values.kafka.controller.affinity }}
+      affinity:
+        {{- toYaml . | nindent 10 }}
+      {{- end }}
+      {{- with .Values.kafka.controller.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 10 }}
+      {{- end}}
+  {{- with .Values.kafka.controller.resources }}
   resources:
     {{- toYaml . | nindent 6 }}
   {{- end }}
@@ -43,7 +53,17 @@ spec:
       class: {{ .Values.kafka.storage.storageClassName }}
       {{- end}}
       deleteClaim: false
-  {{- with .Values.kafka.resources }}
+  template:
+    pod:
+      {{- with .Values.kafka.broker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 10 }}
+      {{- end }}
+      {{- with .Values.kafka.broker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 10 }}
+      {{- end}}
+  {{- with .Values.kafka.broker.resources }}
   resources:
     {{- toYaml . | nindent 6 }}
   {{- end }}
@@ -128,10 +148,6 @@ spec:
           */}}
           bootstrap:
 
-            {{- if .Values.kafka.externalListener.bootstrap.ip }}
-            loadBalancerIP: {{ .Values.kafka.externalListener.bootstrap.ip }}
-            {{- end }}
-
             {{- with .Values.kafka.externalListener.bootstrap.annotations }}
             annotations:
               {{- toYaml . | nindent 14 }}
@@ -141,7 +157,6 @@ spec:
           brokers:
           {{- range $broker := .Values.kafka.externalListener.brokers }}
             - broker: {{ $broker.broker }}
-              loadBalancerIP: {{ $broker.ip }}
               advertisedHost: {{ $broker.host }}
               advertisedPort: 9094
               annotations:
@@ -185,32 +200,6 @@ spec:
         size: {{ .Values.kafka.storage.size }}
         class: {{ .Values.kafka.storage.storageClassName }}
         deleteClaim: false
-
-    template:
-      pod:
-        {{- if .Values.kafka.nodePool.tolerations }}
-        tolerations:
-          {{- range $tol := .Values.kafka.nodePool.tolerations }}
-          - key: {{ $tol.key }}
-            operator: "Equal"
-            value: {{ $tol.value }}
-            effect: {{ $tol.effect }}
-          {{- end }}
-        {{- end }}
-
-        {{- if .Values.kafka.nodePool.affinities }}
-        affinity:
-          nodeAffinity:
-            preferredDuringSchedulingIgnoredDuringExecution:
-              {{- range $affinity := .Values.kafka.nodePool.affinities }}
-              - weight: 1
-                preference:
-                  matchExpressions:
-                      - key: {{ $affinity.key }}
-                        operator: In
-                        values: [{{ $affinity.value }}]
-              {{- end }}
-        {{- end }}
 
   entityOperator:
     topicOperator: {}

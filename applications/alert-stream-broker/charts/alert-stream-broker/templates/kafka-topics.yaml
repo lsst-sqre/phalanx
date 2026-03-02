@@ -114,3 +114,35 @@ spec:
     message.timestamp.type: 'LogAppendTime'
   partitions: {{ .Values.lsstcamTopicPartitionsMDC }}
   replicas: {{ .Values.lsstcamTopicReplicasMDC }}
+---
+apiVersion: "kafka.strimzi.io/{{ .Values.strimziAPIVersion }}"
+kind: KafkaTopic
+metadata:
+  labels:
+    strimzi.io/cluster: "{{ .Values.clusterName }}"
+  name: "{{ .Values.lsstcamTopicNameReprocess}}"
+spec:
+  config:
+    cleanup.policy: "delete"
+    retention.ms: {{ .Values.lsstcamMaxMillisecondsRetainedReprocess }} # 7 days
+    retention.bytes: {{ .Values.lsstcamMaxBytesRetainedReprocess }}
+    compression.type: {{ .Values.topicCompression }}
+    message.timestamp.type: 'LogAppendTime'
+  partitions: {{ .Values.lsstcamTopicPartitionsReprocess }}
+  replicas: {{ .Values.lsstcamTopicReplicasReprocess }}
+---
+apiVersion: "kafka.strimzi.io/{{ .Values.strimziAPIVersion }}"
+kind: KafkaTopic
+metadata:
+  labels:
+    strimzi.io/cluster: "{{ .Values.clusterName }}"
+  name: "{{ .Values.lsstcamTopicNameReprocessTest }}"
+spec:
+  config:
+    cleanup.policy: "delete"
+    retention.ms: {{ .Values.lsstcamMaxMillisecondsRetainedReprocessTest }} # 7 days
+    retention.bytes: {{ .Values.lsstcamMaxBytesRetainedReprocessTest }}
+    compression.type: {{ .Values.topicCompression }}
+    message.timestamp.type: 'LogAppendTime'
+  partitions: {{ .Values.lsstcamTopicPartitionsReprocessTest }}
+  replicas: {{ .Values.lsstcamTopicReplicasReprocessTest }}

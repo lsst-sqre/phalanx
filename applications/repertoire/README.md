@@ -16,7 +16,7 @@ Service discovery
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as a separate service (behind a `NetworkPolicy`) for other, lower-traffic services. |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.37.9"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.13"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
@@ -25,6 +25,7 @@ Service discovery
 | config.baseHostname | string | Set by Argo CD | Base hostname of the Phalanx environment (do not set) |
 | config.butlerConfigs | object | Set by Argo CD | Butler configuration mapping (do not set) |
 | config.datasets | object | See `values.yaml` | Known datasets. Each member of the list is a dictionary with key `description`. Datasets are only shown if also listed in `availableDatasets`. |
+| config.environmentName | string | Set by Argo CD | Human-readable name of the environment for reporting purposes |
 | config.hips.datasets | object | See `values.yaml` | Known HiPS datasets. Each should be a mapping of a label to an object containing the key `paths`, whose values are paths to the roots of HiPS surveys relative to the result of processing `sourceTemplate`. |
 | config.hips.legacy.dataset | string | `nil` | If set, specifies the dataset that should be shown at the legacy HiPS list route that does not include the dataset name. If not set, no legacy HiPS list will be created. |
 | config.hips.legacy.pathPrefix | string | `"/api/hips"` | Path prefix at which the legacy HiPS list should be served |

@@ -7,10 +7,12 @@ Kafka Cluster to receive S3 File Notifications
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | kafdrop.enabled | bool | `true` | Whether Kafdrop is enabled |
+| strimzi-kafka.cluster.monitorLabel | object | `{"prometheus.io/scrape":"true"}` | Monitoring labels for Prometheus scraping |
 | strimzi-kafka.kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled |
 | strimzi-kafka.kafka.listeners.noauth.enabled | bool | `true` | Whether internal no authentication listener is enabled |
 | strimzi-kafka.kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled |
 | strimzi-kafka.kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled |
+| strimzi-kafka.kafka.metricsConfig.enabled | bool | `true` | Whether to enable metrics |
 | kafdrop.affinity | object | `{}` | Affinity configuration |
 | kafdrop.cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |
 | kafdrop.existingSecret | string | Do not use a secret | Existing Kubernetes secret use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |

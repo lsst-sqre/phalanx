@@ -465,6 +465,12 @@ controller:
       #   readOnly: true
       #   volumeName: "project"
 
+    # -- How frequently to restart a Kubernetes watch request. These
+    # connections can be dropped and throw a 400 error, or even be silently
+    # dropped in different Kubernetes enviroments. Setting this value can
+    # help prevent those things from happening.
+    watchReconnectTimeout: 3m
+
     metrics:
       # -- Whether to enable sending metrics
       enabled: false
@@ -560,7 +566,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "11.2.1"
+      tag: "12.0.1"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
@@ -679,6 +685,16 @@ jupyterhub:
         # each user's lab environment in its own namespace
         interNamespaceAccessLabels: "accept"
 
+        # -- Enable the proxy to send traffic to any pod in any namespace with
+        # the `nublado.lsst.io/category: lab` label.
+        egress:
+          - to:
+              - namespaceSelector: {}
+                podSelector:
+                  matchLabels:
+                    nublado.lsst.io/category: lab
+
+
       # -- Extra CLI options to pass to the proxy. The most up-to-date list is
       # [here](https://github.com/jupyterhub/configurable-http-proxy/blob/main/bin/configurable-http-proxy)
       # (not the docs, unfortunately)
@@ -733,7 +749,7 @@ cloudsql:
     pullPolicy: "IfNotPresent"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.11"
+    tag: "1.37.13"
 
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled

@@ -37,6 +37,7 @@ spec:
             - --verbose
             - --datastore
             - "https://epyc.astro.washington.edu/~mjuric/mpsky-data"
+#            - "https://data.mpsky.org/mpsky-data/"
             - --max-loaded-nights
             - "7"
             - --max-ondisk-nights

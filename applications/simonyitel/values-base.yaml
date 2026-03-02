@@ -371,6 +371,69 @@ mtoods:
                       <<: *interval
                       hours: 1
 
+wfoods:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/wfoods
+    pullPolicy: Always
+  env:
+    CTRL_OODS_CONFIG_FILE: /etc/wfoods.yaml
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  s3Credentials:
+  - lfa-credentials.ini
+  - oods-lsstcam-credentials.ini
+  <<: *butler-secret
+  resources:
+    limits:
+      cpu: 100m
+      memory: 4000Mi
+    requests:
+      cpu: 1m
+      memory: 800Mi
+  configfile:
+    path: /etc
+    filename: wfoods.yaml
+    content: |
+      default_interval: &interval
+          days: 0
+          hours: 0
+          minutes: 0
+          seconds: 0
+
+      message_ingester:
+          kafka:
+              brokers:
+                  - sasquatch-kafka-bootstrap.sasquatch:9092
+              topics:
+                - lsst.s3.wf.lsstcam
+              group_id: MTOODS-S3
+              max_messages: 16
+              max_wait_time: 0.25
+          butler:
+              guider_max_age_seconds: 90
+              instrument: lsst.obs.lsst.LsstCam
+              repo_directory : s3://butler@rubinobs-butler-lsstcam
+              s3profile: butler
+              collections:
+                  - LSSTCam/raw/all
+              collection_cleaner:
+                  collections_to_clean:
+                      - collections:
+                          - LSSTCam/raw/all
+                        files_older_than:
+                            <<: *interval
+                            days: 5
+                      - collections:
+                          - LSSTCam/raw/guider
+                        files_older_than:
+                            <<: *interval
+                            days: 5
+                  cleaning_interval:
+                      <<: *interval
+                      hours: 1
+
 mtptg:
   image:
     repository: ts-dockerhub.lsst.org/ptkernel

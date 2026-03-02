@@ -1,3 +1,7 @@
+resources:
+  limits:
+    cpu: 6
+    memory: "2048Mi"
 server:
   readonly:
     replicas: 5

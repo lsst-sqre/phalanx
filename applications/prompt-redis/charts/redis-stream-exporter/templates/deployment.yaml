@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "redis-stream-exporter.name" . }}
+  labels:
+    {{- include "redis-stream-exporter.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "redis-stream-exporter.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "redis-stream-exporter.selectorLabels" . | nindent 8 }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+      - name: redis-exporter
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: REDIS_URI
+          value: redis://prompt-redis.prompt-redis:6379
+        - name: HTTP_PORT
+          value: "8000"
+        - name: SLEEP_INTERVAL
+          value: {{ .Values.sleepInterval | toString | quote }}
+        {{- if .Values.auth.enabled }}
+        - name: REDIS_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "redis-stream-exporter.fullname" . }}-secret
+              key: redis-user
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "redis-stream-exporter.fullname" . }}-secret
+              key: redis-password
+      {{- end }}
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

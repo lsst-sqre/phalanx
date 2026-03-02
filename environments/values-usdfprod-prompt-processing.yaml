@@ -1,12 +1,13 @@
 fqdn: k8s.slac.stanford.edu
 name: usdfprod-prompt-processing
+appOfAppsName: "prompt-processing"
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-prompt-processing
 
 applications:
   butler-writer-service: true
   cert-manager: false
-  gafaelfawr: false
+  gafaelfawr: true
   ingress-nginx: false
   keda: true
   next-visit-fan-out: true

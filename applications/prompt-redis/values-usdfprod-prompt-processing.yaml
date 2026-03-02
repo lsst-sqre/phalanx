@@ -10,3 +10,7 @@ redis:
     requests:
       cpu: "1"
       memory: "1Gi"
+
+redis-stream-exporter:
+  enabled: true
+  sleepInterval: 2

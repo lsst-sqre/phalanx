@@ -16,6 +16,9 @@ spec:
       labels:
         app: fov-quicklook-generator
     spec:
+      securityContext:
+        supplementalGroups:
+          - 4085
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

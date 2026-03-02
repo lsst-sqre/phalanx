@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Publish versioned docs
+name: docverse
+sources:
+  - https://github.com/lsst-sqre/docverse
+type: application
+version: 1.0.0
