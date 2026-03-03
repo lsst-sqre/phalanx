@@ -37,6 +37,7 @@ Individual applications are documented in the :doc:`/applications/index` section
    :caption: Deploy & maintain
    :name: dev-deploy-toc
 
+   github-codeowners
    get-application-logs
    upgrade
    update-a-secret
