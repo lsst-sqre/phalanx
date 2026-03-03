@@ -438,15 +438,15 @@ m2-ess112:
       cpu: 190m
       memory: 510Mi
 
-mtdome-ess107:
+mtdome-ess404:
   enabled: true
-  classifier: ess107
+  classifier: ess404
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 107
+    RUN_ARG: 404
   resources:
     requests:
       cpu: 1
@@ -455,15 +455,15 @@ mtdome-ess107:
       cpu: 2
       memory: 900Mi
 
-mtdome-ess108:
+mtdome-ess405:
   enabled: true
-  classifier: ess108
+  classifier: ess405
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 108
+    RUN_ARG: 405
   resources:
     requests:
       cpu: 19m
@@ -472,15 +472,15 @@ mtdome-ess108:
       cpu: 190m
       memory: 510Mi
 
-partsens-ess401:
+partsens-ess127:
   enabled: true
-  classifier: ess401
+  classifier: ess127
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 401
+    RUN_ARG: 127
   resources:
     requests:
       cpu: 19m
@@ -489,15 +489,15 @@ partsens-ess401:
       cpu: 190m
       memory: 540Mi
 
-partsens-ess402:
+partsens-ess128:
   enabled: true
-  classifier: ess402
+  classifier: ess128
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 402
+    RUN_ARG: 128
   resources:
     requests:
       cpu: 19m
@@ -506,15 +506,15 @@ partsens-ess402:
       cpu: 190m
       memory: 540Mi
 
-partsens-ess403:
+partsens-ess129:
   enabled: true
-  classifier: ess403
+  classifier: ess129
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 403
+    RUN_ARG: 129
   resources:
     requests:
       cpu: 19m

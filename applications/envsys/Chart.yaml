@@ -282,54 +282,54 @@ dependencies:
   condition: m2-ess112-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtdome-ess107
+  alias: mtdome-ess404
   version: 1.0.0
-  condition: mtdome-ess107.enabled
+  condition: mtdome-ess404.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtdome-ess107-sim
+  alias: mtdome-ess404-sim
   version: 1.0.0
-  condition: mtdome-ess107-sim.enabled
+  condition: mtdome-ess404-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtdome-ess108
+  alias: mtdome-ess405
   version: 1.0.0
-  condition: mtdome-ess108.enabled
+  condition: mtdome-ess405.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtdome-ess108-sim
+  alias: mtdome-ess405-sim
   version: 1.0.0
-  condition: mtdome-ess108-sim.enabled
+  condition: mtdome-ess405-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: partsens-ess401
+  alias: partsens-ess127
   version: 1.0.0
-  condition: partsens-ess401.enabled
+  condition: partsens-ess127.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: partsens-ess401-sim
+  alias: partsens-ess127-sim
   version: 1.0.0
-  condition: partsens-ess401-sim.enabled
+  condition: partsens-ess127-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: partsens-ess402
+  alias: partsens-ess128
   version: 1.0.0
-  condition: partsens-ess402.enabled
+  condition: partsens-ess128.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: partsens-ess402-sim
+  alias: partsens-ess128-sim
   version: 1.0.0
-  condition: partsens-ess402-sim.enabled
+  condition: partsens-ess128-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: partsens-ess403
+  alias: partsens-ess129
   version: 1.0.0
-  condition: partsens-ess403.enabled
+  condition: partsens-ess129.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: partsens-ess403-sim
+  alias: partsens-ess129-sim
   version: 1.0.0
-  condition: partsens-ess403-sim.enabled
+  condition: partsens-ess129-sim.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: ringss-ess304
