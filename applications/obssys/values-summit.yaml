@@ -187,7 +187,7 @@ mtqueue:
 mtscheduler:
   classifier: scheduler1
   image:
-    revision: 0
+    revision: 1
     repository: lsstts/scheduler
     pullPolicy: Always
   env:
