@@ -1,0 +1,18 @@
+# Observatory app config
+/applications/argo-workflows/ @lsst-sqre/codeowners-observatory @lsst-sqre/square
+/applications/auxtel/ @lsst-sqre/codeowners-observatory
+/applications/calsys/ @lsst-sqre/codeowners-observatory
+/applications/control-system-test/ @lsst-sqre/codeowners-observatory
+/applications/csc-versions/ @lsst-sqre/codeowners-observatory
+/applications/envsys/ @lsst-sqre/codeowners-observatory
+/applications/love/ @lsst-sqre/codeowners-observatory
+/applications/obssys/ @lsst-sqre/codeowners-observatory
+/applications/ocps-uws-job/ @lsst-sqre/codeowners-observatory
+/applications/rubin-too-producer/ @lsst-sqre/codeowners-observatory
+/applications/simonyitel/ @lsst-sqre/codeowners-observatory
+/applications/uws/ @lsst-sqre/codeowners-observatory
+
+# Observatory environment config
+/environments/templates/applications/telescope/ @lsst-sqre/codeowners-observatory
+/environments/values-base.yaml @lsst-sqre/codeowners-observatory
+/environments/values-summit.yaml @lsst-sqre/codeowners-observatory
