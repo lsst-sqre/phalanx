@@ -35,8 +35,8 @@ audio-broadcaster:
 
 love-commander:
   image:
-    revision: 0
-    repository: ts-dockerhub.lsst.org/love-commander
+    revision: 1
+    repository: lsstts/love-commander
     pullPolicy: Always
   env:
     S3_INSTANCE: cp
@@ -60,8 +60,8 @@ love-commander:
 x-manager-producer:
   &base-manager-producer
   image:
-    revision: 0
-    repository: ts-dockerhub.lsst.org/love-manager
+    revision: 1
+    repository: lsstts/love-manager
     pullPolicy: Always
   env:
     LOVE_SITE: summit
@@ -113,8 +113,8 @@ love-manager:
   manager:
     frontend:
       image:
-        revision: 0
-        repository: ts-dockerhub.lsst.org/love-manager
+        revision: 1
+        repository: lsstts/love-manager
         pullPolicy: Always
       env:
         SERVER_URL: summit-lsp.lsst.codes
