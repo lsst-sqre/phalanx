@@ -188,7 +188,7 @@ mtscheduler:
   classifier: scheduler1
   image:
     revision: 1
-    repository: lsstts/scheduler
+    repository: ts-dockerhub.lsst.org/scheduler
     pullPolicy: Always
   env:
     INDEX: 1
