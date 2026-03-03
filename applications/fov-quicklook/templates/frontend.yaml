@@ -18,6 +18,7 @@ spec:
       containers:
         - name: fov-quicklook-frontend
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           command:
             - sh
             - -c
