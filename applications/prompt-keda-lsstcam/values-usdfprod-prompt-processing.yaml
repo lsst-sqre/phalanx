@@ -18,11 +18,13 @@ prompt-keda:
       # The config will get corrupted after template substitution.
       # Block-style mappings can have lines of any length.
       main: |-
-        - survey: BLOCK-407  # FBS Pre-Operations Survey (independent of environmental conditions)
+        - survey: BLOCK-365  # FBS Survey (dense dithered star field calibrations)
           pipelines: &std-main-pipelines
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
+        - survey: BLOCK-407  # FBS Pre-Operations Survey (independent of environmental conditions)
+          pipelines: *std-main-pipelines
         - survey: BLOCK-408  # FBS Pre-Operations Survey (triggered by environmental conditions)
           pipelines: *std-main-pipelines
         - survey: BLOCK-416  # FBS Pre-Operations Survey (with a constrained LSST configuration)
@@ -32,8 +34,6 @@ prompt-keda:
         - survey: BLOCK-419  # FBS Pre-Operations Survey (a version without elevation, rotation, or filter change constraints)
           pipelines: *std-main-pipelines
         - survey: BLOCK-421  # FBS Pre-Operations Survey (a version without FAM triplets)
-          pipelines: *std-main-pipelines
-        - survey: BLOCK-T637  # Exposure time test
           pipelines: *std-main-pipelines
         - survey: BLOCK-T427  # Daytime checkout
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
@@ -45,9 +45,11 @@ prompt-keda:
         - {pipelines: []}
       preprocessing: |-
         # Run to enable solar system processing in SingleFrame
-        - survey: BLOCK-407
+        - survey: BLOCK-365
           pipelines: &std-pre-pipelines
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing.yaml
+        - survey: BLOCK-407
+          pipelines: *std-pre-pipelines
         - survey: BLOCK-408
           pipelines: *std-pre-pipelines
         - survey: BLOCK-416
@@ -57,8 +59,6 @@ prompt-keda:
         - survey: BLOCK-419
           pipelines: *std-pre-pipelines
         - survey: BLOCK-421
-          pipelines: *std-pre-pipelines
-        - survey: BLOCK-T637
           pipelines: *std-pre-pipelines
         - {survey: "", pipelines: []}
         # Don't preprocess anything unknown
