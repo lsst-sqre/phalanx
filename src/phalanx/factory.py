@@ -2,13 +2,19 @@
 
 from pathlib import Path
 
+from .constants import GOOGLE_CLOUD_RUN_ID_LABEL
+from .models.vault import VaultCredentials
 from .services.application import ApplicationService
 from .services.cluster import GKEPhalanxClusterService
 from .services.environment import EnvironmentService
+from .services.gke_recovery import GKERecoveryService
+from .services.google_cloud import GoogleCloudService
+from .services.recovery_environment import RecoveryEnvironmentService
 from .services.secrets import SecretsService
 from .services.vault import VaultService
 from .storage.argocd import ArgoCDStorage
 from .storage.config import ConfigStorage
+from .storage.google_cloud_api import GoogleCloudAPIStorage
 from .storage.helm import HelmStorage
 from .storage.kubernetes import KubernetesStorage
 from .storage.onepassword import OnepasswordStorage
@@ -54,6 +60,12 @@ class Factory:
     def create_environment_service(self) -> EnvironmentService:
         """Create service for manipulating Phalanx environments.
 
+        Parameters
+        ----------
+        context
+            The Kubernetes context to pass to all commands. If this is None,
+            then the current context will be used.
+
         Returns
         -------
         EnvironmentService
@@ -66,6 +78,81 @@ class Factory:
             kubernetes_storage=self.create_kubernetes_storage(),
             helm_storage=HelmStorage(config_storage),
             vault_storage=VaultStorage(),
+        )
+
+    def create_recovery_environment_service(
+        self, context: str
+    ) -> RecoveryEnvironmentService:
+        """Create service for help with recovering Phalanx environments.
+
+        Parameters
+        ----------
+        context
+            The Kubernetes context to pass to all commands.
+
+        Returns
+        -------
+        RecoveryEnvironmentService
+            Service for helping to recover environments.
+        """
+        config_storage = self.create_config_storage()
+        return RecoveryEnvironmentService(
+            config_storage=config_storage,
+            argocd_storage=ArgoCDStorage(context),
+            kubernetes_storage=self.create_kubernetes_storage(context),
+            helm_storage=HelmStorage(config_storage, context),
+            vault_storage=VaultStorage(),
+        )
+
+    def create_gke_recovery_service(
+        self,
+        *,
+        source_cluster: str,
+        destination_cluster: str,
+        git_branch: str,
+        environment: str,
+        vault_credentials: VaultCredentials,
+        old_context: str,
+        new_context: str,
+        gke_project: str,
+        gke_region: str,
+        run_id: str,
+    ) -> GKERecoveryService:
+        """Create a service for recovering GKE Phalanx clusters from backups.
+
+        Returns
+        -------
+        GKERecoveryService
+           A service object for doing cluster recovery.
+        """
+        recovery_environment_service = (
+            self.create_recovery_environment_service(context=new_context)
+        )
+        source_environment_service = self.create_recovery_environment_service(
+            context=old_context
+        )
+        old_cluster_service = self.create_gke_phalanx_cluster_service(
+            old_context
+        )
+        new_cluster_service = self.create_gke_phalanx_cluster_service(
+            new_context
+        )
+        google_cloud_service = self.create_google_cloud_service(
+            region=gke_region,
+            project=gke_project,
+            phalanx_run_id=run_id,
+        )
+        return GKERecoveryService(
+            source_cluster=source_cluster,
+            destination_cluster=destination_cluster,
+            environment=environment,
+            git_branch=git_branch,
+            google_cloud_service=google_cloud_service,
+            new_cluster_service=new_cluster_service,
+            old_cluster_service=old_cluster_service,
+            recovery_environment_service=recovery_environment_service,
+            source_environment_service=source_environment_service,
+            vault_credentials=vault_credentials,
         )
 
     def create_gke_phalanx_cluster_service(
@@ -85,6 +172,38 @@ class Factory:
         """
         storage = self.create_kubernetes_storage(context)
         return GKEPhalanxClusterService(storage)
+
+    def create_google_cloud_service(
+        self, region: str, project: str, phalanx_run_id: str
+    ) -> GoogleCloudService:
+        """Create a service for accessing the Google Cloud API.
+
+        This service is scoped to running operations in a single region and
+        project.
+
+        Parameters
+        ----------
+        region
+            The Google Cloud region to run comands against.
+        project
+            The Google Cloud project to run comands against.
+        phalanx_run_id
+            An identifier to put in the ``phalanx-run`` label on every Google
+            Cloud resource that is created with this service. This is helpful
+            in resuming backup and restore process after a Google Cloud
+            operation fails (which does happen intermittently), and in cleaning
+            up these resources later.
+
+        Returns
+        -------
+        GKEBackupService
+           A service object for manipulating resources in a Phalanx cluster.
+        """
+        labels = {GOOGLE_CLOUD_RUN_ID_LABEL: phalanx_run_id}
+        storage = GoogleCloudAPIStorage(
+            region=region, project=project, labels=labels
+        )
+        return GoogleCloudService(storage, phalanx_run_id)
 
     def create_kubernetes_storage(
         self, context: str | None = None

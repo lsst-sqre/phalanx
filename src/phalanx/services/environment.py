@@ -103,7 +103,9 @@ class EnvironmentService:
         self._install_app_of_apps(environment, git_branch, argocd_password)
         self._sync_argocd()
         self._sync_infrastructure_applications(environment)
+        self._sync_grafana(environment)
         if "sasquatch" in environment.applications:
+            self._sync_strimzi(environment)
             self._sync_sasquatch(environment)
             self._restart_gafaelfawr()
         self._sync_remaining_applications(environment)
@@ -239,6 +241,19 @@ class EnvironmentService:
                 {"global.vaultSecretsPath": environment.vault_path_prefix},
             )
 
+    def _argocd_login(
+        self, environment_name: str, vault_credentials: VaultCredentials
+    ) -> None:
+        environment = self._config.load_environment(environment_name)
+        vault = self._vault_storage.get_vault_client(
+            environment, credentials=vault_credentials
+        )
+        vault = self._vault_storage.get_vault_client(
+            environment, credentials=vault_credentials
+        )
+        argocd_password = self._get_argocd_password(vault)
+        self._argocd.login("admin", argocd_password)
+
     def _install_app_of_apps(
         self,
         environment: Environment,
@@ -309,8 +324,40 @@ class EnvironmentService:
                 if application in environment.applications:
                     self._argocd.sync(application)
 
+    def _sync_strimzi(self, environment: Environment) -> None:
+        """Sync Strimzi controllers.
+
+        Parameters
+        ----------
+        environment
+            The environment configuration object.
+        """
+        with action_group("Sync Strimzi controllers"):
+            for application in (
+                "strimzi",
+                "strimzi-access-operator",
+                "strimzi-registry-operator",
+            ):
+                if application in environment.applications:
+                    self._argocd.sync(application)
+
+    def _sync_grafana(self, environment: Environment) -> None:
+        """Sync Grafana.
+
+        These should be synced before most other apps so that the Grafana CRDs
+        are available in the cluster.
+
+        Parameters
+        ----------
+        environment
+            The environment configuration object.
+        """
+        with action_group("Sync grafana"):
+            if "grafana" in environment.applications:
+                self._argocd.sync("grafana")
+
     def _sync_sasquatch(self, environment: Environment) -> None:
-        """Sync Sasquatch and Strimzi.
+        """Sync Sasquatch.
 
         These should be synced before most other apps so that apps that publish
         metrics will start correctly and not have to be restarted later.
@@ -321,14 +368,8 @@ class EnvironmentService:
             The environment configuration object.
         """
         with action_group("Sync sasquatch"):
-            for application in (
-                "strimzi",
-                "strimzi-access-operator",
-                "strimzi-registry-operator",
-                "sasquatch",
-            ):
-                if application in environment.applications:
-                    self._argocd.sync(application)
+            if "sasquatch" in environment.applications:
+                self._argocd.sync("sasquatch")
 
     def _restart_gafaelfawr(self) -> None:
         """Restart gafaelfawr.
