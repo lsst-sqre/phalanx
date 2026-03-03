@@ -214,20 +214,44 @@ m2-ess112-sim:
   # -- Enable the ESS:112 simulator CSC
   enabled: false
 
-mtdome-ess107:
-  # -- Enable the ESS:107 CSC
+mtdome-ess404:
+  # -- Enable the ESS:404 CSC
   enabled: false
 
-mtdome-ess107-sim:
-  # -- Enable the ESS:107 simulator CSC
+mtdome-ess404-sim:
+  # -- Enable the ESS:404 simulator CSC
   enabled: false
 
-mtdome-ess108:
-  # -- Enable the ESS:108 CSC
+mtdome-ess405:
+  # -- Enable the ESS:405 CSC
   enabled: false
 
-mtdome-ess108-sim:
-  # -- Enable the ESS:108 simulator CSC
+mtdome-ess405-sim:
+  # -- Enable the ESS:405 simulator CSC
+  enabled: false
+
+partsens-ess127:
+  # -- Enable the ESS:127 CSC
+  enabled: false
+
+partsens-ess127-sim:
+  # -- Enable the ESS:127 simulator CSC
+  enabled: false
+
+partsens-ess128:
+  # -- Enable the ESS:128 CSC
+  enabled: false
+
+partsens-ess128-sim:
+  # -- Enable the ESS:128 simulator CSC
+  enabled: false
+
+partsens-ess129:
+  # -- Enable the ESS:129 CSC
+  enabled: false
+
+partsens-ess129-sim:
+  # -- Enable the ESS:129 simulator CSC
   enabled: false
 
 ringss-ess304:

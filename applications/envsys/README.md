@@ -70,10 +70,16 @@ Deployment for the Environmental Awareness Systems CSCs
 | m2-ess106.enabled | bool | `false` | Enable the ESS:106 CSC |
 | m2-ess112-sim.enabled | bool | `false` | Enable the ESS:112 simulator CSC |
 | m2-ess112.enabled | bool | `false` | Enable the ESS:112 CSC |
-| mtdome-ess107-sim.enabled | bool | `false` | Enable the ESS:107 simulator CSC |
-| mtdome-ess107.enabled | bool | `false` | Enable the ESS:107 CSC |
-| mtdome-ess108-sim.enabled | bool | `false` | Enable the ESS:108 simulator CSC |
-| mtdome-ess108.enabled | bool | `false` | Enable the ESS:108 CSC |
+| mtdome-ess404-sim.enabled | bool | `false` | Enable the ESS:404 simulator CSC |
+| mtdome-ess404.enabled | bool | `false` | Enable the ESS:404 CSC |
+| mtdome-ess405-sim.enabled | bool | `false` | Enable the ESS:405 simulator CSC |
+| mtdome-ess405.enabled | bool | `false` | Enable the ESS:405 CSC |
+| partsens-ess127-sim.enabled | bool | `false` | Enable the ESS:127 simulator CSC |
+| partsens-ess127.enabled | bool | `false` | Enable the ESS:127 CSC |
+| partsens-ess128-sim.enabled | bool | `false` | Enable the ESS:128 simulator CSC |
+| partsens-ess128.enabled | bool | `false` | Enable the ESS:128 CSC |
+| partsens-ess129-sim.enabled | bool | `false` | Enable the ESS:129 simulator CSC |
+| partsens-ess129.enabled | bool | `false` | Enable the ESS:129 CSC |
 | ringss-ess304-sim.enabled | bool | `false` | Enable the ESS:304 simulator CSC |
 | ringss-ess304.enabled | bool | `false` | Enable the ESS:304 CSC |
 | tma-ess104-sim.enabled | bool | `false` | Enable the ESS:104 simulator CSC |

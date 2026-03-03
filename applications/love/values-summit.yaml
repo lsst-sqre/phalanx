@@ -835,8 +835,8 @@ love-producer:
   - name: mtdome
     csc: MTDome:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtdomeess107
-    csc: ESS:107
+  - name: mtdomeess404
+    csc: ESS:404
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
     resources:
       requests:
@@ -845,8 +845,8 @@ love-producer:
       limits:
         cpu: 300m
         memory: 300Mi
-  - name: mtdomeess108
-    csc: ESS:108
+  - name: mtdomeess405
+    csc: ESS:405
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtdometrajectory
     csc: MTDomeTrajectory:0
@@ -985,8 +985,8 @@ love-producer:
   - name: test42
     csc: Test:42
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: partsensess401
-    csc: ESS:401
+  - name: partsensess127
+    csc: ESS:127
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
     resources:
       requests:
@@ -995,8 +995,8 @@ love-producer:
       limits:
         cpu: 300m
         memory: 300Mi
-  - name: partsensess402
-    csc: ESS:402
+  - name: partsensess128
+    csc: ESS:128
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
     resources:
       requests:
@@ -1005,8 +1005,8 @@ love-producer:
       limits:
         cpu: 300m
         memory: 300Mi
-  - name: partsensess403
-    csc: ESS:403
+  - name: partsensess129
+    csc: ESS:129
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
     resources:
       requests:
