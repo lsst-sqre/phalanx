@@ -23,10 +23,19 @@ spec:
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.cloudsql.enabled }}
+      serviceAccountName: "docverse"
+      {{- else }}
       automountServiceAccountToken: false
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           env:
+            - name: "DOCVERSE_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "docverse"
+                  key: "DOCVERSE_DATABASE_PASSWORD"
             {{- if .Values.config.slackAlerts }}
             - name: "DOCVERSE_SLACK_WEBHOOK"
               valueFrom:
@@ -54,10 +63,10 @@ spec:
             # tries to send data over those connections.
             #
             # Note that terminationGracePeriodSeconds includes the time that
-            # is spent in the preStop hook. If you’re adding a preStop hook
+            # is spent in the preStop hook. If you're adding a preStop hook
             # and your terminationGracePeriodSeconds is super fine-tuned, then
             # you should update your terminationGracePeriodSeconds to add the
-            # amount of time you’ll be spending in your preStop hook.
+            # amount of time you'll be spending in your preStop hook.
             preStop:
               sleep:
                 seconds: 10
@@ -77,6 +86,10 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+      {{- if .Values.cloudsql.enabled }}
+      initContainers:
+        {{- include "docverse.cloudsqlSidecar" . | nindent 8 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
