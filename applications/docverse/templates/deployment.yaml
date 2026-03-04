@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "docverse"
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
   labels:
     {{- include "docverse.labels" . | nindent 4 }}
 spec:
