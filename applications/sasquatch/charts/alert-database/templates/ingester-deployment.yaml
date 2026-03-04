@@ -72,3 +72,7 @@ spec:
             secretName: sasquatch
         {{- end }}
       serviceAccountName: "{{ .Values.ingester.serviceAccountName }}"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
