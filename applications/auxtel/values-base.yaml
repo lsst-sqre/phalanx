@@ -22,7 +22,7 @@ atbuilding-sim:
       cpu: 120m
       memory: 350Mi
     requests:
-      cpu: 12m
+      cpu: 15m
       memory: 170Mi
 
 atdome-sim:
