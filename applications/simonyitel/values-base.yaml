@@ -323,7 +323,7 @@ mtoods:
       cpu: 1000m
       memory: 1400Mi
     requests:
-      cpu: 10m
+      cpu: 20m
       memory: 700Mi
   configfile:
     path: /etc
