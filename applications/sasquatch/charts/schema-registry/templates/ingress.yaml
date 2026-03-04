@@ -18,10 +18,10 @@ template:
     name: {{ include "chart.fullname" . }}
     labels:
       {{- include "schema-registry.labels" . | nindent 6 }}
+    {{- with .Values.ingress.annotations }}
     annotations:
-      {{- with .Values.ingress.annotations }}
       {{ toYaml . | nindent 6 }}
-      {{- end }}
+    {{- end }}
   spec:
     rules:
       - host: {{ .Values.ingress.hostname | default .Values.global.host | quote }}
