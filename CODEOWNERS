@@ -9,7 +9,7 @@
 /applications/obssys/ @lsst-sqre/codeowners-observatory
 /applications/ocps-uws-job/ @lsst-sqre/codeowners-observatory
 /applications/rubin-too-producer/ @lsst-sqre/codeowners-observatory
-/applications/simonyitel/ @lsst-sqre/codeowners-observatory
+/applications/simonyitel/ @mareuter @tribeiro @aibsen
 /applications/uws/ @lsst-sqre/codeowners-observatory
 
 # Observatory environment config
