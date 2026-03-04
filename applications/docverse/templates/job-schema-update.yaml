@@ -4,9 +4,8 @@ kind: Job
 metadata:
   name: "docverse-schema-update"
   annotations:
-    helm.sh/hook: "pre-install,pre-upgrade"
-    helm.sh/hook-delete-policy: "hook-succeeded"
-    helm.sh/hook-weight: "1"
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
   labels:
     {{- include "docverse.labels" . | nindent 4 }}
 spec:
