@@ -314,6 +314,7 @@ mtoods:
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+    CTRL_OODS_LOG_LEVEL: DEBUG
   s3Credentials:
   - lfa-credentials.ini
   - oods-lsstcam-credentials.ini
