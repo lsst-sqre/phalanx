@@ -16,3 +16,4 @@
 /environments/templates/applications/telescope/ @lsst-sqre/codeowners-observatory
 /environments/values-base.yaml @lsst-sqre/codeowners-observatory
 /environments/values-summit.yaml @lsst-sqre/codeowners-observatory
+/environments/values-tucson-teststand.yaml @lsst-sqre/codeowners-observatory
