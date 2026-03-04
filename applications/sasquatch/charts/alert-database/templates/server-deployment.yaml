@@ -62,3 +62,7 @@ spec:
           defaultMode: 420
           secretName: sasquatch
        {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
