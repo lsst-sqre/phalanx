@@ -342,7 +342,7 @@ mtoods:
               topics:
                 - lsst.s3.raw.lsstcam
               group_id: MTOODS-S3
-              max_messages: 250
+              max_messages: 197
               max_wait_time: 0.5
               group_wait_time: 0.1
               time_to_wait_without_data: 0.5
