@@ -200,12 +200,6 @@ config:
       - type: "ui"
         name: "logout"
         template: "https://{{base_hostname}}/logout"
-    livetap:
-      - type: "data"
-        name: "tap"
-        datasets:
-          - "live"
-        template: "https://{{base_hostname}}/api/livetap"
     mobu:
       - type: "internal"
         name: "mobu"
