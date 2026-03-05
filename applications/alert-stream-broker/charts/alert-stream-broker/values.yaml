@@ -113,7 +113,7 @@ users:
   -  # -- The username for the user that should be created.
     username: rubin-testing
     # -- A list of topics that the user should get read-only access to.
-    readonlyTopics: ["alert-stream", "alerts-simulated", "alert-stream-test"]
+    readonlyTopics: ["alert-stream", "alert-stream-test"]
     # -- A list of string prefixes for groups that the user should get admin
     # access to, allowing them to create, delete, describe, etc consumer
     # groups. Note that these are prefix-matched, not just literal exact
@@ -152,9 +152,6 @@ kafkaController:
 
 # -- Topic used to send test alerts.
 testTopicName: alert-stream-test
-
-# -- Topic used to send simulated alerts to brokers.
-simulatedTopicName: alerts-simulated
 
 # -- Integer ID to use in the prefix of alert data packets. This should be a
 # valid Confluent Schema Registry ID associated with the schema used.

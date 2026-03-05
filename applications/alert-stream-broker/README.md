@@ -18,11 +18,10 @@ Alert transmission to community brokers
 | alert-database.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | alert-database.ingester.image.imagePullPolicy | string | `"Always"` |  |
 | alert-database.ingester.image.repository | string | `"lsstdm/alert_database_ingester"` |  |
-| alert-database.ingester.image.tag | string | `"v3.4.0"` |  |
+| alert-database.ingester.image.tag | string | `"v4.0.0"` |  |
 | alert-database.ingester.kafka.cluster | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
 | alert-database.ingester.kafka.port | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal listener that expects SCRAM SHA-512 auth. |
 | alert-database.ingester.kafka.strimziAPIVersion | string | `"v1beta2"` | API version of the Strimzi installation's custom resource definitions |
-| alert-database.ingester.kafka.topic | string | `"alerts-simulated"` | Name of the topic which will holds alert data. |
 | alert-database.ingester.kafka.user | string | `"alert-database-ingester"` | The username of the Kafka user identity used to connect to the broker. |
 | alert-database.ingester.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
 | alert-database.ingester.s3.alertBucket | string | `"rubin-alert-archive"` |  |
@@ -40,7 +39,7 @@ Alert transmission to community brokers
 | alert-database.nameOverride | string | `""` | Override the base name for resources |
 | alert-database.server.image.imagePullPolicy | string | `"Always"` |  |
 | alert-database.server.image.repository | string | `"lsstdm/alert_database_server"` |  |
-| alert-database.server.image.tag | string | `"v3.1.0"` |  |
+| alert-database.server.image.tag | string | `"v4.0.0"` |  |
 | alert-database.server.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
 | alert-database.server.s3.alertBucket | string | `"rubin-alert-archive"` |  |
 | alert-database.server.s3.endpointURL | string | `"https://sdfdatas3.slac.stanford.edu/ "` | Project ID which has the above GCP IAM service account |
@@ -92,7 +91,6 @@ Alert transmission to community brokers
 | alert-stream-broker.maxMillisecondsRetained | string | `"5259492000"` | Maximum amount of time to save alerts in the replay topic, in milliseconds. Default is 7 days (604800000). |
 | alert-stream-broker.nameOverride | string | `""` |  |
 | alert-stream-broker.schemaID | int | `1` | Integer ID to use in the prefix of alert data packets. This should be a valid Confluent Schema Registry ID associated with the schema used. |
-| alert-stream-broker.simulatedTopicName | string | `"alerts-simulated"` | Topic used to send simulated alerts to brokers. |
 | alert-stream-broker.strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |
 | alert-stream-broker.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | alert-stream-broker.testTopicName | string | `"alert-stream-test"` | Topic used to send test alerts. |
@@ -100,9 +98,9 @@ Alert transmission to community brokers
 | alert-stream-broker.testTopicReplicas | int | `2` |  |
 | alert-stream-broker.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker. |
 | alert-stream-broker.tls.subject.organization | string | `"Vera C. Rubin Observatory"` | Organization to use in the 'Subject' field of the broker's TLS certificate. |
-| alert-stream-broker.users | list | `[{"groups":["rubin-testing"],"readonlyTopics":["alert-stream","alerts-simulated","alert-stream-test"],"username":"rubin-testing"}]` | A list of users that should be created and granted access.  Passwords for these users are not generated automatically; they are expected to be stored as 1Password secrets which are replicated into Vault. Each username should have a "{{ $username }}-password" secret associated with it. |
+| alert-stream-broker.users | list | `[{"groups":["rubin-testing"],"readonlyTopics":["alert-stream","alert-stream-test"],"username":"rubin-testing"}]` | A list of users that should be created and granted access.  Passwords for these users are not generated automatically; they are expected to be stored as 1Password secrets which are replicated into Vault. Each username should have a "{{ $username }}-password" secret associated with it. |
 | alert-stream-broker.users[0].groups | list | `["rubin-testing"]` | A list of string prefixes for groups that the user should get admin access to, allowing them to create, delete, describe, etc consumer groups. Note that these are prefix-matched, not just literal exact matches. |
-| alert-stream-broker.users[0].readonlyTopics | list | `["alert-stream","alerts-simulated","alert-stream-test"]` | A list of topics that the user should get read-only access to. |
+| alert-stream-broker.users[0].readonlyTopics | list | `["alert-stream","alert-stream-test"]` | A list of topics that the user should get read-only access to. |
 | alert-stream-broker.users[0].username | string | `"rubin-testing"` | The username for the user that should be created. |
 | alert-stream-broker.vaultSecretsPath | string | `""` | Path to the secret resource in Vault |
 | alert-stream-schema-registry.clusterName | string | `"alert-broker"` | Strimzi "cluster name" of the broker to use as a backend. |
