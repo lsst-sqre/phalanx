@@ -173,6 +173,9 @@ config:
     datalinker:
       - type: "data"
         name: "datalink"
+        datasets:
+          - "dp02"
+          - "dp1"
         template: "https://{{base_hostname}}/api/datalink"
         versions:
           datalink-links-1.1:
