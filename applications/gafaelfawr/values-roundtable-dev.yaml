@@ -21,10 +21,6 @@ config:
   oidcServer:
     enabled: true
 
-  # Enable metrics reporting.
-  metrics:
-    enabled: true
-
   knownScopes:
     "write:git-lfs": >-
       Can write objects to Git LFS storage bucket
