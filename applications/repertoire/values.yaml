@@ -203,6 +203,12 @@ config:
       - type: "ui"
         name: "logout"
         template: "https://{{base_hostname}}/logout"
+    livetap:
+      - type: "data"
+        name: "tap"
+        datasets:
+          - "live"
+        template: "https://{{base_hostname}}/api/livetap"
     mobu:
       - type: "internal"
         name: "mobu"
@@ -235,6 +241,12 @@ config:
       - type: "ui"
         name: "portal"
         template: "https://{{base_hostname}}/portal/app/"
+    ppdbtap:
+      - type: "data"
+        name: "tap"
+        datasets:
+          - "prompt"
+        template: "https://{{base_hostname}}/api/ppdbtap"
     semaphore:
       - type: "internal"
         name: "semaphore"
