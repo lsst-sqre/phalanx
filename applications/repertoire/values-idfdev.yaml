@@ -3,7 +3,6 @@ config:
     - "dp02"
     - "dp03"
     - "dp1"
-    - "prompt"
   hips:
     legacy:
       dataset: "dp1"
