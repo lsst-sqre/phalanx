@@ -8,6 +8,7 @@ A Helm chart for deploying the Rapid Analysis services.
 |-----|------|---------|-------------|
 | affinity | object | `{}` | This specifies the scheduling constraints of the pod. |
 | butlerSecret | object | `{}` | This section allows for specification of Butler secret information. If this section is used, it must contain the following attributes: _key_ (The vault key for the Butler secret), _containerPath_ (The directory location for the Butler secret), _dbUser_ (The username for the Butler backend database) |
+| configMountpoint | list | `[]` | This section holds the information necessary to mount configmaps. If the section is used, each object listed can have the following attributes defined: _name_ (The name of the persistent volume and the configMap), _items_ (Files in the configmap to mount), |
 | env | object | `{"AWS_REQUEST_CHECKSUM_CALCULATION":"WHEN_REQUIRED","AWS_RESPONSE_CHECKSUM_VALIDATION":"WHEN_REQUIRED"}` | This section holds a set of key, value pairs for environmental variables (ENV_VAR: value). NOTE: RUN_ARG is taken care of by the chart using _script_. |
 | envSecrets | list | `[]` | This section holds specifications for secret injection. If this section is used, each object listed must have the following attributes defined: _name_ (The label for the secret), _secretName_ (The name of the vault store reference. Uses the _namespace_ attribute to construct the full name), _secretKey_ (The key in the vault store containing the necessary secret) |
 | fullnameOverride | string | `""` | Specify the deployed application name specifically. Overrides all other names. |
@@ -41,7 +42,6 @@ A Helm chart for deploying the Rapid Analysis services.
 | resources | object | `{}` | This allows the specification of resources (CPU, memory) requires to run the container. |
 | scripts | object | `{}` | List of script objects to run for the broadcaster. This section MUST have the following attribute specified for each entry. _name_ (The full path for the script) The following attributes are optional _resources_ (A resource object specification) _nodeSelector_ (A node selector object specification) _tolerations_ (A list of tolerations) _affinity_ (An affinity object specification) |
 | securityContext | object | `{}` | This section allows for specification of security context information. If the section is used, at least one of the following attributes must be specified. _uid_ (User id to run application as), _gid_ (Group id of the user that runs the application), _fid_ (File system context user id), |
-| siteTag | string | `""` | A special tag for letting the scripts know where they are running. |
 | squid.affinity | object | `{}` | Affinity rules for the squid pods |
 | squid.embargo | bool | `false` | This specifies wether the squid service needs to reach embargo or not. |
 | squid.enabled | bool | `false` | This specifies whether to use squid or not. |
