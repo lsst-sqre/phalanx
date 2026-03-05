@@ -46,7 +46,6 @@ Kafka broker cluster for distributing alerts
 | maxMillisecondsRetained | string | `"5259492000"` | Maximum amount of time to save alerts in the replay topic, in milliseconds. Default is 7 days (604800000). |
 | nameOverride | string | `""` |  |
 | schemaID | int | `1` | Integer ID to use in the prefix of alert data packets. This should be a valid Confluent Schema Registry ID associated with the schema used. |
-| simulatedTopicName | string | `"alerts-simulated"` | Topic used to send simulated alerts to brokers. |
 | strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | testTopicName | string | `"alert-stream-test"` | Topic used to send test alerts. |
@@ -54,8 +53,8 @@ Kafka broker cluster for distributing alerts
 | testTopicReplicas | int | `2` |  |
 | tls.certIssuerName | string | `"letsencrypt-dns"` | Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker. |
 | tls.subject.organization | string | `"Vera C. Rubin Observatory"` | Organization to use in the 'Subject' field of the broker's TLS certificate. |
-| users | list | `[{"groups":["rubin-testing"],"readonlyTopics":["alert-stream","alerts-simulated","alert-stream-test"],"username":"rubin-testing"}]` | A list of users that should be created and granted access.  Passwords for these users are not generated automatically; they are expected to be stored as 1Password secrets which are replicated into Vault. Each username should have a "{{ $username }}-password" secret associated with it. |
+| users | list | `[{"groups":["rubin-testing"],"readonlyTopics":["alert-stream","alert-stream-test"],"username":"rubin-testing"}]` | A list of users that should be created and granted access.  Passwords for these users are not generated automatically; they are expected to be stored as 1Password secrets which are replicated into Vault. Each username should have a "{{ $username }}-password" secret associated with it. |
 | users[0].groups | list | `["rubin-testing"]` | A list of string prefixes for groups that the user should get admin access to, allowing them to create, delete, describe, etc consumer groups. Note that these are prefix-matched, not just literal exact matches. |
-| users[0].readonlyTopics | list | `["alert-stream","alerts-simulated","alert-stream-test"]` | A list of topics that the user should get read-only access to. |
+| users[0].readonlyTopics | list | `["alert-stream","alert-stream-test"]` | A list of topics that the user should get read-only access to. |
 | users[0].username | string | `"rubin-testing"` | The username for the user that should be created. |
 | vaultSecretsPath | string | `""` | Path to the secret resource in Vault |
