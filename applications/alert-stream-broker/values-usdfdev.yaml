@@ -34,6 +34,10 @@ alert-stream-broker:
     #      effect: NoSchedule
   vaultSecretsPath: "secret/rubin/usdf-alert-distribtion-dev"
 
+  communityReadonlyTopics: &communityReadonlyTopics
+    - "lsst-alerts-v10.0"
+    - "lsst-alerts-reprocessed-v10.0"
+
   users:
     # A user for development purposes by the Rubin team, with access to all
     # topics in readonly mode.
@@ -42,38 +46,38 @@ alert-stream-broker:
       groups: ["rubin-devel-idfint"]
 
     # A user used by the Rubin team but with similar access to the community
-    # broker users.
-    - username: "rubin-communitybroker-idfint"
-      readonlyTopics: ["alerts-simulated"]
-      groups: ["rubin-communitybroker-idfint"]
+    # broker users. Currently disabled.
+    # - username: "rubin-communitybroker-idfint"
+    #  readonlyTopics: ["alerts-simulated"]
+    #  groups: ["rubin-communitybroker-idfint"]
 
     # The actual community broker users
     - username: "alerce-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["alerce-idfint"]
 
     - username: "ampel-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["ampel-idfint"]
 
     - username: "antares-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["antares-idfint"]
 
     - username: "babamul-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["babamul-idfint"]
 
     - username: "fink-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["fink-idfint"]
 
     - username: "lasair-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["lasair-idfint"]
 
     - username: "pittgoogle-idfint"
-      readonlyTopics: ["alerts-simulated"]
+      readonlyTopics: *communityReadonlyTopics
       groups: ["pittgoogle-idfint"]
 
 alert-stream-schema-registry:
@@ -90,11 +94,6 @@ alert-database:
     schemaRegistryURL: alert-schemas-dev.slac.stanford.edu
 
     serviceAccountName: alert-database-writer
-
-    kafka:
-      cluster: alert-broker
-      port: 9092
-      topic: alerts-simulated
 
     gcp:
       serviceAccountName: alertdb-writer

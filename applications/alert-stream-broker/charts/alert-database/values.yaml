@@ -24,9 +24,6 @@ ingester:
     # -- The username of the Kafka user identity used to connect to the broker.
     user: alert-database-ingester
 
-    # -- Name of the topic which will holds alert data.
-    topic: alerts-simulated
-
     # -- API version of the Strimzi installation's custom resource definitions
     strimziAPIVersion: v1beta2
 
