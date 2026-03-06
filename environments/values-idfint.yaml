@@ -19,6 +19,7 @@ applications:
   butler: true
   datalinker: true
   ghostwriter: true
+  gke: true
   google-cloud-observability: true
   hips: true
   hoverdrive: true

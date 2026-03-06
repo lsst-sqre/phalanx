@@ -1,0 +1,27 @@
+{{- range .Values.autopilot.singleZones }}
+# This is a copy of the default autopilot compute class, but configured to only
+# provision nodes in a single zone.
+# https://docs.cloud.google.com/kubernetes-engine/docs/reference/crds/computeclass
+apiVersion: cloud.google.com/v1
+kind: ComputeClass
+metadata:
+  # ComputeClass names that start with 'autopilot' are reserved in GKE
+  name: single-zone-autopilot-{{ . }}
+spec:
+  activeMigration:
+    optimizeRulePriority: true
+  autopilot:
+    enabled: true
+  autoscalingPolicy:
+    consolidationDelayMinutes: 1
+    consolidationThreshold: 85
+    gpuConsolidationThreshold: 85
+  description: Provides general-purpose Autopilot compute in a single zone.
+  nodePoolAutoCreation:
+    enabled: true
+  whenUnsatisfiable: DoNotScaleUp
+  priorities:
+    - location:
+        zones:
+          - {{ . | quote }}
+{{- end }}
