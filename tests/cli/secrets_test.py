@@ -1,5 +1,6 @@
 """Tests for the secrets command-line subcommand."""
 
+import json
 import os
 import re
 from base64 import b64decode, b64encode
@@ -324,8 +325,8 @@ def test_sync_onepassword(
         "minikube",
         env={"OP_CONNECT_TOKEN": "sometoken"},
     )
-    assert result.exit_code == 0
     assert result.output == snapshot
+    assert result.exit_code == 0
 
     # Check that all static secrets were copied over correctly.
     with (input_path / "onepassword" / "minikube.yaml").open() as fh:
@@ -339,6 +340,11 @@ def test_sync_onepassword(
                 assert b64decode(value.encode()).decode() == vault[key]
             else:
                 assert value == vault[key]
+
+    # Check that the Gafaelfawr OpenID Connect clients secret is correct.
+    oidc_clients_secret = read_output_json("minikube", "oidc-clients")
+    vault = _get_app_secret(mock_vault, f"{base_vault_path}/gafaelfawr")
+    assert vault["oidc-server-secrets"] == json.dumps(oidc_clients_secret)
 
     # Check that the pull secret is correct.
     pull_secret = read_output_json("minikube", "pull-secret")
@@ -384,9 +390,9 @@ def test_sync_onepassword_errors(
         "minikube",
         env={"OP_CONNECT_TOKEN": "sometoken", "VAULT_TOKEN": "sometoken"},
     )
-    assert result.exit_code == 2
     assert app_name in result.output
     assert key in result.output
+    assert result.exit_code == 2
 
     # Instead set the secret to a value that is valid base64, but of binary
     # data that cannot be decoded to a string.
@@ -401,9 +407,9 @@ def test_sync_onepassword_errors(
         "minikube",
         env={"OP_CONNECT_TOKEN": "sometoken", "VAULT_TOKEN": "sometoken"},
     )
-    assert result.exit_code == 2
     assert app_name in result.output
     assert key in result.output
+    assert result.exit_code == 2
 
 
 def test_sync_regenerate(

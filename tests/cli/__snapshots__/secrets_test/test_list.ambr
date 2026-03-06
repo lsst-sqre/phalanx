@@ -10,6 +10,7 @@
   gafaelfawr cilogon-client-secret
   gafaelfawr database-password
   gafaelfawr ldap-password
+  gafaelfawr oidc-server-secrets
   gafaelfawr redis-password
   gafaelfawr session-secret
   gafaelfawr signing-key

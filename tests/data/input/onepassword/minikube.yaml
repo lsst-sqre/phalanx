@@ -10,6 +10,11 @@ applications:
       value: aHR0cHM6Ly9leGFtcGxlLmNvbS9hbGVydC1ob29r
     app-alert-webhook:
       value: https://example.com/app-hook
+oidc-clients:
+  idac-example:
+    id: d2dadb64fb3cfe8669ca653bc3ef726d@clients.minikube.lsst.cloud
+    secret: 6bf105b4e9b62c12d46b41bce4d08d73
+    return_uri: https://idac.example.com/login
 pull-secret:
   registries:
     ghcr.io:
