@@ -110,6 +110,9 @@ applications:
   # most other applications use `GafaelfawrIngress`
   gafaelfawr: true
 
+  # -- Enable the gke application
+  gke: false
+
   # -- Enable the google-cloud-observability application
   google-cloud-observability: false
 

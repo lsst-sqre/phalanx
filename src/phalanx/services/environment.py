@@ -102,6 +102,7 @@ class EnvironmentService:
         self._install_argocd(environment)
         self._install_app_of_apps(environment, git_branch, argocd_password)
         self._sync_argocd()
+        self._sync_gke(environment)
         self._sync_infrastructure_applications(environment)
         if "sasquatch" in environment.applications:
             self._sync_sasquatch(environment)
@@ -327,6 +328,22 @@ class EnvironmentService:
                 "strimzi-registry-operator",
                 "sasquatch",
             ):
+                if application in environment.applications:
+                    self._argocd.sync(application)
+
+    def _sync_gke(self, environment: Environment) -> None:
+        """Sync GKE-specific resources.
+
+        These should be synced before other apps so that they have any custom
+        StorageClasses and ComputeClasses that they need.
+
+        Parameters
+        ----------
+        environment
+            The environment configuration object.
+        """
+        with action_group("Sync GKE-specific resources"):
+            for application in ("gke",):
                 if application in environment.applications:
                     self._argocd.sync(application)
 
