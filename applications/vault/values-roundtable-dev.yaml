@@ -36,3 +36,13 @@ vault:
     serviceAccount:
       annotations:
         iam.gke.io/gcp-service-account: "vault-server@roundtable-dev-abe2.iam.gserviceaccount.com"
+
+    # Autopilot workloads cannot request less than 500m CPU or less than 512Mi
+    # if the pods are using anti-affinity
+    resources:
+      limits:
+        cpu: "1"
+        memory: "700Mi"
+      requests:
+        cpu: "500m"
+        memory: "512Mi"

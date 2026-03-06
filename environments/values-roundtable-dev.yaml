@@ -9,6 +9,7 @@ onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP roundtable-dev.lsst.cloud"
 vaultPathPrefix: "secret/phalanx/roundtable-dev"
+defaultComputeClass: "autopilot"
 
 applications:
   atlantis: false

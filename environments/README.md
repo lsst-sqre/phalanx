@@ -103,6 +103,7 @@
 | controlSystem.schemaRegistryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema registry URL for the control system deployment |
 | controlSystem.siteTag | string | None, must be set | Site tag for the control system deployment |
 | controlSystem.topicName | string | `"sal"` | Topic name tag for the control system deployment |
+| defaultComputeClass | string | `nil` | Whether to deploy workloads using Autopilot or Standard mode. If this is null, the workloads will use the compute class that corresponds to the cluster type. Here's an [example of setting an Autopilot compute class](https://cloud.google.com/kubernetes-engine/docs/how-to/autopilot-classes-standard-clusters#built-in-class) |
 | fqdn | string | None, must be set | Fully-qualified domain name where the environment is running |
 | name | string | None, must be set | Name of the environment |
 | namespaceLabels | object | `{}` | Add labels for application namespaces |
