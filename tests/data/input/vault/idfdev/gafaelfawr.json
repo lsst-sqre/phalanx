@@ -4,5 +4,6 @@
   "cilogon-client-secret": "some-cilogon-password",
   "database-password": "some-database-password",
   "ldap-password": "some-ldap-password",
+  "oidc-server-secrets": "[]",
   "redis-password": "3b17413a28b5be73cc963a98558cb50eadf337e78d422476810fd562d9538492"
 }

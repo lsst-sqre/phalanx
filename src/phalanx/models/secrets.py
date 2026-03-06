@@ -22,11 +22,14 @@ from ..yaml import YAMLFoldedString
 
 __all__ = [
     "ConditionalMixin",
+    "ConditionalOIDCClientsGenerateRules",
     "ConditionalSecretConfig",
     "ConditionalSecretCopyRules",
     "ConditionalSecretGenerateRules",
     "ConditionalSimpleSecretGenerateRules",
     "ConditionalSourceSecretGenerateRules",
+    "OIDCClientSecret",
+    "OIDCClientsGenerateRules",
     "PullSecret",
     "RegistryPullSecret",
     "ResolvedSecrets",
@@ -41,6 +44,35 @@ __all__ = [
     "StaticSecret",
     "StaticSecrets",
 ]
+
+
+class OIDCClientSecret(BaseModel):
+    """Configuration for a single OpenID Connect client of our server.
+
+    This must match the corresponding Gafaelfawr model, since its
+    serialization to JSON will be parsed as part of the Gafaelfawr
+    configuration.
+    """
+
+    model_config = ConfigDict(extra="forbid", populate_by_name=True)
+
+    id: str = Field(
+        ..., title="Client ID", description="Unique identifier of the client"
+    )
+
+    secret: str = Field(
+        ...,
+        title="Client secret",
+        description="Secret used to authenticate this client",
+    )
+
+    return_uri: str = Field(
+        ...,
+        title="Return URL",
+        description=(
+            "Acceptable return URL when authenticating users for this client"
+        ),
+    )
 
 
 class ConditionalMixin(BaseModel):
@@ -88,12 +120,13 @@ class SecretGenerateType(StrEnum):
     rsa_private_key = "rsa-private-key"
     bcrypt_password_hash = "bcrypt-password-hash"
     mtime = "mtime"
+    oidc_clients = "oidc-clients"
 
 
 class SimpleSecretGenerateRules(BaseModel):
     """Rules for generating a secret value with no source information."""
 
-    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+    model_config = ConfigDict(extra="forbid", populate_by_name=True)
 
     type: Literal[
         SecretGenerateType.password,
@@ -101,6 +134,11 @@ class SimpleSecretGenerateRules(BaseModel):
         SecretGenerateType.fernet_key,
         SecretGenerateType.rsa_private_key,
     ] = Field(..., title="Secret type", description="Type of secret")
+
+    @property
+    def always_generate(self) -> bool:
+        """Whether to always generate this secret."""
+        return False
 
     def generate(self) -> SecretStr:
         """Generate a new secret following these rules."""
@@ -134,6 +172,8 @@ class ConditionalSimpleSecretGenerateRules(
 class SourceSecretGenerateRules(BaseModel):
     """Rules for generating a secret from another secret."""
 
+    model_config = ConfigDict(extra="forbid", populate_by_name=True)
+
     type: Literal[
         SecretGenerateType.bcrypt_password_hash,
         SecretGenerateType.mtime,
@@ -148,7 +188,24 @@ class SourceSecretGenerateRules(BaseModel):
         ),
     )
 
+    @property
+    def always_generate(self) -> bool:
+        """Whether to always generate this secret."""
+        return False
+
     def generate(self, source: SecretStr) -> SecretStr:
+        """Generate a new secret following these rules.
+
+        Parameters
+        ----------
+        source
+            Source secret from which to generate the secret.
+
+        Returns
+        -------
+        pydantic.SecretStr
+            New secret.
+        """
         match self.type:
             case SecretGenerateType.bcrypt_password_hash:
                 password_hash = bcrypt.hashpw(
@@ -167,9 +224,54 @@ class ConditionalSourceSecretGenerateRules(
     """Conditional rules for generating a secret from another secret."""
 
 
-SecretGenerateRules = SimpleSecretGenerateRules | SourceSecretGenerateRules
-ConditionalSecretGenerateRules = (
-    ConditionalSimpleSecretGenerateRules | ConditionalSourceSecretGenerateRules
+class OIDCClientsGenerateRules(BaseModel):
+    """Rules for generating a secret from the OIDC clients."""
+
+    model_config = ConfigDict(extra="forbid", populate_by_name=True)
+
+    type: Literal[SecretGenerateType.oidc_clients] = Field(
+        ..., title="Secret type", description="Type of secret"
+    )
+
+    @property
+    def always_generate(self) -> bool:
+        """Whether to always generate this secret."""
+        return True
+
+    def generate(self, source: dict[str, OIDCClientSecret]) -> SecretStr:
+        """Generate a new secret using these rules.
+
+        Parameters
+        ----------
+        source
+            OpenID Connect client information.
+
+        Returns
+        -------
+        pydantic.SecretStr
+            New secret.
+        """
+        clients = [
+            v.model_dump(mode="json") for _, v in sorted(source.items())
+        ]
+        return SecretStr(json.dumps(clients))
+
+
+class ConditionalOIDCClientsGenerateRules(
+    OIDCClientsGenerateRules, ConditionalMixin
+):
+    """Conditional rules for generating an OpenID Connect client secret."""
+
+
+type SecretGenerateRules = (
+    SimpleSecretGenerateRules
+    | SourceSecretGenerateRules
+    | OIDCClientsGenerateRules
+)
+type ConditionalSecretGenerateRules = (
+    ConditionalSimpleSecretGenerateRules
+    | ConditionalSourceSecretGenerateRules
+    | ConditionalOIDCClientsGenerateRules
 )
 
 
@@ -221,6 +323,11 @@ class SecretConfig(BaseModel):
     value: SecretStr | None = Field(
         None, title="Value", description="Fixed value of secret"
     )
+
+    @property
+    def always_generate(self) -> bool:
+        """Whether this secret should always be generated."""
+        return bool(self.generate and self.generate.always_generate)
 
 
 class ConditionalSecretConfig(SecretConfig, ConditionalMixin):
@@ -390,6 +497,13 @@ class StaticSecrets(BaseModel):
         ),
     )
 
+    oidc_clients: dict[str, OIDCClientSecret] = Field(
+        {},
+        title="OpenID Connect clients",
+        description="Secrets for environment OpenID Connect clients",
+        alias="oidc-clients",
+    )
+
     pull_secret: PullSecret | None = Field(
         None,
         title="Pull secret",
@@ -442,9 +556,10 @@ class StaticSecrets(BaseModel):
 
         The static secrets template should always include the ``value`` field
         even though it will be `None`, should not include ``warning`` if it is
-        unset, and should always include the `PullSecret` fields even though
-        they are defaults. The parameters to `~pydantic.BaseModel.model_dict`
-        aren't up to specifying this, hence this custom serializer.
+        unset, and should always include the OIDC clients, pull secrets, and
+        Vault write token fields even though they are defaults. The parameters
+        to `~pydantic.BaseModel.model_dict` aren't up to specifying this,
+        hence this custom serializer.
 
         Returns
         -------
@@ -452,6 +567,8 @@ class StaticSecrets(BaseModel):
             Dictionary suitable for dumping as YAML to make a template.
         """
         result = self.model_dump(by_alias=True, exclude_unset=True)
+        result["oidc-clients"] = {}
         if self.pull_secret:
             result["pull-secret"] = self.pull_secret.model_dump()
+        result["vault-write-token"] = None
         return result
