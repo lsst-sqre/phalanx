@@ -134,7 +134,7 @@ To create a template for that YAML file, run:
 Replace ``<environment>`` with the name of the environment.
 This will print a template for the required static secrets to standard output.
 
-Then, store this file in a secure location and fill in the ``value`` keys and, if necessary, the ``pull-secret`` block with the appropriate values.
+Then, store this file in a secure location and fill in the ``value`` keys and, if necessary, the ``oidc-clients`` and ``pull-secret`` block with the appropriate values.
 You can, if you choose, also store the Vault write token for your environment in this file, which will allow you to skip setting the VAULT_TOKEN environment variable each time you want to run a :command:`phalanx secrets` command.
 
 You will provide this file to :command:`phalanx` when performing secret sync or audit operations (see :doc:`sync-secrets`) with the ``--secrets`` command-line flag.
@@ -168,6 +168,20 @@ Replace ``<environment>`` with the name of your environment.
 The keys under applications are the names of applications and should be the name of a 1Password vault entry.
 The next-level key should be used as the key of a field in that entry.
 Fill in the value with the value of that secret.
+
+.. _admin-onepassword-oidc-clients:
+
+OIDC clients
+^^^^^^^^^^^^
+
+If the environment has OpenID Connect clients, create a 1Password item of type :menuselection:`Server` and title ``oidc-clients``.
+Delete all of the pre-defined sections.
+Then, for each OpenID Connect client, create a section with a title that explains to humans what that client is for.
+Every section should have three fields: ``id``, ``secret``, and ``return_uri``.
+The first is the client ID, the second is the password, and the third is the URI to which the user will be sent after authentication.
+The ``id`` and ``return_uri`` fields should have type text, and ``secret`` should have type password.
+
+See :doc:`/applications/gafaelfawr/add-oidc-client` for more information.
 
 .. _admin-onepassword-pull-secret:
 
@@ -211,6 +225,10 @@ Finally, you can simply maintain static secrets directly in Vault.
 
 If you do not provide any other source of static secrets for an environment, and the static secret already exists in Vault, the :command:`phalanx secrets` command will use that existing value.
 Therefore, if you wish, you may manually set the secrets directly in Vault (or use some other Vault integration beyond the scope of this document) and not provide Phalanx with any other static secrets source.
+
+If you take this approach with an environment that has OpenID Connect clients, you will need to manually manage the ``oidc-server-secrets`` secret for Gafaelfawr.
+The value of this secret must be the JSON representation of a list of Gafaelfawr OpenID Connect client configurations.
+See `the Gafaelfawr documentation <https://gafaelfawr.lsst.io/user-guide/openid-connect.html#openid-connect>`__ for more information.
 
 If you take this approach with an environment that requires a pull secret, you will need to create a Vault secret with the name ``pull-secret`` containing one key named ``.dockerconfigjson``.
 The contents of that key must be the JSON-serialized authentication information for the Docker registries that require authentication.

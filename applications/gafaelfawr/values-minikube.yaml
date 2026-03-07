@@ -10,10 +10,6 @@ config:
   internalDatabase: true
   updateSchema: true
 
-  # Support OpenID Connect clients like Chronograf.
-  oidcServer:
-    enabled: true
-
   github:
     clientId: "64d11db34c968448381e"
 

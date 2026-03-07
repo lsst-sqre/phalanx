@@ -67,6 +67,19 @@ class MockOnepasswordClient:
         for title, values in secrets.applications.items():
             fields = [Field(label=k, value=v.value) for k, v in values.items()]
             self._data[vault][title] = Item(title=title, fields=fields)
+        if secrets.oidc_clients:
+            fields = []
+            sections = []
+            for client, config in secrets.oidc_clients.items():
+                sections.append(Section(id=client, label=client))
+                reference = FieldSection(id=client)
+                fields.extend(
+                    Field(label=k, value=v, section=reference)
+                    for k, v in config.model_dump(mode="json").items()
+                )
+            self._data[vault]["oidc-clients"] = Item(
+                title="oidc-clients", fields=fields, sections=sections
+            )
         if secrets.pull_secret and secrets.pull_secret.registries:
             fields = []
             sections = []

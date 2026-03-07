@@ -4,8 +4,8 @@ Add new OpenID Connect client
 
 Gafaelfawr can also serve as an OpenID Connect server, allowing third-party applications running inside Phalanx and OpenID Connect clients outside of Phalanx environments to authenticate users in the same way that the Science Platform does.
 
-Each OpenID Connect client of Gafaelfawr must be pre-registered and assigned a ``client_id`` and password.
-To complete an authentication, the client must authenticate with that ``client_id`` and password.
+Each OpenID Connect client of Gafaelfawr must be pre-registered and assigned a client ID and password.
+To complete an authentication, the client must authenticate with that client ID and password.
 See `the Gafaelfawr documentation <https://gafaelfawr.lsst.io/user-guide/openid-connect.html>`__.
 
 This page describes how to register a new client of Gafaelfawr.
@@ -18,15 +18,18 @@ You will need the following information:
 .. note::
 
    The instructions here are specific to SQuaRE-managed Phalanx environments.
-   For other environments, you can update the ``oidc-server-secrets`` Gafaelfawr secret key however you maintain static secrets.
+   For other environments, you should update the ``oidc-clients`` portion of your static secrets.
+   See :ref:`admin-static-secrets` for more information.
 
 Add secret
 ==========
 
 OpenID Connect clients are configured in the ``oidc-server-secrets`` key of the ``gafaelfawr`` secret.
-The value of this key is, unfortunately, a JSON representation of all of the clients.
-We currently maintain two parallel records of the clients, one in a structured 1Password secret that is not currently used, and separately in the ``gafaelfawr`` secret.
-The goal is to eventually add automation to Phalanx to generate the latter from the former.
+The value of this key is a JSON representation of all of the clients.
+It is therefore not maintained directly, but instead is generated from structured data stored elsewhere.
+
+For SQuaRE-managed environments, "elsewhere" is the ``oidc-clients`` 1Password item.
+To add a new client, use the following process:
 
 #. Open 1Password.
    Go to the 1Password vault for static secrets for the Phalanx environment where you want to add an OpenID Connect client.
@@ -51,23 +54,20 @@ The goal is to eventually add automation to Phalanx to generate the latter from 
    Set the value to the return URL of the client.
    This should be provided by the OpenID Connect client and will be the URL to which the user is sent after authentication.
 
-#. Now, you will need to copy this data into the ``gafaelfawr`` secret under the ``oidc-server-secrets`` key, creating that key if it doesn't already exist.
-   Unfortunately, you currently have to construct the JSON by hand.
-   The value of this key should be a JSON-encoded list of objects, and each object should have keys ``id``, ``secret``, and ``return_uri`` with the information above.
-   Be sure to include all the clients, not just the new one that you're adding.
-
 Share the secret with the client
 ================================
 
-You now need to convey the ``client_id`` (the ``id`` value above) and the ``client_secret`` (the ``secret`` value above) to the OpenID Connect client.
-They will need to configure their client software to use that ``client_id`` and ``client_secret`` whenever performing an OpenID Connect authentication.
+You will now need to convey the client ID and secret to the administrator of the OpenID Connect client.
+These are the ``id`` and ``secret`` values above.
+In the OpenID Connect protocol, they are called ``client_id`` and ``client_secret``.
+They will need to configure their client software to use that ID and secret whenever performing an OpenID Connect authentication.
 
 The easiest way to do this is often to create a separate 1Password secret and share it with the client.
 
 .. warning::
 
-   **DO NOT SHARE THE SECRETS CREATED ABOVE.**
-   The client should not have access to the ``oidc-clients`` or ``gafaelfawr`` secrets.
+   **DO NOT SHARE THE SECRET CREATED ABOVE.**
+   The client should not have access to the ``oidc-clients`` secret, since this contains secrets for other clients than their own.
 
 #. Go to the SQuaRE vault and create a new secret.
    Use a name like ``Gafaelfawr <client> OIDC``, replacing ``<client>`` with a *short* human-readable name for the client.
@@ -99,4 +99,4 @@ Do this by selecting :menuselection:`Restart` on the deployment in Argo CD (see 
 
 .. note::
 
-   Since this requires a Gafaelfawr restart, and since you are changing a secret that contains manually-formatted JSON that is prone to syntax errors that will prevent Gafaelfawr from starting, you will normally want to do this during a maintenance window for a production environment.
+   Since this requires a Gafaelfawr restart, you will normally want to do this during a maintenance window for a production environment.
