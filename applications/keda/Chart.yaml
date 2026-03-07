@@ -9,5 +9,5 @@ version: 1.0.0
 
 dependencies:
 - name: "keda"
-  version: 2.16.1
+  version: 2.19.0
   repository: "https://kedacore.github.io/charts"
