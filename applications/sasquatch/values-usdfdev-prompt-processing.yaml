@@ -8,17 +8,7 @@ alert-brokers:
     - name: alerts-simulated
       partitions: 45
       replicas: 1
-    - name: lsst-alerts-v9.0
-      partitions: 45
-      replicas: 1
-      bytesRetained: "755000000000"
-      millisecondsRetained: "2629740000"
     - name: lsst-alerts-v10.0
-      partitions: 45
-      replicas: 1
-      bytesRetained: "300000000000"
-      millisecondsRetained: "2629740000"
-    - name: alerts-mock-data-challenge
       partitions: 45
       replicas: 1
       bytesRetained: "300000000000"
@@ -26,9 +16,7 @@ alert-brokers:
 
   communityReadonlyTopics: &communityReadonlyTopics
     - "alerts-simulated"
-    - "lsst-alerts-v9.0"
     - "lsst-alerts-v10.0"
-    - "alerts-mock-data-challenge"
     - "lsst-alerts-reprocessed-v10.0"
 
   users:
@@ -89,14 +77,12 @@ alert-database:
 
     logLevel: verbose
 
-    schemaRegistryURL: http://sasquatch-schema-registry.sasquatch-schema-registry:8081/schema-registry
+    schemaRegistryURL: http://sasquatch-schema-registry:8081
 
     serviceAccountName: alert-database-writer
 
     kafka:
       cluster: sasquatch
-      topic:
-        - lsst-alerts-v9.0
         - lsst-alerts-v10.0
 
   ingress:
@@ -244,4 +230,7 @@ strimzi-kafka:
         memory: 8Gi
 
   cruiseControl:
+    enabled: true
+
+  kafkaExporter:
     enabled: true
