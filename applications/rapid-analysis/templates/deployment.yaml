@@ -49,6 +49,16 @@ spec:
               value: {{ $script.name }} {{ $.Values.location }}
             - name: RAPID_ANALYSIS_LOCATION
               value: {{ $.Values.location | upper | quote }}
+          {{ if $.Values.sentry.enabled }}
+            - name: SENTRY_DSN
+              value: {{ $.Values.sentry.dsn | quote }}
+              # valueFrom:
+              #   secretKeyRef:
+              #     name: "butler"
+              #     key: "sentry-dsn"
+            - name: SENTRY_ENVIRONMENT
+              value: {{ $.Values.location | upper | quote }}
+          {{- end }}
           {{- if $script.env }}
           {{- range $env_var, $env_value := $script.env }}
             - name: {{ $env_var }}

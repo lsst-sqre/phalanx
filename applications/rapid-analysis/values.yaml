@@ -127,6 +127,11 @@ redis:
   tolerations: []
   # -- Affinity rules for the redis pods
   affinity: {}
+sentry:
+  # -- This specifies whether to use sentry or not.
+  enabled: false
+  # -- The DSN for the sentry instance to use.
+  dsn: ""
 squid:
   # -- This specifies whether to use squid or not.
   enabled: false
