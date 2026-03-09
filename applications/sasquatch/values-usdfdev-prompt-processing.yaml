@@ -83,6 +83,7 @@ alert-database:
 
     kafka:
       cluster: sasquatch
+      topic:
         - lsst-alerts-v10.0
 
   ingress:
