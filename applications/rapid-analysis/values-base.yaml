@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-sitcom/rubintv_production
-  tag: tickets-DM-53212
+  tag: tickets-DM-54364
   pullPolicy: Always
 location: BTS
 siteTag: bts
