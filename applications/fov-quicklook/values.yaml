@@ -134,6 +134,7 @@ butler_settings:
   data_repos:
     embargo: "s3://embargo@rubin-summit-users/butler.yaml"
     main: "/sdf/group/rubin/repo/main"
+    dp1: "/sdf/group/rubin/repo/dp1"
 
 # -- Context menu templates for the frontend
 context_menu_templates: []
@@ -209,3 +210,13 @@ ccd_data_types:
     partial: true
     repository_name: main
     instrument: LSSTCam
+  - data_type: difference_image
+    display_name: Difference Image (DP1)
+    collections:
+      - LSSTComCam/DP1
+    data_id_dimension: visit
+    order_by:
+      - -visit
+    partial: true
+    repository_name: dp1
+    instrument: LSSTComCam
