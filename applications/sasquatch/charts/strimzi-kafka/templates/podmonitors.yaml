@@ -108,3 +108,22 @@ spec:
       replacement: $1
       action: replace
 {{- end }}
+{{- if .Values.kafkaExporter.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: kafka-exporter-monitor
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      strimzi.io/component-type: kafka-exporter
+  namespaceSelector:
+    matchNames:
+      - sasquatch
+  podMetricsEndpoints:
+  - port: http-metrics # The named port for 9404
+    path: /metrics
+    interval: 30s
+{{- end }}
