@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: main
+  tag: copilot-by-uuid-main-20260310-2347
 
 config:
   # -- URL path prefix
