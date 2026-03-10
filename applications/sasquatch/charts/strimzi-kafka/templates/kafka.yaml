@@ -272,7 +272,7 @@ spec:
         - name: STRIMZI_MAX_QUEUE_SIZE
           value: "8192"
   {{- if .Values.kafkaExporter.enabled }}
-  exporter:
+  kafkaExporter:
     topicRegex: {{ .Values.kafkaExporter.topicRegex }}
     groupRegex: {{ .Values.kafkaExporter.groupRegex }}
     logging: {{ .Values.kafkaExporter.logging }}
