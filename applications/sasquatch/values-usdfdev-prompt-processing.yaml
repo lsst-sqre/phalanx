@@ -138,6 +138,9 @@ strimzi-kafka:
       replica.lag.time.max.ms: 120000
       log.retention.minutes: 10080
       offsets.retention.minutes: 10080
+      default.replication.factor: 3
+      offsets.topic.replication.factor: 3
+      min.insync.replicas: 2
     listeners:
       tls:
         enabled: true
