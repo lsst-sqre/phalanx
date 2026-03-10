@@ -118,7 +118,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      strimzi.io/kind: KafkaExporter
+      strimzi.io/component-type: kafka-exporter
   namespaceSelector:
     matchNames:
       - sasquatch
