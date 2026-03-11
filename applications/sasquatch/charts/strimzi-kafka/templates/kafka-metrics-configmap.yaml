@@ -168,4 +168,8 @@ data:
     - pattern: "kafka.server<type=broker-metadata-metrics><>(.+):"
       name: kafka_server_brokermetadatametrics_$1
       type: GAUGE
+    # Java JVM metrics
+    - pattern: 'java.lang<type=Memory><>(HeapMemoryUsage|NonHeapMemoryUsage):'
+      name: java_lang_memory_$1
+      type: GAUGE
 {{- end}}
