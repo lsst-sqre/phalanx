@@ -1,5 +1,4 @@
 # Default values for Gafaelfawr.
-
 config:
   # -- Where to send the user after they log out
   # @default -- Top-level page of this Phalanx environment

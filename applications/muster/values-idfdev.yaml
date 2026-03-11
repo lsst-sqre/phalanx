@@ -1,2 +1,5 @@
+image:
+  pullPolicy: Always
+  tag: tickets-DM-54376
 config:
   slackAlerts: true
