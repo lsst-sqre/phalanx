@@ -8,21 +8,17 @@ alert-brokers:
     - name: alerts-simulated
       partitions: 45
       replicas: 1
-    - name: lsst-alerts-v9.0
-      partitions: 45
-      replicas: 1
-      bytesRetained: "755000000000"
-      millisecondsRetained: "2629740000"
     - name: lsst-alerts-v10.0
       partitions: 45
       replicas: 1
       bytesRetained: "300000000000"
       millisecondsRetained: "2629740000"
-    - name: alerts-mock-data-challenge
-      partitions: 45
-      replicas: 1
-      bytesRetained: "300000000000"
-      millisecondsRetained: "2629740000"
+
+  communityReadonlyTopics: &communityReadonlyTopics
+    - "alerts-simulated"
+    - "lsst-alerts-v10.0"
+    - "lsst-alerts-reprocessed-v10.0"
+
 
   users:
 
@@ -30,185 +26,47 @@ alert-brokers:
     # topics in readonly mode.
     - username: "rubin-devel-idfint"
       topics:
-        - name: "*"
-          operations:
-            - "Read"
+        - "*"
       groups:
-        - name: "rubin-devel-idfint"
-          operations:
-            - "Read"
+        - "rubin-devel-idfint"
 
     # The community broker users
     - username: "alerce-idfint"
-      topics:
-        - name: "alerts-simulated"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v9.0"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v10.0"
-          operations:
-            - "Read"
-        - name: "alerts-mock-data-challenge"
-          operations:
-            - "Read"
+      topics: *communityReadonlyTopics
       groups:
-        - name: "alerce-idfint"
-          operations:
-            - "Read"
-
+        - "alerce-idfint"
     - username: "ampel-idfint"
-      topics:
-        - name: "alerts-simulated"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v9.0"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v10.0"
-          operations:
-            - "Read"
-        - name: "alerts-mock-data-challenge"
-          operations:
-            - "Read"
+      topics: *communityReadonlyTopics
       groups:
-        - name: "ampel-idfint"
-          operations:
-            - "Read"
-
+        - "ampel-idfint"
     - username: "antares-idfint"
-      topics:
-        - name: "alerts-simulated"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v9.0"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v10.0"
-          operations:
-            - "Read"
-        - name: "alerts-mock-data-challenge"
-          operations:
-            - "Read"
+      topics: *communityReadonlyTopics
       groups:
-        - name: "antares-idfint"
-          operations:
-            - "Read"
-
+        - "antares-idfint"
     - username: "babamul-idfint"
-      topics:
-        - name: "alerts-simulated"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v9.0"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v10.0"
-          operations:
-            - "Read"
-        - name: "alerts-mock-data-challenge"
-          operations:
-            - "Read"
+      topics: *communityReadonlyTopics
       groups:
-        - name: "babamul-idfint"
-          operations:
-            - "Read"
-
+        - "babamul-idfint"
     - username: "fink-idfint"
-      topics:
-        - name: "alerts-simulated"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v9.0"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v10.0"
-          operations:
-            - "Read"
-        - name: "alerts-mock-data-challenge"
-          operations:
-            - "Read"
+      topics: *communityReadonlyTopics
       groups:
-        - name: "fink-idfint"
-          operations:
-            - "Read"
-
+        - "fink-idfint"
     - username: "lasair-idfint"
-      topics:
-        - name: "alerts-simulated"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v9.0"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v10.0"
-          operations:
-            - "Read"
-        - name: "alerts-mock-data-challenge"
-          operations:
-            - "Read"
+      topics: *communityReadonlyTopics
       groups:
-        - name: "lasair-idfint"
-          operations:
-            - "Read"
-
+        - "lasair-idfint"
     - username: "pittgoogle-idfint"
-      topics:
-        - name: "alerts-simulated"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v9.0"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v10.0"
-          operations:
-            - "Read"
-        - name: "alerts-mock-data-challenge"
-          operations:
-            - "Read"
+      topics: *communityReadonlyTopics
       groups:
-        - name: "pittgoogle-idfint"
-          operations:
-            - "Read"
-
+        - "pittgoogle-idfint"
     - username: "poi-usdf"
-      topics:
-        - name: "alerts-simulated"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v9.0"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v10.0"
-          operations:
-            - "Read"
-        - name: "alerts-mock-data-challenge"
-          operations:
-            - "Read"
+      topics: *communityReadonlyTopics
       groups:
-        - name: "poi-usdf"
-          operations:
-            - "Read"
-
+        - "poi-usdf"
     - username: "snaps-usdf"
-      topics:
-        - name: "alerts-simulated"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v9.0"
-          operations:
-            - "Read"
-        - name: "lsst-alerts-v10.0"
-          operations:
-            - "Read"
-        - name: "alerts-mock-data-challenge"
-          operations:
-            - "Read"
+      topics: *communityReadonlyTopics
       groups:
-        - name: "snaps-usdf"
-          operations:
-            - "Read"
+        - "snaps-usdf"
 
 alert-database:
   enabled: true
@@ -220,14 +78,13 @@ alert-database:
 
     logLevel: verbose
 
-    schemaRegistryURL: http://sasquatch-schema-registry.sasquatch-schema-registry:8081/schema-registry
+    schemaRegistryURL: http://sasquatch-schema-registry:8081
 
     serviceAccountName: alert-database-writer
 
     kafka:
       cluster: sasquatch
       topic:
-        - lsst-alerts-v9.0
         - lsst-alerts-v10.0
 
   ingress:
