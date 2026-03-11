@@ -168,7 +168,7 @@ ccd_data_types:
   - data_type: difference_image
     display_name: Difference Image (Embargo)
     collections:
-      - LSSTCam/runs/nightlyValidation
+      - LSSTCam/runs
     data_id_dimension: visit
     order_by:
       - -visit
@@ -213,7 +213,7 @@ ccd_data_types:
   - data_type: difference_image
     display_name: Difference Image (Main)
     collections:
-      - LSSTCam/runs/nightlyValidation
+      - LSSTCam/runs
     data_id_dimension: visit
     order_by:
       - -visit
