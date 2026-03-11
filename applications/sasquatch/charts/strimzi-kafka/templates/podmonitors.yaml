@@ -48,6 +48,7 @@ metadata:
 spec:
   selector:
     matchLabels:
+      strimzi.io/cluster: "sasquatch"
       strimzi.io/kind: KafkaBridge
   namespaceSelector:
     matchNames:
@@ -66,6 +67,9 @@ metadata:
     {{- toYaml .Values.cluster.monitorLabel | nindent 4 }}
 spec:
   selector:
+    matchLabels:
+      strimzi.io/cluster: "sasquatch"
+      strimzi.io/kind: "Kafka"
     matchExpressions:
       - key: "strimzi.io/kind"
         operator: In
@@ -118,6 +122,7 @@ metadata:
 spec:
   selector:
     matchLabels:
+      strimzi.io/cluster: "sasquatch"
       strimzi.io/component-type: kafka-exporter
   namespaceSelector:
     matchNames:
