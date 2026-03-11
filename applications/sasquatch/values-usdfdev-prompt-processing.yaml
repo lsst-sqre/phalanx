@@ -4,13 +4,13 @@ alert-brokers:
   topics:
     - name: alert-stream-test
       partitions: 400
-      replicas: 1
+      replicas: 2
     - name: alerts-simulated
       partitions: 45
-      replicas: 1
+      replicas: 2
     - name: lsst-alerts-v10.0
       partitions: 45
-      replicas: 1
+      replicas: 2
       bytesRetained: "300000000000"
       millisecondsRetained: "2629740000"
 
