@@ -30,6 +30,10 @@ config:
       Can use internal APIs
     "write:turborepo": >-
       Can read and write to the Turborepo remote cache
+    "admin:docverse": >-
+      Can administer Docverse, including managing organizations
+    "exec:docverse": >-
+      Can access Docverse's as a user in an organization
 
   groupMapping:
     "admin:userinfo":
@@ -59,6 +63,14 @@ config:
           organization: "lsst-sqre"
           team: "square"
     "write:turborepo":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "admin:docverse":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:docverse":
       - github:
           organization: "lsst-sqre"
           team: "square"

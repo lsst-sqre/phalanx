@@ -1,3 +1,12 @@
 image:
   pullPolicy: "Always"
-  tag: "tickets-DM-54209"
+
+config:
+  databaseUrl: "postgresql://docverse@localhost/docverse"
+  logLevel: "DEBUG"
+  updateSchema: true
+
+cloudsql:
+  enabled: true
+  instanceConnectionName: "roundtable-dev-abe2:us-central1:roundtable-dev-572a252e"
+  serviceAccount: "docverse-sa@roundtable-dev-abe2.iam.gserviceaccount.com"
