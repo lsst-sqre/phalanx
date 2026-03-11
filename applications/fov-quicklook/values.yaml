@@ -164,6 +164,17 @@ ccd_data_types:
     partial: true
     repository_name: embargo
     instrument: LSSTCam
+  # -- Embargo / Difference images
+  - data_type: difference_image
+    display_name: Difference Image (Embargo)
+    collections:
+      - LSSTCam/runs/nightlyValidation
+    data_id_dimension: visit
+    order_by:
+      - -visit
+    partial: true
+    repository_name: embargo
+    instrument: LSSTCam
   # -- Embargo / Preliminary visit images
   - data_type: preliminary_visit_image
     display_name: Preliminary (Embargo)
@@ -195,6 +206,17 @@ ccd_data_types:
     data_id_dimension: exposure
     order_by:
       - -exposure
+    partial: true
+    repository_name: main
+    instrument: LSSTCam
+  # -- Main / Difference images
+  - data_type: difference_image
+    display_name: Difference Image (Main)
+    collections:
+      - LSSTCam/runs/nightlyValidation
+    data_id_dimension: visit
+    order_by:
+      - -visit
     partial: true
     repository_name: main
     instrument: LSSTCam
