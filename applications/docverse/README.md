@@ -42,9 +42,12 @@ Publish versioned docs
 | redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
 | redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
+| redis.resources.requests.cpu | string | `"50m"` | GKE Autopilot requires a minimum CPU request of 50m |
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount.api | int | `1` | Number of API deployment pods to start |
 | replicaCount.worker | int | `1` | Number of worker deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the docverse deployment pod |
+| resources.requests.cpu | string | `"50m"` | GKE Autopilot requires a minimum CPU request of 50m |
 | tolerations | list | `[]` | Tolerations for the docverse deployment pod |
 | workerResources | object | See `values.yaml` | Resource limits and requests for the docverse worker pod |
+| workerResources.requests.cpu | string | `"50m"` | GKE Autopilot requires a minimum CPU request of 50m |

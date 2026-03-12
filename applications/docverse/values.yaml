@@ -64,7 +64,8 @@ resources:
     cpu: "1"
     memory: "512Mi"
   requests:
-    cpu: "2m"
+    # -- GKE Autopilot requires a minimum CPU request of 50m
+    cpu: "50m"
     memory: "100Mi"
 
 # -- Resource limits and requests for the docverse worker pod
@@ -74,7 +75,8 @@ workerResources:
     cpu: "1"
     memory: "512Mi"
   requests:
-    cpu: "2m"
+    # -- GKE Autopilot requires a minimum CPU request of 50m
+    cpu: "50m"
     memory: "128Mi"
 
 # -- Tolerations for the docverse deployment pod
@@ -135,7 +137,8 @@ redis:
       cpu: "1"
       memory: "256Mi"
     requests:
-      cpu: "5m"
+      # -- GKE Autopilot requires a minimum CPU request of 50m
+      cpu: "50m"
       memory: "64Mi"
 
   # -- Pod annotations for the Redis pod
