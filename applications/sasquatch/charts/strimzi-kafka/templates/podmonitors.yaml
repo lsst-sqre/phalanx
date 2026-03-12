@@ -48,6 +48,7 @@ metadata:
 spec:
   selector:
     matchLabels:
+      strimzi.io/cluster: "sasquatch"
       strimzi.io/kind: KafkaBridge
   namespaceSelector:
     matchNames:
@@ -66,6 +67,9 @@ metadata:
     {{- toYaml .Values.cluster.monitorLabel | nindent 4 }}
 spec:
   selector:
+    matchLabels:
+      strimzi.io/cluster: "sasquatch"
+      strimzi.io/kind: "Kafka"
     matchExpressions:
       - key: "strimzi.io/kind"
         operator: In
@@ -107,4 +111,24 @@ spec:
       targetLabel: node_ip
       replacement: $1
       action: replace
+{{- end }}
+{{- if .Values.kafkaExporter.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: kafka-exporter-monitor
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      strimzi.io/cluster: "sasquatch"
+      strimzi.io/component-type: kafka-exporter
+  namespaceSelector:
+    matchNames:
+      - sasquatch
+  podMetricsEndpoints:
+  - port: http-metrics # The named port for 9404
+    path: /metrics
+    interval: 30s
 {{- end }}

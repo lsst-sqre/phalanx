@@ -1,0 +1,16 @@
+# -- URL for Schema Registry
+schemaRegistryUrl: http://sasquatch-schema-registry:8081
+
+# -- Configuration for the Job which injects the most recent alert_packet
+# schema into the Schema Registry
+schemaSync:
+  image:
+    # -- Repository of a container which has the alert_packet
+    # syncLatestSchemaToRegistry.py program.
+    repository: lsstdm/lsst_alert_packet
+    # -- Version of the container to use. If container isn't updating in Argo, switch to digest.
+    tag: ""
+    pullPolicy: IfNotPresent
+
+  # -- Subject name to use when inserting data into the Schema Registry
+  subject: alert-packet
