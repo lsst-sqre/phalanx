@@ -1,16 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "docverse"
+  name: "docverse-worker"
   annotations:
     argocd.argoproj.io/sync-wave: "2"
   labels:
     {{- include "docverse.labels" . | nindent 4 }}
+    app.kubernetes.io/component: "worker"
+    docverse-redis-client: "true"
 spec:
-  replicas: {{ .Values.replicaCount.api }}
+  replicas: {{ .Values.replicaCount.worker }}
   selector:
     matchLabels:
       {{- include "docverse.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "worker"
   template:
     metadata:
       annotations:
@@ -20,6 +23,8 @@ spec:
         {{- end }}
       labels:
         {{- include "docverse.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "worker"
+        docverse-redis-client: "true"
     spec:
       {{- with .Values.affinity }}
       affinity:
@@ -31,7 +36,9 @@ spec:
       automountServiceAccountToken: false
       {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: "docverse-worker"
+          command: ["arq"]
+          args: ["docverse.worker.main.WorkerSettings"]
           env:
             - name: "DOCVERSE_DATABASE_PASSWORD"
               valueFrom:
@@ -45,43 +52,13 @@ spec:
                   name: "docverse"
                   key: "slack-webhook"
             {{- end }}
-            # Uvicorn keepalive timeout, in seconds. This should be longer
-            # than any keepalive timeouts on any downstream proxies. The
-            # keepalive timeout for ingress-nginx connections is 60s.
-            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
-              value: "61"
           envFrom:
             - configMapRef:
                 name: "docverse"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          lifecycle:
-            # Number of seconds k8s should wait before sending SIGTERM on
-            # graceful restarts/deployments/shutdowns. We need this because it
-            # takes ingress-nginx some time to configure itself to stop
-            # sending traffic to the pods scheduled for termination. If
-            # Uvicorn gets the SIGTERM and starts closing connections, we
-            # could end up with a TCP race condition if ingress-nginx still
-            # tries to send data over those connections.
-            #
-            # Note that terminationGracePeriodSeconds includes the time that
-            # is spent in the preStop hook. If you're adding a preStop hook
-            # and your terminationGracePeriodSeconds is super fine-tuned, then
-            # you should update your terminationGracePeriodSeconds to add the
-            # amount of time you'll be spending in your preStop hook.
-            preStop:
-              sleep:
-                seconds: 10
-          ports:
-            - name: "http"
-              containerPort: 8080
-              protocol: "TCP"
-          readinessProbe:
-            httpGet:
-              path: "/health"
-              port: "http"
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.workerResources | nindent 12 }}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

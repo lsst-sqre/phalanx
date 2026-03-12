@@ -1,8 +1,13 @@
 apiVersion: v2
-appVersion: "tickets-DM-54282"
+appVersion: "tickets-DM-54375"
 description: Publish versioned docs
 name: docverse
 sources:
   - https://github.com/lsst-sqre/docverse
 type: application
 version: 1.0.0
+
+dependencies:
+  - name: redis
+    version: 1.1.8
+    repository: https://lsst-sqre.github.io/charts/
