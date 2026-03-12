@@ -3,6 +3,10 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: "mobu"
+  {{- if .Values.defaultComputeClass }}
+  labels:
+    cloud.google.com/default-compute-class: {{ .Values.defaultComputeClass }}
+  {{- end}}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -22,8 +26,6 @@ spec:
     targetRevision: {{ or (index .Values "revisions" "mobu") .Values.targetRevision | quote }}
     helm:
       parameters:
-        - name: "global.baseUrl"
-          value: "https://{{ .Values.fqdn }}"
         - name: "global.environmentName"
           value: {{ .Values.name | quote }}
         - name: "global.host"
@@ -35,8 +37,4 @@ spec:
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"
-      valuesObject:
-        config:
-          availableServices:
-            {{- include "enabledServicesYamlList" . | nindent 12 }}
 {{- end -}}

@@ -10,7 +10,7 @@ spec:
   replicas:  {{ .Values.mirrormaker2.replicas }}
   # In Sasquatch MirrorMaker2 is deployed on the target cluster
   # and replicates data from the source cluster.
-  connectCluster: "target"
+  connectCluster: {{ .Values.mirrormaker2.target.alias }}
   clusters:
   - alias: {{ .Values.mirrormaker2.source.alias }}
     bootstrapServers: {{ .Values.mirrormaker2.source.bootstrapServer }}
@@ -25,7 +25,7 @@ spec:
       passwordSecret:
         secretName: sasquatch
         password: replicator-password
-  - alias: "target"
+  - alias: {{ .Values.mirrormaker2.target.alias }}
     # For the Kafka target cluster, use the internal listener with tls encryption and mutual tls authentication.
     bootstrapServers: {{ .Values.cluster.name }}-kafka-bootstrap:9093
     tls:
@@ -44,7 +44,7 @@ spec:
       offset.flush.timeout.ms: 10000
   mirrors:
   - sourceCluster: {{ .Values.mirrormaker2.source.alias }}
-    targetCluster: "target"
+    targetCluster: {{ .Values.mirrormaker2.target.alias }}
     sourceConnector:
       tasksMax: 128
       autoRestart:
@@ -52,6 +52,10 @@ spec:
       config:
         replication.factor: 3
         offset-syncs.topic.replication.factor: 3
+        # The location (source/target) of the offset-syncs topic.
+        # Default is source. If MirrorMaker2 is enabled on multiple target clusters replicating from the same source cluster,
+        # set this to target.
+        offset-syncs.topic.location: {{ .Values.mirrormaker2.replication.offsetSyncsTopicLocation }}
         # Dot not replicate topic ACLs configuration.
         sync.topic.acls.enabled: "false"
         # The frequency to check for new topics.

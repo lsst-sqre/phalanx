@@ -1,0 +1,28 @@
+# The same as the built-in standard-rwo, but the PVs will be created with
+# persistentVolumeReclaimPolicy 'Retain' instead of 'Delete'
+kind: StorageClass
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: standard-rwo-retain
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+parameters:
+  type: pd-balanced
+provisioner: pd.csi.storage.gke.io
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+---
+# The same as the built-in premium-rwo-retain, but the PVs will be created with
+# persistentVolumeReclaimPolicy 'Retain' instead of 'Delete'
+kind: StorageClass
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: premium-rwo-retain
+parameters:
+  type: pd-ssd
+provisioner: pd.csi.storage.gke.io
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+

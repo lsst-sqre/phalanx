@@ -65,11 +65,11 @@ docs = [
 lint = [
     "pre-commit",
     "pre-commit-uv",
-    "ruff>=0.9",
+    "ruff>=0.15",
 ]
 tox = [
     "tox>=4.24",
-    "tox-uv>=1.25",
+    "tox-uv-bare>=1.25",
 ]
 typing = [
     "mypy",

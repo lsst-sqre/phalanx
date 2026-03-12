@@ -284,6 +284,19 @@
       "title": "Vault path prefix",
       "type": "string"
     },
+    "defaultComputeClass": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Whether to deploy workloads using Autopilot or Standard mode. If this is null, the workloads will use the compute class that corresponds to the cluster type. Here's an [example of setting an Autopilot compute class](https://cloud.google.com/kubernetes-engine/docs/how-to/autopilot-classes-standard-clusters#built-in-class)",
+      "title": "Default compute class"
+    },
     "controlSystem": {
       "anyOf": [
         {

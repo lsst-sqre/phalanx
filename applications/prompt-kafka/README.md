@@ -40,7 +40,7 @@ Kafka environment for Prompt Processing
 | kafdrop.podAnnotations | object | `{}` | Pod annotations |
 | kafdrop.replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
 | kafdrop.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafdrop |
-| kafdrop.schemaRegistry | string | `"http://prompt-kafka-schema-registry:8081"` | The endpoint of Schema Registry |
+| kafdrop.schemaRegistry | string | `""` | The endpoint of Schema Registry |
 | kafdrop.server.port | int | `9000` | The web server port to listen on |
 | kafdrop.server.servlet.contextPath | string | `"/kafdrop"` | The context path to serve requests on |
 | kafdrop.service.annotations | object | `{}` | Additional annotations to add to the service |
@@ -83,6 +83,7 @@ Kafka environment for Prompt Processing
 | strimzi-kafka.kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
 | strimzi-kafka.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
 | strimzi-kafka.kraft.enabled | bool | `false` | Enable KRaft mode for Kafka |
+| strimzi-kafka.registry.enabled | bool | `false` | Whether to enable the Schema Registry |
 | strimzi-kafka.registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | strimzi-kafka.registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | strimzi-kafka.registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |

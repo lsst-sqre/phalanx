@@ -214,6 +214,7 @@ spec:
               {{ $key }}: {{ $value }}
               {{- end}}
             {{- end }}
+          allocateLoadBalancerNodePorts: {{ .Values.kafka.externalListener.bootstrap.allocateLoadBalancerNodePorts }}
           {{- if .Values.kafka.externalListener.brokers }}
           brokers:
           {{- range $broker := .Values.kafka.externalListener.brokers }}
@@ -224,7 +225,8 @@ spec:
               annotations:
                 {{- range $key, $value  := $broker.annotations }}
                 {{ $key }}: {{ $value }}
-                {{- end}}
+                {{- end }}
+              allocateLoadBalancerNodePorts: {{ $broker.allocateLoadBalancerNodePorts }}
           {{- end }}
           {{- end }}
           {{- if and (.Values.kafka.externalListener.tls.enabled) (.Values.kafka.externalListener.bootstrap.host) }}

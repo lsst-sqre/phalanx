@@ -271,6 +271,54 @@ hvac-sim:
       cpu: 400m
       memory: 2000Mi
 
+louver-h1-ess441-sim:
+  enabled: true
+  classifier: ess441
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 441 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 160Mi
+    limits:
+      cpu: 190m
+      memory: 480Mi
+
+louver-h1h2-ess442-sim:
+  enabled: true
+  classifier: ess442
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 442 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 160Mi
+    limits:
+      cpu: 190m
+      memory: 480Mi
+
+louver-h2-ess443-sim:
+  enabled: true
+  classifier: ess443
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 443 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 160Mi
+    limits:
+      cpu: 190m
+      memory: 480Mi
+
 m1m3-ess113-sim:
   enabled: true
   classifier: ess113
@@ -383,14 +431,14 @@ m2-ess112-sim:
       cpu: 190m
       memory: 480Mi
 
-mtdome-ess107-sim:
+mtdome-ess404-sim:
   enabled: true
-  classifier: ess107
+  classifier: ess404
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 107 --simulate
+    RUN_ARG: 404 --simulate
   resources:
     requests:
       cpu: 19m
@@ -399,14 +447,14 @@ mtdome-ess107-sim:
       cpu: 190m
       memory: 480Mi
 
-mtdome-ess108-sim:
+mtdome-ess405-sim:
   enabled: true
-  classifier: ess108
+  classifier: ess405
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 108 --simulate
+    RUN_ARG: 405 --simulate
   resources:
     requests:
       cpu: 19m
@@ -415,62 +463,14 @@ mtdome-ess108-sim:
       cpu: 190m
       memory: 480Mi
 
-mtdome-ess118-sim:
+partsens-ess127-sim:
   enabled: true
-  classifier: ess118
+  classifier: ess127
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 118 --simulate
-  resources:
-    requests:
-      cpu: 19m
-      memory: 160Mi
-    limits:
-      cpu: 190m
-      memory: 480Mi
-
-mtdome-ess119-sim:
-  enabled: true
-  classifier: ess119
-  image:
-    repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
-  env:
-    RUN_ARG: 119 --simulate
-  resources:
-    requests:
-      cpu: 19m
-      memory: 160Mi
-    limits:
-      cpu: 190m
-      memory: 480Mi
-
-mtdome-ess120-sim:
-  enabled: true
-  classifier: ess120
-  image:
-    repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
-  env:
-    RUN_ARG: 120 --simulate
-  resources:
-    requests:
-      cpu: 19m
-      memory: 160Mi
-    limits:
-      cpu: 190m
-      memory: 480Mi
-
-partsens-ess401-sim:
-  enabled: true
-  classifier: ess401
-  image:
-    repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
-  env:
-    RUN_ARG: 401 --simulate
+    RUN_ARG: 127 --simulate
   resources:
     requests:
       cpu: 19m
@@ -479,14 +479,14 @@ partsens-ess401-sim:
       cpu: 190m
       memory: 540Mi
 
-partsens-ess402-sim:
+partsens-ess128-sim:
   enabled: true
-  classifier: ess402
+  classifier: ess128
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 402 --simulate
+    RUN_ARG: 128 --simulate
   resources:
     requests:
       cpu: 19m
@@ -495,14 +495,14 @@ partsens-ess402-sim:
       cpu: 190m
       memory: 540Mi
 
-partsens-ess403-sim:
+partsens-ess129-sim:
   enabled: true
-  classifier: ess403
+  classifier: ess129
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 403 --simulate
+    RUN_ARG: 129 --simulate
   resources:
     requests:
       cpu: 19m

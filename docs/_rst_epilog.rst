@@ -16,8 +16,12 @@
 .. _FastAPI: https://fastapi.tiangolo.com/
 .. _Felis: https://felis.lsst.io/
 .. _Gafaelfawr: https://gafaelfawr.lsst.io/
+.. _Google Cloud Key Management: https://cloud.google.com/security/products/security-key-management
+.. _Google Cloud Run: https://cloud.google.com/run
+.. _Google Cloud Storage: https://cloud.google.com/storage
 .. _Google Documentation Style Guide: https://developers.google.com/style/
 .. _Google Filestore: https://cloud.google.com/filestore
+.. _Google Kubernetes Engine: https://cloud.google.com/kubernetes-engine
 .. _Helm: https://helm.sh
 .. _helm-docs: https://github.com/norwoodj/helm-docs
 .. _Ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/

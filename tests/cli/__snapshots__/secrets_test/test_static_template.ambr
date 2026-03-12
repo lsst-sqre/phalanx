@@ -65,6 +65,7 @@
         description: >-
           PostgreSQL credentials in its pgpass format for the Butler database.
         value: null
+  oidc-clients: {}
   pull-secret:
     description: >-
       Pull secrets for Docker registries. Each key under registries is the

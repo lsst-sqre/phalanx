@@ -14,6 +14,7 @@ Argo CD project: ``roundtable``
 
    atlantis/index
    checkerboard/index
+   docverse/index
    eups-distributor/index
    giftless/index
    onepassword-connect/index

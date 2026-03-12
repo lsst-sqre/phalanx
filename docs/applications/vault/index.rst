@@ -28,5 +28,6 @@ Guides
    seal
    external
    migration
+   temporary
    upgrade
    values

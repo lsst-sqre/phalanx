@@ -29,6 +29,8 @@ spec:
           value: {{ .Values.instrument.skymap }}
         - name: CENTRAL_REPO
           value: {{ .Values.instrument.centralRepo }}
+        - name: LSST_RESOURCES_NUM_WORKERS
+          value: {{ with .Values.instrument.transferScale }}{{ . | toString | quote }}{{ else }}"3"{{ end }}
         - name: REPO_RETRY_DELAY
           value: {{ .Values.instrument.repoWait | toString | quote }}
         - name: LSST_DISABLE_BUCKET_VALIDATION
