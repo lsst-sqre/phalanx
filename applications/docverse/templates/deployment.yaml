@@ -6,6 +6,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
   labels:
     {{- include "docverse.labels" . | nindent 4 }}
+    docverse-redis-client: "true"
 spec:
   replicas: {{ .Values.replicaCount.api }}
   selector:
@@ -20,6 +21,7 @@ spec:
         {{- end }}
       labels:
         {{- include "docverse.selectorLabels" . | nindent 8 }}
+        docverse-redis-client: "true"
     spec:
       {{- with .Values.affinity }}
       affinity:
