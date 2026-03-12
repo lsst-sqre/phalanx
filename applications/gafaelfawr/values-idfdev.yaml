@@ -15,6 +15,7 @@ config:
 
   sentry:
     enabled: true
+    tracesSampleRate: 0.05
 
   cilogon:
     clientId: "cilogon:/client_id/46f9ae932fd30e9fb1b246972a3c0720"
