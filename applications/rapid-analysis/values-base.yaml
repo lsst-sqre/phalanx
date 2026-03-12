@@ -3,7 +3,6 @@ image:
   tag: w_2025_48
   pullPolicy: Always
 location: BTS
-siteTag: bts
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
   DEPLOY_BRANCH: deploy-bts
