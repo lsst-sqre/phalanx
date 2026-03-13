@@ -46,8 +46,7 @@ spec:
       schema:
         openAPIV3Schema:
           description: >-
-            GafaelfawrIngress defines the parameters used to create an Ingress
-            resource.
+            GafaelfawrIngress defines the parameters used to create an Ingress resource.
           type: object
           required:
             - config
@@ -60,29 +59,22 @@ spec:
                 allowCookies:
                   type: boolean
                   description: >-
-                    Whether to allow cookie authentication or only token
-                    authentication via the `Authorization` header.
+                    Whether to allow cookie authentication or only token authentication via the `Authorization` header.
                 allowOptions:
                   type: boolean
                   description: >-
-                    Whether to allow non-CORS-preflight OPTIONS requests to
-                    this backend. This must be enabled for WebDAV servers.
+                    Whether to allow non-CORS-preflight OPTIONS requests to this backend. This must be enabled for WebDAV servers.
                 authCacheDuration:
                   type: string
                   description: >-
-                    The length of time for which the Gafaelfawr authorization
-                    results should be cached by NGINX. The cache is
-                    invalidated if the `Cookie` or `Authorization` HTTP
-                    headers change. Must be a valid NGINX duration string.
+                    The length of time for which the Gafaelfawr authorization results should be cached by NGINX. The cache is invalidated if the `Cookie` or `Authorization` HTTP headers change. Must be a valid NGINX duration string.
                 authType:
                   type: string
                   enum:
                     - basic
                     - bearer
                   description: >-
-                    Controls the authentication type in the challenge
-                    returned in the `WWW-Authenticate` header if the user
-                    is not authenticated. By default, this is `bearer`.
+                    Controls the authentication type in the challenge returned in the `WWW-Authenticate` header if the user is not authenticated. By default, this is `bearer`.
                 baseUrl:
                   type: string
                   description: "Base URL for Gafaelfawr APIs."
@@ -90,8 +82,7 @@ spec:
                 delegate:
                   type: object
                   description: >-
-                    Create a (or reuse a cached) delegated token and
-                    include it in the request to the backend service.
+                    Create a (or reuse a cached) delegated token and include it in the request to the backend service.
                   properties:
                     internal:
                       type: object
@@ -104,17 +95,13 @@ spec:
                         scopes:
                           type: array
                           description: >-
-                            Scopes to include in the delegated token if they
-                            are available. These scopes are not required to
-                            access the service; to make them required, include
-                            them in spec.scopes as well.
+                            Scopes to include in the delegated token if they are available. These scopes are not required to access the service; to make them required, include them in spec.scopes as well.
                           items:
                             type: string
                         service:
                           type: string
                           description: >-
-                            Name of the service to which the token is
-                            delegated.
+                            Name of the service to which the token is delegated.
                     notebook:
                       type: object
                       description: >-
@@ -122,15 +109,11 @@ spec:
                     minimumLifetime:
                       type: integer
                       description: >-
-                        Minimum lifetime of delegated token in seconds. If the
-                        user's token has less than that time remaining, force
-                        them to reauthenticate.
+                        Minimum lifetime of delegated token in seconds. If the user's token has less than that time remaining, force them to reauthenticate.
                     useAuthorization:
                       type: boolean
                       description: >-
-                        If set to true, put the delegated token in the
-                        Authorization header of the request as a bearer token,
-                        in addition to X-Auth-Request-Token.
+                        If set to true, put the delegated token in the Authorization header of the request as a bearer token, in addition to X-Auth-Request-Token.
                   oneOf:
                     - required:
                         - internal
@@ -139,15 +122,11 @@ spec:
                 loginRedirect:
                   type: boolean
                   description: >-
-                    Whether to redirect to the login flow if the user is
-                    not currently authenticated.
+                    Whether to redirect to the login flow if the user is not currently authenticated.
                 onlyServices:
                   type: array
                   description: >-
-                    If set, access is restricted to tokens issued to one of
-                    the listed services, in addition to any other access
-                    constraints. Users will not be able to access the ingress
-                    directly with their own tokens.
+                    If set, access is restricted to tokens issued to one of the listed services, in addition to any other access constraints. Users will not be able to access the ingress directly with their own tokens.
                   items:
                     type: string
                 replace403:
@@ -157,30 +136,24 @@ spec:
                 scopes:
                   type: object
                   description: >-
-                    The token scope or scopes required to access this service.
-                    May be omitted if the service allows anonymous access.
+                    The token scope or scopes required to access this service. May be omitted if the service allows anonymous access.
                   properties:
                     any:
                       type: array
                       description: >-
-                        Access is granted if any of the listed scopes are
-                        present.
+                        Access is granted if any of the listed scopes are present.
                       items:
                         type: string
                     all:
                       type: array
                       description: >-
-                        Access is granted if all of the listed scopes are
-                        present.
+                        Access is granted if all of the listed scopes are present.
                       items:
                         type: string
                     anonymous:
                       type: boolean
                       description: >-
-                        Allow anonymous access to this ingress. No access
-                        control checks will be made and no token delegation is
-                        possible, but Gafaelfawr tokens will still be stripped
-                        from the `Authorization` and `Cookie` headers.
+                        Allow anonymous access to this ingress. No access control checks will be made and no token delegation is possible, but Gafaelfawr tokens will still be stripped from the `Authorization` and `Cookie` headers.
                   oneOf:
                     - required:
                         - any
@@ -195,23 +168,23 @@ spec:
                 service:
                   type: string
                   description: >-
-                    The name of the service corresponding to this ingress,
-                    used for metrics reporting. When delegating internal
-                    tokens, this must match config.delegate.internal.service.
-                    This attribute will be required in the future.
+                    The name of the service corresponding to this ingress, used for metrics reporting. When delegating internal tokens, this must match config.delegate.internal.service. This attribute will be required in the future.
                 userDomain:
                   type: boolean
                   description: >-
-                    Expect the last component of the request URL hostname to
-                    be a username and only allow access from matching
-                    usernames. Requires that the ingress host be a wildcard.
+                    Expect the last component of the request URL hostname to be a username and only allow access from matching usernames. Requires that the ingress host be a wildcard.
                 username:
                   type: string
                   description: >-
-                    Restrict access to this ingress to the given username. All
-                    other users, regardless of their scopes, will receive 403
-                    errors. The user's token must still satisfy any scope
-                    constraints.
+                    Restrict access to this ingress to the given username. All other users, regardless of their scopes, will receive 403 errors. The user's token must still satisfy any scope constraints.
+                vinylAuthCacheEnabled:
+                  type: boolean
+                  description: >-
+                    Whether Gafaelfawr authorization results should be cached by Vinyl. The Vinyl cache is configured to cache results for five minutes. The cache is invalidated if the `Cookie` or `Authorization` HTTP headers change.
+              not:
+                required:
+                  - authCacheDuration
+                  - vinylAuthCacheEnabled
             template:
               type: object
               description: "The template used to create the ingress."
@@ -226,11 +199,7 @@ spec:
                     annotations:
                       type: object
                       description: >-
-                        Annotations to apply to the generated ingress. These
-                        will be merged with the annotations required by
-                        Gafaelfawr. If there is a conflict, the
-                        Gafaelfawr-generated annotations will override the
-                        ones provided in this field.
+                        Annotations to apply to the generated ingress. These will be merged with the annotations required by Gafaelfawr. If there is a conflict, the Gafaelfawr-generated annotations will override the ones provided in this field.
                       additionalProperties:
                         type: string
                     labels:
@@ -250,9 +219,7 @@ spec:
                     rules:
                       type: array
                       description: >-
-                        Host rules for the generated ingress. See the schema
-                        for the regular Ingress resource for descriptions of
-                        the individual fields.
+                        Host rules for the generated ingress. See the schema for the regular Ingress resource for descriptions of the individual fields.
                       items:
                         type: object
                         properties:
@@ -298,10 +265,7 @@ spec:
                     tls:
                       type: array
                       description: >-
-                        TLS configuration if one should be added to this
-                        generated ingress. See the schema for the regular
-                        Ingress resource for descriptions of the individual
-                        fields.
+                        TLS configuration if one should be added to this generated ingress. See the schema for the regular Ingress resource for descriptions of the individual fields.
                       items:
                         type: object
                         properties:
@@ -314,15 +278,13 @@ spec:
             status:
               type: object
               description: >-
-                The current state of the GafaelfawrIngress, its processing by
-                Gafaelfawr, and its child resources.
+                The current state of the GafaelfawrIngress, its processing by Gafaelfawr, and its child resources.
               x-kubernetes-preserve-unknown-fields: true
               properties:
                 create:
                   type: object
                   description: >-
-                    Status of processing of the last creation or update of the
-                    GafaelfawrIngress object.
+                    Status of processing of the last creation or update of the GafaelfawrIngress object.
                   required:
                     - lastTransitionTime
                     - message
@@ -338,29 +300,18 @@ spec:
                     message:
                       type: string
                       description: >
-                        A human readable message indicating details about the
-                        transition. This may be an empty string.
+                        A human readable message indicating details about the transition. This may be an empty string.
                       maxLength: 32768
                     observedGeneration:
                       description: >
-                        The .metadata.generation that the condition was set
-                        based upon. For instance, if .metadata.generation is
-                        currently 12, but the
-                        .status.create.observedGeneration is 9, the condition
-                        is out of date with respect to the current state of
-                        the instance.
+                        The .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.create.observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
                       format: int64
                       minimum: 0
                       type: integer
                     reason:
                       type: string
                       description: >
-                        A programmatic identifier indicating the reason for
-                        the condition's last transition. Producers of specific
-                        condition types may define expected values and
-                        meanings for this field, and whether the values are
-                        considered a guaranteed API. The value should be a
-                        CamelCase string. This field may not be empty.
+                        A programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
                       maxLength: 1024
                       minLength: 1
                       pattern: "^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$"
@@ -375,7 +326,6 @@ spec:
                     type:
                       type: string
                       description: >
-                        Type of condition in CamelCase or in
-                        foo.example.com/CamelCase.
+                        Type of condition in CamelCase or in foo.example.com/CamelCase.
                       maxLength: 316
                       pattern: "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$"
