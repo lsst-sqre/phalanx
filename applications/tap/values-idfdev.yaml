@@ -1,5 +1,10 @@
 cadc-tap:
   config:
+    qserv:
+      image:
+        tag: "tickets-DM-54265"
+        pullPolicy: "Always"
+
     kafka:
       enabled: true
 
