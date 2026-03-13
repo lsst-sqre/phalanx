@@ -1,4 +1,5 @@
 # Default values for Gafaelfawr.
+
 config:
   # -- Where to send the user after they log out
   # @default -- Top-level page of this Phalanx environment
@@ -13,6 +14,12 @@ config:
   # Ingress. Must use a service name of `gafaelfawr` and port 8080.
   # @default -- FQDN under `svc.cluster.local`
   baseInternalUrl: null
+
+  # -- URL for direct connections to the sidecar cache container in front of
+  # the Gafaelfawr service, bypassing the Ingress. Must use a service name of
+  # `gafaelfawr-vinyl-cache` and port 8081.
+  # @default -- FQDN under `svc.cluster.local`
+  baseCachingInternalUrl: null
 
   # -- URL for the PostgreSQL database
   # @default -- None, must be set if neither `cloudsql.enabled` nor
