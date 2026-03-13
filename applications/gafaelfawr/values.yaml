@@ -285,6 +285,23 @@ image:
   # @default -- The appVersion of the chart
   tag: ""
 
+vinyl:
+  # -- Whether to enable the Vinyl cache sidecar container
+  enabled: false
+
+  # -- Port for the Vinyl cache to listen on
+  port: 8081
+
+  # -- Resources limits and requests for the Vinyl cache pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+
 ingress:
   # -- Defines additional FQDNs for Gafaelfawr. This doesn't work for cookie
   # or browser authentication, but for token-based services like git-lfs or

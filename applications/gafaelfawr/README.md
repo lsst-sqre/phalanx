@@ -128,3 +128,6 @@ Authentication and identity system
 | replicaCount | int | `1` | Number of web frontend pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the Gafaelfawr frontend pod |
 | tolerations | list | Tolerate GKE arm64 taint | Tolerations for the Gafaelfawr frontend pod |
+| vinyl.enabled | bool | `false` | Whether to enable the Vinyl cache sidecar container |
+| vinyl.port | int | `8081` | Port for the Vinyl cache to listen on |
+| vinyl.resources | object | See `values.yaml` | Resources limits and requests for the Vinyl cache pod |

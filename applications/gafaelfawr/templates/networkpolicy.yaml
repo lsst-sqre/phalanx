@@ -23,3 +23,8 @@ spec:
       ports:
         - protocol: "TCP"
           port: 8080
+        {{- if .Values.vinyl.enabled }}
+        # The vinyl cache sidecar
+        - protocol: "TCP"
+          port: 8081
+        {{- end }}

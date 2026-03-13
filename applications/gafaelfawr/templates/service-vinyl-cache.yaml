@@ -1,0 +1,18 @@
+{{- if .Values.vinyl.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: "gafaelfawr-vinyl-cache"
+  labels:
+    {{- include "gafaelfawr.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: "TCP"
+      port: 8081
+      targetPort: "http-vinyl"
+  selector:
+    {{- include "gafaelfawr.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: "frontend"
+  sessionAffinity: "None"
+{{- end }}
