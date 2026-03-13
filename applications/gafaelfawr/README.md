@@ -26,6 +26,7 @@ Authentication and identity system
 | cloudsql.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the standalone Cloud SQL Proxy pod |
 | config.afterLogoutUrl | string | Top-level page of this Phalanx environment | Where to send the user after they log out |
 | config.allowSubdomains | bool | `false` | Whether to expose cookies to subdomains. DO NOT SET TO TRUE unless all subdomains of the environment base URL are guaranteed to only reference services protected by Gafaelfawr. |
+| config.baseCachingInternalUrl | string | FQDN under `svc.cluster.local` | URL for direct connections to the sidecar cache container in front of the Gafaelfawr service, bypassing the Ingress. Must use a service name of `gafaelfawr-vinyl-cache` and port 8081. |
 | config.baseInternalUrl | string | FQDN under `svc.cluster.local` | URL for direct connections to the Gafaelfawr service, bypassing the Ingress. Must use a service name of `gafaelfawr` and port 8080. |
 | config.cilogon.clientId | string | `nil` | CILogon client ID. One and only one of this, `config.github.clientId`, or `config.oidc.clientId` must be set. |
 | config.cilogon.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
@@ -128,3 +129,6 @@ Authentication and identity system
 | replicaCount | int | `1` | Number of web frontend pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the Gafaelfawr frontend pod |
 | tolerations | list | Tolerate GKE arm64 taint | Tolerations for the Gafaelfawr frontend pod |
+| vinyl.enabled | bool | `false` | Whether to enable the Vinyl cache sidecar container |
+| vinyl.port | int | `8081` | Port for the Vinyl cache to listen on |
+| vinyl.resources | object | See `values.yaml` | Resources limits and requests for the Vinyl cache pod |

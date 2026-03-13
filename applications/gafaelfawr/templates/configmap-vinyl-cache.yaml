@@ -1,0 +1,99 @@
+{{- if .Values.vinyl.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "gafaelfawr-vinyl"
+  labels:
+    {{- include "gafaelfawr.labels" . | nindent 4 }}
+data:
+  default.vcl: |
+    vcl 4.1;
+
+    # ---------------------------------------------------------------
+    # Replicates ingress-nginx annotations:
+    #   auth-method:          GET
+    #   auth-cache-key:       $request_method$http_cookie$http_authorization
+    #   auth-cache-duration:  200 202 401 5m
+    # ---------------------------------------------------------------
+
+    backend auth_server {
+        .host = "127.0.0.1";
+        .port = "8080";
+    }
+
+    sub vcl_recv {
+        # auth-method: GET
+        # Only cache GET requests; pass everything else straight through.
+        if (req.method != "GET") {
+            return (pass);
+        }
+
+        # All other GET requests go through normal cache lookup.
+        return (hash);
+    }
+
+    sub vcl_hash {
+        # auth-cache-key: $request_method$http_cookie$http_authorization
+        #
+        # Varnish always hashes req.url + req.http.Host by default.
+        # We extend that with the three components of the cache key.
+        # hash_data() calls are additive — all values are concatenated
+        # into the cache key before the lookup.
+
+        hash_data(req.method);
+
+        if (req.http.Cookie) {
+            hash_data(req.http.Cookie);
+        } else {
+            hash_data("__no_cookie__");
+        }
+
+        if (req.http.Authorization) {
+            hash_data(req.http.Authorization);
+        } else {
+            hash_data("__no_auth__");
+        }
+
+        # Fall through to the built-in, which hashes req.url + req.http.Host.
+        return (lookup);
+    }
+
+    sub vcl_backend_response {
+        # auth-cache-duration: 200 202 401 5m
+        #
+        # Cache only the listed status codes for 5 minutes.
+        # Mark everything else as uncacheable (hit-for-miss with TTL 0).
+
+        if (beresp.status == 200 ||
+            beresp.status == 202 ||
+            beresp.status == 401) {
+
+            set beresp.ttl = 5m;
+
+            # Don't let downstream Cache-Control headers override our TTL.
+            set beresp.http.Cache-Control = "max-age=300";
+
+            # Strip Set-Cookie so Varnish doesn't refuse to cache the response.
+            unset beresp.http.Set-Cookie;
+
+            return (deliver);
+        }
+
+        # All other status codes: treat as uncacheable.
+        # hit_for_miss keeps the object in cache as a "don't cache" marker
+        # briefly, avoiding a thundering herd on error responses.
+        set beresp.uncacheable = true;
+        set beresp.ttl = 120s;
+        return (deliver);
+    }
+
+    sub vcl_deliver {
+        # Optional: expose cache status for debugging.
+        if (obj.hits > 0) {
+            set resp.http.X-Cache = "HIT";
+            set resp.http.X-Cache-Hits = obj.hits;
+        } else {
+            set resp.http.X-Cache = "MISS";
+        }
+    }
+    {{- end }}

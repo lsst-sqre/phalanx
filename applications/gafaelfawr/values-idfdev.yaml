@@ -1,3 +1,7 @@
+image:
+  pullPolicy: Always
+  tag: tickets-DM-54376
+
 # Use the CSI storage class so that we can use snapshots.
 redis:
   persistence:
@@ -11,6 +15,7 @@ config:
 
   sentry:
     enabled: true
+    tracesSampleRate: 0.05
 
   cilogon:
     clientId: "cilogon:/client_id/46f9ae932fd30e9fb1b246972a3c0720"
@@ -84,6 +89,10 @@ config:
     - "rra"
     - "svoutsin"
     - "kai"
+
+vinyl:
+  # -- Whether to enable the Vinyl cache sidecar container
+  enabled: true
 
 cloudsql:
   enabled: true

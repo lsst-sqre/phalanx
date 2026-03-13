@@ -66,6 +66,10 @@ Common environment variables
 - name: "GAFAELFAWR_BASE_INTERNAL_URL"
   value: "http://gafaelfawr.{{ .Release.Namespace }}.svc.cluster.local:8080"
 {{- end }}
+{{- if not .Values.config.baseCachingInternalUrl }}
+- name: "GAFAELFAWR_BASE_CACHING_INTERNAL_URL"
+  value: "http://gafaelfawr-vinyl-cache.{{ .Release.Namespace }}.svc.cluster.local:8081"
+{{- end }}
 - name: "GAFAELFAWR_BOOTSTRAP_TOKEN"
   valueFrom:
     secretKeyRef:

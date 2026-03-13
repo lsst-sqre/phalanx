@@ -15,6 +15,12 @@ config:
   # @default -- FQDN under `svc.cluster.local`
   baseInternalUrl: null
 
+  # -- URL for direct connections to the sidecar cache container in front of
+  # the Gafaelfawr service, bypassing the Ingress. Must use a service name of
+  # `gafaelfawr-vinyl-cache` and port 8081.
+  # @default -- FQDN under `svc.cluster.local`
+  baseCachingInternalUrl: null
+
   # -- URL for the PostgreSQL database
   # @default -- None, must be set if neither `cloudsql.enabled` nor
   # `config.internalDatabase` are true
@@ -285,6 +291,23 @@ image:
   # -- Tag of Gafaelfawr image to use
   # @default -- The appVersion of the chart
   tag: ""
+
+vinyl:
+  # -- Whether to enable the Vinyl cache sidecar container
+  enabled: false
+
+  # -- Port for the Vinyl cache to listen on
+  port: 8081
+
+  # -- Resources limits and requests for the Vinyl cache pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
 
 ingress:
   # -- Defines additional FQDNs for Gafaelfawr. This doesn't work for cookie

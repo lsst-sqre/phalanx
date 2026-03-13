@@ -120,6 +120,56 @@ spec:
             - name: "tmp"
               mountPath: "/tmp"
             {{- end }}
+        {{- if .Values.vinyl.enabled }}
+        - name: "vinyl"
+          image: varnish:8
+          env:
+            - name: VARNISH_HTTP_PORT
+              value: {{ .Values.vinyl.port | quote }}
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+          startupProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+          ports:
+            - containerPort: 8081
+              name: "http-vinyl"
+              protocol: "TCP"
+          resources:
+            {{- toYaml .Values.vinyl.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "vinyl"
+              mountPath: "/var/lib/varnish"
+            - name: "vinyl-config"
+              mountPath: "/etc/varnish/default.vcl"
+              subPath: "default.vcl"
+        {{- end}}
       {{- if .Values.cloudsql.enabled }}
       initContainers:
         {{- include "gafaelfawr.cloudsqlSidecar" . | nindent 8 }}
@@ -132,6 +182,15 @@ spec:
         - name: "config"
           configMap:
             name: "gafaelfawr"
+        {{- if .Values.vinyl.enabled }}
+        - name: "vinyl"
+          emptyDir:
+            medium: Memory
+            sizeLimit: 100Mi
+        - name: "vinyl-config"
+          configMap:
+            name: "gafaelfawr-vinyl"
+        {{- end }}
         {{- if .Values.config.metrics.enabled }}
         - name: "kafka"
           secret:
