@@ -1,0 +1,11 @@
+config:
+  # TODO: set to the actual alert packets bucket name at USDF
+  s3AlertsBucket: ""
+
+  # TODO: set to the actual schemas bucket name at USDF
+  s3SchemasBucket: ""
+
+  # TODO: set to the MinIO/Ceph endpoint URL at USDF
+  s3EndpointUrl: ""
+
+  s3Credentials: true
