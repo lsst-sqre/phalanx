@@ -170,6 +170,16 @@ config:
         datasets:
           - "efd"
         template: "https://{{base_hostname}}/api/consdbtap"
+    herald:
+      - type: "data"
+        name: "alerts"
+        datasets:
+          - "dp02"
+          - "dp03"
+          - "dp1"
+          - "prompt"
+        template: "https://{{base_hostname}}/api/alerts"
+        openapi: "https://{{base_hostname}}/api/alerts/openapi.json"
     datalinker:
       - type: "data"
         name: "datalink"

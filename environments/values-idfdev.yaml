@@ -21,6 +21,7 @@ applications:
   gke: true
   google-cloud-observability: true
   grafana: true
+  herald: true
   hips: true
   hoverdrive: true
   jira-data-proxy: true
