@@ -56,8 +56,12 @@ cert-manager:
       memory: "64Mi"
 
   # -- Tolerations for the cert-manager controller
-  # @default -- Tolerate GKE arm64 taint
+  # @default -- Tolerate GKE amd64 and arm64 taints
   tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "amd64"
+      effect: "NoSchedule"
     - key: "kubernetes.io/arch"
       operator: "Equal"
       value: "arm64"
