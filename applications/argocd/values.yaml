@@ -4,12 +4,16 @@
 argo-cd:
   global:
     logging:
-      # -- Set the global logging format. Either: `text` or `json`
+      # -- Global logging format (`text` or `json`)
       format: "json"
 
-    # Global argo-cd tolerations
-    # @default -- Tolerate GKE arm64 taint
+    # Global Argo CD tolerations
+    # @default -- Tolerate GKE arm64 and amd64 taints
     tolerations:
+      - key: "kubernetes.io/arch"
+        operator: "Equal"
+        value: "amd64"
+        effect: "NoSchedule"
       - key: "kubernetes.io/arch"
         operator: "Equal"
         value: "arm64"
@@ -25,10 +29,10 @@ argo-cd:
     resources:
       limits:
         cpu: "1"
-        memory: "50Mi"
+        memory: "52Mi"
       requests:
-        cpu: "2m"
-        memory: "10Mi"
+        cpu: "50m"
+        memory: "52Mi"
 
   controller:
     metrics:
@@ -53,7 +57,6 @@ argo-cd:
         memory: "1Gi"
 
   dex:
-
     # -- Resource limits and requests for the Dex server
     # @default -- See `values.yaml`
     resources:
@@ -61,20 +64,19 @@ argo-cd:
         cpu: "1"
         memory: "400Mi"
       requests:
-        cpu: "5m"
-        memory: "30Mi"
+        cpu: "50m"
+        memory: "52Mi"
 
   applicationSet:
-
-    # -- Resource limits and requests for the applicationSet server
+    # -- Resource limits and requests for the applicationSet controller
     # @default -- See `values.yaml`
     resources:
       limits:
         cpu: "1"
         memory: "128Mi"
       requests:
-        cpu: "3m"
-        memory: "30Mi"
+        cpu: "50m"
+        memory: "52Mi"
 
   repoServer:
     metrics:
@@ -88,7 +90,7 @@ argo-cd:
         cpu: "1"
         memory: "640Mi"
       requests:
-        cpu: "200m"
+        cpu: "60m"
         memory: "80Mi"
 
   notifications:
@@ -103,8 +105,8 @@ argo-cd:
         cpu: "100m"
         memory: "350Mi"
       requests:
-        cpu: "5m"
-        memory: "32Mi"
+        cpu: "50m"
+        memory: "52Mi"
 
   server:
     metrics:
@@ -118,7 +120,7 @@ argo-cd:
         cpu: "1"
         memory: "500Mi"
       requests:
-        cpu: "10m"
+        cpu: "50m"
         memory: "64Mi"
 
     ingress:
@@ -141,7 +143,6 @@ argo-cd:
       tls: true
 
   configs:
-
     # -- Add css to configure ArgoCD styling
     styles: null
 
