@@ -2,6 +2,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: "docverse"
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "0"
   labels:
     {{- include "docverse.labels" . | nindent 4 }}
 data:
@@ -9,4 +13,5 @@ data:
   DOCVERSE_LOG_PROFILE: {{ .Values.config.logProfile | quote }}
   DOCVERSE_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
   DOCVERSE_DATABASE_URL: {{ .Values.config.databaseUrl | quote }}
+  DOCVERSE_ARQ_REDIS_URL: {{ .Values.config.arqRedisUrl | quote }}
   REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}
