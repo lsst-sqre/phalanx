@@ -152,3 +152,15 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
+
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: {{ .Values.imageDB.persistence.storageClassName | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.imageDB.persistence.size | quote }}
+
