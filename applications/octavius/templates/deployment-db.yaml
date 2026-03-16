@@ -41,15 +41,15 @@ spec:
 
                 echo "Initiating replica set..."
                 mongo --host octavius-db-0.octavius-db <<EOF
-rs.initiate({
-  _id: "rs0",
-  members: [
-    { _id: 0, host: "octavius-db-0.octavius-db:27017" },
-    { _id: 1, host: "octavius-db-1.octavius-db:27017" },
-    { _id: 2, host: "octavius-db-2.octavius-db:27017" }
-  ]
-})
-EOF
+              rs.initiate({
+                _id: "rs0",
+                members: [
+                  { _id: 0, host: "octavius-db-0.octavius-db:27017" },
+                  { _id: 1, host: "octavius-db-1.octavius-db:27017" },
+                  { _id: 2, host: "octavius-db-2.octavius-db:27017" }
+                ]
+              })
+              EOF
               else
                 echo "Not the first pod, skipping rs.initiate"
               fi
