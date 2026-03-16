@@ -9,6 +9,7 @@ metadata:
   labels:
     {{- include "rapid-analysis.labels" $ | nindent 4 }}
 spec:
+  replicas: {{ default 1 $script.replicas }}
   revisionHistoryLimit: 0
   selector:
     matchLabels:
