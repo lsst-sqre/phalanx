@@ -94,7 +94,7 @@ resources:
     # https://github.com/argoproj/argo-cd/issues/16400
     memory: "3584Mi"
   requests:
-    cpu: "50m"
+    cpu: "154m"
     memory: "1Gi"
 
 # -- Affinity rules for the mobu frontend pod
@@ -111,8 +111,12 @@ podAnnotations: {}
 terminationGracePeriodSeconds: null
 
 # -- Tolerations for the mobu frontend pod
-# @default -- Tolerate GKE arm64 taint
+# @default -- Tolerate GKE amd64 and arm64 taints
 tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "amd64"
+    effect: "NoSchedule"
   - key: "kubernetes.io/arch"
     operator: "Equal"
     value: "arm64"

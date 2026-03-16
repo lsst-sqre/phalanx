@@ -342,8 +342,8 @@ config:
   useSubdomains: []
 
   tap:
-
-    # -- Default schema version for all TAP services (can be overridden per-app)
+    # -- Default schema version for all TAP services (can be overridden
+    # per-app)
     schemaVersion: "w.2026.01"
 
     # -- Template for schema artifact URLs (use {schemaVersion} placeholder)
@@ -351,7 +351,8 @@ config:
     schemaSourceTemplate: "https://github.com/lsst/sdm_schemas/archive/refs/tags/{version}.tar.gz"
 
     # -- TAP Server configuration by application name. Configuration is used
-    # to populate & update the TAP_SCHEMA database for each enabled TAP application
+    # to populate & update the TAP_SCHEMA database for each enabled TAP
+    # application
     # @default -- See `values.yaml`
     servers:
       tap:
@@ -379,10 +380,8 @@ config:
         databasePasswordKey: "livetap-database-password"
 
 cloudsql:
-  # -- Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google
-  # Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as
-  # a separate service (behind a `NetworkPolicy`) for other, lower-traffic
-  # services.
+  # -- Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on
+  # Google Cloud
   enabled: false
 
   image:
@@ -399,7 +398,7 @@ cloudsql:
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
   instanceConnectionName: ""
 
-  # -- The Google service account that has an IAM binding to the `gafaelfawr`
+  # -- The Google service account that has an IAM binding to the `repertoire`
   # Kubernetes service account and has the `cloudsql.client` role
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
   serviceAccount: ""
@@ -434,7 +433,7 @@ resources:
     cpu: "1"
     memory: "180Mi"
   requests:
-    cpu: "10m"
+    cpu: "50m"
     memory: "90Mi"
 
 schemaHook:
@@ -445,12 +444,16 @@ schemaHook:
       cpu: "1"
       memory: "512Mi"
     requests:
-      cpu: "2m"
-      memory: "32Mi"
+      cpu: "50m"
+      memory: "52Mi"
 
-# -- Tolerations for the repertoire deployment pod
-# @default -- Tolerate GKE arm64 taint
+# -- Tolerations for the Repertoire pod
+# @default -- Tolerate GKE amd64 and arm64 taints
 tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "amd64"
+    effect: "NoSchedule"
   - key: "kubernetes.io/arch"
     operator: "Equal"
     value: "arm64"

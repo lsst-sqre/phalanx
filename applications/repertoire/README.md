@@ -13,13 +13,13 @@ Service discovery
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the repertoire deployment pod |
-| cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as a separate service (behind a `NetworkPolicy`) for other, lower-traffic services. |
+| cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
 | cloudsql.image.tag | string | `"1.37.13"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
-| cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
+| cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `repertoire` Kubernetes service account and has the `cloudsql.client` role |
 | config.applications | list | Set by Argo CD | List of applications deployed in this Phalanx environment (do not set) |
 | config.availableDatasets | list | `[]` | Datasets available in the Phalanx environment. This should be overridden by environments to list the datasets they provide. |
 | config.baseHostname | string | Set by Argo CD | Base hostname of the Phalanx environment (do not set) |
@@ -60,4 +60,4 @@ Service discovery
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the repertoire deployment pod |
 | schemaHook.resources | object | See `values.yaml` | Resource limits and requests for the TAP schema update Helm hook job |
-| tolerations | list | Tolerate GKE arm64 taint | Tolerations for the repertoire deployment pod |
+| tolerations | list | Tolerate GKE amd64 and arm64 taints | Tolerations for the Repertoire pod |

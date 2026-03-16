@@ -13,7 +13,7 @@ resources:
     cpu: "1"
     memory: "1024Mi"
   requests:
-    cpu: "40m"
+    cpu: "50m"
     memory: "220Mi"
 
 # -- Affinity rules for the giftless frontend pod

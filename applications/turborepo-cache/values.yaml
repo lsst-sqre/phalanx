@@ -94,7 +94,7 @@ proxy:
       cpu: "1"
       memory: "256Mi"
     requests:
-      cpu: "2m"
+      cpu: "50m"
       memory: "64Mi"
 
   # -- Tolerations for the proxy deployment pod
