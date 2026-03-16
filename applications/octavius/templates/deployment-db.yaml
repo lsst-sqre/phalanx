@@ -1,10 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: "octavius-db-deploy"
+  name: octavius-db
   labels:
     {{- include "octavius.labels" . | nindent 4 }}
 spec:
+  serviceName: octavius-db
   replicas: {{ .Values.replicaCount_db }}
   selector:
     matchLabels:
@@ -25,68 +26,97 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       automountServiceAccountToken: false
+      initContainers:
+        - name: init-replica-set
+          image: mongo:6
+          command:
+            - /bin/sh
+            - -c
+            - |
+              if [ "$(hostname)" = "octavius-db-0" ]; then
+                echo "Waiting for MongoDB to be ready..."
+                until mongo --host octavius-db-0.octavius-db --eval "db.adminCommand('ping')" >/dev/null 2>&1; do
+                  sleep 2
+                done
+
+                echo "Initiating replica set..."
+                mongo --host octavius-db-0.octavius-db <<EOF
+rs.initiate({
+  _id: "rs0",
+  members: [
+    { _id: 0, host: "octavius-db-0.octavius-db:27017" },
+    { _id: 1, host: "octavius-db-1.octavius-db:27017" },
+    { _id: 2, host: "octavius-db-2.octavius-db:27017" }
+  ]
+})
+EOF
+              else
+                echo "Not the first pod, skipping rs.initiate"
+              fi
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: octavius
+                  key: mongo-root-username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: octavius
+                  key: mongo-root-password
       containers:
         - name: {{ .Chart.Name }}-db
+          image: "{{ .Values.imageDB.repository }}:{{ .Values.imageDB.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imageDB.pullPolicy }}
+          command: ["mongod"]
+          args:
+            - "--bind_ip_all"
+            - "--replSet=rs0"
           env:
             {{- if .Values.config.slackAlerts }}
-            - name: "OCTAVIUS_SLACK_WEBHOOK"
+            - name: OCTAVIUS_SLACK_WEBHOOK
               valueFrom:
                 secretKeyRef:
-                  name: "octavius"
-                  key: "slack-webhook"
+                  name: octavius
+                  key: slack-webhook
             {{- end }}
-            # Uvicorn keepalive timeout, in seconds. This should be longer
-            # than any keepalive timeouts on any downstream proxies. The
-            # keepalive timeout for ingress-nginx connections is 60s.
-            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
+            - name: UVICORN_TIMEOUT_KEEP_ALIVE
               value: "61"
-            - name: "MONGO_INITDB_ROOT_USERNAME"
+            - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: octavius
-                  key: "mongo-root-username"
-            - name: "MONGO_INITDB_ROOT_PASSWORD"
+                  key: mongo-root-username
+            - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: octavius
-                  key: "mongo-root-password"
-            - name: "MONGO_INITDB_DATABASE"
+                  key: mongo-root-password
+            - name: MONGO_INITDB_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: octavius
-                  key: "mongo-init-db"
-            - name: "AUTH_DB"
+                  key: mongo-init-db
+            - name: AUTH_DB
               valueFrom:
                 secretKeyRef:
                   name: octavius
-                  key: "mongo-auth-db"
+                  key: mongo-auth-db
 
           envFrom:
             - configMapRef:
-                name: "octavius-configmap"
-          image: "{{ .Values.imageDB.repository }}:{{ .Values.imageDB.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.imageDB.pullPolicy }}
+                name: octavius-configmap
+
           lifecycle:
-            # Number of seconds k8s should wait before sending SIGTERM on
-            # graceful restarts/deployments/shutdowns. We need this because it
-            # takes ingress-nginx some time to configure itself to stop
-            # sending traffic to the pods scheduled for termination. If
-            # Uvicorn gets the SIGTERM and starts closing connections, we
-            # could end up with a TCP race condition if ingress-nginx still
-            # tries to send data over those connections.
-            #
-            # Note that terminationGracePeriodSeconds includes the time that
-            # is spent in the preStop hook. If you’re adding a preStop hook
-            # and your terminationGracePeriodSeconds is super fine-tuned, then
-            # you should update your terminationGracePeriodSeconds to add the
-            # amount of time you’ll be spending in your preStop hook.
             preStop:
               sleep:
                 seconds: 10
+
           ports:
-            - name: "db"
+            - name: db
               containerPort: 27017
-              protocol: "TCP"
+              protocol: TCP
+
           readinessProbe:
             exec:
               command: ["mongo", "--host", "localhost", "--eval", "db.adminCommand('ping')"]
@@ -94,29 +124,30 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 6
+
           volumeMounts:
-            - mountPath: /data/db
-              name: mongo-data
+            - name: mongo-data
+              mountPath: /data/db
+
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
-              drop:
-                - "all"
+              drop: ["all"]
             readOnlyRootFilesystem: false
-      volumes:
-        - name: mongo-data
-          persistentVolumeClaim:
-            claimName: octavius-mongo-pvc
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
