@@ -41,7 +41,7 @@ spec:
             - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
               value: "61"
             - name: "API_PORT"
-              value: 8443
+              value: "8443"
             - name: "MONGO_URL"
               valueFrom:
                 secretKeyRef:
@@ -49,7 +49,7 @@ spec:
                   key: "api-mongo-url"
           envFrom:
             - configMapRef:
-                name: "octavius"
+                name: "octavius-configmap"
           image: "{{ .Values.imageAPI.repository }}:{{ .Values.imageAPI.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imageAPI.pullPolicy }}
           lifecycle:

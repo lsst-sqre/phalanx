@@ -63,7 +63,7 @@ spec:
 
           envFrom:
             - configMapRef:
-                name: "octavius"
+                name: "octavius-configmap"
           image: "{{ .Values.imageDB.repository }}:{{ .Values.imageDB.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imageDB.pullPolicy }}
           lifecycle:

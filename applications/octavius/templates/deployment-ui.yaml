@@ -58,7 +58,7 @@ spec:
                   key: "az-storage-ac-key"
           envFrom:
             - configMapRef:
-                name: "octavius"
+                name: "octavius-configmap"
           image: "{{ .Values.imageUI.repository }}:{{ .Values.imageUI.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imageUI.pullPolicy }}
           lifecycle:
