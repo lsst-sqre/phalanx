@@ -21,14 +21,6 @@ spec:
         - Describe
         type: allow
       {{- end }}
-      # Allow all on the __consumer_offsets topic
-      - resource:
-          type: topic
-          name: "__consumer_offsets"
-          patternType: literal
-        operations:
-        - All
-        type: allow
       # Allow running as a consumer group
       - resource:
           type: group
