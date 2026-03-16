@@ -7,4 +7,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-storage: {{ .Values.imageDB.persistence.size }}
+      storage: {{ .Values.imageDB.persistence.size }}

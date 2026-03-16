@@ -75,7 +75,7 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/api"
+              path: "/api/v1/collections/ComCam"
               port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

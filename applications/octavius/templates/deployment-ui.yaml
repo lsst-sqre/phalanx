@@ -84,7 +84,7 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/octavius-lsst"
+              path: "/octavius"
               port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

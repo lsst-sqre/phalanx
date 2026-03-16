@@ -88,8 +88,8 @@ spec:
               containerPort: 27017
               protocol: "TCP"
           readinessProbe:
-            tcpSocket:
-              port: 27017
+            exec:
+              command: ["mongo", "--host", "localhost", "--eval", "db.adminCommand('ping')"]
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 5
@@ -104,7 +104,7 @@ spec:
             capabilities:
               drop:
                 - "all"
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
       volumes:
         - name: mongo-data
           persistentVolumeClaim:
