@@ -89,6 +89,7 @@ scripts:
   - lsstcam-data
   - project-shared
 - name: LSSTCam/runPlotter.py
+  replicas: 2
   mounts:
   - lsstcam-data
   - project-shared
