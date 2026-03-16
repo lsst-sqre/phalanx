@@ -56,12 +56,12 @@ spec:
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: octavius
+                  name: octavius-secrets
                   key: mongo-root-username
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: octavius
+                  name: octavius-secrets
                   key: mongo-root-password
       containers:
         - name: {{ .Chart.Name }}-db
@@ -76,7 +76,7 @@ spec:
             - name: OCTAVIUS_SLACK_WEBHOOK
               valueFrom:
                 secretKeyRef:
-                  name: octavius
+                  name: octavius-secrets
                   key: slack-webhook
             {{- end }}
             - name: UVICORN_TIMEOUT_KEEP_ALIVE
@@ -84,22 +84,22 @@ spec:
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: octavius
+                  name: octavius-secrets
                   key: mongo-root-username
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: octavius
+                  name: octavius-secrets
                   key: mongo-root-password
             - name: MONGO_INITDB_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: octavius
+                  name: octavius-secrets
                   key: mongo-init-db
             - name: AUTH_DB
               valueFrom:
                 secretKeyRef:
-                  name: octavius
+                  name: octavius-secrets
                   key: mongo-auth-db
 
           lifecycle:

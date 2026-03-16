@@ -31,7 +31,7 @@ spec:
             - name: "OCTAVIUS_SLACK_WEBHOOK"
               valueFrom:
                 secretKeyRef:
-                  name: "octavius"
+                  name: octavius-secrets
                   key: "slack-webhook"
             {{- end }}
             # Uvicorn keepalive timeout, in seconds. This should be longer
@@ -44,24 +44,11 @@ spec:
             - name: "MONGO_URL"
               valueFrom:
                 secretKeyRef:
-                  name: octavius
+                  name: octavius-secrets
                   key: "api-mongo-url"
           image: "{{ .Values.imageAPI.repository }}:{{ .Values.imageAPI.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imageAPI.pullPolicy }}
           lifecycle:
-            # Number of seconds k8s should wait before sending SIGTERM on
-            # graceful restarts/deployments/shutdowns. We need this because it
-            # takes ingress-nginx some time to configure itself to stop
-            # sending traffic to the pods scheduled for termination. If
-            # Uvicorn gets the SIGTERM and starts closing connections, we
-            # could end up with a TCP race condition if ingress-nginx still
-            # tries to send data over those connections.
-            #
-            # Note that terminationGracePeriodSeconds includes the time that
-            # is spent in the preStop hook. If you’re adding a preStop hook
-            # and your terminationGracePeriodSeconds is super fine-tuned, then
-            # you should update your terminationGracePeriodSeconds to add the
-            # amount of time you’ll be spending in your preStop hook.
             preStop:
               sleep:
                 seconds: 10
