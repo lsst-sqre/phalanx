@@ -103,10 +103,6 @@ spec:
                   name: octavius
                   key: mongo-auth-db
 
-          envFrom:
-            - configMapRef:
-                name: octavius-configmap
-
           lifecycle:
             preStop:
               sleep:

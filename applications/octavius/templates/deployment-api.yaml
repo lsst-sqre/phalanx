@@ -12,7 +12,6 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -47,9 +46,6 @@ spec:
                 secretKeyRef:
                   name: octavius
                   key: "api-mongo-url"
-          envFrom:
-            - configMapRef:
-                name: "octavius-configmap"
           image: "{{ .Values.imageAPI.repository }}:{{ .Values.imageAPI.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imageAPI.pullPolicy }}
           lifecycle:
