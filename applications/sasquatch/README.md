@@ -661,6 +661,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.broker.resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Kubernetes resources for the brokers |
 | strimzi-kafka.broker.storage.size | string | `"1.5Ti"` | Storage size for the brokers |
 | strimzi-kafka.broker.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
+| strimzi-kafka.broker.terminationGracePeriodSeconds | int | `180` |  |
 | strimzi-kafka.broker.tolerations | list | `[]` | Tolerations for broker pod assignment |
 | strimzi-kafka.brokerMigration.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka broker pod assignment |
 | strimzi-kafka.brokerMigration.enabled | bool | `false` | Whether to enable another node pool to migrate the kafka brokers to |
@@ -690,6 +691,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.controller.resources | object | `{"limits":{"cpu":"1","memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for the controllers |
 | strimzi-kafka.controller.storage.size | string | `"20Gi"` | Storage size for the controllers |
 | strimzi-kafka.controller.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
+| strimzi-kafka.controller.terminationGracePeriodSeconds | int | `180` |  |
 | strimzi-kafka.controller.tolerations | list | `[]` | Tolerations for controller pod assignment |
 | strimzi-kafka.cruiseControl.enabled | bool | `false` | Enable cruise control (required for broker migration and rebalancing) |
 | strimzi-kafka.cruiseControl.maxReplicasPerBroker | int | `20000` | Maximum number of replicas per broker |

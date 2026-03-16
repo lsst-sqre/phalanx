@@ -14,6 +14,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | broker.resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Kubernetes resources for the brokers |
 | broker.storage.size | string | `"1.5Ti"` | Storage size for the brokers |
 | broker.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
+| broker.terminationGracePeriodSeconds | int | `180` |  |
 | broker.tolerations | list | `[]` | Tolerations for broker pod assignment |
 | brokerMigration.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka broker pod assignment |
 | brokerMigration.enabled | bool | `false` | Whether to enable another node pool to migrate the kafka brokers to |
@@ -43,6 +44,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | controller.resources | object | `{"limits":{"cpu":"1","memory":"4Gi"},"requests":{"cpu":"500m","memory":"2Gi"}}` | Kubernetes resources for the controllers |
 | controller.storage.size | string | `"20Gi"` | Storage size for the controllers |
 | controller.storage.storageClassName | string | None, use the default storage class | Storage class to use when requesting persistent volumes |
+| controller.terminationGracePeriodSeconds | int | `180` |  |
 | controller.tolerations | list | `[]` | Tolerations for controller pod assignment |
 | cruiseControl.enabled | bool | `false` | Enable cruise control (required for broker migration and rebalancing) |
 | cruiseControl.maxReplicasPerBroker | int | `20000` | Maximum number of replicas per broker |
