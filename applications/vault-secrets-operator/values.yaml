@@ -22,8 +22,9 @@ vault-secrets-operator:
       cpu: "300m"
       memory: "300Mi"
     requests:
-      cpu: "20m"
-      memory: "30Mi"
+      cpu: "50m"
+      memory: "52Mi"
+
   serviceAccount:
     # -- Disable creation of a secret for the service account. It shouldn't be
     # needed and it conflicts with the secret we create that contains the
@@ -31,8 +32,12 @@ vault-secrets-operator:
     createSecret: false
 
   # -- Tolerations for vault-secrets-operator
-  # @default -- Tolerate GKE arm64 taint
+  # @default -- Tolerate GKE amd64 and arm64 taints
   tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "amd64"
+      effect: "NoSchedule"
     - key: "kubernetes.io/arch"
       operator: "Equal"
       value: "arm64"

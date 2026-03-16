@@ -315,8 +315,12 @@ nodeSelector: {}
 podAnnotations: {}
 
 # -- Tolerations for the Gafaelfawr frontend pod
-# @default -- Tolerate GKE arm64 taint
+# @default -- Tolerate GKE amd64 and arm64 taints
 tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "amd64"
+    effect: "NoSchedule"
   - key: "kubernetes.io/arch"
     operator: "Equal"
     value: "arm64"
@@ -368,8 +372,12 @@ cloudsql:
   serviceAccount: ""
 
   # -- Tolerations for the standalone Cloud SQL Proxy pod
-  # @default -- Tolerate GKE arm64 taint
+  # @default -- Tolerate GKE amd64 and arm64 taints
   tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "amd64"
+      effect: "NoSchedule"
     - key: "kubernetes.io/arch"
       operator: "Equal"
       value: "arm64"
@@ -410,8 +418,12 @@ maintenance:
   nodeSelector: {}
 
   # -- Tolerations for Gafaelfawr maintenance and audit pods
-  # @default -- Tolerate GKE arm64 taint
+  # @default -- Tolerate GKE amd64 and arm64 taints
   tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "amd64"
+      effect: "NoSchedule"
     - key: "kubernetes.io/arch"
       operator: "Equal"
       value: "arm64"
@@ -436,12 +448,16 @@ operator:
       cpu: "500m"
       memory: "1Gi"
     requests:
-      cpu: "10m"
+      cpu: "50m"
       memory: "175Mi"
 
   # -- Tolerations for the token management pod
-  # @default -- Tolerate GKE arm64 taint
+  # @default -- Tolerate GKE amd64 and arm64 taints
   tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "amd64"
+      effect: "NoSchedule"
     - key: "kubernetes.io/arch"
       operator: "Equal"
       value: "arm64"
@@ -475,14 +491,18 @@ redis-ephemeral:
   resources:
     limits:
       cpu: "1"
-      memory: "40Mi"
+      memory: "52Mi"
     requests:
       cpu: "50m"
-      memory: "15Mi"
+      memory: "52Mi"
 
   # -- Tolerations for the ephemeral Redis pod
-  # @default -- Tolerate GKE arm64 taint
+  # @default -- Tolerate GKE amd64 and arm64 taints
   tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "amd64"
+      effect: "NoSchedule"
     - key: "kubernetes.io/arch"
       operator: "Equal"
       value: "arm64"
@@ -540,8 +560,12 @@ redis:
       memory: "100Mi"
 
   # -- Tolerations for the persistent Redis pod
-  # @default -- Tolerate GKE arm64 taint
+  # @default -- Tolerate GKE amd64 and arm64 taints
   tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "amd64"
+      effect: "NoSchedule"
     - key: "kubernetes.io/arch"
       operator: "Equal"
       value: "arm64"
