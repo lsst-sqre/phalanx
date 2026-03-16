@@ -381,17 +381,7 @@ scripts:
       cpu: 1
       memory: 16G
 - name: LSSTCam/runPlotter.py
-  mounts:
-  - lsstcam-data
-  - project-shared
-  resources:
-    requests:
-      cpu: 1
-      memory: 8G
-    limits:
-      cpu: 1
-      memory: 12G
-- name: LSSTCam/runPlotter2nd.py  # if we need a third make this a StatefulSet
+  replicas: 2
   mounts:
   - lsstcam-data
   - project-shared
