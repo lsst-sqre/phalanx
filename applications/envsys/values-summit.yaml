@@ -255,7 +255,7 @@ epm-generator-ess306:
 hvac:
   enabled: true
   image:
-    revision: 0
+    revision: 2
     repository: ts-dockerhub.lsst.org/hvac
     pullPolicy: Always
   env:
