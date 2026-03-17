@@ -582,7 +582,7 @@ tea-ess125:
   enabled: true
   classifier: ess125
   image:
-    revision: 0
+    revision: 1
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
