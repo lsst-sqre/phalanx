@@ -61,4 +61,4 @@ Downloading logs will give you somewhat older logs, although usually only about 
 
 The logs from Gafaelfawr are in JSON format.
 The best way to search older logs (and arguably the best way to look at current logs) is to use a JSON-aware log view and search tool if available for the environment that you're debugging.
-For the IDF environments, use `Google Log Explorer <https://cloud.google.com/logging/docs/view/logs-explorer-interface>`__.
+For the IDF environments, use `Google Log Explorer <https://docs.cloud.google.com/logging/docs/view/logs-explorer-interface>`__.

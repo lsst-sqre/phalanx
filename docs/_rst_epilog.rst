@@ -48,7 +48,7 @@
 .. _SODA: https://ivoa.net/documents/SODA/
 .. _Sphinx: https://www.sphinx-doc.org/en/master/
 .. _SQuaRE Bot: https://squarebot.lsst.io/
-.. _syrupy: https://syrupy-project.github.io
+.. _syrupy: https://syrupy-project.github.io/syrupy/
 .. _syrupy docs: https://syrupy-project.github.io/syrupy/#cli-options
 .. _TAP: https://www.ivoa.net/documents/TAP/
 .. _Telegraf: https://www.influxdata.com/time-series-platform/telegraf/
@@ -59,4 +59,4 @@
 .. _Vault Secrets Operator: https://github.com/ricoberger/vault-secrets-operator
 .. _venv: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment
 .. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
-.. _workload identity: https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
+.. _workload identity: https://docs.cloud.google.com/kubernetes-engine/docs/how-to/workload-identity

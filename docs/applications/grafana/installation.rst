@@ -56,6 +56,6 @@ This works great, but there is no way to automatically make a Grafana-auth-proxy
 #. Visit ``https://<base-url>/grafana``. You should now be a server admin!
 
 
-.. _Grafana auth proxy: https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/auth-proxy/
+.. _Grafana auth proxy: https://grafana.com/docs/grafana/latest/setup-grafana/configure-access/configure-authentication/auth-proxy/
 .. _Grafana server administrator: https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#grafana-server-administrators
 .. _these instructions: https://grafana.com/docs/grafana/latest/administration/user-management/server-user-management/assign-remove-server-admin-privileges/

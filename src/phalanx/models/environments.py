@@ -267,8 +267,9 @@ class EnvironmentBaseConfig(BaseModel):
             " this is null, the workloads will use the compute class that"
             " corresponds to the cluster type. Here's an [example of setting"
             " an Autopilot compute class]"
-            "(https://cloud.google.com/kubernetes-engine/docs/how-to/autopilot"
-            "-classes-standard-clusters#built-in-class)"
+            "(https://docs.cloud.google.com/kubernetes-engine/docs/how-to/"
+            "autopilot-classes-standard-clusters"
+            "#select-autopilot-class-workload)"
         ),
     )
 
