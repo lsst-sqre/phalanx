@@ -35,7 +35,7 @@ spec:
           image: "{{ .Values.hinfo.image.repository }}:{{ .Values.hinfo.latiss.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.hinfo.image.pullPolicy }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml (.Values.hinfo.latiss.resources | default .Values.resources) | nindent 12 }}
           env:
             - name: "INSTRUMENT"
               value: "LATISS"
@@ -143,7 +143,7 @@ spec:
           image: "{{ .Values.hinfo.image.repository }}:{{ .Values.hinfo.lsstcomcam.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.hinfo.image.pullPolicy }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml (.Values.hinfo.lsstcomcam.resources | default .Values.resources) | nindent 12 }}
           env:
             - name: "INSTRUMENT"
               value: "LSSTComCam"
@@ -251,7 +251,7 @@ spec:
           image: "{{ .Values.hinfo.image.repository }}:{{ .Values.hinfo.lsstcam.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.hinfo.image.pullPolicy }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml (.Values.hinfo.lsstcam.resources | default .Values.resources) | nindent 12 }}
           env:
             - name: "INSTRUMENT"
               value: "LSSTCam"
