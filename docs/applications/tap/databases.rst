@@ -62,7 +62,7 @@ See :ref:`tap-schema-containerized-vs-managed` for details.
 CloudSQL (Google Cloud SQL)
 ---------------------------
 
-The CloudSQL backend uses Google Cloud SQL PostgreSQL instances, accessed through the `Cloud SQL Auth Proxy <https://cloud.google.com/sql/docs/postgres/sql-proxy>`__ running as a sidecar container.
+The CloudSQL backend uses Google Cloud SQL PostgreSQL instances, accessed through the `Cloud SQL Auth Proxy <https://docs.cloud.google.com/sql/docs/postgres/sql-proxy>`__ running as a sidecar container.
 
 Both TAP_SCHEMA and UWS databases are PostgreSQL when using CloudSQL.
 The proxy handles authentication via Workload Identity, so the TAP pod's Kubernetes service account must have an IAM binding to a Google service account with the ``cloudsql.client`` role.
