@@ -23,8 +23,8 @@ pq:
 
 resources:
   requests:
-    cpu: 200m
+    cpu: 500m
     memory: 25Gi
   limits:
-    cpu: 500m
+    cpu: 2
     memory: 25Gi
