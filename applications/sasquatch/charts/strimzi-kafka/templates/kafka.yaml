@@ -32,6 +32,7 @@ spec:
           k8up.io/backup-target: "true"
         {{- end }}
     pod:
+      terminationGracePeriodSeconds: {{ .Values.controller.terminationGracePeriodSeconds}}
       {{- with .Values.controller.affinity }}
       affinity:
         {{- toYaml . | nindent 10 }}
@@ -80,6 +81,7 @@ spec:
           k8up.io/backup-target: "true"
         {{- end }}
     pod:
+      terminationGracePeriodSeconds: {{ .Values.broker.terminationGracePeriodSeconds}}
       {{- with .Values.broker.affinity }}
       affinity:
         {{- toYaml . | nindent 10 }}

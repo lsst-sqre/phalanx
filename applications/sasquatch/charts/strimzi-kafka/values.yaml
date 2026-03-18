@@ -157,6 +157,8 @@ controller:
   # -- Tolerations for controller pod assignment
   tolerations: []
 
+  terminationGracePeriodSeconds: 180
+
   # -- Kubernetes resources for the controllers
   resources:
     requests:
@@ -202,6 +204,8 @@ broker:
 
   # -- Tolerations for broker pod assignment
   tolerations: []
+
+  terminationGracePeriodSeconds: 180
 
   # -- Kubernetes resources for the brokers
   resources:
