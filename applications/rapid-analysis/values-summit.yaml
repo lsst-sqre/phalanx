@@ -416,6 +416,7 @@ scripts:
       cpu: 2
       memory: 12G
 - name: LSSTCam/runPerformanceMonitor.py
+  replicas: 8
   mounts:
   - lsstcam-data
   - project-shared
