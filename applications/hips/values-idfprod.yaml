@@ -1,7 +1,6 @@
 replicaCount: 4
 
 config:
-  gcsProject: "data-curation-prod-fbdb"
   buckets:
     dp02:
       bucketName: "static-us-central1-dp02-hips"
@@ -9,4 +8,6 @@ config:
       bucketName: "static-us-central1-dp1-hips"
       objectPrefix: "DM-51494"
   defaultBucketKey: "dp02"
+  gcsProject: "data-curation-prod-fbdb"
   serviceAccount: "crawlspace-hips@science-platform-stable-6994.iam.gserviceaccount.com"
+  slackAlerts: true
