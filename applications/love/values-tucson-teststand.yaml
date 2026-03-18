@@ -593,9 +593,36 @@ love-producer:
   - name: mtm1m3ts
     csc: MTM1M3TS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtm2
-    csc: MTM2:0 --log-level 10
+  - name: mtm2-telemetry
+    csc: MTM2:0 --log-level 10 --periodic-data tel_ackcmd tel_axialActuatorSteps tel_axialEncoderPositions tel_axialForce tel_displacementSensors tel_forceBalance tel_forceErrorTangent tel_ilcData tel_inclinometerAngleTma tel_netForcesTotal tel_netMomentsTotal tel_position tel_positionIMS tel_powerStatus tel_powerStatusRaw tel_tangentActuatorSteps tel_tangentEncoderPositions tel_tangentForce tel_temperature tel_zenithAngle
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 1
+        memory: 600Mi
+  - name: mtm2-event-01
+    csc: MTM2:0 --log-level 10 --asynchronous-data evt_actuatorBumpTestStatus evt_cellTemperatureHiWarning evt_closedLoopControlMode evt_commandableByDDS evt_config evt_configurationApplied evt_configurationFiles evt_configurationsAvailable evt_controllerState evt_detailedState evt_digitalInput evt_disabledILC evt_enabledFaultsMask evt_errorCode evt_forceBalanceSystemStatus evt_hardpointList evt_heartbeat evt_inclinationTelemetrySource evt_innerLoopControlMode evt_interlock evt_limitSwitchExtend evt_limitSwitchRetract evt_logLevel evt_logMessage evt_m2AssemblyInPosition evt_openLoopMaxLimit evt_powerSystemState evt_scriptExecutionStatus evt_simulationMode evt_softwareVersions evt_summaryFaultsStatus evt_summaryState evt_tcpIpConnected evt_temperatureOffset
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 500m
+        memory: 600Mi
+  - name: mtm2-event-02
+    csc: MTM2:0 --log-level 10 --periodic-data evt_digitalOutput
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 10m
+        memory: 200Mi
+      limits:
+        cpu: 500m
+        memory: 600Mi
   - name: mtmount
     csc: MTMount:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
