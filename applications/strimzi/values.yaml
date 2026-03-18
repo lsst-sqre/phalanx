@@ -6,5 +6,5 @@ strimzi-kafka-operator:
       cpu: "1"
       memory: "1Gi"
     requests:
-      cpu: "20m"
-      memory: "450Mi"
+      cpu: "200m"
+      memory: "512Mi"
