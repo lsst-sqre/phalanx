@@ -1,9 +1,4 @@
 strimzi-kafka-operator:
-  resources:
-    limits:
-      memory: "1Gi"
-    requests:
-      memory: "512Mi"
   watchNamespaces:
     - "prompt-kafka"
     - "s3-file-notifications"
