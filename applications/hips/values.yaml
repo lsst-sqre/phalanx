@@ -79,8 +79,8 @@ resources:
     cpu: "1"
     memory: "256Mi"
   requests:
-    cpu: "1m"
-    memory: "45Mi"
+    cpu: "50m"
+    memory: "52Mi"
 
 # -- Tolerations for the Repertoire pod
 # @default -- Tolerate GKE amd64 and arm64 taints
