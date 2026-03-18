@@ -31,4 +31,6 @@ HiPS tile server backed by Google Cloud Storage
 | podAnnotations | object | `{}` | Annotations for the crawlspace deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the crawlspace deployment pod |
+| sentry.enabled | bool | `false` | Whether to enable the Sentry integration |
+| sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1. |
 | tolerations | list | Tolerate GKE amd64 and arm64 taints | Tolerations for the Repertoire pod |

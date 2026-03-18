@@ -31,8 +31,19 @@ spec:
             - name: "CRAWLSPACE_SLACK_WEBHOOK"
               valueFrom:
                 secretKeyRef:
-                  name: "crawlspace"
+                  name: "hips"
                   key: "slack-webhook"
+            {{- end }}
+            {{- if .Values.sentry.enabled }}
+            - name: "SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: "hips"
+                  key: "sentry-dsn"
+            - name: "SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.environmentName }}
+            - name: "SENTRY_TRACES_SAMPLE_RATE"
+              value: {{ .Values.sentry.tracesSampleRate }}
             {{- end }}
             # Uvicorn keepalive timeout, in seconds. This should be longer
             # than any keepalive timeouts on any downstream proxies. The
