@@ -146,3 +146,13 @@ dependencies:
   version: 1.0.0
   condition: tunablelaser-sim.enabled
   repository: file://../../charts/csc
+- name: csc
+  alias: fiberspectrograph101-sim
+  version: 1.0.0
+  condition: fiberspectrograph101-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: fiberspectrograph102-sim
+  version: 1.0.0
+  condition: fiberspectrograph102-sim.enabled
+  repository: file://../../charts/csc
