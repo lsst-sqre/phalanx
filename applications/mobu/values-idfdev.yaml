@@ -35,6 +35,38 @@ config:
           repo_url: "https://github.com/lsst-sqre/dfuchs-test-mobu.git"
           repo_ref: "main"
         restart: true
+    - name: "usdf-s3-speedtest"
+      # Increase replicas and count (1:1) when we're ready to hammer it.
+      # Each pod ought to be already about maxed out.  7 pods should fit
+      # on a node.  Each node has a gVNIC that should be capable of
+      # 100Gbps.  We don't know how much bandwidth we can get out of
+      # USDF, but this should let us find out.
+      #
+      # A single Pod with 4VCPUs seems to get roughly 10Gbps, so we
+      # might not be able to saturate the gVNIC with our current machine
+      # size and node size type.  But maybe we'll saturate USDF's pipe
+      # first.
+      #
+      # Any bets on whether Cyber decides we're a threat and cuts us
+      # off?
+      #
+      # We're writing output to /rubin/shared/speedtest; eventually I'll
+      # write a notebook to collect and graph that data.
+      count: 1
+      replicas: 1
+      users:
+        - username: "bot-mobu-usdf-speedtest"
+          groups:
+            - name: "g_users"
+              id: 2000003
+      scopes:
+        - "exec:notebook"
+      business:
+        type: "NotebookRunnerCounting"
+        options:
+          repo_url: "https://github.com/lsst-sqre/usdf-speedtest-notebook.git"
+          repo_ref: "main"
+        restart: true
     - name: "phalanx-quotidian"
       count: 1
       users:
