@@ -1,7 +1,7 @@
 db:
   user: "usdf"
   passwordkey: "oods-password"
-  host: "usdf-summit-dev-db-svc.sdf.slac.stanford.edu"
+  host: "usdf-summit-int-db-svc.sdf.slac.stanford.edu"
   database: "exposurelog"
 hinfo:
   latiss:
