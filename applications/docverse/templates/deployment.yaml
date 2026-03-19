@@ -35,6 +35,11 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+            - name: "DOCVERSE_CREDENTIAL_ENCRYPTION_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "docverse"
+                  key: "DOCVERSE_CREDENTIAL_ENCRYPTION_KEY"
             - name: "DOCVERSE_DATABASE_PASSWORD"
               valueFrom:
                 secretKeyRef:
