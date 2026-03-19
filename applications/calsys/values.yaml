@@ -106,6 +106,14 @@ atwhitelight:
   # -- Enabled the ATWhitelight CSC
   enabled: false
 
+fiberspectrograph101-sim:
+  # -- Enable the FiberSpectrograph:101 CSC
+  enabled: false
+
+fiberspectrograph102-sim:
+  # -- Enable the FiberSpectrograph:102 CSC
+  enabled: false
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:

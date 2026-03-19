@@ -17,6 +17,8 @@ Deployment for the Calibration System CSCs
 | electrometer103.enabled | bool | `false` | Enable the Electrometer:103 CSC |
 | electrometer201-sim.enabled | bool | `false` | Enable the Electrometer:201 simulator CSC |
 | electrometer201.enabled | bool | `false` | Enable the Electrometer:201 CSC |
+| fiberspectrograph101-sim.enabled | bool | `false` | Enable the FiberSpectrograph:101 CSC |
+| fiberspectrograph102-sim.enabled | bool | `false` | Enable the FiberSpectrograph:102 CSC |
 | gcheaderservice1.enabled | bool | `false` | Enable the GCHeaderService:1 CSC |
 | global.controlSystem.appNamespace | string | Set by ArgoCD | Application namespace for the control system deployment |
 | global.controlSystem.imageTag | string | Set by ArgoCD | Image tag for the control system deployment |
