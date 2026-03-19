@@ -17,10 +17,9 @@ HiPS tile server backed by Google Cloud Storage
 | config.gcsProject | string | None, must be set | Google Cloud project in which the underlying storage is located |
 | config.logLevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
-| config.pathPrefix | string | `"/api/hips/v2"` | URL path prefix (current API) |
+| config.pathPrefix | string | `"/api/hips"` | URL path prefix |
 | config.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `hips` Kubernetes service account and has access to the storage bucket |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
-| config.v1PathPrefix | string | `"/api/hips"` | URL path prefix (legacy API) |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the hips image |

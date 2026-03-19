@@ -35,19 +35,16 @@ config:
   # human-friendly)
   logProfile: "production"
 
-  # -- URL path prefix (current API)
-  pathPrefix: "/api/hips/v2"
+  # -- URL path prefix
+  pathPrefix: "/api/hips"
 
   # -- The Google service account that has an IAM binding to the `hips`
   # Kubernetes service account and has access to the storage bucket
   # @default -- None, must be set
-  serviceAccount: ""
+  serviceAccount: null
 
   # -- Whether to send Slack alerts for unexpected failures
   slackAlerts: false
-
-  # -- URL path prefix (legacy API)
-  v1PathPrefix: "/api/hips"
 
 image:
   # -- Image to use in the crawlspace deployment
