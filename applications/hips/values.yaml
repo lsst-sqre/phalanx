@@ -6,10 +6,6 @@
 replicaCount: 1
 
 config:
-  # -- Google Cloud project in which the underlying storage is located
-  # @default -- None, must be set
-  gcsProject: ""
-
   # -- A mapping of bucket keys to GCS buckets.
   # /api/hips/v2/<bucket-key>/some/file will serve the file
   # <objectPrefix>/some/file from the corresponding bucket.
@@ -21,19 +17,37 @@ config:
     #   bucketName: somebucket
     #   objectPrefix: someprefix
 
+  # -- Max age of resources in client caches (seconds)
+  cacheMaxAge: 3600
+
   # -- The key of bucket in the 'buckets' dict to serve from the v1 endpoint
   # (/api/hips)
   defaultBucketKey: null
+
+  # -- Google Cloud project in which the underlying storage is located
+  # @default -- None, must be set
+  gcsProject: ""
+
   # -- Choose from the text form of Python logging levels
   logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/api/hips"
 
   # -- The Google service account that has an IAM binding to the `hips`
   # Kubernetes service account and has access to the storage bucket
   # @default -- None, must be set
-  serviceAccount: ""
+  serviceAccount: null
+
+  # -- Whether to send Slack alerts for unexpected failures
+  slackAlerts: false
 
 image:
-  # -- Image to use in the hips deployment
+  # -- Image to use in the crawlspace deployment
   repository: "ghcr.io/lsst-sqre/crawlspace"
 
   # -- Pull policy for the hips image
@@ -46,41 +60,44 @@ ingress:
   # -- Additional annotations for the ingress
   annotations: {}
 
-autoscaling:
-  # -- Enable autoscaling of hips deployment
+sentry:
+  # -- Whether to enable the Sentry integration
   enabled: false
 
-  # -- Minimum number of hips deployment pods
-  minReplicas: 1
+  # -- The percentage of requests that should be traced. This should be a
+  # float between 0 and 1.
+  tracesSampleRate: 0.0
 
-  # -- Maximum number of hips deployment pods
-  maxReplicas: 100
+# -- Affinity rules for the crawlspace deployment pod
+affinity: {}
 
-  # -- Target CPU utilization of hips deployment pods
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+# -- Node selection rules for the crawlspace deployment pod
+nodeSelector: {}
 
-# -- Annotations for the hips deployment pod
+# -- Annotations for the crawlspace deployment pod
 podAnnotations: {}
 
-# -- Resource limits and requests for the hips deployment pod
+# -- Resource limits and requests for the crawlspace deployment pod
 # @default -- See `values.yaml`
 resources:
   limits:
     cpu: "1"
     memory: "256Mi"
   requests:
-    cpu: "1m"
-    memory: "45Mi"
+    cpu: "50m"
+    memory: "52Mi"
 
-# -- Node selection rules for the hips deployment pod
-nodeSelector: {}
-
-# -- Tolerations for the hips deployment pod
-tolerations: []
-
-# -- Affinity rules for the hips deployment pod
-affinity: {}
+# -- Tolerations for the Repertoire pod
+# @default -- Tolerate GKE amd64 and arm64 taints
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "amd64"
+    effect: "NoSchedule"
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
@@ -88,3 +105,7 @@ global:
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
