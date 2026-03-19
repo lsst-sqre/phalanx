@@ -88,7 +88,8 @@ love-manager:
         DB_HOST: postgresdb01.ls.lsst.org
         LOVE_SITE: base
         NIGHTREPORT_MAIL_ADDRESS: sebastian.aranda@noirlab.edu
-        HIDE_TRACE_TIMESTAMPS: "true"
+        SHOW_TRACE_TIMESTAMPS: "true"
+        HEARTBEAT_QUERY_COMMANDER: false
       autoscaling:
         enabled: true
         minReplicas: 2
@@ -130,6 +131,17 @@ love-manager:
       replicas: 1
     - name: m1m3
       <<: *base-manager-producer
+      replicas: 1
+    - name: heartbeat
+      <<: *base-manager-producer
+      env:
+        COMMANDER_HOSTNAME: love-commander-service
+        COMMANDER_PORT: 5000
+        HEARTBEAT_QUERY_COMMANDER: true
+        REDIS_CONFIG_CAPACITY: 100
+        REDIS_CONFIG_EXPIRY: 5
+        REDIS_HOST: love-manager-redis-service
+        SERVER_URL: base-lsp.lsst.codes
       replicas: 1
   redis:
     image:
