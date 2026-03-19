@@ -46,16 +46,7 @@ spec:
             - configMapRef:
                 name: "docverse"
           env:
-            - name: "DOCVERSE_CREDENTIAL_ENCRYPTION_KEY"
-              valueFrom:
-                secretKeyRef:
-                  name: "docverse"
-                  key: "DOCVERSE_CREDENTIAL_ENCRYPTION_KEY"
-            - name: "DOCVERSE_DATABASE_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "docverse"
-                  key: "DOCVERSE_DATABASE_PASSWORD"
+            {{- include "docverse.envVars" . | nindent 12 }}
       {{- if .Values.cloudsql.enabled }}
       initContainers:
         {{- include "docverse.cloudsqlSidecar" . | nindent 8 }}
