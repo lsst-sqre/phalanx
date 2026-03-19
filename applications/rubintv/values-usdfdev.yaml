@@ -6,6 +6,9 @@ rubintv:
 
   frontend:
     debug: true
+    image:
+      tag: deploy
+      pullPolicy: Always
     env:
     - name: RA_PULL_DIRECTORIES
       value: "rubintv_analysis_service"
@@ -21,9 +24,14 @@ rubintv:
       value: "/rubintv/ddv/"
     - name: DDV_CLIENT_WS_ADDRESS
       value: "rubintv/ws/ddv"
-    image:
-      tag: deploy
-      pullPolicy: Always
+    pvcMountpoint:
+    - name: rubintv-scratch
+      persistentVolumeClaim:
+        name: rubintv-scratch
+        storageClassName: wekafs--sdf-k8s01
+        capacity: 1Gi
+      accessMode: ReadWriteMany
+      mountPath: /scratch
     resources:
       requests:
         cpu: 1

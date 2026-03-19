@@ -19,4 +19,22 @@ spec:
 {{- end }}
 {{- end }}
 {{- end }}
+{{- if .Values.frontend.pvcMountpoint }}
+{{- range $vol := .Values.frontend.pvcMountpoint }}
+{{- if $vol.persistentVolumeClaim }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ $vol.persistentVolumeClaim.name | quote }}
+spec:
+  accessModes:
+  - {{ $vol.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ $vol.persistentVolumeClaim.capacity | quote }}
+  storageClassName: {{ $vol.persistentVolumeClaim.storageClassName | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
 
