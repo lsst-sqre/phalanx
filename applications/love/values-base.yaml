@@ -633,20 +633,20 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
     resources:
       requests:
-        cpu: 30m
+        cpu: 100m
         memory: 100Mi
       limits:
-        cpu: 300m
+        cpu: 500m
         memory: 300Mi
   - name: mtmount-event
     csc: MTMount:0 --log-level 10 --asynchronous-data evt_auxiliaryCabinetsThermalSystemState evt_availableSettings evt_azimuthCableWrapSystemState evt_azimuthControllerSettings evt_azimuthDrivesThermalSystemState evt_azimuthHomed evt_azimuthInPosition evt_azimuthLimits evt_azimuthMotionState evt_azimuthSystemState evt_azimuthToppleBlock evt_balanceSystemState evt_cabinet0101ThermalSystemState evt_cameraCableWrapControllerSettings evt_cameraCableWrapFollowing evt_cameraCableWrapInPosition evt_cameraCableWrapLimits evt_cameraCableWrapMotionState evt_cameraCableWrapSystemState evt_cameraCableWrapTarget evt_clockOffset evt_commander evt_configurationApplied evt_configurationsAvailable evt_connected evt_controllerSettingsName evt_deployablePlatformsMotionState evt_deployablePlatformsSystemState evt_elevationControllerSettings evt_elevationDrivesThermalSystemState evt_elevationHomed evt_elevationInPosition evt_elevationLimits evt_elevationLockingPinMotionState evt_elevationMotionState evt_elevationSystemState evt_error evt_errorCode evt_heartbeat evt_lockingPinsSystemState evt_logLevel evt_logMessage evt_mainAxesPowerSupplySystemState evt_mainCabinetThermalSystemState evt_mirrorCoverLocksMotionState evt_mirrorCoverLocksSystemState evt_mirrorCoversMotionState evt_mirrorCoversSystemState evt_motionLockState evt_oilSupplySystemState evt_safetyInterlocks evt_simulationMode evt_softwareVersions evt_summaryState evt_target evt_telemetryConnected evt_topEndChillerSystemState evt_warning
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
     resources:
       requests:
-        cpu: 30m
+        cpu: 100m
         memory: 100Mi
       limits:
-        cpu: 300m
+        cpu: 500m
         memory: 300Mi
   - name: mtocps
     csc: OCPS:3 --log-level 10
