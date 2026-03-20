@@ -52,13 +52,15 @@ config:
       #
       # We're writing output to /rubin/shared/speedtest; eventually I'll
       # write a notebook to collect and graph that data.
-      count: 1
-      replicas: 1
-      users:
-        - username: "bot-mobu-usdf-speedtest"
-          groups:
-            - name: "g_users"
-              id: 2000003
+      count: 25
+      replicas: 25
+      user_spec:
+       username_prefix: "bot-mobu-usdf-speedtest"
+       uid_start: 100300
+       gid_start: 100300
+       groups:
+         - name: "g_users"
+           id: 2000003
       scopes:
         - "exec:notebook"
       business:
