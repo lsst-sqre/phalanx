@@ -52,8 +52,8 @@ config:
       #
       # We're writing output to /rubin/shared/speedtest; eventually I'll
       # write a notebook to collect and graph that data.
-      count: 25
-      replicas: 25
+      count: 100
+      replicas: 100
       user_spec:
        username_prefix: "bot-mobu-usdf-speedtest"
        uid_start: 100300
