@@ -19,7 +19,6 @@ alert-brokers:
     - "lsst-alerts-v10.0"
     - "lsst-alerts-reprocessed-v10.0"
 
-
   users:
 
     # A user for development purposes by the Rubin team, with access to all
@@ -133,11 +132,13 @@ strimzi-kafka:
       prometheus.io/scrape: "true"
   kafka:
     version: "4.1.0"
+    replicationFactor: 3
     config:
       # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
       replica.lag.time.max.ms: 120000
       log.retention.minutes: 10080
       offsets.retention.minutes: 10080
+      min.insync.replicas: 2
     listeners:
       tls:
         enabled: true
@@ -182,7 +183,7 @@ strimzi-kafka:
     enabled: true
     name: kafka
     replicas: 5
-    nodeIds: "[3,4,5,6,7]"
+    nodeIds: "[5,6,7,8,9]"
     storage:
       size: 35Ti
       storageClassName: wekafs--sdf-k8s01
@@ -207,8 +208,8 @@ strimzi-kafka:
   controller:
     enabled: true
     name: controller
-    replicas: 3
-    nodeIds: "[0,1,2]"
+    replicas: 5
+    nodeIds: "[0,1,2,3,4]"
     storage:
       size: 100Gi
       storageClassName: wekafs--sdf-k8s01
