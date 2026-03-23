@@ -94,7 +94,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.15.0"
+      tag: "3.16.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -120,7 +120,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.15.0"
+      tag: "3.16.0"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
