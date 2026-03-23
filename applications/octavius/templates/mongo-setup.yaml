@@ -1,0 +1,90 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongo-setup
+  labels:
+    app: mongo-setup
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: mongo-setup
+          image: ghrc.io/furciferi/mongo-setup:latest
+          command:
+            - /bin/bash
+            - -c
+            - |
+              echo "Waiting for MongoDB pods to be ready..."
+
+              for host in octavius-db-0.octavius-db octavius-db-1.octavius-db octavius-db-2.octavius-db; do
+                until mongosh --host "$host" -u "$MONGO_INITDB_ROOT_USERNAME" -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase "$AUTH_DB" --eval "db.runCommand({ ping: 1 })" >/dev/null 2>&1; do
+                  echo "Waiting for $host..."
+                  sleep 2
+                done
+              done
+
+              echo "Checking replica set status..."
+              RS_OK=$(mongosh --quiet --host octavius-db-0.octavius-db -u "$MONGO_INITDB_ROOT_USERNAME" -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase "$AUTH_DB" --eval "rs.status().ok" 2>/dev/null || echo 0)
+
+              if [ "$RS_OK" != "1" ]; then
+                echo "Initializing replica set..."
+                mongosh --host octavius-db-0.octavius-db -u "$MONGO_INITDB_ROOT_USERNAME" -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase "$AUTH_DB" <<EOF
+              rs.initiate({
+                _id: "rs0",
+                members: [
+                  { _id: 0, host: "octavius-db-0.octavius-db:27017" },
+                  { _id: 1, host: "octavius-db-1.octavius-db:27017" },
+                  { _id: 2, host: "octavius-db-2.octavius-db:27017" }
+                ]
+              })
+              EOF
+              else
+                echo "Replica set already initialized."
+              fi
+
+              echo "Waiting for PRIMARY..."
+              PRIMARY=""
+              while [ -z "$PRIMARY" ]; do
+                PRIMARY=$(mongosh --quiet --host octavius-db-0.octavius-db -u "$MONGO_INITDB_ROOT_USERNAME" -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase "$AUTH_DB" --eval "db.hello().primary" | tr -d '"')
+                [ -z "$PRIMARY" ] && sleep 2
+              done
+
+              echo "PRIMARY is $PRIMARY — starting restore..."
+
+              echo "Fetching init state from azure blob"
+
+              wget $AZURE_DB_ZIP -O /tmp/dump.zip
+              unzip /tmp/dump.zip -d /tmp/dump
+
+              mongorestore \
+                --host "$PRIMARY" \
+                -u "$MONGO_INITDB_ROOT_USERNAME" \
+                -p "$MONGO_INITDB_ROOT_PASSWORD" \
+                --authenticationDatabase "$AUTH_DB" \
+                /tmp/dump
+
+              echo "Restore complete."
+
+          env:
+            - name: AZURE_DB_ZIP
+              valueFrom:
+                secretKeyRef:
+                  name: octavius-secrets
+                  key: azure-db-url
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: octavius-secrets
+                  key: mongo-root-username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: octavius-secrets
+                  key: mongo-root-password
+            - name: AUTH_DB
+              valueFrom:
+                secretKeyRef:
+                  name: octavius-secrets
+                  key: mongo-auth-db

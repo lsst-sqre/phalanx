@@ -63,12 +63,16 @@ spec:
                 seconds: 10
           ports:
             - name: "http"
-              containerPort: 8080
+              containerPort: 80
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/octavius"
+              path: "/octavius/"
               port: "http"
+              initialDelaySeconds: 30
+              periodSeconds: 5
+              timeoutSeconds: 2
+              failureThreshold: 3
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           securityContext:
@@ -76,7 +80,7 @@ spec:
             capabilities:
               drop:
                 - "all"
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
