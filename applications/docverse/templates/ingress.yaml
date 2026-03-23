@@ -8,6 +8,10 @@ config:
   scopes:
     all:
       - "exec:docverse"
+  delegate:
+    internal:
+      service: "docverse"
+      scopes: []
   service: "docverse"
 template:
   metadata:
@@ -41,6 +45,10 @@ config:
   scopes:
     all:
       - "admin:docverse"
+  delegate:
+    internal:
+      service: "docverse"
+      scopes: []
   service: "docverse"
 template:
   metadata:
