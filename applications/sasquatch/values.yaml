@@ -3,6 +3,18 @@
 # Override strimzi-kafka subchart configuration.
 strimzi-kafka: {}
 
+alert-brokers:
+  # -- Whether to enable the alert-brokers subchart
+  enabled: false
+
+alert-database:
+  # -- Whether to enable the alert-database subchart
+  enabled: false
+
+alert-stream-schema-sync:
+  # -- Whether to enable the alert-stream-schema-sync subchart
+  enabled: false
+
 schema-registry:
   # -- Whether to enable the schema-registry subchart
   enabled: false
