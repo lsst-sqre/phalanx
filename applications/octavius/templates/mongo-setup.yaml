@@ -11,7 +11,8 @@ spec:
       restartPolicy: Never
       containers:
         - name: mongo-setup
-          image: ghrc.io/furciferi/mongo-setup:latest
+          image: "{{ .Values.imageSetup.repository }}:{{ .Values.imageSetup.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imageSetup.pullPolicy }}
           command:
             - /bin/bash
             - -c

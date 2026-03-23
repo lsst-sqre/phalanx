@@ -9,6 +9,11 @@ replicaCount_ui: 2
 replicaCount_api: 2
 
 
+imageSetup:
+  # -- Image to use for the MongoDB setup job
+  repository: "ghcr.io/furciferi/mongo-setup"
+  tag: "lsst.v1.0.1"
+  pullPolicy: "IfNotPresent"
 imageAPI:
   # -- Image to use in the octavius deployment
   repository: "ghcr.io/furciferi/octavius-api"
