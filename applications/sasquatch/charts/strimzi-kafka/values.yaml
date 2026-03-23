@@ -20,6 +20,9 @@ kafka:
   # If the property is not set, it defaults to the metadata version that corresponds to the version property.
   metadataVersion: null
 
+  # -- Topic Replication Factor.  The number of copies of topic data that are maintained.
+  replicationFactor: 3
+
   # -- The minimum number of in-sync replicas that must be available for the producer to successfully send records
   # Cannot be greater than the number of replicas.
   minInsyncReplicas: 2

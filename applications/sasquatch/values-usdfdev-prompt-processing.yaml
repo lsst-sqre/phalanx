@@ -133,13 +133,13 @@ strimzi-kafka:
       prometheus.io/scrape: "true"
   kafka:
     version: "4.1.0"
+    replicas: 5
+    replicationFactor: 3
     config:
       # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
       replica.lag.time.max.ms: 120000
       log.retention.minutes: 10080
       offsets.retention.minutes: 10080
-      default.replication.factor: 3
-      offsets.topic.replication.factor: 3
       min.insync.replicas: 2
     listeners:
       tls:
