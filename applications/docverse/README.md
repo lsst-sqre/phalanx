@@ -24,6 +24,7 @@ Publish versioned docs
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/docverse/api"` | URL path prefix |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
+| config.superadminUsers | list | `["jonathansick"]` | Usernames that have super admin (de facto admin in all organizations) |
 | config.updateSchema | bool | `false` | Whether to run Alembic schema migrations on install/upgrade |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.repertoireUrl | string | Set by Argo CD | Base URL for Repertoire discovery API |
