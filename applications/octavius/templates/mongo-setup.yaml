@@ -20,7 +20,7 @@ spec:
               echo "Waiting for MongoDB pods to be ready..."
 
               for host in octavius-db-0.octavius-db octavius-db-1.octavius-db octavius-db-2.octavius-db; do
-                until mongosh --host "$host" -u "$MONGO_INITDB_ROOT_USERNAME" -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase "$AUTH_DB" --eval "db.runCommand({ ping: 1 })" >/dev/null 2>&1; do
+                until mongosh --host "$host" --eval "db.runCommand({ ping: 1 })" >/dev/null 2>&1; do
                   echo "Waiting for $host..."
                   sleep 2
                 done
