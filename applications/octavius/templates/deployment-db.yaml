@@ -25,44 +25,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       automountServiceAccountToken: false
-      initContainers:
-        - name: init-replica-set
-          image: mongo:6
-          command:
-            - /bin/sh
-            - -c
-            - |
-              if [ "$(hostname)" = "octavius-db-0" ]; then
-                echo "Waiting for MongoDB to be ready..."
-                until mongo --host octavius-db-0.octavius-db --eval "db.adminCommand('ping')" >/dev/null 2>&1; do
-                  sleep 2
-                done
-
-                echo "Initiating replica set..."
-                mongo --host octavius-db-0.octavius-db <<EOF
-              rs.initiate({
-                _id: "rs0",
-                members: [
-                  { _id: 0, host: "octavius-db-0.octavius-db:27017" },
-                  { _id: 1, host: "octavius-db-1.octavius-db:27017" },
-                  { _id: 2, host: "octavius-db-2.octavius-db:27017" }
-                ]
-              })
-              EOF
-              else
-                echo "Not the first pod, skipping rs.initiate"
-              fi
-          env:
-            - name: MONGO_INITDB_ROOT_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: octavius-secrets
-                  key: mongo-root-username
-            - name: MONGO_INITDB_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: octavius-secrets
-                  key: mongo-root-password
       containers:
         - name: {{ .Chart.Name }}-db
           image: "{{ .Values.imageDB.repository }}:{{ .Values.imageDB.tag | default .Chart.AppVersion }}"
