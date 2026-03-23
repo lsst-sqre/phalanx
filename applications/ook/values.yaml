@@ -61,7 +61,7 @@ resources:
     memory: "256Mi"
   requests:
     cpu: "120m"
-    memory: "120Mi"
+    memory: "125Mi"
 
 nodeSelector: {}
 
