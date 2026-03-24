@@ -284,7 +284,7 @@ mtcamhexapod:
   enabled: true
   classifier: mthexapod1
   image:
-    revision: 0
+    revision: 3
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
   env:
@@ -436,7 +436,7 @@ mtm2hexapod:
   enabled: true
   classifier: mthexapod2
   image:
-    revision: 0
+    revision: 3
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
   env:
