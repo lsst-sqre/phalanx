@@ -8,7 +8,7 @@ lfa:
 hinfo:
   latiss:
     enable: true
-    tag: "25.11.2"
+    tag: "26.3.3"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcomcam:
     enable: false
@@ -16,7 +16,7 @@ hinfo:
     logConfig: "consdb.hinfo=DEBUG"
   lsstcam:
     enable: true
-    tag: "25.11.2"
+    tag: "26.3.3"
 pq:
   image:
     tag: "main"
