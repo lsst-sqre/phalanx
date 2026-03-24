@@ -11,6 +11,7 @@ config:
     enabled: false
   slack:
     enabled: false
+  bigqueryMaxBytesBilled: 1000000000000
 
 redis:
   persistence:
