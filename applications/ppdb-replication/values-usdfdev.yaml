@@ -5,7 +5,7 @@ config:
   logProfile: "development"
 
   # -- APDB config file resource
-  apdbConfig: "s3://embargo@rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcam.yaml"
+  apdbConfig: "/sdf/data/rubin/user/jeremym/ppdb-config/apdb_dev.yaml"
 
   # -- PPDB config file resource
   ppdbConfig: "gs://ppdb-dev/config/ppdb_dev.yaml"
