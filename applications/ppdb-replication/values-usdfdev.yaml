@@ -10,6 +10,12 @@ config:
   # -- PPDB config file resource
   ppdbConfig: "gs://ppdb-dev/config/ppdb_dev.yaml"
 
+  # -- Time to wait before checking for new chunks, if no chunk appears
+  checkInterval: 60
+
+  # -- Time to wait between uploader file scans
+  waitInterval: 60
+
   # -- Volumes specific to the environment
   volumes:
     - name: sdf-group-rubin
