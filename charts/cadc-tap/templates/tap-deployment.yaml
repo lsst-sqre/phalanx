@@ -1,3 +1,6 @@
+{{- include "cadc-tap.validateBackend" . }}
+{{- include "cadc-tap.validateDatabaseType" .Values.tapSchema.type }}
+{{- include "cadc-tap.validateDatabaseType" .Values.uws.type }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -12,10 +15,11 @@ spec:
       app.kubernetes.io/component: "server"
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "cadc-tap.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "server"
@@ -61,15 +65,17 @@ spec:
                 cd ..
               done
 
-              {{- if eq .Values.config.backend "bigquery" }}
-              # Swap to BigQuery PluginFactory
+              # Select the PluginFactory for the configured backend
               for dir in /var/lib/tomcat/webapps/*/; do
-                if [ -f "${dir}WEB-INF/classes/PluginFactory-bigquery.properties" ]; then
-                  cp "${dir}WEB-INF/classes/PluginFactory-bigquery.properties" "${dir}WEB-INF/classes/PluginFactory.properties"
-                  echo "Using BigQuery PluginFactory.properties in $dir"
+                src="${dir}WEB-INF/classes/PluginFactory-{{ .Values.config.backend }}.properties"
+                if [ -f "$src" ]; then
+                  cp "$src" "${dir}WEB-INF/classes/PluginFactory.properties"
+                  echo "Using {{ .Values.config.backend }} PluginFactory.properties in $dir"
+                else
+                  echo "ERROR: $src not found in $dir" >&2
+                  exit 1
                 fi
               done
-              {{- end }}
 
               echo "org.apache.catalina.startup.VersionLoggerListener.level = OFF" >> /var/lib/tomcat/conf/logging.properties
           securityContext:
@@ -111,119 +117,36 @@ spec:
             runAsGroup: 1001
           env:
             - name: CATALINA_OPTS
+              {{- /*
+                Service and database configuration lives in the
+                catalina.properties key of the cadc-tap-config ConfigMap, which
+                the entrypoint appends to Tomcat's catalina.properties so every
+                entry becomes a system property. Only the JVM heap size and the
+                database passwords stay here.
+              */}}
               value: >-
-                -Dtapschemauser.username={{ .Values.tapSchema.username }}
+                -Xmx{{ .Values.config.jvmMaxHeapSize }}
                 -Dtapschemauser.password=$TAP_SCHEMA_PASSWORD
-                {{- if eq .Values.tapSchema.type "containerized" }}
-                -Dtapschemauser.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dtapschemauser.url=jdbc:mysql://{{ template "cadc-tap.fullname" . }}-schema-db:3306/
-                {{- else if eq .Values.tapSchema.type "external" }}
-                -Dtapschemauser.driverClassName=org.postgresql.Driver
-                -Dtapschemauser.url=jdbc:postgresql://{{ .Values.tapSchema.external.host }}:{{ .Values.tapSchema.external.port }}/{{ .Values.tapSchema.database }}
-                {{- else }}
-                -Dtapschemauser.driverClassName=org.postgresql.Driver
-                -Dtapschemauser.url=jdbc:postgresql://localhost:5432/{{ .Values.tapSchema.database }}
-                {{- end }}
-                -Dtapschemauser.maxActive={{ .Values.tapSchema.tapuser.maxActive }}
-                -Dtapadm.maxActive={{ .Values.tapSchema.tapadm.maxActive }}
-                -Dtapuser.maxActive={{ .Values.tapSchema.tapuser.maxActive }}
-                -Duws.username={{ .Values.uws.username }}
                 {{- if or (eq .Values.uws.type "cloudsql") (eq .Values.uws.type "external") }}
                 -Duws.password=$UWS_DB_PASSWORD
                 {{- end }}
-                {{- if eq .Values.uws.type "containerized" }}
-                -Duws.url=jdbc:postgresql://{{ template "cadc-tap.fullname" . }}-uws-db/
-                {{- else if eq .Values.uws.type "external" }}
-                -Duws.url=jdbc:postgresql://{{ .Values.uws.external.host }}:{{ .Values.uws.external.port }}/{{ .Values.uws.database }}
-                {{- else }}
-                -Duws.url=jdbc:postgresql://localhost:5432/{{ .Values.uws.database }}
-                {{- end }}
-                -Duws.driverClassName=org.postgresql.Driver
-                -Duws.maxActive={{ .Values.uws.maxActive }}
                 {{- if eq .Values.config.backend "pg" }}
-                -Dtap.username={{ .Values.config.pg.username }}
                 -Dtap.password=$TAP_DB_PASSWORD
-                -Dtap.url=jdbc:postgresql://{{ .Values.config.pg.host }}/{{ .Values.config.pg.database }}
-                -Dtap.maxActive=100
-                -Dqservuser.username=unused
-                -Dqservuser.password=unused
-                -Dqservuser.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dqservuser.url=jdbc:mysql://localhost:3306/unused
-                -Dqservuser.maxActive=1
-                {{- else if eq .Values.config.backend "bigquery" }}
-                -Dtap.bigquery.project={{ .Values.config.bigquery.project }}
-                -Dtap.bigquery.dataset={{ .Values.config.bigquery.dataset }}
-                {{- if .Values.config.bigquery.schema }}
-                -Dtap.bigquery.schema={{ .Values.config.bigquery.schema }}
-                {{- end }}
-                -Dqservuser.username=unused
-                -Dqservuser.password=unused
-                -Dqservuser.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dqservuser.url=jdbc:mysql://localhost:3306/unused
-                -Dqservuser.maxActive=1
                 {{- else }}
-                -Dqservuser.username=qsmaster
+                -Dtap.password=$TAP_SCHEMA_PASSWORD
+                {{- end }}
+                {{- if and (eq .Values.config.backend "qserv") (not .Values.config.kafka.enabled) }}
                 -Dqservuser.password=$QSERV_DB_PASSWORD
-                -Dqservuser.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dqservuser.url=jdbc:mysql://{{ .Values.config.qserv.host }}/{{ .Values.config.qserv.jdbcParams }}
-                -Dqservuser.maxActive=100
-                {{- if .Values.config.qserv.schemaMappings }}
-                -Dtap.schema.mappings={{ .Values.config.qserv.schemaMappings }}
                 {{- end }}
-                {{- if .Values.config.qserv.tableMappings }}
-                -Dtap.table.mappings={{ .Values.config.qserv.tableMappings | join "," }}
-                {{- end }}
-                {{- end }}
-                -Dgafaelfawr_url={{ .Values.global.baseUrl }}/auth/api/v1/user-info
-                -Dgcs_bucket={{ .Values.config.gcsBucket }}
-                -Dgcs_bucket_url={{ .Values.config.gcsBucketUrl }}
-                -Dgcs_bucket_type={{ .Values.config.gcsBucketType }}
-                -Ddatabase={{ .Values.config.database }}
-                {{- if .Values.config.kafka.enabled }}
-                -Dkafka.ssl.truststore=/etc/cadc-tap/kafka/ca.crt
-                -Dkafka.ssl.keystore=/etc/cadc-tap/kafka/user.crt
-                -Dkafka.ssl.key=/etc/cadc-tap/kafka/user.key
-                -Dkafka.query.topic={{ .Values.config.kafka.topics.jobRun }}
-                -Dkafka.status.topic={{ .Values.config.kafka.topics.jobStatus }}
-                -Dkafka.delete.topic={{ .Values.config.kafka.topics.jobDelete }}
-                {{- end }}
-                {{- if .Values.config.outputLimit }}
-                -Dtap.outputLimit={{ .Values.config.outputLimit }}
-                {{- end }}
-                {{- if .Values.config.outputLimitUnit }}
-                -Dtap.outputLimitUnit={{ .Values.config.outputLimitUnit }}
-                {{- end }}
-                {{- if .Values.config.maxRec }}
-                -Dtap.maxRec={{ .Values.config.maxRec }}
-                {{- end }}
-                {{- if .Values.config.maxExecutionDuration }}
-                -Dtap.maxExecutionDuration={{ .Values.config.maxExecutionDuration }}
-                {{- end }}
-                {{- if .Values.config.maxDestruction }}
-                -Dtap.maxDestruction={{ .Values.config.maxDestruction }}
-                {{- end }}
-                {{- if .Values.config.maxQuote }}
-                -Dtap.maxQuote={{ .Values.config.maxQuote }}
-                {{- end }}
-                {{- if .Values.config.voParquet }}
-                -Dtap.enableVOParquet=true
-                {{- end }}
-                {{- if .Values.config.uploadPartitionDirectors }}
-                -Dupload.partition.directors={{ .Values.config.uploadPartitionDirectors | join "," }}
-                {{- end }}
-                -Dbase_url={{ .Values.global.baseUrl }}
-                -Dpath_prefix=/api/{{ .Values.ingress.path }}
-                -Dca.nrc.cadc.util.PropertiesReader.dir=/config/
-                -Durl.rewrite.enabled={{ .Values.config.urlRewrite.enabled | default true }}
-                -Durl.rewrite.rules="{{ .Values.config.urlRewrite.rules | default (list "ivoa.ObsCore:access_url") | join "," }}"
-                -Xmx{{ .Values.config.jvmMaxHeapSize }}
+            - name: "BACKEND"
+              value: {{ .Values.config.backend | quote }}
             - name: "CATALINA_BASE"
               value: "/var/lib/tomcat"
             - name: "CATALINA_HOME"
               value: "/usr/share/tomcat"
             - name: "HOME"
               value: "/home/tomcat"
-            {{- if (and (eq .Values.config.backend "qserv") .Values.config.qserv.passwordEnabled) }}
+            {{- if (and (eq .Values.config.backend "qserv") (not .Values.config.kafka.enabled) .Values.config.qserv.passwordEnabled) }}
             - name: "QSERV_DB_PASSWORD"
               valueFrom:
                 secretKeyRef:

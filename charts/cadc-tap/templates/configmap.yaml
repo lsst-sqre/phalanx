@@ -10,17 +10,137 @@ data:
     # Ignore this, it's only here to satisfy the availability check.
     ivo://ivoa.net/std/CDP#proxy-1.0 = ivo://cadc.nrc.ca/cred
     ivo://ivoa.net/sso#tls-with-password = {{ .Values.global.baseUrl }}
+
   catalina.properties: |
-    # tomcat properties
+    {{- $fullname := include "cadc-tap.fullname" . -}}
+    {{- $isPg := eq .Values.config.backend "pg" -}}
+
+    {{- /* tap_schema connection (shared by jdbc/tapschemauser and jdbc/tapadm) */ -}}
+    {{- $tsDriver := "org.postgresql.Driver" -}}
+    {{- $tsUrl := printf "jdbc:postgresql://localhost:5432/%s" .Values.tapSchema.database -}}
+    {{- if eq .Values.tapSchema.type "containerized" -}}
+      {{- $tsDriver = "com.mysql.cj.jdbc.Driver" -}}
+      {{- $tsUrl = printf "jdbc:mysql://%s-schema-db:3306/" $fullname -}}
+    {{- else if eq .Values.tapSchema.type "external" -}}
+      {{- $tsUrl = printf "jdbc:postgresql://%s:%v/%s" .Values.tapSchema.external.host .Values.tapSchema.external.port .Values.tapSchema.database -}}
+    {{- end -}}
+
+    {{- /* uws connection (jdbc/uws) -- always PostgreSQL */ -}}
+    {{- $uwsUrl := printf "jdbc:postgresql://localhost:5432/%s" .Values.uws.database -}}
+    {{- if eq .Values.uws.type "containerized" -}}
+      {{- $uwsUrl = printf "jdbc:postgresql://%s-uws-db/" $fullname -}}
+    {{- else if eq .Values.uws.type "external" -}}
+      {{- $uwsUrl = printf "jdbc:postgresql://%s:%v/%s" .Values.uws.external.host .Values.uws.external.port .Values.uws.database -}}
+    {{- end }}
+    # tomcat connector
     tomcat.connector.connectionTimeout=20000
     tomcat.connector.keepAliveTimeout=120000
     tomcat.connector.secure=false
     tomcat.connector.scheme=http
     tomcat.connector.proxyName={{ .Values.global.host }}
     tomcat.connector.proxyPort=80
-
-    # authentication provider
     ca.nrc.cadc.auth.IdentityManager=org.opencadc.auth.StandardIdentityManager
+    ca.nrc.cadc.util.PropertiesReader.dir=/config/
+
+    # tap_schema database: jdbc/tapschemauser and
+    # jdbc/tapadm are the same connection, different pools.
+    tapschemauser.username={{ .Values.tapSchema.username }}
+    tapschemauser.driverClassName={{ $tsDriver }}
+    tapschemauser.url={{ $tsUrl }}
+    tapschemauser.maxActive={{ .Values.tapSchema.tapschemauser.maxActive }}
+    tapadm.maxActive={{ .Values.tapSchema.tapadm.maxActive }}
+
+    # jdbc/tapuser is the primary query connection, data database for the
+    # pg backend, or tap_schema otherwise.
+    {{- if $isPg }}
+    tap.username={{ .Values.config.pg.username }}
+    tap.driverClassName=org.postgresql.Driver
+    tap.url=jdbc:postgresql://{{ .Values.config.pg.host }}/{{ .Values.config.pg.database }}
+    tap.maxActive=100
+    {{- else }}
+    tap.username={{ .Values.tapSchema.username }}
+    tap.driverClassName={{ $tsDriver }}
+    tap.url={{ $tsUrl }}
+    tap.maxActive={{ .Values.tapSchema.tapuser.maxActive }}
+    {{- end }}
+    # kept for the 2.x direct-Qserv image, whose context.xml still reads it
+    tapuser.maxActive={{ .Values.tapSchema.tapuser.maxActive }}
+
+    # jdbc/uws
+    uws.username={{ .Values.uws.username }}
+    uws.driverClassName=org.postgresql.Driver
+    uws.url={{ $uwsUrl }}
+    uws.maxActive={{ .Values.uws.maxActive }}
+    {{- if and (eq .Values.config.backend "qserv") (not .Values.config.kafka.enabled) }}
+
+    # direct-to-Qserv execution (no Kafka)
+    qservuser.username=qsmaster
+    qservuser.driverClassName=com.mysql.cj.jdbc.Driver
+    qservuser.url=jdbc:mysql://{{ .Values.config.qserv.host }}/{{ .Values.config.qserv.jdbcParams }}
+    qservuser.maxActive=100
+    {{- end }}
+    {{- if eq .Values.config.backend "bigquery" }}
+
+    tap.bigquery.project={{ .Values.config.bigquery.project }}
+    tap.bigquery.dataset={{ .Values.config.bigquery.dataset }}
+    {{- with .Values.config.bigquery.schema }}
+    tap.bigquery.schema={{ . }}
+    {{- end }}
+    {{- end }}
+    {{- with .Values.config.qserv.schemaMappings }}
+    tap.schema.mappings={{ . }}
+    {{- end }}
+    {{- if .Values.config.qserv.tableMappings }}
+    tap.table.mappings={{ .Values.config.qserv.tableMappings | join "," }}
+    {{- end }}
+
+    # service configuration
+    base_url={{ .Values.global.baseUrl }}
+    path_prefix=/api/{{ .Values.ingress.path }}
+    gafaelfawr_url={{ .Values.global.baseUrl }}/auth/api/v1/user-info
+    database={{ .Values.config.database }}
+    gcs_bucket={{ .Values.config.gcsBucket }}
+    gcs_bucket_url={{ .Values.config.gcsBucketUrl }}
+    gcs_bucket_type={{ .Values.config.gcsBucketType }}
+    url.rewrite.enabled={{ .Values.config.urlRewrite.enabled | default true }}
+    url.rewrite.rules={{ .Values.config.urlRewrite.rules | default (list "ivoa.ObsCore:access_url") | join "," }}
+    {{- if .Values.config.kafka.enabled }}
+
+    # kafka
+    kafka.ssl.truststore=/etc/cadc-tap/kafka/ca.crt
+    kafka.ssl.keystore=/etc/cadc-tap/kafka/user.crt
+    kafka.ssl.key=/etc/cadc-tap/kafka/user.key
+    kafka.query.topic={{ .Values.config.kafka.topics.jobRun }}
+    kafka.status.topic={{ .Values.config.kafka.topics.jobStatus }}
+    kafka.delete.topic={{ .Values.config.kafka.topics.jobDelete }}
+    {{- end }}
+
+    {{- /* Optional limits -- omit key to use the app default. */}}
+    {{- with .Values.config.outputLimit }}
+    tap.outputLimit={{ . }}
+    {{- end }}
+    {{- with .Values.config.outputLimitUnit }}
+    tap.outputLimitUnit={{ . }}
+    {{- end }}
+    {{- with .Values.config.maxRec }}
+    tap.maxRec={{ . }}
+    {{- end }}
+    {{- with .Values.config.maxExecutionDuration }}
+    tap.maxExecutionDuration={{ . }}
+    {{- end }}
+    {{- with .Values.config.maxDestruction }}
+    tap.maxDestruction={{ . }}
+    {{- end }}
+    {{- with .Values.config.maxQuote }}
+    tap.maxQuote={{ . }}
+    {{- end }}
+    {{- if .Values.config.voParquet }}
+    tap.enableVOParquet=true
+    {{- end }}
+    {{- if .Values.config.uploadPartitionDirectors }}
+    upload.partition.directors={{ .Values.config.uploadPartitionDirectors | join "," }}
+    {{- end }}
+
   tap-config.properties: |
     # URL rewrite configuration
     url.rewrite.enabled={{ .Values.config.urlRewrite.enabled | default true }}

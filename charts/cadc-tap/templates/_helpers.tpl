@@ -52,6 +52,16 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Validate the configured data backend is one of the allowed values.
+*/}}
+{{- define "cadc-tap.validateBackend" -}}
+  {{- $validBackends := list "pg" "qserv" "bigquery" -}}
+  {{- if not (has .Values.config.backend $validBackends) -}}
+    {{- fail (printf "config.backend must be set to one of: %s (got '%s')" (join ", " $validBackends) .Values.config.backend) -}}
+  {{- end -}}
+{{- end -}}
+
+{{/*
 Validate database type is one of the allowed values.
 */}}
 {{- define "cadc-tap.validateDatabaseType" -}}
@@ -59,26 +69,6 @@ Validate database type is one of the allowed values.
   {{- $type := . -}}
   {{- if not (has $type $validTypes) -}}
     {{- fail (printf "Invalid database type '%s'. Must be one of: %s" $type (join ", " $validTypes)) -}}
-  {{- end -}}
-{{- end -}}
-
-{{/*
-Generate JDBC URL for a database service.
-*/}}
-{{- define "cadc-tap.jdbcUrl" -}}
-  {{- $service := .service -}}
-  {{- $serviceName := .serviceName -}}
-  {{- $context := .context -}}
-  {{- if eq $service.type "cloudsql" -}}
-    jdbc:postgresql://localhost:5432/{{ $service.database }}
-  {{- else if eq $service.type "external" -}}
-    jdbc:postgresql://{{ $service.external.host }}:{{ $service.external.port }}/{{ $service.database }}
-  {{- else -}}
-    {{- if eq $serviceName "tap-schema-db" -}}
-    jdbc:mysql://{{ template "cadc-tap.fullname" $context }}-tap-schema-db/
-    {{- else if eq $serviceName "uws-db" -}}
-    jdbc:postgresql://{{ template "cadc-tap.fullname" $context }}-uws-db/
-    {{- end -}}
   {{- end -}}
 {{- end -}}
 
