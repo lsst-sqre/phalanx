@@ -9,3 +9,16 @@ spec:
   scopes:
     - "read:image"
     - "exec:internal-tools"
+# Does this go here?
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  # I would like a token for usdf-rsp-int even if we are at usdf-rsp-dev
+  name: {{ include "nightlydigest-backend.name" . }}int-gafaelfawr-token
+  labels:
+    {{- include "nightlydigest-backend.labels" . | nindent 4 }}
+spec:
+  service: "bot-nightlydigest-backend"
+  scopes:
+    - "read:image"
+    - "exec:internal-tools"

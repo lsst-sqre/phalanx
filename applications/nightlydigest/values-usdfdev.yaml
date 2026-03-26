@@ -74,6 +74,9 @@ nightlydigest-backend:
     - name: ACCESS_TOKEN
       secretName: nightlydigest-backend-gafaelfawr-token
       secretKey: token
+    - name: ACCESS_TOKEN_INT
+      secretName: nightlydigest-backend-int-gafaelfawr-token
+      secretKey: token
   pvcMountpoints:
     - name: sdf-data-rubin
       storageClassName: sdf-data-rubin
