@@ -12,6 +12,10 @@ config:
         endpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
   logLevel: "INFO"
   logProfile: "production"
+  rootPath: ""
+  # deprecated, should use rootPath instead with a rewriting ingress
+  docsPrefix: "/docs"
+  pathPrefix: "/cm-service"
   db:
     hostname: "postgres.postgres"
     echo: false
@@ -72,5 +76,10 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
+    tag: "0.7.0"
+    pullPolicy: IfNotPresent
+
+web:
+  image:
     tag: "0.7.0"
     pullPolicy: IfNotPresent

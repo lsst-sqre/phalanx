@@ -12,6 +12,10 @@ config:
         endpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
   logLevel: "DEBUG"
   logProfile: "development"
+  rootPath: ""
+  # deprecated, should use rootPath instead with a rewriting ingress
+  docsPrefix: "/docs"
+  pathPrefix: "/cm-service"
   db:
     hostname: "postgres.postgres"
     echo: false
@@ -63,7 +67,7 @@ config:
 
 image:
   tag: "0.7.0"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 daemon:
   security:
@@ -72,4 +76,9 @@ daemon:
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
     tag: "0.7.0"
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
+
+web:
+  image:
+    tag: "0.7.0"
+    pullPolicy: Always
