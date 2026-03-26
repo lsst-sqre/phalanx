@@ -106,6 +106,15 @@ spec:
               - name: SATTLE_URI_BASE
                 value: {{ . }}
               {{- end }}
+              {{/* For PyTorch */}}
+              {{- $cpus := 2 -}}
+              {{- with .Values.resources -}}
+                {{- $cpus = dig "limits" "cpu" 2 . -}}
+              {{- end -}}
+              - name: OMP_NUM_THREADS
+                value: {{ $cpus | toString | quote }}
+              - name: MKL_NUM_THREADS
+                value: {{ $cpus | toString | quote }}
               - name: SASQUATCH_URL
                 value: {{ .Values.sasquatch.endpointUrl }}
               {{- if and .Values.sasquatch.endpointUrl .Values.sasquatch.auth_env }}
