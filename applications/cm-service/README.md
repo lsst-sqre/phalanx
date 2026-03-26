@@ -29,6 +29,7 @@ Campaign Management for Rubin Data Release Production
 | config.db.secretKey | string | `"internalDatabasePassword"` | Key within db authn secret with db password |
 | config.db.secretName | string | `"cm-service"` | Name of a secret with db authn details |
 | config.db.username | string | `"cmservice"` | Name of the database user to use for the application |
+| config.docsPrefix | string | `"/docs"` | URL path prefix for apidocs |
 | config.features | object | `{}` | Enabled features as a mapping of feature to "1" (enabled) or "0" (disabled) |
 | config.fqdnUrl | string | `nil` | URL FQDN, used to write absolute URLs in notifications |
 | config.htcondor.collectorHost | string | `nil` | Name of an htcondor collector host |
@@ -52,7 +53,8 @@ Campaign Management for Rubin Data Release Production
 | config.panda.useNativeHttplib | string | `"1"` | PanDA Use Native HTTPLib instead of Curl |
 | config.panda.verifyHost | string | `"1"` | PanDA host TLS verification |
 | config.panda.virtualOrganization | string | `"Rubin"` | PanDA Virtual Organization Name for oidc |
-| config.pathPrefix | string | `"/cm-service"` | URL path prefix |
+| config.rootPath | string | `"/cm-service"` | URL root path |
+| config.routePrefix | string | `"/cm-service"` | URL path prefix (deprecated) |
 | config.slack.secretName | string | `"cm-service"` | Name of Secret with Slack secrets |
 | config.slack.webhookUrlSecretKey | string | `"slack-webhook-url"` | Secret key for Slack webhook URL |
 | daemon.affinity | object | `{}` | Affinity rules for the daemon pods |
@@ -80,5 +82,17 @@ Campaign Management for Rubin Data Release Production
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the frontend image |
 | image.repository | string | `"ghcr.io/lsst-dm/cm-service"` | Image to use for frontend containers |
 | image.tag | string | The appVersion of the chart | Tag of frontend image to use |
-| ingress.annotations | object | `{}` | Additional annotations for the frontend ingress rule |
+| ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | internalDB | bool | `false` | Whether to use the internal (phalanx) database |
+| web.affinity | object | `{}` | Affinity rules for the web pods |
+| web.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the web image |
+| web.image.repository | string | `"ghcr.io/lsst-dm/cm-web"` | Image to use for web containers |
+| web.image.tag | string | The appVersion of the chart | Tag of web image to use |
+| web.nodeSelector | object | `{}` | Node selection rules for the web pods |
+| web.podAnnotations | object | `{}` | Annotations for the web pods |
+| web.replicaCount | int | `1` | Number of web pods to start |
+| web.resources | object | See `values.yaml` | Resource limits and requests for the web pods |
+| web.rootPath | string | `"/gui"` | ASGI Root path for application |
+| web.security.gid | int | `65532` | Effective GID for nonroot user |
+| web.security.uid | int | `65532` | Effective UID for nonroot user |
+| web.tolerations | list | `[]` | Tolerations for the web pods |
