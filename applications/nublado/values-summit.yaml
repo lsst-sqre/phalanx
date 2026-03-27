@@ -1,6 +1,7 @@
 controller:
   config:
     images:
+      prepullTimeout: "20m"
       source:
         type: "docker"
         registry: "ts-dockerhub.lsst.org"
