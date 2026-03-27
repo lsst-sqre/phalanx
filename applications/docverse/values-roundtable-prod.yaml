@@ -1,5 +1,7 @@
 config:
   databaseUrl: "postgresql://docverse@localhost/docverse"
+  superadminUsers:
+    - "jonathansick"
 
 cloudsql:
   enabled: true

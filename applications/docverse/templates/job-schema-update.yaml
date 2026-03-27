@@ -28,7 +28,7 @@ spec:
       containers:
         - name: "docverse"
           command:
-            - "docverse"
+            - "docverse-admin"
             - "update-db-schema"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
@@ -46,11 +46,7 @@ spec:
             - configMapRef:
                 name: "docverse"
           env:
-            - name: "DOCVERSE_DATABASE_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "docverse"
-                  key: "DOCVERSE_DATABASE_PASSWORD"
+            {{- include "docverse.envVars" . | nindent 12 }}
       {{- if .Values.cloudsql.enabled }}
       initContainers:
         {{- include "docverse.cloudsqlSidecar" . | nindent 8 }}

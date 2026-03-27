@@ -35,18 +35,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-            - name: "DOCVERSE_DATABASE_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "docverse"
-                  key: "DOCVERSE_DATABASE_PASSWORD"
-            {{- if .Values.config.slackAlerts }}
-            - name: "DOCVERSE_SLACK_WEBHOOK"
-              valueFrom:
-                secretKeyRef:
-                  name: "docverse"
-                  key: "slack-webhook"
-            {{- end }}
+            {{- include "docverse.envVars" . | nindent 12 }}
             # Uvicorn keepalive timeout, in seconds. This should be longer
             # than any keepalive timeouts on any downstream proxies. The
             # keepalive timeout for ingress-nginx connections is 60s.

@@ -14,4 +14,7 @@ data:
   DOCVERSE_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
   DOCVERSE_DATABASE_URL: {{ .Values.config.databaseUrl | quote }}
   DOCVERSE_ARQ_REDIS_URL: {{ .Values.config.arqRedisUrl | quote }}
+  {{- with .Values.config.superadminUsers }}
+  DOCVERSE_SUPERADMIN_USERNAMES: {{ toJson . | quote }}
+  {{- end }}
   REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}

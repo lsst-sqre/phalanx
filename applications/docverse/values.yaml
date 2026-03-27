@@ -44,6 +44,10 @@ config:
   # -- Whether to run Alembic schema migrations on install/upgrade
   updateSchema: false
 
+  # -- Usernames that have super admin (de facto admin in all organizations)
+  superadminUsers:
+    - "jonathansick"
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}

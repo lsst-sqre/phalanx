@@ -50,3 +50,26 @@ Cloud SQL Auth Proxy sidecar container
     runAsUser: 65532
     runAsGroup: 65532
 {{- end }}
+
+{{/*
+Secret environment variables shared across all Docverse pods.
+*/}}
+{{- define "docverse.envVars" -}}
+- name: "DOCVERSE_CREDENTIAL_ENCRYPTION_KEY"
+  valueFrom:
+    secretKeyRef:
+      name: "docverse"
+      key: "DOCVERSE_CREDENTIAL_ENCRYPTION_KEY"
+- name: "DOCVERSE_DATABASE_PASSWORD"
+  valueFrom:
+    secretKeyRef:
+      name: "docverse"
+      key: "DOCVERSE_DATABASE_PASSWORD"
+{{- if .Values.config.slackAlerts }}
+- name: "DOCVERSE_SLACK_WEBHOOK"
+  valueFrom:
+    secretKeyRef:
+      name: "docverse"
+      key: "slack-webhook"
+{{- end }}
+{{- end }}
