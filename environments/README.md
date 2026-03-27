@@ -63,6 +63,7 @@
 | applications.prompt-keda-hsc | bool | `false` | Enable the prompt-keda-hsc application |
 | applications.prompt-keda-latiss | bool | `false` | Enable the prompt-keda-latiss application |
 | applications.prompt-keda-lsstcam | bool | `false` | Enable the prompt-keda-lsstcam application |
+| applications.prompt-pub | bool | `false` | Enable the prompt-pub application |
 | applications.prompt-redis | bool | `false` | Enable the prompt-redis application |
 | applications.qserv-kafka | bool | `false` | Enable the qserv-kafka application |
 | applications.repertoire | bool | `true` | Enable the Repertoire application. This provides service discovery for many other Phalanx applications, all of which assume that it is running. |
