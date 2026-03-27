@@ -18,37 +18,31 @@ prompt-keda:
       # The config will get corrupted after template substitution.
       # Block-style mappings can have lines of any length.
       main: |-
-        - survey: BLOCK-365  # FBS Survey (dense dithered star field calibrations)
+        # Dense dithered star field calibrations
+        - survey: BLOCK-365
           pipelines: &std-main-pipelines
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
-        - survey: BLOCK-407  # FBS Pre-Operations Survey (independent of environmental conditions)
-          pipelines: *std-main-pipelines
-        - survey: BLOCK-408  # FBS Pre-Operations Survey (triggered by environmental conditions)
-          pipelines: *std-main-pipelines
-        - survey: BLOCK-416  # FBS Pre-Operations Survey (with a constrained LSST configuration)
-          pipelines: *std-main-pipelines
-        - survey: BLOCK-417  # FBS Pre-Operations Survey (with a constrained LSST configuration)
-          pipelines: *std-main-pipelines
-        - survey: BLOCK-419  # FBS Pre-Operations Survey (a version without elevation, rotation, or filter change constraints)
-          pipelines: *std-main-pipelines
-        - survey: BLOCK-421  # FBS Pre-Operations Survey (a version without FAM triplets)
-          pipelines: *std-main-pipelines
+        # FBS Pre-Operations Survey
+        - {survey: BLOCK-407, pipelines: *std-main-pipelines}
+        - {survey: BLOCK-408, pipelines: *std-main-pipelines}
+        - {survey: BLOCK-416, pipelines: *std-main-pipelines}
+        - {survey: BLOCK-417, pipelines: *std-main-pipelines}
+        - {survey: BLOCK-419, pipelines: *std-main-pipelines}
+        - {survey: BLOCK-421, pipelines: *std-main-pipelines}
         # TMA checkout, no images
-        - {survey: "BLOCK-T250", pipelines: []}
-        - survey: BLOCK-T427  # Daytime checkout
+        - {survey: BLOCK-T250, pipelines: []}
+        # Daytime checkout
+        - survey: BLOCK-T427
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr-cal.yaml']
-        - survey: BLOCK-T698  # Fixed telescope pointing stability test
-          pipelines: *std-main-pipelines
-        - survey: BLOCK-T703  # Fixed pointing
-          pipelines: *std-main-pipelines
-        - survey: BLOCK-T704  # Fixed pointing
-          pipelines: *std-main-pipelines
-        - survey: BLOCK-T706  # Fixed pointing
-          pipelines: *std-main-pipelines
-        # Produces nextVisits but not images
-        - {survey: "BLOCK-T454", pipelines: []}
+        # All-day clearing; produces nextVisits but not images
+        - {survey: BLOCK-T454, pipelines: []}
+        # Fixed telescope pointing stability test
+        - {survey: BLOCK-T698, pipelines: *std-main-pipelines}
+        - {survey: BLOCK-T703, pipelines: *std-main-pipelines}
+        - {survey: BLOCK-T704, pipelines: *std-main-pipelines}
+        - {survey: BLOCK-T706, pipelines: *std-main-pipelines}
         # Miscellaneous scripts, not always images
         - {survey: "", pipelines: []}
         # Ignore unknown events during Commissioning
@@ -58,26 +52,16 @@ prompt-keda:
         - survey: BLOCK-365
           pipelines: &std-pre-pipelines
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing.yaml
-        - survey: BLOCK-407
-          pipelines: *std-pre-pipelines
-        - survey: BLOCK-408
-          pipelines: *std-pre-pipelines
-        - survey: BLOCK-416
-          pipelines: *std-pre-pipelines
-        - survey: BLOCK-417
-          pipelines: *std-pre-pipelines
-        - survey: BLOCK-419
-          pipelines: *std-pre-pipelines
-        - survey: BLOCK-421
-          pipelines: *std-pre-pipelines
-        - survey: BLOCK-T698
-          pipelines: *std-pre-pipelines
-        - survey: BLOCK-T703
-          pipelines: *std-pre-pipelines
-        - survey: BLOCK-T704
-          pipelines: *std-pre-pipelines
-        - survey: BLOCK-T706
-          pipelines: *std-pre-pipelines
+        - {survey: BLOCK-407, pipelines: *std-pre-pipelines}
+        - {survey: BLOCK-408, pipelines: *std-pre-pipelines}
+        - {survey: BLOCK-416, pipelines: *std-pre-pipelines}
+        - {survey: BLOCK-417, pipelines: *std-pre-pipelines}
+        - {survey: BLOCK-419, pipelines: *std-pre-pipelines}
+        - {survey: BLOCK-421, pipelines: *std-pre-pipelines}
+        - {survey: BLOCK-T698, pipelines: *std-pre-pipelines}
+        - {survey: BLOCK-T703, pipelines: *std-pre-pipelines}
+        - {survey: BLOCK-T704, pipelines: *std-pre-pipelines}
+        - {survey: BLOCK-T706, pipelines: *std-pre-pipelines}
         - {survey: "", pipelines: []}
         # Don't preprocess anything unknown
         - {pipelines: []}
