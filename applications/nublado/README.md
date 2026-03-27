@@ -52,6 +52,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.images.numReleases | int | `1` | Number of most-recent releases to prepull. |
 | controller.config.images.numWeeklies | int | `2` | Number of most-recent weeklies to prepull. |
 | controller.config.images.pin | list | `[]` | List of additional image tags to prepull. Listing the image tagged as recommended here is recommended when using a Docker image source to ensure its name can be expanded properly in the menu. |
+| controller.config.images.prepullTimeout | string | `"10m"` | How long to wait for a prepull of a pod to finish before deciding it has failed, in Safir `parse_timedelta` format. |
 | controller.config.images.recommendedTag | string | `"recommended"` | Tag marking the recommended image (shown first in the menu) |
 | controller.config.images.refreshInterval | string | `"5m"` | How frequently to refresh the list of available images and compare it to the cached images on nodes to prepull new images, in Safir `parse_timedelta` format. Newly-available images will not appear in the menu for up to this interval. |
 | controller.config.images.source | object | None, must be specified | Source for prepulled images. For Docker, set `type` to `docker`, `registry` to the hostname and `repository` to the name of the repository. For Google Artifact Repository, set `type` to `google`, `location` to the region, `projectId` to the Google project, `repository` to the name of the repository, and `image` to the name of the image. |
@@ -155,7 +156,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/nublado-jupyterhub"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"12.0.2"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"12.1.0"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | See `values.yaml` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |
