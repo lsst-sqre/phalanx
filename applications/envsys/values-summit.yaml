@@ -174,7 +174,7 @@ earthquake-ess302:
   enabled: true
   classifier: ess302
   image:
-    revision: 0
+    revision: 4
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
