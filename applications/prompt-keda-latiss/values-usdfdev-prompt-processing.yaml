@@ -65,8 +65,8 @@ prompt-keda:
     config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_latiss-dev.yaml
 
   alerts:
-    username: kafka-admin
-    server: usdf-alert-stream-dev.lsst.cloud:9094
+    username: prompt-alert
+    server: sasquatch-kafka-bootstrap.sasquatch:9092
     topic: alert-stream-test
 
   sasquatch:
