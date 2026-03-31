@@ -238,31 +238,31 @@ scripts:
     limits:
       cpu: 2.0
       memory: 8G
-- name: summit/misc/runStarTracker.py
-  mounts:
-  - project-shared
-- name: summit/misc/runStarTrackerCatchup.py
-  mounts:
-  - project-shared
-  resources:
-    requests:
-      cpu: 1.0
-      memory: 6G
-    limits:
-      cpu: 1
-      memory: 8G
-- name: summit/misc/runStarTrackerFast.py
-  mounts:
-  - project-shared
-- name: summit/misc/runStarTrackerMetadata.py
-  mounts:
-  - project-shared
-- name: summit/misc/runStarTrackerNightReport.py
-  mounts:
-  - project-shared
-- name: summit/misc/runStarTrackerWide.py
-  mounts:
-  - project-shared
+# - name: summit/misc/runStarTracker.py
+#   mounts:
+#   - project-shared
+# - name: summit/misc/runStarTrackerCatchup.py
+#   mounts:
+#   - project-shared
+#   resources:
+#     requests:
+#       cpu: 1.0
+#       memory: 6G
+#     limits:
+#       cpu: 1
+#       memory: 8G
+# - name: summit/misc/runStarTrackerFast.py
+#   mounts:
+#   - project-shared
+# - name: summit/misc/runStarTrackerMetadata.py
+#   mounts:
+#   - project-shared
+# - name: summit/misc/runStarTrackerNightReport.py
+#   mounts:
+#   - project-shared
+# - name: summit/misc/runStarTrackerWide.py
+#   mounts:
+#   - project-shared
 - name: summit/misc/runTmaTelemetry.py
   mounts:
   - project-shared
