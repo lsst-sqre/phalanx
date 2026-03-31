@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: by-uuid-difference-image-20260311-0512
+  tag: fov-quicklook-local-diffimage-20260311-0512
 
 config:
   # -- URL path prefix
