@@ -73,6 +73,9 @@ nightlydigest-backend:
     - name: JIRA_API_TOKEN
       secretName: nightlydigest
       secretKey: jira-api-token
+    - name: ZEPHYR_API_TOKEN
+      secretName: nightlydigest
+      secretKey: zephyr-api-token
     - name: ACCESS_TOKEN
       secretName: nightlydigest-backend-gafaelfawr-token
       secretKey: token
