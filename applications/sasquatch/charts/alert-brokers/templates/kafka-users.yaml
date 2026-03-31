@@ -41,3 +41,36 @@ spec:
         - All
       {{- end }}
 {{- end }}
+{{ range $idx, $service := $.Values.serviceAccounts }}
+---
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaUser
+metadata:
+  name: {{ $service.username | quote }}
+  labels:
+    strimzi.io/cluster: {{ $.Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: {{ $cluster | quote }}
+          key: {{ $service.username }}-password
+  authorization:
+    type: simple
+    acls:
+      {{- $additional := .additionalTopics | default (list) -}}
+      {{- $allTopics := concat .topics $additional -}}
+      {{- range $idx, $topic := $allTopics }}
+      - resource:
+          type: topic
+          name: {{ $topic | quote }}
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+        - Write
+        - Describe
+      {{- end }}
+{{- end }}
