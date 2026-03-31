@@ -125,7 +125,7 @@ schema-registry:
   ingress:
     enabled: true
     anonymous: true
-    hostname: usdfdev-prompt-processing.slac.stanford.edu
+    hostname: rubin-alert-schemas-dev.slac.stanford.edu
     annotations:
       nginx.ingress.kubernetes.io/configuration-snippet: |
         # Forbid everything except GET since this should be a read-only ingress
@@ -159,34 +159,39 @@ strimzi-kafka:
       tls:
         enabled: false
       bootstrap:
+        host: rubin-alert-stream-broker-bootstrap-dev.slac.stanford.edu
         annotations:
           metallb.io/address-pool: sdf-dmz
           metallb.io/loadBalancerIPs: 134.79.23.199
         allocateLoadBalancerNodePorts: false
       brokers:
         - broker: 3
+          host: rubin-alert-stream-broker-3-dev.slac.stanford.edu
           annotations:
             metallb.io/address-pool: sdf-dmz
             metallb.io/loadBalancerIPs: 134.79.23.201
         - broker: 4
+          host: rubin-alert-stream-broker-4-dev.slac.stanford.edu
           annotations:
             metallb.io/address-pool: sdf-dmz
             metallb.io/loadBalancerIPs: 134.79.23.203
         - broker: 5
+          host: rubin-alert-stream-broker-5-dev.slac.stanford.edu
           annotations:
             metallb.io/address-pool: sdf-dmz
             metallb.io/loadBalancerIPs: 134.79.23.204
         - broker: 6
+          host: rubin-alert-stream-broker-6-dev.slac.stanford.edu
           annotations:
             metallb.io/address-pool: sdf-dmz
             metallb.io/loadBalancerIPs: 134.79.23.205
         - broker: 7
+          host: rubin-alert-stream-broker-7-dev.slac.stanford.edu
           annotations:
             metallb.io/address-pool: sdf-dmz
             metallb.io/loadBalancerIPs: 134.79.23.206
     metricsConfig:
       enabled: true
-
 
   broker:
     enabled: true
