@@ -88,6 +88,7 @@ love-manager:
         DB_HOST: postgresdb01.ls.lsst.org
         LOVE_SITE: base
         NIGHTREPORT_MAIL_ADDRESS: sebastian.aranda@noirlab.edu
+        HIDE_TRACE_TIMESTAMPS: "true"
       autoscaling:
         enabled: true
         minReplicas: 2
