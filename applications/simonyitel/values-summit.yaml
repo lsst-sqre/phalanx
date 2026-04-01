@@ -366,7 +366,7 @@ mtdometrajectory:
 mtheaderservice:
   enabled: true
   image:
-    revision: 0
+    revision: 3
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
   env:
