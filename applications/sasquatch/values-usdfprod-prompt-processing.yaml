@@ -4,13 +4,13 @@ alert-brokers:
   topics:
     - name: alert-stream-test
       partitions: 400
-      replicas: 1
+      replicas: 3
     - name: alerts-simulated
       partitions: 45
-      replicas: 1
+      replicas: 3
     - name: lsst-alerts-v10.0
       partitions: 45
-      replicas: 1
+      replicas: 3
       bytesRetained: "300000000000"
       millisecondsRetained: "2629740000"
 
@@ -122,7 +122,7 @@ schema-registry:
   ingress:
     enabled: true
     anonymous: true
-    hostname: usdfprod-prompt-processing.slac.stanford.edu
+    hostname: rubin-alert-schemas.slac.stanford.edu
     annotations:
       nginx.ingress.kubernetes.io/configuration-snippet: |
         # Forbid everything except GET since this should be a read-only ingress
@@ -138,6 +138,7 @@ strimzi-kafka:
   kafka:
     version: "4.1.0"
     replicationFactor: 3
+    replicas: 5
     config:
       # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
       replica.lag.time.max.ms: 120000
@@ -155,31 +156,37 @@ strimzi-kafka:
       tls:
         enabled: false
       bootstrap:
+        host: rubin-alert-stream-bootstrap.slac.stanford.edu
         annotations:
           metallb.io/address-pool: sdf-dmz
           metallb.io/loadBalancerIPs: 134.79.23.209
         allocateLoadBalancerNodePorts: false
       brokers:
-        - broker: 3
-          annotations:
-            metallb.io/address-pool: sdf-dmz
-            metallb.io/loadBalancerIPs: 134.79.23.210
-        - broker: 4
-          annotations:
-            metallb.io/address-pool: sdf-dmz
-            metallb.io/loadBalancerIPs: 134.79.23.211
         - broker: 5
+          host: rubin-alert-stream-broker-5.slac.stanford.edu
           annotations:
             metallb.io/address-pool: sdf-dmz
             metallb.io/loadBalancerIPs: 134.79.23.212
         - broker: 6
+          host: rubin-alert-stream-broker-6.slac.stanford.edu
           annotations:
             metallb.io/address-pool: sdf-dmz
             metallb.io/loadBalancerIPs: 134.79.23.213
         - broker: 7
+          host: rubin-alert-stream-broker-7.slac.stanford.edu
           annotations:
             metallb.io/address-pool: sdf-dmz
             metallb.io/loadBalancerIPs: 134.79.23.215
+        - broker: 8
+          host: rubin-alert-stream-broker-8.slac.stanford.edu
+          annotations:
+            metallb.io/address-pool: sdf-dmz
+            metallb.io/loadBalancerIPs: 134.79.23.210
+        - broker: 9
+          host: rubin-alert-stream-broker-9.slac.stanford.edu
+          annotations:
+            metallb.io/address-pool: sdf-dmz
+            metallb.io/loadBalancerIPs: 134.79.23.211
     metricsConfig:
       enabled: true
 
@@ -237,4 +244,7 @@ strimzi-kafka:
         memory: 8Gi
 
   cruiseControl:
+    enabled: true
+
+  kafkaExporter:
     enabled: true
