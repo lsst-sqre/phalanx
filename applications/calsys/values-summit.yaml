@@ -250,7 +250,7 @@ simulation-gencam:
 tunablelaser:
   enabled: true
   image:
-    revision: 0
+    revision: 3
     repository: ts-dockerhub.lsst.org/tunablelaser
     pullPolicy: Always
   resources:
