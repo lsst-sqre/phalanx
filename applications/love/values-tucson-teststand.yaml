@@ -88,6 +88,7 @@ love-manager:
         DB_HOST: postgresdb01.tu.lsst.org
         LOVE_SITE: tucson
         NIGHTREPORT_MAIL_ADDRESS: saranda@lsst.org
+        HIDE_TRACE_TIMESTAMPS: "false"
       autoscaling:
         enabled: true
         minReplicas: 2
