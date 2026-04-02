@@ -179,6 +179,16 @@ dependencies:
   condition: mtrotator-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: mtvms-camera-rotator-sim
+  version: 1.0.0
+  condition: mtvms-camera-rotator-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: mtvms-m2-sim
+  version: 1.0.0
+  condition: mtvms-m2-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: mtvms-m1m3-sim
   version: 1.0.0
   condition: mtvms-m1m3-sim.enabled
