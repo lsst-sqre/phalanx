@@ -803,16 +803,6 @@ love-producer:
       limits:
         cpu: 300m
         memory: 500Mi
-  - name: m2mtvms2
-    csc: MTVMS:2
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-    resources:
-      requests:
-        cpu: 50m
-        memory: 160Mi
-      limits:
-        cpu: 300m
-        memory: 300Mi
   - name: mtheaderservice
     csc: MTHeaderService:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
