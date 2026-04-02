@@ -680,6 +680,12 @@ love-producer:
   - name: mtvmsm1m3
     csc: MTVMS:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: m2mtvms2
+    csc: MTVMS:2
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: mtvmscamerarotator
+    csc: MTVMS:3
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ocsscheduler
     csc: Scheduler:3 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
