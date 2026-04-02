@@ -475,6 +475,21 @@ mtrotator-sim:
       cpu: 60m
       memory: 280Mi
 
+mtvms-camera-rotator-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/vms_sim
+    pullPolicy: Always
+  env:
+    RUN_ARG: CameraRotator
+  resources:
+    limits:
+      cpu: 250m
+      memory: 180Mi
+    requests:
+      cpu: 25m
+      memory: 60Mi
+
 mtvms-m1m3-sim:
   enabled: true
   image:
@@ -482,6 +497,21 @@ mtvms-m1m3-sim:
     pullPolicy: Always
   env:
     RUN_ARG: M1M3
+  resources:
+    limits:
+      cpu: 250m
+      memory: 180Mi
+    requests:
+      cpu: 25m
+      memory: 60Mi
+
+mtvms-m2-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/vms_sim
+    pullPolicy: Always
+  env:
+    RUN_ARG: M2
   resources:
     limits:
       cpu: 250m
