@@ -16,7 +16,7 @@ controller:
         registry: "ghcr.io"
         repository: "lsst-sqre/sciplat-lab"
       pin:
-        - "r29_2_0_rsp2648"
+        - "r29_2_0_rsp2697"
     lab:
       affinity:
         nodeAffinity:
