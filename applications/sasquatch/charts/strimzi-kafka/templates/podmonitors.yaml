@@ -132,4 +132,22 @@ spec:
   - port: http-metrics # The named port for 9404
     path: /metrics
     interval: 30s
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: kafka-broker-monitor
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      strimzi.io/cluster: "sasquatch"
+      strimzi.io/name: "sasquatch-kafka"
+  namespaceSelector:
+    matchNames:
+      - sasquatch
+  podMetricsEndpoints:
+  - port: tcp-prometheus # This is the standard Strimzi name for port 9404
+    path: /metrics
+    interval: 30s
 {{- end }}
