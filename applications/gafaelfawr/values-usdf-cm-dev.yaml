@@ -224,3 +224,6 @@ config:
     - "rra"
     - "ytl"
     - "ppascual"
+
+image:
+  tag: 14.1.0
