@@ -242,10 +242,10 @@ daemon:
   resources:
     limits:
       cpu: "1"
-      memory: "1Gi"
+      memory: "8Gi"
     requests:
       cpu: "0.1"
-      memory: "550Mi"
+      memory: "4Gi"
 
   # -- Affinity rules for the daemon pods
   affinity: {}
