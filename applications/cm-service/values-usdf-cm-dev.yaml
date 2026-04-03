@@ -27,6 +27,7 @@ config:
     DAEMON_V2: 1
     DAEMON_CAMPAIGNS: 1
     DAEMON_NODES: 1
+    SCHEDULER: 1
     STORE_FSM: 1
     ALLOW_TASK_UPSERT: 1
     MOCK_BUTLER: 0
@@ -66,7 +67,7 @@ config:
     useNativeHttplib: "1"
 
 image:
-  tag: "0.7.0"
+  tag: "0.8.0-rc.1"
   pullPolicy: Always
 
 daemon:
@@ -75,10 +76,17 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.7.0"
+    tag: "0.8.0-rc.1"
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: "1"
+      memory: "8Gi"
+    requests:
+      cpu: "0.1"
+      memory: "4Gi"
 
 web:
   image:
-    tag: "0.7.0"
+    tag: "0.8.0-rc.1"
     pullPolicy: Always
