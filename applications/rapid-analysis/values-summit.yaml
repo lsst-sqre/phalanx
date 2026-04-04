@@ -396,6 +396,7 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
+  replicas: 3
   resources:
     requests:
       cpu: 1
