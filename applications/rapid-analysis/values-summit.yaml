@@ -404,10 +404,10 @@ scripts:
       cpu: 2
       memory: 10G
 - name: LSSTCam/runZernikePredictionPlotting.py
-  replicas: 5
   mounts:
   - lsstcam-data
   - project-shared
+  replicas: 5
   resources:
     requests:
       cpu: 1
@@ -416,10 +416,10 @@ scripts:
       cpu: 2
       memory: 12G
 - name: LSSTCam/runPerformanceMonitor.py
-  replicas: 8
   mounts:
   - lsstcam-data
   - project-shared
+  replicas: 5
   resources:
     requests:
       cpu: 1
@@ -454,10 +454,10 @@ scripts:
       cpu: 1
       memory: 6G
 - name: LSSTCam/runGuiderAnalysis.py
-  replicas: 5
   mounts:
   - lsstcam-data
   - project-shared
+  replicas: 8
   resources:
     requests:
       cpu: 1
