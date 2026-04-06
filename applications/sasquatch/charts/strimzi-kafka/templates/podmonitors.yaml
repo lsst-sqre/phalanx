@@ -132,6 +132,7 @@ spec:
   - port: http-metrics # The named port for 9404
     path: /metrics
     interval: 30s
+---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
