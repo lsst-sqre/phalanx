@@ -274,11 +274,11 @@ mtaos:
     serverPath: /obs-env
   resources:
     limits:
-      cpu: 5000m
-      memory: 5500Mi
+      cpu: 6000m
+      memory: 6000Mi
     requests:
-      cpu: 1000m
-      memory: 2000Mi
+      cpu: 5000m
+      memory: 5000Mi
 
 mtcamhexapod:
   enabled: true
