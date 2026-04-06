@@ -10,7 +10,7 @@ fullnameOverride: ""
 ingester:
   image:
     repository: lsstdm/alert_database_ingester
-    tag: v4.0.0
+    tag: tickets-DM-54429
     imagePullPolicy: Always
 
   kafka:
