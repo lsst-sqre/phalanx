@@ -113,6 +113,7 @@ spec:
       action: replace
 {{- end }}
 {{- if .Values.kafkaExporter.enabled }}
+---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
