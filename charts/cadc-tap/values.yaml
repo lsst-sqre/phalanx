@@ -94,7 +94,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.16.0"
+      tag: "3.17.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -120,7 +120,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.16.0"
+      tag: "3.17.0"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
@@ -182,6 +182,18 @@ config:
 
     # -- Whether kafka is enabled
     enabled: false
+
+  # -- Output limit value for TAP queries advertised in capabilities.
+  # Leave empty to use the default (100000000).
+  outputLimit: ""
+
+  # -- Unit for the output limit: "byte" or "row".
+  # Leave empty to use the default ("row").
+  outputLimitUnit: ""
+
+  # -- Maximum row limit (MAXREC) enforced server-side.
+  # Leave empty to use the default (100000000).
+  maxRec: ""
 
   # -- Rules for renaming Columns
   urlRewrite:
@@ -343,7 +355,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "3.16.0"
+    tag: "3.17.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`

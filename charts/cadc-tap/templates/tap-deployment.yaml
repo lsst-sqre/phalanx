@@ -182,6 +182,15 @@ spec:
                 -Dkafka.status.topic={{ .Values.config.kafka.topics.jobStatus }}
                 -Dkafka.delete.topic={{ .Values.config.kafka.topics.jobDelete }}
                 {{- end }}
+                {{- if .Values.config.outputLimit }}
+                -Dtap.outputLimit={{ .Values.config.outputLimit }}
+                {{- end }}
+                {{- if .Values.config.outputLimitUnit }}
+                -Dtap.outputLimitUnit={{ .Values.config.outputLimitUnit }}
+                {{- end }}
+                {{- if .Values.config.maxRec }}
+                -Dtap.maxRec={{ .Values.config.maxRec }}
+                {{- end }}
                 -Dbase_url={{ .Values.global.baseUrl }}
                 -Dpath_prefix=/api/{{ .Values.ingress.path }}
                 -Dca.nrc.cadc.util.PropertiesReader.dir=/config/

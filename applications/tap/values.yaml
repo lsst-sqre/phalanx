@@ -16,6 +16,10 @@ cadc-tap:
     # -- Whether Sentry is enabled in this environment
     sentryEnabled: false
 
+    # -- 3GB byte limit for Qserv
+    outputLimit: "3221225472"
+    outputLimitUnit: "byte"
+
   serviceAccount:
     # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
     name: "tap"
