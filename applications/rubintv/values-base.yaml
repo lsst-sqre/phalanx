@@ -6,6 +6,9 @@ rubintv:
 
   frontend:
     debug: true
+    image:
+      tag: deploy
+      pullPolicy: Always
     env:
     - name: S3_ENDPOINT_URL
       value: &s3E "https://s3.ls.lsst.org"
@@ -23,9 +26,14 @@ rubintv:
     - name: RA_REDIS_PASSWORD
       secretName: rubintv-secrets
       secretKey: ra-redis-password
-    image:
-      tag: deploy
-      pullPolicy: Always
+    pvcMountpoint:
+    - name: rubintv-scratch
+      persistentVolumeClaim:
+        name: rubintv-scratch
+        storageClassName: rook-ceph-block
+        capacity: 1Gi
+      accessMode: ReadWriteOnce
+      mountPath: /scratch
     resources:
       requests:
         cpu: 1
