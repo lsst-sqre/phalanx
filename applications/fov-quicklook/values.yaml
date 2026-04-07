@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: main
+  tag: fov-quicklook-local-ui-date-only-exposure-list-20260407-1737
 
 config:
   # -- URL path prefix
