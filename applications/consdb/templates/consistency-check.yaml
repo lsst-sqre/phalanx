@@ -1,0 +1,39 @@
+{{- if .Values.consistencyCheck.enable }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: consdb-consistency-check
+spec:
+  schedule: "6 12 * * *"  # UTC 12:06 daily
+  timeZone: "Etc/UTC"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: consistency-check
+              image: "{{ .Values.consistencyCheck.image.repository }}:{{ .Values.consistencyCheck.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.consistencyCheck.image.pullPolicy }}
+              env:
+                - name: "DB_HOST"
+                  value: "{{ .Values.db.host }}"
+                - name: "DB_PASS"
+                  valueFrom:
+                    secretKeyRef:
+                      name: consdb
+                      key: "{{ .Values.db.passwordkey }}"
+                - name: "DB_USER"
+                  value: "{{ .Values.db.user }}"
+                - name: "DB_NAME"
+                  value: "{{ .Values.db.database }}"
+              resources:
+                {{- toYaml .Values.consistencyCheck.resources | nindent 16 }}
+              volumeMounts:
+                - mountPath: /tmp
+                  name: temp
+          volumes:
+            - name: "temp"
+              emptyDir: {}
+          restartPolicy: OnFailure
+{{- end }}

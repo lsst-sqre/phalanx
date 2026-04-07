@@ -16,6 +16,17 @@ hinfo:
 pq:
   image:
     tag: "25.11.2"
+consistencyCheck:
+  enable: true
+  image:
+    tag: "26.4.1"
+  resources:
+    requests:
+      cpu: 200m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
 
 resources:
   requests:
