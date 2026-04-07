@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: main
+  tag: fov-quicklook-local-progress-no-regress-generate-tiles-20260407-0828
 
 config:
   # -- URL path prefix
