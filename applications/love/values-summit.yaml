@@ -158,7 +158,7 @@ love-manager:
     producers:
     - name: general
       <<: *base-manager-producer
-      replicas: 10
+      replicas: 1
     - name: atqueue
       <<: *base-manager-producer
       replicas: 1
@@ -169,6 +169,21 @@ love-manager:
       <<: *base-manager-producer
       replicas: 1
     - name: m1m3
+      <<: *base-manager-producer
+      replicas: 1
+    - name: envsys
+      <<: *base-manager-producer
+      replicas: 1
+    - name: atcs
+      <<: *base-manager-producer
+      replicas: 1
+    - name: mtcs
+      <<: *base-manager-producer
+      replicas: 1
+    - name: calsys
+      <<: *base-manager-producer
+      replicas: 1
+    - name: obssys
       <<: *base-manager-producer
       replicas: 1
   redis:
@@ -294,6 +309,46 @@ love-nginx:
           proxy_set_header Host $host;
           proxy_redirect off;
       }
+      location /love/manager/envsys {
+          proxy_pass http://love-manager-producer-envsys-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/atcs {
+          proxy_pass http://love-manager-producer-atcs-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/mtcs {
+          proxy_pass http://love-manager-producer-mtcs-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/calsys {
+          proxy_pass http://love-manager-producer-calsys-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/obssys {
+          proxy_pass http://love-manager-producer-obssys-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
       location /love/media {
           alias /usr/src/love-manager/media;
       }
@@ -393,22 +448,22 @@ love-producer:
   producers:
   - name: ataos
     csc: ATAOS:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atbuilding
     csc: ATBuilding:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: atcamera
     csc: ATCamera:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atdome
     csc: ATDome:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atdometrajectory
     csc: ATDomeTrajectory:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atheaderservice
     csc: ATHeaderService:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
     resources:
       requests:
         cpu: 50m
@@ -418,10 +473,10 @@ love-producer:
         memory: 600Mi
   - name: athexapod
     csc: ATHexapod:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atmcs
     csc: ATMCS:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
     resources:
       requests:
         cpu: 40m
@@ -431,22 +486,22 @@ love-producer:
         memory: 300Mi
   - name: atmonochromator
     csc: ATMonochromator:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: atocps
     csc: OCPS:1
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: atoods
     csc: ATOODS:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atpneumatics
     csc: ATPneumatics:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atptg
     csc: ATPtg:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atscheduler
     csc: Scheduler:2
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: atscriptqueue
     csc: ScriptQueue:2
     WEBSOCKET_HOST: love-nginx-service/love/manager/atqueue/ws/subscription
@@ -459,13 +514,13 @@ love-producer:
         memory: 800Mi
   - name: atspectrograph
     csc: ATSpectrograph:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atwhitelight
     csc: ATWhiteLight:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: auxteless201
     csc: ESS:201
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -475,7 +530,7 @@ love-producer:
         memory: 300Mi
   - name: auxteless202
     csc: ESS:202
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -485,7 +540,7 @@ love-producer:
         memory: 300Mi
   - name: auxteless204
     csc: ESS:204
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 60m
@@ -495,7 +550,7 @@ love-producer:
         memory: 300Mi
   - name: auxteless308
     csc: ESS:308
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 60m
@@ -505,7 +560,7 @@ love-producer:
         memory: 300Mi
   - name: calibhilless301
     csc: ESS:301
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 60m
@@ -515,7 +570,7 @@ love-producer:
         memory: 300Mi
   - name: cameraess111
     csc: ESS:111
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 60m
@@ -525,7 +580,7 @@ love-producer:
         memory: 300Mi
   - name: camerahexapod
     csc: MTHexapod:1
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
         cpu: 100m
@@ -535,25 +590,25 @@ love-producer:
         memory: 300Mi
   - name: cccamera
     csc: CCCamera:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: ccheaderservice
     csc: CCHeaderService:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: ccocps
     csc: OCPS:2
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: ccoods
     csc: CCOODS:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: cbp
     csc: CBP:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: dream
     csc: DREAM:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: cleanroomess109
     csc: ESS:109
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 60m
@@ -563,19 +618,19 @@ love-producer:
         memory: 300Mi
   - name: dimm1
     csc: DIMM:1
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: dimm2
     csc: DIMM:2
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: dsm1
     csc: DSM:1
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: dsm2
     csc: DSM:2
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: earthquakeess302
     csc: ESS:302
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -585,22 +640,22 @@ love-producer:
         memory: 300Mi
   - name: eas
     csc: EAS:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: electrometer101
     csc: Electrometer:101
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: electrometer102
     csc: Electrometer:102
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: electrometer103
     csc: Electrometer:103
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: electrometer201
     csc: Electrometer:201
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: epm-ess303
     csc: ESS:303
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -610,7 +665,7 @@ love-producer:
         memory: 300Mi
   - name: epm-generator-ess305
     csc: ESS:305
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -620,7 +675,7 @@ love-producer:
         memory: 300Mi
   - name: epm-generator-ess306
     csc: ESS:306
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -630,43 +685,43 @@ love-producer:
         memory: 300Mi
   - name: fiberspectrograph101
     csc: FiberSpectrograph:101
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: fiberspectrograph102
     csc: FiberSpectrograph:102
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: fiberspectrograph3
     csc: FiberSpectrograph:3
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: gcheaderservice1
     csc: GCHeaderService:1
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: gcheaderservice101
     csc: GCHeaderService:101
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: gcheaderservice102
     csc: GCHeaderService:102
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: gcheaderservice103
     csc: GCHeaderService:103
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: genericcamera1
     csc: GenericCamera:1
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: genericcamera101
     csc: GenericCamera:101
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: genericcamera102
     csc: GenericCamera:102
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: genericcamera103
     csc: GenericCamera:103
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: gis
     csc: GIS:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: hvac
     csc: HVAC:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 100m
@@ -676,37 +731,37 @@ love-producer:
         memory: 600Mi
   - name: lasertracker1
     csc: LaserTracker:1
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: ledprojector
     csc: LEDProjector:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: linearstage101
     csc: LinearStage:101
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: linearstage102
     csc: LinearStage:102
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: linearstage103
     csc: LinearStage:103
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: linearstage104
     csc: LinearStage:104
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: louverh1ess441
     csc: ESS:441
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: louverh1h2ess442
     csc: ESS:442
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: louverh2ess443
     csc: ESS:443
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: love
     csc: LOVE:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: m1m3ess113
     csc: ESS:113
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -716,7 +771,7 @@ love-producer:
         memory: 300Mi
   - name: m1m3ess114
     csc: ESS:114
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -726,7 +781,7 @@ love-producer:
         memory: 300Mi
   - name: m1m3ess115
     csc: ESS:115
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -736,7 +791,7 @@ love-producer:
         memory: 300Mi
   - name: m1m3ess116
     csc: ESS:116
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -746,7 +801,7 @@ love-producer:
         memory: 300Mi
   - name: m1m3ess117
     csc: ESS:117
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -786,7 +841,7 @@ love-producer:
         memory: 300Mi
   - name: m2ess106
     csc: ESS:106
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -796,7 +851,7 @@ love-producer:
         memory: 600Mi
   - name: m2ess112
     csc: ESS:112
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -806,7 +861,7 @@ love-producer:
         memory: 500Mi
   - name: mtheaderservice
     csc: MTHeaderService:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
         cpu: 20m
@@ -816,7 +871,7 @@ love-producer:
         memory: 300Mi
   - name: m2hexapod
     csc: MTHexapod:2
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
         cpu: 100m
@@ -832,10 +887,10 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtaos
     csc: MTAOS:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: mtcamera
     csc: MTCamera:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
         cpu: 100m
@@ -845,10 +900,10 @@ love-producer:
         memory: 600Mi
   - name: mtdome
     csc: MTDome:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: mtdomeess404
     csc: ESS:404
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -858,10 +913,10 @@ love-producer:
         memory: 300Mi
   - name: mtdomeess405
     csc: ESS:405
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: mtdometrajectory
     csc: MTDomeTrajectory:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: mtm1m3-telemetry-01
     csc: MTM1M3:0 --periodic-data tel_forceActuatorData tel_hardpointActuatorData tel_imsData tel_hardpointMonitorData tel_appliedAzimuthForces tel_appliedAccelerationForces tel_appliedBalanceForces tel_appliedCylinderForces tel_appliedElevationForces tel_appliedThermalForces tel_appliedVelocityForces
     WEBSOCKET_HOST: love-nginx-service/love/manager/m1m3/ws/subscription
@@ -954,10 +1009,10 @@ love-producer:
         memory: 600Mi
   - name: mtocps
     csc: OCPS:3
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: mtoods
     csc: MTOODS:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
         cpu: 20m
@@ -967,13 +1022,13 @@ love-producer:
         memory: 300Mi
   - name: mtptg
     csc: MTPtg:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: mtreflector
     csc: MTReflector:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: mtrotator
     csc: MTRotator:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -983,7 +1038,7 @@ love-producer:
         memory: 300Mi
   - name: mtscheduler
     csc: Scheduler:1
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: mtscriptqueue
     csc: ScriptQueue:1
     WEBSOCKET_HOST: love-nginx-service/love/manager/mtqueue/ws/subscription
@@ -996,7 +1051,7 @@ love-producer:
         memory: 800Mi
   - name: ocsscheduler
     csc: Scheduler:3
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: ocsscriptqueue
     csc: ScriptQueue:3
     WEBSOCKET_HOST: love-nginx-service/love/manager/ocsqueue/ws/subscription
@@ -1012,13 +1067,13 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: raocps
     csc: OCPS:101
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: test42
     csc: Test:42
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: partsensess127
     csc: ESS:127
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 60m
@@ -1028,7 +1083,7 @@ love-producer:
         memory: 300Mi
   - name: partsensess128
     csc: ESS:128
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 60m
@@ -1038,7 +1093,7 @@ love-producer:
         memory: 300Mi
   - name: partsensess129
     csc: ESS:129
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 60m
@@ -1048,7 +1103,7 @@ love-producer:
         memory: 300Mi
   - name: ringssess304
     csc: ESS:304
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 60m
@@ -1058,7 +1113,7 @@ love-producer:
         memory: 300Mi
   - name: tea-ess123
     csc: ESS:123
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -1068,7 +1123,7 @@ love-producer:
         memory: 300Mi
   - name: tea-ess124
     csc: ESS:124
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -1078,7 +1133,7 @@ love-producer:
         memory: 300Mi
   - name: tea-ess125
     csc: ESS:125
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -1088,7 +1143,7 @@ love-producer:
         memory: 300Mi
   - name: tea-ess126
     csc: ESS:126
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -1098,7 +1153,7 @@ love-producer:
         memory: 300Mi
   - name: tmaess104
     csc: ESS:104
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -1108,7 +1163,7 @@ love-producer:
         memory: 300Mi
   - name: tmaess105
     csc: ESS:105
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 60m
@@ -1118,7 +1173,7 @@ love-producer:
         memory: 300Mi
   - name: tmaess110
     csc: ESS:110
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -1128,7 +1183,7 @@ love-producer:
         memory: 300Mi
   - name: tmaess121
     csc: ESS:121
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -1138,7 +1193,7 @@ love-producer:
         memory: 300Mi
   - name: tmaess122
     csc: ESS:122
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 70m
@@ -1148,10 +1203,10 @@ love-producer:
         memory: 300Mi
   - name: tunablelaser
     csc: TunableLaser:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: watcher
     csc: Watcher:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
     resources:
       requests:
         cpu: 50m
@@ -1161,7 +1216,7 @@ love-producer:
         memory: 300Mi
   - name: weatherforecast
     csc: WeatherForecast:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 25m
@@ -1171,7 +1226,7 @@ love-producer:
         memory: 300Mi
   - name: wfoods
     csc: WFOODS:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
         cpu: 20m
