@@ -71,8 +71,8 @@ manager:
       DB_HOST: love-manager-database-service
       # -- The port for the database service
       DB_PORT: 5432
-      # -- Whether to hide timestamps in logs
-      HIDE_TRACE_TIMESTAMPS: "false"
+      # -- Whether to show timestamps in logs
+      SHOW_TRACE_TIMESTAMPS: "true"
       # -- The name of the redis service
       REDIS_HOST: love-manager-redis-service
       # -- The expiration time for the redis service
