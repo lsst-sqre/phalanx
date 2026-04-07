@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: main
+  tag: fov-quicklook-local-deploy-broker-daemon-20260407-0525
 
 config:
   # -- URL path prefix
