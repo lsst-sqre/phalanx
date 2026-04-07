@@ -17,6 +17,7 @@ applications:
   datalinker: true
   exposurelog: true
   fov-quicklook: true
+  grafana: true
   jira-data-proxy: true
   livetap: true
   mobu: true
