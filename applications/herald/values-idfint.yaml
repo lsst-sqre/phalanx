@@ -1,0 +1,7 @@
+config:
+  s3AlertsBucket: "rubin-alert-archive"
+  s3SchemasBucket: "rubin-alert-archive"
+  s3AlertsPrefix: "v2/alerts"
+  s3SchemasPrefix: "v2/schemas"
+  s3EndpointUrl: "https://sdfdatas3.slac.stanford.edu"
+  s3Credentials: true

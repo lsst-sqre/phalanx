@@ -33,6 +33,7 @@
 | applications.gke | bool | `false` | Enable the gke application |
 | applications.google-cloud-observability | bool | `false` | Enable the google-cloud-observability application |
 | applications.grafana | bool | `false` | Enable the grafana application |
+| applications.herald | bool | `false` | Enable the herald application |
 | applications.hips | bool | `false` | Enable the HiPS application |
 | applications.hoverdrive | bool | `false` | Enable the hoverdrive application |
 | applications.ingress-nginx | bool | `true` | Enable the ingress-nginx application. This is required for all environments, but is still configurable because currently USDF uses an unsupported configuration with ingress-nginx deployed in a different cluster. |

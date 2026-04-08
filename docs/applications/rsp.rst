@@ -14,6 +14,7 @@ Argo CD project: ``rsp``
    consdbtap/index
    datalinker/index
    fov-quicklook/index
+   herald/index
    hips/index
    hoverdrive/index
    jira-data-proxy/index

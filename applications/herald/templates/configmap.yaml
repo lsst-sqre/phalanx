@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "herald"
+  labels:
+    {{- include "herald.labels" . | nindent 4 }}
+data:
+  HERALD_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  HERALD_LOG_PROFILE: {{ .Values.config.logProfile | quote }}
+  HERALD_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  HERALD_S3_ALERTS_BUCKET: {{ .Values.config.s3AlertsBucket | quote }}
+  HERALD_S3_SCHEMAS_BUCKET: {{ .Values.config.s3SchemasBucket | quote }}
+  HERALD_S3_ALERTS_PREFIX: {{ .Values.config.s3AlertsPrefix | quote }}
+  HERALD_S3_SCHEMAS_PREFIX: {{ .Values.config.s3SchemasPrefix | quote }}
+  {{- if .Values.config.s3Region }}
+  HERALD_S3_REGION: {{ .Values.config.s3Region | quote }}
+  {{- end }}
+  {{- if .Values.config.s3EndpointUrl }}
+  HERALD_S3_ENDPOINT_URL: {{ .Values.config.s3EndpointUrl | quote }}
+  {{- end }}
