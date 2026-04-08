@@ -253,6 +253,15 @@ mtaos:
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+    OPENBLAS_NUM_THREADS: 4
+    GOTO_NUM_THREADS: 4
+    OMP_NUM_THREADS: 4
+    MKL_NUM_THREADS: 4
+    MKL_DOMAIN_NUM_THREADS: 4
+    MPI_NUM_THREADS: 4
+    NUMEXPR_NUM_THREADS: 4
+    NUMEXPR_MAX_THREADS: 4
+    OMP_PROC_BIND: false
   s3Credentials:
   - butler-credentials.ini
   <<: *butler-secret
