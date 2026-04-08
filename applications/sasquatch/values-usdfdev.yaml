@@ -97,11 +97,11 @@ influxdb:
       termination-query-log: true
   resources:
     requests:
-      memory: 96Gi
-      cpu: 8
+      memory: 128Gi
+      cpu: 16
     limits:
-      memory: 96Gi
-      cpu: 8
+      memory: 128Gi
+      cpu: 16
 
 customInfluxDBIngress:
   enabled: true
