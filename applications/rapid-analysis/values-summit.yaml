@@ -26,6 +26,10 @@ env:
   NUMEXPR_NUM_THREADS: 1
   NUMEXPR_MAX_THREADS: 1
   OMP_PROC_BIND: false
+envSecrets:
+- name: SENTRY_DSN
+  secretName: rapid-analysis-secrets
+  secretKey: sentry.dsn
 securityContext:
   uid: 73006
   gid: 73006

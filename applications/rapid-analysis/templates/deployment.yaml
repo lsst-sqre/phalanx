@@ -50,11 +50,6 @@ spec:
             - name: RAPID_ANALYSIS_LOCATION
               value: {{ $.Values.location | upper | quote }}
           {{ if $.Values.sentry.enabled }}
-            - name: SENTRY_DSN
-              valueFrom:
-                secretKeyRef:
-                  name: "rapid-analysis-secrets"
-                  key: "sentry.dsn"
             - name: SENTRY_ENVIRONMENT
               value: {{ $.Values.location | upper | quote }}
           {{- end }}
