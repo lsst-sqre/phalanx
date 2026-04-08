@@ -51,11 +51,10 @@ spec:
               value: {{ $.Values.location | upper | quote }}
           {{ if $.Values.sentry.enabled }}
             - name: SENTRY_DSN
-              value: {{ $.Values.sentry.dsn | quote }}
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: "butler"
-              #     key: "sentry-dsn"
+              valueFrom:
+                secretKeyRef:
+                  name: "rapid-analysis-secrets"
+                  key: "sentry.dsn"
             - name: SENTRY_ENVIRONMENT
               value: {{ $.Values.location | upper | quote }}
           {{- end }}
