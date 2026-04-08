@@ -3,9 +3,14 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: "sasquatch"
-  {{- with .Values.namespaceLabels.sasquatch }}
+  {{- if .Values.defaultComputeClass | or .Values.namespaceLabels.sasquatch }}
   labels:
+  {{- if .Values.defaultComputeClass }}
+    cloud.google.com/default-compute-class: {{ .Values.defaultComputeClass }}
+  {{- end}}
+  {{- with .Values.namespaceLabels.sasquatch }}
     {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- end }}
 ---
 apiVersion: argoproj.io/v1alpha1

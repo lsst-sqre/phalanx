@@ -21,10 +21,6 @@ config:
   oidcServer:
     enabled: true
 
-  # Enable metrics reporting.
-  metrics:
-    enabled: true
-
   knownScopes:
     "write:git-lfs": >-
       Can write objects to Git LFS storage bucket
@@ -34,6 +30,8 @@ config:
       Can use internal APIs
     "write:turborepo": >-
       Can read and write to the Turborepo remote cache
+    "exec:docverse": >-
+      Can access Docverse's as a user in an organization
 
   groupMapping:
     "admin:userinfo":
@@ -63,6 +61,10 @@ config:
           organization: "lsst-sqre"
           team: "square"
     "write:turborepo":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:docverse":
       - github:
           organization: "lsst-sqre"
           team: "square"

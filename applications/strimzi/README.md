@@ -8,4 +8,4 @@ Strimzi Kafka Operator
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| strimzi-cluster-operator | object | See `values.yaml` | Resource limits and requests for the strimzi-cluster-operator pod |
+| strimzi-kafka-operator.resources | object | See `values.yaml` | Resource limits and requests for the strimzi-cluster-operator Pod |

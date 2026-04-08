@@ -9,16 +9,16 @@ Google provides a mechanism to obtain those credentials using the :command:`gclo
    For Phalanx environments run by SQuaRE, this access must be via an ``lsst.cloud`` Google account that is used only for Rubin activities.
    If you do not already have such an account or permissions and need administrative access to a Phalanx environment maintained by SQuaRE, contact SQuaRE for access.
 
-#. `Install gcloud <https://cloud.google.com/sdk/docs/install>`__ on the system on which you want to run privileged Kubernetes commands.
+#. `Install gcloud <https://docs.cloud.google.com/sdk/docs/install-sdk>`__ on the system on which you want to run privileged Kubernetes commands.
 
-#. `Initialize gcloud <https://cloud.google.com/sdk/docs/initializing>`__.
+#. `Initialize gcloud <https://docs.cloud.google.com/sdk/docs/initializing>`__.
    You will need to have access to the Google Cloud Platform project where your target Kubernetes cluster is running.
 
    If you have access to multiple Google Cloud Platform projects, you will be asked to select one as your default project.
    You may wish to choose the project for the Phalanx environment you use most often.
    You can find the project ID of a Phalanx project hosted on GKE in its :doc:`environments page </environments/index>`.
 
-#. `Install kubectl and the GKE auth plugin <https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl>`__.
+#. `Install kubectl and the GKE auth plugin <https://docs.cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl>`__.
    As part of that installation, you will run the :command:`gcloud` command that obtains credentials usable by :command:`kubectl` and other privileged Kubernetes commands.
 
 The final step has an example :command:`gcloud` command, but it assumes that you are getting credentials for your default project.

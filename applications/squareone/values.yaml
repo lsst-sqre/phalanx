@@ -33,14 +33,14 @@ ingress:
   # -- Scope required for /times-square UI
   timesSquareScope: "exec:notebook"
 
-# -- Resource requests and limits for squareone pods
+# -- Resource requests and limits for Squareone pods
 # @default -- see `values.yaml`
 resources:
   limits:
     cpu: "1"
     memory: "1Gi"
   requests:
-    cpu: "6m"
+    cpu: "50m"
     memory: "200Mi"
 
 autoscaling:
@@ -53,8 +53,12 @@ autoscaling:
 nodeSelector: {}
 
 # Tolerations for squareone pod
-# @default -- Tolerate GKE arm64 taint
+# @default -- Tolerate GKE amd64 and arm64 taints
 tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "amd64"
+    effect: "NoSchedule"
   - key: "kubernetes.io/arch"
     operator: "Equal"
     value: "arm64"
@@ -68,6 +72,7 @@ config:
   siteName: "Rubin Science Platform"
 
   # -- Site description, used in meta tags
+  # @default -- See `values.yaml`
   siteDescription: |
     Access Rubin Observatory Legacy Survey of Space and Time data.
 
@@ -78,43 +83,38 @@ config:
   showPreview: true
 
   # -- URL to the Semaphore (user notifications) API service.
-  # @default null disables the Semaphore integration
+  # @default -- null disables the Semaphore integration
   semaphoreUrl: null
 
   # -- URL to the Times Square (parameterized notebooks) API service.
-  # @default null disables the Times Square integration
+  # @default -- null disables the Times Square integration
   timesSquareUrl: null
 
-  # -- URL to the COmanage registry, if the environment uses COmanage for identity.
-  # @default null disables the COmanage integration
+  # -- URL to the COmanage registry, if the environment uses COmanage for
+  # identity.
+  # @default -- null disables the COmanage integration
   coManageRegistryUrl: null
 
   # -- Plausible tracking domain. For example, `data.lsst.cloud`.
-  # @default null disables Plausible tracking
+  # @default -- null disables Plausible tracking
   plausibleDomain: null
 
   # -- Enable Sentry
-  # @default -- See `values.yaml`
   enableSentry: false
 
   # -- Sentry DSN
-  # @default -- See `values.yaml`
   sentryDsn: null
 
   # -- Sentry traces sample rate
-  # @default -- See `values.yaml`
   sentryTracesSampleRate: 0
 
   # -- Sentry replays sample rate
-  # @default -- See `values.yaml`
   sentryReplaysSessionSampleRate: 0
 
   # -- Sentry error replays sample rate
-  # @default -- See `values.yaml`
   sentryReplaysOnErrorSampleRate: 0
 
   # -- Sentry debug mode
-  # @default -- See `values.yaml`
   sentryDebug: false
 
   # -- Enable the App menu
@@ -128,7 +128,7 @@ config:
 
   # -- URL to an external header logo image (HTTPS only). Takes priority over
   # headerLogoFile and headerLogoData.
-  # @default null uses Squareone's default built-in logo
+  # @default -- null uses Squareone's default built-in logo
   headerLogoUrl: null
 
   # -- Filename of a logo image in the content/{environment}/ directory
@@ -136,31 +136,28 @@ config:
   # Used only if headerLogoUrl is null. Supported formats: .png, .jpg, .jpeg,
   # .svg, .webp, .gif. Note: unlike MDX files, logo files do NOT fall back to
   # idfprod if not found in the environment directory.
-  # @default null uses Squareone's default built-in logo
+  # @default -- null uses Squareone's default built-in logo
   headerLogoFile: null
 
   # -- Base64-encoded image data for header logo (without data URL prefix).
   # Must be used with headerLogoMimeType. Used only if both headerLogoUrl and
   # headerLogoFile are null.
-  # @default null uses Squareone's default built-in logo
+  # @default -- null uses Squareone's default built-in logo
   headerLogoData: null
 
   # -- MIME type for base64-encoded logo data (e.g., 'image/png',
   # 'image/svg+xml'). Required when headerLogoData is provided.
-  # @default -- See `values.yaml`
   headerLogoMimeType: null
 
   # -- Height of header logo in pixels
-  # @default -- See `values.yaml`
   headerLogoHeight: 50
 
   # -- Width of header logo in pixels. If not provided, maintains aspect ratio
   # based on height.
-  # @default null maintains aspect ratio
+  # @default -- null maintains aspect ratio
   headerLogoWidth: null
 
   # -- Alternative text for header logo for accessibility
-  # @default -- See `values.yaml`
   headerLogoAlt: "Logo"
 
 # Global parameters are set by parameters injected by the Argo CD Application
@@ -181,3 +178,7 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD Application
   vaultSecretsPathPrefix: null
+
+  # -- Base URL for Repertoire discovery API
+  # @default -- Set by Argo CD
+  repertoireUrl: null

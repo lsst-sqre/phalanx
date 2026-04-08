@@ -1,12 +1,13 @@
-fqdn: k8s.slac.stanford.edu
+fqdn: usdfdev-prompt-processing.slac.stanford.edu
 name: usdfdev-prompt-processing
+appOfAppsName: "science-platform"
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-prompt-processing-dev
 
 applications:
   butler-writer-service: true
   cert-manager: false
-  gafaelfawr: false
+  gafaelfawr: true
   ingress-nginx: false
   keda: true
   next-visit-fan-out: true
@@ -15,6 +16,8 @@ applications:
   prompt-keda-latiss: true
   prompt-keda-lsstcam: true
   prompt-redis: true
+  sasquatch: true
   s3-file-notifications: true
   strimzi: true
+  strimzi-registry-operator: true
   vault-secrets-operator: false

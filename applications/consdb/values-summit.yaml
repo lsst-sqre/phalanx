@@ -17,6 +17,13 @@ hinfo:
   lsstcam:
     enable: true
     tag: "25.11.2"
+    resources:
+      requests:
+        cpu: 500m
+        memory: 25Gi
+      limits:
+        cpu: 2
+        memory: 25Gi
 pq:
   image:
     tag: "25.11.2"

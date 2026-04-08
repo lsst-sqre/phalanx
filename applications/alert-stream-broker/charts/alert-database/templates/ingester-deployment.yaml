@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "alertDatabase.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: 24
   selector:
     matchLabels:
       {{- include "alertDatabase.ingesterSelectorLabels" . | nindent 6 }}
@@ -26,10 +26,6 @@ spec:
             - name: "kafka-server-ca-cert"
               mountPath: "/etc/kafka-server-ca-cert"
               readOnly: True
-            {{- if .Values.ingester.s3.usdf }}
-            - mountPath: /var/secrets/google
-              name: alert-stream-broker-secrets
-            {{- end }}
 
           command:
             - "alertdb-ingester"

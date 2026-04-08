@@ -35,67 +35,38 @@ config:
           repo_url: "https://github.com/lsst-sqre/dfuchs-test-mobu.git"
           repo_ref: "main"
         restart: true
-    - name: "recommended"
+    - name: "phalanx-quotidian"
       count: 1
       users:
-        - username: "bot-mobu-recommended"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_ref: "prod"
-        restart: true
-    - name: "daily"
-      count: 1
-      users:
-        - username: "bot-mobu-daily"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          image:
-            image_class: latest-daily
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_ref: "prod"
-        restart: true
-    - name: "tutorial"
-      count: 1
-      users:
-        - username: "bot-mobu-tutorial"
+        - username: "bot-mobu-quotidian"
           groups:
             - name: "g_users"
               id: 2000003
       scopes:
+        - "exec:internal-tools"
         - "exec:notebook"
         - "exec:portal"
         - "read:image"
         - "read:tap"
+        - "write:sasquatch"
       business:
         type: "NotebookRunnerCounting"
         options:
-          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
+          image:
+            image_class: "latest-weekly"
+          repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
           repo_ref: "main"
-          max_executions: 1
         restart: true
-    - name: "tap"
+    - name: "muster"
       count: 1
       users:
-        - username: "bot-mobu-tap"
-      scopes: ["read:tap"]
+        - username: "bot-mobu-muster"
+      scopes:
+        - "read:image"
       business:
-        type: "TAPQuerySetRunner"
+        type: "Muster"
         options:
-          sync: false
-          query_set: "dp0.2"
+          idle_time: 300
         restart: true
     - name: "sia"
       count: 1
@@ -108,5 +79,18 @@ config:
       business:
         type: "SIAQuerySetRunner"
         options:
+          dataset: "dp02"
           query_set: "dp02"
+        restart: true
+    - name: "tap"
+      count: 1
+      users:
+        - username: "bot-mobu-tap"
+      scopes: ["read:tap"]
+      business:
+        type: "TAPQuerySetRunner"
+        options:
+          dataset: "dp02"
+          query_set: "dp0.2"
+          sync: false
         restart: true

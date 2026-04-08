@@ -66,23 +66,25 @@ kafka:
     # TLS connections.
     brokers: []
 
-  nodePool:
-    # -- List of node affinities to set for the broker's nodes. The key should
-    # be a label key, and the value should be a label value, and then the
-    # broker will prefer running Kafka and Zookeeper on nodes with those
-    # key-value pairs.
-    affinities:
-      - key: kafka
-        value: ok
+  broker:
+    # -- Tolerations for broker pod assignment
+    tolerations: []
 
-    # -- List of taint tolerations when scheduling the broker's pods onto
-    # nodes. The key should be a taint key, the value should be a taint
-    # value, and effect should be a taint effect that can be tolerated
-    # (ignored) when scheduling the broker's Kafka and Zookeeper pods.
-    tolerations:
-      - key: kafka
-        value: ok
-        effect: NoSchedule
+    # -- Affinity for broker pod assignment
+    affinity: []
+
+    # -- Kubernetes resources for the brokers
+    resources: []
+
+  controller:
+    # -- Tolerations for controller pod assignment
+    tolerations: []
+
+    # -- Affinity for controller pod assignment
+    affinity: []
+
+    # -- Kubernetes resources for the controllers
+    resources: []
 
 # -- Kafka JMX Exporter for more detailed diagnostic metrics.
 kafkaExporter:
@@ -111,7 +113,7 @@ users:
   -  # -- The username for the user that should be created.
     username: rubin-testing
     # -- A list of topics that the user should get read-only access to.
-    readonlyTopics: ["alert-stream", "alerts-simulated", "alert-stream-test"]
+    readonlyTopics: ["alert-stream", "alert-stream-test"]
     # -- A list of string prefixes for groups that the user should get admin
     # access to, allowing them to create, delete, describe, etc consumer
     # groups. Note that these are prefix-matched, not just literal exact
@@ -148,21 +150,8 @@ kafkaController:
     # -- Name of a StorageClass to use when requesting persistent volumes
     storageClassName: ""
 
-  # -- Kubernetes requests and limits for the Kafka Controller
-  # @default -- See `values.yaml`
-  resources:
-    requests:
-      memory: 32Gi
-      cpu: "4"
-    limits:
-      memory: 64Gi
-      cpu: "8"
-
 # -- Topic used to send test alerts.
 testTopicName: alert-stream-test
-
-# -- Topic used to send simulated alerts to brokers.
-simulatedTopicName: alerts-simulated
 
 # -- Integer ID to use in the prefix of alert data packets. This should be a
 # valid Confluent Schema Registry ID associated with the schema used.

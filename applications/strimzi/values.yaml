@@ -1,10 +1,10 @@
-# -- Resource limits and requests for the strimzi-cluster-operator pod
-# @default -- See `values.yaml`
-strimzi-cluster-operator:
+strimzi-kafka-operator:
+  # -- Resource limits and requests for the strimzi-cluster-operator Pod
+  # @default -- See `values.yaml`
   resources:
     limits:
       cpu: "1"
       memory: "1Gi"
     requests:
-      cpu: "20m"
-      memory: "450Mi"
+      cpu: "200m"
+      memory: "512Mi"

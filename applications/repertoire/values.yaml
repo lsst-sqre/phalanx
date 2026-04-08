@@ -58,6 +58,16 @@ config:
         LSST Commissioning Camera of seven ~1 square degree fields, over seven
         weeks in late 2024.
       docsUrl: "https://dp1.lsst.io/"
+    efd:
+      description: "Engineering Field Database."
+    live:
+      description: "Live internal data from the telescope."
+    prompt:
+      description: "Prompt products."
+
+  # -- Human-readable name of the environment for reporting purposes
+  # @default -- Set by Argo CD
+  environmentName: null
 
   hips:
     # -- Known HiPS datasets. Each should be a mapping of a label to an object
@@ -154,9 +164,18 @@ config:
       - type: "ui"
         name: "argocd"
         template: "https://{{base_hostname}}/argo-cd"
+    consdbtap:
+      - type: "data"
+        name: "tap"
+        datasets:
+          - "efd"
+        template: "https://{{base_hostname}}/api/consdbtap"
     datalinker:
       - type: "data"
         name: "datalink"
+        datasets:
+          - "dp02"
+          - "dp1"
         template: "https://{{base_hostname}}/api/datalink"
         versions:
           datalink-links-1.1:
@@ -178,17 +197,28 @@ config:
           v1:
             template: "https://{{base_hostname}}/auth/api/v1"
         openapi: "https://{{base_hostname}}/auth/openapi.json"
+      - type: "internal"
+        name: "login"
+        template: "https://{{base_hostname}}/login"
       - type: "ui"
         name: "logout"
         template: "https://{{base_hostname}}/logout"
-      - type: "ui"
-        name: "tokens"
-        template: "https://{{base_hostname}}/auth/tokens"
+    livetap:
+      - type: "data"
+        name: "tap"
+        datasets:
+          - "live"
+        template: "https://{{base_hostname}}/api/livetap"
     mobu:
       - type: "internal"
         name: "mobu"
         template: "https://{{base_hostname}}/mobu"
         openapi: "https://{{base_hostname}}/mobu/openapi.json"
+    muster:
+      - type: "internal"
+        name: "muster"
+        template: "https://{{base_hostname}}/muster"
+        openapi: "https://{{base_hostname}}/muster/openapi.json"
     noteburst:
       - type: "internal"
         name: "noteburst"
@@ -211,6 +241,12 @@ config:
       - type: "ui"
         name: "portal"
         template: "https://{{base_hostname}}/portal/app/"
+    ppdbtap:
+      - type: "data"
+        name: "tap"
+        datasets:
+          - "prompt"
+        template: "https://{{base_hostname}}/api/ppdbtap"
     semaphore:
       - type: "internal"
         name: "semaphore"
@@ -228,6 +264,13 @@ config:
             template: "https://{{base_hostname}}/api/sia/{{dataset}}/query"
             ivoaStandardId: "ivo://ivoa.net/std/SIA#query-2.0"
         openapi: "https://{{base_hostname}}/api/sia/openapi.json"
+    squareone:
+      - type: "ui"
+        name: "settings"
+        template: "https://{{base_hostname}}/settings"
+      - type: "ui"
+        name: "squareone"
+        template: "https://{{base_hostname}}/"
     ssotap:
       - type: "data"
         name: "tap"
@@ -299,8 +342,8 @@ config:
   useSubdomains: []
 
   tap:
-
-    # -- Default schema version for all TAP services (can be overridden per-app)
+    # -- Default schema version for all TAP services (can be overridden
+    # per-app)
     schemaVersion: "w.2026.01"
 
     # -- Template for schema artifact URLs (use {schemaVersion} placeholder)
@@ -308,23 +351,24 @@ config:
     schemaSourceTemplate: "https://github.com/lsst/sdm_schemas/archive/refs/tags/{version}.tar.gz"
 
     # -- TAP Server configuration by application name. Configuration is used
-    # to populate & update the TAP_SCHEMA database for each enabled TAP application
+    # to populate & update the TAP_SCHEMA database for each enabled TAP
+    # application
     # @default -- See `values.yaml`
     servers:
       tap:
         enabled: false
         schemas:
-          - dp02_dc2
           - dp1
           - ivoa_obscore
+          - dp02_dc2
         databaseUrl: "postgresql://tap@127.0.0.1:5432/tap"
         databasePasswordKey: "tap-database-password"
 
       ssotap:
         enabled: false
         schemas:
-          - dp03_1yr
           - dp03_10yr
+          - dp03_1yr
         databaseUrl: "postgresql://ssotap@127.0.0.1:5432/ssotap"
         databasePasswordKey: "ssotap-database-password"
 
@@ -336,10 +380,8 @@ config:
         databasePasswordKey: "livetap-database-password"
 
 cloudsql:
-  # -- Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google
-  # Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as
-  # a separate service (behind a `NetworkPolicy`) for other, lower-traffic
-  # services.
+  # -- Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on
+  # Google Cloud
   enabled: false
 
   image:
@@ -347,7 +389,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.9"
+    tag: "1.37.14"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -356,7 +398,7 @@ cloudsql:
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
   instanceConnectionName: ""
 
-  # -- The Google service account that has an IAM binding to the `gafaelfawr`
+  # -- The Google service account that has an IAM binding to the `repertoire`
   # Kubernetes service account and has the `cloudsql.client` role
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
   serviceAccount: ""
@@ -389,10 +431,10 @@ podAnnotations: {}
 resources:
   limits:
     cpu: "1"
-    memory: "100Mi"
+    memory: "180Mi"
   requests:
-    cpu: "10m"
-    memory: "50Mi"
+    cpu: "50m"
+    memory: "90Mi"
 
 schemaHook:
   # -- Resource limits and requests for the TAP schema update Helm hook job
@@ -402,12 +444,16 @@ schemaHook:
       cpu: "1"
       memory: "512Mi"
     requests:
-      cpu: "2m"
-      memory: "32Mi"
+      cpu: "50m"
+      memory: "52Mi"
 
-# -- Tolerations for the repertoire deployment pod
-# @default -- Tolerate GKE arm64 taint
+# -- Tolerations for the Repertoire pod
+# @default -- Tolerate GKE amd64 and arm64 taints
 tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "amd64"
+    effect: "NoSchedule"
   - key: "kubernetes.io/arch"
     operator: "Equal"
     value: "arm64"

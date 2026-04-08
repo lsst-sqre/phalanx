@@ -71,6 +71,8 @@ manager:
       DB_HOST: love-manager-database-service
       # -- The port for the database service
       DB_PORT: 5432
+      # -- Whether to show timestamps in logs
+      SHOW_TRACE_TIMESTAMPS: "true"
       # -- The name of the redis service
       REDIS_HOST: love-manager-redis-service
       # -- The expiration time for the redis service
@@ -260,7 +262,7 @@ redis:
     # -- The redis image to use
     repository: redis
     # -- The tag to use for the redis image
-    tag: 8.4.0
+    tag: 8.6.2
     # -- The pull policy for the redis image
     pullPolicy: IfNotPresent
   envSecrets:

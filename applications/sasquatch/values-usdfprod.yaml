@@ -18,6 +18,7 @@ strimzi-kafka:
       bootstrap:
         annotations:
           metallb.io/address-pool: sdf-rubin-ingest
+        allocateLoadBalancerNodePorts: false
       brokers:
         - broker: 0
           annotations:
@@ -399,7 +400,7 @@ telegraf:
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: |
-        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source" ]
+        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source", "VersionType" ]
       topicRegexps: |
         [ "summit.lsst.ATCamera" ]
     cccamera:
@@ -408,7 +409,7 @@ telegraf:
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: |
-        [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source" ]
+        [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source", "VersionType" ]
       topicRegexps: |
         [ "summit.lsst.CCCamera" ]
     mtcamera:
@@ -417,7 +418,7 @@ telegraf:
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: |
-        [ "Agent", "Aspic", "Axis", "Bay", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
+        [ "Agent", "Aspic", "Axis", "Bay", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck", "VersionType" ]
       topicRegexps: |
         [ "summit.lsst.MTCamera" ]
     obsenv:

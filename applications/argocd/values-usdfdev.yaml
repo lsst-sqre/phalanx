@@ -66,6 +66,7 @@ argo-cd:
         g, fritzm@slac.stanford.edu, role:developer
         g, gmegias@slac.stanford.edu, role:developer
         g, hchiang2@slac.stanford.edu, role:developer
+        g, jkurla@slac.stanford.edu, role:developer
         g, kadrlica@slac.stanford.edu, role:developer
         g, koike@slac.stanford.edu, role:developer
         g, lguy@slac.stanford.edu, role:developer
@@ -79,7 +80,13 @@ argo-cd:
         g, saranda@slac.stanford.edu, role:developer
         g, smart@slac.stanford.edu, role:developer
         g, spothi@slac.stanford.edu, role:developer
+        g, sullii@slac.stanford.edu, role:developer
         g, vbecker@slac.stanford.edu, role:developer
+        g, youtsumi@slac.stanford.edu, role:developer
+        g, robyww@slac.stanford.edu, role:developer
+        g, jaladh@slac.stanford.edu, role:developer
+        g, loi@slac.stanford.edu, role:developer
+        g, kpuri@slac.stanford.edu, role:developer
         g, youtsumi@slac.stanford.edu, role:developer
       scopes: "[email]"
 

@@ -88,6 +88,7 @@ love-manager:
         DB_HOST: postgresdb01.tu.lsst.org
         LOVE_SITE: tucson
         NIGHTREPORT_MAIL_ADDRESS: saranda@lsst.org
+        SHOW_TRACE_TIMESTAMPS: "false"
       autoscaling:
         enabled: true
         minReplicas: 2
@@ -493,6 +494,15 @@ love-producer:
   - name: linearstage104
     csc: LinearStage:104 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: louverh1ess441
+    csc: ESS:441 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: louverh1h2ess442
+    csc: ESS:442 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: louverh2ess443
+    csc: ESS:443 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: love
     csc: LOVE:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -532,20 +542,11 @@ love-producer:
   - name: mtdome
     csc: MTDome:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtdomeess107
-    csc: ESS:107 --log-level 10
+  - name: mtdomeess404
+    csc: ESS:404 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtdomeess108
-    csc: ESS:108 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtdomeess118
-    csc: ESS:118 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtdomeess119
-    csc: ESS:119 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtdomeess120
-    csc: ESS:120 --log-level 10
+  - name: mtdomeess405
+    csc: ESS:405 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtdometrajectory
     csc: MTDomeTrajectory:0 --log-level 10
@@ -593,11 +594,38 @@ love-producer:
   - name: mtm1m3ts
     csc: MTM1M3TS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtm2
-    csc: MTM2:0 --log-level 10
+  - name: mtm2-telemetry
+    csc: MTM2:0 --log-level 10 --periodic-data tel_ackcmd tel_axialActuatorSteps tel_axialEncoderPositions tel_axialForce tel_displacementSensors tel_forceBalance tel_forceErrorTangent tel_ilcData tel_inclinometerAngleTma tel_netForcesTotal tel_netMomentsTotal tel_position tel_positionIMS tel_powerStatus tel_powerStatusRaw tel_tangentActuatorSteps tel_tangentEncoderPositions tel_tangentForce tel_temperature tel_zenithAngle
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: mtmount
-    csc: MTMount:0 --log-level 10
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 500m
+        memory: 600Mi
+  - name: mtm2-event
+    csc: MTM2:0 --log-level 10 --asynchronous-data evt_actuatorBumpTestStatus evt_cellTemperatureHiWarning evt_closedLoopControlMode evt_commandableByDDS evt_config evt_configurationApplied evt_configurationFiles evt_configurationsAvailable evt_controllerState evt_detailedState evt_digitalInput evt_digitalOutput evt_disabledILC evt_enabledFaultsMask evt_errorCode evt_forceBalanceSystemStatus evt_hardpointList evt_heartbeat evt_inclinationTelemetrySource evt_innerLoopControlMode evt_interlock evt_limitSwitchExtend evt_limitSwitchRetract evt_logLevel evt_logMessage evt_m2AssemblyInPosition evt_openLoopMaxLimit evt_powerSystemState evt_scriptExecutionStatus evt_simulationMode evt_softwareVersions evt_summaryFaultsStatus evt_summaryState evt_tcpIpConnected evt_temperatureOffset
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 500m
+        memory: 600Mi
+  - name: mtmount-telemetry
+    csc: MTMount:0 --log-level 10 --periodic-data tel_ackcmd tel_auxiliaryCabinetsThermal tel_azimuth tel_azimuthCableWrap tel_azimuthDrives tel_azimuthDrivesThermal tel_balancing tel_cabinet0101Thermal tel_cameraCableWrap tel_capacitorBank tel_compressedAir tel_cooling tel_deployablePlatforms tel_dynaleneCooling tel_elevation tel_elevationDrives tel_elevationDrivesThermal tel_encoder tel_generalPurposeGlycolWater tel_lockingPins tel_mainCabinetThermal tel_mainPowerSupply tel_mirrorCover tel_mirrorCoverLocks tel_oilSupplySystem tel_safetySystem tel_telemetryClientHeartbeat tel_topEndChiller
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 30m
+        memory: 100Mi
+      limits:
+        cpu: 300m
+        memory: 300Mi
+  - name: mtmount-event
+    csc: MTMount:0 --log-level 10 --asynchronous-data evt_auxiliaryCabinetsThermalSystemState evt_availableSettings evt_azimuthCableWrapSystemState evt_azimuthControllerSettings evt_azimuthDrivesThermalSystemState evt_azimuthHomed evt_azimuthInPosition evt_azimuthLimits evt_azimuthMotionState evt_azimuthSystemState evt_azimuthToppleBlock evt_balanceSystemState evt_cabinet0101ThermalSystemState evt_cameraCableWrapControllerSettings evt_cameraCableWrapFollowing evt_cameraCableWrapInPosition evt_cameraCableWrapLimits evt_cameraCableWrapMotionState evt_cameraCableWrapSystemState evt_cameraCableWrapTarget evt_clockOffset evt_commander evt_configurationApplied evt_configurationsAvailable evt_connected evt_controllerSettingsName evt_deployablePlatformsMotionState evt_deployablePlatformsSystemState evt_elevationControllerSettings evt_elevationDrivesThermalSystemState evt_elevationHomed evt_elevationInPosition evt_elevationLimits evt_elevationLockingPinMotionState evt_elevationMotionState evt_elevationSystemState evt_error evt_errorCode evt_heartbeat evt_lockingPinsSystemState evt_logLevel evt_logMessage evt_mainAxesPowerSupplySystemState evt_mainCabinetThermalSystemState evt_mirrorCoverLocksMotionState evt_mirrorCoverLocksSystemState evt_mirrorCoversMotionState evt_mirrorCoversSystemState evt_motionLockState evt_oilSupplySystemState evt_safetyInterlocks evt_simulationMode evt_softwareVersions evt_summaryState evt_target evt_telemetryConnected evt_topEndChillerSystemState evt_warning
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
     resources:
       requests:
@@ -631,6 +659,12 @@ love-producer:
   - name: mtvmsm1m3
     csc: MTVMS:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: m2mtvms2
+    csc: MTVMS:2
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: mtvmscamerarotator
+    csc: MTVMS:3
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ocsscheduler
     csc: Scheduler:3 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -644,14 +678,14 @@ love-producer:
       limits:
         cpu: 500m
         memory: 600Mi
-  - name: partsensess401
-    csc: ESS:401
+  - name: partsensess127
+    csc: ESS:127
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: partsensess402
-    csc: ESS:402
+  - name: partsensess128
+    csc: ESS:128
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: partsensess403
-    csc: ESS:403
+  - name: partsensess129
+    csc: ESS:129
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ringssess304
     csc: ESS:304 --log-level 10
@@ -694,4 +728,7 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: weatherforecast
     csc: WeatherForecast:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: wfoods
+    csc: WFOODS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription

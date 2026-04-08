@@ -53,8 +53,8 @@ resources:
     cpu: "1"
     memory: "100Mi"
   requests:
-    cpu: "1.5m"
-    memory: "45Mi"
+    cpu: "50m"
+    memory: "52Mi"
 
 # -- Node selection rules for the jira-data-proxy deployment pod
 nodeSelector: {}

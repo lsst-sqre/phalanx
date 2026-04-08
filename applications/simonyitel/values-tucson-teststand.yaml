@@ -176,8 +176,22 @@ mtcamhexapod-sim:
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
+  obsenv: true
+  obsenv_configfile:
+    filename: obs_env_config.json
+    content: |
+      {
+        "repositories": {
+          "ts_config_mttcs": "https://github.com/lsst-ts/"
+        },
+        "base_env_source_org": "https://github.com/lsst-ts/",
+        "base_env_source_repo": "ts_cycle_build",
+        "base_env_def_file": "cycle/cycle.env",
+        "destination": "/net/obs-env/auto_base_packages"
+      }
   env:
     RUN_ARG: --simulate 1
+    TS_CONFIG_MTTCS_DIR: "/net/obs-env/auto_base_packages/ts_config_mttcs"
   resources:
     limits:
       cpu: 500m
@@ -264,8 +278,22 @@ mtm2hexapod-sim:
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
+  obsenv: true
+  obsenv_configfile:
+    filename: obs_env_config.json
+    content: |
+      {
+        "repositories": {
+          "ts_config_mttcs": "https://github.com/lsst-ts/"
+        },
+        "base_env_source_org": "https://github.com/lsst-ts/",
+        "base_env_source_repo": "ts_cycle_build",
+        "base_env_def_file": "cycle/cycle.env",
+        "destination": "/net/obs-env/auto_base_packages"
+      }
   env:
     RUN_ARG: --simulate 2
+    TS_CONFIG_MTTCS_DIR: "/net/obs-env/auto_base_packages/ts_config_mttcs"
   resources:
     limits:
       cpu: 400m
@@ -305,6 +333,69 @@ mtptg:
       cpu: 120m
       memory: 1500Mi
 
+wfoods:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/wfoods
+    pullPolicy: Always
+  env:
+    CTRL_OODS_CONFIG_FILE: /etc/wfoods.yaml
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.tu.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  s3Credentials:
+  - lfa-credentials.ini
+  - oods-lsstcam-credentials.ini
+  <<: *butler-secret
+  resources:
+    limits:
+      cpu: 100m
+      memory: 4000Mi
+    requests:
+      cpu: 1m
+      memory: 800Mi
+  configfile:
+    path: /etc
+    filename: wfoods.yaml
+    content: |
+      default_interval: &interval
+          days: 0
+          hours: 0
+          minutes: 0
+          seconds: 0
+
+      message_ingester:
+          kafka:
+              brokers:
+                  - sasquatch-kafka-bootstrap.sasquatch:9092
+              topics:
+                - lsst.s3.wf.lsstcam
+              group_id: MTOODS-S3
+              max_messages: 16
+              max_wait_time: 0.25
+          butler:
+              guider_max_age_seconds: 90
+              instrument: lsst.obs.lsst.LsstCam
+              repo_directory : s3://butler@rubinobs-butler-lsstcam
+              s3profile: butler
+              collections:
+                  - LSSTCam/raw/all
+              collection_cleaner:
+                  collections_to_clean:
+                      - collections:
+                          - LSSTCam/raw/all
+                        files_older_than:
+                            <<: *interval
+                            days: 5
+                      - collections:
+                          - LSSTCam/raw/guider
+                        files_older_than:
+                            <<: *interval
+                            days: 5
+                  cleaning_interval:
+                      <<: *interval
+                      hours: 1
+
 mtrotator-sim:
   enabled: true
   image:
@@ -320,6 +411,21 @@ mtrotator-sim:
       cpu: 60m
       memory: 280Mi
 
+mtvms-camera-rotator-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/vms_sim
+    pullPolicy: Always
+  env:
+    RUN_ARG: CameraRotator
+  resources:
+    limits:
+      cpu: 250m
+      memory: 180Mi
+    requests:
+      cpu: 25m
+      memory: 60Mi
+
 mtvms-m1m3-sim:
   enabled: true
   image:
@@ -327,6 +433,21 @@ mtvms-m1m3-sim:
     pullPolicy: Always
   env:
     RUN_ARG: M1M3
+  resources:
+    limits:
+      cpu: 250m
+      memory: 180Mi
+    requests:
+      cpu: 25m
+      memory: 60Mi
+
+mtvms-m2-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/vms_sim
+    pullPolicy: Always
+  env:
+    RUN_ARG: M2
   resources:
     limits:
       cpu: 250m

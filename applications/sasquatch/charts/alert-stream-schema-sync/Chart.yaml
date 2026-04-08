@@ -1,0 +1,6 @@
+apiVersion: v2
+name: alert-stream-schema-sync
+version: 1.0.0
+description: Syncs data into schema registry
+appVersion: 2.1.0
+type: application

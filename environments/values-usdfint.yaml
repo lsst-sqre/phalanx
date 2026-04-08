@@ -12,6 +12,7 @@ applications:
   ingress-nginx: false
 
   butler: true
+  consdb: true
   consdbtap: true
   datalinker: true
   livetap: true

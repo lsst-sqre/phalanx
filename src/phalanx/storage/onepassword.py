@@ -12,7 +12,12 @@ from ..exceptions import (
     NoOnepasswordCredentialsError,
 )
 from ..models.environments import EnvironmentBaseConfig
-from ..models.secrets import PullSecret, StaticSecret, StaticSecrets
+from ..models.secrets import (
+    OIDCClientSecret,
+    PullSecret,
+    StaticSecret,
+    StaticSecrets,
+)
 
 __all__ = ["OnepasswordClient", "OnepasswordStorage"]
 
@@ -98,9 +103,27 @@ class OnepasswordClient:
         # Return the static secrets.
         return StaticSecrets(
             applications=applications,
+            oidc_clients=self._get_oidc_clients(),
             pull_secret=self._get_pull_secret(),
             vault_write_token=self._get_vault_write_token(),
         )
+
+    def _get_oidc_clients(self) -> dict[str, OIDCClientSecret]:
+        """Get the OpenID Connect clients for an environment from 1Password.
+
+        Returns
+        -------
+        dict of OIDCClientSecret
+            Dicttionary mapping human-readable client names to configuration
+            information and secrets for that client.
+        """
+        fields = {"id", "secret", "return_uri"}
+        clients = self._parse_structured_item("oidc-clients", fields)
+        if clients is None:
+            return {}
+        return {
+            k: OIDCClientSecret.model_validate(v) for k, v in clients.items()
+        }
 
     def _get_pull_secret(self) -> PullSecret | None:
         """Get the pull secret for an environment from 1Password.
@@ -111,25 +134,10 @@ class OnepasswordClient:
             The constructed pull secret in a form suitable for adding to
             Vault, or `None` if there is no pull secret for this environment.
         """
-        try:
-            item = self._onepassword.get_item("pull-secret", self._vault_id)
-        except FailedToRetrieveItemException:
+        fields = {"username", "password"}
+        secrets = self._parse_structured_item("pull-secret", fields)
+        if secrets is None:
             return None
-
-        # Extract the usernames and passwords from the 1Password item.
-        secrets: defaultdict[str, dict[str, str]] = defaultdict(dict)
-        section = {s.id: s.label for s in item.sections}
-        for field in item.fields:
-            if field.label not in ("username", "password"):
-                continue
-            section_id = field.section.id if field.section else None
-            registry = section[section_id]
-            if field.label == "username":
-                secrets[registry]["username"] = field.value
-            elif field.label == "password":
-                secrets[registry]["password"] = field.value
-
-        # Return the result converted to the appropriate model.
         return PullSecret.model_validate({"registries": secrets})
 
     def _get_vault_write_token(self) -> SecretStr | None:
@@ -151,6 +159,44 @@ class OnepasswordClient:
             if field.label == "vault-token":
                 return SecretStr(field.value)
         return None
+
+    def _parse_structured_item(
+        self, name: str, valid_fields: set[str]
+    ) -> dict[str, dict[str, str]] | None:
+        """Parse a structured 1Password item.
+
+        Several 1Password items (oidc-clients, pull-secret) use the same
+        structured format of labeled sections with fields chosen from a
+        defined set of possible field names. This method parses a generic
+        instance of such.
+
+        Parameters
+        ----------
+        name
+            Name of the (optional) 1Password item.
+        valid_fields
+            Valid fields for each section. Unrecognized fields will be
+            ignored.
+
+        Returns
+        -------
+        defaultdict of dict or None
+            Mapping of section names to name and value pairs within that
+            section, or `None` if no such item exists.
+        """
+        try:
+            item = self._onepassword.get_item(name, self._vault_id)
+        except FailedToRetrieveItemException:
+            return None
+        contents: defaultdict[str, dict[str, str]] = defaultdict(dict)
+        section = {s.id: s.label for s in item.sections}
+        for field in item.fields:
+            if field.label not in valid_fields:
+                continue
+            section_id = field.section.id if field.section else None
+            section_name = section[section_id]
+            contents[section_name][field.label] = field.value
+        return contents
 
 
 class OnepasswordStorage:

@@ -1,7 +1,5 @@
 strimzi-kafka-operator:
   resources:
-    limits:
-      memory: "1Gi"
     requests:
       memory: "100Mi"
   watchNamespaces:

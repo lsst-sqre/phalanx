@@ -20,6 +20,8 @@ from ..exceptions import (
 )
 from ..models.environments import Environment, EnvironmentBaseConfig
 from ..models.secrets import (
+    OIDCClientSecret,
+    OIDCClientsGenerateRules,
     PullSecret,
     ResolvedSecrets,
     Secret,
@@ -192,9 +194,7 @@ class SecretsService:
                     static_secret.warning = YAMLFoldedString(warning)
                 template[secret.application][secret.key] = static_secret
         static_secrets = StaticSecrets(
-            applications=template,
-            pull_secret=PullSecret(),
-            vault_write_token=None,
+            applications=template, pull_secret=PullSecret()
         )
         return yaml.dump(static_secrets.to_template(), width=70)
 
@@ -583,6 +583,7 @@ class SecretsService:
                     resolved=resolved,
                     current_value=vault_values.get(config.key),
                     static_value=static_value,
+                    oidc_clients=static_secrets.oidc_clients,
                     regenerate=regenerate,
                 )
                 if secret:
@@ -603,6 +604,7 @@ class SecretsService:
         resolved: dict[str, dict[str, SecretStr]],
         current_value: SecretStr | None,
         static_value: SecretStr | None,
+        oidc_clients: dict[str, OIDCClientSecret],
         regenerate: bool = False,
     ) -> SecretStr | None:
         """Resolve a single secret.
@@ -618,6 +620,8 @@ class SecretsService:
             Current secret value in Vault, if known.
         static_value
             User-provided static secret value, if any.
+        oidc_clients
+            OpenID Connect client information for this environment.
         regenerate
             Whether to regenerate any generated secrets.
 
@@ -645,7 +649,7 @@ class SecretsService:
                 return None
             value = other
         elif config.generate:
-            if current_value and not regenerate:
+            if current_value and not regenerate and not config.always_generate:
                 value = current_value
             elif isinstance(config.generate, SourceSecretGenerateRules):
                 other_key = config.generate.source
@@ -653,6 +657,8 @@ class SecretsService:
                 if not other:
                     return None
                 value = config.generate.generate(other)
+            elif isinstance(config.generate, OIDCClientsGenerateRules):
+                value = config.generate.generate(oidc_clients)
             else:
                 value = config.generate.generate()
         else:

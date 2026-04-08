@@ -21,13 +21,6 @@ ingress:
   annotations: {}
 
 config:
-  # -- Which applications (tap, butler, etc.) are available in this
-  # environment. Notebooks can specify a `mobu.required_services` list in their
-  # metadata, and mobu will only run them if all services in that list are in
-  # this `availableServices` list. See
-  # [the Mobu documentation](https://mobu.lsst.io/user_guide/in_repo_config.html#service-specific-notebooks)
-  availableServices: []
-
   # -- Autostart specification. Must be a list of mobu flock specifications.
   # Each flock listed will be automatically started when mobu is started.
   autostart: []
@@ -101,7 +94,7 @@ resources:
     # https://github.com/argoproj/argo-cd/issues/16400
     memory: "3584Mi"
   requests:
-    cpu: "50m"
+    cpu: "154m"
     memory: "1Gi"
 
 # -- Affinity rules for the mobu frontend pod
@@ -118,8 +111,12 @@ podAnnotations: {}
 terminationGracePeriodSeconds: null
 
 # -- Tolerations for the mobu frontend pod
-# @default -- Tolerate GKE arm64 taint
+# @default -- Tolerate GKE amd64 and arm64 taints
 tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "amd64"
+    effect: "NoSchedule"
   - key: "kubernetes.io/arch"
     operator: "Equal"
     value: "arm64"
@@ -128,10 +125,6 @@ tolerations:
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
-  # -- Base URL for the environment
-  # @default -- Set by Argo CD
-  baseUrl: null
-
   # -- Name of the Phalanx environment
   # @default -- Set by Argo CD
   environmentName: null

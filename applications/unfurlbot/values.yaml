@@ -43,10 +43,12 @@ config:
     # direct messages)
     slackMessageMpim: "lsst.square-events.squarebot.slack.message.mpim"
 
-  # -- Time (seconds) after which a triggering Slack message is considered stale and ignored.
+  # -- Time (seconds) after which a triggering Slack message is considered
+  # stale and ignored
   slackTriggerMessageTtl: "60"
 
-  # -- Time (second) before an unfurl can be made to the same channel/thread for a given token
+  # -- Time (second) before an unfurl can be made to the same channel/thread
+  # for a given token
   slackDebounceTime: "600"
 
   # -- Jira base URL
@@ -120,10 +122,10 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "12Mi"
+      memory: "52Mi"
     requests:
-      cpu: "2m"
-      memory: "3Mi"
+      cpu: "50m"
+      memory: "52Mi"
 
 # -- Affinity rules for the unfurlbot deployment pod
 affinity: {}
@@ -141,7 +143,7 @@ resources:
     cpu: "1"
     memory: "128Mi"
   requests:
-    cpu: "9m"
+    cpu: "50m"
     memory: "60Mi"
 
 # -- Tolerations for the unfurlbot deployment pod

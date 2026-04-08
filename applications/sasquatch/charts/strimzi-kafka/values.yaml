@@ -11,7 +11,7 @@ cluster:
 
 kafka:
   # -- Version of Kafka to deploy
-  version: "4.0.0"
+  version: "4.1.0"
 
   # -- 09:00–11:00 CLT (UTC−3)
   maintenanceTimeWindows: "0 0 12-13 ? * *"
@@ -20,8 +20,8 @@ kafka:
   # If the property is not set, it defaults to the metadata version that corresponds to the version property.
   metadataVersion: null
 
-  # -- Number of Kafka broker replicas to run
-  replicas: 3
+  # -- Topic Replication Factor.  The number of copies of topic data that are maintained.
+  replicationFactor: 3
 
   # -- The minimum number of in-sync replicas that must be available for the producer to successfully send records
   # Cannot be greater than the number of replicas.
@@ -99,6 +99,10 @@ kafka:
       # resource
       annotations: {}
 
+      # -- Whether to allocate NodePort automatically for the Service with type LoadBalancer.
+      # @default -- true
+      allocateLoadBalancerNodePorts: true
+
     # -- Brokers configuration. _host_ is used in the brokers'
     # advertised.brokers configuration and for TLS hostname verification.  The
     # format is a list of maps.
@@ -122,6 +126,9 @@ jvmOptions: {}
 controller:
   # -- Enable node pool for the kafka controllers
   enabled: false
+
+  # -- Number of kafka controllers to run
+  replicas: 3
 
   # -- IDs to assign to the controllers
   nodeIds: "[3,4,5]"
@@ -153,6 +160,8 @@ controller:
   # -- Tolerations for controller pod assignment
   tolerations: []
 
+  terminationGracePeriodSeconds: 180
+
   # -- Kubernetes resources for the controllers
   resources:
     requests:
@@ -168,6 +177,9 @@ broker:
 
   # -- Node pool name
   name: kafka
+
+  # -- Number of Kafka broker replicas to run
+  replicas: 3
 
   # -- IDs to assign to the brokers
   nodeIds: "[0,1,2]"
@@ -198,6 +210,8 @@ broker:
 
   # -- Tolerations for broker pod assignment
   tolerations: []
+
+  terminationGracePeriodSeconds: 180
 
   # -- Kubernetes resources for the brokers
   resources:
@@ -394,6 +408,12 @@ mirrormaker2:
     # comma-separated list or regular expression pattern
     topicsPattern: "registry-schemas, lsst.sal.*"
 
+  target:
+    # -- Target cluster alias. Used to identify the target cluster in
+    # MirrorMaker2 configuration.
+    # @default -- target
+    alias: "target"
+
   replication:
     policy:
       # -- Convention used for the replicated topic name when the DefaultReplicationPolicy
@@ -408,6 +428,9 @@ mirrormaker2:
     # Options are 'earliest' and 'latest'.
     # @default -- earliest
     offset: earliest
+    # -- The location (source/target) of the offset-syncs topic.
+    # @default -- source
+    offsetSyncsTopicLocation: source
 
   # -- Kubernetes resources for MirrorMaker2
   resources:

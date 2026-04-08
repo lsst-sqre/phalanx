@@ -33,8 +33,12 @@ cert-manager:
       - "--logging-format=json"
 
     # -- Tolerations for the cert-manager cainjector pod
-    # @default -- Tolerate GKE arm64 taint
+    # @default -- Tolerate GKE amd64 and arm64 taints
     tolerations:
+      - key: "kubernetes.io/arch"
+        operator: "Equal"
+        value: "amd64"
+        effect: "NoSchedule"
       - key: "kubernetes.io/arch"
         operator: "Equal"
         value: "arm64"
@@ -52,8 +56,12 @@ cert-manager:
       memory: "64Mi"
 
   # -- Tolerations for the cert-manager controller
-  # @default -- Tolerate GKE arm64 taint
+  # @default -- Tolerate GKE amd64 and arm64 taints
   tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "amd64"
+      effect: "NoSchedule"
     - key: "kubernetes.io/arch"
       operator: "Equal"
       value: "arm64"
@@ -71,12 +79,16 @@ cert-manager:
         cpu: "100m"
         memory: "256Mi"
       requests:
-        cpu: "10m"
-        memory: "32Mi"
+        cpu: "50m"
+        memory: "52Mi"
 
     # -- Tolerations for the cert-manager webhook pod
-    # @default -- Tolerate GKE arm64 taint
+    # @default -- Tolerate GKE amd64 and arm64 taints
     tolerations:
+      - key: "kubernetes.io/arch"
+        operator: "Equal"
+        value: "amd64"
+        effect: "NoSchedule"
       - key: "kubernetes.io/arch"
         operator: "Equal"
         value: "arm64"

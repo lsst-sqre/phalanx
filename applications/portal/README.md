@@ -29,7 +29,7 @@ Rubin Science Platform Portal Aspect
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Portal image |
-| image.repository | string | `"ipac/suit"` | Portal image to use |
+| image.repository | string | `"ghcr.io/lsst/suit"` | Portal image to use |
 | image.tag | string | The appVersion of the chart | Tag of Portal image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | nameOverride | string | `""` | Override the base name for resources |

@@ -20,6 +20,7 @@
 | applications.control-system-test | bool | `false` | Enable the control-system-test application |
 | applications.csc-versions | bool | `false` | Enable the csc-versions application |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
+| applications.docverse | bool | `false` | Enable the docverse application |
 | applications.envsys | bool | `false` | Enable the envsys control system application |
 | applications.eups-distributor | bool | `false` | Enable the eups-distributor application |
 | applications.exposure-checker | bool | `false` | Enable the exposure-checker application |
@@ -29,6 +30,7 @@
 | applications.gafaelfawr | bool | `true` | Enable the Gafaelfawr application. This is required by Phalanx since most other applications use `GafaelfawrIngress` |
 | applications.ghostwriter | bool | `false` | Enable the ghostwriter application |
 | applications.giftless | bool | `false` | Enable the giftless application |
+| applications.gke | bool | `false` | Enable the gke application |
 | applications.google-cloud-observability | bool | `false` | Enable the google-cloud-observability application |
 | applications.grafana | bool | `false` | Enable the grafana application |
 | applications.hips | bool | `false` | Enable the HiPS application |
@@ -54,6 +56,7 @@
 | applications.portal | bool | `false` | Enable the portal application |
 | applications.postgres | bool | `false` | Enable the in-cluster PostgreSQL server. Use of this server is discouraged in favor of using infrastructure SQL, but will remain supported for use cases such as minikube test deployments. |
 | applications.ppdb-replication | bool | `false` | Enable the ppdb-replication application |
+| applications.ppdbtap | bool | `false` | Enable the ppdbtap application |
 | applications.production-tools | bool | `false` | Enable the production-tools application |
 | applications.prompt-kafka | bool | `false` | Enable the prompt-kafka application |
 | applications.prompt-keda-hsc | bool | `false` | Enable the prompt-keda-hsc application |
@@ -101,6 +104,7 @@
 | controlSystem.schemaRegistryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema registry URL for the control system deployment |
 | controlSystem.siteTag | string | None, must be set | Site tag for the control system deployment |
 | controlSystem.topicName | string | `"sal"` | Topic name tag for the control system deployment |
+| defaultComputeClass | string | `nil` | Whether to deploy workloads using Autopilot or Standard mode. If this is null, the workloads will use the compute class that corresponds to the cluster type. Here's an [example of setting an Autopilot compute class](https://cloud.google.com/kubernetes-engine/docs/how-to/autopilot-classes-standard-clusters#built-in-class) |
 | fqdn | string | None, must be set | Fully-qualified domain name where the environment is running |
 | name | string | None, must be set | Name of the environment |
 | namespaceLabels | object | `{}` | Add labels for application namespaces |

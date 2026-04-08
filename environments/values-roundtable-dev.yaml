@@ -4,16 +4,19 @@ appOfAppsName: "roundtable"
 gcp:
   projectId: "roundtable-dev-abe2"
   region: "us-central1"
-  clusterName: "roundtable-dev"
+  clusterName: "roundtable-dev-2"
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP roundtable-dev.lsst.cloud"
 vaultPathPrefix: "secret/phalanx/roundtable-dev"
+defaultComputeClass: "single-zone-autopilot-us-central1-b"
 
 applications:
   atlantis: false
+  docverse: true
   eups-distributor: true
   giftless: true
+  gke: true
   google-cloud-observability: true
   jira-data-proxy: true
   mobu: true

@@ -77,7 +77,6 @@ controller:
       enabled: true
 hub:
   useSubdomains: true
-  landingPage: "/lab/tree/notebooks/tutorials/welcome.md"
 
 jupyterhub:
   cull:

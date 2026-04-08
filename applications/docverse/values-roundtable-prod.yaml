@@ -1,0 +1,9 @@
+config:
+  databaseUrl: "postgresql://docverse@localhost/docverse"
+  superadminUsers:
+    - "jonathansick"
+
+cloudsql:
+  enabled: true
+  instanceConnectionName: "roundtable-prod-f6fd:us-central1:roundtable-prod-f119ac3d"
+  serviceAccount: "docverse-sa@roundtable-prod-f6fd.iam.gserviceaccount.com"

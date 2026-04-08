@@ -2,6 +2,13 @@ replicaCount: 2
 
 # Use the CSI storage class so that we can use snapshots.
 redis:
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "100m"
+      memory: "210Mi"
   persistence:
     storageClass: "wekafs--sdf-k8s01"
 
@@ -153,6 +160,39 @@ config:
       - "rubinmgr"
       - "unix-admin"
     "read:image":
+      - "lsst"
+      - "lsst-ccs"
+      - "rubin_users"
+      - "rubin_users-a"
+      - "rubin_users-b"
+      - "rubin_users-c"
+      - "rubin_users-d"
+      - "rubin_users-e"
+      - "rubin_users-f"
+      - "rubin_users-g"
+      - "rubin_users-h"
+      - "rubin_users-i"
+      - "rubin_users-j"
+      - "rubin_users-k"
+      - "rubin_users-l"
+      - "rubin_users-m"
+      - "rubin_users-n"
+      - "rubin_users-o"
+      - "rubin_users-p"
+      - "rubin_users-q"
+      - "rubin_users-r"
+      - "rubin_users-s"
+      - "rubin_users-t"
+      - "rubin_users-u"
+      - "rubin_users-v"
+      - "rubin_users-w"
+      - "rubin_users-x"
+      - "rubin_users-y"
+      - "rubin_users-z"
+      - "rubin_admin_datasets"
+      - "rubin_admin_repos"
+      - "unix-admin"
+    "read:sasquatch":
       - "lsst"
       - "lsst-ccs"
       - "rubin_users"

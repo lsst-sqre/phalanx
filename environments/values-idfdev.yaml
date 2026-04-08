@@ -7,16 +7,18 @@ butlerServerRepositories:
 gcp:
   projectId: "science-platform-dev-7696"
   region: "us-central1"
-  clusterName: "science-platform-dev"
+  clusterName: "rsp-dev"
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP data-dev.lsst.cloud"
 vaultPathPrefix: "secret/phalanx/idfdev"
 
 applications:
+  bigquery-kafka: true
   butler: true
   datalinker: true
   ghostwriter: true
+  gke: true
   google-cloud-observability: true
   grafana: true
   hips: true
@@ -27,6 +29,7 @@ applications:
   noteburst: true
   nublado: true
   portal: true
+  ppdbtap: true
   qserv-kafka: true
   sasquatch: true
   sasquatch-backpack: true

@@ -81,6 +81,8 @@ spec:
               - name: LOCAL_REPO_CONFIG
                 value: {{ . }}
               {{- end }}
+              - name: LSST_RESOURCES_NUM_WORKERS
+                value: {{ with .Values.instrument.transferScale }}{{ . | toString | quote }}{{ else }}"3"{{ end }}
               - name: REPO_RETRY_DELAY
                 value: {{ .Values.instrument.repoWait | toString | quote }}
               - name: LSST_DISABLE_BUCKET_VALIDATION
@@ -104,6 +106,15 @@ spec:
               - name: SATTLE_URI_BASE
                 value: {{ . }}
               {{- end }}
+              {{/* For PyTorch */}}
+              {{- $cpus := 2 -}}
+              {{- with .Values.resources -}}
+                {{- $cpus = dig "limits" "cpu" 2 . -}}
+              {{- end -}}
+              - name: OMP_NUM_THREADS
+                value: {{ $cpus | toString | quote }}
+              - name: MKL_NUM_THREADS
+                value: {{ $cpus | toString | quote }}
               - name: SASQUATCH_URL
                 value: {{ .Values.sasquatch.endpointUrl }}
               {{- if and .Values.sasquatch.endpointUrl .Values.sasquatch.auth_env }}

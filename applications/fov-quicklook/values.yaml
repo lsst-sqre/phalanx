@@ -110,6 +110,12 @@ butler_settings:
     - name: butler-config
       configMap:
         name: fov-quicklook-butler-config
+    - name: sdf-group-rubin
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin
+    - name: sdf-data-rubin
+      persistentVolumeClaim:
+        claimName: sdf-data-rubin
   volume_mounts:
     - name: aws-credentials
       mountPath: /var/run/fov-quicklook/secrets/aws-credentials.ini
@@ -119,8 +125,15 @@ butler_settings:
       subPath: postgres-credentials.txt
     - name: butler-config
       mountPath: /var/run/fov-quicklook/config
+    - name: sdf-group-rubin
+      mountPath: /sdf/group/rubin
+      readOnly: true
+    - name: sdf-data-rubin
+      mountPath: /sdf/data/rubin
+      readOnly: true
   data_repos:
     embargo: "s3://embargo@rubin-summit-users/butler.yaml"
+    main: "/sdf/group/rubin/repo/main"
 
 # -- Context menu templates for the frontend
 context_menu_templates: []
@@ -128,10 +141,9 @@ context_menu_templates: []
 # -- CCD data type configurations for the quicklook system
 # Each entry defines how to access different types of Butler data
 ccd_data_types:
-  # -- Raw data from LSSTCam
-  - id: raw
-    name: raw
-    display_name: Raw
+  # -- Embargo / Raw data from LSSTCam
+  - data_type: raw
+    display_name: Raw (Embargo)
     collections:
       - LSSTCam/raw/all
     data_id_dimension: exposure
@@ -141,10 +153,9 @@ ccd_data_types:
     partial: false
     repository_name: embargo
     instrument: LSSTCam
-  # -- Post-ISR (Instrument Signature Removal) processed images
-  - id: post_isr_image
-    name: post_isr_image
-    display_name: Post-ISR
+  # -- Embargo / Post-ISR (Instrument Signature Removal) processed images
+  - data_type: post_isr_image
+    display_name: Post-ISR (Embargo)
     collections:
       - LSSTCam/runs/nightlyValidation
     data_id_dimension: exposure
@@ -153,10 +164,9 @@ ccd_data_types:
     partial: true
     repository_name: embargo
     instrument: LSSTCam
-  # -- Preliminary visit images
-  - id: preliminary_visit_image
-    name: preliminary_visit_image
-    display_name: Preliminary
+  # -- Embargo / Preliminary visit images
+  - data_type: preliminary_visit_image
+    display_name: Preliminary (Embargo)
     collections:
       - LSSTCam/runs/nightlyValidation
     data_id_dimension: visit
@@ -164,4 +174,38 @@ ccd_data_types:
       - -visit
     partial: true
     repository_name: embargo
+    instrument: LSSTCam
+  # -- main / Raw data from LSSTCam
+  - data_type: raw
+    display_name: Raw (Main)
+    collections:
+      - LSSTCam/raw/all
+    data_id_dimension: exposure
+    order_by:
+      - -day_obs
+      - -exposure
+    partial: false
+    repository_name: main
+    instrument: LSSTCam
+  # -- Post-ISR (Instrument Signature Removal) processed images
+  - data_type: post_isr_image
+    display_name: Post-ISR (Main)
+    collections:
+      - LSSTCam/runs/nightlyValidation
+    data_id_dimension: exposure
+    order_by:
+      - -exposure
+    partial: true
+    repository_name: main
+    instrument: LSSTCam
+  # -- Preliminary visit images
+  - data_type: preliminary_visit_image
+    display_name: Preliminary (Main)
+    collections:
+      - LSSTCam/runs/nightlyValidation
+    data_id_dimension: visit
+    order_by:
+      - -visit
+    partial: true
+    repository_name: main
     instrument: LSSTCam

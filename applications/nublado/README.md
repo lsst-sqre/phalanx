@@ -16,7 +16,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.37.11"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.14"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.nodeSelector | object | `{}` | Node selection rules for the Cloud SQL Auth Proxy pod |
 | cloudsql.podAnnotations | object | `{}` | Annotations for the Cloud SQL Auth Proxy pod |
@@ -52,6 +52,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.images.numReleases | int | `1` | Number of most-recent releases to prepull. |
 | controller.config.images.numWeeklies | int | `2` | Number of most-recent weeklies to prepull. |
 | controller.config.images.pin | list | `[]` | List of additional image tags to prepull. Listing the image tagged as recommended here is recommended when using a Docker image source to ensure its name can be expanded properly in the menu. |
+| controller.config.images.prepullTimeout | string | `"10m"` | How long to wait for a prepull of a pod to finish before deciding it has failed, in Safir `parse_timedelta` format. |
 | controller.config.images.recommendedTag | string | `"recommended"` | Tag marking the recommended image (shown first in the menu) |
 | controller.config.images.refreshInterval | string | `"5m"` | How frequently to refresh the list of available images and compare it to the cached images on nodes to prepull new images, in Safir `parse_timedelta` format. Newly-available images will not appear in the menu for up to this interval. |
 | controller.config.images.source | object | None, must be specified | Source for prepulled images. For Docker, set `type` to `docker`, `registry` to the hostname and `repository` to the name of the repository. For Google Artifact Repository, set `type` to `google`, `location` to the region, `projectId` to the Google project, `repository` to the name of the repository, and `image` to the name of the image. |
@@ -92,6 +93,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | controller.config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | controller.config.pathPrefix | string | `"/nublado"` | Path prefix that will be routed to the controller |
+| controller.config.watchReconnectTimeout | string | `"3m"` | How frequently to restart a Kubernetes watch request. These connections can be dropped and throw a 400 error, or even be silently dropped in different Kubernetes enviroments. Setting this value can help prevent those things from happening. |
 | controller.googleServiceAccount | string | None, must be set when using Google Artifact Registry | If Google Artifact Registry is used as the image source, the Google service account that has an IAM binding to the `nublado-controller` Kubernetes service account and has the Artifact Registry reader role |
 | controller.ingress.annotations | object | `{}` | Additional annotations to add for the Nublado controller ingress |
 | controller.nodeSelector | object | `{}` | Node selector rules for the Nublado controller |
@@ -154,7 +156,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/nublado-jupyterhub"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"11.2.1"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"12.1.0"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | See `values.yaml` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |
@@ -163,6 +165,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.prePuller.continuous.enabled | bool | `false` | Whether to run the JupyterHub continuous prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.prePuller.hook.enabled | bool | `false` | Whether to run the JupyterHub hook prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.proxy.chp.extraCommandLineFlags | list | `["--keep-alive-timeout=61000"]` | Extra CLI options to pass to the proxy. The most up-to-date list is [here](https://github.com/jupyterhub/configurable-http-proxy/blob/main/bin/configurable-http-proxy) (not the docs, unfortunately) |
+| jupyterhub.proxy.chp.networkPolicy.egress | list | `[{"to":[{"namespaceSelector":{},"podSelector":{"matchLabels":{"nublado.lsst.io/category":"lab"}}}]}]` | Enable the proxy to send traffic to any pod in any namespace with the `nublado.lsst.io/category: lab` label. |
 | jupyterhub.proxy.chp.networkPolicy.interNamespaceAccessLabels | string | `"accept"` | Enable access to the proxy from other namespaces, since we put each user's lab environment in its own namespace |
 | jupyterhub.proxy.chp.resources | object | See `values.yaml` | Resource limits and requests for proxy pod |
 | jupyterhub.proxy.chp.tolerations | list | Tolerate GKE arm64 taint | Tolerations for proxy pod |

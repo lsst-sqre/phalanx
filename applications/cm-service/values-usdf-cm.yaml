@@ -12,6 +12,10 @@ config:
         endpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
   logLevel: "INFO"
   logProfile: "production"
+  rootPath: ""
+  # deprecated, should use rootPath instead with a rewriting ingress
+  docsPrefix: "/docs"
+  pathPrefix: "/cm-service"
   db:
     hostname: "postgres.postgres"
     echo: false
@@ -24,7 +28,7 @@ config:
     DAEMON_CAMPAIGNS: 1
     DAEMON_NODES: 1
     STORE_FSM: 1
-    ALLOW_TASK_UPSERT: 0
+    ALLOW_TASK_UPSERT: 1
     MOCK_BUTLER: 0
     MOCK_BPS: 0
 
@@ -38,9 +42,10 @@ config:
       secretName: "cm-service"
       secretKey: "butler-authn"
     storageClassName: "sdf-data-rubin"
-    subPath: "repo/main"
-    mountPath: "/sdf/group/rubin/repo/main"
+    subPath: "repo"
+    mountPath: "/sdf/group/rubin/repo"
     repositories:
+      "dp2_prep": "/sdf/group/rubin/repo/dp2_prep"
       "/repo/main": "/sdf/group/rubin/repo/main/butler.yaml"
       "/repo/main+sasquatch_dev": "/sdf/group/rubin/repo/main/butler+sasquatch_dev.yaml"
       "/repo/embargo": "s3://embargo@rubin-summit-users/butler.yaml"
@@ -62,7 +67,7 @@ config:
     useNativeHttplib: "1"
 
 image:
-  tag: "0.6.0"
+  tag: "0.7.0"
   pullPolicy: IfNotPresent
 
 daemon:
@@ -71,5 +76,10 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.6.0"
+    tag: "0.7.0"
+    pullPolicy: IfNotPresent
+
+web:
+  image:
+    tag: "0.7.0"
     pullPolicy: IfNotPresent

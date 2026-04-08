@@ -13,7 +13,7 @@ Kubernetes application manager
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| argo-cd.applicationSet.resources | object | See `values.yaml` | Resource limits and requests for the applicationSet server |
+| argo-cd.applicationSet.resources | object | See `values.yaml` | Resource limits and requests for the applicationSet controller |
 | argo-cd.configs.cm."application.resourceTrackingMethod" | string | `"label"` | Keep label-based tracking for now until Nublado is updated. |
 | argo-cd.configs.cm."resource.compareoptions" | string | `"ignoreAggregatedRoles: true\n"` | Configure resource comparison |
 | argo-cd.configs.cm."ui.bannerpermanent" | string | `"true"` | Persist env banner |
@@ -28,11 +28,15 @@ Kubernetes application manager
 | argo-cd.controller.metrics.enabled | bool | `true` | Enable controller metrics service |
 | argo-cd.controller.resources | object | See `values.yaml` | Resource limits and requests for the application controller pods |
 | argo-cd.dex.resources | object | See `values.yaml` | Resource limits and requests for the Dex server |
-| argo-cd.global.logging.format | string | `"json"` | Set the global logging format. Either: `text` or `json` |
+| argo-cd.global.logging.format | string | `"json"` | Global logging format (`text` or `json`) |
 | argo-cd.global.tolerations[0].effect | string | `"NoSchedule"` |  |
 | argo-cd.global.tolerations[0].key | string | `"kubernetes.io/arch"` |  |
 | argo-cd.global.tolerations[0].operator | string | `"Equal"` |  |
-| argo-cd.global.tolerations[0].value | string | `"arm64"` |  |
+| argo-cd.global.tolerations[0].value | string | `"amd64"` |  |
+| argo-cd.global.tolerations[1].effect | string | `"NoSchedule"` |  |
+| argo-cd.global.tolerations[1].key | string | `"kubernetes.io/arch"` |  |
+| argo-cd.global.tolerations[1].operator | string | `"Equal"` |  |
+| argo-cd.global.tolerations[1].value | string | `"arm64"` |  |
 | argo-cd.notifications.metrics.enabled | bool | `true` | Enable notifications metrics service |
 | argo-cd.notifications.resources | object | See `values.yaml` | Resource limits and requests for the notifications controller |
 | argo-cd.redis.metrics.enabled | bool | `true` | Enable Redis metrics service |

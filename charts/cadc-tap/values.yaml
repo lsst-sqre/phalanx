@@ -52,7 +52,7 @@ affinity: {}
 
 config:
   # -- What type of backend are we connecting to?
-  # @default -- None, must be set to `pg` or `qserv`
+  # @default -- None, must be set to `pg`, `qserv` or `bigquery`
   backend: ""
 
   pg:
@@ -76,7 +76,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "1.24.0"
+      tag: "1.26.0"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -94,11 +94,33 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.12.0"
+      tag: "3.17.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
     passwordEnabled: false
+
+  bigquery:
+    # -- BigQuery project ID
+    # @default -- None, must be set if backend is `bigquery`
+    project: ""
+
+    # -- BigQuery dataset name
+    # @default -- None, must be set if backend is `bigquery`
+    dataset: ""
+
+    # -- Schema name for table mappings (optional)
+    schema: ""
+
+    image:
+      # -- TAP image to use
+      repository: "ghcr.io/lsst-sqre/lsst-tap-service"
+
+      # -- Pull policy for the TAP image
+      pullPolicy: "IfNotPresent"
+
+      # -- Tag of TAP image to use
+      tag: "3.17.0"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
@@ -150,8 +172,28 @@ config:
       # -- Job Delete topic
       jobDelete: "lsst.tap.job-delete"
 
+    # -- Name of the KafkaUser to use for authentication
+    # @default -- "tap"
+    kafkaUserName: "tap"
+
+    # -- Kafka consumer group ID.
+    # @default -- "tap"
+    consumerGroupId: "tap"
+
     # -- Whether kafka is enabled
     enabled: false
+
+  # -- Output limit value for TAP queries advertised in capabilities.
+  # Leave empty to use the default (100000000).
+  outputLimit: ""
+
+  # -- Unit for the output limit: "byte" or "row".
+  # Leave empty to use the default ("row").
+  outputLimitUnit: ""
+
+  # -- Maximum row limit (MAXREC) enforced server-side.
+  # Leave empty to use the default (100000000).
+  maxRec: ""
 
   # -- Rules for renaming Columns
   urlRewrite:
@@ -249,7 +291,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "DP1-v1.2.0"
+    tag: "w.2026.01"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
@@ -313,7 +355,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "3.12.0"
+    tag: "3.17.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
@@ -352,7 +394,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.11"
+    tag: "1.37.14"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"

@@ -3,6 +3,18 @@
 # Override strimzi-kafka subchart configuration.
 strimzi-kafka: {}
 
+alert-brokers:
+  # -- Whether to enable the alert-brokers subchart
+  enabled: false
+
+alert-database:
+  # -- Whether to enable the alert-database subchart
+  enabled: false
+
+alert-stream-schema-sync:
+  # -- Whether to enable the alert-stream-schema-sync subchart
+  enabled: false
+
 schema-registry:
   # -- Whether to enable the schema-registry subchart
   enabled: false
@@ -202,7 +214,7 @@ chronograf:
     repository: "quay.io/influxdb/chronograf"
 
     # -- Docker tag to use for Chronograf
-    tag: 1.10.8
+    tag: 1.10.9
 
   updateStrategy:
     # -- Deployment strategy, use recreate with persistence enabled
@@ -262,7 +274,7 @@ kapacitor:
     # -- Docker image to use for Kapacitor
     repository: docker.io/library/kapacitor
     # -- Tag to use for Kapacitor
-    tag: 1.8.2
+    tag: 1.8.3
     # -- Pull policy for Kapacitor
     pullPolicy: "IfNotPresent"
 
@@ -328,6 +340,10 @@ backup:
 
 tap:
   # -- Whether to enable the tap subchart
+  enabled: false
+
+ppdbtap:
+  # -- Whether to enable the ppdbtap subchart
   enabled: false
 
 obsenv:

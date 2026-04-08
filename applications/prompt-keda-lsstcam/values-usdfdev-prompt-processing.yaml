@@ -6,7 +6,6 @@ prompt-keda:
     tag: latest
 
   instrument:
-    skymap: lsst_cells_v1 # TODO: Remove when dev is updated with new LSSTCam templates.
     pipelines:
       # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
       # if the result (including any comments) is longer than 72 characters.
@@ -45,8 +44,8 @@ prompt-keda:
     config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcam-dev.yaml
 
   alerts:
-    username: kafka-admin
-    server: usdf-alert-stream-dev.lsst.cloud:9094
+    username: prompt-alert
+    server: sasquatch-kafka-bootstrap.sasquatch:9092
     topic: alert-stream-test
 
   sasquatch:
