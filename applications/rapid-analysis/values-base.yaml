@@ -13,6 +13,20 @@ env:
   RA_PULL_DIRECTORIES: "TARTS donut_viz drp_pipe ts_wep ts_ofc ts_config_mttcs summit_utils summit_extras rubintv_production daf_butler pipe_base"
   TARTS_DATA_DIR: /project/rubintv/aos_data/TARTS
   AI_DONUT_DATA_DIR: /project/rubintv/aos_data/AI_DONUT
+  # These threading env vars are the ones set in
+  # lsst.utils.disable_implicit_threading() They are being set here as well for
+  # extra safety as there is a possibility that code could init before that's
+  # called, at least in theory. Pods which want to take advantage of more cores
+  # can override these values at runtime.
+  OPENBLAS_NUM_THREADS: 1
+  GOTO_NUM_THREADS: 1
+  OMP_NUM_THREADS: 1
+  MKL_NUM_THREADS: 1
+  MKL_DOMAIN_NUM_THREADS: 1
+  MPI_NUM_THREADS: 1
+  NUMEXPR_NUM_THREADS: 1
+  NUMEXPR_MAX_THREADS: 1
+  OMP_PROC_BIND: false
 securityContext:
   uid: 73006
   gid: 73006
