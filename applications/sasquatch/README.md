@@ -65,7 +65,7 @@ Rubin Observatory's telemetry service
 | influxdb.config.logging.format | string | `"json"` | Format to use for log messages |
 | influxdb.config.logging.level | string | `"debug"` | Logging level |
 | influxdb.enabled | bool | `true` | Whether InfluxDB is enabled |
-| influxdb.image.tag | string | `"1.11.8"` | InfluxDB image tag |
+| influxdb.image.tag | string | `"1.12.3"` | InfluxDB image tag |
 | influxdb.ingress.annotations | object | See `values.yaml` | Annotations to add to the ingress |
 | influxdb.ingress.className | string | `"nginx"` | Ingress class to use |
 | influxdb.ingress.enabled | bool | `false` | Whether to enable the InfluxDB ingress |
