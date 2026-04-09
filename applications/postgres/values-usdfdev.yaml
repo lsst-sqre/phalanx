@@ -13,6 +13,9 @@ timessquare_db:
 exposure_checker_db:
   user: "expchecker"
   db: "expchecker"
+grafana_db:
+  user: "grafana"
+  db: "grafana"
 
 postgresVolumeSize: "10Gi"
 postgresStorageClass: 'wekafs--sdf-k8s01'

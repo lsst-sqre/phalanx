@@ -239,3 +239,21 @@ consdb:
 
 tap:
   enabled: true
+
+grafana:
+  enabled: true
+  influxdb:
+    url: "http://sasquatch-trickster.sasquatch"
+    databases:
+      - lsst.prompt
+      - lsst.verify
+      - lsst.dm
+
+trickster:
+  enabled: true
+  config:
+    logging:
+      log_level: "debug"
+
+redis:
+  enabled: true
