@@ -10,6 +10,8 @@ config:
     enabled: true
   slackAlerts: true
   tap:
+    schemaVersion: "releases/w.2026.15"
+    schemaSourceTemplate: "gs://rubin-sdm-schemas-artifacts/{version}/schemas.tar.gz"
     servers:
       tap:
         enabled: true
