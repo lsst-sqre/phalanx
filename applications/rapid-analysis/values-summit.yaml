@@ -374,16 +374,6 @@ nfsMountpoint:
   readOnly: true
   server: nfs-auxtel.cp.lsst.org
   serverPath: /auxtel/lsstdata/base/auxtel
-- name: comcam-data
-  containerPath: /repo/LSSTComCam
-  readOnly: false
-  server: nfs-comcam.cp.lsst.org
-  serverPath: /comcam/repo/LSSTComCam
-- name: comcam-gen3-data
-  containerPath: /data/lsstdata/base/comcam
-  readOnly: true
-  server: nfs-comcam.cp.lsst.org
-  serverPath: /comcam/lsstdata/base/comcam
 - name: lsstcam-data
   containerPath: /repo/LSSTCam
   readOnly: false
