@@ -88,10 +88,10 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 6G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 8G
 ###
 ### LSSTCam pods
@@ -118,10 +118,10 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 4G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 5G
 - name: LSSTCam/runOneOffVisitImage.py
   mounts:
@@ -129,10 +129,10 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 8G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 10G
 - name: LSSTCam/runMetadataServerAos.py
   mounts:
@@ -152,10 +152,10 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: .5
+      cpu: 0.5
       memory: 8G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 25G
 - name: LSSTCam/runPlotter.py
   replicas: 2
@@ -164,10 +164,10 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 8G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 12G
 - name: LSSTCam/runPsfPlotting.py
   mounts:
@@ -176,10 +176,10 @@ scripts:
   replicas: 3
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 6G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 10G
 - name: LSSTCam/runZernikePredictionPlotting.py
   mounts:
@@ -188,10 +188,10 @@ scripts:
   replicas: 5
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 6G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 12G
 - name: LSSTCam/runPerformanceMonitor.py
   mounts:
@@ -200,10 +200,10 @@ scripts:
   replicas: 5
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 6G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 8G
 - name: LSSTCam/runClusterManager.py
   mounts:
@@ -215,7 +215,7 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 12G
     limits:
       cpu: 1.2
@@ -226,10 +226,10 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 4G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 6G
 - name: LSSTCam/runGuiderAnalysis.py
   mounts:
@@ -238,7 +238,7 @@ scripts:
   replicas: 8
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 6G
     limits:
       cpu: 1.2
@@ -270,10 +270,10 @@ latissGather1bSet:
   resources:
     requests:
       cpu: 1.0
-      memory: "4G"
+      memory: 4G
     limits:
       cpu: 1.0
-      memory: "8G"
+      memory: 8G
 ###
 ### LSSTCam StatefulSets
 ###
@@ -314,10 +314,10 @@ lsstcamGather1bSet:
   resources:
     requests:
       cpu: 1.0
-      memory: "4G"
+      memory: 4G
     limits:
       cpu: 1.1
-      memory: "8G"
+      memory: 8G
 lsstcamGather1bAosSet:
   name: LSSTCam/runStep1bAosWorker.py
   mounts:
@@ -327,10 +327,10 @@ lsstcamGather1bAosSet:
   resources:
     requests:
       cpu: 1.0
-      memory: "4G"
+      memory: 4G
     limits:
       cpu: 1.1
-      memory: "8G"
+      memory: 8G
 lsstcamBacklogWorkerSet:
   name: LSSTCam/runBacklogWorker.py
   mounts:
@@ -340,10 +340,10 @@ lsstcamBacklogWorkerSet:
   resources:
     requests:
       cpu: 1.0
-      memory: "4G"
+      memory: 4G
     limits:
       cpu: 1.0
-      memory: "8G"
+      memory: 8G
 lsstcamGatherRollupSet:
   name: LSSTCam/runNightlyWorker.py
   mounts:
@@ -353,10 +353,10 @@ lsstcamGatherRollupSet:
   resources:
     requests:
       cpu: 1.0
-      memory: "12G"
+      memory: 12G
     limits:
       cpu: 1.0
-      memory: "24G"
+      memory: 24G
 pullSecretsPath: pull-secret
 butlerSecret:
   containerPath: /home/saluser/.lsst
@@ -425,10 +425,10 @@ redis:
     request: 10Gi
   resources:
     requests:
-      cpu: 2
+      cpu: 2.0
       memory: 1Gi
     limits:
-      cpu: 3
+      cpu: 3.0
       memory: 50Gi
 squid:
   enabled: true
