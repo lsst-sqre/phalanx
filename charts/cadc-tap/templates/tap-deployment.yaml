@@ -69,6 +69,14 @@ spec:
                   echo "Using BigQuery PluginFactory.properties in $dir"
                 fi
               done
+              {{- else if eq .Values.config.backend "pg" }}
+              # Swap to PostgreSQL PluginFactory
+              for dir in /var/lib/tomcat/webapps/*/; do
+                if [ -f "${dir}WEB-INF/classes/PluginFactory-pg.properties" ]; then
+                  cp "${dir}WEB-INF/classes/PluginFactory-pg.properties" "${dir}WEB-INF/classes/PluginFactory.properties"
+                  echo "Using pg PluginFactory.properties in $dir"
+                fi
+              done
               {{- end }}
 
               echo "org.apache.catalina.startup.VersionLoggerListener.level = OFF" >> /var/lib/tomcat/conf/logging.properties
@@ -124,10 +132,9 @@ spec:
                 -Dtapschemauser.driverClassName=org.postgresql.Driver
                 -Dtapschemauser.url=jdbc:postgresql://localhost:5432/{{ .Values.tapSchema.database }}
                 {{- end }}
-                -Dtapschemauser.maxActive={{ .Values.tapSchema.tapuser.maxActive }}
+                -Dtapschemauser.maxActive={{ .Values.tapSchema.tapschemauser.maxActive }}
                 -Dtapuser.maxActive={{ .Values.tapSchema.tapuser.maxActive }}
                 -Dtapadm.maxActive={{ .Values.tapSchema.tapadm.maxActive }}
-                -Dtapuser.maxActive={{ .Values.tapSchema.tapuser.maxActive }}
                 -Duws.username={{ .Values.uws.username }}
                 {{- if or (eq .Values.uws.type "cloudsql") (eq .Values.uws.type "external") }}
                 -Duws.password=$UWS_DB_PASSWORD
@@ -144,6 +151,7 @@ spec:
                 {{- if eq .Values.config.backend "pg" }}
                 -Dtap.username={{ .Values.config.pg.username }}
                 -Dtap.password=$TAP_DB_PASSWORD
+                -Dtap.driverClassName=org.postgresql.Driver
                 -Dtap.url=jdbc:postgresql://{{ .Values.config.pg.host }}/{{ .Values.config.pg.database }}
                 -Dtap.maxActive=100
                 -Dqservuser.username=unused
@@ -151,7 +159,21 @@ spec:
                 -Dqservuser.driverClassName=com.mysql.cj.jdbc.Driver
                 -Dqservuser.url=jdbc:mysql://localhost:3306/unused
                 -Dqservuser.maxActive=1
-                {{- else if eq .Values.config.backend "bigquery" }}
+                {{- else }}
+                -Dtap.username={{ .Values.tapSchema.username }}
+                -Dtap.password=$TAP_SCHEMA_PASSWORD
+                {{- if eq .Values.tapSchema.type "containerized" }}
+                -Dtap.driverClassName=com.mysql.cj.jdbc.Driver
+                -Dtap.url=jdbc:mysql://{{ template "cadc-tap.fullname" . }}-schema-db:3306/
+                {{- else if eq .Values.tapSchema.type "external" }}
+                -Dtap.driverClassName=org.postgresql.Driver
+                -Dtap.url=jdbc:postgresql://{{ .Values.tapSchema.external.host }}:{{ .Values.tapSchema.external.port }}/{{ .Values.tapSchema.database }}
+                {{- else }}
+                -Dtap.driverClassName=org.postgresql.Driver
+                -Dtap.url=jdbc:postgresql://localhost:5432/{{ .Values.tapSchema.database }}
+                {{- end }}
+                -Dtap.maxActive={{ .Values.tapSchema.tapuser.maxActive }}
+                {{- if eq .Values.config.backend "bigquery" }}
                 -Dtap.bigquery.project={{ .Values.config.bigquery.project }}
                 -Dtap.bigquery.dataset={{ .Values.config.bigquery.dataset }}
                 {{- if .Values.config.bigquery.schema }}
@@ -168,6 +190,7 @@ spec:
                 -Dqservuser.driverClassName=com.mysql.cj.jdbc.Driver
                 -Dqservuser.url=jdbc:mysql://{{ .Values.config.qserv.host }}/{{ .Values.config.qserv.jdbcParams }}
                 -Dqservuser.maxActive=100
+                {{- end }}
                 {{- end }}
                 -Dgafaelfawr_url={{ .Values.global.baseUrl }}/auth/api/v1/user-info
                 -Dgcs_bucket={{ .Values.config.gcsBucket }}
@@ -197,6 +220,8 @@ spec:
                 -Durl.rewrite.enabled={{ .Values.config.urlRewrite.enabled | default true }}
                 -Durl.rewrite.rules="{{ .Values.config.urlRewrite.rules | default "ivoa.ObsCore:access_url" }}"
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
+            - name: "BACKEND"
+              value: {{ .Values.config.backend | quote }}
             - name: "CATALINA_BASE"
               value: "/var/lib/tomcat"
             - name: "CATALINA_HOME"

@@ -48,8 +48,8 @@ IVOA TAP service
 | config.pg.database | string | None, must be set if backend is `pg` | Database to connect to |
 | config.pg.host | string | None, must be set if backend is `pg` | Host to connect to |
 | config.pg.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
-| config.pg.image.repository | string | `"ghcr.io/lsst-sqre/tap-postgres-service"` | TAP image to use |
-| config.pg.image.tag | string | `"1.26.0"` | Tag of TAP image to use |
+| config.pg.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
+| config.pg.image.tag | string | `"3.17.0"` | Tag of TAP image to use |
 | config.pg.username | string | None, must be set if backend is `pg` | Username to connect with |
 | config.qserv.host | string | `"mock-db:3306"` (the mock QServ) | QServ hostname:port to connect to |
 | config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
@@ -104,7 +104,9 @@ IVOA TAP service
 | tapSchema.resources | object | See `values.yaml` | Resource limits and requests for the TAP schema database pod |
 | tapSchema.tapadm | object | `{"maxActive":2}` | Connection pool configuration for jdbc/tapadm |
 | tapSchema.tapadm.maxActive | int | `2` | Maximum active connections (maxIdle will be set to this value) |
-| tapSchema.tapuser | object | `{"maxActive":3}` | Connection pool configuration for jdbc/tapuser (query planning and tap_upload) |
+| tapSchema.tapschemauser | object | `{"maxActive":3}` | Connection pool configuration for jdbc/tapschemauser |
+| tapSchema.tapschemauser.maxActive | int | `3` | Maximum active connections (maxIdle will be set to this value) |
+| tapSchema.tapuser | object | `{"maxActive":3}` | Connection pool configuration for jdbc/tapuser |
 | tapSchema.tapuser.maxActive | int | `3` | Maximum active connections (maxIdle will be set to this value) |
 | tapSchema.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the TAP schema database pod |
 | tapSchema.type | string | "containerized" | Database backend type: "containerized", "cloudsql", or "external" |

@@ -70,13 +70,13 @@ config:
 
     image:
       # -- TAP image to use
-      repository: "ghcr.io/lsst-sqre/tap-postgres-service"
+      repository: "ghcr.io/lsst-sqre/lsst-tap-service"
 
       # -- Pull policy for the TAP image
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "1.26.0"
+      tag: "3.17.0"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -267,7 +267,12 @@ tapSchema:
     # -- Maximum active connections (maxIdle will be set to this value)
     maxActive: 2
 
-  # -- Connection pool configuration for jdbc/tapuser (query planning and tap_upload)
+  # -- Connection pool configuration for jdbc/tapschemauser
+  tapschemauser:
+    # -- Maximum active connections (maxIdle will be set to this value)
+    maxActive: 3
+
+  # -- Connection pool configuration for jdbc/tapuser
   tapuser:
     # -- Maximum active connections (maxIdle will be set to this value)
     maxActive: 3

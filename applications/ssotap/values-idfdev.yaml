@@ -1,4 +1,10 @@
 cadc-tap:
+  config:
+    pg:
+      image:
+        pullPolicy: "Always"
+        tag: "tickets-DM-54118"
+
   cloudsql:
     enabled: true
     instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
