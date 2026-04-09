@@ -416,7 +416,7 @@ redis:
   resources:
     requests:
       cpu: 2.0
-      memory: 1Gi
+      memory: 25Gi
     limits:
       cpu: 3.0
       memory: 50Gi
