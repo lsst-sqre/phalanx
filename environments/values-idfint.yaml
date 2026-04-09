@@ -21,6 +21,7 @@ applications:
   ghostwriter: true
   gke: true
   google-cloud-observability: true
+  herald: true
   hips: true
   hoverdrive: true
   mobu: true

@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-so/rubintv_production
-  tag: w_2025_48
+  tag: w_2026_13
   pullPolicy: Always
 location: BTS
 env:
@@ -10,8 +10,9 @@ env:
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   RAPID_ANALYSIS_DO_RAISE: True
   BUTLER_ROLLOUT_PAUSE: 1.0
-  RA_PULL_DIRECTORIES: "TARTS donut_viz drp_pipe ts_wep ts_ofc summit_utils summit_extras rubintv_production"
+  RA_PULL_DIRECTORIES: "TARTS donut_viz drp_pipe ts_wep ts_ofc ts_config_mttcs summit_utils summit_extras rubintv_production daf_butler pipe_base"
   TARTS_DATA_DIR: /project/rubintv/aos_data/TARTS
+  AI_DONUT_DATA_DIR: /project/rubintv/aos_data/AI_DONUT
 securityContext:
   uid: 73006
   gid: 73006
@@ -34,11 +35,6 @@ scripts:
   - auxtel-data
   - auxtel-gen3-data
   - project-shared
-# - name: LATISS/runOneOffVisitImage.py
-#   mounts:
-#   - auxtel-data
-#   - auxtel-gen3-data
-#   - project-shared
 - name: LATISS/runOneOffExpRecord.py
   mounts:
   - auxtel-data
@@ -88,6 +84,7 @@ scripts:
   - lsstcam-data
   - project-shared
 - name: LSSTCam/runPlotter.py
+  replicas: 2
   mounts:
   - lsstcam-data
   - project-shared
@@ -135,6 +132,39 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
+- name: LSSTCam/runRadialPlotting.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 12G
+    limits:
+      cpu: 1.2
+      memory: 16G
+- name: LSSTCam/runFWHMPlotting.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 4G
+    limits:
+      cpu: 1
+      memory: 6G
+- name: LSSTCam/runGuiderAnalysis.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
 ##
 ## LATISS StatefulSets
 ##
@@ -152,6 +182,20 @@ latissWorkerSet:
     limits:
       cpu: 1.0
       memory: 6G
+latissGather1bSet:
+  name: LATISS/runStep1bWorker.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+  replicas: 1
+  resources:
+    requests:
+      cpu: 0.5
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
 ###
 ### LSSTCam StatefulSets
 ###

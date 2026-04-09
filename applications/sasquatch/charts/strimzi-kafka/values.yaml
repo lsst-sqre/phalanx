@@ -50,6 +50,9 @@ kafka:
     # -- Whether metric configuration is enabled
     enabled: false
 
+    # -- Include per topic metrics in Jmx Exporter
+    includeTopicMetrics: false
+
   listeners:
     plain:
       # -- Whether internal plaintext listener is enabled

@@ -48,6 +48,8 @@ schema-registry-remote:
     name: registry-schemas-remote
 
 influxdb:
+  image:
+    tag: 1.12.3
   ingress:
     enabled: false
     hostname: data-dev.lsst.cloud
@@ -58,6 +60,8 @@ customInfluxDBIngress:
 
 influxdb-enterprise:
   enabled: true
+  image:
+    tag: 1.12.3
   license:
     secret:
       name: sasquatch

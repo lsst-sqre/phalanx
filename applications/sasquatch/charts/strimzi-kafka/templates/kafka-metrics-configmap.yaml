@@ -168,4 +168,12 @@ data:
     - pattern: "kafka.server<type=broker-metadata-metrics><>(.+):"
       name: kafka_server_brokermetadatametrics_$1
       type: GAUGE
+    {{- if .Values.kafka.metricsConfig.includeTopicMetrics }}
+    # Per topic metrics
+    - pattern: kafka.server<type=BrokerTopicMetrics, name=(BytesInPerSec|BytesOutPerSec|MessagesInPerSec), topic=(.+)><>Count
+      name: kafka_server_BrokerTopicMetrics_$1_total
+      labels:
+        topic: "$2"
+      type: COUNTER
+    {{- end }}
 {{- end}}

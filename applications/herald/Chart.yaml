@@ -1,0 +1,8 @@
+apiVersion: v2
+name: herald
+type: application
+version: 1.0.0
+description: "Rubin alert packet retrieval service"
+sources:
+  - "https://github.com/lsst-sqre/herald"
+appVersion: "0.1.0"

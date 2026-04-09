@@ -192,6 +192,7 @@ strimzi-kafka:
             metallb.io/loadBalancerIPs: 134.79.23.206
     metricsConfig:
       enabled: true
+      includeTopicMetrics: true
 
   broker:
     enabled: true

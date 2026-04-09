@@ -144,6 +144,9 @@ applications:
   # -- Enable the giftless application
   giftless: false
 
+  # -- Enable the herald application
+  herald: false
+
   # -- Enable the HiPS application
   hips: false
 
