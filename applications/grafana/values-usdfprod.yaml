@@ -9,3 +9,6 @@ grafana:
   config:
     database:
       host: "rsp-db-rw.postgres-db.svc.cluster.local"
+
+  authProxy:
+    enabled: false
