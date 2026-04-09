@@ -133,7 +133,7 @@ love-manager:
       replicas: 1
     - name: envsys
       <<: *base-manager-producer
-      replicas: 1
+      replicas: 2
     - name: atcs
       <<: *base-manager-producer
       replicas: 1
@@ -808,6 +808,13 @@ love-producer:
   - name: weatherforecast
     csc: WeatherForecast:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    resources:
+      requests:
+        cpu: 50m
+        memory: 150Mi
+      limits:
+        cpu: 500m
+        memory: 300Mi
   - name: wfoods
     csc: WFOODS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription

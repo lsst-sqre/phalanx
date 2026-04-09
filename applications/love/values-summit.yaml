@@ -173,7 +173,7 @@ love-manager:
       replicas: 1
     - name: envsys
       <<: *base-manager-producer
-      replicas: 1
+      replicas: 2
     - name: atcs
       <<: *base-manager-producer
       replicas: 1
