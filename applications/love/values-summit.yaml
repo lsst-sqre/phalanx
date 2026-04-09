@@ -1219,10 +1219,10 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
-        cpu: 25m
+        cpu: 50m
         memory: 150Mi
       limits:
-        cpu: 250m
+        cpu: 500m
         memory: 300Mi
   - name: wfoods
     csc: WFOODS:0 --log-level 10
