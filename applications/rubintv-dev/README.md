@@ -46,9 +46,9 @@ Real-time display front end development application
 | rubintv.workers.env | list | `[]` | This section holds a list of key, value pairs for environmental variables (name: key, value: value). |
 | rubintv.workers.envSecrets | list | See `values.yaml` | This section holds specifications for secret injection. |
 | rubintv.workers.gid | string | `nil` | GID to run as (site-dependent as above) |
-| rubintv.workers.image | object | `{"pullPolicy":"IfNotPresent","repository":"ts-dockerhub.lsst.org/rubintv-broadcaster","tag":"develop"}` | Settings for OCI image for worker pods |
+| rubintv.workers.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/lsst-so/rubintv_production","tag":"develop"}` | Settings for OCI image for worker pods |
 | rubintv.workers.image.pullPolicy | string | `"IfNotPresent"` | The policy to apply when pulling an image for deployment. |
-| rubintv.workers.image.repository | string | `"ts-dockerhub.lsst.org/rubintv-broadcaster"` | The Docker registry name for the container image. |
+| rubintv.workers.image.repository | string | `"ghcr.io/lsst-so/rubintv_production"` | The Docker registry name for the container image. |
 | rubintv.workers.image.tag | string | `"develop"` | The tag of the container image to use. |
 | rubintv.workers.imagePullSecrets | list | See `values.yaml` | Image pull secrets. |
 | rubintv.workers.nodeSelector | object | `{}` | Node selector rules for the rubintv-dev worker pods |
