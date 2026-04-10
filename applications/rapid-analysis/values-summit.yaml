@@ -12,6 +12,24 @@ env:
   RA_PULL_DIRECTORIES: "TARTS donut_viz drp_pipe ts_wep ts_ofc ts_config_mttcs summit_utils summit_extras rubintv_production daf_butler pipe_base"
   TARTS_DATA_DIR: /project/rubintv/aos_data/TARTS
   AI_DONUT_DATA_DIR: /project/rubintv/aos_data/AI_DONUT
+  # These threading env vars are the ones set in
+  # lsst.utils.disable_implicit_threading() They are being set here as well for
+  # extra safety as there is a possibility that code could init before that's
+  # called, at least in theory. Pods which want to take advantage of more cores
+  # can override these values at runtime.
+  OPENBLAS_NUM_THREADS: 1
+  GOTO_NUM_THREADS: 1
+  OMP_NUM_THREADS: 1
+  MKL_NUM_THREADS: 1
+  MKL_DOMAIN_NUM_THREADS: 1
+  MPI_NUM_THREADS: 1
+  NUMEXPR_NUM_THREADS: 1
+  NUMEXPR_MAX_THREADS: 1
+  OMP_PROC_BIND: false
+envSecrets:
+- name: SENTRY_DSN
+  secretName: rapid-analysis-secrets
+  secretKey: sentry.dsn
 securityContext:
   uid: 73006
   gid: 73006
@@ -70,10 +88,10 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 6G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 8G
 ###
 ### LSSTCam pods
@@ -100,10 +118,10 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 4G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 5G
 - name: LSSTCam/runOneOffVisitImage.py
   mounts:
@@ -111,10 +129,10 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 8G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 10G
 - name: LSSTCam/runMetadataServerAos.py
   mounts:
@@ -134,11 +152,11 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: .5
+      cpu: 0.5
       memory: 8G
     limits:
-      cpu: 1
-      memory: 16G
+      cpu: 1.0
+      memory: 25G
 - name: LSSTCam/runPlotter.py
   replicas: 2
   mounts:
@@ -146,10 +164,10 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 8G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 12G
 - name: LSSTCam/runPsfPlotting.py
   mounts:
@@ -158,10 +176,10 @@ scripts:
   replicas: 3
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 6G
     limits:
-      cpu: 2
+      cpu: 1.0
       memory: 10G
 - name: LSSTCam/runZernikePredictionPlotting.py
   mounts:
@@ -170,10 +188,10 @@ scripts:
   replicas: 5
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 6G
     limits:
-      cpu: 2
+      cpu: 1.0
       memory: 12G
 - name: LSSTCam/runPerformanceMonitor.py
   mounts:
@@ -182,10 +200,10 @@ scripts:
   replicas: 5
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 6G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 8G
 - name: LSSTCam/runClusterManager.py
   mounts:
@@ -197,7 +215,7 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 12G
     limits:
       cpu: 1.2
@@ -208,10 +226,10 @@ scripts:
   - project-shared
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 4G
     limits:
-      cpu: 1
+      cpu: 1.0
       memory: 6G
 - name: LSSTCam/runGuiderAnalysis.py
   mounts:
@@ -220,10 +238,10 @@ scripts:
   replicas: 8
   resources:
     requests:
-      cpu: 1
+      cpu: 1.0
       memory: 6G
     limits:
-      cpu: 1
+      cpu: 1.2
       memory: 8G
 ##
 ## LATISS StatefulSets
@@ -252,10 +270,10 @@ latissGather1bSet:
   resources:
     requests:
       cpu: 1.0
-      memory: "4G"
+      memory: 4G
     limits:
       cpu: 1.0
-      memory: "8G"
+      memory: 8G
 ###
 ### LSSTCam StatefulSets
 ###
@@ -270,36 +288,36 @@ lsstcamWorkerSet:
       cpu: 1.0
       memory: 4G
     limits:
-      cpu: 1.0
+      cpu: 1.1
       memory: 8G  # we should check this value
 lsstcamAosWorkerSet:
   name: LSSTCam/runAosWorker.py
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 36  # 4 deep keeps up for all data except when there's IT trouble
+  replicas: 32  # 4 deep keeps up for all data except when there's IT trouble
   env:
     LIMITS_CPU: 4
   resources:
     requests:
-      cpu: 1.0
+      cpu: 4.2
       memory: 4G
     limits:
-      cpu: 4.0
+      cpu: 4.2
       memory: 8G
 lsstcamGather1bSet:
   name: LSSTCam/runStep1bWorker.py
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 10
+  replicas: 12
   resources:
     requests:
       cpu: 1.0
-      memory: "4G"
+      memory: 4G
     limits:
-      cpu: 1.0
-      memory: "8G"
+      cpu: 1.1
+      memory: 8G
 lsstcamGather1bAosSet:
   name: LSSTCam/runStep1bAosWorker.py
   mounts:
@@ -309,10 +327,10 @@ lsstcamGather1bAosSet:
   resources:
     requests:
       cpu: 1.0
-      memory: "4G"
+      memory: 4G
     limits:
-      cpu: 1.0
-      memory: "8G"
+      cpu: 1.1
+      memory: 8G
 lsstcamBacklogWorkerSet:
   name: LSSTCam/runBacklogWorker.py
   mounts:
@@ -322,10 +340,10 @@ lsstcamBacklogWorkerSet:
   resources:
     requests:
       cpu: 1.0
-      memory: "4G"
+      memory: 4G
     limits:
       cpu: 1.0
-      memory: "8G"
+      memory: 8G
 lsstcamGatherRollupSet:
   name: LSSTCam/runNightlyWorker.py
   mounts:
@@ -335,10 +353,10 @@ lsstcamGatherRollupSet:
   resources:
     requests:
       cpu: 1.0
-      memory: "12G"
+      memory: 12G
     limits:
       cpu: 1.0
-      memory: "24G"
+      memory: 24G
 pullSecretsPath: pull-secret
 butlerSecret:
   containerPath: /home/saluser/.lsst
@@ -356,16 +374,6 @@ nfsMountpoint:
   readOnly: true
   server: nfs-auxtel.cp.lsst.org
   serverPath: /auxtel/lsstdata/base/auxtel
-- name: comcam-data
-  containerPath: /repo/LSSTComCam
-  readOnly: false
-  server: nfs-comcam.cp.lsst.org
-  serverPath: /comcam/repo/LSSTComCam
-- name: comcam-gen3-data
-  containerPath: /data/lsstdata/base/comcam
-  readOnly: true
-  server: nfs-comcam.cp.lsst.org
-  serverPath: /comcam/lsstdata/base/comcam
 - name: lsstcam-data
   containerPath: /repo/LSSTCam
   readOnly: false
@@ -407,10 +415,10 @@ redis:
     request: 10Gi
   resources:
     requests:
-      cpu: 2
-      memory: 1Gi
+      cpu: 2.0
+      memory: 25Gi
     limits:
-      cpu: 3
+      cpu: 3.0
       memory: 50Gi
 squid:
   enabled: true
