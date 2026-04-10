@@ -44,7 +44,7 @@ x-manager-producer:
     HEARTBEAT_QUERY_COMMANDER: false
     JIRA_API_HOSTNAME: rubinobs.atlassian.net
     JIRA_PROJECT_ID: 10063
-    REDIS_CONFIG_CAPACITY: 100
+    REDIS_CONFIG_CAPACITY: 500
     REDIS_CONFIG_EXPIRY: 5
     REDIS_HOST: love-manager-redis-service
     REMOTE_STORAGE: true
