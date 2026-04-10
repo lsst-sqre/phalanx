@@ -82,6 +82,30 @@ spec:
               mountPath: {{ $vol.containerPath }}
               readOnly: {{ $vol.readOnly }}
             {{- end }}
+      {{- if .Values.frontend.pvcMountpoint }}
+      initContainers:
+        {{- range $vol := .Values.frontend.pvcMountpoint }}
+        - name: "fix-pvc-ownership-{{ $vol.name }}"
+          image: "busybox"
+          command:
+            - "chown"
+            - "1000:1000"
+            - "{{ $vol.mountPath }}"
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+          volumeMounts:
+            - name: {{ $vol.name }}
+              mountPath: {{ $vol.mountPath }}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+        {{- end }}
+      {{- end }}
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
