@@ -105,17 +105,14 @@ purger:
     directories:
       - path: /purge
         threshold: 1GiB
-        # This is the case where we just purge everything once a week.
-        # Set the threshold to 1 second: yeah, *everything*
+        # We're going to try purging only those files with ctimes more
+        # than 30 minutes before the run.  This may help with the case
+        # of mobu flocks getting files yanked out from under them.
         intervals:
           large:
-            accessInterval: 1s
-            modificationInterval: 1s
-            creationInterval: 1s
+            creationInterval: 30m
           small:
-            accessInterval: 1s
-            modificationInterval: 1s
-            creationInterval: 1s
+            creationInterval: 30m
 
 cronjob:
   tutorials:
