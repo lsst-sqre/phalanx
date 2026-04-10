@@ -49,7 +49,7 @@ strimzi-kafka:
         cpu: 2
       limits:
         memory: 1Gi
-        cpu: 4
+        cpu: 6
   controller:
     enabled: true
     backup: true
