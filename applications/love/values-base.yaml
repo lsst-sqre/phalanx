@@ -847,7 +847,7 @@ love-producer:
     <<: *love-producer-envsys-resources
   - name: tmaess121
     csc: ESS:121 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     <<: *love-producer-envsys-resources
   - name: tmaess122
     csc: ESS:122 --log-level 10
