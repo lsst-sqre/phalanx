@@ -630,7 +630,7 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: m2hexapod
     csc: MTHexapod:2 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
         cpu: 40m
