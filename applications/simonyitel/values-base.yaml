@@ -467,6 +467,7 @@ mtrotator-sim:
 mtvms-camera-rotator-sim:
   enabled: true
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/vms_sim
     pullPolicy: Always
   env:
@@ -482,6 +483,7 @@ mtvms-camera-rotator-sim:
 mtvms-m1m3-sim:
   enabled: true
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/vms_sim
     pullPolicy: Always
   env:
@@ -497,6 +499,7 @@ mtvms-m1m3-sim:
 mtvms-m2-sim:
   enabled: true
   image:
+    revision: 0
     repository: ts-dockerhub.lsst.org/vms_sim
     pullPolicy: Always
   env:
