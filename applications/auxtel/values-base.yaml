@@ -126,10 +126,10 @@ atoods:
     - *bs-fn
   resources:
     limits:
-      cpu: 400m
+      cpu: 1
       memory: 1600Mi
     requests:
-      cpu: 40m
+      cpu: 500m
       memory: 800Mi
   configfile:
     path: /etc
