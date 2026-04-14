@@ -133,7 +133,7 @@ telegraf:
         [ "lsst.prompt" ]
       timestamp_field: "timestamp"
       tags: |
-        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch", "group"]
+        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch"]
     dm:
       enabled: true
       debug: true
