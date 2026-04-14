@@ -25,6 +25,7 @@ Run InfluxDB Enterprise on Kubernetes
 | data.config.cluster.termination-query-log | bool | `true` | Whether to log queries that are terminated due to resource limits |
 | data.config.continuousQueries.enabled | bool | `false` | Whether continuous queries are enabled |
 | data.config.data.cache-max-memory-size | int | `0` | Maximum size a shared cache can reach before it starts rejecting writes |
+| data.config.data.max-series-per-database | int | `10000000` | The maximum number of series allowed per database before writes are dropped when in-memory indexing is enabled. This is a safety mechanism to prevent OOM crashes when a large number of series are being written to the database. |
 | data.config.data.trace-logging-enabled | bool | `true` | Whether to enable verbose logging of additional debug information within the TSM engine and WAL |
 | data.config.data.wal-fsync-delay | string | `"100ms"` | Duration a write will wait before fsyncing. This is useful for slower disks or when WAL write contention is present. |
 | data.config.hintedHandoff.max-size | int | `107374182400` | Maximum size of the hinted-handoff queue in bytes |

@@ -240,6 +240,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.data.config.cluster.termination-query-log | bool | `true` | Whether to log queries that are terminated due to resource limits |
 | influxdb-enterprise.data.config.continuousQueries.enabled | bool | `false` | Whether continuous queries are enabled |
 | influxdb-enterprise.data.config.data.cache-max-memory-size | int | `0` | Maximum size a shared cache can reach before it starts rejecting writes |
+| influxdb-enterprise.data.config.data.max-series-per-database | int | `10000000` | The maximum number of series allowed per database before writes are dropped when in-memory indexing is enabled. This is a safety mechanism to prevent OOM crashes when a large number of series are being written to the database. |
 | influxdb-enterprise.data.config.data.trace-logging-enabled | bool | `true` | Whether to enable verbose logging of additional debug information within the TSM engine and WAL |
 | influxdb-enterprise.data.config.data.wal-fsync-delay | string | `"100ms"` | Duration a write will wait before fsyncing. This is useful for slower disks or when WAL write contention is present. |
 | influxdb-enterprise.data.config.hintedHandoff.max-size | int | `107374182400` | Maximum size of the hinted-handoff queue in bytes |
@@ -337,6 +338,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.data.config.cluster.termination-query-log | bool | `true` | Whether to log queries that are terminated due to resource limits |
 | influxdb-enterprise-active.data.config.continuousQueries.enabled | bool | `false` | Whether continuous queries are enabled |
 | influxdb-enterprise-active.data.config.data.cache-max-memory-size | int | `0` | Maximum size a shared cache can reach before it starts rejecting writes |
+| influxdb-enterprise-active.data.config.data.max-series-per-database | int | `10000000` | The maximum number of series allowed per database before writes are dropped when in-memory indexing is enabled. This is a safety mechanism to prevent OOM crashes when a large number of series are being written to the database. |
 | influxdb-enterprise-active.data.config.data.trace-logging-enabled | bool | `true` | Whether to enable verbose logging of additional debug information within the TSM engine and WAL |
 | influxdb-enterprise-active.data.config.data.wal-fsync-delay | string | `"100ms"` | Duration a write will wait before fsyncing. This is useful for slower disks or when WAL write contention is present. |
 | influxdb-enterprise-active.data.config.hintedHandoff.max-size | int | `107374182400` | Maximum size of the hinted-handoff queue in bytes |
@@ -434,6 +436,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.data.config.cluster.termination-query-log | bool | `true` | Whether to log queries that are terminated due to resource limits |
 | influxdb-enterprise-standby.data.config.continuousQueries.enabled | bool | `false` | Whether continuous queries are enabled |
 | influxdb-enterprise-standby.data.config.data.cache-max-memory-size | int | `0` | Maximum size a shared cache can reach before it starts rejecting writes |
+| influxdb-enterprise-standby.data.config.data.max-series-per-database | int | `10000000` | The maximum number of series allowed per database before writes are dropped when in-memory indexing is enabled. This is a safety mechanism to prevent OOM crashes when a large number of series are being written to the database. |
 | influxdb-enterprise-standby.data.config.data.trace-logging-enabled | bool | `true` | Whether to enable verbose logging of additional debug information within the TSM engine and WAL |
 | influxdb-enterprise-standby.data.config.data.wal-fsync-delay | string | `"100ms"` | Duration a write will wait before fsyncing. This is useful for slower disks or when WAL write contention is present. |
 | influxdb-enterprise-standby.data.config.hintedHandoff.max-size | int | `107374182400` | Maximum size of the hinted-handoff queue in bytes |

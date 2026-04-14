@@ -368,6 +368,11 @@ data:
       # writes
       cache-max-memory-size: 0
 
+      # -- The maximum number of series allowed per database before writes are dropped
+      # when in-memory indexing is enabled. This is a safety mechanism to prevent OOM
+      # crashes when a large number of series are being written to the database.
+      max-series-per-database: 10000000
+
     antiEntropy:
       # -- Enable the anti-entropy service, which copies and repairs shards
       enabled: false
