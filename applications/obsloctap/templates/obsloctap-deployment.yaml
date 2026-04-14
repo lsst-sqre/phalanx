@@ -28,9 +28,9 @@ spec:
       volumes:
         - name: "cache-dir"
           emptyDir: {}
-        - name: "tmp"
-          emptyDir: {}
-      # Have to fix permissions on the pgpass file.
+        - name: "tmp-volume"
+          emptyDir:
+            sizeLimit: 500Mi
       # init container pattern borrowed from vo-cutouts.
       containers:
         - name: {{ .Chart.Name }}
@@ -53,6 +53,9 @@ spec:
           resources:
               {{- toYaml .Values.resources | nindent 12 }}
 
+          volumeMounts:
+            - name: "tmp-volume"
+              mountPath: "/tmp"
           env:
             - name: "LOG_CONFIG"
               value: "{{ .Values.obsloctap.logLevel }}"
@@ -78,11 +81,11 @@ spec:
                   key: "password"
             - name: "database_schema"
               value: "{{ .Values.config.database_schema }}"
-
-{{- range $key, $value := .Values.environment }}
+{{- range $key, $value := .Values.obsloctap.environment }}
             - name: {{ $key | quote }}
               value: {{ $value | quote }}
 {{- end }}
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

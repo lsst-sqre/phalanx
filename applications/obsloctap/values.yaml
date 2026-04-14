@@ -10,6 +10,8 @@ obsloctap:
     # @default -- The appVersion of the chart
     tag: ""
   logLevel: INFO
+  environment:
+    MPLCONFIGDIR: "/tmp"
 
 consumekafka:
   replicaCount: 1
@@ -35,9 +37,6 @@ rubinsim:
   bucketVal: "1"
   AWS_SHARED_CREDENTIALS_FILE: "/home/worker/.lsst/aws-credentials.ini"
   S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
-
-# -- Environment variables (e.g. butler configuration/auth parms) for panel
-environment:
 
 
 ingress:
