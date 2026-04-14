@@ -8,15 +8,15 @@ lfa:
 hinfo:
   latiss:
     enable: true
-    tag: "25.11.2"
-    logConfig: "consdb.hinfo=DEBUG"
+    tag: "26.3.3"
+    logConfig: "consdb.hinfo=INFO"
   lsstcomcam:
     enable: true
-    tag: "25.11.2"
+    tag: "26.3.3"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcam:
     enable: true
-    tag: "25.11.2"
+    tag: "26.3.3"
     resources:
       requests:
         cpu: 500m
@@ -26,7 +26,7 @@ hinfo:
         memory: 25Gi
 pq:
   image:
-    tag: "25.11.2"
+    tag: "26.3.3"
 
 resources:
   requests:
