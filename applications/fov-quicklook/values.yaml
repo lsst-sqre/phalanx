@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: fov-quicklook-local-diffimage-20260311-0512
+  tag: fov-quicklook-local-by-uuid-diffimage-20260414-2205
 
 config:
   # -- URL path prefix
