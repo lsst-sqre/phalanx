@@ -87,14 +87,6 @@ spec:
               mountPath: /data/db
             - name: mongo-keyfile
               mountPath: /etc/mongo-keyfile
-        volumes:
-          - name: mongo-keyfile
-            secret:
-              secretName: octavius-secrets
-              items:
-                - key: mongo-keyfile
-                  path: keyfile
-              defaultMode: 0400
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -114,7 +106,14 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-
+      volumes:
+        - name: mongo-keyfile
+          secret:
+            secretName: octavius-secrets
+            items:
+              - key: mongo-keyfile
+                path: keyfile
+            defaultMode: 0400
       securityContext:
         runAsNonRoot: true
         runAsUser: 999
