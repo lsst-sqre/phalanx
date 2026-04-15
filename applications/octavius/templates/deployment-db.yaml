@@ -25,6 +25,20 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       automountServiceAccountToken: false
+      initContainers:
+        - name: init-keyfile
+          image: "{{ .Values.imageAPI.repository }}:{{ .Values.imageAPI.tag | default .Chart.AppVersion }}"
+          command:
+            - sh
+            - -c
+            - |
+              cp /secret/keyfile /work/keyfile
+              chmod 400 /work/keyfile
+          volumeMounts:
+            - name: mongo-keyfile-secret
+              mountPath: /secret
+            - name: mongo-keyfile-work
+              mountPath: /work
       containers:
         - name: {{ .Chart.Name }}-db
           image: "{{ .Values.imageDB.repository }}:{{ .Values.imageDB.tag | default .Chart.AppVersion }}"
@@ -85,7 +99,7 @@ spec:
           volumeMounts:
             - name: mongo-data
               mountPath: /data/db
-            - name: mongo-keyfile
+            - name: mongo-keyfile-work
               mountPath: /etc/mongo-keyfile
 
           resources:
@@ -107,13 +121,15 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        - name: mongo-keyfile
+        - name: mongo-keyfile-secret
           secret:
             secretName: octavius-secrets
             items:
               - key: mongo-keyfile
                 path: keyfile
             defaultMode: 0400
+        - name: mongo-keyfile-work
+          emptyDir: {}
       securityContext:
         runAsNonRoot: true
         runAsUser: 999
