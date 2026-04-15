@@ -14,6 +14,7 @@ applications:
   prompt-kafka: true
   prompt-keda-latiss: false
   prompt-keda-lsstcam: true
+  prompt-pub: true
   prompt-redis: true
   sasquatch: true
   s3-file-notifications: true
