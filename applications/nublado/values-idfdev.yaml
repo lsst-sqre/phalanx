@@ -1,5 +1,8 @@
 sentry:
   enabled: true
+image:
+  pullPolicy: Always
+  tag: "tickets-DM-54495"
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
