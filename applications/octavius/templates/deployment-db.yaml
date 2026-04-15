@@ -76,7 +76,7 @@ spec:
 
           readinessProbe:
             exec:
-              command: ["mongo", "--host", "localhost", "--eval", "db.adminCommand('ping')"]
+              command: ["mongosh", "--host", "localhost", "-u", "$MONGO_INITDB_ROOT_USERNAME", "-p", "$MONGO_INITDB_ROOT_PASSWORD", "--authenticationDatabase", "$AUTH_DB", "--eval", "db.adminCommand('ping')"]
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 5
