@@ -12,7 +12,7 @@ replicaCount_api: 2
 imageSetup:
   # -- Image to use for the MongoDB setup job
   repository: "ghcr.io/furciferi/mongo-setup"
-  tag: "lsst.v1.0.1"
+  tag: "lsst.v1.0.3"
   pullPolicy: "IfNotPresent"
 imageAPI:
   # -- Image to use in the octavius deployment
@@ -23,7 +23,7 @@ imageAPI:
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
-  tag: "lsst.v1.0.1"
+  tag: "lsst.v1.0.3"
 
 imageUI:
   # -- Image to use in the octavius deployment
@@ -34,7 +34,7 @@ imageUI:
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
-  tag: "lsst.v1.0.1"
+  tag: "lsst.v1.0.3"
 
 imageDB:
   # -- Image to use in the octavius deployment
@@ -46,7 +46,7 @@ imageDB:
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
-  tag: "lsst.v1.0.1"
+  tag: "lsst.v1.0.3"
   persistence:
     enabled: true
     size: 5Gi

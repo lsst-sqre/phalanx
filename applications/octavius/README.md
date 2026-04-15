@@ -28,7 +28,7 @@ Object classification tool for postage stamp images
 | imageDB.tag | string | The appVersion of the chart | Tag of image to use |
 | imageSetup.pullPolicy | string | `"IfNotPresent"` |  |
 | imageSetup.repository | string | `"ghcr.io/furciferi/mongo-setup"` | Image to use for the MongoDB setup job |
-| imageSetup.tag | string | `"lsst.v1.0.1"` |  |
+| imageSetup.tag | string | `"lsst.v1.0.3"` |  |
 | imageUI.pullPolicy | string | `"IfNotPresent"` | Pull policy for the octavius image |
 | imageUI.repository | string | `"ghcr.io/furciferi/octavius-ui"` | Image to use in the octavius deployment |
 | imageUI.tag | string | The appVersion of the chart | Tag of image to use |
