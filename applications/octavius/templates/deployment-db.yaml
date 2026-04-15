@@ -32,14 +32,16 @@ spec:
             - sh
             - -c
             - |
-              ls -lthra /secret/keyfile
-              cp /secret/keyfile /work/keyfile
+              echo $MONGO_KEYFILE_CONTENT > /work/keyfile
+              ls -lthra /work/keyfile
               chmod 400 /work/keyfile
-          securityContext:
-            runAsUser: 0
+          env:
+            - name: MONGO_KEYFILE_CONTENT
+              valueFrom:
+                secretKeyRef:
+                  name: octavius-secrets
+                  key: mongo-keyfile
           volumeMounts:
-            - name: mongo-keyfile-secret
-              mountPath: /secret
             - name: mongo-keyfile-work
               mountPath: /work
       containers:
@@ -124,13 +126,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        - name: mongo-keyfile-secret
-          secret:
-            secretName: octavius-secrets
-            items:
-              - key: mongo-keyfile
-                path: keyfile
-            defaultMode: 0400
         - name: mongo-keyfile-work
           emptyDir: {}
       securityContext:
