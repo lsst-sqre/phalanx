@@ -27,13 +27,16 @@ spec:
       automountServiceAccountToken: false
       initContainers:
         - name: init-keyfile
-          image: "{{ .Values.imageAPI.repository }}:{{ .Values.imageAPI.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.imageDB.repository }}:{{ .Values.imageDB.tag | default .Chart.AppVersion }}"
           command:
             - sh
             - -c
             - |
+              ls -lthra /secret/keyfile
               cp /secret/keyfile /work/keyfile
               chmod 400 /work/keyfile
+          securityContext:
+            runAsUser: 0
           volumeMounts:
             - name: mongo-keyfile-secret
               mountPath: /secret
