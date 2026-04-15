@@ -67,7 +67,7 @@ spec:
                 -u "$MONGO_INITDB_ROOT_USERNAME" \
                 -p "$MONGO_INITDB_ROOT_PASSWORD" \
                 --authenticationDatabase "$AUTH_DB" \
-                /tmp/dump
+                /tmp/dump/octavius-db
 
               echo "Restore complete."
 
