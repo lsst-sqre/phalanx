@@ -29,7 +29,6 @@ spec:
         - name: {{ .Chart.Name }}-db
           image: "{{ .Values.imageDB.repository }}:{{ .Values.imageDB.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imageDB.pullPolicy }}
-          command: ["mongod"]
           args:
             - "--bind_ip_all"
             - "--replSet=rs0"
@@ -76,7 +75,7 @@ spec:
 
           readinessProbe:
             exec:
-              command: ["sh","-c","mongosh --host localhost -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase $AUTH_DB --eval \"db.adminCommand('ping')\""]
+              command: ["sh","-c","mongosh --quiet --eval \"db.runCommand({ ping: 1 }).ok\" | grep 1"]
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 5
