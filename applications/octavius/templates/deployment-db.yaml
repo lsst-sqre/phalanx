@@ -130,8 +130,8 @@ spec:
           emptyDir: {}
       securityContext:
         runAsNonRoot: true
-        runAsUser: 999
-        runAsGroup: 999
+        runAsUser: 1009
+        runAsGroup: 1009
 
   volumeClaimTemplates:
     - metadata:
