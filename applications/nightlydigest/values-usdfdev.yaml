@@ -52,7 +52,7 @@ nightlydigest-backend:
   replicas: 4
   image:
     repository: ts-dockerhub.lsst.org/nightlydigest-backend
-    tag: c0043
+    tag: c0044
     pullPolicy: Always
   env:
     - name: JIRA_API_HOSTNAME
