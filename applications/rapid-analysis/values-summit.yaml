@@ -113,6 +113,13 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 2G
+    limits:
+      cpu: 1.0
+      memory: 3.5G
 - name: LSSTCam/runOneOffPostIsr.py
   mounts:
   - lsstcam-data
