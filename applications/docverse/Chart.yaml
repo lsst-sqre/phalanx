@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "tickets-DM-54492"
+appVersion: "tickets-DM-54627"
 description: Publish versioned docs
 name: docverse
 sources:
