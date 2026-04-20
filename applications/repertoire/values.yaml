@@ -129,6 +129,24 @@ config:
   # human-friendly)
   logProfile: "production"
 
+  # -- IVOA publishing registry configuration.
+  # @default -- See `values.yaml`
+  ivoaRegistry:
+    adminEmail: "vo-registry@lsst.org"
+    authority: "ivo://rubin"
+    created: "2026-04-20T00:00:00"
+    ivoid: "ivo://rubin/registry"
+    pathPrefix: "/discovery"
+    repositoryName: "Rubin Science Platform IVOA Publishing Registry"
+    organisation:
+      created: "2026-05-05T00:00:00Z"
+      description: >-
+        Vera C. Rubin Observatory operates the Vera C. Rubin Observatory
+        telescope and conducts the Legacy Survey of Space and Time (LSST).
+      homepage: "https://rubinobservatory.org"
+      ivoid: "ivo://rubin/org"
+      title: "Vera C. Rubin Observatory"
+
   metrics:
     # -- Whether to enable sending metrics
     enabled: false
@@ -276,6 +294,24 @@ config:
             template: "https://{{base_hostname}}/api/sia/{{dataset}}/query"
             ivoaStandardId: "ivo://ivoa.net/std/SIA#query-2.0"
         openapi: "https://{{base_hostname}}/api/sia/openapi.json"
+        ivoaRegistry:
+          ivoaServiceType: "sia"
+          records:
+            dp02:
+              ivoid: "ivo://rubin/sia/dp02"
+              title: "Rubin Science Platform SIA Service (DP0.2)"
+              created: "2026-04-20T00:00:00"
+              description: >-
+                Simple Image Access v2 service for Data Preview 0.2, providing
+                image access to the DESC DC2 simulation processed with Rubin
+                Science Pipelines.
+            dp1:
+              ivoid: "ivo://rubin/sia/dp1"
+              title: "Rubin Science Platform SIA Service (DP1)"
+              created: "2026-04-20T00:00:00"
+              description: >-
+                Simple Image Access v2 service for Data Preview 1, providing
+                image access to commissioning data from Rubin Observatory.
     squareone:
       - type: "ui"
         name: "settings"
@@ -296,6 +332,17 @@ config:
           - "dp02"
           - "dp1"
         template: "https://{{base_hostname}}/api/tap"
+        ivoaRegistry:
+          ivoaServiceType: "tap"
+          ivoid: "ivo://rubin/tap"
+          title: "Rubin Science Platform TAP Service"
+          created: "2026-04-20T00:00:00"
+          description: >-
+            Table Access Protocol service for the Rubin Science Platform,
+            providing access to catalog data from Rubin Observatory data
+            releases.
+          adqlVersion: "2.1"
+          uploadSupported: true
     times-square:
       - type: "internal"
         name: "times-square"
@@ -319,6 +366,14 @@ config:
             template: "https://{{base_hostname}}/api/cutout/sync"
             ivoaStandardId: "ivo://ivoa.net/std/SODA#sync-1.0"
         openapi: "https://{{base_hostname}}/api/cutout/openapi.json"
+        ivoaRegistry:
+          ivoaServiceType: "soda"
+          ivoid: "ivo://rubin/cutout"
+          title: "Rubin Science Platform Image Cutout Service"
+          created: "2026-04-20T00:00:00"
+          description: >-
+            Image cutout service (SODA) for the Rubin Science Platform,
+            supporting both synchronous and asynchronous image cutout requests.
     wobbly:
       - type: "internal"
         name: "wobbly"
