@@ -236,7 +236,7 @@ ocsscheduler:
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
     server: nfs-project.ls.lsst.org
-    serverPath: /project/
+    serverPath: /project/scheduler
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
