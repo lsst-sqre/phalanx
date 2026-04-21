@@ -43,7 +43,7 @@ cbp:
 electrometer101:
   enabled: true
   image:
-    revision: 3
+    revision: 0
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -65,7 +65,7 @@ electrometer101:
 electrometer102:
   enabled: true
   image:
-    revision: 3
+    revision: 0
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -87,7 +87,7 @@ electrometer102:
 electrometer103:
   enabled: true
   image:
-    revision: 3
+    revision: 0
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -109,7 +109,7 @@ electrometer103:
 electrometer201:
   enabled: true
   image:
-    revision: 3
+    revision: 0
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
@@ -131,7 +131,7 @@ electrometer201:
 ledprojector:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/ledprojector
     pullPolicy: Always
   resources:
@@ -145,7 +145,7 @@ ledprojector:
 linearstage101:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
@@ -161,7 +161,7 @@ linearstage101:
 linearstage102:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
@@ -177,7 +177,7 @@ linearstage102:
 linearstage103:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
@@ -193,7 +193,7 @@ linearstage103:
 linearstage104:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
@@ -250,7 +250,7 @@ simulation-gencam:
 tunablelaser:
   enabled: true
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/tunablelaser
     pullPolicy: Always
   resources:

@@ -198,7 +198,7 @@ gcheaderservice103:
 lasertracker1:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/lasertracker
     pullPolicy: Always
   env:
@@ -245,7 +245,7 @@ mtaircompressor2:
 
 mtaos:
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
   env:
@@ -293,7 +293,7 @@ mtcamhexapod:
   enabled: true
   classifier: mthexapod1
   image:
-    revision: 3
+    revision: 0
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
   env:
@@ -332,7 +332,7 @@ mtcamhexapod-sim:
 mtdome:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtdome
     pullPolicy: Always
   resources:
@@ -375,7 +375,7 @@ mtdometrajectory:
 mtheaderservice:
   enabled: true
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
   env:
@@ -445,7 +445,7 @@ mtm2hexapod:
   enabled: true
   classifier: mthexapod2
   image:
-    revision: 3
+    revision: 0
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
   env:
@@ -530,7 +530,7 @@ mtmount-sim:
 mtoods:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtoods
     pullPolicy: Always
   env:
@@ -645,7 +645,7 @@ mtrotator-sim:
 wfoods:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/wfoods
     pullPolicy: Always
   env:
