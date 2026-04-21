@@ -6,6 +6,15 @@ environment:
   BUCKET_NAME: "rubin-plot-navigator"
   BUCKET_URL: "https://s3dfrgw.slac.stanford.edu/"
   AWS_PROFILE: "rubin-plot-navigator"
+  PGPASSFILE: "/opt/lsst/butler/secrets/postgres-credentials.txt"
+  PGUSER: "rubin"
+  AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"
+  LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
+  LSST_DISABLE_BUCKET_VALIDATION: "1"
+  AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
+  AWS_RESPONSE_CHECKSUM_VALIDATION: "WHEN_REQUIRED"
+  REDIS_HOST: "plot-navigator-redis"
+  REDIS_PORT: "6379"
 
 config:
   separateSecrets: false
