@@ -18,10 +18,9 @@ image:
 # If this section is used, each object listed can have the following attributes defined:
 # _name_ (The label identifying the pull-secret to use)
 imagePullSecrets: []
-# -- This is the namespace in which the CSC will be placed
 # -- Environment variables to set in the container.
-# Threading and numerical library defaults are set here and can be overridden
-# per CSC in the application values files.
+# Threading and numerical library defaults are provided here and can be
+# overridden per CSC in the application values files.
 env:
   OPENBLAS_NUM_THREADS: 1
   GOTO_NUM_THREADS: 1
