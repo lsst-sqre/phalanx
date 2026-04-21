@@ -1,4 +1,6 @@
 config:
+  metrics:
+    enabled: true
   s3AlertsBucket: "rubin-alert-archive"
   s3SchemasBucket: "rubin-alert-archive"
   s3AlertsPrefix: "v2/alerts"
