@@ -53,5 +53,5 @@ spec:
         {{- end }}
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
+        runAsUser: 65532
         runAsGroup: 4085
