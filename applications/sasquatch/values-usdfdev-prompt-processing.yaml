@@ -13,6 +13,9 @@ alert-brokers:
       replicas: 3
       bytesRetained: "300000000000"
       millisecondsRetained: "2629740000"
+    - name: alerts-test-topic
+      partitions: 45
+      replicas: 3
 
   communityReadonlyTopics: &communityReadonlyTopics
     - "alerts-simulated"
