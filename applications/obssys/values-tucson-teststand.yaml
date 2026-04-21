@@ -201,7 +201,7 @@ ocsqueue:
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
-    server: nfs-obsenv.ls.lsst.org
+    server: nfs-obsenv.tu.lsst.org
     serverPath: /obs-env
   affinity:
     podAntiAffinity:
