@@ -178,7 +178,6 @@ mtcamhexapod-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate 1
-    TS_CONFIG_MTTCS_DIR: "/net/obs-env/auto_base_packages/ts_config_mttcs"
   resources:
     limits:
       cpu: 500m
