@@ -18,8 +18,19 @@ image:
 # If this section is used, each object listed can have the following attributes defined:
 # _name_ (The label identifying the pull-secret to use)
 imagePullSecrets: []
-# -- This is the namespace in which the CSC will be placed
-env: {}
+# -- Environment variables to set in the container.
+# Threading and numerical library defaults are provided here and can be
+# overridden per CSC in the application values files.
+env:
+  OPENBLAS_NUM_THREADS: 1
+  GOTO_NUM_THREADS: 1
+  OMP_NUM_THREADS: 1
+  MKL_NUM_THREADS: 1
+  MKL_DOMAIN_NUM_THREADS: 1
+  MPI_NUM_THREADS: 1
+  NUMEXPR_NUM_THREADS: 1
+  NUMEXPR_MAX_THREADS: 1
+  OMP_PROC_BIND: false
 # -- This section holds specifications for secret injection.
 # If this section is used, each object listed must have the following attributes defined:
 # _name_ (The label for the secret),
