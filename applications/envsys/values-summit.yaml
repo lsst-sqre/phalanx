@@ -127,10 +127,10 @@ dimm1:
     RUN_ARG: 1
   resources:
     requests:
-      cpu: 23m
+      cpu: 50m
       memory: 256Mi
     limits:
-      cpu: 230m
+      cpu: 250m
       memory: 512Mi
 
 dimm2:
@@ -143,10 +143,10 @@ dimm2:
     RUN_ARG: 2
   resources:
     requests:
-      cpu: 30m
+      cpu: 50m
       memory: 320Mi
     limits:
-      cpu: 230m
+      cpu: 250m
       memory: 640Mi
 
 dream:
@@ -198,7 +198,7 @@ eas:
       cpu: 120m
       memory: 512Mi
     limits:
-      cpu: 500m
+      cpu: 600m
       memory: 768Mi
 
 epm-ess303:
@@ -229,10 +229,10 @@ epm-generator-ess305:
     RUN_ARG: 305
   resources:
     requests:
-      cpu: 35m
+      cpu: 50m
       memory: 180Mi
     limits:
-      cpu: 220m
+      cpu: 300m
       memory: 360Mi
 
 epm-generator-ess306:
@@ -246,10 +246,10 @@ epm-generator-ess306:
     RUN_ARG: 306
   resources:
     requests:
-      cpu: 35m
+      cpu: 50m
       memory: 180Mi
     limits:
-      cpu: 220m
+      cpu: 300m
       memory: 360Mi
 
 hvac:
@@ -450,7 +450,7 @@ mtdome-ess404:
   resources:
     requests:
       cpu: 1
-      memory: 90Mi
+      memory: 150Mi
     limits:
       cpu: 2
       memory: 900Mi
@@ -590,7 +590,7 @@ tea-ess125:
   resources:
     requests:
       cpu: 19m
-      memory: 180Mi
+      memory: 250Mi
     limits:
       cpu: 190m
       memory: 540Mi
@@ -710,7 +710,7 @@ weatherforecast:
   resources:
     requests:
       cpu: 15m
-      memory: 170Mi
+      memory: 200Mi
     limits:
       cpu: 90m
-      memory: 350Mi
+      memory: 400Mi

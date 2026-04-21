@@ -61,10 +61,10 @@ atqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 6
+      cpu: 8
       memory: 48Gi
     requests:
-      cpu: 3
+      cpu: 4
       memory: 8Gi
 
 atscheduler:
@@ -181,7 +181,7 @@ mtqueue:
       cpu: 12
       memory: 48Gi
     requests:
-      cpu: 4
+      cpu: 6
       memory: 8Gi
 
 mtscheduler:
@@ -218,7 +218,7 @@ mtscheduler:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 6
+      cpu: 10
       memory: 20000Mi
     requests:
       cpu: 6
@@ -277,7 +277,7 @@ ocsqueue:
       memory: 10Gi
     requests:
       cpu: 1
-      memory: 1Gi
+      memory: 2Gi
 
 ocsscheduler:
   classifier: scheduler3
@@ -313,10 +313,10 @@ ocsscheduler:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 2600m
+      cpu: 4
       memory: 10000Mi
     requests:
-      cpu: 260m
+      cpu: 1
       memory: 5000Mi
 
 watcher:

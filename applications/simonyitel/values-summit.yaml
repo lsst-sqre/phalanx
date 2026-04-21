@@ -309,7 +309,7 @@ mtcamhexapod:
       cpu: 500m
       memory: 900Mi
     requests:
-      cpu: 120m
+      cpu: 200m
       memory: 450Mi
 
 mtcamhexapod-sim:
@@ -369,7 +369,7 @@ mtdometrajectory:
       cpu: 250m
       memory: 560Mi
     requests:
-      cpu: 55m
+      cpu: 70m
       memory: 280Mi
 
 mtheaderservice:
@@ -461,7 +461,7 @@ mtm2hexapod:
       cpu: 400m
       memory: 1400Mi
     requests:
-      cpu: 120m
+      cpu: 200m
       memory: 700Mi
 
 mtm2hexapod-sim:
@@ -547,7 +547,7 @@ mtoods:
       cpu: 1500m
       memory: 2100Mi
     requests:
-      cpu: 300m
+      cpu: 500m
       memory: 800Mi
   configfile:
     path: /etc
@@ -623,7 +623,7 @@ mtrotator:
       cpu: 1
       memory: 900Mi
     requests:
-      cpu: 280m
+      cpu: 400m
       memory: 300Mi
 
 mtrotator-sim:
