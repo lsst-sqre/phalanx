@@ -16,7 +16,6 @@ atqueue:
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
-  obsenv: true
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 2 --state enabled
@@ -35,6 +34,11 @@ atqueue:
     readOnly: false
     server: nfs-project.ls.lsst.org
     serverPath: /project
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.ls.lsst.org
+    serverPath: /obs-env
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -94,7 +98,6 @@ mtqueue:
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
-  obsenv: true
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 1 --state enabled
@@ -113,6 +116,11 @@ mtqueue:
     readOnly: false
     server: nfs-project.ls.lsst.org
     serverPath: /project
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.ls.lsst.org
+    serverPath: /obs-env
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -172,7 +180,6 @@ ocsqueue:
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
-  obsenv: true
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 3 --state enabled
@@ -191,6 +198,11 @@ ocsqueue:
     readOnly: false
     server: nfs-project.ls.lsst.org
     serverPath: /project
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.ls.lsst.org
+    serverPath: /obs-env
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -224,7 +236,7 @@ ocsscheduler:
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
     server: nfs-project.ls.lsst.org
-    serverPath: /project/
+    serverPath: /project/scheduler
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
