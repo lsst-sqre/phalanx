@@ -915,7 +915,7 @@ love-producer:
         memory: 300Mi
   - name: mtptg
     csc: MTPtg:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
         cpu: 20m
