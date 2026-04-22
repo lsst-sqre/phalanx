@@ -35,12 +35,12 @@ spec:
           - name: {{ $key | quote }}
             value: {{ $value | quote }}
 {{- end }}
-          - name: S3_KEY
+          - name: AWS_ACCESS_KEY_ID
             valueFrom:
               secretKeyRef:
                 name: {{ include "plot-navigator.fullname" . }}
                 key: S3_KEY
-          - name: S3_SECRET
+          - name: AWS_SECRET_ACCESS_KEY
             valueFrom:
               secretKeyRef:
                 name: {{ include "plot-navigator.fullname" . }}

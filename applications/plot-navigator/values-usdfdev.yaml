@@ -5,6 +5,7 @@ environment:
   REPO_URLS: '{"main": "unused", "embargo": "unused", "dp2_prep": "unused", "/repo/dc2": "unused", "/repo/dp1": "unused", "/repo/main": "unused"}'
   BUCKET_NAME: "rubin-plot-navigator"
   BUCKET_URL: "https://s3dfrgw.slac.stanford.edu/"
+  S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
   AWS_PROFILE: "rubin-plot-navigator"
   PGPASSFILE: "/opt/lsst/butler/secrets/postgres-credentials.txt"
   PGUSER: "rubin"
