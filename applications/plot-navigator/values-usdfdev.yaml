@@ -15,6 +15,7 @@ environment:
   AWS_RESPONSE_CHECKSUM_VALIDATION: "WHEN_REQUIRED"
   REDIS_HOST: "plot-navigator-redis"
   REDIS_PORT: "6379"
+  APP_PREFIX: "/plot-navigator"
 
 config:
   separateSecrets: false
