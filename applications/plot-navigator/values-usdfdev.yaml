@@ -6,6 +6,7 @@ environment:
   BUCKET_NAME: "rubin-plot-navigator"
   BUCKET_URL: "https://s3dfrgw.slac.stanford.edu/"
   AWS_PROFILE: "rubin-plot-navigator"
+  AWS_DEFAULT_REGION: "s3dfrgw"
   PGPASSFILE: "/opt/lsst/butler/secrets/postgres-credentials.txt"
   PGUSER: "rubin"
   AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"
