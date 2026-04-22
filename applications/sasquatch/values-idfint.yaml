@@ -104,6 +104,7 @@ app-metrics:
   apps:
     - bigquerykafka
     - gafaelfawr
+    - herald
     - mobu
     - noteburst
     - nublado
