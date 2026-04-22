@@ -11,6 +11,10 @@ globalAppConfig:
     influxTags:
       - "service"
       - "username"
+  herald:
+    influxTags:
+      - "endpoint"
+      - "error_type"
   mobu:
     influxTags:
       - "sync"
