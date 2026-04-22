@@ -189,6 +189,11 @@ config:
           datalink-links-1.1:
             template: "https://{{base_hostname}}/api/datalink/links"
         openapi: "https://{{base_hostname}}/api/datalink/openapi.json"
+    docverse:
+      - type: "internal"
+        name: "docverse"
+        template: "https://{{base_hostname}}/docverse/api"
+        openapi: "https://{{base_hostname}}/docverse/api/openapi.json"
     gafaelfawr:
       - type: "internal"
         name: "gafaelfawr"
