@@ -71,11 +71,20 @@ spec:
               value: "0"
             - name: AWS_REQUEST_CHECKSUM_CALCULATION
               value: WHEN_REQUIRED
+          startupProbe:
+            httpGet:
+              path: /readiness
+              port: 9040
+            failureThreshold: 20
+            periodSeconds: 5
           readinessProbe:
-            tcpSocket:
-              port: 5432
+            httpGet:
+              path: /readiness
+              port: 9040
             initialDelaySeconds: 2
             periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
           volumeMounts:
             - name: gcp-int-repo-config-volume
               mountPath: /opt/lsst/configs/gcp-repo-path
@@ -92,16 +101,39 @@ spec:
           command:
             - "/alloydb-auth-proxy"
             - "--public-ip"
-            - "--address=0.0.0.0"
+            - "--address=127.0.0.1"
             - "--port=5432"
+            - "--health-check"
+            - "--http-address=$(POD_IP)"
+            - "--http-port=9040"
             - "--credentials-file"
             - "/opt/lsst/secrets/alloy-db/key.json"
             - {{ .Values.alloyDbProxy.config.instanceUri | quote }}
-          readinessProbe:
-            tcpSocket:
-              port: 5432
-            initialDelaySeconds: 2
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          startupProbe:
+            httpGet:
+              path: /readiness
+              port: 9040
+            failureThreshold: 20
             periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 9040
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: 9040
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
           resources:
             {{- toYaml .Values.alloyDbProxy.resources | nindent 12 }}
           securityContext:
