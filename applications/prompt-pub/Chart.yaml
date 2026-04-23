@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Manages the lifecycle of Butler Prompt Data Products as they move from the embargo repo to publication for end users.
+name: prompt-pub
+sources:
+- https://github.com/lsst-dm/prompt_publication_service
+type: application
+version: 1.0.0

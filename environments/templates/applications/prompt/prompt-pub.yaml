@@ -1,0 +1,42 @@
+{{- if (index .Values "applications" "prompt-pub") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "prompt-pub"
+  {{- if .Values.defaultComputeClass }}
+  labels:
+    cloud.google.com/default-compute-class: {{ .Values.defaultComputeClass | quote }}
+  {{- end}}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "prompt-pub"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "prompt-pub"
+    server: "https://kubernetes.default.svc"
+  project: "prompt"
+  source:
+    path: "applications/prompt-pub"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ or (index .Values "revisions" "prompt-pub") .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.environmentName"
+          value: {{ .Values.name | quote }}
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.repertoireUrl"
+          value: "https://{{ .Values.fqdn }}/repertoire"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}
