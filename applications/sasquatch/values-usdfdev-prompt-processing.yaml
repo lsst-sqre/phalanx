@@ -13,11 +13,17 @@ alert-brokers:
       replicas: 3
       bytesRetained: "300000000000"
       millisecondsRetained: "2629740000"
+    - name: lsst-alerts-v11
+      partitions: 45
+      replicas: 3
+      bytesRetained: "300000000000"
+      millisecondsRetained: "2629740000"
 
   communityReadonlyTopics: &communityReadonlyTopics
     - "alerts-simulated"
     - "lsst-alerts-v10.0"
     - "lsst-alerts-reprocessed-v10.0"
+    - "lsst-alerts-v11"
 
   users:
 
@@ -101,7 +107,7 @@ alert-stream-schema-sync:
   enabled: true
   schemaSync:
     image:
-      tag: tickets-DM-53520
+      tag: w.2026.19
 
 chronograf:
   enabled: false
