@@ -11,7 +11,7 @@ nightlydigest-nginx:
     frontend:
       image:
         repository: ts-dockerhub.lsst.org/nightlydigest-frontend
-        tag: c0043
+        tag: c0044
         pullPolicy: Always
   staticStore:
     name: nightlydigest-nginx-static
