@@ -104,7 +104,7 @@ alert-stream-schema-sync:
   enabled: true
   schemaSync:
     image:
-      tag: tickets-DM-53520
+      tag: tickets-DM-54017
 
 chronograf:
   enabled: false
