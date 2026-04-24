@@ -8,8 +8,8 @@ publication:
   stateDB: "postgresql+asyncpg://prompt_pub@usdf-butler-prompt-publication-db-tx.sdf.slac.stanford.edu/promptpub"
   repos:
     embargo: "s3://embargo@rubin-summit-users/butler.yaml"
-    main: "/sdf/data/repo/main/butler.yaml"
-    promptPrep: "/sdf/data/repo/prompt_prep/butler.yaml"
+    main: "/sdf/data/rubin/repo/main/butler.yaml"
+    promptPrep: "/sdf/data/rubin/repo/prompt_prep/butler.yaml"
   butlerWriterKafka:
     address: "prompt-kafka-kafka-bootstrap.prompt-kafka:9092"
     topic: "butler-writer-ingestion-events"
