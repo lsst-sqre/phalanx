@@ -159,6 +159,8 @@ app-metrics:
 
 backup:
   enabled: true
+  image:
+    tag: "tickets-DM-54695"
   schedule: "0 5 * * *"
   persistence:
     size: 500Gi
