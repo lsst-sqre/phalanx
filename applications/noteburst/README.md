@@ -32,7 +32,7 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | config.worker.keepAlive | string | `"hourly"` | Worker keep alive mode: "normal", "fast", "hourly", "daily", "disabled" |
 | config.worker.maxConcurrentJobs | int | `1` | Max number of concurrent notebook executions per worker |
 | config.worker.tokenLifetime | string | `"2419200"` | Worker token lifetime, in seconds. |
-| config.worker.tokenScopes | string | `"exec:notebook,read:image,read:tap,read:alertdb"` | Nublado2 worker account's token scopes as a comma-separated list. |
+| config.worker.tokenScopes | string | `"exec:notebook,read:image,read:tap,read:alertdb,read:sasquatch"` | Nublado2 worker account's token scopes as a comma-separated list. |
 | config.worker.workerCount | int | `1` | Number of workers to run |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
