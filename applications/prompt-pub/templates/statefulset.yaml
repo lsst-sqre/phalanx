@@ -89,7 +89,7 @@ spec:
             - name: gcp-int-repo-config-volume
               mountPath: /opt/lsst/configs/gcp-repo-path
             - name: sdf-data-rubin
-              mountPath: /sdf/data
+              mountPath: /sdf/data/rubin
             - name: s3-credentials-file
               mountPath: /opt/lsst/secrets/s3-credentials/credentials
               subPath: credentials
