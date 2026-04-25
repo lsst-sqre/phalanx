@@ -72,6 +72,17 @@ spec:
           value: {{ .Values.alerts.topic}}
         - name: SERVICE_LOG_LEVELS
           value: {{ .Values.logLevel }}
+        {{- if .Values.sentry.enabled }}
+        - name: SENTRY_DSN
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "prompt-keda.fullname" . }}-sentry-secret
+              key: sentry_dsn
+        {{- with .Values.sentry.environment }}
+        - name: SENTRY_ENVIRONMENT
+          value: {{ . }}
+        {{- end }}
+        {{- end }}
         volumeMounts:
         {{- include "prompt-keda.credentials-volumeMounts" . | nindent 8 }}
         {{- if .Values.registry.centralRepoFile }}

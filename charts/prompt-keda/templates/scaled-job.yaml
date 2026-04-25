@@ -145,6 +145,17 @@ spec:
                 value: {{ .Values.logLevel }}
               - name: LOCAL_REPO_CACHE_SIZE
                 value: {{ .Values.cache.baseSize | toString | quote }}
+              {{- if .Values.sentry.enabled }}
+              - name: SENTRY_DSN
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ template "prompt-keda.fullname" . }}-sentry-secret
+                    key: sentry_dsn
+              {{- with .Values.sentry.environment }}
+              - name: SENTRY_ENVIRONMENT
+                value: {{ . }}
+              {{- end }}
+              {{- end }}
               - name: DEBUG_EXPORT_OUTPUTS
                 value: {{ if .Values.debug.exportOutputs }}'1'{{ else }}'0'{{ end }}
               {{- if .Values.debug.monitorDaxApdb }}

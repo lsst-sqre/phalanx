@@ -238,6 +238,15 @@ nameOverride: ""
 # -- Override the full name for resources (includes the release name)
 fullnameOverride: "prompt-keda"
 
+sentry:
+  # -- If set, this application's Vault secret must contain a `sentry_dsn` key,
+  # which will be injected as SENTRY_DSN into the worker and initializer containers.
+  # Leave false to disable Sentry.
+  enabled: false
+  # -- Sentry environment tag (e.g. "development", "production").
+  # Sets SENTRY_ENVIRONMENT. Leave blank to let Sentry use its default.
+  environment: ""
+
 debug:
   # -- Whether or not pipeline outputs should be exported to the central repo.
   # This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination.

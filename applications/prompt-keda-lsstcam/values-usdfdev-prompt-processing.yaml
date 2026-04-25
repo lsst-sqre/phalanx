@@ -62,3 +62,7 @@ prompt-keda:
     kafka_cluster: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
     kafka_username: butler-writer
     kafka_topic: butler-writer
+
+  sentry:
+    enabled: true
+    environment: development
