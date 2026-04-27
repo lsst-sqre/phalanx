@@ -28,7 +28,7 @@ jobs:
           # Ensure the documentation gets the right version.
           fetch-depth: 0
 
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v8.1.0
 
       - name: Install graphviz
         run: |
