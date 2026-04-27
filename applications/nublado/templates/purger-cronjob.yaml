@@ -23,15 +23,15 @@ spec:
           {{- end }}
           containers:
           - name: "{{ .Chart.Name }}-purger"
-            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-            imagePullPolicy: "{{ .Values.image.pullPolicy }}"
-            {{- with .Values.purger.resources }}
-            resources:
-              {{- toYaml . | nindent 14 }}
-            {{- end }}
-
             {{- if or .Values.controller.slackAlerts .Values.sentry.enabled }}
             env:
+            {{- if .Values.controller.slackAlerts }}
+            - name: "NUBLADO_ALERT_HOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "nublado-secret"
+                  key: "slack-webhook"
+            {{- end }}
             {{- if .Values.sentry.enabled }}
             - name: "SENTRY_DSN"
               valueFrom:
@@ -41,15 +41,14 @@ spec:
             - name: "SENTRY_ENVIRONMENT"
               value: {{ .Values.global.environmentName }}
             {{- end }}
-            {{- if .Values.controller.slackAlerts }}
-            - name: "RSP_SCRATCHPURGER_ALERT_HOOK"
-              valueFrom:
-                secretKeyRef:
-                  name: "nublado-secret"
-                  key: "slack-webhook"
-            {{- end }}
             {{- end }}
             command: [ "nublado", "purger", "execute" ]
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+            {{- with .Values.purger.resources }}
+            resources:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
             securityContext:
               allowPrivilegeEscalation: true
               privileged: true
