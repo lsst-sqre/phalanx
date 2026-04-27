@@ -45,6 +45,15 @@ spec:
               secretKeyRef:
                 name: {{ include "plot-navigator.fullname" . }}
                 key: S3_SECRET
+          - name: REDIS_HOST
+            value: "plot-navigator-redis"
+          - name: REDIS_PORT
+            value: "6379"
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: redis-secret
+                key: password
         resources:
           {{- toYaml .Values.resources | nindent 10 }}
         {{- if .Values.config.envFromSecretPath }}
