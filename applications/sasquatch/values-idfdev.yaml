@@ -161,6 +161,7 @@ backup:
   enabled: true
   image:
     tag: "tickets-DM-54695"
+    pullPolicy: "Always"
   schedule: "0 5 * * *"
   persistence:
     size: 500Gi
