@@ -23,6 +23,11 @@ redis:
     limits:
       memory: "512Mi"
 
+image:
+  tag: "FIREFLY-1793-rubin-fixes_b3"
+  repository: "ipac/suit"
+
+
 resources:
   limits:
     memory: "30Gi"
