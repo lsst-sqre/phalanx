@@ -226,7 +226,7 @@ controller:
 
       # -- Timeout for deleting a user's lab resources from Kubernetes in
       # Safir `parse_timedelta` format
-      deleteTimeout: 1m
+      deleteTimeout: 2m
 
       # -- Select where `/tmp` and `/lab_startup` in the lab will come
       # from. Choose between `disk` (node-local ephemeral storage) and

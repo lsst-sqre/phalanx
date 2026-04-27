@@ -60,7 +60,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.affinity | object | `{}` | Affinity rules for user lab pods |
 | controller.config.lab.application | string | `"nublado-users"` | Argo CD application in which to collect user lab objects |
 | controller.config.lab.defaultSize | string | `"large"` | Default size selected on the spawner form. This must be either `null` or the name of one of the sizes listed in `sizes`. If `null`, the first listed size will be the default. |
-| controller.config.lab.deleteTimeout | string | `"1m"` | Timeout for deleting a user's lab resources from Kubernetes in Safir `parse_timedelta` format |
+| controller.config.lab.deleteTimeout | string | `"2m"` | Timeout for deleting a user's lab resources from Kubernetes in Safir `parse_timedelta` format |
 | controller.config.lab.emptyDirSource | string | `"memory"` | Select where `/tmp` and `/lab_startup` in the lab will come from. Choose between `disk` (node-local ephemeral storage) and `memory` (tmpfs capped at 25% of the available memory for `/tmp`). |
 | controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab |
 | controller.config.lab.extraAnnotations | object | `{}` | Extra annotations to add to user lab pods |
