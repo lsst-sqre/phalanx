@@ -274,6 +274,24 @@ telegraf:
       topicRegexps: |
         [ "lsst.scimma" ]
       offset: oldest
+    atcamera:
+      enabled: true
+      database: "lsst.ATCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source", "VersionType" ]
+      topicRegexps: |
+        [ "lsst.ATCamera" ]
+    mtcamera:
+      enabled: true
+      database: "lsst.MTCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Axis", "Bay", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck", "VersionType" ]
+      topicRegexps: |
+        [ "lsst.MTCamera" ]
   resources:
     limits:
       cpu: "2"
