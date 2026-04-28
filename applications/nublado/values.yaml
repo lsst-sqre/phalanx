@@ -402,7 +402,7 @@ controller:
       # -- Directory in the lab under which runtime information such as
       # tokens, environment variables, and container information will be
       # mounted
-      runtimeMountsDir: "/opt/lsst/software/jupyterlab"
+      runtimeMountsDir: "/etc/nublado"
 
       # -- Secrets to set in the user pods. Each should have a `secretKey` key
       # pointing to a secret in the same namespace as the controller
