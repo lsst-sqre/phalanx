@@ -1,3 +1,7 @@
+image:
+  tag: "tickets-DM-54788"
+  pullPolicy: "Always"
+
 vaultSecretsEnabled: false
 
 config:
@@ -16,5 +20,3 @@ redis:
   persistence:
     enabled: true
 
-resultWorker:
-  allowRootDebug: false

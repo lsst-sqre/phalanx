@@ -160,8 +160,8 @@ frontend:
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "1"
-      memory: "450Mi"
+      cpu: "2"
+      memory: "1Gi"
     requests:
       cpu: "100m"
       memory: "145Mi"
@@ -257,8 +257,8 @@ resultWorker:
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "1"
-      memory: "500Mi"
+      cpu: "2"
+      memory: "1Gi"
     requests:
       cpu: "1"
       memory: "145Mi"
