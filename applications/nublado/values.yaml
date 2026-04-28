@@ -226,7 +226,7 @@ controller:
 
       # -- Timeout for deleting a user's lab resources from Kubernetes in
       # Safir `parse_timedelta` format
-      deleteTimeout: 1m
+      deleteTimeout: 2m
 
       # -- Select where `/tmp` and `/lab_startup` in the lab will come
       # from. Choose between `disk` (node-local ephemeral storage) and
@@ -402,7 +402,7 @@ controller:
       # -- Directory in the lab under which runtime information such as
       # tokens, environment variables, and container information will be
       # mounted
-      runtimeMountsDir: "/opt/lsst/software/jupyterlab"
+      runtimeMountsDir: "/etc/nublado"
 
       # -- Secrets to set in the user pods. Each should have a `secretKey` key
       # pointing to a secret in the same namespace as the controller
