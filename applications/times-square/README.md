@@ -27,7 +27,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.enableGitHubApp | string | `"False"` | Toggle to enable the GitHub App functionality |
 | config.githubAppId | string | `""` | GitHub application ID |
 | config.githubCheckRunTimeout | string | `"3600"` | Timeout for GitHub check runs in seconds |
-| config.githubOrgs | string | `"lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"` | GitHub organizations that can sync repos to Times Square (comma-separated). |
+| config.githubOrgs | string | `"lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-so,lsst-pst"` | GitHub organizations that can sync repos to Times Square (comma-separated). |
 | config.htmlKeyMigration.dryRun | bool | `true` | Whether to run the HTML key migration job as a dry-run only |
 | config.htmlKeyMigration.enabled | bool | `false` | Whether to run the HTML key migration job as a pre-install/upgrade hook |
 | config.htmlKeyMigration.page | string | `""` | The name of the page to migrate, if set |
@@ -60,7 +60,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | ingress.path | string | `"/times-square/api"` | Root URL path prefix for times-square API |
 | ingress.templateApiScope | string | `"exec:notebook"` | scope for using just the template engine |
 | nameOverride | string | `""` | Override the base name for resources |
-| nodeSelector | object | `{}` | Node selection rules for the times-square deployment pod |
+| nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` | Annotations for the times-square deployment pod |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
 | redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
