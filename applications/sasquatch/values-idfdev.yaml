@@ -160,7 +160,7 @@ app-metrics:
 backup:
   enabled: true
   image:
-    tag: "tickets-DM-54695"
+    tag: "tickets-DM-54806"
     pullPolicy: "Always"
   schedule: "0 5 * * *"
   persistence:
