@@ -56,7 +56,7 @@ spec:
               value: "{{ .Values.config.database_schema }}"
             - name: "INSTRUMENT"
               value: "LSSTCam"
-            - name: "LOG_CONFIG"
+            - name: "SAFIR_LOG_LEVEL"
               value: "{{ .Values.consumekafka.logLevel }}"
             - name: "KAFKA_BOOTSTRAP"
               value: "{{ .Values.kafka.bootstrap }}"
