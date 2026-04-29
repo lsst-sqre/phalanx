@@ -9,6 +9,8 @@ config:
   githubAppId: "327289"
   enableGitHubApp: "True"
   sentryTracesSampleRate: 1
+  renameGithubOwner:
+    enabled: true
 cloudsql:
   enabled: false
 redis:
