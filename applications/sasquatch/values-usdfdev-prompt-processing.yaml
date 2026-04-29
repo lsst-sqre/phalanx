@@ -13,11 +13,17 @@ alert-brokers:
       replicas: 3
       bytesRetained: "300000000000"
       millisecondsRetained: "2629740000"
+    - name: lsst-alerts-v11.0
+      partitions: 45
+      replicas: 3
+      bytesRetained: "300000000000"
+      millisecondsRetained: "2629740000"
 
   communityReadonlyTopics: &communityReadonlyTopics
     - "alerts-simulated"
     - "lsst-alerts-v10.0"
     - "lsst-alerts-reprocessed-v10.0"
+    - "lsst-alerts-reprocessed-v11.0"
 
   users:
 

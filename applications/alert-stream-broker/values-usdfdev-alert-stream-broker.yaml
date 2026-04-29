@@ -175,6 +175,12 @@ alert-stream-broker:
   lsstcamMaxBytesRetained100: "300000000000"
   lsstcamMaxMillisecondsRetained100: "2629740000"
 
+  lsstcamTopicName110: lsst-alerts-v11.0
+  lsstcamTopicPartitions110: 45
+  lsstcamTopicReplicas110: 1
+  lsstcamMaxBytesRetained110: "300000000000"
+  lsstcamMaxMillisecondsRetained110: "2629740000"
+
   lsstcamTopicNameReprocess: lsst-alerts-reprocessed-v10.0
   lsstcamTopicPartitionsReprocess: 45
   lsstcamTopicReplicasReprocess: 1
