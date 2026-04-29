@@ -39,6 +39,10 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.profile | string | `"production"` | Run profile: "production" or "development" |
 | config.redisCacheUrl | string | Points to embedded Redis | URL for Redis html / noteburst job cache database |
 | config.redisQueueUrl | string | Points to embedded Redis | URL for Redis arq queue database |
+| config.renameGithubOwner.dryRun | bool | `false` | Whether to run the rename-github-owner job as a dry-run only |
+| config.renameGithubOwner.enabled | bool | `false` | Whether to deploy the on-demand `rename-github-owner` Job to rewrite the `github_owner` column on pages after a GitHub org/user rename. |
+| config.renameGithubOwner.new | string | `"lsst-so"` | Replacement `github_owner` value (passed as `--new`). |
+| config.renameGithubOwner.old | string | `"lsst-sitcom"` | Current `github_owner` value to rewrite (passed as `--old`). |
 | config.sentryTracesSampleRate | float | `0` |  |
 | config.updateSchema | bool | false to disable schema upgrades | Whether to run the database migration job |
 | config.worker.enableLivenessCheck | bool | `true` | Enable liveness checks for the arq queue |
