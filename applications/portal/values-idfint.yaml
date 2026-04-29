@@ -24,7 +24,7 @@ redis:
       memory: "512Mi"
 
 image:
-  tag: "FIREFLY-1793-rubin-fixes_b3"
+  tag: "portal-pre-8-2026.1_b1"
   repository: "ipac/suit"
 
 
