@@ -57,7 +57,7 @@ spec:
             - name: "tmp-volume"
               mountPath: "/tmp"
           env:
-            - name: "LOG_CONFIG"
+            - name: "SAFIR_LOG_LEVEL"
               value: "{{ .Values.obsloctap.logLevel }}"
             - name: "database"
               valueFrom:
