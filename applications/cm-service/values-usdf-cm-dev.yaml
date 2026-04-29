@@ -66,7 +66,7 @@ config:
     useNativeHttplib: "1"
 
 image:
-  tag: "0.7.0"
+  tag: "0.7.2"
   pullPolicy: Always
 
 daemon:
@@ -75,10 +75,10 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.7.0"
+    tag: "0.7.2"
     pullPolicy: Always
 
 web:
   image:
-    tag: "0.7.0"
+    tag: "0.7.2"
     pullPolicy: Always
