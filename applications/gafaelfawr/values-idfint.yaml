@@ -47,8 +47,8 @@ config:
       api:
         hips: 1000
       notebook:
-        cpu: 8.0
-        memory: 32
+        cpu: 15.0
+        memory: 120
 
   # Allow access by GitHub team.
   groupMapping:
