@@ -8,7 +8,7 @@ config:
   sentryTracesSampleRate: 1
   renameGithubOwner:
     enabled: true
-    dryRun: true
+    dryRun: false
 cloudsql:
   enabled: false
 redis:
