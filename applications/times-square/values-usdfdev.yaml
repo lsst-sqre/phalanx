@@ -9,6 +9,7 @@ config:
   githubAppId: "327289"
   enableGitHubApp: "True"
   sentryTracesSampleRate: 1
+  githubOrgs: "lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-so,lsst-pst"
   renameGithubOwner:
     enabled: true
 cloudsql:
