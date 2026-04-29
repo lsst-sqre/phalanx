@@ -24,7 +24,7 @@ redis:
       memory: "512Mi"
 
 image:
-  tag: "portal-pre-8-2026.1_b1"
+  tag: "portal-pre-8-2026.1_b2"
   repository: "ipac/suit"
 
 
