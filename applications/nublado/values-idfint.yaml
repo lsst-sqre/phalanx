@@ -84,6 +84,14 @@ controller:
             requests:
               cpu: 1.0
               memory: "8Gi"
+        - size: "gargantuan"
+          resources:
+            limits:
+              cpu: 15.0
+              memory: "120Gi"
+            requests:
+              cpu: 4.0
+              memory: "32Gi"
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
