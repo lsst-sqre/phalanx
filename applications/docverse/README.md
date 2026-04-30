@@ -20,6 +20,7 @@ Publish versioned docs
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `docverse` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.arqRedisUrl | string | Points to embedded Redis | URL for Redis arq queue database |
 | config.databaseUrl | string | `""` | Database URL for PostgreSQL |
+| config.githubAppId | string | `nil` | GitHub App ID for Docverse to use when accessing GitHub repositories. If not set, Docverse will operate in a limited mode without GitHub integration. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/docverse/api"` | URL path prefix |

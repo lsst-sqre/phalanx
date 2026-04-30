@@ -2,8 +2,9 @@ image:
   pullPolicy: "Always"
 
 config:
-  databaseUrl: "postgresql://docverse@localhost/docverse"
   logLevel: "DEBUG"
+  databaseUrl: "postgresql://docverse@localhost/docverse"
+  githubAppId: "3556766"
   updateSchema: true
   superadminUsers:
     - "jonathansick"
