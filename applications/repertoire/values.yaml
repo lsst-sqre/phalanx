@@ -356,11 +356,11 @@ config:
   tap:
     # -- Default schema version for all TAP services (can be overridden
     # per-app)
-    schemaVersion: "w.2026.01"
+    schemaVersion: "releases/w.2026.17"
 
     # -- Template for schema artifact URLs (use {schemaVersion} placeholder)
-    # @default -- lsst/sdm_schemas on GitHub
-    schemaSourceTemplate: "https://github.com/lsst/sdm_schemas/archive/refs/tags/{version}.tar.gz"
+    # @default -- GCS rubin-sdm-schemas-artifacts bucket
+    schemaSourceTemplate: "gs://rubin-sdm-schemas-artifacts/{version}/schemas.tar.gz"
 
     # -- TAP Server configuration by application name. Configuration is used
     # to populate & update the TAP_SCHEMA database for each enabled TAP
