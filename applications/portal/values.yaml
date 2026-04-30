@@ -49,13 +49,6 @@ tolerations: []
 # -- Affinity rules for the Portal pod
 affinity: {}
 
-# -- Security context for the Portal pod
-# @default -- See `values.yaml`
-securityContext:
-  runAsUser: 91
-  runAsGroup: 91
-  fsGroup: 91
-
 config:
   # -- If not null, display this alert to all users in a banner
   alertMessage: null
