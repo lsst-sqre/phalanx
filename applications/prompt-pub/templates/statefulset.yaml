@@ -1,0 +1,190 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: prompt-pub
+  labels:
+    {{- include "prompt-pub.labels" . | nindent 4 }}
+spec:
+  serviceName: prompt-pub-headless
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "prompt-pub.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "prompt-pub.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 48045 # rubinppb
+        runAsGroup: 4085 # rubin-users
+        fsGroup: 4085
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          env:
+            - name: PROMPTPUB_STATE_DATABASE_URI
+              value: {{ .Values.publication.stateDB }}
+            - name: PROMPTPUB_STATE_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: state_database_password
+                  name: prompt-pub
+            - name: PROMPTPUB_EMBARGO_REPO_PATH
+              value: {{ .Values.publication.repos.embargo }}
+            - name: PROMPTPUB_MAIN_REPO_PATH
+              value: {{ .Values.publication.repos.main }}
+            - name: PROMPTPUB_PROMPT_PREP_REPO_PATH
+              value: {{ .Values.publication.repos.promptPrep }}
+            - name: PROMPTPUB_GOOGLE_INT_REPO_PATH
+              value: /opt/lsst/configs/gcp-repo-path/gcp-int-repo.yaml
+            - name: PROMPTPUB_KAFKA_SERVER
+              value: {{ .Values.publication.butlerWriterKafka.address }}
+            - name: PROMPTPUB_KAFKA_TOPIC
+              value: {{ .Values.publication.butlerWriterKafka.topic }}
+            - name: PROMPTPUB_KAFKA_GROUP_ID
+              value: {{ .Values.publication.butlerWriterKafka.groupId }}
+            - name: PROMPTPUB_KAFKA_USERNAME
+              value: {{ .Values.publication.butlerWriterKafka.username }}
+            - name: PROMPTPUB_KAFKA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: prompt_publication_consumer_password
+                  name: prompt-pub
+            - name: PROMPTPUB_EMBARGO_BATCH_FILE_DIRECTORY
+              value: {{ .Values.publication.embargoBatchFileDir }}
+            - name: LSST_RESOURCES_NUM_WORKERS
+              value: {{ .Values.middleware.lsstResources.numWorkers | quote }}
+            - name: LSST_DB_AUTH_CREDENTIALS
+              valueFrom:
+                secretKeyRef:
+                  key: lsst_db_auth_credentials
+                  name: prompt-pub
+            - name: LSST_RESOURCES_S3_PROFILE_embargo
+              value: {{ .Values.middleware.lsstResources.s3ProfileEmbargo }}
+            - name: AWS_SHARED_CREDENTIALS_FILE
+              value: /opt/lsst/secrets/s3-credentials/credentials
+            - name: AWS_PROFILE
+              value: embargo
+            - name: LSST_DISABLE_BUCKET_VALIDATION
+              value: "0"
+            - name: AWS_REQUEST_CHECKSUM_CALCULATION
+              value: WHEN_REQUIRED
+          startupProbe:
+            httpGet:
+              path: /readiness
+              port: 9040
+            failureThreshold: 20
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 9040
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          volumeMounts:
+            - name: gcp-int-repo-config-volume
+              mountPath: /opt/lsst/configs/gcp-repo-path
+            - name: sdf-data-rubin
+              mountPath: /sdf/data/rubin
+            - name: s3-credentials-file
+              mountPath: /opt/lsst/secrets/s3-credentials/credentials
+              subPath: credentials
+              readOnly: true
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        - name: alloydb-proxy
+          image: "{{ .Values.alloyDbProxy.image.repository }}:{{ .Values.alloyDbProxy.image.tag }}"
+          command:
+            - "/alloydb-auth-proxy"
+            - "--public-ip"
+            - "--address=127.0.0.1"
+            - "--port=5432"
+            - "--health-check"
+            - "--http-address=$(POD_IP)"
+            - "--http-port=9040"
+            - "--credentials-file"
+            - "/opt/lsst/secrets/alloy-db/key.json"
+            - {{ .Values.alloyDbProxy.config.instanceUri | quote }}
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          startupProbe:
+            httpGet:
+              path: /readiness
+              port: 9040
+            failureThreshold: 20
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 9040
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: 9040
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            {{- toYaml .Values.alloyDbProxy.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: alloydb-credentials-file
+              mountPath: /opt/lsst/secrets/alloy-db/key.json
+              subPath: key.json
+              readOnly: true
+      volumes:
+      - name: gcp-int-repo-config-volume
+        configMap:
+          name: prompt-pub
+          items:
+            - key: gcp-int-repo
+              path: gcp-int-repo.yaml
+      - name: s3-credentials-file
+        secret:
+          secretName: prompt-pub
+          defaultMode: 420
+          items:
+            - key: s3_credentials_file
+              path: credentials
+      - name: alloydb-credentials-file
+        secret:
+          secretName: prompt-pub
+          items:
+            - key: alloydb_credentials_file
+              path: key.json
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: sdf-data-rubin
+      spec:
+        accessModes: [ "ReadWriteMany" ]
+        storageClassName: sdf-data-rubin
+        resources:
+          requests:
+            storage: 1Gi

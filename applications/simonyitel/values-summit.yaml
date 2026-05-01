@@ -198,7 +198,7 @@ gcheaderservice103:
 lasertracker1:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/lasertracker
     pullPolicy: Always
   env:
@@ -245,7 +245,7 @@ mtaircompressor2:
 
 mtaos:
   image:
-    revision: 4
+    revision: 1
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
   env:
@@ -293,7 +293,7 @@ mtcamhexapod:
   enabled: true
   classifier: mthexapod1
   image:
-    revision: 3
+    revision: 1
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
   env:
@@ -309,7 +309,7 @@ mtcamhexapod:
       cpu: 500m
       memory: 900Mi
     requests:
-      cpu: 120m
+      cpu: 200m
       memory: 450Mi
 
 mtcamhexapod-sim:
@@ -332,7 +332,7 @@ mtcamhexapod-sim:
 mtdome:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtdome
     pullPolicy: Always
   resources:
@@ -369,13 +369,13 @@ mtdometrajectory:
       cpu: 250m
       memory: 560Mi
     requests:
-      cpu: 55m
+      cpu: 70m
       memory: 280Mi
 
 mtheaderservice:
   enabled: true
   image:
-    revision: 3
+    revision: 0
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
   env:
@@ -445,7 +445,7 @@ mtm2hexapod:
   enabled: true
   classifier: mthexapod2
   image:
-    revision: 3
+    revision: 1
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
   env:
@@ -461,7 +461,7 @@ mtm2hexapod:
       cpu: 400m
       memory: 1400Mi
     requests:
-      cpu: 120m
+      cpu: 200m
       memory: 700Mi
 
 mtm2hexapod-sim:
@@ -530,7 +530,7 @@ mtmount-sim:
 mtoods:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtoods
     pullPolicy: Always
   env:
@@ -547,7 +547,7 @@ mtoods:
       cpu: 1500m
       memory: 2100Mi
     requests:
-      cpu: 300m
+      cpu: 500m
       memory: 800Mi
   configfile:
     path: /etc
@@ -615,7 +615,7 @@ mtptg:
 mtrotator:
   enabled: true
   image:
-    revision: 0
+    revision: 1
     repository: ts-dockerhub.lsst.org/mtrotator
     pullPolicy: Always
   resources:
@@ -623,7 +623,7 @@ mtrotator:
       cpu: 1
       memory: 900Mi
     requests:
-      cpu: 280m
+      cpu: 400m
       memory: 300Mi
 
 mtrotator-sim:
@@ -645,7 +645,7 @@ mtrotator-sim:
 wfoods:
   enabled: true
   image:
-    revision: 1
+    revision: 0
     repository: ts-dockerhub.lsst.org/wfoods
     pullPolicy: Always
   env:

@@ -9,8 +9,8 @@ controller:
       numReleases: 0
       numWeeklies: 3
       numDailies: 2
-      cycle: 43
-      recommendedTag: "recommended_c0043"
+      cycle: 44
+      recommendedTag: "recommended_c0044"
     lab:
       defaultSize: "small"
       env:

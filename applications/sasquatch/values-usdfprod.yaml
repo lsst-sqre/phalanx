@@ -726,3 +726,23 @@ obsloctap:
 
 tap:
   enabled: true
+
+grafana:
+  enabled: true
+  influxdb:
+    url: "http://sasquatch-trickster.sasquatch"
+    databases:
+      - lsst.prompt
+      - lsst.verify
+      - lsst.dm
+      - efd
+
+trickster:
+  enabled: true
+  config:
+    backends:
+      default:
+        origin_url: http://sasquatch-influxdb-enterprise-active-data.sasquatch:8086
+
+redis:
+  enabled: true

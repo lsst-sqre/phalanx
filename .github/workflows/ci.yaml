@@ -41,7 +41,7 @@ jobs:
         env:
           GOBIN: /usr/local/bin/
 
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v8.1.0
 
       - name: Run linters
         run: uv run --only-group=tox tox run -e lint
@@ -59,7 +59,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v8.1.0
         with:
           python-version: ${{ matrix.python }}
 
@@ -89,7 +89,7 @@ jobs:
       - name: Run helm unittest for sub-charts
         run: helm unittest applications/*/charts/*/tests/..
 
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v8.1.0
 
       - name: Run Phalanx Helm linter
         run: uv run --only-group=tox tox run -e phalanx-lint-change
@@ -152,7 +152,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v8.1.0
 
       - name: Download installer dependencies
         run: |
@@ -208,7 +208,7 @@ jobs:
           # Ensure the documentation gets the right version.
           fetch-depth: 0
 
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v8.1.0
 
       - name: Install graphviz
         run: |

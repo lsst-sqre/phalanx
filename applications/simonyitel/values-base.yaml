@@ -19,10 +19,10 @@ lasertracker1-sim:
   resources:
     limits:
       cpu: 200m
-      memory: 512Mi
+      memory: 400Mi
     requests:
-      cpu: 26m
-      memory: 256Mi
+      cpu: 50m
+      memory: 200Mi
 
 mtaircompressor1-sim:
   enabled: true
@@ -34,10 +34,10 @@ mtaircompressor1-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 320Mi
+      memory: 400Mi
     requests:
-      cpu: 10m
-      memory: 160Mi
+      cpu: 15m
+      memory: 200Mi
 
 mtaircompressor2-sim:
   enabled: true
@@ -49,10 +49,10 @@ mtaircompressor2-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 320Mi
+      memory: 400Mi
     requests:
-      cpu: 10m
-      memory: 160Mi
+      cpu: 15m
+      memory: 200Mi
 
 mtaos:
   image:
@@ -87,7 +87,7 @@ mtaos:
       cpu: 1000m
       memory: 1800Mi
     requests:
-      cpu: 35m
+      cpu: 50m
       memory: 900Mi
 
 mtcamhexapod-sim:
@@ -96,22 +96,8 @@ mtcamhexapod-sim:
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
-  obsenv: true
-  obsenv_configfile:
-    filename: obs_env_config.json
-    content: |
-      {
-        "repositories": {
-          "ts_config_mttcs": "https://github.com/lsst-ts/"
-        },
-        "base_env_source_org": "https://github.com/lsst-ts/",
-        "base_env_source_repo": "ts_cycle_build",
-        "base_env_def_file": "cycle/cycle.env",
-        "destination": "/net/obs-env/auto_base_packages"
-      }
   env:
     RUN_ARG: --simulate 1
-    TS_CONFIG_MTTCS_DIR: "/net/obs-env/auto_base_packages/ts_config_mttcs"
   resources:
     limits:
       cpu: 500m
@@ -129,10 +115,10 @@ mtdome-sim:
     RUN_ARG: --simulate 1
   resources:
     limits:
-      cpu: 900m
+      cpu: 1
       memory: 320Mi
     requests:
-      cpu: 220m
+      cpu: 400m
       memory: 160Mi
 
 mtdometrajectory:
@@ -213,7 +199,8 @@ mtm1m3-sim:
     LSST_KAFKA_MAX_QUEUE_MS: 100
   resources:
     limits:
-      cpu: 1000m
+      cpu: 1
+      memory: 1Gi
     requests:
       cpu: 300m
       memory: 300Mi
@@ -226,23 +213,10 @@ mtm1m3ts-sim:
   resources:
     limits:
       cpu: 400m
+      memory: 1Gi
     requests:
       cpu: 40m
-      memory: 90Mi
-
-mtm2-sim:
-  image:
-    repository: ts-dockerhub.lsst.org/m2
-    pullPolicy: Always
-  env:
-    RUN_ARG: --simulate
-  resources:
-    limits:
-      cpu: 850m
-      memory: 1500Mi
-    requests:
-      cpu: 120m
-      memory: 500Mi
+      memory: 150Mi
 
 mtm2hexapod-sim:
   enabled: true
@@ -250,22 +224,8 @@ mtm2hexapod-sim:
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
     pullPolicy: Always
-  obsenv: true
-  obsenv_configfile:
-    filename: obs_env_config.json
-    content: |
-      {
-        "repositories": {
-          "ts_config_mttcs": "https://github.com/lsst-ts/"
-        },
-        "base_env_source_org": "https://github.com/lsst-ts/",
-        "base_env_source_repo": "ts_cycle_build",
-        "base_env_def_file": "cycle/cycle.env",
-        "destination": "/net/obs-env/auto_base_packages"
-      }
   env:
     RUN_ARG: --simulate 2
-    TS_CONFIG_MTTCS_DIR: "/net/obs-env/auto_base_packages/ts_config_mttcs"
   resources:
     limits:
       cpu: 400m
@@ -286,7 +246,7 @@ mtm2-hwsim:
       cpu: 850m
       memory: 1500Mi
     requests:
-      cpu: 120m
+      cpu: 200m
       memory: 500Mi
 
 mtmount-sim:
@@ -320,11 +280,11 @@ mtoods:
   <<: *butler-secret
   resources:
     limits:
-      cpu: 1000m
-      memory: 1400Mi
+      cpu: 1
+      memory: 4Gi
     requests:
-      cpu: 10m
-      memory: 700Mi
+      cpu: 100m
+      memory: 1Gi
   configfile:
     path: /etc
     filename: mtoods.yaml
@@ -393,10 +353,10 @@ wfoods:
   <<: *butler-secret
   resources:
     limits:
-      cpu: 100m
+      cpu: 1
       memory: 4000Mi
     requests:
-      cpu: 1m
+      cpu: 100m
       memory: 800Mi
   configfile:
     path: /etc
@@ -456,9 +416,10 @@ mtptg:
   resources:
     limits:
       cpu: 1200m
+      memory: 3Gi
     requests:
       cpu: 120m
-      memory: 1500Mi
+      memory: 500Mi
 
 mtrotator-sim:
   enabled: true
@@ -472,7 +433,7 @@ mtrotator-sim:
       cpu: 400m
       memory: 600Mi
     requests:
-      cpu: 60m
+      cpu: 120m
       memory: 280Mi
 
 mtvms-camera-rotator-sim:
@@ -488,7 +449,7 @@ mtvms-camera-rotator-sim:
       memory: 180Mi
     requests:
       cpu: 25m
-      memory: 60Mi
+      memory: 90Mi
 
 mtvms-m1m3-sim:
   enabled: true
@@ -518,4 +479,4 @@ mtvms-m2-sim:
       memory: 180Mi
     requests:
       cpu: 25m
-      memory: 60Mi
+      memory: 90Mi

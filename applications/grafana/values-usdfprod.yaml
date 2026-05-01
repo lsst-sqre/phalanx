@@ -1,0 +1,11 @@
+grafana:
+  gafaelfawrScopes:
+    all:
+      - "exec:internal-tools"
+  spec:
+    persistentVolumeClaim:
+      spec:
+        storageClassName: "wekafs--sdf-k8s01"
+  config:
+    database:
+      host: "rsp-db-rw.postgres-db.svc.cluster.local"

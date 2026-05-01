@@ -180,7 +180,7 @@ config:
     tokenLifetime: "2419200"
 
     # -- Nublado2 worker account's token scopes as a comma-separated list.
-    tokenScopes: "exec:notebook,read:image,read:tap,read:alertdb"
+    tokenScopes: "exec:notebook,read:image,read:tap,read:alertdb,read:sasquatch"
 
     # -- Nublado image stream to select: "recommended", "weekly" or "reference"
     imageSelector: "recommended"

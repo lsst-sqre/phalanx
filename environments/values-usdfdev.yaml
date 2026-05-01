@@ -18,7 +18,7 @@ applications:
   exposure-checker: true
   exposurelog: true
   fov-quicklook: true
-  grafana: false
+  grafana: true
   jira-data-proxy: true
   livetap: true
   mobu: true

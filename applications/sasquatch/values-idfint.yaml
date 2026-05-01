@@ -23,15 +23,7 @@ strimzi-kafka:
         - broker: 2
           loadBalancerIP: "34.173.225.150"
           host: sasquatch-int-kafka-2.lsst.cloud
-  mirrormaker2:
-    enabled: true
-    source:
-      alias: "idfdev"
-      bootstrapServer: sasquatch-dev-kafka-bootstrap.lsst.cloud:9094
-      topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*"
   users:
-    replicator:
-      enabled: true
     telegraf:
       enabled: true
   controller:
@@ -112,6 +104,7 @@ app-metrics:
   apps:
     - bigquerykafka
     - gafaelfawr
+    - herald
     - mobu
     - noteburst
     - nublado

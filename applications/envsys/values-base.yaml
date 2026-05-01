@@ -155,10 +155,10 @@ dream-sim:
     key: aws-secret-access-key
   resources:
     limits:
-      cpu: 100m
+      cpu: 200m
       memory: 320Mi
     requests:
-      cpu: 15m
+      cpu: 70m
       memory: 160Mi
 
 dsm1-sim:
@@ -234,10 +234,10 @@ epm-generator-ess305-sim:
     RUN_ARG: 305 --simulate
   resources:
     requests:
-      cpu: 30m
+      cpu: 50m
       memory: 160Mi
     limits:
-      cpu: 190m
+      cpu: 250m
       memory: 320Mi
 
 epm-generator-ess306-sim:
@@ -250,10 +250,10 @@ epm-generator-ess306-sim:
     RUN_ARG: 306 --simulate
   resources:
     requests:
-      cpu: 30m
+      cpu: 50m
       memory: 160Mi
     limits:
-      cpu: 190m
+      cpu: 250m
       memory: 320Mi
 
 hvac-sim:
@@ -682,8 +682,8 @@ weatherforecast:
     key: meteoblue-api-key
   resources:
     requests:
-      cpu: 14m
-      memory: 160Mi
+      cpu: 50m
+      memory: 250Mi
     limits:
-      cpu: 90m
-      memory: 320Mi
+      cpu: 250m
+      memory: 750Mi

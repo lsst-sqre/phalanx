@@ -6,6 +6,9 @@ rubintv:
 
   frontend:
     debug: true
+    image:
+      tag: v2.6.11
+      pullPolicy: Always
     env:
     - name: RA_PULL_DIRECTORIES
       value: "rubintv_analysis_service"
@@ -27,9 +30,14 @@ rubintv:
     - name: RA_REDIS_PASSWORD
       secretName: rubintv-secrets
       secretKey: ra-redis-password
-    image:
-      tag: v2.6.11
-      pullPolicy: Always
+    pvcMountpoint:
+    - name: rubintv-scratch
+      persistentVolumeClaim:
+        name: rubintv-scratch
+        storageClassName: rook-ceph-block
+        capacity: 1Gi
+      accessMode: ReadWriteOnce
+      mountPath: /scratch
     resources:
       requests:
         cpu: 1
@@ -41,7 +49,7 @@ rubintv:
   workers:
     replicas: 1
     image:
-      repository: ghcr.io/lsst-sitcom/rubintv_production
+      repository: ghcr.io/lsst-so/rubintv_production
       tag: w_2025_38
       pullPolicy: Always
     uid: 73006

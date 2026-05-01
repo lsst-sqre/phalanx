@@ -27,6 +27,24 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+            {{- if .Values.config.metrics.enabled }}
+            - name: "KAFKA_BOOTSTRAP_SERVERS"
+              valueFrom:
+                secretKeyRef:
+                  name: "herald-kafka"
+                  key: "bootstrapServers"
+            - name: "KAFKA_CLIENT_CERT_PATH"
+              value: "/etc/herald-kafka/user.crt"
+            - name: "KAFKA_CLIENT_KEY_PATH"
+              value: "/etc/herald-kafka/user.key"
+            - name: "KAFKA_CLUSTER_CA_PATH"
+              value: "/etc/herald-kafka/ca.crt"
+            - name: "KAFKA_SECURITY_PROTOCOL"
+              valueFrom:
+                secretKeyRef:
+                  name: "herald-kafka"
+                  key: "securityProtocol"
+            {{- end }}
             {{- if .Values.config.s3Credentials }}
             - name: "HERALD_AWS_ACCESS_KEY_ID"
               valueFrom:
@@ -85,6 +103,27 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+          {{- if .Values.config.metrics.enabled }}
+          volumeMounts:
+            - name: "kafka"
+              mountPath: "/etc/herald-kafka/ca.crt"
+              readOnly: true
+              subPath: "ssl.truststore.crt"
+            - name: "kafka"
+              mountPath: "/etc/herald-kafka/user.crt"
+              readOnly: true
+              subPath: "ssl.keystore.crt"
+            - name: "kafka"
+              mountPath: "/etc/herald-kafka/user.key"
+              readOnly: true
+              subPath: "ssl.keystore.key"
+          {{- end }}
+      {{- if .Values.config.metrics.enabled }}
+      volumes:
+        - name: "kafka"
+          secret:
+            secretName: "herald-kafka"
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

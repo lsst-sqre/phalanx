@@ -170,16 +170,6 @@ config:
         datasets:
           - "efd"
         template: "https://{{base_hostname}}/api/consdbtap"
-    herald:
-      - type: "data"
-        name: "alerts"
-        datasets:
-          - "dp02"
-          - "dp03"
-          - "dp1"
-          - "prompt"
-        template: "https://{{base_hostname}}/api/alerts"
-        openapi: "https://{{base_hostname}}/api/alerts/openapi.json"
     datalinker:
       - type: "data"
         name: "datalink"
@@ -199,6 +189,11 @@ config:
           datalink-links-1.1:
             template: "https://{{base_hostname}}/api/datalink/links"
         openapi: "https://{{base_hostname}}/api/datalink/openapi.json"
+    docverse:
+      - type: "internal"
+        name: "docverse"
+        template: "https://{{base_hostname}}/docverse/api"
+        openapi: "https://{{base_hostname}}/docverse/api/openapi.json"
     gafaelfawr:
       - type: "internal"
         name: "gafaelfawr"
@@ -213,6 +208,13 @@ config:
       - type: "ui"
         name: "logout"
         template: "https://{{base_hostname}}/logout"
+    herald:
+      - type: "data"
+        name: "alerts"
+        datasets:
+          - "prompt"
+        template: "https://{{base_hostname}}/api/alerts"
+        openapi: "https://{{base_hostname}}/api/alerts/openapi.json"
     livetap:
       - type: "data"
         name: "tap"
@@ -354,11 +356,11 @@ config:
   tap:
     # -- Default schema version for all TAP services (can be overridden
     # per-app)
-    schemaVersion: "w.2026.01"
+    schemaVersion: "releases/w.2026.17"
 
     # -- Template for schema artifact URLs (use {schemaVersion} placeholder)
-    # @default -- lsst/sdm_schemas on GitHub
-    schemaSourceTemplate: "https://github.com/lsst/sdm_schemas/archive/refs/tags/{version}.tar.gz"
+    # @default -- GCS rubin-sdm-schemas-artifacts bucket
+    schemaSourceTemplate: "gs://rubin-sdm-schemas-artifacts/{version}/schemas.tar.gz"
 
     # -- TAP Server configuration by application name. Configuration is used
     # to populate & update the TAP_SCHEMA database for each enabled TAP
@@ -399,7 +401,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.14"
+    tag: "1.37.15"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"

@@ -226,6 +226,11 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
           volumeMounts:
             - mountPath: "/firefly/alerts"
               name: "alerts"
@@ -239,10 +244,11 @@ spec:
               name: "workarea"
       imagePullSecrets:
         - name: "pull-secret"
-      {{- with .Values.securityContext }}
       securityContext:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        runAsNonRoot: true
+        runAsUser: 91
+        runAsGroup: 91
+        fsGroup: 91
       volumes:
         - name: "alerts"
           configMap:

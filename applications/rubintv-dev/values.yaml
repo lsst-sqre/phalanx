@@ -68,7 +68,7 @@ rubintv:
     # -- Settings for OCI image for worker pods
     image:
       # -- The Docker registry name for the container image.
-      repository: ts-dockerhub.lsst.org/rubintv-broadcaster
+      repository: ghcr.io/lsst-so/rubintv_production
 
       # -- The tag of the container image to use.
       tag: develop

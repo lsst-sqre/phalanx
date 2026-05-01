@@ -20,10 +20,10 @@ atbuilding:
   resources:
     limits:
       cpu: 120m
-      memory: 350Mi
+      memory: 500Mi
     requests:
       cpu: 12m
-      memory: 170Mi
+      memory: 250Mi
 
 atdome:
   enabled: true
@@ -91,7 +91,7 @@ athexapod:
 atmcs:
   enabled: true
   image:
-    revision: 2
+    revision: 0
     repository: ts-dockerhub.lsst.org/atmcs
     pullPolicy: Always
   resources:
@@ -100,7 +100,7 @@ atmcs:
       memory: 600Mi
     requests:
       cpu: 60m
-      memory: 200Mi
+      memory: 250Mi
 
 atoods:
   image:
@@ -138,7 +138,7 @@ atoods:
     limits:
       memory: 2Gi
     requests:
-      cpu: 14m
+      cpu: 600m
       memory: 1Gi
   configfile:
     path: /etc
@@ -184,7 +184,7 @@ atoods:
 atpneumatics:
   enabled: true
   image:
-    revision: 2
+    revision: 0
     repository: ts-dockerhub.lsst.org/at_pneumatics
     pullPolicy: Always
   resources:

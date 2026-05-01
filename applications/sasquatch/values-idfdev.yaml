@@ -42,11 +42,6 @@ schema-registry:
   ingress:
     enabled: true
 
-schema-registry-remote:
-  enabled: true
-  topic:
-    name: registry-schemas-remote
-
 influxdb:
   image:
     tag: 1.12.3
@@ -153,6 +148,7 @@ app-metrics:
   apps:
     - bigquerykafka
     - gafaelfawr
+    - herald
     - mobu
     - noteburst
     - nublado

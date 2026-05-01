@@ -4,7 +4,7 @@ appOfAppsName: "roundtable"
 gcp:
   projectId: "roundtable-prod-f6fd"
   region: "us-central1"
-  clusterName: "roundtable-prod"
+  clusterName: "roundtable-prod-2"
 onepassword:
   connectUrl: "https://roundtable.lsst.cloud/1password"
   vaultTitle: "RSP roundtable.lsst.cloud"
@@ -13,7 +13,7 @@ vaultPathPrefix: "secret/phalanx/roundtable-prod"
 applications:
   atlantis: true
   checkerboard: true
-  docverse: true
+  docverse: false
   eups-distributor: true
   giftless: true
   google-cloud-observability: true

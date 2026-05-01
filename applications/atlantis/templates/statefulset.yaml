@@ -80,6 +80,22 @@ spec:
             secretKeyRef:
               name: "atlantis"
               key: "google-cloud-monitoring-slack-token"
+
+          # Needed for provisioning alerting resources in the USDF Grafana
+          # instance
+        - name: "TF_VAR_usdf_grafana_token"
+          valueFrom:
+            secretKeyRef:
+              name: "atlantis"
+              key: "usdf-grafana-token"
+
+          # Needed for provisioning Slack notifications in the USDF Grafana
+          # instance
+        - name: "TF_VAR_usdf_grafana_slack_token"
+          valueFrom:
+            secretKeyRef:
+              name: "atlantis"
+              key: "usdf-grafana-slack-token"
         ports:
         - name: "http"
           containerPort: 8080

@@ -58,15 +58,8 @@ telegraf:
   enabled: true
   kafkaConsumers:
     example:
-      enabled: true
-      replicaCount: 1
-      database: "lsst.example"
-      tags: |
-        [ "band", "instrument" ]
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.example" ]
+      enabled: false
+
 kafdrop:
   ingress:
     enabled: true

@@ -44,7 +44,7 @@ x-manager-producer:
     HEARTBEAT_QUERY_COMMANDER: false
     JIRA_API_HOSTNAME: rubinobs.atlassian.net
     JIRA_PROJECT_ID: 10063
-    REDIS_CONFIG_CAPACITY: 100
+    REDIS_CONFIG_CAPACITY: 500
     REDIS_CONFIG_EXPIRY: 5
     REDIS_HOST: love-manager-redis-service
     REMOTE_STORAGE: true
@@ -118,7 +118,7 @@ love-manager:
     producers:
     - name: general
       <<: *base-manager-producer
-      replicas: 10
+      replicas: 1
     - name: atqueue
       <<: *base-manager-producer
       replicas: 1
@@ -129,6 +129,21 @@ love-manager:
       <<: *base-manager-producer
       replicas: 1
     - name: m1m3
+      <<: *base-manager-producer
+      replicas: 1
+    - name: envsys
+      <<: *base-manager-producer
+      replicas: 2
+    - name: atcs
+      <<: *base-manager-producer
+      replicas: 1
+    - name: mtcs
+      <<: *base-manager-producer
+      replicas: 1
+    - name: calsys
+      <<: *base-manager-producer
+      replicas: 1
+    - name: obssys
       <<: *base-manager-producer
       replicas: 1
   redis:
@@ -252,6 +267,46 @@ love-nginx:
           proxy_set_header Host $host;
           proxy_redirect off;
       }
+      location /love/manager/envsys {
+          proxy_pass http://love-manager-producer-envsys-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/atcs {
+          proxy_pass http://love-manager-producer-atcs-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/mtcs {
+          proxy_pass http://love-manager-producer-mtcs-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/calsys {
+          proxy_pass http://love-manager-producer-calsys-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/obssys {
+          proxy_pass http://love-manager-producer-obssys-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
       location /love/media {
           alias /usr/src/love-manager/media;
       }
@@ -325,42 +380,72 @@ love-nginx:
         }
       }
 
+x-love-producer-envsys-resources:
+  &love-producer-envsys-resources
+  resources:
+    requests:
+      cpu: 50m
+      memory: 150Mi
+    limits:
+      cpu: 500m
+      memory: 300Mi
+
+x-love-producer-scripqueue-resources:
+  &love-producer-scripqueue-resources
+  resources:
+    requests:
+      cpu: 50m
+      memory: 200Mi
+    limits:
+      cpu: 500m
+      memory: 500Mi
+
+x-love-producer-vms-resources:
+  &love-producer-vms-resources
+  resources:
+    requests:
+      cpu: 50m
+      memory: 150Mi
+    limits:
+      cpu: 300m
+      memory: 300Mi
+
 love-producer:
   image:
     repository: ts-dockerhub.lsst.org/love-producer
     pullPolicy: Always
   resources:
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 15m
+      memory: 120Mi
     limits:
       cpu: 100m
       memory: 300Mi
   producers:
   - name: ataos
     csc: ATAOS:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atbuilding
     csc: ATBuilding:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: atcamera
     csc: ATCamera:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atdome
     csc: ATDome:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atdometrajectory
     csc: ATDomeTrajectory:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atheaderservice
     csc: ATHeaderService:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: athexapod
     csc: ATHexapod:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atmcs
     csc: ATMCS:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
     resources:
       requests:
         cpu: 100m
@@ -370,107 +455,111 @@ love-producer:
         memory: 900Mi
   - name: atocps
     csc: OCPS:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: atoods
     csc: ATOODS:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atpneumatics
     csc: ATPneumatics:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atptg
     csc: ATPtg:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: atscheduler
     csc: Scheduler:2 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: atscriptqueue
     csc: ScriptQueue:2 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/atqueue/ws/subscription
-    resources:
-      requests:
-        cpu: 50m
-        memory: 100Mi
-      limits:
-        cpu: 500m
-        memory: 500Mi
+    <<: *love-producer-scripqueue-resources
   - name: atspectrograph
     csc: ATSpectrograph:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: auxteless201
     csc: ESS:201 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: auxteless202
     csc: ESS:202 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: auxteless204
     csc: ESS:204 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: auxteless308
     csc: ESS:308 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: calibhilless301
     csc: ESS:301 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: cameraess111
     csc: ESS:111 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: camerahexapod
     csc: MTHexapod:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: cbp
     csc: CBP:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: dream
     csc: DREAM:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: cleanroomess109
     csc: ESS:109 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: dimm1
     csc: DIMM:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: dimm2
     csc: DIMM:2 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: dsm1
     csc: DSM:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: dsm2
     csc: DSM:2 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: eas
     csc: EAS:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
   - name: electrometer101
     csc: Electrometer:101 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: electrometer102
     csc: Electrometer:102 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: electrometer103
     csc: Electrometer:103 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: electrometer201
     csc: Electrometer:201 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: epm-ess303
     csc: ESS:303 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: epm-generator-ess305
     csc: ESS:305 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: epm-generator-ess306
     csc: ESS:306 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: gcheaderservice1
     csc: GCHeaderService:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: genericcamera1
     csc: GenericCamera:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: hvac
     csc: HVAC:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     resources:
       requests:
         cpu: 100m
@@ -480,61 +569,75 @@ love-producer:
         memory: 600Mi
   - name: lasertracker1
     csc: LaserTracker:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: ledprojector
     csc: LEDProjector:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: linearstage101
     csc: LinearStage:101 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: linearstage102
     csc: LinearStage:102 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: linearstage103
     csc: LinearStage:103 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: linearstage104
     csc: LinearStage:104 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: louverh1ess441
     csc: ESS:441 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: louverh1h2ess442
     csc: ESS:442 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: louverh2ess443
     csc: ESS:443 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: love
-    csc: LOVE:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: m1m3ess113
     csc: ESS:113 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: m1m3ess114
     csc: ESS:114 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: m1m3ess115
     csc: ESS:115 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: m1m3ess116
     csc: ESS:116 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: m1m3ess117
     csc: ESS:117 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: m2ess106
     csc: ESS:106 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: m2ess112
     csc: ESS:112 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: mtheaderservice
     csc: MTHeaderService:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: m2hexapod
     csc: MTHexapod:2 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
+    resources:
+      requests:
+        cpu: 40m
+        memory: 120Mi
+      limits:
+        cpu: 200m
+        memory: 300Mi
   - name: mtaircompressor1
     csc: MTAirCompressor:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -543,29 +646,31 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtaos
     csc: MTAOS:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: mtcamera
     csc: MTCamera:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
-        cpu: 40m
+        cpu: 60m
         memory: 300Mi
       limits:
-        cpu: 400m
+        cpu: 500m
         memory: 600Mi
   - name: mtdome
     csc: MTDome:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: mtdomeess404
     csc: ESS:404 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: mtdomeess405
     csc: ESS:405 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: mtdometrajectory
     csc: MTDomeTrajectory:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: mtm1m3-telemetry-01
     csc: MTM1M3:0 --log-level 10 --periodic-data tel_forceActuatorData tel_hardpointActuatorData tel_imsData tel_hardpointMonitorData tel_appliedAzimuthForces tel_appliedAccelerationForces tel_appliedBalanceForces tel_appliedCylinderForces tel_appliedElevationForces tel_appliedThermalForces tel_appliedVelocityForces
     WEBSOCKET_HOST: love-nginx-service/love/manager/m1m3/ws/subscription
@@ -581,7 +686,7 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/m1m3/ws/subscription
     resources:
       requests:
-        cpu: 10m
+        cpu: 50m
         memory: 200Mi
       limits:
         cpu: 100m
@@ -611,148 +716,153 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtm2-telemetry
     csc: MTM2:0 --log-level 10 --periodic-data tel_ackcmd tel_axialActuatorSteps tel_axialEncoderPositions tel_axialForce tel_displacementSensors tel_forceBalance tel_forceErrorTangent tel_ilcData tel_inclinometerAngleTma tel_netForcesTotal tel_netMomentsTotal tel_position tel_positionIMS tel_powerStatus tel_powerStatusRaw tel_tangentActuatorSteps tel_tangentEncoderPositions tel_tangentForce tel_temperature tel_zenithAngle
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
-        cpu: 100m
+        cpu: 200m
         memory: 200Mi
       limits:
         cpu: 1
         memory: 600Mi
   - name: mtm2-event
     csc: MTM2:0 --log-level 10 --asynchronous-data evt_actuatorBumpTestStatus evt_cellTemperatureHiWarning evt_closedLoopControlMode evt_commandableByDDS evt_config evt_configurationApplied evt_configurationFiles evt_configurationsAvailable evt_controllerState evt_detailedState evt_digitalInput evt_digitalOutput evt_disabledILC evt_enabledFaultsMask evt_errorCode evt_forceBalanceSystemStatus evt_hardpointList evt_heartbeat evt_inclinationTelemetrySource evt_innerLoopControlMode evt_interlock evt_limitSwitchExtend evt_limitSwitchRetract evt_logLevel evt_logMessage evt_m2AssemblyInPosition evt_openLoopMaxLimit evt_powerSystemState evt_scriptExecutionStatus evt_simulationMode evt_softwareVersions evt_summaryFaultsStatus evt_summaryState evt_tcpIpConnected evt_temperatureOffset
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
         cpu: 100m
         memory: 200Mi
       limits:
-        cpu: 1
+        cpu: 500m
         memory: 600Mi
   - name: mtmount-telemetry
     csc: MTMount:0 --log-level 10 --periodic-data tel_ackcmd tel_auxiliaryCabinetsThermal tel_azimuth tel_azimuthCableWrap tel_azimuthDrives tel_azimuthDrivesThermal tel_balancing tel_cabinet0101Thermal tel_cameraCableWrap tel_capacitorBank tel_compressedAir tel_cooling tel_deployablePlatforms tel_dynaleneCooling tel_elevation tel_elevationDrives tel_elevationDrivesThermal tel_encoder tel_generalPurposeGlycolWater tel_lockingPins tel_mainCabinetThermal tel_mainPowerSupply tel_mirrorCover tel_mirrorCoverLocks tel_oilSupplySystem tel_safetySystem tel_telemetryClientHeartbeat tel_topEndChiller
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
-        cpu: 100m
-        memory: 100Mi
+        cpu: 50m
+        memory: 120Mi
       limits:
         cpu: 500m
-        memory: 300Mi
+        memory: 360Mi
   - name: mtmount-event
     csc: MTMount:0 --log-level 10 --asynchronous-data evt_auxiliaryCabinetsThermalSystemState evt_availableSettings evt_azimuthCableWrapSystemState evt_azimuthControllerSettings evt_azimuthDrivesThermalSystemState evt_azimuthHomed evt_azimuthInPosition evt_azimuthLimits evt_azimuthMotionState evt_azimuthSystemState evt_azimuthToppleBlock evt_balanceSystemState evt_cabinet0101ThermalSystemState evt_cameraCableWrapControllerSettings evt_cameraCableWrapFollowing evt_cameraCableWrapInPosition evt_cameraCableWrapLimits evt_cameraCableWrapMotionState evt_cameraCableWrapSystemState evt_cameraCableWrapTarget evt_clockOffset evt_commander evt_configurationApplied evt_configurationsAvailable evt_connected evt_controllerSettingsName evt_deployablePlatformsMotionState evt_deployablePlatformsSystemState evt_elevationControllerSettings evt_elevationDrivesThermalSystemState evt_elevationHomed evt_elevationInPosition evt_elevationLimits evt_elevationLockingPinMotionState evt_elevationMotionState evt_elevationSystemState evt_error evt_errorCode evt_heartbeat evt_lockingPinsSystemState evt_logLevel evt_logMessage evt_mainAxesPowerSupplySystemState evt_mainCabinetThermalSystemState evt_mirrorCoverLocksMotionState evt_mirrorCoverLocksSystemState evt_mirrorCoversMotionState evt_mirrorCoversSystemState evt_motionLockState evt_oilSupplySystemState evt_safetyInterlocks evt_simulationMode evt_softwareVersions evt_summaryState evt_target evt_telemetryConnected evt_topEndChillerSystemState evt_warning
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
-        cpu: 100m
-        memory: 100Mi
+        cpu: 50m
+        memory: 120Mi
       limits:
         cpu: 500m
-        memory: 300Mi
+        memory: 360Mi
   - name: mtocps
     csc: OCPS:3 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: mtoods
     csc: MTOODS:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: mtptg
     csc: MTPtg:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: mtreflector
     csc: MTReflector:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: mtrotator
     csc: MTRotator:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: mtscheduler
     csc: Scheduler:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: mtscriptqueue
     csc: ScriptQueue:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/mtqueue/ws/subscription
-    resources:
-      requests:
-        cpu: 50m
-        memory: 100Mi
-      limits:
-        cpu: 500m
-        memory: 500Mi
+    <<: *love-producer-scripqueue-resources
   - name: mtvmsm1m3
     csc: MTVMS:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    <<: *love-producer-vms-resources
   - name: m2mtvms2
     csc: MTVMS:2
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    <<: *love-producer-vms-resources
   - name: mtvmscamerarotator
     csc: MTVMS:3
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    <<: *love-producer-vms-resources
   - name: ocsscheduler
     csc: Scheduler:3 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: ocsscriptqueue
     csc: ScriptQueue:3 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/ocsqueue/ws/subscription
-    resources:
-      requests:
-        cpu: 50m
-        memory: 100Mi
-      limits:
-        cpu: 500m
-        memory: 500Mi
+    <<: *love-producer-scripqueue-resources
   - name: raocps
     csc: OCPS:101 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: partsensess127
     csc: ESS:127
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: partsensess128
     csc: ESS:128
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: partsensess129
     csc: ESS:129
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: ringssess304
     csc: ESS:304 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: tea-ess123
     csc: ESS:123
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: tea-ess124
     csc: ESS:124
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: tea-ess125
     csc: ESS:125
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: tea-ess126
     csc: ESS:126
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: test42
     csc: Test:42 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess104
     csc: ESS:104 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: tmaess105
     csc: ESS:105 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: tmaess110
     csc: ESS:110 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: tmaess121
     csc: ESS:121 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: tmaess122
     csc: ESS:122 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: tunablelaser
     csc: TunableLaser:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: watcher
     csc: Watcher:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: weatherforecast
     csc: WeatherForecast:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: wfoods
     csc: WFOODS:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription

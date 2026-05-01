@@ -13,6 +13,8 @@ cadc-tap:
     database: "postgres"
     username: "postgres"
     useVaultPassword: false
+    image:
+      tag: "2.15.1"
 
   config:
     gcsBucket: "lsstrsp:async-results.lsst.codes"

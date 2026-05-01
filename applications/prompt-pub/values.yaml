@@ -1,0 +1,112 @@
+# Default values for prompt-pub.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of statefulset pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the prompt-pub deployment
+  repository: "ghcr.io/lsst-dm/prompt_publication_service"
+
+  # -- Pull policy for the prompt-pub image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+publication:
+
+  # -- Postgres database for holding publication state
+  stateDB: ""
+
+  repos:
+    # -- Path to Embargo Butler config
+    embargo: ""
+
+    # -- Path to Main Butler config
+    main: ""
+
+    # -- Path to Prompt Prep repo config
+    promptPrep: ""
+
+  butlerWriterKafka:
+    # -- Address to Butler Writer Kafka
+    address: ""
+
+    # -- Butler Writer Kafka Topic.  Equal to kafka.outputTopic from the butler-writer-service app
+    topic: "butler-writer-ingestion-events"
+
+    # -- Kafka Consumer Group ID
+    groupId: "prompt-publication"
+
+    # -- Kafka Consumer User Name
+    username: "prompt-publication-consumer"
+
+  embargoBatchFileDir: ""
+
+middleware:
+
+  lsstResources:
+
+    # -- Sets the number of concurrent Butler file transfers per process.  Setting it explicitly here because this value is nondeterministic if you don’t assign something, but the exact value isn’t that critical.
+    numWorkers: 4
+
+    # -- S3 Profile for Embargo
+    s3ProfileEmbargo: "https://sdfembs3.sdf.slac.stanford.edu"
+
+alloyDbProxy:
+
+  image:
+    # -- Image to use for alloy db proxy
+    repository: "gcr.io/alloydb-connectors/alloydb-auth-proxy"
+
+    # -- Pull policy for the allow db proxy image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of image to use
+    tag: "1.14.2"
+
+  config:
+    # -- Uri for Allow DB instance
+    instanceUri: ""
+
+  # -- Resource limits and requests for the alloy db proxy pod
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "0.2"
+
+
+# -- Affinity rules for the prompt-pub statefulset pod
+affinity: {}
+
+# -- Node selection rules for the prompt-pub statefulset pod
+nodeSelector: {}
+
+# -- Annotations for the prompt-pub statefulset pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the prompt-pub statefulset pod
+# @default -- See `values.yaml`
+resources: {}
+
+# -- Tolerations for the prompt-pub deployment pod
+tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base URL for Repertoire discovery API
+  # @default -- Set by Argo CD
+  repertoireUrl: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
