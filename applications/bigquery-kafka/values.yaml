@@ -33,6 +33,11 @@ config:
   # @default -- 10MiB
   jobRunMaxBytes: 10485760
 
+  # -- Maximum bytes of encoded output to return per query. Results exceeding
+  # this will be truncated with an overflow marker.
+  # @default -- 3GiB
+  maxResultBytes: 3221225472
+
   # -- Kafka topic for query execution requests
   jobRunTopic: "lsst.ppdbtap.job-run"
 
