@@ -1,3 +1,7 @@
+autoscaling:
+  enabled: true
+  targetCPUUtilizationPercentage: 800
+
 config:
   metrics:
     enabled: true

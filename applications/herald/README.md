@@ -12,7 +12,7 @@ Rubin alert packet retrieval service
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the herald deployment pod |
 | autoscaling.enabled | bool | `false` | Enable autoscaling of the herald deployment |
-| autoscaling.maxReplicas | int | `4` | Maximum number of herald deployment pods |
+| autoscaling.maxReplicas | int | `10` | Maximum number of herald deployment pods |
 | autoscaling.minReplicas | int | `1` | Minimum number of herald deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization as a percentage of requested CPU for autoscaling |
 | autoscaling.targetMemoryUtilizationPercentage | string | `""` | Target memory utilization as a percentage of requested memory for autoscaling |
