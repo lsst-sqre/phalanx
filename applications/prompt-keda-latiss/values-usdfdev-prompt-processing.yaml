@@ -81,3 +81,7 @@ prompt-keda:
   podAnnotations: {
     edu.stanford.slac.sdf.project/usdf-embargo: "true"
   }
+
+  sentry:
+    enabled: true
+    environment: development
