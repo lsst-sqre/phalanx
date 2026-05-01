@@ -11,7 +11,7 @@ autoscaling:
   minReplicas: 1
 
   # -- Maximum number of herald deployment pods
-  maxReplicas: 4
+  maxReplicas: 10
 
   # -- Target CPU utilization as a percentage of requested CPU for autoscaling
   targetCPUUtilizationPercentage: 80
@@ -106,7 +106,13 @@ podAnnotations: {}
 
 # -- Resource limits and requests for the herald deployment pod
 # @default -- See `values.yaml`
-resources: {}
+resources:
+  requests:
+    cpu: "100m"
+    memory: "256Mi"
+  limits:
+    cpu: "1"
+    memory: "512Mi"
 
 # -- Tolerations for the herald deployment pod
 tolerations: []
