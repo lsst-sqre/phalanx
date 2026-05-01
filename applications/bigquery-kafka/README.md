@@ -27,6 +27,7 @@ BigQuery Kafka bridge
 | config.jobStatusTopic | string | `"lsst.ppdbtap.job-status"` | Kafka topic for query status |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
+| config.maxResultBytes | int | 3GiB | Maximum bytes of encoded output to return per query. Results exceeding this will be truncated with an overflow marker. |
 | config.maxWorkerJobs | int | `2` | Maximum number of arq jobs each worker can process simultaneously |
 | config.metrics.application | string | `"bigquerykafka"` | Name under which to log metrics. Generally there is no reason to change this. |
 | config.metrics.enabled | bool | `false` | Whether to enable sending metrics |
