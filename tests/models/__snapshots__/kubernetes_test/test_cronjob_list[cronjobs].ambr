@@ -1,0 +1,4 @@
+# serializer version: 1
+# name: test_cronjob_list[cronjobs]
+  NamespacedResourceList[CronJob](items=[CronJob(kind='CronJob', name='gafaelfawr-maintenance', finalizers=[], status=Status(conditions=[]), namespace='gafaelfawr'), CronJob(kind='CronJob', name='ook-ingest-lsst-texmf', finalizers=[], status=Status(conditions=[]), namespace='ook')], kind='List')
+# ---

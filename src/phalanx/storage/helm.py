@@ -24,11 +24,17 @@ class HelmStorage:
     ----------
     config_storage
         Storage object for the Phalanx configuration.
+    context
+        The kubectl context to specify for all helm commands. If this is
+        None, then the current context will be used.
     """
 
-    def __init__(self, config_storage: ConfigStorage) -> None:
+    def __init__(
+        self, config_storage: ConfigStorage, context: str | None = None
+    ) -> None:
         self._config = config_storage
-        self._helm = Command("helm")
+        common_args = ["--kube-context", context] if context else []
+        self._helm = Command("helm", common_args=common_args)
 
     def create(
         self, application: str, description: str, starter: HelmStarter

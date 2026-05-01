@@ -5,7 +5,6 @@ from collections.abc import Iterator
 import jinja2
 import pytest
 from syrupy.assertion import SnapshotAssertion
-from syrupy.extensions.single_file import SingleFileAmberSnapshotExtension
 
 from phalanx.factory import Factory
 from phalanx.storage import kubernetes
@@ -14,13 +13,14 @@ from .support.command import MockCommand
 from .support.data import phalanx_test_path
 from .support.helm import MockHelmCommand, patch_helm
 from .support.onepassword import MockOnepasswordClient, patch_onepassword
+from .support.syrupy import SinglefilePydanticExtension
 from .support.vault import MockVaultClient, patch_vault
 
 
 @pytest.fixture
 def snapshot(snapshot: SnapshotAssertion) -> SnapshotAssertion:
-    """Override the default snapshot fixture to do a file per test."""
-    return snapshot.use_extension(SingleFileAmberSnapshotExtension)
+    """Provide a snapshot fixture that can serialize Pydantic models."""
+    return snapshot.with_defaults(extension_class=SinglefilePydanticExtension)
 
 
 @pytest.fixture(autouse=True)
