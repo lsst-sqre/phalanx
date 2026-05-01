@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "tickets-DM-54689-github-webhook"
+appVersion: "tickets-DM-54689-stable-github-ids"
 description: Publish versioned docs
 name: docverse
 sources:
