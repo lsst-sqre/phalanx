@@ -1,9 +1,4 @@
-semaphore:
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
 config:
-  phalanx_env: "usdfint"
-  github_app_id: "337324"
-  enable_github_app: "True"
+  enableGithubApp: true
+  githubAppId: "337324"
+  phalanxEnv: "usdfint"

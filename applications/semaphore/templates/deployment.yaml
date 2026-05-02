@@ -64,6 +64,13 @@ spec:
                 secretKeyRef:
                   name: {{ include "semaphore.fullname" . }}
                   key: SEMAPHORE_GITHUB_APP_PRIVATE_KEY
+            {{- if .Values.config.slackAlerts }}
+            - name: "SEMAPHORE_SLACK_WEBHOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "semaphore"
+                  key: "slack-webhook"
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

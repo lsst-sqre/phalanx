@@ -14,7 +14,35 @@ image:
 
   # -- Tag of the image
   # @default -- The appVersion of the chart
-  tag: ""
+  tag: null
+
+config:
+  # -- Toggle to enable the GitHub App functionality
+  enableGithubApp: false
+
+  # -- GitHub application ID
+  githubAppId: null
+
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/semaphore"
+
+  # -- Name of the Phalanx environment where the application is installed
+  # @default -- Must be set
+  phalanxEnv: null
+
+  # -- Whether to send Slack alerts for unexpected failures
+  slackAlerts: false
+
+ingress:
+  # -- Additional annotations to add to the ingress
+  annotations: {}
 
 # -- Override the base name for resources
 nameOverride: ""
@@ -35,16 +63,6 @@ serviceAccount:
 
 # -- Annotations for pods
 podAnnotations: {}
-
-ingress:
-  # -- Enable ingress
-  enabled: true
-
-  # -- URL path prefix where the Semaphore API is hosted
-  path: "/semaphore"
-
-  # -- Additional annotations to add to the ingress
-  annotations: {}
 
 # -- Resource requests and limits for Semaphore
 # @default -- See `values.yaml`
@@ -68,24 +86,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-# Semaphore app configurations.
-config:
-  # -- Name of the service, and path where the external API is hosted.
-  name: "semaphore"
-  # -- Name of the Phalanx environment where the application is installed
-  # TODO can this be set by a global?
-  phalanx_env: ""
-  # Run profile: "production" or "development"
-  profile: "production"
-  # Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
-  log_level: "INFO"
-  # -- Logger name
-  logger_name: "semaphore"
-  # -- GitHub application ID
-  github_app_id: ""
-  # -- Toggle to enable the GitHub App functionality
-  enable_github_app: "False"
 
 # Global parameters will be set by parameters injected by Argo CD and should
 # not be set in the individual environment values files.

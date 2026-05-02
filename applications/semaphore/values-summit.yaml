@@ -1,2 +1,2 @@
 config:
-  phalanx_env: "summit"
+  phalanxEnv: "summit"

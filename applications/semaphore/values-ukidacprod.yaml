@@ -1,5 +1,5 @@
 config:
-  github_app_id: "1452049"
-  enable_github_app: "True"
-  phalanx_env: "ukidacprod"
-  log_level: "DEBUG"
+  enableGithubApp: true
+  githubAppId: "1452049"
+  logLevel: "DEBUG"
+  phalanxEnv: "ukidacprod"

@@ -10,7 +10,7 @@ spec:
     - host: {{ required "global.host must be set" .Values.global.host | quote }}
       http:
         paths:
-          - path: {{ .Values.ingress.path | quote }}
+          - path: {{ .Values.config.pathPrefix | quote }}
             pathType: "Prefix"
             backend:
               service:
