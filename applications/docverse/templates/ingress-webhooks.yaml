@@ -1,0 +1,30 @@
+{{- if .Values.config.githubAppId }}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "docverse-webhooks"
+  labels:
+    {{- include "docverse.labels" . | nindent 4 }}
+config:
+  scopes:
+    anonymous: true
+template:
+  metadata:
+    name: "docverse-webhooks"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.config.pathPrefix }}/webhooks"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "docverse"
+                  port:
+                    number: 8080
+{{- end }}

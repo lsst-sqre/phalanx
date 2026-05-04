@@ -18,3 +18,6 @@ data:
   DOCVERSE_SUPERADMIN_USERNAMES: {{ toJson . | quote }}
   {{- end }}
   REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}
+  {{- if .Values.config.githubAppId }}
+  DOCVERSE_GITHUB_APP_ID: {{ .Values.config.githubAppId | quote }}
+  {{- end }}

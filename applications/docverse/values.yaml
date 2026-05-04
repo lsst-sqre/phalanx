@@ -44,6 +44,10 @@ config:
   # -- Whether to run Alembic schema migrations on install/upgrade
   updateSchema: false
 
+  # -- GitHub App ID for Docverse to use when accessing GitHub repositories. If
+  # not set, Docverse will operate in a limited mode without GitHub integration.
+  githubAppId: null
+
   # -- Usernames that have super admin (de facto admin in all organizations)
   superadminUsers:
     - "jonathansick"

@@ -65,6 +65,18 @@ Secret environment variables shared across all Docverse pods.
     secretKeyRef:
       name: "docverse"
       key: "DOCVERSE_DATABASE_PASSWORD"
+{{- if .Values.config.githubAppId }}
+- name: "DOCVERSE_GITHUB_APP_PRIVATE_KEY"
+  valueFrom:
+    secretKeyRef:
+      name: "docverse"
+      key: "DOCVERSE_GITHUB_APP_PRIVATE_KEY"
+- name: "DOCVERSE_GITHUB_WEBHOOK_SECRET"
+  valueFrom:
+    secretKeyRef:
+      name: "docverse"
+      key: "DOCVERSE_GITHUB_WEBHOOK_SECRET"
+{{- end }}
 {{- if .Values.config.slackAlerts }}
 - name: "DOCVERSE_SLACK_WEBHOOK"
   valueFrom:
