@@ -96,7 +96,7 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-# -- Node selection rules for the times-square deployment pod
+  # -- Node selection rules for the times-square deployment pod
 nodeSelector: {}
 
 # -- Tolerations for the times-square deployment pod
@@ -143,13 +143,13 @@ config:
   enableGitHubApp: "False"
 
   # -- GitHub organizations that can sync repos to Times Square (comma-separated).
-  githubOrgs: "lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"
+  githubOrgs: "lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-so,lsst-pst"
 
   # -- Timeout for GitHub check runs in seconds
-  githubCheckRunTimeout: "3600"  # 1 hour
+  githubCheckRunTimeout: "3600" # 1 hour
 
   # -- Default execution timeout for notebooks in seconds
-  defaultExecutionTimeout: "300"  # 5 minutes
+  defaultExecutionTimeout: "300" # 5 minutes
 
   # Sentry tracing sample rate
   sentryTracesSampleRate: 0.0
@@ -172,6 +172,20 @@ config:
     onDemand: false
 
     # -- Whether to run the nbstripout migration job as a dry-run only
+    dryRun: false
+
+  renameGithubOwner:
+    # -- Whether to deploy the on-demand `rename-github-owner` Job to rewrite
+    # the `github_owner` column on pages after a GitHub org/user rename.
+    enabled: false
+
+    # -- Current `github_owner` value to rewrite (passed as `--old`).
+    old: "lsst-sitcom"
+
+    # -- Replacement `github_owner` value (passed as `--new`).
+    new: "lsst-so"
+
+    # -- Whether to run the rename-github-owner job as a dry-run only
     dryRun: false
 
   worker:
