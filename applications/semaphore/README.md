@@ -20,9 +20,9 @@ User notification and messaging service for the Rubin Science Platform.
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/semaphore"` | URL path prefix |
-| config.phalanxEnv | string | Must be set | Name of the Phalanx environment where the application is installed |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| global.environmentName | string | Set by Argo CD | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD Application | Host name for ingress |
 | global.vaultSecretsPathPrefix | string | Set by Argo CD Application | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |

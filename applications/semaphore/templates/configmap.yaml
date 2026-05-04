@@ -10,4 +10,4 @@ data:
   SEMAPHORE_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
   SEMAPHORE_LOG_PROFILE: {{ .Values.config.logProfile | quote }}
   SEMAPHORE_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
-  SEMAPHORE_PHALANX_ENV: {{ .Values.config.phalanxEnv | quote }}
+  SEMAPHORE_PHALANX_ENV: {{ .Values.global.environmentName | quote }}

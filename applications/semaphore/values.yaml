@@ -33,10 +33,6 @@ config:
   # -- URL path prefix
   pathPrefix: "/semaphore"
 
-  # -- Name of the Phalanx environment where the application is installed
-  # @default -- Must be set
-  phalanxEnv: null
-
   # -- Whether to send Slack alerts for unexpected failures
   slackAlerts: false
 
@@ -90,6 +86,10 @@ affinity: {}
 # Global parameters will be set by parameters injected by Argo CD and should
 # not be set in the individual environment values files.
 global:
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD
+  environmentName: null
+
   # -- Host name for ingress
   # @default -- Set by Argo CD Application
   host: null

@@ -2,4 +2,3 @@ config:
   enableGithubApp: true
   githubAppId: "127943"
   logLevel: "DEBUG"
-  phalanxEnv: "idfdev"

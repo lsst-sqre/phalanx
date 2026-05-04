@@ -1,4 +1,3 @@
 config:
   enableGithubApp: true
   githubAppId: "337324"
-  phalanxEnv: "usdfint"
