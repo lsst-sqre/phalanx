@@ -14,7 +14,7 @@ Manages the lifecycle of Butler Prompt Data Products as they move from the embar
 | alloyDbProxy.config.instanceUri | string | `""` | Uri for Allow DB instance |
 | alloyDbProxy.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the allow db proxy image |
 | alloyDbProxy.image.repository | string | `"gcr.io/alloydb-connectors/alloydb-auth-proxy"` | Image to use for alloy db proxy |
-| alloyDbProxy.image.tag | string | `"1.14.2"` | Tag of image to use |
+| alloyDbProxy.image.tag | string | `"1.14.3"` | Tag of image to use |
 | alloyDbProxy.resources | object | See `values.yaml` | Resource limits and requests for the alloy db proxy pod |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.repertoireUrl | string | Set by Argo CD | Base URL for Repertoire discovery API |
