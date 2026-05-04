@@ -1,13 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "semaphore.fullname" . }}
+  name: "semaphore"
   labels:
     {{- include "semaphore.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "semaphore.selectorLabels" . | nindent 6 }}
@@ -16,54 +14,29 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
-          {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
         {{- include "semaphore.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "semaphore.serviceAccountName" . }}
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-              - "all"
-            readOnlyRootFilesystem: true
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          envFrom:
-            - configMapRef:
-                name: {{ include "semaphore.fullname" . }}
           env:
-            - name: SEMAPHORE_GITHUB_WEBHOOK_SECRET
+            - name: "SEMAPHORE_GITHUB_WEBHOOK_SECRET"
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "semaphore.fullname" . }}
-                  key: SEMAPHORE_GITHUB_WEBHOOK_SECRET
-            - name: SEMAPHORE_GITHUB_APP_PRIVATE_KEY
+                  name: "semaphore"
+                  key: "SEMAPHORE_GITHUB_WEBHOOK_SECRET"
+            - name: "SEMAPHORE_GITHUB_APP_PRIVATE_KEY"
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "semaphore.fullname" . }}
-                  key: SEMAPHORE_GITHUB_APP_PRIVATE_KEY
+                  name: "semaphore"
+                  key: "SEMAPHORE_GITHUB_APP_PRIVATE_KEY"
             {{- if .Values.config.slackAlerts }}
             - name: "SEMAPHORE_SLACK_WEBHOOK"
               valueFrom:
@@ -71,14 +44,39 @@ spec:
                   name: "semaphore"
                   key: "slack-webhook"
             {{- end }}
+          envFrom:
+            - configMapRef:
+                name: "semaphore"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          livenessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - "all"
+            readOnlyRootFilesystem: true
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
