@@ -12,8 +12,6 @@ config:
   slackAlerts: true
   tap:
     servers:
-      tap:
-        enabled: true
       ssotap:
         enabled: true
   useSubdomains:
