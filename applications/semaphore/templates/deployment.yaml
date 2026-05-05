@@ -44,6 +44,17 @@ spec:
                   name: "semaphore"
                   key: "slack-webhook"
             {{- end }}
+            {{- if .Values.config.sentry.enabled }}
+            - name: "SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: "semaphore"
+                  key: "sentry-dsn"
+            - name: "SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.environmentName }}
+            - name: "SENTRY_TRACES_SAMPLE_RATE"
+              value: {{ .Values.config.sentry.tracesSampleRate }}
+            {{- end }}
             # Uvicorn keepalive timeout, in seconds. This should be longer
             # than any keepalive timeouts on any downstream proxies. The
             # keepalive timeout for ingress-nginx connections is 60s.

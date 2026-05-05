@@ -7,10 +7,10 @@ replicaCount: 1
 
 image:
   # -- Semaphore image repository
-  repository: ghcr.io/lsst-sqre/semaphore
+  repository: "ghcr.io/lsst-sqre/semaphore"
 
   # -- Image pull policy
-  pullPolicy: IfNotPresent
+  pullPolicy: "IfNotPresent"
 
   # -- Tag of the image
   # @default -- The appVersion of the chart
@@ -32,6 +32,14 @@ config:
 
   # -- URL path prefix
   pathPrefix: "/semaphore"
+
+  sentry:
+    # -- Set to true to enable the Sentry integration.
+    enabled: false
+
+    # -- The percentage of requests that should be traced. This
+    # should be a float between 0 and 1
+    tracesSampleRate: 0.0
 
   # -- Whether to send Slack alerts for unexpected failures
   slackAlerts: false

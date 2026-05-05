@@ -16,6 +16,8 @@ User notification and messaging service for the Rubin Science Platform.
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/semaphore"` | URL path prefix |
+| config.sentry.enabled | bool | `false` | Set to true to enable the Sentry integration. |
+| config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1 |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
 | global.environmentName | string | Set by Argo CD | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD Application | Host name for ingress |
