@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-so/rubintv_production
-  tag: tickets-DM-50534-w48
+  tag: tickets-DM-54805-alarm
   pullPolicy: IfNotPresent
 location: USDF
 env:
