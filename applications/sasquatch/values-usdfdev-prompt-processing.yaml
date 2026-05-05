@@ -13,6 +13,9 @@ alert-brokers:
       replicas: 3
       bytesRetained: "300000000000"
       millisecondsRetained: "2629740000"
+    - name: alerts-test-topic
+      partitions: 45
+      replicas: 3
 
   communityReadonlyTopics: &communityReadonlyTopics
     - "alerts-simulated"
@@ -80,7 +83,7 @@ alert-database:
   ingester:
     # The image can use either a tag or a digest to determine which is being used.
     image:
-      tag: v3.4.0
+      tag: tickets-DM-54429
 
     logLevel: verbose
 
@@ -101,7 +104,7 @@ alert-stream-schema-sync:
   enabled: true
   schemaSync:
     image:
-      tag: tickets-DM-53520
+      tag: tickets-DM-54017
 
 chronograf:
   enabled: false

@@ -27,7 +27,7 @@ alert-brokers:
       topics:
         - "*"
       groups:
-        - "rubin-devel-idfint"
+        - "rubin-devel-usdf"
 
     # The community broker users
     - username: "alerce-usdf"
