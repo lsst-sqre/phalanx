@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: main
+  tag: fov-quicklook-local-ai-agent-vendor-20260505-1735
 
 config:
   # -- URL path prefix
