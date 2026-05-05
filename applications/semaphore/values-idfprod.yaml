@@ -1,3 +1,4 @@
 config:
   enableGithubApp: true
   githubAppId: "131502"
+  slackAlerts: true

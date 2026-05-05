@@ -2,3 +2,4 @@ config:
   enableGithubApp: true
   githubAppId: "127943"
   logLevel: "DEBUG"
+  slackAlerts: true
