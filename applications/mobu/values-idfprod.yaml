@@ -37,6 +37,8 @@ config:
         options:
           repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
           repo_ref: "main"
+          execution_idle_time: 0
+          idle_time: 300
         restart: true
     - name: "tutorial"
       count: 1

@@ -56,6 +56,8 @@ config:
             image_class: "latest-weekly"
           repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
           repo_ref: "main"
+          execution_idle_time: 0
+          idle_time: 300
         restart: true
     - name: "muster"
       count: 1
