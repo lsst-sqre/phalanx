@@ -50,6 +50,25 @@ controller:
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "rubin-epo-cit-sci-pipeline.json"
+      sizes:
+        # Double the memory because these are running on nodes with a 2x ratio
+        # of mem to CPU compared to standard nodes
+        - size: "small"
+          resources:
+            limits:
+              cpu: 1.0
+              memory: "8Gi"
+            requests:
+              cpu: 0.25
+              memory: "1.5Gi"
+        - size: "large"
+          resources:
+            limits:
+              cpu: 4.0
+              memory: "32Gi"
+            requests:
+              cpu: 1.0
+              memory: "8Gi"
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
