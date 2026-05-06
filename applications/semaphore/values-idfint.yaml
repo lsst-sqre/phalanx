@@ -1,4 +1,4 @@
 config:
-  phalanx_env: "idfint"
-  github_app_id: "131457"
-  enable_github_app: "True"
+  enableGithubApp: true
+  githubAppId: "131457"
+  slackAlerts: true

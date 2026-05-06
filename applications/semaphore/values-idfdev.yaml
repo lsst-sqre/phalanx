@@ -1,7 +1,5 @@
-image:
-  pullPolicy: Always
 config:
-  github_app_id: "127943"
-  enable_github_app: "True"
-  phalanx_env: "idfdev"
-  log_level: "DEBUG"
+  enableGithubApp: true
+  githubAppId: "127943"
+  logLevel: "DEBUG"
+  slackAlerts: true

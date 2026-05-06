@@ -7,44 +7,55 @@ replicaCount: 1
 
 image:
   # -- Semaphore image repository
-  repository: ghcr.io/lsst-sqre/semaphore
+  repository: "ghcr.io/lsst-sqre/semaphore"
 
   # -- Image pull policy
-  pullPolicy: IfNotPresent
+  pullPolicy: "IfNotPresent"
 
   # -- Tag of the image
   # @default -- The appVersion of the chart
-  tag: ""
+  tag: null
 
-# -- Override the base name for resources
-nameOverride: ""
+config:
+  # -- Toggle to enable the GitHub App functionality
+  enableGithubApp: false
 
-# -- Override the full name for resources (includes the release name)
-fullnameOverride: ""
+  # -- GitHub application ID
+  githubAppId: null
 
-serviceAccount:
-  # -- Specifies whether a service account should be created.
-  create: false
+  # -- Logging level
+  logLevel: "INFO"
 
-  # -- Annotations to add to the service account
-  annotations: {}
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
 
-  # The name of the service account to use.
-  # @default -- Generated using the fullname template
-  name: ""
+  # -- URL path prefix
+  pathPrefix: "/semaphore"
 
-# -- Annotations for pods
-podAnnotations: {}
+  sentry:
+    # -- Set to true to enable the Sentry integration.
+    enabled: false
+
+    # -- The percentage of requests that should be traced. This
+    # should be a float between 0 and 1
+    tracesSampleRate: 0.0
+
+  # -- Whether to send Slack alerts for unexpected failures
+  slackAlerts: false
 
 ingress:
-  # -- Enable ingress
-  enabled: true
-
-  # -- URL path prefix where the Semaphore API is hosted
-  path: "/semaphore"
-
   # -- Additional annotations to add to the ingress
   annotations: {}
+
+# -- Affinity rules for the Semaphore pod
+affinity: {}
+
+# -- Node selection rules for the Semaphore pod
+nodeSelector: {}
+
+# -- Annotations for the Semaphore pod
+podAnnotations: {}
 
 # -- Resource requests and limits for Semaphore
 # @default -- See `values.yaml`
@@ -56,40 +67,16 @@ resources:
     cpu: "2m"
     memory: "75Mi"
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
-nodeSelector: {}
-
+# -- Tolerations for the Semaphore pod
 tolerations: []
-
-affinity: {}
-
-# Semaphore app configurations.
-config:
-  # -- Name of the service, and path where the external API is hosted.
-  name: "semaphore"
-  # -- Name of the Phalanx environment where the application is installed
-  # TODO can this be set by a global?
-  phalanx_env: ""
-  # Run profile: "production" or "development"
-  profile: "production"
-  # Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
-  log_level: "INFO"
-  # -- Logger name
-  logger_name: "semaphore"
-  # -- GitHub application ID
-  github_app_id: ""
-  # -- Toggle to enable the GitHub App functionality
-  enable_github_app: "False"
 
 # Global parameters will be set by parameters injected by Argo CD and should
 # not be set in the individual environment values files.
 global:
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD
+  environmentName: null
+
   # -- Host name for ingress
   # @default -- Set by Argo CD Application
   host: null
