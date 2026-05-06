@@ -1,0 +1,74 @@
+{{- if .Values.config.keeperSync.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "docverse-sync-worker"
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  labels:
+    {{- include "docverse.labels" . | nindent 4 }}
+    app.kubernetes.io/component: "sync-worker"
+    docverse-redis-client: "true"
+spec:
+  replicas: {{ .Values.syncWorker.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "docverse.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "sync-worker"
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.syncWorker.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "docverse.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "sync-worker"
+        docverse-redis-client: "true"
+    spec:
+      {{- with .Values.syncWorker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.cloudsql.enabled }}
+      serviceAccountName: "docverse"
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        - name: "docverse-sync-worker"
+          command: ["arq"]
+          args: ["docverse.worker.main.KeeperSyncWorkerSettings"]
+          env:
+            {{- include "docverse.envVars" . | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: "docverse"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.syncWorker.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+      {{- if .Values.cloudsql.enabled }}
+      initContainers:
+        {{- include "docverse.cloudsqlSidecar" . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.syncWorker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.syncWorker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+{{- end }}

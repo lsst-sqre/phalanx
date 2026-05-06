@@ -8,6 +8,8 @@ config:
   updateSchema: true
   superadminUsers:
     - "jonathansick"
+  keeperSync:
+    enabled: true
 
 cloudsql:
   enabled: true
