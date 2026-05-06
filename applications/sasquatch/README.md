@@ -49,6 +49,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-active.enabled | bool | `false` | Whether to enable influxdb-enterprise-active |
 | influxdb-enterprise-standby.enabled | bool | `false` | Whether to enable influxdb-enterprise-standby |
 | influxdb-enterprise.enabled | bool | `false` | Whether to enable influxdb-enterprise |
+| influxdb-migration.enabled | bool | `false` | Whether to enable the influxdb-migration subchart |
 | influxdb.config.continuous_queries.enabled | bool | `false` | Whether continuous queries are enabled |
 | influxdb.config.coordinator.log-queries-after | string | `"15s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
 | influxdb.config.coordinator.max-concurrent-queries | int | `500` | Maximum number of running queries allowed on the instance (0 is unlimited) |
@@ -519,6 +520,14 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | influxdb-enterprise-standby.serviceAccount.create | bool | `false` | Whether to create a Kubernetes service account to run as |
 | influxdb-enterprise-standby.serviceAccount.name | string | Name based on the chart fullname | Name of the Kubernetes service account to run as |
+| influxdb-migration.affinity | object | `{}` | Affinity rules for the influxdb-migration deployment pod |
+| influxdb-migration.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the influxdb-migration image |
+| influxdb-migration.image.repository | string | `"ghcr.io/lsst-sqre/sasquatch"` | Image to use in the influxdb-migration deployment |
+| influxdb-migration.image.tag | string | The appVersion of the chart | Tag of image to use |
+| influxdb-migration.nodeSelector | object | `{}` | Node selection rules for the influxdb-migration deployment pod |
+| influxdb-migration.podAnnotations | object | `{}` | Annotations for the influxdb-migration deployment pod |
+| influxdb-migration.resources | object | `{}` | Resource limits and requests for the influxdb-migration deployment pod |
+| influxdb-migration.tolerations | list | `[]` | Tolerations for the influxdb-migration deployment pod |
 | kafdrop.affinity | object | `{}` | Affinity configuration |
 | kafdrop.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | kafdrop.cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |

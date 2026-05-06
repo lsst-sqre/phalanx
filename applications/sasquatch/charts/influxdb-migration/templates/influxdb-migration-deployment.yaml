@@ -1,0 +1,67 @@
+{{ if .Values.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sasquatch-influxdb-migration
+  labels:
+    {{- include "influxdb-migration.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "influxdb-migration.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- if .Values.podAnnotations }}
+      annotations:
+        {{ toYaml .Values.podAnnotations | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "influxdb-migration.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      volumes:
+      - name: backup
+        persistentVolumeClaim:
+          claimName: sasquatch-backup-artifacts
+      containers:
+      - name: sasquatch
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+        env:
+        - name: SASQUATCH_INFLUXDB_USER
+          valueFrom:
+            secretKeyRef:
+              name: sasquatch
+              key: influxdb-user
+        - name: SASQUATCH_INFLUXDB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sasquatch
+              key: influxdb-password
+        volumeMounts:
+        - name: backup
+          mountPath: /backup
+        command:
+        - /bin/sh
+        - -c
+        - "sleep infinity"  # Keeps the pod alive for exec access
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

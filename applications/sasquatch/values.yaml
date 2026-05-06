@@ -338,6 +338,10 @@ backup:
   # -- Whether to enable the backups subchart
   enabled: false
 
+influxdb-migration:
+  # -- Whether to enable the influxdb-migration subchart
+  enabled: false
+
 tap:
   # -- Whether to enable the tap subchart
   enabled: false
