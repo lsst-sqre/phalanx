@@ -52,6 +52,12 @@ config:
   superadminUsers:
     - "jonathansick"
 
+  keeperSync:
+    # -- Enable the Keeper-sync worker that consumes the
+    # `docverse:sync-queue` arq queue. Requires the docverse image to
+    # provide `docverse.worker.main.KeeperSyncWorkerSettings`.
+    enabled: false
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
@@ -86,6 +92,32 @@ workerResources:
     # -- GKE Autopilot requires a minimum CPU request of 50m
     cpu: "50m"
     memory: "128Mi"
+
+syncWorker:
+  # -- Number of Keeper-sync worker pods to start
+  replicaCount: 1
+
+  # -- Resource limits and requests for the Keeper-sync worker pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+    requests:
+      cpu: "50m"
+      memory: "128Mi"
+
+  # -- Affinity rules for the Keeper-sync worker pod
+  affinity: {}
+
+  # -- Node selection rules for the Keeper-sync worker pod
+  nodeSelector: {}
+
+  # -- Annotations for the Keeper-sync worker pod
+  podAnnotations: {}
+
+  # -- Tolerations for the Keeper-sync worker pod
+  tolerations: []
 
 # -- Tolerations for the docverse deployment pod
 tolerations: []

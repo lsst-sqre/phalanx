@@ -21,6 +21,7 @@ Publish versioned docs
 | config.arqRedisUrl | string | Points to embedded Redis | URL for Redis arq queue database |
 | config.databaseUrl | string | `""` | Database URL for PostgreSQL |
 | config.githubAppId | string | `nil` | GitHub App ID for Docverse to use when accessing GitHub repositories. If not set, Docverse will operate in a limited mode without GitHub integration. |
+| config.keeperSync.enabled | bool | `false` | Enable the Keeper-sync worker that consumes the `docverse:sync-queue` arq queue. Requires the docverse image to provide `docverse.worker.main.KeeperSyncWorkerSettings`. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/docverse/api"` | URL path prefix |
@@ -50,6 +51,12 @@ Publish versioned docs
 | replicaCount.worker | int | `1` | Number of worker deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the docverse deployment pod |
 | resources.requests.cpu | string | `"50m"` | GKE Autopilot requires a minimum CPU request of 50m |
+| syncWorker.affinity | object | `{}` | Affinity rules for the Keeper-sync worker pod |
+| syncWorker.nodeSelector | object | `{}` | Node selection rules for the Keeper-sync worker pod |
+| syncWorker.podAnnotations | object | `{}` | Annotations for the Keeper-sync worker pod |
+| syncWorker.replicaCount | int | `1` | Number of Keeper-sync worker pods to start |
+| syncWorker.resources | object | See `values.yaml` | Resource limits and requests for the Keeper-sync worker pod |
+| syncWorker.tolerations | list | `[]` | Tolerations for the Keeper-sync worker pod |
 | tolerations | list | `[]` | Tolerations for the docverse deployment pod |
 | workerResources | object | See `values.yaml` | Resource limits and requests for the docverse worker pod |
 | workerResources.requests.cpu | string | `"50m"` | GKE Autopilot requires a minimum CPU request of 50m |
