@@ -1,5 +1,6 @@
 apiVersion: v2
-appVersion: "tickets-DM-54794-sync-engine-foundation"
+# https://github.com/lsst-sqre/docverse/pull/300
+appVersion: "tickets-DM-54794-run-service-and-queue"
 description: Publish versioned docs
 name: docverse
 sources:
