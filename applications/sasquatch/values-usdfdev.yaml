@@ -225,6 +225,11 @@ backup:
       enabled: true
       retentionDays: 3
 
+influxdb-migration:
+  enabled: true
+  image:
+    tag: "tickets-DM-54806"
+
 prompt-processing:
   enabled: true
   topics:
