@@ -50,6 +50,7 @@ controller:
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "rubin-epo-cit-sci-pipeline.json"
+          path: "/opt/lsst/software/jupyterlab/secrets/rubin-epo-cit-sci-pipeline.json"
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
