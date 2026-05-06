@@ -13,7 +13,7 @@ controller:
     lab:
       defaultSize: "small"
       env:
-        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
+        PGPASSFILE: "/etc/nublado/secrets/postgres-credentials.txt"
         PGUSER: "lsstprod_ro"
         NO_ACTIVITY_TIMEOUT: "432000"
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
