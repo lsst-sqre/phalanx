@@ -55,7 +55,7 @@ config:
         vo-cutouts: 35
       notebook:
         cpu: 4.0
-        memory: 16
+        memory: 32
       tap:
         qserv:
           concurrent: 12
