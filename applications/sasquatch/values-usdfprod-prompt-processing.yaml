@@ -110,6 +110,19 @@ influxdb:
 influxdb-enterprise-standby:
   enabled: false
 
+kafbat:
+  enabled: true
+  ingress:
+    enabled: true
+  resources:
+    requests:
+      memory: 2Gi
+      cpu: 1
+    limits:
+      memory: 4Gi
+      cpu: 2
+
+
 kafdrop:
   enabled: false
   ingress:
