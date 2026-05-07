@@ -83,6 +83,7 @@ Rubin Observatory's telemetry service
 | influxdb.securityContext.runAsUser | int | `1500` |  |
 | influxdb.setDefaultUser.enabled | bool | `true` | Whether the default InfluxDB user is set |
 | influxdb.setDefaultUser.user.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
+| kafbat.enabled | bool | `false` | Whether to enable the kafbat subchart |
 | kafdrop-remote.enabled | bool | `false` | Whether to enable the kafdrop-remote, an instance of kafdrop for remote topics |
 | kafdrop-remote.kafka.topicPrefixes | string | None, must be set if enabled | Prefixes of the remote topics kafdrop-remote has access to. |
 | kafdrop-remote.kafka.user | string | `"kafdrop-remote"` | Kafka user to use for kafdrop-remote |
@@ -519,6 +520,32 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | influxdb-enterprise-standby.serviceAccount.create | bool | `false` | Whether to create a Kubernetes service account to run as |
 | influxdb-enterprise-standby.serviceAccount.name | string | Name based on the chart fullname | Name of the Kubernetes service account to run as |
+| kafbat.affinity | object | `{}` | Affinity configuration |
+| kafbat.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
+| kafbat.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| kafbat.image.repository | string | `"ghcr.io/kafbat/kafka-ui"` | kafbat Docker image repository |
+| kafbat.image.tag | string | `"v1.5.0"` | kafbat image version |
+| kafbat.ingress.annotations | object | `{}` | Additional ingress annotations |
+| kafbat.ingress.enabled | bool | `false` | Whether to enable the ingress |
+| kafbat.ingress.path | string | `"/kafbat"` | Ingress path |
+| kafbat.kafbatUser.securityProtocol | string | `"SSL"` | Kafka Security Protocol for user |
+| kafbat.kafka.bootstrap | string | `"sasquatch-kafka-bootstrap.sasquatch:9093"` | Kafka bootstrap |
+| kafbat.kafka.topicPrefixes | list | ["lsst"] | Kafka topic prefixes to filter topics by |
+| kafbat.logging.appLevel | string | `"INFO"` | application logging level |
+| kafbat.logging.uiLevel | string | `"INFO"` | UI logging level |
+| kafbat.nodeSelector | object | `{}` | Node selector configuration |
+| kafbat.podAnnotations | object | `{}` | Pod annotations |
+| kafbat.replicaCount | int | `1` | Number of kafbat pods to run in the deployment. |
+| kafbat.resources | object | See `values.yaml` | Kubernetes requests and limits for kafbat |
+| kafbat.schemaRegistry | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | The endpoint of Schema Registry |
+| kafbat.server.maxInMemorySize | string | `"20MB"` | Spring code max in memory size. Increase to improve kafbat performance. |
+| kafbat.server.pollingInterval | string | `"20"` | Polling interval to Kafka.  Increase to reduce kafbat load. |
+| kafbat.server.port | int | `8080` | The web server port to listen on |
+| kafbat.server.resourceLocking | bool | `true` | Sets Kafbat to read only |
+| kafbat.server.servlet.contextPath | string | `"/kafbat"` | The context path to serve requests on |
+| kafbat.service.annotations | object | `{}` | Additional annotations to add to the service |
+| kafbat.service.port | int | `8080` | Service port |
+| kafbat.tolerations | list | `[]` | Tolerations configuration |
 | kafdrop.affinity | object | `{}` | Affinity configuration |
 | kafdrop.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | kafdrop.cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |

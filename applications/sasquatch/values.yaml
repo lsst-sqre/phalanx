@@ -315,6 +315,10 @@ kapacitor:
       memory: 2Gi
       cpu: 2
 
+kafbat:
+  # -- Whether to enable the kafbat subchart
+  enabled: false
+
 kafdrop:
   # -- Whether to enable the kafdrop subchart
   enabled: true

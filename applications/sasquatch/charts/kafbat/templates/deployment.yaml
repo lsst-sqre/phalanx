@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafbat
+  labels:
+    {{- include "kafbat.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "kafbat.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "kafbat.selectorLabels" . | nindent 8 }}
+      annotations:
+        {{- with .Values.podAnnotations }}
+        {{ toYaml . | indent 8 }}
+        {{- end }}
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: kafbat
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          env:
+            - name:  AUTH_TYPE
+              value: "DISABLED"
+            - name: SERVER_SERVLET_CONTEXT_PATH
+              value: {{ .Values.server.servlet.contextPath | quote }}
+            - name: KAFKA_CLUSTERS_0_NAME
+              value: {{ .Values.cluster.name | quote }}
+            - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
+              value: {{ .Values.kafka.bootstrap | quote }}
+            - name: KAFKA_CLUSTERS_0_READONLY
+              value: "true"
+            - name: KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL
+              value: {{ .Values.kafbatUser.securityProtocol | quote }}
+            - name: KAFKA_CLUSTERS_0_PROPERTIES_SSL_TRUSTSTORE_LOCATION
+              value: "/etc/kafka/secrets/ca.p12"
+            - name: KAFKA_CLUSTERS_0_PROPERTIES_SSL_TRUSTSTORE_TYPE
+              value: "PKCS12"
+            - name: KAFKA_CLUSTERS_0_PROPERTIES_SSL_TRUSTSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ printf "%s-cluster-ca-cert" .Values.cluster.name }}
+                  key: ca.password
+            - name: KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_LOCATION
+              value: "/etc/kafka/user-secrets/user.p12"
+            - name: KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_TYPE
+              value: "PKCS12"
+            - name: KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kafbat
+                  key: user.password
+            - name: KAFKA_CLUSTERS_0_SCHEMAREGISTRY
+              value: {{ .Values.schemaRegistry | quote }}
+            - name: KAFKA_CLUSTERS_0_DEFAULTKEYSERDE
+              value: "SchemaRegistry"
+            - name: SPRING_CODEC_MAX_IN_MEMORY_SIZE
+              value: {{ .Values.server.maxInMemorySize | quote }}
+            - name: KAFKA_CLUSTERS_0_POLLING_INTERVAL
+              value: {{ .Values.server.pollingInterval | quote }}
+            - name: KAFKA_CLUSTERS_0_RESOURCELOCKING
+              value: {{ .Values.server.resourceLocking | quote }}
+            - name: LOGGING_LEVEL_ROOT
+              value: {{ .Values.logging.appLevel | quote }}
+            - name: LOGGING_LEVEL_IO_KAFBAT_UI
+              value: {{ .Values.logging.uiLevel | quote }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.server.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: "{{ .Values.server.servlet.contextPath | trimSuffix "/" }}/actuator/health"
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: "{{ .Values.server.servlet.contextPath | trimSuffix "/" }}/actuator/health"
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 10
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: cluster-ca
+              mountPath: /etc/kafka/secrets
+            - name: user-certs
+              mountPath: /etc/kafka/user-secrets
+              readOnly: true
+      volumes:
+      - name: cluster-ca
+        secret:
+          secretName: {{ printf "%s-cluster-ca-cert" .Values.cluster.name }}
+      - name: user-certs
+        secret:
+          secretName: kafbat
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{ toYaml . | indent 8 }}
+      {{- end }}

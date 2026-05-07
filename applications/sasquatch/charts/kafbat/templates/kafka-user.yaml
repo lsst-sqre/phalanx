@@ -1,0 +1,37 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: kafbat
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: cluster
+          name: kafka-cluster
+          patternType: literal
+        operations:
+          - Describe
+        host: "*"
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operations:
+          - All
+      {{- range .Values.kafka.topicPrefixes }}
+      - resource:
+          type: topic
+          name:  {{ . }}
+          patternType: prefix
+        type: allow
+        host: "*"
+        operations:
+          - Read
+          - Describe
+      {{- end }}

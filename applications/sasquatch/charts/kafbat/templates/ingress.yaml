@@ -1,0 +1,33 @@
+{{- if .Values.ingress.enabled -}}
+{{- $ingressPath := .Values.ingress.path -}}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: kafbat
+  labels:
+    {{- include "kafbat.labels" . | nindent 4 }}
+  annotations:
+    {{- with .Values.ingress.annotations }}
+    {{ toYaml . | indent 4 }}
+    {{- end }}
+config:
+  scopes:
+    all:
+      - "exec:internal-tools"
+  loginRedirect: true
+template:
+  metadata:
+    name: kafbat
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ $ingressPath }}
+              pathType: Prefix
+              backend:
+                service:
+                  name: kafbat
+                  port:
+                    number: {{ .Values.service.port }}
+{{- end }}

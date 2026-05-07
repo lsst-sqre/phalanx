@@ -1,0 +1,97 @@
+# Default values for kafbat
+
+# -- Number of kafbat pods to run in the deployment.
+replicaCount: 1
+
+cluster:
+  # -- Name of the Strimzi cluster. Synchronize this with the cluster name in
+  # the parent Sasquatch chart.
+  name: sasquatch
+
+image:
+  # -- kafbat Docker image repository
+  repository: ghcr.io/kafbat/kafka-ui
+
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+  # -- kafbat image version
+  tag: v1.5.0
+
+kafka:
+  # -- Kafka bootstrap
+  bootstrap: "sasquatch-kafka-bootstrap.sasquatch:9093"
+  # -- Kafka topic prefixes to filter topics by
+  # @default -- ["lsst"]
+  topicPrefixes:
+    - "lsst"
+
+kafbatUser:
+  # -- Kafka Security Protocol for user
+  securityProtocol: "SSL"
+
+logging:
+  # -- application logging level
+  appLevel: INFO
+  # -- UI logging level
+  uiLevel: INFO
+
+server:
+
+  # -- Spring code max in memory size. Increase to improve kafbat performance.
+  maxInMemorySize: "20MB"
+
+  # -- Polling interval to Kafka.  Increase to reduce kafbat load.
+  pollingInterval: "20"
+
+  # -- The web server port to listen on
+  port: 8080
+
+  # -- Sets Kafbat to read only
+  resourceLocking: true
+
+  servlet:
+    # -- The context path to serve requests on
+    contextPath: /kafbat
+
+# -- The endpoint of Schema Registry
+schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
+
+service:
+  # -- Additional annotations to add to the service
+  annotations: {}
+
+  # -- Service port
+  port: 8080
+
+ingress:
+  # -- Whether to enable the ingress
+  enabled: false
+
+  # -- Additional ingress annotations
+  annotations: {}
+
+  # -- Ingress path
+  path: /kafbat
+
+# -- Kubernetes requests and limits for kafbat
+# @default -- See `values.yaml`
+resources:
+  requests:
+    memory: 500Mi
+    cpu: 200m
+  limits:
+    memory: 2Gi
+    cpu: 1
+
+# -- Node selector configuration
+nodeSelector: {}
+
+# -- Tolerations configuration
+tolerations: []
+
+# -- Affinity configuration
+affinity: {}
+
+# -- Pod annotations
+podAnnotations: {}
