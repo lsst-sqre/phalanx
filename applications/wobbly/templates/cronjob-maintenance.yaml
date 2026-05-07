@@ -118,7 +118,7 @@ spec:
             runAsGroup: 1000
           {{- with .Values.tolerations }}
           tolerations:
-            {{- toYaml . | nindent 8 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           volumes:
             {{- if .Values.config.metrics.enabled }}
