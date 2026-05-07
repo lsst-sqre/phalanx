@@ -120,7 +120,7 @@ hub:
 
 jupyterhub:
   cull:
-    timeout: 108000  # 30 hours
+    timeout: 90000 # 25hrs
   hub:
     config:
       JupyterHub:
