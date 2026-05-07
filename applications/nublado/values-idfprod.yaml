@@ -105,6 +105,9 @@ hub:
   landingPage: "/lab/tree/notebooks/tutorials/welcome.md"
 
 jupyterhub:
+  cull:
+    timeout: 90000  # 25hrs
+
   hub:
     config:
       JupyterHub:
