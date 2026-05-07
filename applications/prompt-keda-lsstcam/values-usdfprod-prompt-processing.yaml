@@ -1,12 +1,12 @@
 prompt-keda:
   image:
     pullPolicy: IfNotPresent
-    tag: 13.14.0
+    tag: 14.0.0
 
   alerts:
     username: prompt-alert
     server: sasquatch-kafka-bootstrap.sasquatch:9092
-    topic: lsst-alerts-v10.0
+    topic: lsst-alerts-v11
 
   worker:
     restart: 10
