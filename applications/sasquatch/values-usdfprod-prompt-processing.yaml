@@ -78,7 +78,7 @@ alert-database:
   ingester:
     # The image can use either a tag or a digest to determine which is being used.
     image:
-      tag: v3.4.0
+      tag: v4.1.0
 
     logLevel: verbose
 
@@ -89,7 +89,7 @@ alert-database:
     kafka:
       cluster: sasquatch
       topic:
-        - lsst-alerts-v10.0
+        - lsst-alerts-v11
 
   ingress:
     enabled: true
