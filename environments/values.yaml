@@ -76,6 +76,9 @@ applications:
   # -- Enable the consdbtap application
   consdbtap: false
 
+  # -- Enable the conesearch application
+  conesearch: false
+
   # -- Enable the control-system-test application
   control-system-test: false
 

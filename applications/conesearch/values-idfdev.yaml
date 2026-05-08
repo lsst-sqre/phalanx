@@ -1,0 +1,23 @@
+image:
+  repository: "ghcr.io/lsst-sqre/conesearch"
+  pullPolicy: "Always"
+  tag: "tickets-DM-5437-v2"
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 4
+
+config:
+  collections:
+    dp1:
+      table: "dp1.Object"
+      idColumn: "objectId"
+      raColumn: "coord_ra"
+      decColumn: "coord_dec"
+      maxSr: 1.0
+      maxRecords: 1000000
+      verb1Columns:
+        - "objectId"
+        - "coord_ra"
+        - "coord_dec"
