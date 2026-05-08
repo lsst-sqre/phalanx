@@ -1,8 +1,22 @@
+image:
+  tag: DM-54730
 environment:
   BASE_URL: "/plot-navigator"
   REPO_URLS: '{"main": "unused", "embargo": "unused", "dp2_prep": "unused", "/repo/dc2": "unused", "/repo/dp1": "unused", "/repo/main": "unused"}'
+  BUTLER_REPO_NAMES: "main,dp2_prep,embargo,/repo/dc2,/repo/dp1"
   BUCKET_NAME: "rubin-plot-navigator"
   BUCKET_URL: "https://s3dfrgw.slac.stanford.edu/"
+  S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
+  DAF_BUTLER_REPOSITORY_INDEX: "/sdf/group/rubin/shared/data-repos.yaml"
+  AWS_PROFILE: "rubin-plot-navigator"
+  PGPASSFILE: "/opt/lsst/butler/secrets/postgres-credentials.txt"
+  PGUSER: "rubin"
+  AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"
+  LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
+  LSST_DISABLE_BUCKET_VALIDATION: "1"
+  AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
+  AWS_RESPONSE_CHECKSUM_VALIDATION: "WHEN_REQUIRED"
+  APP_PREFIX: "/plot-navigator"
 
 config:
   separateSecrets: false
