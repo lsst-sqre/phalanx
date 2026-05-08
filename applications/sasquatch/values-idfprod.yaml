@@ -14,15 +14,15 @@ strimzi-kafka:
         loadBalancerIP: "34.55.132.0"
         host: sasquatch-kafka-bootstrap.lsst.cloud
       brokers:
-        - broker: 3
-          loadBalancerIP: "34.122.37.250"
-          host: sasquatch-kafka-3.lsst.cloud
-        - broker: 4
-          loadBalancerIP: "34.72.131.177"
-          host: sasquatch-kafka-4.lsst.cloud
-        - broker: 5
-          loadBalancerIP: "34.72.103.157"
-          host: sasquatch-kafka-5.lsst.cloud
+        - broker: 0
+          loadBalancerIP: "35.192.187.249"
+          host: sasquatch-kafka-0.lsst.cloud
+        - broker: 1
+          loadBalancerIP: "34.29.173.204"
+          host: sasquatch-kafka-1.lsst.cloud
+        - broker: 2
+          loadBalancerIP: "34.123.107.123"
+          host: sasquatch-kafka-2.lsst.cloud
   users:
     telegraf:
       enabled: true
