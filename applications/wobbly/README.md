@@ -45,4 +45,4 @@ IVOA UWS database storage
 | podAnnotations | object | `{}` | Annotations for the wobbly deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the wobbly deployment pod |
-| tolerations | list | `[]` | Tolerations for the wobbly deployment pod |
+| tolerations | list | TolerateGKE amd64 and arm64 taints | Tolerations for the wobbly deployment pod |

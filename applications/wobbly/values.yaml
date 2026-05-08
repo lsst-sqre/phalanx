@@ -21,6 +21,28 @@ config:
   # @default -- None, must be set if `cloudsql.enabled` is false
   databaseUrl: null
 
+  metrics:
+    # -- Whether to enable sending metrics
+    enabled: false
+
+    # -- Name under which to log metrics. Generally there is no reason to
+    # change this.
+    application: "wobbly"
+
+    events:
+      # -- Topic prefix for events. It may sometimes be useful to change this
+      # in development environments.
+      topicPrefix: "lsst.square.metrics.events"
+
+    schemaManager:
+      # -- URL of the Confluent-compatible schema registry server
+      # @default -- Sasquatch in the local cluster
+      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
+
+      # -- Suffix to add to all registered subjects. This is sometimes useful
+      # for experimentation during development.
+      suffix: ""
+
   # -- Logging level
   logLevel: "INFO"
 
@@ -46,28 +68,6 @@ config:
   # -- Whether to automatically update the Wobbly database schema
   updateSchema: false
 
-  metrics:
-    # -- Whether to enable sending metrics
-    enabled: false
-
-    # -- Name under which to log metrics. Generally there is no reason to
-    # change this.
-    application: "wobbly"
-
-    events:
-      # -- Topic prefix for events. It may sometimes be useful to change this
-      # in development environments.
-      topicPrefix: "lsst.square.metrics.events"
-
-    schemaManager:
-      # -- URL of the Confluent-compatible schema registry server
-      # @default -- Sasquatch in the local cluster
-      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
-
-      # -- Suffix to add to all registered subjects. This is sometimes useful
-      # for experimentation during development.
-      suffix: ""
-
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
@@ -92,7 +92,16 @@ resources:
     memory: "150Mi"
 
 # -- Tolerations for the wobbly deployment pod
-tolerations: []
+# @default -- TolerateGKE amd64 and arm64 taints
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "amd64"
+    effect: "NoSchedule"
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
 
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
