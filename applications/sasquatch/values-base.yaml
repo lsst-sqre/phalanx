@@ -148,6 +148,15 @@ telegraf:
       topicRegexps: |
         [ "lsst.scimma" ]
       offset: oldest
+    cp:
+      enabled: true
+      database: "lsst.cp"
+      timestamp_format: "unix"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.cp" ]
+      tags: |
+        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch", "pipeline" ]
     # CSC connectors
     auxtel:
       enabled: true
@@ -318,6 +327,7 @@ rest-proxy:
     topicPrefixes:
       - lsst.obsenv
       - lsst.scimma
+      - lsst.cp
 
 chronograf:
   persistence:
