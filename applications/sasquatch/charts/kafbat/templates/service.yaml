@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafbat
+  annotations:
+    {{- with .Values.service.annotations }}
+    {{ toYaml . | indent 6 }}
+    {{- end }}
+  labels:
+    {{- include "kafbat.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "kafbat.selectorLabels" . | nindent 4 }}
