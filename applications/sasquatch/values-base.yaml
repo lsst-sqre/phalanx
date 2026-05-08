@@ -132,6 +132,23 @@ telegraf:
   enabled: true
   kafkaVersion: "3.9.1"
   kafkaConsumers:
+    # Application connectors
+    obsenv:
+      enabled: true
+      database: "lsst.obsenv"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.obsenv" ]
+    scimma:
+      enabled: true
+      database: "lsst.scimma"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.scimma" ]
+      offset: oldest
+    # CSC connectors
     auxtel:
       enabled: true
       database: "efd"
@@ -259,21 +276,7 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTVMS" ]
-    obsenv:
-      enabled: true
-      database: "lsst.obsenv"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.obsenv" ]
-    scimma:
-      enabled: true
-      database: "lsst.scimma"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.scimma" ]
-      offset: oldest
+    # CCS connectors (experimental) data is being written on separate databases for now
     atcamera:
       enabled: true
       database: "lsst.ATCamera"
