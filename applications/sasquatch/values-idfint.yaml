@@ -103,6 +103,7 @@ app-metrics:
   enabled: true
   apps:
     - bigquerykafka
+    - conesearch
     - gafaelfawr
     - herald
     - mobu

@@ -7,6 +7,9 @@
 # for the structure of this value.
 # @default -- See `values.yaml`
 globalAppConfig:
+  conesearch:
+    influxTags:
+      - "username"
   gafaelfawr:
     influxTags:
       - "service"
@@ -35,6 +38,9 @@ globalAppConfig:
     influxTags:
       - "username"
       - "queue"
+  conesearch:
+    influxTags:
+      - "username"
   qservkafka:
     influxTags:
       - "username"
