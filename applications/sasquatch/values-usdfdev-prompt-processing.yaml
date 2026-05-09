@@ -122,6 +122,11 @@ kafbat:
   enabled: true
   ingress:
     enabled: true
+  kafka:
+    topicPrefixes:
+      - "alert"
+      - "lsst"
+      - "registry"
   resources:
     requests:
       memory: 2Gi
