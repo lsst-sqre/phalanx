@@ -63,9 +63,9 @@ docs = [
     "sphinx-jinja",
 ]
 lint = [
-    "pre-commit",
-    "pre-commit-uv",
+    "prek",
     "ruff>=0.15",
+    "uv",
 ]
 tox = [
     "tox>=4.24",

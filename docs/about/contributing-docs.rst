@@ -10,7 +10,7 @@ Set up for documentation development
 ====================================
 
 Follow the steps at :doc:`local-environment-setup` to set up a Phalanx development environment.
-This installs tox_, the tooling for builds with isolated Python environments, and pre-commit_, a tool for linting and formatting files.
+This installs tox_, the tooling for builds with isolated Python environments, and prek_, a tool for linting and formatting files.
 
 Compiling the documentation
 ===========================
