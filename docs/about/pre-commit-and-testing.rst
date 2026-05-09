@@ -10,7 +10,8 @@ This document describes how to use pre-commit and the Phalanx tests.
 What to expect when developing in Phalanx with pre-commit
 =========================================================
 
-Once pre-commit is installed, your Git commits in Phalanx are checked by the linters.
+Pre-commit checks are handled by a program called prek_, which is installed into your development virtualenv as part of setting up your local development environment.
+Once installed, every Git commit you make in Phalanx are checked by the linters.
 If a linter "fails" the commit, you'll need to make the necessary changes and re-try the Git commit.
 
 Many linters make the required changes when "failing."
@@ -23,7 +24,7 @@ You'll need to manually resolve those issues before re-adding and committing.
 Linting all files
 =================
 
-Pre-commit normally runs only on changed files.
+Pre-commit checks normally run only on changed files.
 To check all files (similar to how we run pre-commit in GitHub Actions):
 
 .. code-block:: sh

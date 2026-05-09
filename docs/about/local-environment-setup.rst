@@ -2,14 +2,14 @@
 Setting up a Phalanx development environment
 ############################################
 
-The Phalanx repository uses pre-commit_ to lint source files and generate Helm chart documentation with helm-docs_.
+The Phalanx repository uses Git pre-commit hooks to lint source files and generate Helm chart documentation with helm-docs_.
 It also has a command-line tool, :command:`phalanx`, which aids in maintaining Phalanx applications and environments.
 
 If you are contributing to Phalanx as either a developer or an environment administrator, you should enable these tools in your local environment to ensure that you can use the command-line tool as intended, that your changes are clean, and that the Helm chart documentation is kept up-to-date.
 
 .. important::
 
-   Pre-commit also runs in GitHub Actions to ensure that contributions conform to the linters.
+   The pre-commit hooks also run in GitHub Actions to ensure that contributions conform to the linters.
    If your pull request's "lint" step fails, it's likely because pre-commit wasn't enabled locally.
    This page shows you how to fix that.
 
@@ -64,14 +64,14 @@ From the ``phalanx`` directory, with the virtualenv from the previous step activ
 
    make init
 
-This step populates your virtual environment with Phalanx's dependencies, installs tox_ (used for testing and other build steps), and installs pre-commit_ (used to check and sometimes reformat your changes before committing them).
+This step populates your virtual environment with Phalanx's dependencies, installs tox_ (used for testing and other build steps), and installs prek_ (used to check and sometimes reformat your changes before committing them).
 
 .. _about-helm-docs:
 
 Install helm-docs
 =================
 
-:command:`helm-docs` will be run automatically by pre-commit for any commit that changes an application or environment Helm chart.
+:command:`helm-docs` will be run automatically by a Git pre-commit hook for any commit that changes an application or environment Helm chart.
 You therefore must have it installed on your PATH.
 
 See the `helm-docs installation guide <https://github.com/norwoodj/helm-docs#installation>`__ for details.

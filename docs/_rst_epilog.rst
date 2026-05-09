@@ -36,7 +36,7 @@
 .. _Phalanx repository: https://github.com/lsst-sqre/phalanx
 .. _Pods:
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/
-.. _pre-commit: https://pre-commit.com
+.. _prek: https://prek.j178.dev/
 .. _Repertoire: https://repertoire.lsst.io/
 .. _Roundtable: https://roundtable.lsst.io/
 .. _Ruff: https://docs.astral.sh/ruff/
