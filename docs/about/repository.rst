@@ -120,15 +120,15 @@ Test and formatting infrastructure
 
 The Phalanx repository uses two levels of testing and continuous integration.
 
-`Pre-commit`_ performs file formatting, linting, and schema checking, both on your local editing environment (when configured) and verified in GitHub Actions.
-In one check, Pre-commit regenerates Helm chart documentation for applications with helm-docs_.
+prek_ performs file formatting, linting, and schema checking, both on your local editing environment (when configured) and verified in GitHub Actions.
+In one of its pre-commit checks, prek regenerates Helm chart documentation for applications with helm-docs_.
 See the `.pre-commit-config.yaml <https://github.com/lsst-sqre/phalanx/blob/main/.pre-commit-config.yaml>`__ file for configuration details.
-Learn how to set up Pre-commit in your local editing environment in :doc:`local-environment-setup`.
+Learn how to set up prek in your local editing environment in :doc:`local-environment-setup`.
 
 Second, GitHub Actions runs a CI workflow (`.github/workflows/ci.yaml <https://github.com/lsst-sqre/phalanx/blob/main/.github/workflows/ci.yaml>`__).
 This workflow has four key jobs:
 
-- Linting with Pre-commit_, mirroring the local editing environment.
+- Linting with pre-commit hooks, mirroring the local editing environment.
 - Static validation of Helm charts with the `helm/chart-testing-action <https://github.com/helm/chart-testing-action>`__ GitHub action.
 - Python tests of both the Phalanx command-line tool and of the Phalanx configuration.
 - An integration test of a Phalanx environment in a minikube.
