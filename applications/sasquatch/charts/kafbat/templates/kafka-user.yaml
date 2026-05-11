@@ -17,6 +17,7 @@ spec:
           patternType: literal
         operations:
           - Describe
+          - DescribeConfigs
         host: "*"
       - resource:
           type: group
@@ -34,4 +35,5 @@ spec:
         operations:
           - Read
           - Describe
+          - DescribeConfigs
       {{- end }}
