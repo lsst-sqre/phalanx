@@ -1,4 +1,15 @@
 cadc-tap:
+  resources:
+    requests:
+      cpu: "1.0"
+      memory: "2Gi"
+    limits:
+      cpu: "4.0"
+      memory: "8Gi"
+
+  config:
+    jvmMaxHeapSize: 7G
+
   cloudsql:
     enabled: true
     instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
