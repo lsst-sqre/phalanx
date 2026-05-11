@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-so/rubintv_production
-  tag: w_2026_13
+  tag: w_2026_18
   pullPolicy: Always
 location: SUMMIT
 env:
