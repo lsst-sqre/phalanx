@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-so/rubintv_production
-  tag: w_2026_13
+  tag: tickets-DM-54909
   pullPolicy: Always
 location: BTS
 env:
@@ -10,7 +10,7 @@ env:
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   RAPID_ANALYSIS_DO_RAISE: True
   BUTLER_ROLLOUT_PAUSE: 1.0
-  RA_PULL_DIRECTORIES: "TARTS donut_viz drp_pipe ts_wep ts_ofc ts_config_mttcs summit_utils summit_extras rubintv_production daf_butler pipe_base"
+  RA_PULL_DIRECTORIES: ""
   TARTS_DATA_DIR: /project/rubintv/aos_data/TARTS
   AI_DONUT_DATA_DIR: /project/rubintv/aos_data/AI_DONUT
   # These threading env vars are the ones set in
