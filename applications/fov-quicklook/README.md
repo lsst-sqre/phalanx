@@ -37,7 +37,7 @@ Full focal plane viewer
 | generator.resources.requests | object | `{"cpu":"2000m","memory":"8Gi"}` | Resource requests for the generator |
 | image.pullPolicy | string | `"Always"` | Pull policy for the fov-quicklook image |
 | image.repository | string | `"ghcr.io/lsst-sqre/fov-quicklook"` | Image to use in the fov-quicklook deployment |
-| image.tag | string | `"main"` | Tag of image to use |
+| image.tag | string | `"fov-quicklook-local-issue-10-differnce-image"` | Tag of image to use |
 | s3_tile | object | `{"bucket":"fov-quicklook-tile","endpoint":"sdfembs3.sdf.slac.stanford.edu:443","secure":true}` | S3 configuration for the tile storage |
 | use_gafaelfawr | bool | `true` | Use gafaelfawr to authenticate |
 | use_vault | bool | `true` | Use vault to store secrets |
