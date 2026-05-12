@@ -84,4 +84,15 @@ Secret environment variables shared across all Docverse pods.
       name: "docverse"
       key: "slack-webhook"
 {{- end }}
+{{- if .Values.config.sentry.enabled }}
+- name: "SENTRY_DSN"
+  valueFrom:
+    secretKeyRef:
+      name: "docverse"
+      key: "SENTRY_DSN"
+- name: "SENTRY_ENVIRONMENT"
+  value: {{ .Values.global.environmentName | quote }}
+- name: "SENTRY_TRACES_SAMPLE_RATE"
+  value: {{ .Values.config.sentry.tracesSampleRate | quote }}
+{{- end }}
 {{- end }}
