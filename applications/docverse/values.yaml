@@ -34,6 +34,15 @@ config:
   # -- Whether to send Slack alerts for unexpected failures
   slackAlerts: false
 
+  sentry:
+    # -- Whether to send error reports and tracing data to Sentry. Requires
+    # the sentry-dsn secret to be set in Vault.
+    enabled: false
+
+    # -- The percentage of requests that should be traced. This should be a
+    # float between 0 and 1.
+    tracesSampleRate: 0.0
+
   # -- Database URL for PostgreSQL
   databaseUrl: ""
 

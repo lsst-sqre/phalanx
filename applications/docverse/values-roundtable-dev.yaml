@@ -12,6 +12,8 @@ config:
     enabled: true
   lifecycleEval:
     enabled: true
+  sentry:
+    enabled: true
 
 cloudsql:
   enabled: true

@@ -2,6 +2,8 @@ config:
   databaseUrl: "postgresql://docverse@localhost/docverse"
   superadminUsers:
     - "jonathansick"
+  sentry:
+    enabled: true
 
 cloudsql:
   enabled: true
