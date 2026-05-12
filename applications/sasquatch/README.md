@@ -525,6 +525,8 @@ Rubin Observatory's telemetry service
 | influxdb-migration.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the influxdb-migration image |
 | influxdb-migration.image.repository | string | `"ghcr.io/lsst-sqre/sasquatch"` | Image to use in the influxdb-migration deployment |
 | influxdb-migration.image.tag | string | The appVersion of the chart | Tag of image to use |
+| influxdb-migration.influxdb.host | string | `"usdf-rsp.slac.stanford.edu"` | Target InfluxDB host |
+| influxdb-migration.influxdb.path | string | `"influxdb-enterprise-data"` | Target InfluxDB path |
 | influxdb-migration.nodeSelector | object | `{}` | Node selection rules for the influxdb-migration deployment pod |
 | influxdb-migration.podAnnotations | object | `{}` | Annotations for the influxdb-migration deployment pod |
 | influxdb-migration.resources | object | `{}` | Resource limits and requests for the influxdb-migration deployment pod |
