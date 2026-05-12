@@ -27,7 +27,30 @@ spec:
       - name: backup
         persistentVolumeClaim:
           claimName: sasquatch-backup-artifacts
+      - name: nginx-config
+        configMap:
+          name: influxdb-nginx-proxy
+      - name: nginx-cache
+        emptyDir: {}
+      - name: nginx-run
+        emptyDir: {}
+      - name: nginx-tmp
+        emptyDir: {}
       containers:
+      - name: nginx-proxy
+        image: nginx:alpine
+        ports:
+          - containerPort: 8086
+        volumeMounts:
+          - name: nginx-config
+            mountPath: /etc/nginx/nginx.conf
+            subPath: nginx.conf
+          - mountPath: /var/cache/nginx
+            name: nginx-cache
+          - mountPath: /var/run
+            name: nginx-run
+          - mountPath: /tmp
+            name: nginx-tmp
       - name: sasquatch
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
