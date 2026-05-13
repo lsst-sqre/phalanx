@@ -9,6 +9,7 @@ Tool for github terraform workflows: https://runatlantis.io
 | affinity | object | `{}` | Affinity rules for the atlantis deployment pod |
 | config.repoConfig | object | See `values.yaml` | Content for the [server-side repo config](https://www.runatlantis.io/docs/server-side-repo-config.html) file |
 | config.serverConfig | object | See `values.yaml` | Content for the [server config](https://www.runatlantis.io/docs/server-configuration.html) file. Note the format of the keys (kebab-case) |
+| config.serverConfig.allow-commands | string | `"version,plan,apply,unlock,approve_policies,import"` | Add `import` to the defaults |
 | config.serverConfig.automerge | bool | `false` | Whether to automatically merge PRs after plans have been applied (see [docs](https://www.runatlantis.io/docs/automerging.html)) |
 | config.serverConfig.log-level | string | `"info"` | One of: debug, info, warn, or error. |
 | config.serverConfig.repo-allowlist | string | `""` | Specification of GitHub repos that Atlantis will accept webooks from: [docs](https://www.runatlantis.io/docs/server-configuration.html#repo-allowlist) |

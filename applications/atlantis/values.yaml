@@ -7,21 +7,20 @@ config:
   # Kubernetes service account to impersonate it.
   # googleServiceAccount:
 
-
   # -- Content for the [server-side repo
   # config](https://www.runatlantis.io/docs/server-side-repo-config.html) file
   # @default -- See `values.yaml`
   repoConfig:
     repos:
-    - id: "/.*/"
-      apply_requirements: ["mergeable", "undiverged"]
-      pre_workflow_hooks:
-      - run: "rm -rf src/prodromos/templates"
-        description: |
-          The prodromos repo has .tf files in the templates dir
-          which confuses the module autoplanner. There is no way
-          to tell the module autoplanner to ignore anything :(
-        commands: "plan, apply"
+      - id: "/.*/"
+        apply_requirements: ["mergeable", "undiverged"]
+        pre_workflow_hooks:
+          - run: "rm -rf src/prodromos/templates"
+            description: |
+              The prodromos repo has .tf files in the templates dir
+              which confuses the module autoplanner. There is no way
+              to tell the module autoplanner to ignore anything :(
+            commands: "plan, apply"
 
   # -- Content for the [server
   # config](https://www.runatlantis.io/docs/server-configuration.html) file.
@@ -42,6 +41,9 @@ config:
     # -- We're delegating auth for the web UI to gafaelfawr
     web-basic-auth: false
     autoplan-modules: true
+    # -- Add `import` to the defaults
+    allow-commands: "version,plan,apply,unlock,approve_policies,import"
+    gh-team-allowlist: "square:version,square:plan,square:apply,square:unlock,square:approve_policies,square:import"
 
 image:
   # -- atlantis image to use
