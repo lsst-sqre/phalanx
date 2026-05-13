@@ -1,0 +1,45 @@
+{{- if .Values.scaleReplica.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scale-down-prompt-pub
+  namespace: prompt-pub
+spec:
+  schedule: {{ .Values.scaleReplica.downSchedule | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: scale-replica
+          containers:
+          - name: scale-replica
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - kubectl scale statefulset prompt-pub --replicas=0
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scale-up-prompt-pub
+  namespace: prompt-pub
+spec:
+  schedule: {{ .Values.scaleReplica.upSchedule | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: scale-replica
+          containers:
+          - name: scale-replica
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - kubectl scale statefulset prompt-pub --replicas=1
+          restartPolicy: OnFailure
+{{- end }}
