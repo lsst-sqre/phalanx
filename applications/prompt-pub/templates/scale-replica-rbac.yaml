@@ -1,0 +1,31 @@
+{{- if .Values.scaleReplica.enabled }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: prompt-pub-scale-replica
+  namespace: prompt-pub
+rules:
+- apiGroups: ["apps"]
+  resources: ["statefulsets", "statefulsets/scale"]
+  verbs: ["get", "update", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: prompt-pub-scale-replica-binding
+  namespace: prompt-pub
+subjects:
+- kind: ServiceAccount
+  name: scale-replica
+  namespace: prompt-pub
+roleRef:
+  kind: Role
+  name: prompt-pub-scale-replica
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: scale-replica
+  namespace: prompt-pub
+{{- end }}

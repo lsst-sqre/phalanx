@@ -79,6 +79,13 @@ alloyDbProxy:
       memory: "256Mi"
       cpu: "0.2"
 
+scaleReplica:
+  # -- Enable scale up and down of prompt pub statefulset on a schedule
+  enabled: false
+  # -- Time in Cron format to scale down replica in UTC
+  downSchedule: "30 21 * * *"
+  # -- Time to Cron format scale up replica in UTC
+  upSchedule: "0 12 * * *"
 
 # -- Affinity rules for the prompt-pub statefulset pod
 affinity: {}
