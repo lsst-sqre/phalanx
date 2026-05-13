@@ -10,6 +10,8 @@ config:
     - "jonathansick"
   keeperSync:
     enabled: true
+  lifecycleEval:
+    enabled: true
 
 cloudsql:
   enabled: true
