@@ -22,6 +22,7 @@ Publish versioned docs
 | config.databaseUrl | string | `""` | Database URL for PostgreSQL |
 | config.githubAppId | string | `nil` | GitHub App ID for Docverse to use when accessing GitHub repositories. If not set, Docverse will operate in a limited mode without GitHub integration. |
 | config.keeperSync.enabled | bool | `false` | Enable the Keeper-sync worker that consumes the `docverse:sync-queue` arq queue. Requires the docverse image to provide `docverse.worker.main.KeeperSyncWorkerSettings`. |
+| config.lifecycleEval.enabled | bool | `false` | Enable the lifecycle-evaluation worker that consumes the `docverse:lifecycle-queue` arq queue. Requires the docverse image to provide `docverse.worker.main.LifecycleEvalWorkerSettings`. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/docverse/api"` | URL path prefix |
@@ -35,6 +36,12 @@ Publish versioned docs
 | image.repository | string | `"ghcr.io/lsst-sqre/docverse"` | Image to use in the docverse deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
+| lifecycleWorker.affinity | object | `{}` | Affinity rules for the lifecycle-eval worker pod |
+| lifecycleWorker.nodeSelector | object | `{}` | Node selection rules for the lifecycle-eval worker pod |
+| lifecycleWorker.podAnnotations | object | `{}` | Annotations for the lifecycle-eval worker pod |
+| lifecycleWorker.replicaCount | int | `1` | Number of lifecycle-eval worker pods to start |
+| lifecycleWorker.resources | object | See `values.yaml` | Resource limits and requests for the lifecycle-eval worker pod |
+| lifecycleWorker.tolerations | list | `[]` | Tolerations for the lifecycle-eval worker pod |
 | nodeSelector | object | `{}` | Node selection rules for the docverse deployment pod |
 | podAnnotations | object | `{}` | Annotations for the docverse deployment pod |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |

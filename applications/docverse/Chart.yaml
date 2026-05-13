@@ -1,6 +1,6 @@
 apiVersion: v2
-# https://github.com/lsst-sqre/docverse/pull/306
-appVersion: "tickets-DM-54794-tier-crons"
+# https://github.com/lsst-sqre/docverse/pull/364
+appVersion: "tickets-DM-54688-worker-pool"
 description: Publish versioned docs
 name: docverse
 sources:
