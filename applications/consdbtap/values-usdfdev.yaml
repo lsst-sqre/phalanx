@@ -2,7 +2,12 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-usdf-dev-cdb"
-      tag: "w.2026.18"
+      tag: "tickets-OSW-1617"
+      pullPolicy: "Always"
 
   config:
     datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/w.2026.18/datalink-snippets.zip"
+
+    pg:
+      # Use dev db for testing
+      host: "usdf-summit-dev-db-svc.sdf.slac.stanford.edu"
