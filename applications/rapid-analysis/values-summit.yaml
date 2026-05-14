@@ -338,7 +338,7 @@ lsstcamGather1bAosSet:
       memory: 4G
     limits:
       cpu: 1.1
-      memory: 8G
+      memory: 10G
 lsstcamBacklogWorkerSet:
   name: LSSTCam/runBacklogWorker.py
   mounts:
