@@ -58,6 +58,12 @@ config:
     # provide `docverse.worker.main.KeeperSyncWorkerSettings`.
     enabled: false
 
+  lifecycleEval:
+    # -- Enable the lifecycle-evaluation worker that consumes the
+    # `docverse:lifecycle-queue` arq queue. Requires the docverse image to
+    # provide `docverse.worker.main.LifecycleEvalWorkerSettings`.
+    enabled: false
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
@@ -117,6 +123,32 @@ syncWorker:
   podAnnotations: {}
 
   # -- Tolerations for the Keeper-sync worker pod
+  tolerations: []
+
+lifecycleWorker:
+  # -- Number of lifecycle-eval worker pods to start
+  replicaCount: 1
+
+  # -- Resource limits and requests for the lifecycle-eval worker pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+    requests:
+      cpu: "50m"
+      memory: "128Mi"
+
+  # -- Affinity rules for the lifecycle-eval worker pod
+  affinity: {}
+
+  # -- Node selection rules for the lifecycle-eval worker pod
+  nodeSelector: {}
+
+  # -- Annotations for the lifecycle-eval worker pod
+  podAnnotations: {}
+
+  # -- Tolerations for the lifecycle-eval worker pod
   tolerations: []
 
 # -- Tolerations for the docverse deployment pod

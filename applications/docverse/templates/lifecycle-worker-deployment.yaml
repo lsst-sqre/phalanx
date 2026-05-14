@@ -1,0 +1,74 @@
+{{- if .Values.config.lifecycleEval.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "docverse-lifecycle-worker"
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  labels:
+    {{- include "docverse.labels" . | nindent 4 }}
+    app.kubernetes.io/component: "lifecycle-worker"
+    docverse-redis-client: "true"
+spec:
+  replicas: {{ .Values.lifecycleWorker.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "docverse.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "lifecycle-worker"
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.lifecycleWorker.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "docverse.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "lifecycle-worker"
+        docverse-redis-client: "true"
+    spec:
+      {{- with .Values.lifecycleWorker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.cloudsql.enabled }}
+      serviceAccountName: "docverse"
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        - name: "docverse-lifecycle-worker"
+          command: ["arq"]
+          args: ["docverse.worker.main.LifecycleEvalWorkerSettings"]
+          env:
+            {{- include "docverse.envVars" . | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: "docverse"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.lifecycleWorker.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+      {{- if .Values.cloudsql.enabled }}
+      initContainers:
+        {{- include "docverse.cloudsqlSidecar" . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.lifecycleWorker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.lifecycleWorker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+{{- end }}
