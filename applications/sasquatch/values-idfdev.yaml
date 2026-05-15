@@ -179,11 +179,6 @@ backup:
   restore:
     enabled: false
 
-influxdb-migration:
-  enabled: true
-  image:
-    tag: "tickets-DM-54806"
-
 backpack:
   enabled: true
 
