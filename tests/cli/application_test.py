@@ -4,6 +4,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
+import pytest
 import yaml
 from git.repo import Repo
 from git.util import Actor
@@ -14,6 +15,14 @@ from phalanx.models.applications import Project
 from ..support.cli import run_cli
 from ..support.data import PhalanxData
 from ..support.helm import MockHelmCommand
+
+
+@pytest.fixture
+def config_path(data: PhalanxData, tmp_path: Path) -> Path:
+    """Create a copy of the input configuration for tests that modify it."""
+    config_path = tmp_path / "phalanx"
+    shutil.copytree(str(data.path("input")), str(config_path))
+    return config_path
 
 
 def test_add_helm_repos(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
@@ -33,9 +42,7 @@ def test_add_helm_repos(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
     )
 
 
-def test_create(data: PhalanxData, tmp_path: Path) -> None:
-    config_path = tmp_path / "phalanx"
-    shutil.copytree(str(data.path("input")), str(config_path))
+def test_create(data: PhalanxData, config_path: Path) -> None:
     app_docs_path = config_path / "docs" / "applications"
     apps_path = config_path / "applications"
 
@@ -167,9 +174,7 @@ def test_create(data: PhalanxData, tmp_path: Path) -> None:
     assert "  ZZZ_OTHER_APP_PATH_PREFIX:" in config_map
 
 
-def test_create_errors(data: PhalanxData, tmp_path: Path) -> None:
-    config_path = tmp_path / "phalanx"
-    shutil.copytree(str(data.path("input")), str(config_path))
+def test_create_errors(data: PhalanxData, config_path: Path) -> None:
     result = run_cli(
         "application",
         "create",
@@ -214,11 +219,7 @@ def test_create_errors(data: PhalanxData, tmp_path: Path) -> None:
     assert result.exit_code == 2
 
 
-def test_create_prompt(data: PhalanxData, tmp_path: Path) -> None:
-    config_path = tmp_path / "phalanx"
-    shutil.copytree(str(data.path("input")), str(config_path))
-
-    # Add an application, prompting for the description.
+def test_create_prompt(data: PhalanxData, config_path: Path) -> None:
     result = run_cli(
         "application",
         "create",
