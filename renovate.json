@@ -5,8 +5,20 @@
   "configMigration": true,
   "packageRules": [
     {
+      "matchPackageNames": ["ghcr.io/home-assistant/home-assistant"],
+      "assignees": ["fritzm"]
+    },
+    {
+      "matchPackageNames": ["keda"],
+      "assignees": ["dspeck1"]
+    },
+    {
       "matchPackageNames": ["lsstsqre/tap-schema-mock"],
       "allowedVersions": "<10"
+    },
+    {
+      "matchPackageNames": ["weaviate"],
+      "assignees": ["jhu-s", "emanehab99"]
     }
   ],
   "rebaseWhen": "conflicted",
