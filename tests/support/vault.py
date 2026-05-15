@@ -15,7 +15,7 @@ from safir.datetime import isodatetime
 
 from phalanx.models.vault import VaultAppRoleMetadata, VaultToken
 
-from .data import phalanx_test_path
+from .data import PhalanxData
 
 __all__ = [
     "MockVaultClient",
@@ -46,7 +46,9 @@ class MockVaultClient:
         self._secret_ids: defaultdict[str, list[tuple[str, str]]]
         self._secret_ids = defaultdict(list)
 
-    def load_test_data(self, path: str, environment: str) -> None:
+    def load_test_data(
+        self, data: PhalanxData, path: str, environment: str
+    ) -> None:
         """Load Vault test data for the given environment.
 
         This method is not part of the Vault API. It is intended for use by
@@ -54,13 +56,15 @@ class MockVaultClient:
 
         Parameters
         ----------
+        data
+            Phalanx test data.
         path
             Path to the environment data in Vault.
         environment
             Name of the environment for which to load Vault test data.
         """
         _, app_path = path.split("/", 1)
-        data_path = phalanx_test_path() / "vault" / environment
+        data_path = data.path(f"input/vault/{environment}")
         for app_data_path in data_path.iterdir():
             application = app_data_path.stem
             with app_data_path.open() as fh:

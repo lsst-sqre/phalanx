@@ -5,15 +5,10 @@ from subprocess import CompletedProcess
 
 import pytest
 from pytest_mock import MockerFixture
-from syrupy.assertion import SnapshotAssertion
 
 from ..support.cli import run_cli
 from ..support.command import MockCommand
-from ..support.constants import DATA_DIR
-
-
-def kubectl_output(filename: str) -> str:
-    return (DATA_DIR / "output" / "kubectl" / filename).read_text()
+from ..support.data import PhalanxData
 
 
 @dataclass
@@ -28,13 +23,25 @@ class ExpectedCaptureCall:
 
 
 @pytest.mark.usefixtures("mock_kubernetes_kubectl")
-def test_suspend_crons_requires_context() -> None:
-    result = run_cli("recover", "suspend-crons")
-    assert result.exit_code == 2
+def test_requires_context() -> None:
+    for command in (
+        "suspend-crons",
+        "resume-crons",
+        "scale-down-workloads",
+        "scale-up-workloads",
+        "release-service-ips",
+        "restore-service-ips",
+        "pause-sasquatch-kafka-reconciliation",
+        "resume-sasquatch-kafka-reconciliation",
+        "scale-down",
+        "scale-up",
+    ):
+        result = run_cli("recover", command)
+        assert result.exit_code == 2
 
 
 def test_suspend_crons(
-    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+    data: PhalanxData, mock_kubernetes_kubectl: MockCommand
 ) -> None:
     command = mock_kubernetes_kubectl
     command.expect_capture(
@@ -47,23 +54,18 @@ def test_suspend_crons(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("cronjob-list.json"),
+        stdout=data.read_text("kubectl/cronjob-list.json"),
     )
 
     result = run_cli("recover", "suspend-crons", "--context", "fake-context")
     assert result.exit_code == 0
-
-    assert command.mock.run.call_args_list == snapshot
-
-
-@pytest.mark.usefixtures("mock_kubernetes_kubectl")
-def test_resume_crons_requires_context() -> None:
-    result = run_cli("recover", "resume-crons")
-    assert result.exit_code == 2
+    data.assert_calls_match(
+        command.mock.run.call_args_list, "recover/suspend-crons"
+    )
 
 
 def test_resume_crons(
-    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+    data: PhalanxData, mock_kubernetes_kubectl: MockCommand
 ) -> None:
     command = mock_kubernetes_kubectl
     command.expect_capture(
@@ -76,23 +78,18 @@ def test_resume_crons(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("cronjob-list.json"),
+        stdout=data.read_text("kubectl/cronjob-list.json"),
     )
 
     result = run_cli("recover", "resume-crons", "--context", "fake-context")
     assert result.exit_code == 0
-
-    assert command.mock.run.call_args_list == snapshot
-
-
-@pytest.mark.usefixtures("mock_kubernetes_kubectl")
-def test_scale_down_workloads_requires_context() -> None:
-    result = run_cli("recover", "scale-down-workloads")
-    assert result.exit_code == 2
+    data.assert_calls_match(
+        command.mock.run.call_args_list, "recover/resume-crons"
+    )
 
 
 def test_scale_down_workloads(
-    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+    data: PhalanxData, mock_kubernetes_kubectl: MockCommand
 ) -> None:
     command = mock_kubernetes_kubectl
 
@@ -106,7 +103,7 @@ def test_scale_down_workloads(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("deployment-list.json"),
+        stdout=data.read_text("kubectl/deployment-list.json"),
     )
     command.expect_capture(
         args=(
@@ -118,7 +115,7 @@ def test_scale_down_workloads(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("statefulset-list.json"),
+        stdout=data.read_text("kubectl/statefulset-list.json"),
     )
 
     result = run_cli(
@@ -127,20 +124,19 @@ def test_scale_down_workloads(
     assert result.exit_code == 0
 
     # Assert exactly these calls to capture were made
-    assert command.mock.capture.call_args_list == snapshot
+    data.assert_calls_match(
+        command.mock.capture.call_args_list,
+        "recover/scale-down-workloads-capture",
+    )
 
     # Nothing from the argocd namespace should be in here.
-    assert command.mock.run.call_args_list == snapshot
-
-
-@pytest.mark.usefixtures("mock_kubernetes_kubectl")
-def test_scale_up_workloads_requires_context() -> None:
-    result = run_cli("recover", "scale-up-workloads")
-    assert result.exit_code == 2
+    data.assert_calls_match(
+        command.mock.run.call_args_list, "recover/scale-down-workloads-run"
+    )
 
 
 def test_scale_up_workloads(
-    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+    data: PhalanxData, mock_kubernetes_kubectl: MockCommand
 ) -> None:
     command = mock_kubernetes_kubectl
 
@@ -154,7 +150,7 @@ def test_scale_up_workloads(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("deployment-list-scaled-down.json"),
+        stdout=data.read_text("kubectl/deployment-list-scaled-down.json"),
     )
     command.expect_capture(
         args=(
@@ -166,7 +162,7 @@ def test_scale_up_workloads(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("statefulset-list-scaled-down.json"),
+        stdout=data.read_text("kubectl/statefulset-list-scaled-down.json"),
     )
     result = run_cli(
         "recover", "scale-up-workloads", "--context", "fake-context"
@@ -174,21 +170,20 @@ def test_scale_up_workloads(
     assert result.exit_code == 0
 
     # Assert exactly these calls to capture were made
-    assert command.mock.capture.call_args_list == snapshot
+    data.assert_calls_match(
+        command.mock.capture.call_args_list,
+        "recover/scale-up-workloads-capture",
+    )
 
     # Nothing from the argocd namespace should be in here.
-    assert command.mock.run.call_args_list == snapshot
-
-
-@pytest.mark.usefixtures("mock_kubernetes_kubectl")
-def test_release_service_ips_requires_context() -> None:
-    result = run_cli("recover", "release-service-ips")
-    assert result.exit_code == 2
+    data.assert_calls_match(
+        command.mock.run.call_args_list, "recover/scale-up-workloads-run"
+    )
 
 
 def test_release_service_ips(
+    data: PhalanxData,
     mock_kubernetes_kubectl: MockCommand,
-    snapshot: SnapshotAssertion,
     mocker: MockerFixture,
 ) -> None:
     mocker.patch("time.sleep")
@@ -206,7 +201,7 @@ def test_release_service_ips(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("service-list.json"),
+        stdout=data.read_text("kubectl/service-list.json"),
     )
     command.expect_capture(
         args=(
@@ -218,7 +213,8 @@ def test_release_service_ips(
             "-o",
             "json",
         ),
-        stdout=kubectl_output(
+        stdout=data.read_text(
+            "kubectl/"
             "service-ingress-nginx-controller-cluster-ip-with-finalizers.json"
         ),
     )
@@ -232,7 +228,8 @@ def test_release_service_ips(
             "-o",
             "json",
         ),
-        stdout=kubectl_output(
+        stdout=data.read_text(
+            "kubectl/"
             "service-ingress-nginx-controller-cluster-ip-without-finalizers.json"
         ),
     )
@@ -246,8 +243,8 @@ def test_release_service_ips(
             "-o",
             "json",
         ),
-        stdout=kubectl_output(
-            "service-ingress-nginx-controller-released.json"
+        stdout=data.read_text(
+            "kubectl/service-ingress-nginx-controller-released.json"
         ),
     )
 
@@ -256,19 +253,18 @@ def test_release_service_ips(
     )
 
     assert result.exit_code == 0
-    assert command.mock.capture.call_args_list == snapshot
-    assert command.mock.run.call_args_list == snapshot
-
-
-@pytest.mark.usefixtures("mock_kubernetes_kubectl")
-def test_restore_service_ips_requires_context() -> None:
-    result = run_cli("recover", "restore-service-ips")
-    assert result.exit_code == 2
+    data.assert_calls_match(
+        command.mock.capture.call_args_list,
+        "recover/release-service-ips-capture",
+    )
+    data.assert_calls_match(
+        command.mock.run.call_args_list, "recover/release-service-ips-run"
+    )
 
 
 def test_restore_service_ips(
+    data: PhalanxData,
     mock_kubernetes_kubectl: MockCommand,
-    snapshot: SnapshotAssertion,
     mocker: MockerFixture,
 ) -> None:
     mocker.patch("time.sleep")
@@ -286,7 +282,7 @@ def test_restore_service_ips(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("service-list-released.json"),
+        stdout=data.read_text("kubectl/service-list-released.json"),
     )
     command.expect_capture(
         args=(
@@ -298,7 +294,8 @@ def test_restore_service_ips(
             "-o",
             "json",
         ),
-        stdout=kubectl_output(
+        stdout=data.read_text(
+            "kubectl/"
             "service-ingress-nginx-controller-released-cluster-ip-with-finalizers.json"
         ),
     )
@@ -312,7 +309,8 @@ def test_restore_service_ips(
             "-o",
             "json",
         ),
-        stdout=kubectl_output(
+        stdout=data.read_text(
+            "kubectl/"
             "service-ingress-nginx-controller-released-cluster-ip-without-finalizers.json"
         ),
     )
@@ -326,7 +324,7 @@ def test_restore_service_ips(
             "-o",
             "json",
         ),
-        stdout=kubectl_output("service-ingress-nginx-controller.json"),
+        stdout=data.read_text("kubectl/service-ingress-nginx-controller.json"),
     )
 
     result = run_cli(
@@ -334,18 +332,17 @@ def test_restore_service_ips(
     )
 
     assert result.exit_code == 0
-    assert command.mock.capture.call_args_list == snapshot
-    assert command.mock.run.call_args_list == snapshot
-
-
-@pytest.mark.usefixtures("mock_kubernetes_kubectl")
-def test_pause_kafka_requires_context() -> None:
-    result = run_cli("recover", "pause-sasquatch-kafka-reconciliation")
-    assert result.exit_code == 2
+    data.assert_calls_match(
+        command.mock.capture.call_args_list,
+        "recover/restore-service-ips-capture",
+    )
+    data.assert_calls_match(
+        command.mock.run.call_args_list, "recover/restore-service-ips-run"
+    )
 
 
 def test_pause_kafka(
-    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+    data: PhalanxData, mock_kubernetes_kubectl: MockCommand
 ) -> None:
     command = mock_kubernetes_kubectl
 
@@ -356,18 +353,14 @@ def test_pause_kafka(
         "fake-context",
     )
     assert result.exit_code == 0
-
-    assert command.mock.run.call_args_list == snapshot
-
-
-@pytest.mark.usefixtures("mock_kubernetes_kubectl")
-def test_resume_kafka_requires_context() -> None:
-    result = run_cli("recover", "resume-sasquatch-kafka-reconciliation")
-    assert result.exit_code == 2
+    data.assert_calls_match(
+        command.mock.run.call_args_list,
+        "recover/pause-sasquatch-kafka-reconciliation",
+    )
 
 
 def test_resume_kafka(
-    mock_kubernetes_kubectl: MockCommand, snapshot: SnapshotAssertion
+    data: PhalanxData, mock_kubernetes_kubectl: MockCommand
 ) -> None:
     command = mock_kubernetes_kubectl
 
@@ -378,19 +371,15 @@ def test_resume_kafka(
         "fake-context",
     )
     assert result.exit_code == 0
-
-    assert command.mock.run.call_args_list == snapshot
-
-
-@pytest.mark.usefixtures("mock_kubernetes_kubectl")
-def test_scale_down_requires_context() -> None:
-    result = run_cli("recover", "scale-down")
-    assert result.exit_code == 2
+    data.assert_calls_match(
+        command.mock.run.call_args_list,
+        "recover/resume-sasquatch-kafka-reconciliation",
+    )
 
 
 def test_scale_down(
+    data: PhalanxData,
     mock_kubernetes_kubectl: MockCommand,
-    snapshot: SnapshotAssertion,
     mocker: MockerFixture,
 ) -> None:
     mocker.patch("time.sleep")
@@ -408,7 +397,7 @@ def test_scale_down(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("service-list.json"),
+        stdout=data.read_text("kubectl/service-list.json"),
     )
     command.expect_capture(
         args=(
@@ -420,7 +409,8 @@ def test_scale_down(
             "-o",
             "json",
         ),
-        stdout=kubectl_output(
+        stdout=data.read_text(
+            "kubectl/"
             "service-ingress-nginx-controller-cluster-ip-with-finalizers.json"
         ),
     )
@@ -434,7 +424,8 @@ def test_scale_down(
             "-o",
             "json",
         ),
-        stdout=kubectl_output(
+        stdout=data.read_text(
+            "kubectl/"
             "service-ingress-nginx-controller-cluster-ip-without-finalizers.json"
         ),
     )
@@ -448,8 +439,8 @@ def test_scale_down(
             "-o",
             "json",
         ),
-        stdout=kubectl_output(
-            "service-ingress-nginx-controller-released.json"
+        stdout=data.read_text(
+            "kubectl/service-ingress-nginx-controller-released.json"
         ),
     )
     command.expect_capture(
@@ -462,7 +453,7 @@ def test_scale_down(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("cronjob-list.json"),
+        stdout=data.read_text("kubectl/cronjob-list.json"),
     )
     command.expect_capture(
         args=(
@@ -474,7 +465,7 @@ def test_scale_down(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("deployment-list.json"),
+        stdout=data.read_text("kubectl/deployment-list.json"),
     )
     command.expect_capture(
         args=(
@@ -486,25 +477,23 @@ def test_scale_down(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("statefulset-list.json"),
+        stdout=data.read_text("kubectl/statefulset-list.json"),
     )
 
     result = run_cli("recover", "scale-down", "--context", "fake-context")
     assert result.exit_code == 0
 
-    assert command.mock.capture.call_args_list == snapshot
-    assert command.mock.run.call_args_list == snapshot
-
-
-@pytest.mark.usefixtures("mock_kubernetes_kubectl")
-def test_scale_up_requires_context() -> None:
-    result = run_cli("recover", "scale-up")
-    assert result.exit_code == 2
+    data.assert_calls_match(
+        command.mock.capture.call_args_list, "recover/scale-down-capture"
+    )
+    data.assert_calls_match(
+        command.mock.run.call_args_list, "recover/scale-down-run"
+    )
 
 
 def test_scale_up(
+    data: PhalanxData,
     mock_kubernetes_kubectl: MockCommand,
-    snapshot: SnapshotAssertion,
     mocker: MockerFixture,
 ) -> None:
     mocker.patch("time.sleep")
@@ -522,7 +511,7 @@ def test_scale_up(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("service-list-released.json"),
+        stdout=data.read_text("kubectl/service-list-released.json"),
     )
     command.expect_capture(
         args=(
@@ -534,7 +523,8 @@ def test_scale_up(
             "-o",
             "json",
         ),
-        stdout=kubectl_output(
+        stdout=data.read_text(
+            "kubectl/"
             "service-ingress-nginx-controller-released-cluster-ip-with-finalizers.json"
         ),
     )
@@ -548,7 +538,8 @@ def test_scale_up(
             "-o",
             "json",
         ),
-        stdout=kubectl_output(
+        stdout=data.read_text(
+            "kubectl/"
             "service-ingress-nginx-controller-released-cluster-ip-without-finalizers.json"
         ),
     )
@@ -562,7 +553,7 @@ def test_scale_up(
             "-o",
             "json",
         ),
-        stdout=kubectl_output("service-ingress-nginx-controller.json"),
+        stdout=data.read_text("kubectl/service-ingress-nginx-controller.json"),
     )
     command.expect_capture(
         args=(
@@ -574,7 +565,7 @@ def test_scale_up(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("deployment-list-scaled-down.json"),
+        stdout=data.read_text("kubectl/deployment-list-scaled-down.json"),
     )
     command.expect_capture(
         args=(
@@ -586,7 +577,7 @@ def test_scale_up(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("statefulset-list-scaled-down.json"),
+        stdout=data.read_text("kubectl/statefulset-list-scaled-down.json"),
     )
     command.expect_capture(
         args=(
@@ -598,11 +589,15 @@ def test_scale_up(
             "json",
             "--all-namespaces",
         ),
-        stdout=kubectl_output("cronjob-list.json"),
+        stdout=data.read_text("kubectl/cronjob-list.json"),
     )
 
     result = run_cli("recover", "scale-up", "--context", "fake-context")
     assert result.exit_code == 0
 
-    assert command.mock.capture.call_args_list == snapshot
-    assert command.mock.run.call_args_list == snapshot
+    data.assert_calls_match(
+        command.mock.capture.call_args_list, "recover/scale-up-capture"
+    )
+    data.assert_calls_match(
+        command.mock.run.call_args_list, "recover/scale-up-run"
+    )

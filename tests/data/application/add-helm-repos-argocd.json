@@ -1,0 +1,9 @@
+[
+  [
+    "repo",
+    "add",
+    "--force-update",
+    "argoproj",
+    "https://argoproj.github.io/argo-helm"
+  ]
+]

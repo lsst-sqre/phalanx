@@ -4,20 +4,17 @@ import os
 from pathlib import Path
 
 import yaml
-from syrupy.assertion import SnapshotAssertion
 
 from phalanx.constants import HELM_DOCLINK_ANNOTATION
 from phalanx.docs.jinja import build_jinja_contexts
 from phalanx.factory import Factory
 from phalanx.models.environments import IdentityProvider
 
-from ..support.data import phalanx_test_path
+from ..support.data import PhalanxData
 
 
-def test_build_jinja_contexts(
-    factory: Factory, snapshot: SnapshotAssertion
-) -> None:
-    config_dir = phalanx_test_path()
+def test_build_jinja_contexts(data: PhalanxData, factory: Factory) -> None:
+    config_dir = data.path("input")
     cwd = Path.cwd()
 
     # build_jinja_contexts expects to be run from a top-level subdirectory of
@@ -74,11 +71,11 @@ def test_build_jinja_contexts(
 
         # Check some of the more complex data.
         scopes = {s.scope: s.groups_as_rst() for s in idfdev.gafaelfawr.scopes}
-        assert scopes == snapshot
+        data.assert_json_matches(scopes, "docs/gafaelfawr-scopes-idfdev")
         scopes = {
             s.scope: s.groups_as_rst() for s in minikube.gafaelfawr.scopes
         }
-        assert scopes == snapshot
+        data.assert_json_matches(scopes, "docs/gafaelfawr-scopes-minikube")
 
         # Check some of the additional application data that isn't used by the
         # command-line tests, only by the documentation.

@@ -7,34 +7,35 @@ from pathlib import Path
 import yaml
 from git.repo import Repo
 from git.util import Actor
-from syrupy.assertion import SnapshotAssertion
 
 from phalanx.factory import Factory
 from phalanx.models.applications import Project
 
 from ..support.cli import run_cli
-from ..support.data import phalanx_test_path, read_output_json
+from ..support.data import PhalanxData
 from ..support.helm import MockHelmCommand
 
 
-def test_add_helm_repos(
-    mock_helm: MockHelmCommand, snapshot: SnapshotAssertion
-) -> None:
+def test_add_helm_repos(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
     result = run_cli("application", "add-helm-repos", "argocd")
     assert result.output == ""
     assert result.exit_code == 0
-    assert mock_helm.call_args_list == snapshot
+    data.assert_json_matches(
+        mock_helm.call_args_list, "application/add-helm-repos-argocd"
+    )
 
     mock_helm.reset_mock()
     result = run_cli("application", "add-helm-repos")
     assert result.output == ""
     assert result.exit_code == 0
-    assert mock_helm.call_args_list == snapshot
+    data.assert_json_matches(
+        mock_helm.call_args_list, "application/add-helm-repos"
+    )
 
 
-def test_create(tmp_path: Path, snapshot: SnapshotAssertion) -> None:
+def test_create(data: PhalanxData, tmp_path: Path) -> None:
     config_path = tmp_path / "phalanx"
-    shutil.copytree(str(phalanx_test_path()), str(config_path))
+    shutil.copytree(str(data.path("input")), str(config_path))
     app_docs_path = config_path / "docs" / "applications"
     apps_path = config_path / "applications"
 
@@ -90,7 +91,7 @@ def test_create(tmp_path: Path, snapshot: SnapshotAssertion) -> None:
 
     # Check that the environments/values.yaml file was updated correctly.
     env_values = (config_path / "environments" / "values.yaml").read_text()
-    assert env_values == snapshot
+    data.assert_text_matches(env_values, "create/values.yaml")
 
     # Check that the Argo CD application templates were created.
     argo_path = config_path / "environments" / "templates" / "applications"
@@ -108,9 +109,9 @@ def test_create(tmp_path: Path, snapshot: SnapshotAssertion) -> None:
 
     # Check that the applications were added to the indices.
     index = (app_docs_path / "infrastructure.rst").read_text()
-    assert index == snapshot
+    data.assert_text_matches(index, "create/infrastructure.rst")
     index = (app_docs_path / "rsp.rst").read_text()
-    assert index == snapshot
+    data.assert_text_matches(index, "create/rsp.rst")
 
     # Enable all of these applications for the minikube environment so that we
     # can load them with the normal tools.
@@ -166,9 +167,9 @@ def test_create(tmp_path: Path, snapshot: SnapshotAssertion) -> None:
     assert "  ZZZ_OTHER_APP_PATH_PREFIX:" in config_map
 
 
-def test_create_errors(tmp_path: Path) -> None:
+def test_create_errors(data: PhalanxData, tmp_path: Path) -> None:
     config_path = tmp_path / "phalanx"
-    shutil.copytree(str(phalanx_test_path()), str(config_path))
+    shutil.copytree(str(data.path("input")), str(config_path))
     result = run_cli(
         "application",
         "create",
@@ -213,9 +214,9 @@ def test_create_errors(tmp_path: Path) -> None:
     assert result.exit_code == 2
 
 
-def test_create_prompt(tmp_path: Path) -> None:
+def test_create_prompt(data: PhalanxData, tmp_path: Path) -> None:
     config_path = tmp_path / "phalanx"
-    shutil.copytree(str(phalanx_test_path()), str(config_path))
+    shutil.copytree(str(data.path("input")), str(config_path))
 
     # Add an application, prompting for the description.
     result = run_cli(
@@ -241,7 +242,7 @@ def test_create_prompt(tmp_path: Path) -> None:
     assert chart["description"] == "Some application"
 
 
-def test_lint(mock_helm: MockHelmCommand, snapshot: SnapshotAssertion) -> None:
+def test_lint(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "lint":
@@ -265,7 +266,9 @@ def test_lint(mock_helm: MockHelmCommand, snapshot: SnapshotAssertion) -> None:
     expected = "==> Linting gafaelfawr (environment idfdev)\n"
     assert result.output == expected
     assert result.exit_code == 0
-    assert mock_helm.call_args_list == snapshot
+    data.assert_json_matches(
+        mock_helm.call_args_list, "application/lint-gafaelfawr"
+    )
 
     # Lint both gafaelfawr and portal for all configured environmments. We
     # won't bother to check the --set flag again. The important part is that
@@ -278,7 +281,9 @@ def test_lint(mock_helm: MockHelmCommand, snapshot: SnapshotAssertion) -> None:
     )
     assert result.output == expected
     assert result.exit_code == 0
-    assert mock_helm.call_args_list == snapshot
+    data.assert_json_matches(
+        mock_helm.call_args_list, "application/lint-gafaelfawr-portal"
+    )
 
     def callback_error(*command: str) -> subprocess.CompletedProcess:
         return subprocess.CompletedProcess(
@@ -298,9 +303,7 @@ def test_lint(mock_helm: MockHelmCommand, snapshot: SnapshotAssertion) -> None:
     assert result.exit_code == 1
 
 
-def test_lint_no_repos(
-    mock_helm: MockHelmCommand, snapshot: SnapshotAssertion
-) -> None:
+def test_lint_no_repos(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "lint":
@@ -319,23 +322,23 @@ def test_lint_no_repos(
     expected = "==> Linting postgres (environment idfdev)\n"
     assert result.output == expected
     assert result.exit_code == 0
-    assert mock_helm.call_args_list == snapshot
+    data.assert_json_matches(
+        mock_helm.call_args_list, "application/lint-postgres"
+    )
 
 
-def test_lint_all(
-    mock_helm: MockHelmCommand, snapshot: SnapshotAssertion
-) -> None:
+def test_lint_all(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
     result = run_cli("application", "lint-all")
     assert result.output == ""
     assert result.exit_code == 0
-    assert mock_helm.call_args_list == snapshot
+    data.assert_json_matches(mock_helm.call_args_list, "application/lint-all")
 
 
 def test_lint_all_git(
-    tmp_path: Path, mock_helm: MockHelmCommand, snapshot: SnapshotAssertion
+    data: PhalanxData, tmp_path: Path, mock_helm: MockHelmCommand
 ) -> None:
     upstream_path = tmp_path / "upstream"
-    shutil.copytree(str(phalanx_test_path()), str(upstream_path))
+    shutil.copytree(str(data.path("input")), str(upstream_path))
     upstream_repo = Repo.init(str(upstream_path), initial_branch="main")
     upstream_repo.index.add(["applications", "environments"])
     actor = Actor("Someone", "someone@example.com")
@@ -376,12 +379,12 @@ def test_lint_all_git(
     )
     assert result.output == ""
     assert result.exit_code == 0
-    assert mock_helm.call_args_list == snapshot
+    data.assert_json_matches(
+        mock_helm.call_args_list, "application/lint-all-git"
+    )
 
 
-def test_template(mock_helm: MockHelmCommand) -> None:
-    test_path = phalanx_test_path()
-
+def test_template(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "template":
@@ -394,27 +397,4 @@ def test_template(mock_helm: MockHelmCommand) -> None:
     result = run_cli("application", "template", "gafaelfawr", "idfdev")
     assert result.output == "this is some template\n"
     assert result.exit_code == 0
-    set_args = read_output_json("idfdev", "lint-set-values")
-    assert mock_helm.call_args_list == [
-        [
-            "repo",
-            "add",
-            "--force-update",
-            "lsst-sqre",
-            "https://lsst-sqre.github.io/charts/",
-        ],
-        ["repo", "update"],
-        ["dependency", "update", "--skip-refresh"],
-        [
-            "template",
-            "gafaelfawr",
-            str(test_path / "applications" / "gafaelfawr"),
-            "--include-crds",
-            "--values",
-            "gafaelfawr/values.yaml",
-            "--values",
-            "gafaelfawr/values-idfdev.yaml",
-            "--set",
-            ",".join(set_args),
-        ],
-    ]
+    data.assert_json_matches(mock_helm.call_args_list, "application/template")

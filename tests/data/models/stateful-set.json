@@ -1,0 +1,32 @@
+{
+  "items": [
+    {
+      "finalizers": [],
+      "kind": "StatefulSet",
+      "name": "gafaelfawr-redis",
+      "namespace": "gafaelfawr",
+      "pervious_replica_count": null,
+      "previous_replica_count": null,
+      "replicas": 1
+    },
+    {
+      "finalizers": [],
+      "kind": "StatefulSet",
+      "name": "gafaelfawr-redis-ephemeral",
+      "namespace": "gafaelfawr",
+      "pervious_replica_count": null,
+      "previous_replica_count": null,
+      "replicas": 1
+    },
+    {
+      "finalizers": [],
+      "kind": "StatefulSet",
+      "name": "argocd",
+      "namespace": "argocd",
+      "pervious_replica_count": null,
+      "previous_replica_count": null,
+      "replicas": 1
+    }
+  ],
+  "kind": "List"
+}

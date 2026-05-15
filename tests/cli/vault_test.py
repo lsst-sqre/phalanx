@@ -7,7 +7,6 @@ from pathlib import Path
 
 import jinja2
 import yaml
-from syrupy.assertion import SnapshotAssertion
 
 from phalanx.constants import (
     VAULT_APPROLE_SECRET_TEMPLATE,
@@ -17,12 +16,12 @@ from phalanx.factory import Factory
 from phalanx.models.vault import VaultAppRole, VaultToken
 
 from ..support.cli import run_cli
-from ..support.data import assert_json_dirs_match, phalanx_test_path
+from ..support.data import PhalanxData
 from ..support.vault import MockVaultClient
 
 
 def test_audit(
-    factory: Factory, mock_vault: MockVaultClient, snapshot: SnapshotAssertion
+    data: PhalanxData, factory: Factory, mock_vault: MockVaultClient
 ) -> None:
     config_storage = factory.create_config_storage()
     environment = config_storage.load_environment_config("idfdev")
@@ -34,7 +33,7 @@ def test_audit(
         "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
     )
     assert result.exit_code == 1
-    assert result.output == snapshot
+    data.assert_text_matches(result.output, "vault/audit-missing")
 
     # Create an AppRole with the wrong policy and the wrong list of policies.
     mock_vault.create_or_update_policy(f"{vault_path}/read", "blah blah blah")
@@ -45,7 +44,7 @@ def test_audit(
         "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
     )
     assert result.exit_code == 1
-    assert result.output == snapshot
+    data.assert_text_matches(result.output, "vault/audit-approle-wrong")
 
     # Use the Phalanx Vault service to recreate the AppRole, which should fix
     # all of the problems, and then add an extra policy.
@@ -60,7 +59,7 @@ def test_audit(
         "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
     )
     assert result.exit_code == 1
-    assert result.output == snapshot
+    data.assert_text_matches(result.output, "vault/audit-approle-extra")
 
     # Fix the AppRole again, and create a write token with the wrong policies
     # and a write policy with the wrong contents.
@@ -75,7 +74,7 @@ def test_audit(
         "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
     )
     assert result.exit_code == 1
-    assert result.output == snapshot
+    data.assert_text_matches(result.output, "vault/audit-write-wrong")
 
     # Create a new token that expires in six days and use that to fix the
     # policy. This should also revoke the old token. Also create a new token
@@ -93,7 +92,7 @@ def test_audit(
     )
     assert result.exit_code == 1
     output = re.sub(r"[\d-]{10} [\d:]{8}", "<timestamp>", result.output)
-    assert output == snapshot
+    data.assert_text_matches(output, "vault/audit-write-expired")
 
 
 def test_audit_clean(factory: Factory, mock_vault: MockVaultClient) -> None:
@@ -109,15 +108,14 @@ def test_audit_clean(factory: Factory, mock_vault: MockVaultClient) -> None:
 
 
 def test_copy_secrets(
+    *,
+    data: PhalanxData,
     factory: Factory,
     tmp_path: Path,
     mock_vault: MockVaultClient,
-    snapshot: SnapshotAssertion,
 ) -> None:
-    input_path = phalanx_test_path()
-    vault_input_path = input_path / "vault" / "idfdev"
     old_path = "secret/k8s_operator/data-dev.lsst.cloud"
-    mock_vault.load_test_data(old_path, "idfdev")
+    mock_vault.load_test_data(data, old_path, "idfdev")
 
     result = run_cli(
         "vault",
@@ -127,7 +125,7 @@ def test_copy_secrets(
         env={"VAULT_TOKEN": "sometoken"},
     )
     assert result.exit_code == 0
-    assert result.output == snapshot
+    data.assert_text_matches(result.output, "vault/copy-secrets")
     result = run_cli(
         "vault",
         "export-secrets",
@@ -137,8 +135,7 @@ def test_copy_secrets(
     )
     assert result.exit_code == 0
     assert result.output == ""
-
-    assert_json_dirs_match(tmp_path, vault_input_path)
+    data.assert_json_dirs_match(tmp_path, "input/vault/idfdev")
 
     # Check that the Vault secrets cannot be copied over themselves.
     config_storage = factory.create_config_storage()
@@ -274,13 +271,15 @@ def test_create_write_token(
 
 
 def test_export_secrets(
-    factory: Factory, tmp_path: Path, mock_vault: MockVaultClient
+    *,
+    data: PhalanxData,
+    factory: Factory,
+    tmp_path: Path,
+    mock_vault: MockVaultClient,
 ) -> None:
-    input_path = phalanx_test_path()
-    vault_input_path = input_path / "vault" / "idfdev"
     config_storage = factory.create_config_storage()
     environment = config_storage.load_environment("idfdev")
-    mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
+    mock_vault.load_test_data(data, environment.vault_path_prefix, "idfdev")
 
     result = run_cli(
         "vault",
@@ -291,5 +290,4 @@ def test_export_secrets(
     )
     assert result.exit_code == 0
     assert result.output == ""
-
-    assert_json_dirs_match(tmp_path, vault_input_path)
+    data.assert_json_dirs_match(tmp_path, "input/vault/idfdev")
