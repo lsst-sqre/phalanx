@@ -110,7 +110,7 @@ atscheduler:
 gis:
   enabled: true
   image:
-    revision: 0
+    revision: 2
     repository: ts-dockerhub.lsst.org/gis
     pullPolicy: Always
   secretFixup:
