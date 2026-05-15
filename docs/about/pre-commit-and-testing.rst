@@ -64,12 +64,12 @@ To do this, run:
 
 This also allows you to preview the new documentation, which will be generated in :file:`docs/_build/html`.
 
-Some tests use syrupy_ to automatically create "snapshots" of expected output.
+Some tests compare the output of commands to saved expected output in the :file:`tests/data` directory.
 If your changes change this expected output, the tests will fail.
-If the changes to the output are in fact correct, you can regenerate these snapshots by running:
+To regenerate the expected output, run:
 
 .. code-block:: sh
 
-   tox run -e py -- --snapshot-update
+   tox run -e py -- --update-test-data
 
-More info on working with `syrupy`_ can be found in the `syrupy docs`_.
+You can then use :command:`git diff tests/data` to check that the changes to the output match your expectations.

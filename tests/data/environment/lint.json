@@ -1,0 +1,29 @@
+[
+  [
+    "lint",
+    "environments",
+    "--strict",
+    "--values",
+    "environments/values.yaml",
+    "--values",
+    "environments/values-idfdev.yaml"
+  ],
+  [
+    "lint",
+    "environments",
+    "--strict",
+    "--values",
+    "environments/values.yaml",
+    "--values",
+    "environments/values-minikube.yaml"
+  ],
+  [
+    "lint",
+    "environments",
+    "--strict",
+    "--values",
+    "environments/values.yaml",
+    "--values",
+    "environments/values-usdfdev-prompt-processing.yaml"
+  ]
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "args": [
+      "scale",
+      "Deployment/gafaelfawr",
+      "--replicas",
+      "1",
+      "--namespace",
+      "gafaelfawr"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "annotate",
+      "Deployment",
+      "gafaelfawr",
+      "phalanx.lsst.org/previous-replica-count-",
+      "--namespace",
+      "gafaelfawr"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "scale",
+      "Deployment/gafaelfawr-operator",
+      "--replicas",
+      "2",
+      "--namespace",
+      "gafaelfawr"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "annotate",
+      "Deployment",
+      "gafaelfawr-operator",
+      "phalanx.lsst.org/previous-replica-count-",
+      "--namespace",
+      "gafaelfawr"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "scale",
+      "StatefulSet/gafaelfawr-redis",
+      "--replicas",
+      "4",
+      "--namespace",
+      "gafaelfawr"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "annotate",
+      "StatefulSet",
+      "gafaelfawr-redis",
+      "phalanx.lsst.org/previous-replica-count-",
+      "--namespace",
+      "gafaelfawr"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "scale",
+      "StatefulSet/gafaelfawr-redis-ephemeral",
+      "--replicas",
+      "5",
+      "--namespace",
+      "gafaelfawr"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "annotate",
+      "StatefulSet",
+      "gafaelfawr-redis-ephemeral",
+      "phalanx.lsst.org/previous-replica-count-",
+      "--namespace",
+      "gafaelfawr"
+    ],
+    "kwargs": {}
+  }
+]

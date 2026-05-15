@@ -1,0 +1,14 @@
+[
+  {
+    "args": [
+      "annotate",
+      "Kafka",
+      "sasquatch",
+      "strimzi.io/pause-reconciliation=true",
+      "--namespace",
+      "sasquatch",
+      "--overwrite"
+    ],
+    "kwargs": {}
+  }
+]

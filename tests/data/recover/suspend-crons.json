@@ -1,0 +1,26 @@
+[
+  {
+    "args": [
+      "patch",
+      "CronJob",
+      "gafaelfawr-maintenance",
+      "--namespace",
+      "gafaelfawr",
+      "--patch",
+      "{\"spec\" : {\"suspend\" : true }}"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "patch",
+      "CronJob",
+      "ook-ingest-lsst-texmf",
+      "--namespace",
+      "ook",
+      "--patch",
+      "{\"spec\" : {\"suspend\" : true }}"
+    ],
+    "kwargs": {}
+  }
+]

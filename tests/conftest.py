@@ -1,26 +1,28 @@
 """Test fixtures."""
 
 from collections.abc import Iterator
+from pathlib import Path
 
 import jinja2
 import pytest
-from syrupy.assertion import SnapshotAssertion
-from syrupy.extensions.single_file import SingleFileAmberSnapshotExtension
 
 from phalanx.factory import Factory
 from phalanx.storage import kubernetes
 
 from .support.command import MockCommand
-from .support.data import phalanx_test_path
+from .support.data import PhalanxData
 from .support.helm import MockHelmCommand, patch_helm
 from .support.onepassword import MockOnepasswordClient, patch_onepassword
 from .support.vault import MockVaultClient, patch_vault
 
 
-@pytest.fixture
-def snapshot(snapshot: SnapshotAssertion) -> SnapshotAssertion:
-    """Override the default snapshot fixture to do a file per test."""
-    return snapshot.use_extension(SingleFileAmberSnapshotExtension)
+def pytest_addoption(parser: pytest.Parser) -> None:
+    parser.addoption(
+        "--update-test-data",
+        action="store_true",
+        default=False,
+        help="Overwrite expected test output with current results",
+    )
 
 
 @pytest.fixture(autouse=True)
@@ -36,15 +38,28 @@ def _clear_environment(monkeypatch: pytest.MonkeyPatch) -> None:
 
 
 @pytest.fixture
-def factory() -> Factory:
+def data(request: pytest.FixtureRequest) -> PhalanxData:
+    update = request.config.getoption("--update-test-data")
+    return PhalanxData(Path(__file__).parent / "data", update_test_data=update)
+
+
+@pytest.fixture
+def factory(data: PhalanxData) -> Factory:
     """Create a factory pointing at the test data."""
-    return Factory(phalanx_test_path())
+    return Factory(data.path("input"))
 
 
 @pytest.fixture
 def mock_helm() -> Iterator[MockHelmCommand]:
     """Mock out Helm commands."""
     yield from patch_helm()
+
+
+@pytest.fixture
+def mock_kubernetes_kubectl() -> Iterator[MockCommand]:
+    """Mock the kubectl Command in the kubernetes storage."""
+    mock_command = MockCommand()
+    yield from mock_command.patch_command_class(kubernetes)
 
 
 @pytest.fixture
@@ -67,10 +82,3 @@ def templates() -> jinja2.Environment:
         undefined=jinja2.StrictUndefined,
         autoescape=jinja2.select_autoescape(disabled_extensions=["tmpl"]),
     )
-
-
-@pytest.fixture
-def mock_kubernetes_kubectl() -> Iterator[MockCommand]:
-    """Mock the kubectl Command in the kubernetes storage."""
-    mock_command = MockCommand()
-    yield from mock_command.patch_command_class(kubernetes)

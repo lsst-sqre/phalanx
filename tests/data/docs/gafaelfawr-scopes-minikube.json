@@ -1,0 +1,23 @@
+{
+  "admin:provision": [
+    ":fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__"
+  ],
+  "exec:admin": [
+    ":fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__"
+  ],
+  "exec:internal-tools": [
+    ":fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__"
+  ],
+  "exec:notebook": [
+    ":fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__"
+  ],
+  "exec:portal": [
+    ":fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__"
+  ],
+  "read:image": [
+    ":fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__"
+  ],
+  "read:tap": [
+    ":fab:`github` `lsst-sqre/square <https://github.com/orgs/lsst-sqre/teams/square>`__"
+  ]
+}

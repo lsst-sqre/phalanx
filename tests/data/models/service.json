@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "external_traffic_policy": "Local",
+      "finalizers": [
+        "gke.networking.io/l4-netlb-v1",
+        "service.kubernetes.io/load-balancer-cleanup"
+      ],
+      "kind": "Service",
+      "load_balancer_ip": "35.225.112.77",
+      "name": "ingress-nginx-controller",
+      "namespace": "ingress-nginx",
+      "previous_external_traffic_policy": null,
+      "previous_loadbalancer_ip": null,
+      "status_load_balancer_ip": "35.225.112.77"
+    }
+  ],
+  "kind": "List"
+}

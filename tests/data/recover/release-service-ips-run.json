@@ -1,0 +1,84 @@
+[
+  {
+    "args": [
+      "annotate",
+      "Service",
+      "ingress-nginx-controller",
+      "phalanx.lsst.org/previous-load-balancer-ip=35.225.112.77",
+      "--namespace",
+      "ingress-nginx"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "annotate",
+      "Service",
+      "ingress-nginx-controller",
+      "phalanx.lsst.org/previous-external-traffic-policy=Local",
+      "--namespace",
+      "ingress-nginx"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "patch",
+      "Service",
+      "ingress-nginx-controller",
+      "--namespace",
+      "ingress-nginx",
+      "--patch",
+      "{\"spec\" : {\"loadBalancerIP\" : null }}"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "patch",
+      "Service",
+      "ingress-nginx-controller",
+      "--namespace",
+      "ingress-nginx",
+      "--patch",
+      "{\"spec\": {\"type\": \"ClusterIP\" } }"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "patch",
+      "Service",
+      "ingress-nginx-controller",
+      "--namespace",
+      "ingress-nginx",
+      "--patch",
+      "{\"spec\": {\"type\": \"LoadBalancer\"}}"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "wait",
+      "--for=jsonpath={.status.loadBalancer.ingress}",
+      "Service/ingress-nginx-controller",
+      "--namespace",
+      "ingress-nginx",
+      "--timeout",
+      "5m"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "patch",
+      "Service",
+      "ingress-nginx-controller",
+      "--namespace",
+      "ingress-nginx",
+      "--patch",
+      "{\"spec\": {\"externalTrafficPolicy\": \"Local\"}}"
+    ],
+    "kwargs": {}
+  }
+]
