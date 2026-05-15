@@ -1,0 +1,26 @@
+[
+  {
+    "args": [
+      "get",
+      "Deployment",
+      "-l",
+      "argocd.argoproj.io/instance",
+      "-o",
+      "json",
+      "--all-namespaces"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "get",
+      "StatefulSet",
+      "-l",
+      "argocd.argoproj.io/instance",
+      "-o",
+      "json",
+      "--all-namespaces"
+    ],
+    "kwargs": {}
+  }
+]

@@ -1,0 +1,11 @@
+[
+  [
+    "lint",
+    "environments",
+    "--strict",
+    "--values",
+    "environments/values.yaml",
+    "--values",
+    "environments/values-idfdev.yaml"
+  ]
+]

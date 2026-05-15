@@ -4,7 +4,6 @@ import uuid
 from collections.abc import Iterator
 from unittest.mock import patch
 
-import yaml
 from onepasswordconnectsdk.client import (
     FailedToRetrieveItemException,
     FailedToRetrieveVaultException,
@@ -17,9 +16,7 @@ from onepasswordconnectsdk.models import (
     Vault,
 )
 
-from phalanx.models.secrets import StaticSecrets
-
-from .data import phalanx_test_path
+from .data import PhalanxData
 
 __all__ = [
     "MockOnepasswordClient",
@@ -47,7 +44,9 @@ class MockOnepasswordClient:
         """
         self._data[vault] = {}
 
-    def load_test_data(self, vault: str, environment: str) -> None:
+    def load_test_data(
+        self, data: PhalanxData, vault: str, environment: str
+    ) -> None:
         """Load 1Password test data for the given environment.
 
         This method is not part of the 1Password Connect API. It is intended
@@ -55,14 +54,14 @@ class MockOnepasswordClient:
 
         Parameters
         ----------
+        data
+            Phalanx test data.
         vault
             Name of the 1Password vault.
         environment
             Name of the environment for which to load 1Password test data.
         """
-        data_path = phalanx_test_path() / "onepassword" / f"{environment}.yaml"
-        with data_path.open() as fh:
-            secrets = StaticSecrets.model_validate(yaml.safe_load(fh))
+        secrets = data.read_static_secrets(f"input/onepassword/{environment}")
         self._data[vault] = {}
         for title, values in secrets.applications.items():
             fields = [Field(label=k, value=v.value) for k, v in values.items()]

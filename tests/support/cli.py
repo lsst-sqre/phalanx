@@ -1,10 +1,10 @@
 """Helper functions for running command-line tests."""
 
+from pathlib import Path
+
 from click.testing import CliRunner, Result
 
 from phalanx.cli import main
-
-from .data import phalanx_test_path
 
 __all__ = ["run_cli"]
 
@@ -33,7 +33,8 @@ def run_cli(
     """
     args = list(command)
     if needs_config:
-        args.extend(["--config", str(phalanx_test_path())])
+        root_path = Path(__file__).parent.parent / "data" / "input"
+        args.extend(["--config", str(root_path)])
     runner = CliRunner()
     return runner.invoke(
         main, args, catch_exceptions=False, env=env, input=stdin

@@ -1,0 +1,12 @@
+[
+  [
+    "template",
+    "science-platform",
+    "<ANY>",
+    "--include-crds",
+    "--values",
+    "environments/values.yaml",
+    "--values",
+    "environments/values-idfdev.yaml"
+  ]
+]

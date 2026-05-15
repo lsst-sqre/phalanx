@@ -1,0 +1,88 @@
+[
+  {
+    "args": [
+      "get",
+      "Service",
+      "--field-selector",
+      "spec.type=LoadBalancer",
+      "-l",
+      "argocd.argoproj.io/instance",
+      "-o",
+      "json",
+      "--all-namespaces"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "get",
+      "Service",
+      "ingress-nginx-controller",
+      "--namespace",
+      "ingress-nginx",
+      "-o",
+      "json"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "get",
+      "Service",
+      "ingress-nginx-controller",
+      "--namespace",
+      "ingress-nginx",
+      "-o",
+      "json"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "get",
+      "Service",
+      "ingress-nginx-controller",
+      "--namespace",
+      "ingress-nginx",
+      "-o",
+      "json"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "get",
+      "CronJob",
+      "-l",
+      "argocd.argoproj.io/instance",
+      "-o",
+      "json",
+      "--all-namespaces"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "get",
+      "Deployment",
+      "-l",
+      "argocd.argoproj.io/instance",
+      "-o",
+      "json",
+      "--all-namespaces"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "get",
+      "StatefulSet",
+      "-l",
+      "argocd.argoproj.io/instance",
+      "-o",
+      "json",
+      "--all-namespaces"
+    ],
+    "kwargs": {}
+  }
+]
