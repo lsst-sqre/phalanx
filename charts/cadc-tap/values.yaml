@@ -86,6 +86,10 @@ config:
     # -- Extra JDBC connection parameters
     jdbcParams: ""
 
+    # -- Schema name mappings: comma-separated list of user_schema:internal_schema pairs.
+    # Example: "dp1:dp1_pilot" dp1 queries execute against dp1_pilot.
+    schemaMappings: ""
+
     image:
       # -- TAP image to use
       repository: "ghcr.io/lsst-sqre/lsst-tap-service"
