@@ -15,6 +15,3 @@ config:
 redis:
   persistence:
     enabled: true
-
-resultWorker:
-  allowRootDebug: false
