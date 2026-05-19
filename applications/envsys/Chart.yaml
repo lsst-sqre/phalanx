@@ -7,6 +7,16 @@ dependencies:
   version: 1.0.0
   repository: file://../../charts/csc_shared
 - name: csc
+  alias: automatic-transfer-switch-ess309
+  version: 1.0.0
+  condition: automatic-transfer-switch-ess309.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: automatic-transfer-switch-ess309-sim
+  version: 1.0.0
+  condition: automatic-transfer-switch-ess309-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: auxtel-ess201
   version: 1.0.0
   condition: auxtel-ess201.enabled
@@ -430,6 +440,26 @@ dependencies:
   alias: tma-ess110-sim
   version: 1.0.0
   condition: tma-ess110-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: ups-server-room1-ess310
+  version: 1.0.0
+  condition: ups-server-room1-ess310.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: ups-server-room1-ess310-sim
+  version: 1.0.0
+  condition: ups-server-room1-ess310-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: ups-server-room2-ess311
+  version: 1.0.0
+  condition: ups-server-room2-ess311.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: ups-server-room2-ess311-sim
+  version: 1.0.0
+  condition: ups-server-room2-ess311-sim.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: weatherforecast
