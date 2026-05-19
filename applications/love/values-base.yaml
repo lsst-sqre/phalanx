@@ -475,6 +475,10 @@ love-producer:
   - name: atspectrograph
     csc: ATSpectrograph:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
+  - name: automatic-transfer-switch-ess309
+    csc: ESS:309 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: auxteless201
     csc: ESS:201 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
@@ -856,6 +860,14 @@ love-producer:
   - name: tunablelaser
     csc: TunableLaser:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
+  - name: ups-server-room1-ess310
+    csc: ESS:310 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
+  - name: ups-server-room2-ess311
+    csc: ESS:311 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: watcher
     csc: Watcher:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
