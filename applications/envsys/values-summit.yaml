@@ -1,3 +1,20 @@
+automatic-transfer-switch-ess309:
+  enabled: true
+  classifier: ess309
+  image:
+    revision: 3
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 309
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 360Mi
+
 auxtel-ess201:
   enabled: true
   classifier: ess201
@@ -696,6 +713,40 @@ tma-ess110:
     limits:
       cpu: 190m
       memory: 540Mi
+
+ups-server-room1-ess310:
+  enabled: true
+  classifier: ess310
+  image:
+    revision: 3
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 310
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 360Mi
+
+ups-server-room2-ess311:
+  enabled: true
+  classifier: ess311
+  image:
+    revision: 3
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 311
+  resources:
+    requests:
+      cpu: 19m
+      memory: 180Mi
+    limits:
+      cpu: 190m
+      memory: 360Mi
 
 weatherforecast:
   image:
