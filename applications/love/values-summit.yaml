@@ -60,7 +60,7 @@ love-commander:
 x-manager-producer:
   &base-manager-producer
   image:
-    revision: 0
+    revision: 3
     repository: ts-dockerhub.lsst.org/love-manager
     pullPolicy: Always
   env:
@@ -113,7 +113,7 @@ love-manager:
   manager:
     frontend:
       image:
-        revision: 0
+        revision: 3
         repository: ts-dockerhub.lsst.org/love-manager
         pullPolicy: Always
       env:
@@ -228,7 +228,7 @@ love-nginx:
   initContainers:
     frontend:
       image:
-        revision: 1
+        revision: 2
         repository: ts-dockerhub.lsst.org/love-frontend-k8s
         pullPolicy: Always
     manager:
@@ -539,6 +539,10 @@ love-producer:
   - name: atspectrograph
     csc: ATSpectrograph:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
+  - name: automatic-transfer-switch-ess309
+    csc: ESS:309 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: atwhitelight
     csc: ATWhiteLight:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
@@ -1014,6 +1018,15 @@ love-producer:
   - name: tunablelaser
     csc: TunableLaser:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
+  - name: ups-server-room1-ess310
+    csc: ESS:310 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
+  - name: ups-server-room2-ess311
+    csc: ESS:311 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    <<: *love-producer-envsys-resources
+
   - name: watcher
     csc: Watcher:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription

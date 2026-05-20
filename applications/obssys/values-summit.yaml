@@ -14,7 +14,7 @@ x-butler-lfa-combo: &butler-lfa-combo
 atqueue:
   classifier: scriptqueue2
   image:
-    revision: 0
+    revision: 3
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
   env:
@@ -131,7 +131,7 @@ gis:
 mtqueue:
   classifier: scriptqueue1
   image:
-    revision: 0
+    revision: 3
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
   env:
@@ -227,7 +227,7 @@ mtscheduler:
 ocsqueue:
   classifier: scriptqueue3
   image:
-    revision: 0
+    revision: 3
     repository: ts-dockerhub.lsst.org/scriptqueue
     pullPolicy: Always
   env:
@@ -321,7 +321,7 @@ ocsscheduler:
 
 watcher:
   image:
-    revision: 1
+    revision: 3
     repository: ts-dockerhub.lsst.org/watcher
     pullPolicy: Always
   envSecrets:
