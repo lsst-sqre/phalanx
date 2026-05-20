@@ -62,8 +62,11 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.defaultSize | string | `"large"` | Default size selected on the spawner form. This must be either `null` or the name of one of the sizes listed in `sizes`. If `null`, the first listed size will be the default. |
 | controller.config.lab.deleteTimeout | string | `"2m"` | Timeout for deleting a user's lab resources from Kubernetes in Safir `parse_timedelta` format |
 | controller.config.lab.emptyDirSource | string | `"memory"` | Select where `/tmp` and `/lab_startup` in the lab will come from. Choose between `disk` (node-local ephemeral storage) and `memory` (tmpfs capped at 25% of the available memory for `/tmp`). |
+| controller.config.lab.enableRubinQueryMenu | bool | `true` | Enable TAP query menu.  Allows selection of recent TAP queries and opening of notebooks that use them. |
+| controller.config.lab.enableTutorialsMenu | bool | `true` | Enable tutorials menu.  Sets up hierarchical menu with CST tutorials available for selection. |
 | controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab |
 | controller.config.lab.extraAnnotations | object | `{}` | Extra annotations to add to user lab pods |
+| controller.config.lab.fileBrowserRoot | string | `"home"` | File browser root; either "root" or "home"; defines the top level directory that the Lab file browser can reach. |
 | controller.config.lab.files | object | See `values.yaml` | Files to be mounted as ConfigMaps inside the user lab pod. `contents` contains the file contents. Set `modify` to true to make the file writable in the pod. |
 | controller.config.lab.homeVolumeName | string | `"home"` | Home volume name.  The controller needs to know which volume contains user homes. |
 | controller.config.lab.homedirPrefix | string | `"/home"` | Prefix of home directory path to add before the username. This is the path inside the container, not the path of the volume. |

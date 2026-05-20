@@ -1,5 +1,8 @@
 sentry:
   enabled: true
+image:
+  tag: "tickets-DM-49034-and-53832"
+  pullPolicy: "Always"
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
@@ -44,6 +47,7 @@ controller:
         TMPDIR: "/tmp"
         TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
+      fileBrowserRoot: "root"
       nodeSelector:
         node_pool: "user-lab-pool"
       tolerations:

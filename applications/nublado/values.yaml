@@ -233,6 +233,14 @@ controller:
       # `memory` (tmpfs capped at 25% of the available memory for `/tmp`).
       emptyDirSource: "memory"
 
+      # -- Enable TAP query menu.  Allows selection of recent TAP
+      # queries and opening of notebooks that use them.
+      enableRubinQueryMenu: true
+
+      # -- Enable tutorials menu.  Sets up hierarchical menu with CST
+      # tutorials available for selection.
+      enableTutorialsMenu: true
+
       # -- Environment variables to set for every user lab
       # @default -- See `values.yaml`
       env:
@@ -278,6 +286,10 @@ controller:
           #url_prefix = /idds
           #cacher_dir = /tmp
           cacher_dir = /data/idds
+
+      # -- File browser root; either "root" or "home"; defines the top
+      # level directory that the Lab file browser can reach.
+      fileBrowserRoot: "home"
 
       # -- Path inside the lab container where custom JupyterLab configuration
       # is stored
