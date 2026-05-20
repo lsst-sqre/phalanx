@@ -207,7 +207,7 @@ earthquake-ess302:
 eas:
   enabled: true
   image:
-    revision: 0
+    revision: 2
     repository: ts-dockerhub.lsst.org/eas
     pullPolicy: Always
   resources:
@@ -750,7 +750,7 @@ ups-server-room2-ess311:
 
 weatherforecast:
   image:
-    revision: 0
+    revision: 3
     repository: ts-dockerhub.lsst.org/weatherforecast
     pullPolicy: Always
   env:
