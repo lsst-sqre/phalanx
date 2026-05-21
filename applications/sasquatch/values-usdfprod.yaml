@@ -660,6 +660,17 @@ kafdrop-remote:
     hostname: usdf-rsp.slac.stanford.edu
     path: /kafdrop-remote
 
+rest-proxy:
+  enabled: true
+  ingress:
+    enabled: true
+    hostname: usdf-rsp.slac.stanford.edu
+  kafka:
+    topicPrefixes:
+      - lsst.dm
+      - lsst.verify
+      - lsst.prompt
+
 chronograf:
   ingress:
     enabled: true
