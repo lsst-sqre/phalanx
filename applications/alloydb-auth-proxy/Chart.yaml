@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 1.13.7
+description: Proxy service for connecting to AlloyDB from USDF
+name: alloydb-auth-proxy
+sources:
+- https://github.com/GoogleCloudPlatform/alloydb-auth-proxy
+type: application
+version: 1.0.0
