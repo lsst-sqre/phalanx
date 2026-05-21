@@ -126,22 +126,15 @@ kafdrop-remote:
     path: /kafdrop-remote
 
 rest-proxy:
-  enabled: false
+  enabled: true
   ingress:
     enabled: true
     hostname: usdf-rsp-int.slac.stanford.edu
   kafka:
-    topics:
-      - test.next-visit
     topicPrefixes:
-      - test
       - lsst.dm
-      - lsst.debug
-      - lsst.example
-      - lsst.rubintv
-      - lsst.camera
       - lsst.verify
-      - lsst.lf
+      - lsst.prompt
 
 chronograf:
   ingress:
