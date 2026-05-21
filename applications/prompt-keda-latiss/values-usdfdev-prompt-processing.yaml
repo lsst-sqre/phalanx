@@ -71,7 +71,6 @@ prompt-keda:
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
-    auth_env: false
 
   keda:
     redisStreams:
