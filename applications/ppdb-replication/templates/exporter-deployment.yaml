@@ -71,6 +71,8 @@ spec:
               value: {{ .Values.config.additionalS3ProfileUrl | quote }}
             - name: LSST_DISABLE_BUCKET_VALIDATION
               value: {{ .Values.config.disableBucketValidation | quote }}
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/app/secrets/gcs-credentials.json"
             - name: DAX_APDB_MONITOR_CONFIG
               value: "logging:lsst.dax.ppdb.metrics,lsst.dax.ppdb.bigquery.ppdb_bigquery,-any"
           volumeMounts:
