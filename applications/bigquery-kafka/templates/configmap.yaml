@@ -17,6 +17,9 @@ data:
   {{- if .Values.config.bigqueryMaxBytesBilled }}
   QSERV_KAFKA_BIGQUERY_MAX_BYTES_BILLED: {{ int64 .Values.config.bigqueryMaxBytesBilled | quote }}
   {{- end }}
+  {{- if .Values.config.maxResultBytes }}
+  QSERV_KAFKA_MAX_RESULT_BYTES: {{ int64 .Values.config.maxResultBytes | quote }}
+  {{- end }}
   QSERV_KAFKA_JOB_CANCEL_TOPIC: {{ .Values.config.jobCancelTopic | quote }}
   QSERV_KAFKA_JOB_RUN_BATCH_SIZE: {{ .Values.config.jobRunBatchSize | quote }}
   QSERV_KAFKA_JOB_RUN_MAX_BYTES: {{ int64 .Values.config.jobRunMaxBytes | quote }}
