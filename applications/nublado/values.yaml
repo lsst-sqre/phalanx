@@ -235,7 +235,7 @@ controller:
 
       # -- Enable TAP query menu.  Allows selection of recent TAP
       # queries and opening of notebooks that use them.
-      enableRubinQueryMenu: true
+      enableJobsMenu: true
 
       # -- Enable tutorials menu.  Sets up hierarchical menu with CST
       # tutorials available for selection.
