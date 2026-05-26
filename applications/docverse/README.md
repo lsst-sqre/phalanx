@@ -26,6 +26,8 @@ Publish versioned docs
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/docverse/api"` | URL path prefix |
+| config.sentry.enabled | bool | `false` | Whether to send error reports and tracing data to Sentry. Requires the sentry-dsn secret to be set in Vault. |
+| config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1. |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
 | config.superadminUsers | list | `["jonathansick"]` | Usernames that have super admin (de facto admin in all organizations) |
 | config.updateSchema | bool | `false` | Whether to run Alembic schema migrations on install/upgrade |
