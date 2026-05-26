@@ -21,7 +21,7 @@ atqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 2 --state enabled
     USER_USERNAME: user
-    IMAGE_SERVER_URL: http://ccs.lsst.org
+    IMAGE_SERVER_URL: http://lsstcam-mcm.cp.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
@@ -138,7 +138,7 @@ mtqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 1 --state enabled
     USER_USERNAME: user
-    IMAGE_SERVER_URL: http://ccs.lsst.org
+    IMAGE_SERVER_URL: http://lsstcam-mcm.cp.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
@@ -233,7 +233,7 @@ ocsqueue:
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 3 --state enabled
-    IMAGE_SERVER_URL: http://ccs.lsst.org
+    IMAGE_SERVER_URL: http://lsstcam-mcm.cp.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
