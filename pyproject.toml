@@ -62,7 +62,7 @@ docs = [
     "sphinx-jinja",
 ]
 lint = [
-    "prek",
+    "prek!=0.4.2",  # https://github.com/j178/prek/issues/2127
     "ruff>=0.15",
     "uv",
 ]
