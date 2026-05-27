@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-so/rubintv_production
-  tag: tickets-DM-54937
+  tag: tickets-DM-55049
   pullPolicy: Always
 location: BTS
 env:
@@ -10,7 +10,7 @@ env:
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   RAPID_ANALYSIS_DO_RAISE: True
   BUTLER_ROLLOUT_PAUSE: 1.0
-  RA_PULL_DIRECTORIES: "rubintv_production"
+  RA_PULL_DIRECTORIES: ""
   TARTS_DATA_DIR: /project/rubintv/aos_data/TARTS
   AI_DONUT_DATA_DIR: /project/rubintv/aos_data/AI_DONUT
   # These threading env vars are the ones set in
@@ -226,11 +226,11 @@ lsstcamWorkerSet:
   replicas: 189  # 1 deep for now
   resources:
     requests:
-      cpu: 0.5
-      memory: 4G
+      cpu: 0.25
+      memory: 3G
     limits:
       cpu: 1.0
-      memory: 6G  # we should check this value
+      memory: 5G  # we should check this value
 lsstcamAosWorkerSet:
   name: LSSTCam/runAosWorker.py
   mounts:
