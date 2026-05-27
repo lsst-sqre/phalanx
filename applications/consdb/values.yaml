@@ -43,6 +43,19 @@ pq:
     # -- Overrides the image tag whose default is the chart appVersion.
     tag: ""
 
+consistencyCheck:
+  # -- Enable consistency check CronJob
+  enable: false
+  image:
+    # -- Pull policy for the consdb-hinfo image
+    pullPolicy: "Always"
+    # -- Image to use in the consdb-pq deployment
+    repository: "ghcr.io/lsst-dm/consdb-consistency-check"
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+    # -- Resource requests for the consistency check cron job
+    resources: {}
+
 kafka:
   # -- Kafka bootstrap server
   bootstrap: "sasquatch-kafka-bootstrap.sasquatch:9092"

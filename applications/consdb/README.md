@@ -17,6 +17,11 @@ Consolidated Database of Image Metadata
 | autoscaling.maxReplicas | int | `10` | Maximum number of consdb deployment pods |
 | autoscaling.minReplicas | int | `1` | Minimum number of consdb deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of consdb deployment pods |
+| consistencyCheck.enable | bool | `false` | Enable consistency check CronJob |
+| consistencyCheck.image.pullPolicy | string | `"Always"` | Pull policy for the consdb-hinfo image |
+| consistencyCheck.image.repository | string | `"ghcr.io/lsst-dm/consdb-consistency-check"` | Image to use in the consdb-pq deployment |
+| consistencyCheck.image.resources | object | `{}` | Resource requests for the consistency check cron job |
+| consistencyCheck.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | db.database | string | `"consdb"` | Database name |
 | db.host | string | `"postgres.postgres"` | Database host |
 | db.user | string | `"consdb"` | Database user |
