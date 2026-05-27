@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "tickets-DM-54913-ref-deleted-triggers"
+appVersion: "tickets-DM-54914"
 description: Publish versioned docs
 name: docverse
 sources:
