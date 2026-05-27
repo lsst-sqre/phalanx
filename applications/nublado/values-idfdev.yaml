@@ -33,6 +33,7 @@ controller:
         - containerPath: "/home"
           volumeName: "home"
     images:
+      pin: ["exp_w_2026_22_ai"]
       source:
         type: "google"
         location: "us-central1"
