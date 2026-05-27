@@ -7,6 +7,17 @@ controller:
   nodeSelector:
     edu.stanford.slac.sdf.project/rsp: "true"
   config:
+    dropdownMenu:
+      release:
+        cutoffVersion: "29.0.0"
+      weekly:
+        number: 78
+      daily:
+        number: 25
+      releaseCandidate:
+        cutoffVersion: "29.2.1"
+      experimental:
+        age: "3w"
     logLevel: "DEBUG"
     images:
       source:
