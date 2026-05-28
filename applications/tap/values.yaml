@@ -20,6 +20,9 @@ cadc-tap:
     outputLimit: "3221225472"
     outputLimitUnit: "byte"
 
+    # -- Advertise VOParquet as a supported output format
+    voParquet: true
+
   serviceAccount:
     # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
     name: "tap"
