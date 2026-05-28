@@ -19,5 +19,12 @@
     "--force-update",
     "lsst-sqre",
     "https://lsst-sqre.github.io/charts/"
+  ],
+  [
+    "repo",
+    "add",
+    "--force-update",
+    "ricoberger",
+    "https://ricoberger.github.io/helm-charts/"
   ]
 ]

@@ -7,7 +7,10 @@
       "namespace": "gafaelfawr",
       "pervious_replica_count": null,
       "previous_replica_count": null,
-      "replicas": 1
+      "replicas": 1,
+      "status": {
+        "conditions": []
+      }
     },
     {
       "finalizers": [],
@@ -16,7 +19,10 @@
       "namespace": "gafaelfawr",
       "pervious_replica_count": null,
       "previous_replica_count": null,
-      "replicas": 1
+      "replicas": 1,
+      "status": {
+        "conditions": []
+      }
     },
     {
       "finalizers": [],
@@ -25,7 +31,10 @@
       "namespace": "argocd",
       "pervious_replica_count": null,
       "previous_replica_count": null,
-      "replicas": 1
+      "replicas": 1,
+      "status": {
+        "conditions": []
+      }
     }
   ],
   "kind": "List"

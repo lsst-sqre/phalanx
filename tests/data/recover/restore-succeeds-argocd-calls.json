@@ -1,0 +1,1017 @@
+[
+  {
+    "args": [
+      "login",
+      "--plaintext",
+      "--username",
+      "admin",
+      "--password",
+      "6f80a0863ae18da19d53e99b9ce67f82f54bc6164f368b6863471002992f0063",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "login",
+      "--plaintext",
+      "--username",
+      "admin",
+      "--password",
+      "6f80a0863ae18da19d53e99b9ce67f82f54bc6164f368b6863471002992f0063",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "create",
+      "science-platform",
+      "--repo",
+      "https://nope.nope",
+      "--path",
+      "environments",
+      "--dest-namespace",
+      "argocd",
+      "--dest-server",
+      "https://kubernetes.default.svc",
+      "--upsert",
+      "--revision",
+      "main",
+      "--helm-set",
+      "repoUrl=https://nope.nope",
+      "--helm-set",
+      "targetRevision=main",
+      "--values",
+      "values.yaml",
+      "--values",
+      "values-idfdev.yaml",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "science-platform",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "set",
+      "science-platform",
+      "--project",
+      "infrastructure",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "argocd",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "argocd",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "cert-manager",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "eups-distributor",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "gafaelfawr",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "jira-data-proxy",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "mobu",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "onepassword-connect",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "ook",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "repertoire",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "sasquatch",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "squarebot",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "squareone",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "templatebot",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "turborepo-cache",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "unfurlbot",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:VaultSecret:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "login",
+      "--plaintext",
+      "--username",
+      "admin",
+      "--password",
+      "6f80a0863ae18da19d53e99b9ce67f82f54bc6164f368b6863471002992f0063",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "set",
+      "sasquatch",
+      "--helm-set",
+      "strimzi-kafka.kafka.pauseReconciliation=true",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "sasquatch",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:KafkaUser:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "sasquatch",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:KafkaTopic:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "gafaelfawr",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:KafkaAccess:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "ook",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:KafkaAccess:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "squarebot",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:KafkaAccess:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "templatebot",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:KafkaAccess:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "unfurlbot",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:KafkaAccess:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "sasquatch",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:Kafka:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "cert-manager",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "sasquatch",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:KafkaNodePool:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "unset",
+      "sasquatch",
+      "--parameter",
+      "strimzi-kafka.kafka.pauseReconciliation",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "postgres",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "gafaelfawr",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "argocd",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "cert-manager",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "eups-distributor",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "gafaelfawr",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "giftless",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "google-cloud-observability",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "ingress-nginx",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "ook",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "squarebot",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "strimzi",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "strimzi-access-operator",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "strimzi-registry-operator",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "turborepo-cache",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "vault",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "vault-secrets-operator",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ServiceAccount:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "argocd",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "gafaelfawr",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "giftless",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "ingress-nginx",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "jira-data-proxy",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "mobu",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "ook",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "repertoire",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "sasquatch",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "squarebot",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "squareone",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "strimzi",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "templatebot",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "turborepo-cache",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "unfurlbot",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "vault",
+      "--timeout",
+      "120",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd",
+      "--resource",
+      "*:ConfigMap:*"
+    ],
+    "kwargs": {}
+  },
+  {
+    "args": [
+      "app",
+      "sync",
+      "-l",
+      "argocd.argoproj.io/instance=science-platform",
+      "--timeout",
+      "300",
+      "--port-forward",
+      "--port-forward-namespace",
+      "argocd"
+    ],
+    "kwargs": {}
+  }
+]

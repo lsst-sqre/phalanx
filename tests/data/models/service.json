@@ -12,6 +12,9 @@
       "namespace": "ingress-nginx",
       "previous_external_traffic_policy": null,
       "previous_loadbalancer_ip": null,
+      "status": {
+        "conditions": []
+      },
       "status_load_balancer_ip": "35.225.112.77"
     }
   ],

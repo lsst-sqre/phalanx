@@ -4,13 +4,19 @@
       "finalizers": [],
       "kind": "CronJob",
       "name": "gafaelfawr-maintenance",
-      "namespace": "gafaelfawr"
+      "namespace": "gafaelfawr",
+      "status": {
+        "conditions": []
+      }
     },
     {
       "finalizers": [],
       "kind": "CronJob",
       "name": "ook-ingest-lsst-texmf",
-      "namespace": "ook"
+      "namespace": "ook",
+      "status": {
+        "conditions": []
+      }
     }
   ],
   "kind": "List"
