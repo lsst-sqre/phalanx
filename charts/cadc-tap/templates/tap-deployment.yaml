@@ -191,6 +191,9 @@ spec:
                 {{- if .Values.config.maxRec }}
                 -Dtap.maxRec={{ .Values.config.maxRec }}
                 {{- end }}
+                {{- if .Values.config.voParquet }}
+                -Dtap.enableVOParquet=true
+                {{- end }}
                 -Dbase_url={{ .Values.global.baseUrl }}
                 -Dpath_prefix=/api/{{ .Values.ingress.path }}
                 -Dca.nrc.cadc.util.PropertiesReader.dir=/config/
