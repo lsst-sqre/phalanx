@@ -35,7 +35,7 @@ audio-broadcaster:
 
 love-commander:
   image:
-    revision: 0
+    revision: 3
     repository: ts-dockerhub.lsst.org/love-commander
     pullPolicy: Always
   env:
@@ -465,7 +465,7 @@ x-love-producer-vms-resources:
 
 love-producer:
   image:
-    revision: 0
+    revision: 3
     repository: ts-dockerhub.lsst.org/love-producer
     pullPolicy: Always
   resources:
