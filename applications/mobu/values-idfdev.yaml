@@ -1,3 +1,6 @@
+image:
+  tag: "tickets-DM-53832"
+  pullPolicy: "Always"
 config:
   logLevel: DEBUG
   logMonkeysToFile: false
@@ -53,7 +56,9 @@ config:
         type: "NotebookRunnerCounting"
         options:
           image:
-            image_class: "latest-weekly"
+#            image_class: "latest-weekly"
+            image_class: "by-tag"
+            tag: "exp_w_2026_22_ai"
           repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
           repo_ref: "main"
           execution_idle_time: 0
