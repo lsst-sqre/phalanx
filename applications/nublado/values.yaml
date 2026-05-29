@@ -233,8 +233,8 @@ controller:
       # `memory` (tmpfs capped at 25% of the available memory for `/tmp`).
       emptyDirSource: "memory"
 
-      # -- Whether to enable Rubin menu and query submenus
-      enableRubinQueryMenu: true
+      # -- Whether to enable Jobs menu and query submenus
+      enableJobsMenu: true
 
       # -- Whether to enable Tutorials menu and submenus
       enableTutorialsMenu: true
