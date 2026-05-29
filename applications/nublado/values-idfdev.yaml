@@ -1,6 +1,6 @@
 image:
   pullPolicy: Always
-  tag: "tickets-DM-53832-startup"
+  tag: "tickets-DM-53832"
 sentry:
   enabled: true
 controller:
@@ -33,6 +33,7 @@ controller:
         - containerPath: "/home"
           volumeName: "home"
     images:
+      pin: ["exp_w_2026_22_ai"]
       source:
         type: "google"
         location: "us-central1"
