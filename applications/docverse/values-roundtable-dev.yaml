@@ -12,6 +12,7 @@ config:
     enabled: true
   lifecycleEval:
     enabled: true
+    gitRefAuditEnabled: true
   sentry:
     enabled: true
 
