@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: main
+  tag: fov-quicklook-local-issue19-service-host-fix-20260602a
 
 config:
   # -- URL path prefix
