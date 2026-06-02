@@ -1,0 +1,5 @@
+apiVersion: v2
+description: YouCat instance for storing and managing user-created tables
+name: usertap
+type: application
+version: 1.0.0

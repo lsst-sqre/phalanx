@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "usertap"
+  labels:
+    {{- include "usertap.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "usertap.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "youcat"
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      labels:
+        {{- include "usertap.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "youcat"
+    spec:
+      {{- if .Values.cloudsql.enabled }}
+      serviceAccountName: "usertap"
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        - name: "youcat"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          command: ["/usr/bin/cadc-tomcat-start"]
+          env:
+            - name: "org.opencadc.youcat.tapadm.password"
+              valueFrom:
+                secretKeyRef:
+                  name: "usertap"
+                  key: "db-password"
+            - name: "org.opencadc.youcat.tapuser.password"
+              valueFrom:
+                secretKeyRef:
+                  name: "usertap"
+                  key: "db-password"
+            - name: "org.opencadc.youcat.uws.password"
+              valueFrom:
+                secretKeyRef:
+                  name: "usertap"
+                  key: "db-password"
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: "config"
+              mountPath: "/config"
+              readOnly: true
+      {{- if .Values.cloudsql.enabled }}
+      initContainers:
+        - name: "cloud-sql-proxy"
+          command:
+            - "/cloud_sql_proxy"
+            - "-ip_address_types=PRIVATE"
+            - "-log_debug_stdout=true"
+            - "-structured_logs=true"
+            - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
+          image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
+          imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
+          {{- with .Values.cloudsql.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          restartPolicy: "Always"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+      {{- end }}
+      # securityContext:
+      #   runAsNonRoot: true
+      #   runAsUser: 1000
+      #   runAsGroup: 1000
+      volumes:
+        - name: "config"
+          configMap:
+            name: "usertap"

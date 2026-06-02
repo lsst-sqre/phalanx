@@ -30,5 +30,6 @@ Argo CD project: ``rsp``
    ssotap/index
    tap/index
    times-square/index
+   usertap/index
    vo-cutouts/index
    wobbly/index
