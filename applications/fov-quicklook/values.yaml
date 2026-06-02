@@ -138,6 +138,21 @@ butler_settings:
 # -- Context menu templates for the frontend
 context_menu_templates: []
 
+debug:
+  jupyter: false
+  username: ""
+  websocketProbe:
+    enabled: false
+    port: 9801
+    clientIntervalSeconds: 10
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 1000m
+        memory: 256Mi
+
 # -- CCD data type configurations for the quicklook system
 # Each entry defines how to access different types of Butler data
 ccd_data_types:

@@ -1,0 +1,123 @@
+{{- if .Values.debug.websocketProbe.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fov-quicklook-websocket-probe-server
+  labels:
+    app: fov-quicklook-websocket-probe-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fov-quicklook-websocket-probe-server
+  template:
+    metadata:
+      labels:
+        app: fov-quicklook-websocket-probe-server
+    spec:
+      containers:
+        - name: websocket-probe-server
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          command:
+            - python
+            - -u
+            - -m
+            - quicklook.dev.websocket_probe
+            - server
+            - --host
+            - 0.0.0.0
+            - --port
+            - {{ .Values.debug.websocketProbe.port | quote }}
+          ports:
+            - containerPort: {{ .Values.debug.websocketProbe.port }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: {{ .Values.debug.websocketProbe.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+          resources: {{ toYaml .Values.debug.websocketProbe.resources | nindent 12 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fov-quicklook-websocket-probe
+spec:
+  selector:
+    app: fov-quicklook-websocket-probe-server
+  ports:
+    - name: websocket
+      protocol: TCP
+      port: {{ .Values.debug.websocketProbe.port }}
+      targetPort: {{ .Values.debug.websocketProbe.port }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fov-quicklook-websocket-probe-client
+  labels:
+    app: fov-quicklook-websocket-probe-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fov-quicklook-websocket-probe-client
+  template:
+    metadata:
+      labels:
+        app: fov-quicklook-websocket-probe-client
+    spec:
+      containers:
+        - name: websocket-probe-client
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          command:
+            - python
+            - -u
+            - -m
+            - quicklook.dev.websocket_probe
+            - client
+            - --url
+            - ws://fov-quicklook-websocket-probe:{{ .Values.debug.websocketProbe.port }}/ws
+            - --repeat
+            - --interval-seconds
+            - {{ .Values.debug.websocketProbe.clientIntervalSeconds | quote }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+          resources: {{ toYaml .Values.debug.websocketProbe.resources | nindent 12 }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: fov-quicklook-websocket-probe-server
+spec:
+  podSelector:
+    matchLabels:
+      app: fov-quicklook-websocket-probe-server
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: fov-quicklook-websocket-probe-client
+      ports:
+        - protocol: TCP
+          port: {{ .Values.debug.websocketProbe.port }}
+{{- end }}

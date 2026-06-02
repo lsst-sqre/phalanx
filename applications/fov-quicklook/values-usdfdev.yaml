@@ -7,6 +7,17 @@ log_level: warning
 debug:
   jupyter: true
   username: koike
+  websocketProbe:
+    enabled: true
+    port: 9801
+    clientIntervalSeconds: 10
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 1000m
+        memory: 256Mi
 context_menu_templates:
   - name: 'UUID'
     template: "%(uuid)"

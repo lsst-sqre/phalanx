@@ -22,6 +22,11 @@ Full focal plane viewer
 | config.pathPrefix | string | `"/fov-quicklook"` | URL path prefix |
 | config.s3_tile_path_prefix | string | `"fov-quicklook/prod"` | path prefix for object storage for tiles |
 | context_menu_templates | list | `[]` | Context menu templates for the frontend |
+| debug.websocketProbe.clientIntervalSeconds | number | `10` | Interval between websocket probe client connection attempts |
+| debug.websocketProbe.enabled | bool | `false` | Enable minimal websocket probe deployments for cluster connectivity debugging |
+| debug.websocketProbe.port | int | `9801` | Port used by the websocket probe server |
+| debug.websocketProbe.resources.limits | object | `{"cpu":"1000m","memory":"256Mi"}` | Resource limits for websocket probe pods |
+| debug.websocketProbe.resources.requests | object | `{"cpu":"100m","memory":"128Mi"}` | Resource requests for websocket probe pods |
 | coordinator.resources.limits | object | `{"cpu":"4000m","memory":"512Mi"}` | Resource limits for the coordinator |
 | coordinator.resources.requests | object | `{"cpu":"100m","memory":"512Mi"}` | Resource requests for the coordinator |
 | db.resources.limits | object | `{"cpu":"2000m","memory":"256Mi"}` | Resource limits for the database |

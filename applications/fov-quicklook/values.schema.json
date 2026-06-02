@@ -321,11 +321,38 @@
         },
         "username": {
           "type": "string"
+        },
+        "websocketProbe": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "port": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "clientIntervalSeconds": {
+              "type": "number",
+              "minimum": 1
+            },
+            "resources": {
+              "$ref": "#/definitions/resources"
+            }
+          },
+          "required": [
+            "enabled",
+            "port",
+            "clientIntervalSeconds",
+            "resources"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "jupyter",
-        "username"
+        "username",
+        "websocketProbe"
       ]
     },
     "context_menu_template": {
