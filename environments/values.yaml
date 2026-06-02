@@ -38,9 +38,6 @@ vaultPathPrefix: ""
 defaultComputeClass: null
 
 applications:
-  # -- Enable the alert-stream-broker application
-  alert-stream-broker: false
-
   # -- Enable the argo-workflows application
   argo-workflows: false
 
