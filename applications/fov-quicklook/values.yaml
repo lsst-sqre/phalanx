@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: main
+  tag: fov-quicklook-local-issue19-netprobe-20260602d
 
 config:
   # -- URL path prefix
