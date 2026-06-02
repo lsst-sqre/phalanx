@@ -10,7 +10,7 @@ image:
 consumekafka:
   image:
     # -- Tag of image to use
-    tag: "1.1.1"
+    tag: "1.1.2"
     #tag: "tickets-dm-54795"
   logLevel: DEBUG
   pvcMountpoint:
@@ -24,8 +24,8 @@ obsloctap:
   image:
     # -- Tag of image to use
     # @default -- The appVersion of the chart
-    #tag: "1.1.1"
-    tag: "tickets-dm-54795"
+    tag: "1.1.2"
+    #tag: "tickets-dm-54795"
     pullPolicy: Always
   logLevel: INFO
 
