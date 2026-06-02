@@ -24,4 +24,4 @@ To configure an Ingress_ to use certificates issued by it, add a ``tls`` configu
 
 Typically, this should be done on one and only one Ingress_ for an environment using ``cert-manager``.
 The RSP conventionally uses the :px-app:`argocd` application.
-There are some special exceptions that have their own ingresses or otherwise need valid CA-issued certificates, such as :px-app:`alert-stream-broker` and :px-app:`sasquatch`.
+There are some special exceptions that have their own ingresses or otherwise need valid CA-issued certificates, such as :px-app:`sasquatch`.
