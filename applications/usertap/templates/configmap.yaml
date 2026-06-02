@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: usertap
+  labels:
+    {{- include "usertap.labels" . | nindent 4 }}
+data:
+  youcat.properties: |
+    # configure the admin user: admin user can create a schema via the REST API
+    # for StandardIdentityManager and OIDC, this is: {issuer} {sub}
+    org.opencadc.youcat.adminUser = https://data-dev.lsst.cloud danfuchs
+
+    # (optional) configure schema creation in the database (default: false)
+    # if true, the admin call to create a schema will try to create it in the db
+    #          and add it to tap_schema
+    # if false, the admin call will only add the schema to the tap_schema
+    #           and assume it exists
+    org.opencadc.youcat.createSchemaInDB = true
+
+    # (optional) schema creation in the database (default: false)
+    org.opencadc.youcat.createSchemaInDB = true
+
+    org.opencadc.youcat.metadataValidation = strict
+  cadc-registry.properties: |
+    ivo://ivoa.net/sso#OpenID = {{ .Values.global.baseUrl }}
+    # Ignore this, it's only here to satisfy the availability check.
+    ivo://ivoa.net/std/CDP#proxy-1.0 = ivo://cadc.nrc.ca/cred
+    ivo://ivoa.net/sso#tls-with-password = {{ .Values.global.baseUrl }}
+  cadc-tap-tmp.properties: |
+    ## this config stores temp files (tap_upload URLs and async results) in
+    ## the baseStorageDir which is probably inside the container: use with care
+
+    # implementation
+    org.opencadc.tap.tmp.StorageManager = org.opencadc.tap.tmp.TempStorageManager
+
+    # ugh: need to configure the front-end https proxy hostname here (same value as in catalina.properties)
+    # ugh: need to configure the service name (normally youcat as below by optional war-rename effects it)
+    # ugh: need to know the path from the web.xml but at least that's hard-coded
+    org.opencadc.tap.tmp.TempStorageManager.baseURL = https://{{ .Values.global.host }}/api/youcat/tmp
+
+
+    # path in container to store tmp files
+    # optional: deployer could bind an external filesystem here
+    org.opencadc.tap.tmp.TempStorageManager.baseStorageDir = /var/tmp/youcat
+
+  catalina.properties: |
+    # enable setting system props with environment
+    org.apache.tomcat.util.digester.PROPERTY_SOURCE=org.apache.tomcat.util.digester.EnvironmentPropertySource
+
+    # tomcat properties
+    tomcat.connector.connectionTimeout=20000
+    tomcat.connector.keepAliveTimeout=120000
+    tomcat.connector.secure=false
+    tomcat.connector.scheme=https
+    tomcat.connector.proxyName={{ .Values.global.host }}
+    tomcat.connector.proxyPort=443
+
+    org.opencadc.youcat.tapadm.maxActive=1
+    org.opencadc.youcat.tapadm.username={{ .Values.youcat.tapadm.username }}
+    # Set from an env var
+    # org.opencadc.youcat.tapadm.password=
+    org.opencadc.youcat.tapadm.url={{ .Values.youcat.tapadm.url }}
+
+    org.opencadc.youcat.tapuser.maxActive=1
+    org.opencadc.youcat.tapuser.username={{ .Values.youcat.tapuser.username }}
+    # Set from an env var
+    # org.opencadc.youcat.tapuser.password=
+    org.opencadc.youcat.tapuser.url={{ .Values.youcat.tapuser.url }}
+
+    org.opencadc.youcat.uws.maxActive=1
+    org.opencadc.youcat.uws.username={{ .Values.youcat.uws.username}}
+    # Set from an env var
+    # org.opencadc.youcat.uws.password=
+    org.opencadc.youcat.uws.url={{ .Values.youcat.uws.url }}
+
+    # authentication provider
+    ca.nrc.cadc.auth.IdentityManager=org.opencadc.auth.StandardIdentityManager
+  tap-config.properties: |
+    # URL rewrite configuration
+    url.rewrite.enabled=true

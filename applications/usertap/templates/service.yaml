@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: usertap
+  labels:
+    {{- include "usertap.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: "TCP"
+      port: 80
+      targetPort: 8080
+  selector:
+    {{- include "usertap.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: "youcat"

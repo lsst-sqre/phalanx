@@ -1,0 +1,35 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: usertap-anonymous
+  labels:
+    {{- include "usertap.labels" . | nindent 4 }}
+config:
+  scopes:
+    anonymous: true
+template:
+  metadata:
+    name: usertap-anonymous
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "900"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
+      nginx.ingress.kubernetes.io/rewrite-target: "/youcat/$1"
+      nginx.ingress.kubernetes.io/proxy-redirect-from: "https://{{ .Values.global.host }}/youcat/"
+      nginx.ingress.kubernetes.io/proxy-redirect-to: "https://{{ .Values.global.host }}/api/youcat/"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/use-regex: "true"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        more_set_headers "server: OpenCADC/cadc-rest";
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/api/youcat/(availability|capabilities|reg|swagger-ui.*)"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: usertap
+                  port:
+                    number: 80

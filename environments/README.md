@@ -90,6 +90,7 @@
 | applications.times-square | bool | `false` | Enable the times-square application |
 | applications.turborepo-cache | bool | `false` | Enable the turborepo-cache application |
 | applications.unfurlbot | bool | `false` | Enable the unfurlbot application |
+| applications.usertap | bool | `false` | Enable the usertap application |
 | applications.uws | bool | `false` | Enable the uws application. This includes the dmocps control system application. |
 | applications.vault | bool | `false` | Enable the vault application. This is the actual vault storage and there should only be one production and one development instance globally. |
 | applications.vault-secrets-operator | bool | `true` | Enable the vault-secrets-operator application. This is required for all environments. |

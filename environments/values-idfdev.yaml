@@ -43,6 +43,7 @@ applications:
   strimzi-registry-operator: true
   tap: true
   times-square: true
+  usertap: true
   vault-secrets-operator: true
   vo-cutouts: true
   wobbly: true
