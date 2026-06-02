@@ -15,7 +15,7 @@ hinfo:
     tag: "25.11.2"
 pq:
   image:
-    tag: "26.3.3"
+    tag: "26.6.1"
 
 resources:
   requests:
