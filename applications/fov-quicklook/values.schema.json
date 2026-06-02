@@ -119,15 +119,25 @@
         "resources": {
           "$ref": "#/definitions/resources"
         },
-        "replicas": {
-          "type": "integer",
-          "minimum": 1
+        "workdir": {
+          "type": "object",
+          "properties": {
+            "medium": {
+              "type": "string",
+              "enum": [
+                "",
+                "Memory"
+              ]
+            },
+            "sizeLimit": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "medium"
+          ]
         },
-        "concurrency": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "local_storage": {
+        "mergedDir": {
           "type": "object",
           "properties": {
             "sizeLimit": {
@@ -137,12 +147,16 @@
           "required": [
             "sizeLimit"
           ]
+        },
+        "replicas": {
+          "type": "integer",
+          "minimum": 1
         }
       },
       "required": [
         "resources",
-        "concurrency",
-        "local_storage",
+        "workdir",
+        "mergedDir",
         "replicas"
       ]
     },
@@ -150,13 +164,6 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/context_menu_template"
-      },
-      "default": []
-    },
-    "ccd_data_types": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ccd_data_type_config"
       },
       "default": []
     }
@@ -173,56 +180,6 @@
   ],
   "additionalProperties": false,
   "definitions": {
-    "ccd_data_type_config": {
-      "type": "object",
-      "properties": {
-        "data_type": {
-          "type": "string",
-          "description": "Butler dataset type name for queries (e.g., 'raw', 'post_isr_image')"
-        },
-        "display_name": {
-          "type": "string",
-          "description": "Display name for the UI (e.g., 'Raw', 'Post-ISR')"
-        },
-        "collections": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Butler collection names"
-        },
-        "data_id_dimension": {
-          "type": "string",
-          "default": "exposure",
-          "description": "Data identifier dimension for Butler queries"
-        },
-        "order_by": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "default": ["-exposure"],
-          "description": "Order by clauses for queries"
-        },
-        "partial": {
-          "type": "boolean",
-          "default": false,
-          "description": "Whether to use partial loading for this data type"
-        },
-        "repository_name": {
-          "type": "string",
-          "default": "embargo",
-          "description": "Butler repository name (e.g., 'embargo', 'main')"
-        },
-        "instrument": {
-          "type": "string",
-          "default": "LSSTCam",
-          "description": "Butler instrument name"
-        }
-      },
-      "required": ["data_type", "display_name", "collections"],
-      "additionalProperties": false
-    },
     "image_config": {
       "type": "object",
       "properties": {
@@ -247,19 +204,10 @@
       "properties": {
         "pathPrefix": {
           "type": "string"
-        },
-        "s3_tile_path_prefix": {
-          "type": "string"
-        },
-        "max_object_storage_usage": {
-          "type": "number",
-          "$comment": "Maximum allowed storage usage for object storage in bytes"
         }
       },
       "required": [
-        "pathPrefix",
-        "s3_tile_path_prefix",
-        "max_object_storage_usage"
+        "pathPrefix"
       ],
       "additionalProperties": false
     },
