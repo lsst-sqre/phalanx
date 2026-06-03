@@ -1,0 +1,31 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ template "squareone.fullname" . }}-admin
+  labels:
+    {{- include "squareone.labels" . | nindent 4 }}
+config:
+  loginRedirect: true
+  scopes:
+    all:
+      - {{ .Values.ingress.adminScope | quote }}
+  service: "squareone"
+template:
+  metadata:
+    name: {{ template "squareone.fullname" . }}-admin
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/admin"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: {{ template "squareone.fullname" . }}
+                  port:
+                    number: 80
