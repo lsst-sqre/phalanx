@@ -118,10 +118,10 @@ influxdb:
     storageClass: rook-ceph-block
   resources:
     requests:
-      memory: 64Gi
+      memory: 32Gi
       cpu: 8
     limits:
-      memory: 64Gi
+      memory: 32Gi
       cpu: 8
 
 customInfluxDBIngress:
