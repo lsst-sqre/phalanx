@@ -1,4 +1,16 @@
 cadc-tap:
   tapSchema:
-    image:
-      repository: "lsstsqre/tap-schema-usdf-dev-livetap"
+    type: "external"
+    database: "livetap"
+    username: "tap_schema_livetap"
+    useVaultPassword: true
+    external:
+      host: "rsp-db-ro.postgres-db"
+
+  uws:
+    type: "external"
+    database: "livetap"
+    username: "uws_livetap"
+    useVaultPassword: true
+    external:
+      host: "rsp-db-rw.postgres-db"
