@@ -8,10 +8,12 @@ cadc-tap:
     useVaultPassword: false
 
   uws:
-    type: "containerized"
-    database: "postgres"
-    username: "postgres"
-    useVaultPassword: false
+    type: "external"
+    database: "tap"
+    username: "uws_tap"
+    useVaultPassword: true
+    external:
+      host: "rsp-db-rw.postgres-db"
 
   config:
     qserv:
