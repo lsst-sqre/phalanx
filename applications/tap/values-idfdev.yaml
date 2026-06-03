@@ -6,6 +6,10 @@ cadc-tap:
     urlRewrite:
       enabled: true
       rules: "ivoa.ObsCore:access_url, dp02_dc2_catalogs.ObsCore:access_url, dp1.ObsCore:access_url"
+    qserv:
+      image:
+        tag: "tickets-DM-55287"
+        pullPolicy: "Always"
 
   cloudsql:
     enabled: true
