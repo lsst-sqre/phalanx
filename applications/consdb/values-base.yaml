@@ -19,7 +19,7 @@ hinfo:
     tag: "26.6.1"
 pq:
   image:
-    tag: "26.6.1"
+    tag: "26.6.2"
 
 resources:
   requests:
