@@ -544,7 +544,7 @@ love-producer:
     csc: Electrometer:201 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: epm-ess303
-    csc: ESS:303 --log-level 10
+    csc: ESS:303 --log-level 10 --asynchronous-data evt_heartbeat evt_summaryState evt_logMessage evt_errorCode evt_logLevel evt_simulationMode evt_configurationApplied evt_configurationsAvailable evt_softwareVersions evt_sensorStatus tel_schneiderPm5xxx tel_xups
     WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
     <<: *love-producer-envsys-resources
   - name: epm-generator-ess305
