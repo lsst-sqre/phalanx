@@ -195,6 +195,10 @@ config:
         datasets:
           - "efd"
         template: "https://{{base_hostname}}/api/consdbtap"
+        versions:
+          tables:
+            template: "https://{{base_hostname}}/api/consdbtap/tables"
+            ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
     datalinker:
       - type: "data"
         name: "datalink"
@@ -259,6 +263,10 @@ config:
         datasets:
           - "live"
         template: "https://{{base_hostname}}/api/livetap"
+        versions:
+          tables:
+            template: "https://{{base_hostname}}/api/livetap/tables"
+            ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
     mobu:
       - type: "internal"
         name: "mobu"
@@ -337,6 +345,10 @@ config:
         datasets:
           - "dp03"
         template: "https://{{base_hostname}}/api/ssotap"
+        versions:
+          tables:
+            template: "https://{{base_hostname}}/api/ssotap/tables"
+            ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
     tap:
       - type: "data"
         name: "tap"
@@ -344,6 +356,10 @@ config:
           - "dp02"
           - "dp1"
         template: "https://{{base_hostname}}/api/tap"
+        versions:
+          tables:
+            template: "https://{{base_hostname}}/api/tap/tables"
+            ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
         ivoaRegistry:
           ivoaServiceType: "tap"
           ivoid: "ivo://org.rubinobs/tap"
@@ -369,7 +385,7 @@ config:
         datasets:
           - "dp02"
           - "dp1"
-        template: "https://{{base_hostname}}/api/cutout"
+        template: "https://{{{base_hostname}}/api/cutout"
         versions:
           soda-async-1.0:
             template: "https://{{base_hostname}}/api/cutout/jobs"
