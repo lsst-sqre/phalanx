@@ -14,7 +14,7 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/idfprod"
 
 applications:
-  herald: true
+  herald: false
   butler: true
   datalinker: true
   ghostwriter: true
