@@ -139,7 +139,9 @@ config:
     ivoid: "ivo://org.rubinobs/registry"
     pathPrefix: "/discovery"
     repositoryName: "Rubin Science Platform IVOA Publishing Registry"
-    rights: "Restricted to authorized Rubin data rights holders. See https://www.lsst.org/content/data-rights"
+    rights: >-
+      Restricted to authorized Rubin data rights holders. See
+      https://www.lsst.org/content/data-rights
     rightsUri: "https://www.lsst.org/content/data-rights"
     shortName: "Rubin RSP"
     organisation:
@@ -218,6 +220,19 @@ config:
         template: "https://{{base_hostname}}/docverse/api"
         openapi: "https://{{base_hostname}}/docverse/api/openapi.json"
     gafaelfawr:
+      - type: "data"
+        name: "gms"
+        template: "https://{{base_hostname}}/auth/gms"
+        versions:
+          gms-search-1.0:
+            template: "https://{{base_hostname}}/auth/gms"
+            ivoaStandardId: "ivo://ivoa.net/std/gms#search-1.0"
+        ivoaRegistry:
+          ivoaServiceType: "gms"
+          ivoid: "ivo://example.com/groups"
+          title: "Rubin Observatory GMS"
+          created: '2026-06-04T00:00:00'
+          description: "Group Membership Service for Rubin Observatory."
       - type: "internal"
         name: "gafaelfawr"
         template: "https://{{base_hostname}}/auth"
