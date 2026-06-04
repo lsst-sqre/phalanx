@@ -16,6 +16,10 @@ spec:
       labels:
         app: jupyter
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 4085 # rubin_users for /sdf/data/rubin/repo access
       containers:
       - name: jupyter
         image: jupyter/base-notebook:latest
