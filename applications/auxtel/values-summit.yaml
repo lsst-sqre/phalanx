@@ -104,7 +104,7 @@ atmcs:
 
 atoods:
   image:
-    revision: 0
+    revision: 4
     repository: ts-dockerhub.lsst.org/atoods
     pullPolicy: Always
   env:
