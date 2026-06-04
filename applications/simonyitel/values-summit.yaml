@@ -530,7 +530,7 @@ mtmount-sim:
 mtoods:
   enabled: true
   image:
-    revision: 0
+    revision: 4
     repository: ts-dockerhub.lsst.org/mtoods
     pullPolicy: Always
   env:
@@ -645,7 +645,7 @@ mtrotator-sim:
 wfoods:
   enabled: true
   image:
-    revision: 0
+    revision: 4
     repository: ts-dockerhub.lsst.org/wfoods
     pullPolicy: Always
   env:
