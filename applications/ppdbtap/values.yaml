@@ -24,6 +24,9 @@ cadc-tap:
     # -- Whether Sentry is enabled in this environment
     sentryEnabled: false
 
+    # -- Advertise VOParquet as a supported output format
+    voParquet: true
+
   serviceAccount:
     # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
     name: "ppdbtap"

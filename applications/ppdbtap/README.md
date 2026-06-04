@@ -13,6 +13,7 @@ TAP service for the ppdb BigQuery backend
 | cadc-tap.config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
 | cadc-tap.config.serviceName | string | `"ppdbtap"` | Name of the service from Gafaelfawr's perspective |
 | cadc-tap.config.vaultSecretName | string | `"ppdbtap"` | Vault secret name: the final key in the vault path |
+| cadc-tap.config.voParquet | bool | `true` | Advertise VOParquet as a supported output format |
 | cadc-tap.ingress.path | string | `"ppdbtap"` | Ingress path that should be routed to this service |
 | cadc-tap.serviceAccount.name | string | `"ppdbtap"` | Name of the Kubernetes `ServiceAccount`, used for CloudSQL access |
 | cadc-tap.uws.database | string | `"ppdbtap"` | Database name |

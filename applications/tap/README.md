@@ -17,6 +17,7 @@ IVOA TAP service
 | cadc-tap.config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
 | cadc-tap.config.serviceName | string | `"tap"` | Name of the service from Gafaelfawr's perspective |
 | cadc-tap.config.vaultSecretName | string | `"tap"` | Vault secret name: the final key in the vault path |
+| cadc-tap.config.voParquet | bool | `true` | Advertise VOParquet as a supported output format |
 | cadc-tap.ingress.path | string | `"tap"` | Ingress path that should be routed to this service |
 | cadc-tap.serviceAccount.name | string | `"tap"` | Name of the Kubernetes `ServiceAccount`, used for CloudSQL access |
 | cadc-tap.tapSchema.database | string | `"tap"` | Database name |
