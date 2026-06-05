@@ -385,7 +385,7 @@ config:
         datasets:
           - "dp02"
           - "dp1"
-        template: "https://{{{base_hostname}}/api/cutout"
+        template: "https://{{base_hostname}}/api/cutout"
         versions:
           soda-async-1.0:
             template: "https://{{base_hostname}}/api/cutout/jobs"
