@@ -32,6 +32,7 @@ config:
       business:
         type: "NotebookRunnerCounting"
         options:
+          cell_execution_timeout: "1h"
           repo_url: "https://github.com/lsst-sqre/dfuchs-test-mobu.git"
           repo_ref: "main"
         restart: true
@@ -52,6 +53,7 @@ config:
       business:
         type: "NotebookRunnerCounting"
         options:
+          cell_execution_timeout: "1h"
           image:
             image_class: "latest-weekly"
           repo_url: "https://github.com/lsst-sqre/phalanx-test.git"

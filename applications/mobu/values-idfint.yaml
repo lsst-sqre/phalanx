@@ -35,6 +35,7 @@ config:
       business:
         type: "NotebookRunnerCounting"
         options:
+          cell_execution_timeout: "1h"
           image:
             image_class: "latest-daily"
           repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
@@ -57,6 +58,7 @@ config:
         type: "NotebookRunnerCounting"
         options:
           repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
+          cell_execution_timeout: "1h"
           repo_ref: "main"
           execution_idle_time: 0
           idle_time: 300
@@ -73,6 +75,7 @@ config:
       business:
         type: "NotebookRunnerCounting"
         options:
+          cell_execution_timeout: "1h"
           repo_url: "https://github.com/lsst/tutorial-notebooks.git"
           repo_ref: "main"
           max_executions: 1
@@ -91,6 +94,7 @@ config:
     #  business:
     #    type: "NotebookRunnerCounting"
     #    options:
+    #      cell_execution_timeout: "1h"
     #      image:
     #        image_class: "by-tag"
     #        tag: "r29_2_0_rsp2590"
