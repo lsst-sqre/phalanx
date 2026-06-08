@@ -75,6 +75,14 @@ ingress-nginx:
           return 403;
         }
 
+    image:
+      registry: ghcr.io
+      image: lsst-sqre/ingress-nginx-controller
+      tag: "v1.15.2-devsquare"
+      digest: null
+      digestChroot: null
+      pullPolicy: Always
+
     metrics:
       # -- Enable metrics reporting via Prometheus
       enabled: true
