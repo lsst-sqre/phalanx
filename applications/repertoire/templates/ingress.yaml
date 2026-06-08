@@ -26,3 +26,12 @@ template:
                   name: "repertoire"
                   port:
                     number: 8080
+            {{- if .Values.config.ivoaRegistry }}
+            - path: {{ .Values.config.ivoaRegistry.pathPrefix | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "repertoire"
+                  port:
+                    number: 8080
+            {{- end }}
