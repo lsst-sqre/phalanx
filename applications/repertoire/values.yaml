@@ -310,6 +310,13 @@ config:
         name: "semaphore"
         template: "https://{{base_hostname}}/semaphore"
         openapi: "https://{{base_hostname}}/semaphore/openapi.json"
+    sasquatch:
+      - type: "ui"
+        name: "chronograf"
+        template: "https://{{base_hostname}}/chronograf"
+      - type: "ui"
+        name: "kafdrop"
+        template: "https://{{base_hostname}}/chronograf"
     sia:
       - type: "data"
         name: "sia"
