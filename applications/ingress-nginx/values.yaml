@@ -79,9 +79,9 @@ ingress-nginx:
       registry: ghcr.io
       image: lsst-sqre/ingress-nginx-controller
       tag: "v1.15.2-devsquare"
-      digest: null
-      digestChroot: null
-      pullPolicy: Always
+      digest: "sha256:ad37060a7aca08908bff09308f26e31b5eb4d155a8b77df65c926a4618078039"
+      digestChroot: "sha256:2dfeb83efdbf162a325a2bccd729104ddaf13da117c68f71f977c1dc868beabd"
+      pullPolicy: IfNotPresent
 
     metrics:
       # -- Enable metrics reporting via Prometheus
