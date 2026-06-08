@@ -23,6 +23,12 @@ Ingress controller
 | ingress-nginx.controller.config.server-snippet | string | See `values.yaml` | Add additional per-server configuration used by Gafaelfawr to report errors from the authorization layer |
 | ingress-nginx.controller.config.ssl-redirect | string | `"true"` | Redirect all non-SSL access to SSL |
 | ingress-nginx.controller.config.use-forwarded-headers | string | `"true"` | Enable the `X-Forwarded-For` processing |
+| ingress-nginx.controller.image.digest | string | `nil` |  |
+| ingress-nginx.controller.image.digestChroot | string | `nil` |  |
+| ingress-nginx.controller.image.image | string | `"lsst-sqre/ingress-nginx-controller"` |  |
+| ingress-nginx.controller.image.pullPolicy | string | `"Always"` |  |
+| ingress-nginx.controller.image.registry | string | `"ghcr.io"` |  |
+| ingress-nginx.controller.image.tag | string | `"v1.15.2-devsquare"` |  |
 | ingress-nginx.controller.metrics.enabled | bool | `true` | Enable metrics reporting via Prometheus |
 | ingress-nginx.controller.podLabels | object | See `values.yaml` | Add labels used by `NetworkPolicy` objects to restrict access to the ingress and thus ensure that auth subrequest handlers run |
 | ingress-nginx.controller.resources | object | See `values.yaml` | Resource requests and limits for ingress-nginx controller |
