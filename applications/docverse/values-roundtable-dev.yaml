@@ -10,7 +10,7 @@ config:
     - "jonathansick"
   keeperSync:
     enabled: true
-  lifecycleEval:
+  maintenance:
     enabled: true
     gitRefAuditEnabled: true
   sentry:

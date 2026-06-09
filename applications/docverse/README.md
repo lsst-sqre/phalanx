@@ -22,10 +22,11 @@ Publish versioned docs
 | config.databaseUrl | string | `""` | Database URL for PostgreSQL |
 | config.githubAppId | string | `nil` | GitHub App ID for Docverse to use when accessing GitHub repositories. If not set, Docverse will operate in a limited mode without GitHub integration. |
 | config.keeperSync.enabled | bool | `false` | Enable the Keeper-sync worker that consumes the `docverse:sync-queue` arq queue. Requires the docverse image to provide `docverse.worker.main.KeeperSyncWorkerSettings`. |
-| config.lifecycleEval.enabled | bool | `false` | Enable the lifecycle-evaluation worker that consumes the `docverse:lifecycle-queue` arq queue. Requires the docverse image to provide `docverse.worker.main.LifecycleEvalWorkerSettings`. |
-| config.lifecycleEval.gitRefAuditEnabled | bool | `false` | Whether to enable auditing the git ref lifecycle rule. Enabling this will cause docverse to GitHub API calls to determine if the git ref associated with an edition still exists. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
+| config.maintenance.enabled | bool | `false` | Enable the maintenance worker that consumes the `docverse:maintenance-queue` arq queue. Requires the docverse image to provide `docverse.worker.main.MaintenanceWorkerSettings`. |
+| config.maintenance.gitRefAuditEnabled | bool | `false` | Whether to enable auditing the git ref lifecycle rule. Enabling this will cause docverse to make GitHub API calls to determine if the git ref associated with an edition still exists. |
+| config.maintenance.jobTimeoutSeconds | int | `3600` | Per-job timeout, in seconds, for maintenance-pool jobs (lifecycle evaluation and git ref audits). |
 | config.pathPrefix | string | `"/docverse/api"` | URL path prefix |
 | config.sentry.enabled | bool | `false` | Whether to send error reports and tracing data to Sentry. Requires the sentry-dsn secret to be set in Vault. |
 | config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1. |
@@ -39,12 +40,12 @@ Publish versioned docs
 | image.repository | string | `"ghcr.io/lsst-sqre/docverse"` | Image to use in the docverse deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
-| lifecycleWorker.affinity | object | `{}` | Affinity rules for the lifecycle-eval worker pod |
-| lifecycleWorker.nodeSelector | object | `{}` | Node selection rules for the lifecycle-eval worker pod |
-| lifecycleWorker.podAnnotations | object | `{}` | Annotations for the lifecycle-eval worker pod |
-| lifecycleWorker.replicaCount | int | `1` | Number of lifecycle-eval worker pods to start |
-| lifecycleWorker.resources | object | See `values.yaml` | Resource limits and requests for the lifecycle-eval worker pod |
-| lifecycleWorker.tolerations | list | `[]` | Tolerations for the lifecycle-eval worker pod |
+| maintenanceWorker.affinity | object | `{}` | Affinity rules for the maintenance worker pod |
+| maintenanceWorker.nodeSelector | object | `{}` | Node selection rules for the maintenance worker pod |
+| maintenanceWorker.podAnnotations | object | `{}` | Annotations for the maintenance worker pod |
+| maintenanceWorker.replicaCount | int | `1` | Number of maintenance worker pods to start |
+| maintenanceWorker.resources | object | See `values.yaml` | Resource limits and requests for the maintenance worker pod |
+| maintenanceWorker.tolerations | list | `[]` | Tolerations for the maintenance worker pod |
 | nodeSelector | object | `{}` | Node selection rules for the docverse deployment pod |
 | podAnnotations | object | `{}` | Annotations for the docverse deployment pod |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |

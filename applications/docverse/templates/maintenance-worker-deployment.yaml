@@ -1,33 +1,33 @@
-{{- if .Values.config.lifecycleEval.enabled }}
+{{- if .Values.config.maintenance.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "docverse-lifecycle-worker"
+  name: "docverse-maintenance-worker"
   annotations:
     argocd.argoproj.io/sync-wave: "2"
   labels:
     {{- include "docverse.labels" . | nindent 4 }}
-    app.kubernetes.io/component: "lifecycle-worker"
+    app.kubernetes.io/component: "maintenance-worker"
     docverse-redis-client: "true"
 spec:
-  replicas: {{ .Values.lifecycleWorker.replicaCount }}
+  replicas: {{ .Values.maintenanceWorker.replicaCount }}
   selector:
     matchLabels:
       {{- include "docverse.selectorLabels" . | nindent 6 }}
-      app.kubernetes.io/component: "lifecycle-worker"
+      app.kubernetes.io/component: "maintenance-worker"
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        {{- with .Values.lifecycleWorker.podAnnotations }}
+        {{- with .Values.maintenanceWorker.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
         {{- include "docverse.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: "lifecycle-worker"
+        app.kubernetes.io/component: "maintenance-worker"
         docverse-redis-client: "true"
     spec:
-      {{- with .Values.lifecycleWorker.affinity }}
+      {{- with .Values.maintenanceWorker.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -37,9 +37,9 @@ spec:
       automountServiceAccountToken: false
       {{- end }}
       containers:
-        - name: "docverse-lifecycle-worker"
+        - name: "docverse-maintenance-worker"
           command: ["arq"]
-          args: ["docverse.worker.main.LifecycleEvalWorkerSettings"]
+          args: ["docverse.worker.main.MaintenanceWorkerSettings"]
           env:
             {{- include "docverse.envVars" . | nindent 12 }}
           envFrom:
@@ -48,7 +48,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
-            {{- toYaml .Values.lifecycleWorker.resources | nindent 12 }}
+            {{- toYaml .Values.maintenanceWorker.resources | nindent 12 }}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -59,11 +59,11 @@ spec:
       initContainers:
         {{- include "docverse.cloudsqlSidecar" . | nindent 8 }}
       {{- end }}
-      {{- with .Values.lifecycleWorker.nodeSelector }}
+      {{- with .Values.maintenanceWorker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.lifecycleWorker.tolerations }}
+      {{- with .Values.maintenanceWorker.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
