@@ -73,6 +73,11 @@ config:
     # provide `docverse.worker.main.LifecycleEvalWorkerSettings`.
     enabled: false
 
+    # -- Whether to enable auditing the git ref lifecycle rule.
+    # Enabling this will cause docverse to GitHub API calls to determine
+    # if the git ref associated with an edition still exists.
+    gitRefAuditEnabled: false
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}

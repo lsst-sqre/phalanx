@@ -23,6 +23,7 @@ Publish versioned docs
 | config.githubAppId | string | `nil` | GitHub App ID for Docverse to use when accessing GitHub repositories. If not set, Docverse will operate in a limited mode without GitHub integration. |
 | config.keeperSync.enabled | bool | `false` | Enable the Keeper-sync worker that consumes the `docverse:sync-queue` arq queue. Requires the docverse image to provide `docverse.worker.main.KeeperSyncWorkerSettings`. |
 | config.lifecycleEval.enabled | bool | `false` | Enable the lifecycle-evaluation worker that consumes the `docverse:lifecycle-queue` arq queue. Requires the docverse image to provide `docverse.worker.main.LifecycleEvalWorkerSettings`. |
+| config.lifecycleEval.gitRefAuditEnabled | bool | `false` | Whether to enable auditing the git ref lifecycle rule. Enabling this will cause docverse to GitHub API calls to determine if the git ref associated with an edition still exists. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/docverse/api"` | URL path prefix |

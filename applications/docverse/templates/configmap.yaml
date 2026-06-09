@@ -21,3 +21,4 @@ data:
   {{- if .Values.config.githubAppId }}
   DOCVERSE_GITHUB_APP_ID: {{ .Values.config.githubAppId | quote }}
   {{- end }}
+  DOCVERSE_GIT_REF_AUDIT_ENABLED: {{ .Values.config.lifecycleEval.gitRefAuditEnabled | quote }}
