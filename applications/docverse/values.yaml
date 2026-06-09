@@ -67,14 +67,18 @@ config:
     # provide `docverse.worker.main.KeeperSyncWorkerSettings`.
     enabled: false
 
-  lifecycleEval:
-    # -- Enable the lifecycle-evaluation worker that consumes the
-    # `docverse:lifecycle-queue` arq queue. Requires the docverse image to
-    # provide `docverse.worker.main.LifecycleEvalWorkerSettings`.
+  maintenance:
+    # -- Enable the maintenance worker that consumes the
+    # `docverse:maintenance-queue` arq queue. Requires the docverse image to
+    # provide `docverse.worker.main.MaintenanceWorkerSettings`.
     enabled: false
 
+    # -- Per-job timeout, in seconds, for maintenance-pool jobs (lifecycle
+    # evaluation and git ref audits).
+    jobTimeoutSeconds: 3600
+
     # -- Whether to enable auditing the git ref lifecycle rule.
-    # Enabling this will cause docverse to GitHub API calls to determine
+    # Enabling this will cause docverse to make GitHub API calls to determine
     # if the git ref associated with an edition still exists.
     gitRefAuditEnabled: false
 
@@ -139,11 +143,11 @@ syncWorker:
   # -- Tolerations for the Keeper-sync worker pod
   tolerations: []
 
-lifecycleWorker:
-  # -- Number of lifecycle-eval worker pods to start
+maintenanceWorker:
+  # -- Number of maintenance worker pods to start
   replicaCount: 1
 
-  # -- Resource limits and requests for the lifecycle-eval worker pod
+  # -- Resource limits and requests for the maintenance worker pod
   # @default -- See `values.yaml`
   resources:
     limits:
@@ -153,16 +157,16 @@ lifecycleWorker:
       cpu: "50m"
       memory: "128Mi"
 
-  # -- Affinity rules for the lifecycle-eval worker pod
+  # -- Affinity rules for the maintenance worker pod
   affinity: {}
 
-  # -- Node selection rules for the lifecycle-eval worker pod
+  # -- Node selection rules for the maintenance worker pod
   nodeSelector: {}
 
-  # -- Annotations for the lifecycle-eval worker pod
+  # -- Annotations for the maintenance worker pod
   podAnnotations: {}
 
-  # -- Tolerations for the lifecycle-eval worker pod
+  # -- Tolerations for the maintenance worker pod
   tolerations: []
 
 # -- Tolerations for the docverse deployment pod
