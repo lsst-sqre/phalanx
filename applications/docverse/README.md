@@ -19,15 +19,23 @@ Publish versioned docs
 | cloudsql.resources | object | See `values.yaml` | Resource requests and limits for Cloud SQL Auth Proxy |
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `docverse` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.arqRedisUrl | string | Points to embedded Redis | URL for Redis arq queue database |
+| config.credentialKeyRotation | bool | `false` | Set true during a credential-encryption (Fernet) key rotation to deliver the retired key (DOCVERSE_CREDENTIAL_ENCRYPTION_KEY_RETIRED) to all pods so existing credentials can still be decrypted. Set back to false and remove the Vault key once all credentials have been re-encrypted. |
 | config.databaseUrl | string | `""` | Database URL for PostgreSQL |
 | config.githubAppId | string | `nil` | GitHub App ID for Docverse to use when accessing GitHub repositories. If not set, Docverse will operate in a limited mode without GitHub integration. |
 | config.keeperSync.enabled | bool | `false` | Enable the Keeper-sync worker that consumes the `docverse:sync-queue` arq queue. Requires the docverse image to provide `docverse.worker.main.KeeperSyncWorkerSettings`. |
+| config.keeperSync.jobTimeoutSeconds | int | `3600` | Per-job timeout, in seconds, for keeper-sync arq jobs. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.maintenance.enabled | bool | `false` | Enable the maintenance worker that consumes the `docverse:maintenance-queue` arq queue. Requires the docverse image to provide `docverse.worker.main.MaintenanceWorkerSettings`. |
 | config.maintenance.gitRefAuditEnabled | bool | `false` | Whether to enable auditing the git ref lifecycle rule. Enabling this will cause docverse to make GitHub API calls to determine if the git ref associated with an edition still exists. |
 | config.maintenance.jobTimeoutSeconds | int | `3600` | Per-job timeout, in seconds, for maintenance-pool jobs (lifecycle evaluation and git ref audits). |
 | config.pathPrefix | string | `"/docverse/api"` | URL path prefix |
+| config.reaperThresholds.buildProcessingSeconds | int | `28800` | Stuck-run reaper threshold, in seconds, for build_processing jobs. |
+| config.reaperThresholds.dashboardBuildSeconds | int | `1800` | Stuck-run reaper threshold, in seconds, for dashboard_build jobs. |
+| config.reaperThresholds.dashboardSyncSeconds | int | `21600` | Stuck-run reaper threshold, in seconds, for dashboard_sync jobs. |
+| config.reaperThresholds.keeperSyncSeconds | int | `21600` | Stuck-run reaper threshold, in seconds, for keeper-sync jobs. |
+| config.reaperThresholds.lifecycleSeconds | int | `21600` | Stuck-run reaper threshold, in seconds, for lifecycle_eval and git_ref_audit jobs (maintenance pool). |
+| config.reaperThresholds.publishEditionSeconds | int | `14400` | Stuck-run reaper threshold, in seconds, for publish_edition jobs. |
 | config.sentry.enabled | bool | `false` | Whether to send error reports and tracing data to Sentry. Requires the sentry-dsn secret to be set in Vault. |
 | config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1. |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |

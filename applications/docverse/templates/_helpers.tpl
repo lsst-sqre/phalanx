@@ -60,6 +60,13 @@ Secret environment variables shared across all Docverse pods.
     secretKeyRef:
       name: "docverse"
       key: "DOCVERSE_CREDENTIAL_ENCRYPTION_KEY"
+{{- if .Values.config.credentialKeyRotation }}
+- name: "DOCVERSE_CREDENTIAL_ENCRYPTION_KEY_RETIRED"
+  valueFrom:
+    secretKeyRef:
+      name: "docverse"
+      key: "DOCVERSE_CREDENTIAL_ENCRYPTION_KEY_RETIRED"
+{{- end }}
 - name: "DOCVERSE_DATABASE_PASSWORD"
   valueFrom:
     secretKeyRef:
