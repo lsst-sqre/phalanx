@@ -67,6 +67,9 @@ config:
     # provide `docverse.worker.main.KeeperSyncWorkerSettings`.
     enabled: false
 
+    # -- Per-job timeout, in seconds, for keeper-sync arq jobs.
+    jobTimeoutSeconds: 3600
+
   maintenance:
     # -- Enable the maintenance worker that consumes the
     # `docverse:maintenance-queue` arq queue. Requires the docverse image to
@@ -81,6 +84,27 @@ config:
     # Enabling this will cause docverse to make GitHub API calls to determine
     # if the git ref associated with an edition still exists.
     gitRefAuditEnabled: false
+
+  # -- Set true during a credential-encryption (Fernet) key rotation to deliver
+  # the retired key (DOCVERSE_CREDENTIAL_ENCRYPTION_KEY_RETIRED) to all pods so
+  # existing credentials can still be decrypted. Set back to false and remove the
+  # Vault key once all credentials have been re-encrypted.
+  credentialKeyRotation: false
+
+  reaperThresholds:
+    # -- Stuck-run reaper threshold, in seconds, for keeper-sync jobs.
+    keeperSyncSeconds: 21600
+    # -- Stuck-run reaper threshold, in seconds, for lifecycle_eval and
+    # git_ref_audit jobs (maintenance pool).
+    lifecycleSeconds: 21600
+    # -- Stuck-run reaper threshold, in seconds, for dashboard_build jobs.
+    dashboardBuildSeconds: 1800
+    # -- Stuck-run reaper threshold, in seconds, for publish_edition jobs.
+    publishEditionSeconds: 14400
+    # -- Stuck-run reaper threshold, in seconds, for build_processing jobs.
+    buildProcessingSeconds: 28800
+    # -- Stuck-run reaper threshold, in seconds, for dashboard_sync jobs.
+    dashboardSyncSeconds: 21600
 
 ingress:
   # -- Additional annotations for the ingress rule

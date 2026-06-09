@@ -23,3 +23,10 @@ data:
   {{- end }}
   DOCVERSE_GIT_REF_AUDIT_ENABLED: {{ .Values.config.maintenance.gitRefAuditEnabled | quote }}
   DOCVERSE_MAINTENANCE_JOB_TIMEOUT_SECONDS: {{ .Values.config.maintenance.jobTimeoutSeconds | quote }}
+  DOCVERSE_KEEPER_SYNC_JOB_TIMEOUT_SECONDS: {{ .Values.config.keeperSync.jobTimeoutSeconds | quote }}
+  DOCVERSE_KEEPER_SYNC_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.keeperSyncSeconds | quote }}
+  DOCVERSE_LIFECYCLE_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.lifecycleSeconds | quote }}
+  DOCVERSE_DASHBOARD_BUILD_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.dashboardBuildSeconds | quote }}
+  DOCVERSE_PUBLISH_EDITION_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.publishEditionSeconds | quote }}
+  DOCVERSE_BUILD_PROCESSING_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.buildProcessingSeconds | quote }}
+  DOCVERSE_DASHBOARD_SYNC_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.dashboardSyncSeconds | quote }}
