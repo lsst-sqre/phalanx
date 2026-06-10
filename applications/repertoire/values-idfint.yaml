@@ -3,6 +3,7 @@ config:
     - "dp02"
     - "dp03"
     - "dp1"
+    - "dp2"
     - "prompt"
   hips:
     legacy:
@@ -11,6 +12,7 @@ config:
     enabled: true
   slackAlerts: true
   tap:
+    schemaVersion: "main"
     servers:
       tap:
         enabled: true
