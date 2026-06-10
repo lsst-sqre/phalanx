@@ -58,6 +58,10 @@ config:
         LSST Commissioning Camera of seven ~1 square degree fields, over seven
         weeks in late 2024.
       docsUrl: "https://dp1.lsst.io/"
+    dp2:
+      description: >-
+        Data Preview 2.
+      docsUrl: "https://dp2.lsst.io/"
     efd:
       description: "Engineering Field Database."
     live:
@@ -362,6 +366,7 @@ config:
         datasets:
           - "dp02"
           - "dp1"
+          - "dp2"
         template: "https://{{base_hostname}}/api/tap"
         versions:
           tables:
@@ -460,6 +465,7 @@ config:
       tap:
         enabled: false
         schemas:
+          - dp2
           - dp1
           - ivoa_obscore
           - dp02_dc2
