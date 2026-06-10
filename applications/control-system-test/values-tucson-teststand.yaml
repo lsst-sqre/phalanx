@@ -23,3 +23,5 @@ rumba:
 
 kafka-rw-broker-test:
   enabled: true
+  image:
+    tag: 0.49.0-kafka-4.1.0
