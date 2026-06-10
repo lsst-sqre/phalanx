@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-so/rubintv_production
-  tag: tickets-DM-55103
+  tag: tickets-DM-55208
   pullPolicy: Always
 location: SUMMIT
 env:
