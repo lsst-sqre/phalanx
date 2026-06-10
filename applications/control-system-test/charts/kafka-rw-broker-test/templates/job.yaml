@@ -33,7 +33,7 @@ spec:
             - name: REPLICATION_FACTOR
               value: {{ .Values.kafka.replicationFactor | quote }}
             - name: RETENTION_MS
-              value: {{ .Values.kafka.retentionMs | quote }}
+              value: {{ .Values.kafka.retentionMs | int64 | quote }}
             - name: NUM_RECORDS
               value: {{ .Values.test.numRecords | quote }}
             - name: RECORD_SIZE
@@ -61,6 +61,9 @@ spec:
               sasl.mechanism=${LSST_KAFKA_SECURITY_MECHANISM}
               sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="${LSST_KAFKA_SECURITY_USERNAME}" password="${LSST_KAFKA_SECURITY_PASSWORD}";
               EOF
+
+              echo "RETENTION_MS=${RETENTION_MS}"
+              printf 'RETENTION_MS shell-quoted: <%q>\n' "${RETENTION_MS}"
 
               "${KAFKA_BIN}/kafka-topics.sh" \
                 --bootstrap-server "${LSST_KAFKA_BROKER_ADDR}" \
