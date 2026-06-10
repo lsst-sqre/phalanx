@@ -87,5 +87,10 @@ chronograf:
     PUBLIC_URL: https://roundtable-dev.lsst.cloud/
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/roundtable-dev.json
 
+app-metrics:
+  enabled: true
+  apps:
+    - gafaelfawr
+
 squareEvents:
   enabled: true
