@@ -17,6 +17,7 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | integration-testing.enabled | bool | `false` | Enable the integration testing system |
+| kafka-rw-broker-test.enabled | bool | `false` | Enable Kafka read/write broker test. |
 | rumba.enabled | bool | `false` | Enable cronjob to clean up inactivate Kafka consumers. |
 | integration-testing.envEfd | string | `nil` | The Name of the EFD instance. |
 | integration-testing.image.tag | string | `nil` | The image tag for the Integration Test runner container |
@@ -27,6 +28,24 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | integration-testing.s3Bucket | string | `nil` | The S3 bucket name to use |
 | integration-testing.serviceAccount | string | `"integration-tests"` | This sets the service account name |
 | integration-testing.workflowName | string | `"integration-test-workflow"` | Name for the top-level workflow |
+| kafka-rw-broker-test.image.pullPolicy | string | `"IfNotPresent"` |  |
+| kafka-rw-broker-test.image.repository | string | `"quay.io/strimzi/kafka"` |  |
+| kafka-rw-broker-test.image.tag | string | `""` |  |
+| kafka-rw-broker-test.job.backoffLimit | int | `0` |  |
+| kafka-rw-broker-test.job.ttlSecondsAfterFinished | int | `86400` |  |
+| kafka-rw-broker-test.kafka.partitions | int | `3` |  |
+| kafka-rw-broker-test.kafka.replicationFactor | int | `3` |  |
+| kafka-rw-broker-test.kafka.retentionMs | int | `3600000` |  |
+| kafka-rw-broker-test.kafka.topic | string | `"broker-rw-test"` |  |
+| kafka-rw-broker-test.namespace | string | `"control-system-test"` |  |
+| kafka-rw-broker-test.resources.limits.cpu | string | `"1"` |  |
+| kafka-rw-broker-test.resources.limits.memory | string | `"1Gi"` |  |
+| kafka-rw-broker-test.resources.requests.cpu | string | `"250m"` |  |
+| kafka-rw-broker-test.resources.requests.memory | string | `"512Mi"` |  |
+| kafka-rw-broker-test.test.numRecords | int | `10000` |  |
+| kafka-rw-broker-test.test.recordSize | int | `1024` |  |
+| kafka-rw-broker-test.test.throughput | int | `1000` |  |
+| kafka-rw-broker-test.test.timeoutMs | int | `60000` |  |
 | rumba.failedJobsHistoryLimit | int | `1` | The number of failed pods to keep |
 | rumba.image.pullPolicy | string | `"Always"` |  |
 | rumba.image.tag | string | `"latest"` | The image tag for the rumba cronjob container |

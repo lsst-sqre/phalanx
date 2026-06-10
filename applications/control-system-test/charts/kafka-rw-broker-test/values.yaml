@@ -1,0 +1,30 @@
+namespace: control-system-test
+
+image:
+  repository: quay.io/strimzi/kafka
+  tag: ""
+  pullPolicy: IfNotPresent
+
+kafka:
+  topic: broker-rw-test
+  partitions: 3
+  replicationFactor: 3
+  retentionMs: 3600000
+
+test:
+  numRecords: 10000
+  recordSize: 1024
+  throughput: 1000
+  timeoutMs: 60000
+
+job:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 86400
+
+resources:
+  requests:
+    cpu: "250m"
+    memory: "512Mi"
+  limits:
+    cpu: "1"
+    memory: "1Gi"
