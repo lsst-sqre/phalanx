@@ -760,8 +760,8 @@ weatherforecast:
     key: meteoblue-api-key
   resources:
     requests:
-      cpu: 15m
-      memory: 200Mi
+      cpu: 50m
+      memory: 256Mi
     limits:
-      cpu: 90m
-      memory: 400Mi
+      cpu: 500m
+      memory: 512Mi
