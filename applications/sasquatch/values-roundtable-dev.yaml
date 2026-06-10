@@ -7,6 +7,9 @@ strimzi-kafka:
         enabled: true
       external:
         enabled: false
+  users:
+    telegraf:
+      enabled: true
   controller:
     enabled: true
     affinity:
