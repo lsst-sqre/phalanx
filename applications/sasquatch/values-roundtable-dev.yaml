@@ -43,7 +43,11 @@ schema-registry:
   enabled: true
 
 influxdb:
-  enabled: false
+  enabled: true
+
+customInfluxDBIngress:
+  enabled: true
+  hostname: roundtable-dev.lsst.cloud
 
 telegraf:
   enabled: false
