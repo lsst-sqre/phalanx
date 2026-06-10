@@ -16,3 +16,6 @@ dependencies:
 - name: integration-testing
   version: 1.0.0
   condition: integration-testing.enabled
+- name: kafka-rw-broker-test
+  version: 1.0.0
+  condition: kafka-rw-broker-test.enabled
