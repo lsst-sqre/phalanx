@@ -1,0 +1,4 @@
+apiVersion: v2
+name: kafka-rw-broker-test
+description: Helm chart for testing Kafka brokers read/write speed.
+version: 1.0.0
