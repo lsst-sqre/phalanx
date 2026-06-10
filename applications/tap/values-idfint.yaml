@@ -17,12 +17,12 @@ cadc-tap:
     serviceAccount: "tap-service@science-platform-int-dc5d.iam.gserviceaccount.com"
     database: "tap"
 
-  tapSchema:
-    type: "containerized"
-    image:
-      repository: "lsstsqre/tap-schema-idfint-tap"
-      tag: "tickets-DM-54614"
-      pullPolicy: "Always"
-    database: "TAP_SCHEMA"
-    username: "TAP_SCHEMA"
-    useVaultPassword: false
+  # tapSchema:
+  #   type: "containerized"
+  #   image:
+  #     repository: "lsstsqre/tap-schema-idfint-tap"
+  #     tag: "tickets-DM-54614"
+  #     pullPolicy: "Always"
+  #   database: "TAP_SCHEMA"
+  #   username: "TAP_SCHEMA"
+  #   useVaultPassword: false
