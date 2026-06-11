@@ -6,6 +6,7 @@ config:
       username: "efdreader"
       passwordKey: "summit_efd-password"
       schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
+      local: true
     usdf_efd:
       url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
       database: "efd"

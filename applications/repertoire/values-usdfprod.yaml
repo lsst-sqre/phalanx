@@ -14,3 +14,4 @@ config:
       username: "efdreader"
       passwordKey: "usdf_efd-password"
       schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
+      local: true
