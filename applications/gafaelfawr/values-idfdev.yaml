@@ -29,6 +29,10 @@ config:
     uidAttr: null
     gidAttr: null
     addUserGroup: true
+    systemGroups:
+      - "g_admins"
+      - "g_developers"
+      - "g_users"
 
   firestore:
     project: "rsp-firestore-dev-31c4"

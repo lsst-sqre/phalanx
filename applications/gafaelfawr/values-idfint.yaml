@@ -29,6 +29,12 @@ config:
     uidAttr: null
     gidAttr: null
     addUserGroup: true
+    systemGroups:
+      - "g_admins"
+      - "g_contrib"
+      - "g_developers"
+      - "g_rubin"
+      - "g_users"
 
   firestore:
     project: "rsp-firestore-int-7bfb"
