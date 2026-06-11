@@ -35,7 +35,7 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | kafka-rw-broker-test.job.ttlSecondsAfterFinished | int | `86400` |  |
 | kafka-rw-broker-test.kafka.partitions | int | `3` |  |
 | kafka-rw-broker-test.kafka.replicationFactor | int | `3` |  |
-| kafka-rw-broker-test.kafka.retentionMs | int | `3600000` |  |
+| kafka-rw-broker-test.kafka.retentionMs | string | `"3600000"` |  |
 | kafka-rw-broker-test.kafka.topic | string | `"broker-rw-test"` |  |
 | kafka-rw-broker-test.namespace | string | `"control-system-test"` |  |
 | kafka-rw-broker-test.resources.limits.cpu | string | `"1"` |  |
