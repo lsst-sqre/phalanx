@@ -33,6 +33,9 @@ ingress:
   # -- Scope required for /times-square UI
   timesSquareScope: "exec:notebook"
 
+  # -- Scope required for the /admin UI
+  adminScope: "exec:admin"
+
 # -- Resource requests and limits for Squareone pods
 # @default -- see `values.yaml`
 resources:

@@ -49,6 +49,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy (tip: use Always for development) |
 | image.repository | string | `"ghcr.io/lsst-sqre/squareone"` | Squareone Docker image repository |
 | image.tag | string | Chart's appVersion | Overrides the image tag. |
+| ingress.adminScope | string | `"exec:admin"` | Scope required for the /admin UI |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | ingress.enabled | bool | `true` | Enable ingress |
 | ingress.timesSquareScope | string | `"exec:notebook"` | Scope required for /times-square UI |
