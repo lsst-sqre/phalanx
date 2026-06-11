@@ -66,7 +66,11 @@ spec:
               sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="${LSST_KAFKA_SECURITY_USERNAME}" password="${LSST_KAFKA_SECURITY_PASSWORD}";
               EOF
 
-              echo "RETENTION_MS=${RETENTION_MS}"
+              echo "=== Client properties, password redacted ==="
+              sed -E 's/(password=")[^"]*(")/\1********\2/' "${CLIENT_PROPERTIES}"
+
+              set +e
+
 
               "${KAFKA_BIN}/kafka-topics.sh" \
                 --bootstrap-server "${LSST_KAFKA_BROKER_ADDR}" \
@@ -78,6 +82,13 @@ spec:
                 --config "retention.ms=${RETENTION_MS}" \
                 --config "cleanup.policy=delete" \
                 --command-config "${CLIENT_PROPERTIES}"
+              rc=$?
+
+              if [ "$rc" -ne 0 ]; then
+                echo "Topic creation failed with exit code ${rc}. Sleeping for debug..."
+                sleep infinity
+                exit "$rc"
+              fi
 
               echo "=== Topic description ==="
               "${KAFKA_BIN}/kafka-topics.sh" \
@@ -85,6 +96,13 @@ spec:
                 --describe \
                 --topic "${TOPIC}" \
                 --command-config "${CLIENT_PROPERTIES}"
+              rc=$?
+
+              if [ "$rc" -ne 0 ]; then
+                echo "Topic description failed with exit code ${rc}. Sleeping for debug..."
+                sleep infinity
+                exit "$rc"
+              fi
 
               echo "=== Producer/write test ==="
               "${KAFKA_BIN}/kafka-producer-perf-test.sh" \
@@ -94,6 +112,13 @@ spec:
                 --record-size "${RECORD_SIZE}" \
                 --throughput "${THROUGHPUT}" \
                 --command-config "${CLIENT_PROPERTIES}"
+              rc=$?
+
+              if [ "$rc" -ne 0 ]; then
+                echo "Producer test failed with exit code ${rc}. Sleeping for debug..."
+                sleep infinity
+                exit "$rc"
+              fi
 
               echo "=== Consumer/read test ==="
               GROUP_ID="broker-rw-test-$(date +%Y%m%d%H%M%S)"
@@ -105,5 +130,12 @@ spec:
                 --messages "${NUM_RECORDS}" \
                 --timeout "${TIMEOUT_MS}" \
                 --command-config "${CLIENT_PROPERTIES}"
+              rc=$?
+
+              if [ "$rc" -ne 0 ]; then
+                echo "Consumer test failed with exit code ${rc}. Sleeping for debug..."
+                sleep infinity
+                exit "$rc"
+              fi
 
               echo "=== Kafka broker read/write test finished ==="
