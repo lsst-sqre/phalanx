@@ -27,7 +27,7 @@ template:
                   port:
                     number: 8080
             {{- if .Values.config.ivoaRegistry }}
-            - path: {{ .Values.config.ivoaRegistry.pathPrefix | quote }}
+            - path: "{{ .Values.config.ivoaRegistry.pathPrefix }}/registry"
               pathType: "Prefix"
               backend:
                 service:
