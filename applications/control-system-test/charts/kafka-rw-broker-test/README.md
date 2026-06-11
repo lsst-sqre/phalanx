@@ -13,7 +13,7 @@ Helm chart for testing Kafka brokers read/write speed.
 | job.ttlSecondsAfterFinished | int | `86400` |  |
 | kafka.partitions | int | `3` |  |
 | kafka.replicationFactor | int | `3` |  |
-| kafka.retentionMs | int | `3600000` |  |
+| kafka.retentionMs | string | `"3600000"` |  |
 | kafka.topic | string | `"broker-rw-test"` |  |
 | namespace | string | `"control-system-test"` |  |
 | resources.limits.cpu | string | `"1"` |  |
