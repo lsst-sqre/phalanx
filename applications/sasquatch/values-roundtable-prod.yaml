@@ -65,6 +65,7 @@ kafdrop:
   kafka:
     topicPrefixes:
       - "lsst.square-events.squarebot.slack.interaction"
+      - "lsst.square.metrics.events"
 
 rest-proxy:
   enabled: false
