@@ -61,6 +61,7 @@ spec:
               CLIENT_PROPERTIES="/tmp/client.properties"
 
               cat > "${CLIENT_PROPERTIES}" <<EOF
+              bootstrap.servers=${LSST_KAFKA_BROKER_ADDR}
               security.protocol=${LSST_KAFKA_SECURITY_PROTOCOL}
               sasl.mechanism=${LSST_KAFKA_SECURITY_MECHANISM}
               sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="${LSST_KAFKA_SECURITY_USERNAME}" password="${LSST_KAFKA_SECURITY_PASSWORD}";
@@ -106,12 +107,11 @@ spec:
 
               echo "=== Producer/write test ==="
               "${KAFKA_BIN}/kafka-producer-perf-test.sh" \
-                --bootstrap-server "${LSST_KAFKA_BROKER_ADDR}" \
                 --topic "${TOPIC}" \
                 --num-records "${NUM_RECORDS}" \
                 --record-size "${RECORD_SIZE}" \
                 --throughput "${THROUGHPUT}" \
-                --command-config "${CLIENT_PROPERTIES}"
+                --producer.config "${CLIENT_PROPERTIES}"
               rc=$?
 
               if [ "$rc" -ne 0 ]; then
@@ -129,7 +129,7 @@ spec:
                 --group "${GROUP_ID}" \
                 --messages "${NUM_RECORDS}" \
                 --timeout "${TIMEOUT_MS}" \
-                --command-config "${CLIENT_PROPERTIES}"
+                --consumer.config "${CLIENT_PROPERTIES}"
               rc=$?
 
               if [ "$rc" -ne 0 ]; then
