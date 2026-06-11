@@ -7,6 +7,18 @@
 # for the structure of this value.
 # @default -- See `values.yaml`
 globalAppConfig:
+  docverse:
+    influxTags:
+      - "organization"
+      - "project"
+      - "action"
+      - "edition_kind"
+      - "trigger"
+      - "role"
+      - "principal_type"
+      - "ci_platform"
+      - "success"
+      - "github_repository"
   gafaelfawr:
     influxTags:
       - "service"

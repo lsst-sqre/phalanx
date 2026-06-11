@@ -47,6 +47,13 @@ spec:
                 name: "docverse"
           env:
             {{- include "docverse.envVars" . | nindent 12 }}
+            # Alembic-only job: never publish metrics. Override the shared
+            # configmap's METRICS_ENABLED so Configuration() builds the no-op
+            # metrics manager instead of a Kafka one (this job has no Kafka
+            # wiring and runs as a PreSync hook before the docverse-kafka
+            # secret is minted).
+            - name: "METRICS_ENABLED"
+              value: "false"
       {{- if .Values.cloudsql.enabled }}
       initContainers:
         {{- include "docverse.cloudsqlSidecar" . | nindent 8 }}
