@@ -63,8 +63,7 @@ spec:
               cat > "${CLIENT_PROPERTIES}" <<EOF
               security.protocol=${LSST_KAFKA_SECURITY_PROTOCOL}
               sasl.mechanism=${LSST_KAFKA_SECURITY_MECHANISM}
-              sasl.username=${LSST_KAFKA_SECURITY_USERNAME}
-              sasl.password=${LSST_KAFKA_SECURITY_PASSWORD}
+              sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="${LSST_KAFKA_SECURITY_USERNAME}" password="${LSST_KAFKA_SECURITY_PASSWORD}";
               EOF
 
               echo "=== Client properties, password redacted ==="
