@@ -36,6 +36,7 @@ spec:
         - name: {{ .Chart.Name }}
           env:
             {{- include "docverse.envVars" . | nindent 12 }}
+            {{- include "docverse.kafkaEnvVars" . | nindent 12 }}
             # Uvicorn keepalive timeout, in seconds. This should be longer
             # than any keepalive timeouts on any downstream proxies. The
             # keepalive timeout for ingress-nginx connections is 60s.
@@ -79,6 +80,10 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+          {{- if .Values.config.metrics.enabled }}
+          volumeMounts:
+            {{- include "docverse.kafkaVolumeMounts" . | nindent 12 }}
+          {{- end }}
       {{- if .Values.cloudsql.enabled }}
       initContainers:
         {{- include "docverse.cloudsqlSidecar" . | nindent 8 }}
@@ -95,3 +100,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
+      {{- if .Values.config.metrics.enabled }}
+      volumes:
+        {{- include "docverse.kafkaVolume" . | nindent 8 }}
+      {{- end }}

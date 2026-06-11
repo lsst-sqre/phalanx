@@ -30,3 +30,9 @@ data:
   DOCVERSE_PUBLISH_EDITION_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.publishEditionSeconds | quote }}
   DOCVERSE_BUILD_PROCESSING_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.buildProcessingSeconds | quote }}
   DOCVERSE_DASHBOARD_SYNC_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.dashboardSyncSeconds | quote }}
+  {{- if .Values.config.metrics.enabled }}
+  METRICS_ENABLED: "true"
+  METRICS_APPLICATION: {{ .Values.config.metrics.application | quote }}
+  METRICS_EVENTS_TOPIC_PREFIX: {{ .Values.config.metrics.events.topicPrefix | quote }}
+  SCHEMA_MANAGER_REGISTRY_URL: {{ .Values.config.metrics.schemaManager.registryUrl | quote }}
+  {{- end }}

@@ -41,6 +41,7 @@ spec:
           args: ["docverse.worker.main.WorkerSettings"]
           env:
             {{- include "docverse.envVars" . | nindent 12 }}
+            {{- include "docverse.kafkaEnvVars" . | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: "docverse"
@@ -54,6 +55,10 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+          {{- if .Values.config.metrics.enabled }}
+          volumeMounts:
+            {{- include "docverse.kafkaVolumeMounts" . | nindent 12 }}
+          {{- end }}
       {{- if .Values.cloudsql.enabled }}
       initContainers:
         {{- include "docverse.cloudsqlSidecar" . | nindent 8 }}
@@ -70,3 +75,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
+      {{- if .Values.config.metrics.enabled }}
+      volumes:
+        {{- include "docverse.kafkaVolume" . | nindent 8 }}
+      {{- end }}

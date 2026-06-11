@@ -29,6 +29,10 @@ Publish versioned docs
 | config.maintenance.enabled | bool | `false` | Enable the maintenance worker that consumes the `docverse:maintenance-queue` arq queue. Requires the docverse image to provide `docverse.worker.main.MaintenanceWorkerSettings`. |
 | config.maintenance.gitRefAuditEnabled | bool | `false` | Whether to enable auditing the git ref lifecycle rule. Enabling this will cause docverse to make GitHub API calls to determine if the git ref associated with an edition still exists. |
 | config.maintenance.jobTimeoutSeconds | int | `3600` | Per-job timeout, in seconds, for maintenance-pool jobs (lifecycle evaluation and git ref audits). |
+| config.metrics.application | string | `"docverse"` | Name under which to log metrics. Generally there is no reason to change this. |
+| config.metrics.enabled | bool | `false` | Whether to enable sending application metrics events to Sasquatch over Kafka. When disabled, Docverse uses a no-op metrics manager. |
+| config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
+| config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.pathPrefix | string | `"/docverse/api"` | URL path prefix |
 | config.reaperThresholds.buildProcessingSeconds | int | `28800` | Stuck-run reaper threshold, in seconds, for build_processing jobs. |
 | config.reaperThresholds.dashboardBuildSeconds | int | `1800` | Stuck-run reaper threshold, in seconds, for dashboard_build jobs. |

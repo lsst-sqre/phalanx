@@ -103,3 +103,64 @@ Secret environment variables shared across all Docverse pods.
   value: {{ .Values.config.sentry.tracesSampleRate | quote }}
 {{- end }}
 {{- end }}
+
+{{/*
+Kafka connection environment variables for application-metrics publishing,
+sourced from the access-operator-minted docverse-kafka secret plus the static
+mount paths. Included only by the long-running metric-publishing pods (the API
+and the three worker pools) — deliberately NOT part of docverse.envVars, so the
+PreSync schema-update job never references the docverse-kafka secret (which the
+access operator only mints during the main sync wave). Self-gated on
+config.metrics.enabled.
+*/}}
+{{- define "docverse.kafkaEnvVars" -}}
+{{- if .Values.config.metrics.enabled }}
+- name: "KAFKA_BOOTSTRAP_SERVERS"
+  valueFrom:
+    secretKeyRef:
+      name: "docverse-kafka"
+      key: "bootstrapServers"
+- name: "KAFKA_SECURITY_PROTOCOL"
+  valueFrom:
+    secretKeyRef:
+      name: "docverse-kafka"
+      key: "securityProtocol"
+- name: "KAFKA_CLIENT_CERT_PATH"
+  value: "/etc/docverse-kafka/user.crt"
+- name: "KAFKA_CLIENT_KEY_PATH"
+  value: "/etc/docverse-kafka/user.key"
+- name: "KAFKA_CLUSTER_CA_PATH"
+  value: "/etc/docverse-kafka/ca.crt"
+{{- end }}
+{{- end }}
+
+{{/*
+Volume mounts for the Kafka client certificate material minted by the Strimzi
+access operator into the docverse-kafka secret. Included by every pod that
+publishes application metrics when config.metrics.enabled is true.
+*/}}
+{{- define "docverse.kafkaVolumeMounts" -}}
+- name: "kafka"
+  mountPath: "/etc/docverse-kafka/ca.crt"
+  readOnly: true
+  subPath: "ssl.truststore.crt"
+- name: "kafka"
+  mountPath: "/etc/docverse-kafka/user.crt"
+  readOnly: true
+  subPath: "ssl.keystore.crt"
+- name: "kafka"
+  mountPath: "/etc/docverse-kafka/user.key"
+  readOnly: true
+  subPath: "ssl.keystore.key"
+{{- end }}
+
+{{/*
+The Kafka client certificate volume sourced from the docverse-kafka secret.
+Included by every pod that publishes application metrics when
+config.metrics.enabled is true.
+*/}}
+{{- define "docverse.kafkaVolume" -}}
+- name: "kafka"
+  secret:
+    secretName: "docverse-kafka"
+{{- end }}
