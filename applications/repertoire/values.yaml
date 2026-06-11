@@ -137,7 +137,7 @@ config:
     created: "2026-05-20T00:00:00"
     creator: "Vera C. Rubin Observatory"
     ivoid: "ivo://org.rubinobs/registry"
-    pathPrefix: "/discovery"
+    path: "/api/registry"
     repositoryName: "Rubin Science Platform IVOA Publishing Registry"
     rights: >-
       Restricted to authorized Rubin data rights holders. See
