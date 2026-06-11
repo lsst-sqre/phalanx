@@ -6,6 +6,8 @@ config:
   githubAppId: "1112177"
   enableGitHubApp: "True"
   sentryTracesSampleRate: 1
+  renameGithubOwner:
+    enabled: false
 cloudsql:
   enabled: false
 redis:
@@ -16,4 +18,4 @@ redis:
     requests:
       memory: "8Gi"
     limits:
-      memory: "24Gi"
+      memory: "32Gi"

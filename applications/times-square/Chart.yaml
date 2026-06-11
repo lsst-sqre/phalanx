@@ -8,7 +8,7 @@ sources:
 type: application
 
 # The default version tag of the times-square docker image
-appVersion: "0.23.0"
+appVersion: "0.24.0"
 
 dependencies:
   - name: redis
@@ -23,3 +23,9 @@ annotations:
     - id: "SQR-065"
       title: "Design of Noteburst, a programatic JupyterLab notebook execution service for the Rubin Science Platform"
       url: "https://sqr-065.lsst.io/"
+    - id: "SQR-083"
+      title: "Patterns for accessing external resources from Times Square notebooks"
+      url: "https://sqr-083.lsst.io/"
+    - id: "SQR-084"
+      title: "Using Times Square for observatory reporting"
+      url: "https://sqr-084.lsst.io/"
