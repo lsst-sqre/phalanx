@@ -5,7 +5,7 @@ strimzi — Kafka cluster manager
 ###############################
 
 The ``strimzi`` application is an installation of the `Strimzi Kafka Operator <https://strimzi.io/>`__, used to manage `Apache Kafka`_ installations in the Rubin Science Platform.
-It is used by both :px-app:`alert-stream-broker` and :px-app:`sasquatch` to create their respective Kafka clusters.
+It is used by :px-app:`sasquatch` to create its Kafka cluster.
 
 .. jinja:: strimzi
    :file: applications/_summary.rst.jinja
