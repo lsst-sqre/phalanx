@@ -6,7 +6,7 @@ image:
   pullPolicy: IfNotPresent
 
 kafka:
-  topic: broker-rw-test
+  topic: lsst.sal.kafka-broker-rw-test
   partitions: 3
   replicationFactor: 3
   retentionMs: "3600000"
