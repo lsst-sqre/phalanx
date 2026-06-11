@@ -45,7 +45,7 @@ python_api_dir = "internals/api"
 rst_epilog_file = "_rst_epilog.rst"
 
 [sphinx.intersphinx.projects]
-click = "https://click.palletsprojects.com/en/8.1.x/"
+click = "https://click.palletsprojects.com/en/stable/"
 hvac = "https://hvac.readthedocs.io/en/stable/"
 python = "https://docs.python.org/3/"
 safir = "https://safir.lsst.io/"
