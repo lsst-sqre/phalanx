@@ -6,4 +6,5 @@ config:
       username: "efdreader"
       passwordKey: "idfdev_efd-password"
       schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
+      local: true
   slackAlerts: true
