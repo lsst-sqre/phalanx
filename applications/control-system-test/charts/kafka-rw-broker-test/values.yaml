@@ -9,7 +9,7 @@ kafka:
   topic: broker-rw-test
   partitions: 3
   replicationFactor: 3
-  retentionMs: 3600000
+  retentionMs: "3600000"
 
 test:
   numRecords: 10000

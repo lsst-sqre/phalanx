@@ -33,7 +33,7 @@ spec:
             - name: REPLICATION_FACTOR
               value: {{ .Values.kafka.replicationFactor | quote }}
             - name: RETENTION_MS
-              value: {{ .Values.kafka.retentionMs | int64 | quote }}
+              value: {{ .Values.kafka.retentionMs | quote }}
             - name: NUM_RECORDS
               value: {{ .Values.test.numRecords | quote }}
             - name: RECORD_SIZE
@@ -42,6 +42,10 @@ spec:
               value: {{ .Values.test.throughput | quote }}
             - name: TIMEOUT_MS
               value: {{ .Values.test.timeoutMs | quote }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
 
           command:
             - /bin/bash
@@ -63,7 +67,6 @@ spec:
               EOF
 
               echo "RETENTION_MS=${RETENTION_MS}"
-              printf 'RETENTION_MS shell-quoted: <%q>\n' "${RETENTION_MS}"
 
               "${KAFKA_BIN}/kafka-topics.sh" \
                 --bootstrap-server "${LSST_KAFKA_BROKER_ADDR}" \
