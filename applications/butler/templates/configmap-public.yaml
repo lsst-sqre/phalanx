@@ -16,4 +16,7 @@ data:
     dp1: "{{.Values.global.baseUrl}}{{.Values.config.pathPrefix}}/repo/dp1/butler.yaml"
     {{- if .Values.config.promptPostgresUri }}
     prompt: "{{.Values.global.baseUrl}}{{.Values.config.pathPrefix}}/repo/prompt/butler.yaml"
+    {{- end }}
+    {{- if .Values.config.dp2PostgresUri }}
+    dp2: "{{.Values.global.baseUrl}}{{.Values.config.pathPrefix}}/repo/dp2/butler.yaml"
     {{ end }}
