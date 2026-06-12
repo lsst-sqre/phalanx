@@ -22,7 +22,7 @@ config:
       - "read:tap"
   autostart:
     - name: "scale-test-qserv"
-      count: 50
+      count: 500
       user_spec:
         username_prefix: "bot-mobu-scale-notebook"
       scopes:
