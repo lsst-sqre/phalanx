@@ -609,7 +609,7 @@ mtptg:
     limits:
       cpu: 1200m
     requests:
-      cpu: 120m
+      cpu: 1000m
       memory: 1500Mi
 
 mtrotator:
