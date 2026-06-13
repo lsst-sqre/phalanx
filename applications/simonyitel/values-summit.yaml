@@ -484,7 +484,7 @@ mtm2hexapod-sim:
 mtmount:
   enabled: true
   image:
-    revision: 0
+    revision: 6
     repository: ts-dockerhub.lsst.org/mtmount
     pullPolicy: Always
   resources:
