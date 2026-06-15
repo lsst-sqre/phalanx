@@ -32,7 +32,7 @@ Turborepo remote cache
 | proxy.config.pathPrefix | string | `"/turborepo-cache"` | URL path prefix for the proxy application |
 | proxy.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the proxy image |
 | proxy.image.repository | string | `"ghcr.io/lsst-sqre/turborepo-cache-proxy"` | Image to use for the proxy deployment |
-| proxy.image.tag | string | `"1.0.1"` | Tag of proxy image to use |
+| proxy.image.tag | string | `"1.0.2"` | Tag of proxy image to use |
 | proxy.nodeSelector | object | `{}` | Node selection rules for the proxy deployment pod |
 | proxy.podAnnotations | object | `{}` | Annotations for the proxy deployment pod |
 | proxy.replicaCount | int | `1` | Number of proxy deployment pods to start |
