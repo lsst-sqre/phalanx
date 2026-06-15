@@ -44,7 +44,7 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | kafka-rw-broker-test.resources.requests.memory | string | `"512Mi"` |  |
 | kafka-rw-broker-test.test.numRecords | int | `100000` |  |
 | kafka-rw-broker-test.test.recordSize | int | `1024` |  |
-| kafka-rw-broker-test.test.throughput | int | `5000` |  |
+| kafka-rw-broker-test.test.throughput | int | `3000` |  |
 | kafka-rw-broker-test.test.timeoutMs | int | `120000` |  |
 | rumba.failedJobsHistoryLimit | int | `1` | The number of failed pods to keep |
 | rumba.image.pullPolicy | string | `"Always"` |  |
