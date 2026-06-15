@@ -1,8 +1,8 @@
 image:
   pullPolicy: Always
-  # Deploy the DM-55225 /api-aspect discovery skeleton branch image
-  # (squareone PR lsst-sqre/squareone#471) for preview on idfdev.
-  tag: "tickets-DM-55225-api-aspect-skeleton"
+  # Deploy the DM-55225 /api-aspect presentation branch image
+  # (squareone PR lsst-sqre/squareone#472) for preview on idfdev.
+  tag: "tickets-DM-55225-api-aspect-presentation"
 
 ingress:
   timesSquareScope: "exec:admin"
