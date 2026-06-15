@@ -131,9 +131,15 @@ love-manager:
     - name: m1m3
       <<: *base-manager-producer
       replicas: 1
-    - name: envsys
+    - name: envsys-1
       <<: *base-manager-producer
-      replicas: 2
+      replicas: 1
+    - name: envsys-2
+      <<: *base-manager-producer
+      replicas: 1
+    - name: envsys-3
+      <<: *base-manager-producer
+      replicas: 1
     - name: atcs
       <<: *base-manager-producer
       replicas: 1
@@ -260,8 +266,24 @@ love-nginx:
           proxy_set_header Host $host;
           proxy_redirect off;
       }
-      location /love/manager/envsys {
-          proxy_pass http://love-manager-producer-envsys-service:8000;
+      location /love/manager/envsys-1 {
+          proxy_pass http://love-manager-producer-envsys-1-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/envsys-2 {
+          proxy_pass http://love-manager-producer-envsys-2-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/envsys-3 {
+          proxy_pass http://love-manager-producer-envsys-3-service:8000;
           proxy_http_version 1.1;
           proxy_set_header Upgrade $http_upgrade;
           proxy_set_header Connection "upgrade";
@@ -439,25 +461,25 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
   - name: automatic-transfer-switch-ess309
     csc: ESS:309 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: auxteless201
     csc: ESS:201 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: auxteless202
     csc: ESS:202 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: auxteless204
     csc: ESS:204 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: auxteless308
     csc: ESS:308 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: calibhilless301
     csc: ESS:301 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: cameraess111
     csc: ESS:111 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: camerahexapod
     csc: MTHexapod:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
@@ -478,25 +500,25 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: dream
     csc: DREAM:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-3/ws/subscription
   - name: cleanroomess109
     csc: ESS:109 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: dimm1
     csc: DIMM:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-3/ws/subscription
   - name: dimm2
     csc: DIMM:2 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-3/ws/subscription
   - name: dsm1
     csc: DSM:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-3/ws/subscription
   - name: dsm2
     csc: DSM:2 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-3/ws/subscription
   - name: eas
     csc: EAS:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-3/ws/subscription
   - name: electrometer101
     csc: Electrometer:101 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
@@ -511,13 +533,13 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: epm-ess303
     csc: ESS:303 --log-level 10 --asynchronous-data evt_heartbeat evt_summaryState evt_logMessage evt_errorCode evt_logLevel evt_simulationMode evt_configurationApplied evt_configurationsAvailable evt_softwareVersions evt_sensorStatus tel_schneiderPm5xxx tel_xups
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: epm-generator-ess305
     csc: ESS:305 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: epm-generator-ess306
     csc: ESS:306 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: gcheaderservice1
     csc: GCHeaderService:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
@@ -526,7 +548,7 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: hvac
     csc: HVAC:0
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-3/ws/subscription
     resources:
       requests:
         cpu: 100m
@@ -554,37 +576,37 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: louverh1ess441
     csc: ESS:441 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: louverh1h2ess442
     csc: ESS:442 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: louverh2ess443
     csc: ESS:443 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: love
     csc: LOVE:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: m1m3ess113
     csc: ESS:113 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: m1m3ess114
     csc: ESS:114 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: m1m3ess115
     csc: ESS:115 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: m1m3ess116
     csc: ESS:116 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: m1m3ess117
     csc: ESS:117 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: m2ess106
     csc: ESS:106 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: m2ess112
     csc: ESS:112 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: m2hexapod
     csc: MTHexapod:2 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
@@ -602,10 +624,10 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
   - name: mtdomeess404
     csc: ESS:404 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: mtdomeess405
     csc: ESS:405 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: mtdometrajectory
     csc: MTDomeTrajectory:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
@@ -738,61 +760,61 @@ love-producer:
         memory: 600Mi
   - name: partsensess127
     csc: ESS:127
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: partsensess128
     csc: ESS:128
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: partsensess129
     csc: ESS:129
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: ringssess304
     csc: ESS:304 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: test42
     csc: Test:42 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess104
     csc: ESS:104 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: tmaess105
     csc: ESS:105 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: tmaess110
     csc: ESS:110 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: tmaess121
     csc: ESS:121 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: tma-ess122
     csc: ESS:122 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: tea-ess123
     csc: ESS:123
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: tea-ess124
     csc: ESS:124
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: tea-ess125
     csc: ESS:125
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: tea-ess126
     csc: ESS:126
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
   - name: tunablelaser
     csc: TunableLaser:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/calsys/ws/subscription
   - name: ups-server-room1-ess310
     csc: ESS:310 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: ups-server-room2-ess311
     csc: ESS:311 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
   - name: watcher
     csc: Watcher:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
   - name: weatherforecast
     csc: WeatherForecast:0 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-3/ws/subscription
     resources:
       requests:
         cpu: 50m
