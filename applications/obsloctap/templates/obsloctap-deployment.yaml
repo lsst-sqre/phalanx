@@ -81,7 +81,28 @@ spec:
                   key: "password"
             - name: "database_schema"
               value: "{{ .Values.config.database_schema }}"
-{{- range $key, $value := .Values.obsloctap.environment }}
+            - name: "consdb_database"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "consdb-database"
+            - name: "consdb_username"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "consdb-username"
+            - name: "consdb_url"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "consdb-url"
+            - name: "consdb_password"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "consdb-password"
+
+  {{- range $key, $value := .Values.obsloctap.environment }}
             - name: {{ $key | quote }}
               value: {{ $value | quote }}
 {{- end }}
