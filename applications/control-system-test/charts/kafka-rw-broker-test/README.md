@@ -20,7 +20,7 @@ Helm chart for testing Kafka brokers read/write speed.
 | resources.limits.memory | string | `"1Gi"` |  |
 | resources.requests.cpu | string | `"250m"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
-| test.numRecords | int | `10000` |  |
+| test.numRecords | int | `100000` |  |
 | test.recordSize | int | `1024` |  |
-| test.throughput | int | `1000` |  |
-| test.timeoutMs | int | `60000` |  |
+| test.throughput | int | `5000` |  |
+| test.timeoutMs | int | `120000` |  |
