@@ -63,7 +63,7 @@ proxy:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of proxy image to use
-    tag: "1.0.1"
+    tag: "1.0.2"
 
   config:
     # -- Log level for the proxy application
