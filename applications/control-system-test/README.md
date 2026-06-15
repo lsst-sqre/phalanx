@@ -42,10 +42,10 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | kafka-rw-broker-test.resources.limits.memory | string | `"1Gi"` |  |
 | kafka-rw-broker-test.resources.requests.cpu | string | `"250m"` |  |
 | kafka-rw-broker-test.resources.requests.memory | string | `"512Mi"` |  |
-| kafka-rw-broker-test.test.numRecords | int | `10000` |  |
+| kafka-rw-broker-test.test.numRecords | int | `100000` |  |
 | kafka-rw-broker-test.test.recordSize | int | `1024` |  |
-| kafka-rw-broker-test.test.throughput | int | `1000` |  |
-| kafka-rw-broker-test.test.timeoutMs | int | `60000` |  |
+| kafka-rw-broker-test.test.throughput | int | `5000` |  |
+| kafka-rw-broker-test.test.timeoutMs | int | `120000` |  |
 | rumba.failedJobsHistoryLimit | int | `1` | The number of failed pods to keep |
 | rumba.image.pullPolicy | string | `"Always"` |  |
 | rumba.image.tag | string | `"latest"` | The image tag for the rumba cronjob container |

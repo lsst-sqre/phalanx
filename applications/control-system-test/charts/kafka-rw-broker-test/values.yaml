@@ -12,10 +12,10 @@ kafka:
   retentionMs: "3600000"
 
 test:
-  numRecords: 10000
+  numRecords: 100000
   recordSize: 1024
-  throughput: 1000
-  timeoutMs: 60000
+  throughput: 5000
+  timeoutMs: 120000
 
 job:
   backoffLimit: 0
