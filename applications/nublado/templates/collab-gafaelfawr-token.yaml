@@ -1,0 +1,10 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: "collab-gafaelfawr-token"
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+spec:
+  service: "bot-collab"
+  scopes:
+    - "admin:userinfo"
