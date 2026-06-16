@@ -104,10 +104,11 @@ cloudsql:
   serviceAccount: "nublado@science-platform-dev-7696.iam.gserviceaccount.com"
 collab:
   enabled: true
+  config:
+    excludedGroups: ["g_adhoc-2"]
   image:
     tag: "tickets-DM-55155"
   volumeName: "collab"
-  exclude: ["g_adhoc-2"]
   schedule: "* * * * *"
 purger:
   enabled: true

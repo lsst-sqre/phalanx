@@ -890,18 +890,15 @@ collab:
   affinity: {}
 
   config:
-    # -- Collaboration volume mount point inside container.
+    # -- Collaboration volume mount point inside container
     collabDir: "/mnt/collab"
 
-    # -- Path to list of excluded groups.
-    excludedGroupsPath: "/etc/collab-group/exclude-groups.yaml"
+    # -- Excluded groups
+    # @default -- None, must be set for each environment
+    excludedGroups: null
 
-    # -- Path to Gafaelfawr token with "admin:userinfo" scope.
+    # -- Path to Gafaelfawr token with "admin:userinfo" scope
     gafaelfawrTokenPath: "/etc/gafaelfawr/token"
-
-  # -- List of excluded user groups.
-  # @default -- empty list, must be set for each environment.
-  exclude: []
 
   image:
     # -- collab-group image to use (will eventually be rolled into nublado)

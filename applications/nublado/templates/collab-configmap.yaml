@@ -8,6 +8,4 @@ metadata:
 data:
   config.yaml: |-
     {{- toYaml .Values.collab.config | nindent 4 }}
-  exclude-groups.yaml: |-
-    {{- toYaml .Values.collab.exclude | nindent 4 }}
 {{- end }}
