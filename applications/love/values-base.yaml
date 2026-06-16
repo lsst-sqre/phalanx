@@ -139,6 +139,10 @@ love-manager:
       replicas: 1
     - name: envsys-3
       <<: *base-manager-producer
+      image:
+        revision: 0
+        repository: ts-dockerhub.lsst.org/love-manager
+        pullPolicy: Always
       replicas: 1
     - name: atcs
       <<: *base-manager-producer
@@ -148,6 +152,10 @@ love-manager:
       replicas: 1
     - name: calsys
       <<: *base-manager-producer
+      image:
+        revision: 0
+        repository: ts-dockerhub.lsst.org/love-manager
+        pullPolicy: Always
       replicas: 1
     - name: obssys
       <<: *base-manager-producer
