@@ -1,0 +1,30 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "semaphore-admin"
+  labels:
+    {{- include "semaphore.labels" . | nindent 4 }}
+config:
+  scopes:
+    all:
+      - "admin:notifications"
+  service: "semaphore"
+template:
+  metadata:
+    name: "semaphore-admin"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.config.pathPrefix }}/v1/admin"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "semaphore"
+                  port:
+                    number: 80
