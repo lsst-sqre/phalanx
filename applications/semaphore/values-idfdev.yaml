@@ -3,3 +3,7 @@ config:
   githubAppId: "127943"
   logLevel: "DEBUG"
   slackAlerts: true
+cloudsql:
+  enabled: true
+  instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
+  serviceAccount: "semaphore@science-platform-dev-7696.iam.gserviceaccount.com"

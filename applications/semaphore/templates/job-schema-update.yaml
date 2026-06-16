@@ -1,23 +1,24 @@
-apiVersion: apps/v1
-kind: Deployment
+{{- if .Values.config.updateSchema -}}
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: "semaphore"
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "hook-succeeded"
+    helm.sh/hook-weight: "1"
   labels:
     {{- include "semaphore.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      {{- include "semaphore.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- with .Values.podAnnotations }}
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-        {{- end }}
+      {{- end }}
       labels:
         {{- include "semaphore.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "schema-update"
     spec:
       {{- with .Values.affinity }}
       affinity:
@@ -30,6 +31,9 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
+          command:
+            - "semaphore"
+            - "update-schema"
           env:
             - name: "SEMAPHORE_DATABASE_PASSWORD"
               valueFrom:
@@ -64,45 +68,11 @@ spec:
             - name: "SENTRY_TRACES_SAMPLE_RATE"
               value: {{ .Values.config.sentry.tracesSampleRate }}
             {{- end }}
-            # Uvicorn keepalive timeout, in seconds. This should be longer
-            # than any keepalive timeouts on any downstream proxies. The
-            # keepalive timeout for ingress-nginx connections is 60s.
-            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
-              value: "61"
           envFrom:
             - configMapRef:
                 name: "semaphore"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-          lifecycle:
-            # Number of seconds k8s should wait before sending SIGTERM on
-            # graceful restarts/deployments/shutdowns. We need this because it
-            # takes ingress-nginx some time to configure itself to stop
-            # sending traffic to the pods scheduled for termination. If
-            # Uvicorn gets the SIGTERM and starts closing connections, we
-            # could end up with a TCP race condition if ingress-nginx still
-            # tries to send data over those connections.
-            #
-            # Note that terminationGracePeriodSeconds includes the time that
-            # is spent in the preStop hook. If you’re adding a preStop hook
-            # and your terminationGracePeriodSeconds is super fine-tuned, then
-            # you should update your terminationGracePeriodSeconds to add the
-            # amount of time you’ll be spending in your preStop hook.
-            preStop:
-              sleep:
-                seconds: 10
-          livenessProbe:
-            httpGet:
-              path: "/"
-              port: "http"
-          ports:
-            - name: "http"
-              containerPort: 8080
-              protocol: "TCP"
-          readinessProbe:
-            httpGet:
-              path: "/"
-              port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           securityContext:
@@ -119,6 +89,7 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      restartPolicy: "Never"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -127,3 +98,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+{{- end }}

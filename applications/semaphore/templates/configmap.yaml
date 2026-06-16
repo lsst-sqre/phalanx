@@ -2,9 +2,20 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: "semaphore"
+  {{- if .Values.config.updateSchema }}
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation"
+    helm.sh/hook-weight: "0"
+  {{- end }}
   labels:
     {{- include "semaphore.labels" . | nindent 4 }}
 data:
+  {{- if .Values.cloudsql.enabled }}
+  SEMAPHORE_DATABASE_URL: "postgresql://semaphore@localhost/semaphore"
+  {{- else }}
+  SEMAPHORE_DATABASE_URL: {{ .Values.config.databaseUrl | quote }}
+  {{- end }}
   SEMAPHORE_ENABLE_GITHUB_APP: {{ .Values.config.enableGithubApp | quote }}
   SEMAPHORE_GITHUB_APP_ID: {{ .Values.config.githubAppId | quote }}
   SEMAPHORE_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
