@@ -242,6 +242,8 @@ config:
   knownScopes:
     "admin:jupyterlab": >-
       Can create and destroy labs for any user
+    "admin:notifications": >-
+      Can send and view all user notifications
     "admin:token": >-
       Can create and modify tokens for any user
     "admin:userinfo": >-
@@ -266,6 +268,8 @@ config:
       Execute SELECT queries in the TAP interface on project datasets
     "write:files": >-
       Write access to POSIX file space
+    "write:notifications": >-
+      Service can send notifications to users and manage its notifications
     "write:sasquatch": >-
       Write access to the Sasquatch telemetry service
     "user:token": >-

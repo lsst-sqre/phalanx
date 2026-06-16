@@ -71,6 +71,8 @@ config:
   groupMapping:
     "admin:jupyterlab":
       - "g_admins"
+    "admin:notifications":
+      - "g_admins"
     "admin:userinfo":
       - "g_admins"
     "exec:admin":
