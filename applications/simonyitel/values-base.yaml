@@ -253,7 +253,9 @@ mtmount-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtmount
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
+  nodeSelector:
+    kubernetes.io/hostname: manke01
   env:
     RUN_ARG: --simulate
   resources:
