@@ -486,7 +486,9 @@ mtmount:
   image:
     revision: 6
     repository: ts-dockerhub.lsst.org/mtmount
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
+  nodeSelector:
+    kubernetes.io/hostname: yagan14
   resources:
     limits:
       cpu: 2
@@ -500,9 +502,11 @@ mtmount-ccw-only:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/mtmount
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   env:
     CCW_ONLY: yes
+  nodeSelector:
+    kubernetes.io/hostname: yagan14
   resources:
     limits:
       cpu: 500m
