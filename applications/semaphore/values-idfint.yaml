@@ -1,3 +1,6 @@
+image:
+  tag: "t-DM-55229"
+  pullPolicy: "Always"
 config:
   enableGithubApp: true
   githubAppId: "131457"
