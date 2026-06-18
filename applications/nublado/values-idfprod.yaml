@@ -52,16 +52,16 @@ controller:
           secretKey: "rubin-epo-cit-sci-pipeline.json"
           path: "/opt/lsst/software/jupyterlab/secrets/rubin-epo-cit-sci-pipeline.json"
       sizes:
-        # Double the memory because these are running on nodes with a 2x ratio
-        # of mem to CPU compared to standard nodes
+        # Double the memory for a large because these are running on nodes
+        # with a 2x ratio of memory to CPU compared to standard nodes.
         - size: "small"
           resources:
             limits:
               cpu: 1.0
-              memory: "8Gi"
+              memory: "4Gi"
             requests:
               cpu: 0.25
-              memory: "1.5Gi"
+              memory: "1Gi"
         - size: "large"
           resources:
             limits:
