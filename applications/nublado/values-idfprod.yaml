@@ -106,7 +106,8 @@ hub:
 
 jupyterhub:
   cull:
-    timeout: 90000  # 25hrs
+    timeout: 90000  # 25 hours
+    maxAge: 432000  # 5 days
 
   hub:
     config:
