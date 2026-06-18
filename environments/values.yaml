@@ -299,6 +299,9 @@ applications:
   # -- Enable the times-square application
   times-square: false
 
+  # -- Enable the weatherbroadcaster application
+  weatherbroadcaster: false
+
   # -- Enable the turborepo-cache application
   turborepo-cache: false
 

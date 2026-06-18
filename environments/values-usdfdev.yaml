@@ -49,3 +49,4 @@ applications:
   tap: true
   tasso: true
   times-square: true
+  weatherbroadcaster: true

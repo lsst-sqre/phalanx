@@ -31,3 +31,4 @@ Argo CD project: ``rubin``
    schedview-snapshot/index
    schedview-static-pages/index
    tasso/index
+   weatherbroadcaster/index
