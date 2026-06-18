@@ -48,3 +48,4 @@ applications:
   strimzi: true
   tap: true
   times-square: true
+  weatherbroadcaster: true

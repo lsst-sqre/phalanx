@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "weatherbroadcaster"
+  labels:
+    {{- include "weatherbroadcaster.labels" . | nindent 4 }}
+data:
+  WEATHERBROADCASTER_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  WEATHERBROADCASTER_LOG_PROFILE: {{ .Values.config.logProfile | quote }}
+  WEATHERBROADCASTER_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}
