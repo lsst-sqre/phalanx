@@ -465,7 +465,6 @@ config:
       tap:
         enabled: false
         schemas:
-          - dp2
           - dp1
           - ivoa_obscore
           - dp02_dc2
