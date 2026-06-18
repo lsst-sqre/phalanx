@@ -18,3 +18,13 @@ integration-testing:
 
 rumba:
   enabled: true
+
+kafka-rw-broker-test:
+  enabled: true
+  image:
+    tag: 0.47.0-kafka-3.9.1
+  test:
+    numRecords: 100000
+    recordSize: 1024
+    throughput: 3000
+    timeoutMs: 120000
