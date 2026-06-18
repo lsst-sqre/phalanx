@@ -57,6 +57,7 @@ config:
   quota:
     default:
       api:
+        herald: 250
         hips: 1000
         sia: 70
         tap: 1000
