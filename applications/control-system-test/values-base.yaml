@@ -26,5 +26,5 @@ kafka-rw-broker-test:
   test:
     numRecords: 100000
     recordSize: 1024
-    throughput: 3000
+    throughput: 5000
     timeoutMs: 120000
