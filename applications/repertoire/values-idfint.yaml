@@ -16,6 +16,11 @@ config:
     servers:
       tap:
         enabled: true
+        schemas:
+          - dp2
+          - dp1
+          - ivoa_obscore
+          - dp02_dc2
       ssotap:
         enabled: true
   useSubdomains:
