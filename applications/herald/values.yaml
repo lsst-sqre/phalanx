@@ -11,7 +11,7 @@ autoscaling:
   minReplicas: 1
 
   # -- Maximum number of herald deployment pods
-  maxReplicas: 10
+  maxReplicas: 20
 
   # -- Target CPU utilization as a percentage of requested CPU for autoscaling
   targetCPUUtilizationPercentage: 800
