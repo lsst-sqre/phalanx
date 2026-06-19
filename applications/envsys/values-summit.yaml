@@ -87,7 +87,7 @@ calibhill-ess301:
   enabled: true
   classifier: ess301
   image:
-    revision: 0
+    revision: 6
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
