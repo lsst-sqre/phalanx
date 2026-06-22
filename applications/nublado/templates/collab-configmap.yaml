@@ -1,0 +1,11 @@
+{{- if .Values.collab.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "collab-configmap"
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+data:
+  config.yaml: |-
+    {{- toYaml .Values.collab.config | nindent 4 }}
+{{- end }}

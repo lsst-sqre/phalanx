@@ -40,6 +40,7 @@ controller:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "https://data-dev.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         RUBIN_DIR: "/rubin"
+        NUBLADO_COLLAB_DIR: "/collab"
         SCRATCH_PATH: "/deleted-sundays"
         TMPDIR: "/tmp"
         TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
@@ -66,6 +67,11 @@ controller:
             serverPath: "/home-tiered-share/_reloc/deleted-sundays"
             server: "10.234.16.4"
             type: "nfs"
+        - name: "collab"
+          source:
+            serverPath: "/home-tiered-share/_reloc/collab"
+            server: "10.234.16.4"
+            type: "nfs"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -73,11 +79,12 @@ controller:
           volumeName: "rubin"
         - containerPath: "/deleted-sundays"
           volumeName: "deleted-sundays"
+        - containerPath: "/collab"
+          volumeName: "collab"
     metrics:
       enabled: true
 hub:
   useSubdomains: true
-
 jupyterhub:
   cull:
     timeout: 43200  # 12 hours
@@ -91,11 +98,18 @@ jupyterhub:
     db:
       upgrade: true
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
-
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
   serviceAccount: "nublado@science-platform-dev-7696.iam.gserviceaccount.com"
+collab:
+  enabled: true
+  config:
+    excludedGroups: ["g_adhoc-2"]
+  image:
+    tag: "tickets-DM-55155"
+  volumeName: "collab"
+  schedule: "* * * * *"
 purger:
   enabled: true
   volumeName: "deleted-sundays"
