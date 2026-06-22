@@ -383,6 +383,12 @@ config:
             releases.
           adqlVersion: "2.1"
           uploadSupported: true
+          records:
+            dp1:
+              ivoid: "ivo://org.rubinobs/catalogs/lsst-dp1"
+              title: "Rubin Science Platform TAP (DP1)"
+              created: "2026-05-20T00:00:00"
+              description: "DP1 catalog data accessible via the Rubin TAP service."
     times-square:
       - type: "internal"
         name: "times-square"
