@@ -1,3 +1,20 @@
 resources:
   limits:
     memory: "8Gi"
+
+image:
+  # -- Portal image to use
+  repository: "ipac/firefly"
+
+  # -- Pull policy for the Portal image
+  pullPolicy: "IfNotPresent"
+  # -- Tag of Portal image to use
+  # @default -- The appVersion of the chart
+  tag: "2025.5.4"
+
+ingress:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/firefly$1$2"
+    nginx.ingress.kubernetes.io/proxy-redirect-from: "/firefly/"
+    nginx.ingress.kubernetes.io/proxy-redirect-to: "/portal/app/"
+    nginx.ingress.kubernetes.io/proxy-cookie-path: "/firefly /portal/app"
