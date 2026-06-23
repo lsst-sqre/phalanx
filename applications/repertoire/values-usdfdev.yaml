@@ -7,6 +7,11 @@ config:
     - "live"
   hips:
     datasets: {}
+  tap:
+    servers:
+      tap:
+        databaseUrl: "postgresql://tap_schema_admin_tap@rsp-db.postgres-db:5432/tap"
+        databasePasswordKey: "tap-schema-admin-password"
   influxdbDatabases:
     usdfdev_efd:
       url: "https://usdf-rsp-dev.slac.stanford.edu/influxdb/"

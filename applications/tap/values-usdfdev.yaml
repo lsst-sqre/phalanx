@@ -8,16 +8,21 @@ cadc-tap:
     useVaultPassword: false
 
   uws:
-    type: "containerized"
-    database: "postgres"
-    username: "postgres"
-    useVaultPassword: false
+    type: "external"
+    database: "tap"
+    username: "uws_tap"
+    useVaultPassword: true
+    external:
+      host: "rsp-db-rw.postgres-db"
 
   config:
     qserv:
       host: "sdfqserv001.sdf.slac.stanford.edu:4090"
       jdbcParams: "?enabledTLSProtocols=TLSv1.3"
       passwordEnabled: true
+      image:
+        tag: "tickets-DM-55283"
+        pullPolicy: "Always"
 
     kafka:
       enabled: true
