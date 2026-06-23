@@ -194,6 +194,9 @@ spec:
                 {{- if .Values.config.voParquet }}
                 -Dtap.enableVOParquet=true
                 {{- end }}
+                {{- if .Values.config.uploadPartitionDirectors }}
+                -Dupload.partition.directors={{ .Values.config.uploadPartitionDirectors }}
+                {{- end }}
                 -Dbase_url={{ .Values.global.baseUrl }}
                 -Dpath_prefix=/api/{{ .Values.ingress.path }}
                 -Dca.nrc.cadc.util.PropertiesReader.dir=/config/

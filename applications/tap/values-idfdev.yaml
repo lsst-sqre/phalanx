@@ -3,6 +3,12 @@ cadc-tap:
     kafka:
       enabled: true
 
+    uploadPartitionDirectors: "dp1.Object:objectId"
+    qserv:
+      image:
+        pullPolicy: "Always"
+        tag: "tickets-DM-55169"
+
     urlRewrite:
       enabled: true
       rules: "ivoa.ObsCore:access_url, dp02_dc2_catalogs.ObsCore:access_url, dp1.ObsCore:access_url"

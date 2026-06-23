@@ -199,6 +199,10 @@ config:
   # supported output format in the TAP capabilities.
   voParquet: false
 
+  # -- Comma-separated list of Qserv director tables for dependent upload
+  # partition detection.
+  uploadPartitionDirectors: ""
+
   # -- Rules for renaming Columns
   urlRewrite:
 
