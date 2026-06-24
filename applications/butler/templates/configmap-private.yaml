@@ -23,11 +23,21 @@ data:
 
   dp2.yaml: |
     datastore:
-      cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
-      name: dp2
-      records:
-        table: dp2_datastore_records
-      root: s3://butler-us-central1-dp2/dp2/
+      cls: lsst.daf.butler.datastores.chainedDatastore.ChainedDatastore
+      datastores:
+        - datastore:
+            cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+            name: dp2
+            records:
+              table: dp2_datastore_records
+            root: s3://butler-us-central1-dp2/dp2/
+        - datastore:
+            cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+            name: refcats
+            records:
+              table: refcats_datastore_records
+            root: s3://butler-us-central1-dp2/refcats/
+
     registry:
       db: {{ .Values.config.dp2PostgresUri }}
       temporary_tables: false
@@ -38,7 +48,7 @@ data:
         datastores: lsst.daf.butler.registry.bridge.monolithic.MonolithicDatastoreRegistryBridgeManager
         dimensions: lsst.daf.butler.registry.dimensions.static.StaticDimensionRecordStorageManager
         opaque: lsst.daf.butler.registry.opaque.ByNameOpaqueTableStorageManager
-      namespace: dm_55224
+      namespace: dp2_mini_dm_55293_try2
 
   prompt.yaml: |
     datastore:
