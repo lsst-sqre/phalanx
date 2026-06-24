@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "weatherbroadcaster"
+  labels:
+    {{- include "weatherbroadcaster.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: 8080
+      targetPort: "http"
+      protocol: "TCP"
+      name: "http"
+  selector:
+    {{- include "weatherbroadcaster.selectorLabels" . | nindent 4 }}

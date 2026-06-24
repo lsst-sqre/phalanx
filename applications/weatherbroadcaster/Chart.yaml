@@ -1,0 +1,9 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Publish weather station data for MeteoBlue.
+home: weatherbroadcaster.lsst.io
+name: weatherbroadcaster
+sources:
+- https://github.com/lsst-ts/weatherbroadcaster
+type: application
+version: 1.0.0
