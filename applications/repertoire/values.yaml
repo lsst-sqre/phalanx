@@ -235,12 +235,6 @@ config:
           gms-search-1.0:
             template: "https://{{base_hostname}}/auth/gms"
             ivoaStandardId: "ivo://ivoa.net/std/gms#search-1.0"
-        ivoaRegistry:
-          ivoaServiceType: "gms"
-          ivoid: "ivo://example.com/groups"
-          title: "Rubin Observatory GMS"
-          created: '2026-06-04T00:00:00'
-          description: "Group Membership Service for Rubin Observatory."
       - type: "internal"
         name: "gafaelfawr"
         template: "https://{{base_hostname}}/auth"
