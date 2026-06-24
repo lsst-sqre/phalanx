@@ -142,12 +142,17 @@ config:
     creator: "Vera C. Rubin Observatory"
     ivoid: "ivo://org.rubinobs/registry"
     path: "/api/registry"
-    repositoryName: "Rubin Science Platform IVOA Publishing Registry"
+    repositoryName: "Rubin IVOA Publishing Registry"
     rights: >-
       Restricted to authorized Rubin data rights holders. See
       https://www.lsst.org/content/data-rights
     rightsUri: "https://www.lsst.org/content/data-rights"
-    shortName: "Rubin RSP"
+    shortName: "Rubin"
+    subjects:
+      - "surveys"
+      - "wide-band photometry"
+    facility:
+      - "Rubin:Simonyi"
     organisation:
       created: "2026-05-20T00:00:00Z"
       description: >-
@@ -236,6 +241,12 @@ config:
           gms-search-1.0:
             template: "https://{{base_hostname}}/auth/gms"
             ivoaStandardId: "ivo://ivoa.net/std/gms#search-1.0"
+        ivoaRegistry:
+          ivoaServiceType: "gms"
+          ivoid: "ivo://org.rubinobs/groups"
+          title: "Rubin Observatory GMS"
+          created: '2026-06-04T00:00:00'
+          description: "Group Membership Service for Rubin Observatory."
       - type: "internal"
         name: "gafaelfawr"
         template: "https://{{base_hostname}}/auth"
@@ -341,7 +352,7 @@ config:
           records:
             dp1:
               ivoid: "ivo://org.rubinobs/sia/lsst-dp1"
-              title: "Rubin Science Platform SIA Service (DP1)"
+              title: "Rubin SIA Service (DP1)"
               created: "2026-05-20T00:00:00"
               description: >-
                 Simple Image Access v2 service for Data Preview 1, providing
@@ -378,20 +389,26 @@ config:
         ivoaRegistry:
           ivoaServiceType: "tap"
           ivoid: "ivo://org.rubinobs/tap"
-          title: "Rubin Science Platform TAP Service"
+          title: "Rubin TAP Service"
           created: "2026-05-20T00:00:00"
           description: >-
-            Table Access Protocol service for the Rubin Science Platform,
-            providing access to catalog data from Rubin Observatory data
+            Table Access Protocol service providing access to
+            catalog data from Rubin Observatory data
             releases.
-          adqlVersion: "2.1"
+          adqlVersion: "2.0"
           uploadSupported: true
-          records:
+          additionalOutputFormats:
+            - mime: "application/vnd.apache.parquet"
+              alias:
+                - "parquet"
+          datasets:
             dp1:
               ivoid: "ivo://org.rubinobs/catalogs/lsst-dp1"
-              title: "Rubin Science Platform TAP (DP1)"
+              title: "Rubin TAP (DP1)"
               created: "2026-05-20T00:00:00"
               description: "DP1 catalog data accessible via the Rubin TAP service."
+              instrument:
+                - "LSSTCam"
     times-square:
       - type: "internal"
         name: "times-square"
@@ -419,10 +436,10 @@ config:
         ivoaRegistry:
           ivoaServiceType: "soda"
           ivoid: "ivo://org.rubinobs/cutout"
-          title: "Rubin Science Platform Image Cutout Service"
+          title: "Rubin Image Cutout Service"
           created: "2026-05-20T00:00:00"
           description: >-
-            Image cutout service (SODA) for the Rubin Science Platform,
+            Image cutout service (SODA) for Rubin,
             supporting both synchronous and asynchronous image cutout requests.
     wobbly:
       - type: "internal"
