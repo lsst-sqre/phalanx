@@ -86,7 +86,6 @@
 | applications.strimzi-access-operator | bool | `false` | Enable the strimzi-access-operator application |
 | applications.strimzi-registry-operator | bool | `false` | Enable the strimzi-registry-operator application |
 | applications.tap | bool | `false` | Enable the tap application |
-| applications.tasso | bool | `false` | Enable the tasso application |
 | applications.templatebot | bool | `false` | Enable the templatebot application |
 | applications.times-square | bool | `false` | Enable the times-square application |
 | applications.turborepo-cache | bool | `false` | Enable the turborepo-cache application |

@@ -290,9 +290,6 @@ applications:
   # -- Enable the tap application
   tap: false
 
-  # -- Enable the tasso application
-  tasso: false
-
   # -- Enable the templatebot application
   templatebot: false
 
