@@ -2,7 +2,6 @@ ataos:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ataos
-    pullPolicy: Always
   resources:
     limits:
       cpu: 450m
@@ -16,7 +15,6 @@ atbuilding:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/atbuilding
-    pullPolicy: Always
   resources:
     limits:
       cpu: 120m
@@ -30,7 +28,6 @@ atdome:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/atdome
-    pullPolicy: Always
   resources:
     limits:
       cpu: 170m
@@ -43,7 +40,6 @@ atdometrajectory:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/atdometrajectory
-    pullPolicy: Always
   resources:
     limits:
       cpu: 350m
@@ -56,7 +52,6 @@ atheaderservice:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/headerservice
-    pullPolicy: Always
   env:
     URL_SPEC: --lfa_mode s3 --s3instance cp
     CAMERA: at
@@ -79,7 +74,6 @@ athexapod:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/athexapod
-    pullPolicy: Always
   resources:
     limits:
       cpu: 200m
@@ -93,7 +87,6 @@ atmcs:
   image:
     revision: 7
     repository: ts-dockerhub.lsst.org/atmcs
-    pullPolicy: Always
   resources:
     limits:
       cpu: 600m
@@ -106,7 +99,6 @@ atoods:
   image:
     revision: 4
     repository: ts-dockerhub.lsst.org/atoods
-    pullPolicy: Always
   env:
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
@@ -186,7 +178,6 @@ atpneumatics:
   image:
     revision: 7
     repository: ts-dockerhub.lsst.org/at_pneumatics
-    pullPolicy: Always
   resources:
     limits:
       cpu: 200m
@@ -199,7 +190,6 @@ atptg:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ptkernel
-    pullPolicy: Always
   env:
     TELESCOPE: AT
     LSST_KAFKA_TLM_FLUSH_MS: 0
@@ -216,7 +206,6 @@ atspectrograph:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/atspec
-    pullPolicy: Always
   resources:
     limits:
       cpu: 150m
@@ -230,7 +219,6 @@ pmd1:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/pmd
-    pullPolicy: Always
   env:
     RUN_ARG: 1
   resources:
