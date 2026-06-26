@@ -47,5 +47,4 @@ applications:
   strimzi-registry-operator: true
   strimzi: true
   tap: true
-  tasso: true
   times-square: true
