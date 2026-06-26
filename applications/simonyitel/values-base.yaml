@@ -13,7 +13,6 @@ lasertracker1-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/lasertracker
-    pullPolicy: Always
   env:
     RUN_ARG: 1 --simulate 2
   resources:
@@ -28,7 +27,6 @@ mtaircompressor1-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtaircompressor
-    pullPolicy: Always
   env:
     RUN_ARG: 1 --simulate --state disabled
   resources:
@@ -43,7 +41,6 @@ mtaircompressor2-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtaircompressor
-    pullPolicy: Always
   env:
     RUN_ARG: 2 --simulate --state disabled
   resources:
@@ -57,7 +54,6 @@ mtaircompressor2-sim:
 mtaos:
   image:
     repository: ts-dockerhub.lsst.org/mtaos
-    pullPolicy: Always
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
@@ -95,7 +91,6 @@ mtcamhexapod-sim:
   classifier: mthexapod1
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
-    pullPolicy: Always
   env:
     RUN_ARG: --simulate 1
   resources:
@@ -110,7 +105,6 @@ mtdome-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtdome
-    pullPolicy: Always
   env:
     RUN_ARG: --simulate 1
   resources:
@@ -124,7 +118,6 @@ mtdome-sim:
 mtdometrajectory:
   image:
     repository: ts-dockerhub.lsst.org/mtdometrajectory
-    pullPolicy: Always
   resources:
     limits:
       cpu: 250m
@@ -137,7 +130,6 @@ mtheaderservice:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/headerservice
-    pullPolicy: Always
   env:
     URL_SPEC: --lfa_mode s3 --s3instance ls
     TSTAND_HEADERSERVICE: BASE
@@ -160,7 +152,6 @@ mtheaderservice-sim:
   enabled: false
   image:
     repository: ts-dockerhub.lsst.org/headerservice
-    pullPolicy: Always
   env:
     URL_SPEC: --lfa_mode s3 --s3instance ls
     RUN_ARG: --playback
@@ -191,7 +182,6 @@ mtm1m3-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtm1m3_sim
-    pullPolicy: Always
   env:
     LSST_KAFKA_TLM_FLUSH_MS: 0
     LSST_KAFKA_CMDEVT_FLUSH_MS: 0
@@ -209,7 +199,6 @@ mtm1m3ts-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtm1m3ts_sim
-    pullPolicy: Always
   resources:
     limits:
       cpu: 400m
@@ -223,7 +212,6 @@ mtm2hexapod-sim:
   classifier: mthexapod2
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
-    pullPolicy: Always
   env:
     RUN_ARG: --simulate 2
   resources:
@@ -238,7 +226,6 @@ mtm2-hwsim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/m2
-    pullPolicy: Always
   env:
     RUN_ARG: --host m2-crio-simulator.ls.lsst.org
   resources:
@@ -253,7 +240,6 @@ mtmount-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtmount
-    pullPolicy: IfNotPresent
   nodeSelector:
     kubernetes.io/hostname: manke01
   env:
@@ -270,7 +256,6 @@ mtoods:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtoods
-    pullPolicy: Always
   env:
     CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
@@ -343,7 +328,6 @@ wfoods:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/wfoods
-    pullPolicy: Always
   env:
     CTRL_OODS_CONFIG_FILE: /etc/wfoods.yaml
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
@@ -410,7 +394,6 @@ wfoods:
 mtptg:
   image:
     repository: ts-dockerhub.lsst.org/ptkernel
-    pullPolicy: Always
   env:
     TELESCOPE: MT
     LSST_KAFKA_TLM_FLUSH_MS: 0
@@ -427,7 +410,6 @@ mtrotator-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtrotator
-    pullPolicy: Always
   env:
     RUN_ARG: --simulate
   resources:
@@ -442,7 +424,6 @@ mtvms-camera-rotator-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/vms_sim
-    pullPolicy: Always
   env:
     RUN_ARG: CameraRotator
   resources:
@@ -457,7 +438,6 @@ mtvms-m1m3-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/vms_sim
-    pullPolicy: Always
   env:
     RUN_ARG: M1M3
   resources:
@@ -472,7 +452,6 @@ mtvms-m2-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/vms_sim
-    pullPolicy: Always
   env:
     RUN_ARG: M2
   resources:

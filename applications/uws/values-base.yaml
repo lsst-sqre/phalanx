@@ -61,7 +61,6 @@ atocps:
   classifier: ocps1
   image:
     repository: ts-dockerhub.lsst.org/dmocps
-    pullPolicy: Always
   env:
     RUN_ARG: 1
   resources:
@@ -77,7 +76,6 @@ mtocps:
   classifier: ocps3
   image:
     repository: ts-dockerhub.lsst.org/dmocps
-    pullPolicy: Always
   env:
     RUN_ARG: 3
   resources:
@@ -93,7 +91,6 @@ raocps:
   classifier: ocps101
   image:
     repository: ts-dockerhub.lsst.org/dmocps
-    pullPolicy: Always
   env:
     RUN_ARG: 101
     REDIS_HOST: redis-service.rapid-analysis.svc.cluster.local
