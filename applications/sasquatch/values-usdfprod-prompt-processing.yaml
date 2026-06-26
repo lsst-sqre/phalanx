@@ -99,7 +99,7 @@ alert-stream-schema-sync:
   enabled: true
   schemaSync:
     image:
-      tag: w.2026.19
+      tag: tickets-DM-54971
 
 chronograf:
   enabled: false
