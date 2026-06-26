@@ -3,7 +3,6 @@ atmonochromator:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/atmonochromator
-    pullPolicy: Always
   resources:
     limits:
       cpu: 120m
@@ -17,7 +16,6 @@ atwhitelight:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/atwhitelight
-    pullPolicy: Always
   resources:
     limits:
       cpu: 150m
@@ -31,7 +29,6 @@ cbp:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/cbp
-    pullPolicy: Always
   resources:
     limits:
       cpu: 120m
@@ -45,7 +42,6 @@ electrometer101:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/electrometer
-    pullPolicy: Always
   env:
     RUN_ARG: 101
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -67,7 +63,6 @@ electrometer102:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/electrometer
-    pullPolicy: Always
   env:
     RUN_ARG: 102
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -89,7 +84,6 @@ electrometer103:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/electrometer
-    pullPolicy: Always
   env:
     RUN_ARG: 103
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -111,7 +105,6 @@ electrometer201:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/electrometer
-    pullPolicy: Always
   env:
     RUN_ARG: 201
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -133,7 +126,6 @@ ledprojector:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ledprojector
-    pullPolicy: Always
   resources:
     limits:
       cpu: 120m
@@ -147,7 +139,6 @@ linearstage101:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/linearstage
-    pullPolicy: Always
   env:
     RUN_ARG: 101
   resources:
@@ -163,7 +154,6 @@ linearstage102:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/linearstage
-    pullPolicy: Always
   env:
     RUN_ARG: 102
   resources:
@@ -179,7 +169,6 @@ linearstage103:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/linearstage
-    pullPolicy: Always
   env:
     RUN_ARG: 103
   resources:
@@ -195,7 +184,6 @@ linearstage104:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/linearstage
-    pullPolicy: Always
   env:
     RUN_ARG: 104
   resources:
@@ -211,7 +199,6 @@ mtreflector:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/mtreflector
-    pullPolicy: Always
   resources:
     limits:
       cpu: 200m
@@ -226,7 +213,6 @@ simulation-gencam:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/genericcamera
-    pullPolicy: Always
   env:
     RUN_ARG: 1
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -252,7 +238,6 @@ tunablelaser:
   image:
     revision: 2
     repository: ts-dockerhub.lsst.org/tunablelaser
-    pullPolicy: Always
   resources:
     limits:
       cpu: 120m
