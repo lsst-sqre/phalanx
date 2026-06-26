@@ -15,7 +15,6 @@ atqueue:
   classifier: scriptqueue2
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
-    pullPolicy: Always
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 2 --state enabled
@@ -58,7 +57,6 @@ atscheduler:
   classifier: scheduler2
   image:
     repository: ts-dockerhub.lsst.org/scheduler
-    pullPolicy: Always
   env:
     INDEX: 2
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -97,7 +95,6 @@ mtqueue:
   classifier: scriptqueue1
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
-    pullPolicy: Always
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 1 --state enabled
@@ -140,7 +137,6 @@ mtscheduler:
   classifier: scheduler1
   image:
     repository: ts-dockerhub.lsst.org/scheduler
-    pullPolicy: Always
   env:
     INDEX: 1
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -179,7 +175,6 @@ ocsqueue:
   classifier: scriptqueue3
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
-    pullPolicy: Always
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 3 --state enabled
@@ -222,7 +217,6 @@ ocsscheduler:
   classifier: scheduler3
   image:
     repository: ts-dockerhub.lsst.org/scheduler
-    pullPolicy: Always
   env:
     INDEX: 3
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -260,7 +254,6 @@ ocsscheduler:
 watcher:
   image:
     repository: ts-dockerhub.lsst.org/watcher
-    pullPolicy: Always
   resources:
     limits:
       cpu: 2400m
