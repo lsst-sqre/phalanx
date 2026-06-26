@@ -16,7 +16,6 @@ atqueue:
   image:
     revision: 4
     repository: ts-dockerhub.lsst.org/scriptqueue
-    pullPolicy: Always
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 2 --state enabled
@@ -72,7 +71,6 @@ atscheduler:
   image:
     revision: 6
     repository: ts-dockerhub.lsst.org/scheduler
-    pullPolicy: Always
   env:
     INDEX: 2
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -112,7 +110,6 @@ gis:
   image:
     revision: 2
     repository: ts-dockerhub.lsst.org/gis
-    pullPolicy: Always
   secretFixup:
     containerPath: /home/saluser/.store
     filenames:
@@ -133,7 +130,6 @@ mtqueue:
   image:
     revision: 4
     repository: ts-dockerhub.lsst.org/scriptqueue
-    pullPolicy: Always
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 1 --state enabled
@@ -189,7 +185,6 @@ mtscheduler:
   image:
     revision: 6
     repository: ts-dockerhub.lsst.org/scheduler
-    pullPolicy: Always
   env:
     INDEX: 1
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -229,7 +224,6 @@ ocsqueue:
   image:
     revision: 4
     repository: ts-dockerhub.lsst.org/scriptqueue
-    pullPolicy: Always
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 3 --state enabled
@@ -284,7 +278,6 @@ ocsscheduler:
   image:
     revision: 6
     repository: ts-dockerhub.lsst.org/scheduler
-    pullPolicy: Always
   env:
     INDEX: 3
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -323,7 +316,6 @@ watcher:
   image:
     revision: 3
     repository: ts-dockerhub.lsst.org/watcher
-    pullPolicy: Always
   envSecrets:
   - name: ESCALATION_KEY
     key: squadcast-escalation-key

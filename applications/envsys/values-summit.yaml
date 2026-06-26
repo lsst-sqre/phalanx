@@ -4,7 +4,6 @@ automatic-transfer-switch-ess309:
   image:
     revision: 3
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 309
   resources:
@@ -21,7 +20,6 @@ auxtel-ess201:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 201
   resources:
@@ -38,7 +36,6 @@ auxtel-ess202:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 202
   resources:
@@ -55,7 +52,6 @@ auxtel-ess308:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 308
   resources:
@@ -72,7 +68,6 @@ auxtel-ess204:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 204
   resources:
@@ -89,7 +84,6 @@ calibhill-ess301:
   image:
     revision: 6
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 301
   resources:
@@ -106,7 +100,6 @@ camera-ess111:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 111
   resources:
@@ -123,7 +116,6 @@ cleanroom-ess109:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 109
   resources:
@@ -139,7 +131,6 @@ dimm1:
   image:
     revision: 5
     repository: ts-dockerhub.lsst.org/dimm
-    pullPolicy: Always
   env:
     RUN_ARG: 1
   resources:
@@ -155,7 +146,6 @@ dimm2:
   image:
     revision: 5
     repository: ts-dockerhub.lsst.org/dimm
-    pullPolicy: Always
   env:
     RUN_ARG: 2
   resources:
@@ -171,7 +161,6 @@ dream:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/dream
-    pullPolicy: Always
   env:
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
@@ -193,7 +182,6 @@ earthquake-ess302:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 302
   resources:
@@ -209,7 +197,6 @@ eas:
   image:
     revision: 6
     repository: ts-dockerhub.lsst.org/eas
-    pullPolicy: Always
   resources:
     requests:
       cpu: 120m
@@ -224,7 +211,6 @@ epm-ess303:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 303
   resources:
@@ -241,7 +227,6 @@ epm-generator-ess305:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 305
   resources:
@@ -258,7 +243,6 @@ epm-generator-ess306:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 306
   resources:
@@ -274,7 +258,6 @@ hvac:
   image:
     revision: 7
     repository: ts-dockerhub.lsst.org/hvac
-    pullPolicy: Always
   env:
     RUN_ARG: --state enabled
   resources:
@@ -291,7 +274,6 @@ louver-h1-ess441:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 441
   resources:
@@ -308,7 +290,6 @@ louver-h1h2-ess442:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 442
   resources:
@@ -325,7 +306,6 @@ louver-h2-ess443:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 443
   resources:
@@ -342,7 +322,6 @@ m1m3-ess113:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 113
   resources:
@@ -359,7 +338,6 @@ m1m3-ess114:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 114
   resources:
@@ -376,7 +354,6 @@ m1m3-ess115:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 115
   resources:
@@ -393,7 +370,6 @@ m1m3-ess116:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 116
   resources:
@@ -410,7 +386,6 @@ m1m3-ess117:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 117
   resources:
@@ -427,7 +402,6 @@ m2-ess106:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 106
   resources:
@@ -444,7 +418,6 @@ m2-ess112:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 112
   resources:
@@ -461,7 +434,6 @@ mtdome-ess404:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 404
   resources:
@@ -478,7 +450,6 @@ mtdome-ess405:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 405
   resources:
@@ -495,7 +466,6 @@ partsens-ess127:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 127
   resources:
@@ -512,7 +482,6 @@ partsens-ess128:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 128
   resources:
@@ -529,7 +498,6 @@ partsens-ess129:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 129
   resources:
@@ -546,7 +514,6 @@ ringss-ess304:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 304
     RINGSS_USER: ringssRO
@@ -567,7 +534,6 @@ tea-ess123:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 123
   resources:
@@ -584,7 +550,6 @@ tea-ess124:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 124
   resources:
@@ -601,7 +566,6 @@ tea-ess125:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 125
   resources:
@@ -618,7 +582,6 @@ tea-ess126:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 126
   resources:
@@ -635,7 +598,6 @@ tma-ess121:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 121
   resources:
@@ -652,7 +614,6 @@ tma-ess122:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 122
   resources:
@@ -669,7 +630,6 @@ tma-ess104:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 104
   resources:
@@ -686,7 +646,6 @@ tma-ess105:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 105
   resources:
@@ -703,7 +662,6 @@ tma-ess110:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 110
   resources:
@@ -720,7 +678,6 @@ ups-server-room1-ess310:
   image:
     revision: 3
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 310
   resources:
@@ -737,7 +694,6 @@ ups-server-room2-ess311:
   image:
     revision: 3
     repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
   env:
     RUN_ARG: 311
   resources:
@@ -752,7 +708,6 @@ weatherforecast:
   image:
     revision: 3
     repository: ts-dockerhub.lsst.org/weatherforecast
-    pullPolicy: Always
   env:
     RUN_ARG: --state enabled
   envSecrets:

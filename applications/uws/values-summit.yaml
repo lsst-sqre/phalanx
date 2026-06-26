@@ -48,7 +48,6 @@ atocps:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/dmocps
-    pullPolicy: Always
   env:
     RUN_ARG: 1
   resources:
@@ -65,7 +64,6 @@ ccocps:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/dmocps
-    pullPolicy: Always
   env:
     RUN_ARG: 2
   resources:
@@ -82,7 +80,6 @@ mtocps:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/dmocps
-    pullPolicy: Always
   env:
     RUN_ARG: 3
   resources:
@@ -99,7 +96,6 @@ raocps:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/dmocps
-    pullPolicy: Always
   env:
     RUN_ARG: 101
     REDIS_HOST: redis-service.rapid-analysis.svc.cluster.local
