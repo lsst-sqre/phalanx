@@ -2,7 +2,6 @@ cbp-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/cbp
-    pullPolicy: Always
   env:
     RUN_ARG: --simulate
   resources:
@@ -17,7 +16,6 @@ electrometer101-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/electrometer
-    pullPolicy: Always
   env:
     RUN_ARG: 101 --simulate 1
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -38,7 +36,6 @@ electrometer102-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/electrometer
-    pullPolicy: Always
   env:
     RUN_ARG: 102 --simulate 1
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -59,7 +56,6 @@ electrometer103-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/electrometer
-    pullPolicy: Always
   env:
     RUN_ARG: 103 --simulate 1
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -80,7 +76,6 @@ electrometer201-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/electrometer
-    pullPolicy: Always
   env:
     RUN_ARG: 201 --simulate 1
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -101,7 +96,6 @@ fiberspectrograph101-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/fiberspectrograph
-    pullPolicy: Always
   env:
     RUN_ARG: 101 --simulate 1
   resources:
@@ -116,7 +110,6 @@ fiberspectrograph102-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/fiberspectrograph
-    pullPolicy: Always
   env:
     RUN_ARG: 102 --simulate 1
   resources:
@@ -131,7 +124,6 @@ gcheaderservice1:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/headerservice
-    pullPolicy: Always
   env:
     CAMERA: gc1
     TSTAND_HEADERSERVICE: TUCSON
@@ -154,7 +146,6 @@ ledprojector-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/ledprojector
-    pullPolicy: Always
   env:
     RUN_ARG: --simulate
   resources:
@@ -169,7 +160,6 @@ linearstage101-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/linearstage
-    pullPolicy: Always
   env:
     RUN_ARG: 101 --simulate
   resources:
@@ -184,7 +174,6 @@ linearstage102-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/linearstage
-    pullPolicy: Always
   env:
     RUN_ARG: 102 --simulate
   resources:
@@ -199,7 +188,6 @@ linearstage103-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/linearstage
-    pullPolicy: Always
   env:
     RUN_ARG: 103 --simulate
   resources:
@@ -214,7 +202,6 @@ linearstage104-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/linearstage
-    pullPolicy: Always
   env:
     RUN_ARG: 104 --simulate
   resources:
@@ -229,7 +216,6 @@ mtreflector-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtreflector
-    pullPolicy: Always
   env:
     RUN_ARG: --simulate
   resources:
@@ -245,7 +231,6 @@ simulation-gencam:
   classifier: genericcamera1
   image:
     repository: ts-dockerhub.lsst.org/genericcamera
-    pullPolicy: Always
   env:
     RUN_ARG: 1
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
@@ -270,7 +255,6 @@ tunablelaser-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/tunablelaser
-    pullPolicy: Always
   env:
     RUN_ARG: --simulate 1
   resources:
