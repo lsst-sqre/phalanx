@@ -13,7 +13,7 @@ image:
   # -- (int) The cycle revision to add to the image tag
   revision:
   # -- The policy to apply when pulling an image for deployment
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 # -- The list of pull secrets needed for the images.
 # If this section is used, each object listed can have the following attributes defined:
 # _name_ (The label identifying the pull-secret to use)

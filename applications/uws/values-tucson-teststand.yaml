@@ -47,7 +47,6 @@ atocps:
   classifier: ocps1
   image:
     repository: ts-dockerhub.lsst.org/dmocps
-    pullPolicy: Always
   env:
     RUN_ARG: 1
   resources:
@@ -63,7 +62,6 @@ ccocps:
   classifier: ocps2
   image:
     repository: ts-dockerhub.lsst.org/dmocps
-    pullPolicy: Always
   env:
     RUN_ARG: 2
   resources:
