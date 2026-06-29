@@ -21,6 +21,7 @@ Argo CD project: ``rsp``
    livetap/index
    noteburst/index
    nublado/index
+   obsforge/index
    portal/index
    ppdbtap/index
    qserv-kafka/index
