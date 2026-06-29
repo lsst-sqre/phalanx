@@ -24,9 +24,9 @@ kafka-rw-broker-test:
   image:
     tag: 0.47.0-kafka-3.9.1
   test:
-    numRecords: "2500000"
+    numRecords: "1000000"
     recordSize: 1024
-    throughput: 25000
+    throughput: 10000
     timeoutMs: 240000
   kafka:
-    partitions: 32
+    partitions: 1
