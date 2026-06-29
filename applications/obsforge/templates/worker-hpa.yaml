@@ -1,0 +1,24 @@
+{{- if .Values.worker.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: "obsforge-worker"
+  labels:
+    {{- include "obsforge.labels" . | nindent 4 }}
+spec:
+  maxReplicas: {{ .Values.worker.autoscaling.maxReplicas }}
+  minReplicas: {{ .Values.worker.autoscaling.minReplicas }}
+  metrics:
+    {{- if .Values.worker.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: "cpu"
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.worker.autoscaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+  scaleTargetRef:
+    apiVersion: "apps/v1"
+    kind: "Deployment"
+    name: "obsforge-worker"
+{{- end }}
