@@ -21,3 +21,26 @@ Selector labels
 app.kubernetes.io/name: "obsforge"
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Common environment variables from secrets
+*/}}
+{{- define "obsforge.envVars" -}}
+- name: "OBSFORGE_DATABASE_PASSWORD"
+  valueFrom:
+    secretKeyRef:
+      name: "obsforge"
+      key: "database-password"
+- name: "OBSFORGE_ARQ_QUEUE_PASSWORD"
+  valueFrom:
+    secretKeyRef:
+      name: "obsforge"
+      key: "redis-password"
+{{- if .Values.config.slackAlerts }}
+- name: "OBSFORGE_SLACK_WEBHOOK"
+  valueFrom:
+    secretKeyRef:
+      name: "obsforge"
+      key: "slack-webhook"
+{{- end }}
+{{- end }}
