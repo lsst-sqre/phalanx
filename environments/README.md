@@ -50,6 +50,7 @@
 | applications.noteburst | bool | `false` | Enable the noteburst application (required by times-square) |
 | applications.nublado | bool | `false` | Enable the nublado application (v3 of the Notebook Aspect) |
 | applications.nvr-control | bool | `false` | Enable the nvr-control application |
+| applications.obsforge | bool | `false` | Enable the obsforge application |
 | applications.obsforgetap | bool | `false` | Enable the obsforgetap application |
 | applications.obsloctap | bool | `false` | Enable the obsloctap application |
 | applications.obssys | bool | `false` | Enable the obssys control system application |
