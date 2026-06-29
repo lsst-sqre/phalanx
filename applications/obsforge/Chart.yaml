@@ -1,8 +1,19 @@
 apiVersion: v2
-appVersion: 0.1.0
-description: A metadata enrichment service for Rubin Observatory observations
 name: obsforge
-sources:
-- https://github.com/lsst-sqre/obsforge
 type: application
 version: 1.0.0
+description: A metadata enrichment service for Rubin Observatory observations
+sources:
+  - https://github.com/lsst-sqre/obsforge
+appVersion: 0.1.0
+
+dependencies:
+  - name: redis
+    version: 1.1.12
+    repository: https://lsst-sqre.github.io/charts/
+
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-115"
+      title: "ObsForge: A metadata enrichment service for Rubin Observatory observations"
+      url: "https://sqr-115.lsst.io/"
