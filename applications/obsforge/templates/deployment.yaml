@@ -9,6 +9,7 @@ spec:
   selector:
     matchLabels:
       {{- include "obsforge.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "api"
   template:
     metadata:
       annotations:
@@ -18,6 +19,8 @@ spec:
         {{- end }}
       labels:
         {{- include "obsforge.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "api"
+        obsforge-redis-client: "true"
     spec:
       {{- with .Values.affinity }}
       affinity:
@@ -27,13 +30,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-            {{- if .Values.config.slackAlerts }}
-            - name: "OBSFORGE_SLACK_WEBHOOK"
-              valueFrom:
-                secretKeyRef:
-                  name: "obsforge"
-                  key: "slack-webhook"
-            {{- end }}
+            {{- include "obsforge.envVars" . | nindent 12 }}
             # Uvicorn keepalive timeout, in seconds. This should be longer
             # than any keepalive timeouts on any downstream proxies. The
             # keepalive timeout for ingress-nginx connections is 60s.
