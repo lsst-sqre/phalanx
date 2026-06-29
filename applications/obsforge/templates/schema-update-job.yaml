@@ -1,0 +1,62 @@
+{{- if .Values.config.updateSchema }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "obsforge-schema-update"
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "hook-succeeded"
+  labels:
+    {{- include "obsforge.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.schemaUpdate.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "obsforge.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "schema-update"
+        obsforge-redis-client: "true"
+    spec:
+      {{- with .Values.schemaUpdate.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: "obsforge-schema-update"
+          command:
+            - "obsforge"
+            - "update-schema"
+          env:
+            {{- include "obsforge.envVars" . | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: "obsforge"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.schemaUpdate.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+      {{- with .Values.schemaUpdate.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: "Never"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with .Values.schemaUpdate.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
