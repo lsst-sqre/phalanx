@@ -5,7 +5,17 @@ metadata:
   labels:
     {{- include "obsforge.labels" . | nindent 4 }}
 data:
+  OBSFORGE_ALEMBIC_CONFIG_PATH: "/app/alembic.ini"
+  OBSFORGE_ARQ_MODE: {{ .Values.config.arqMode | quote }}
+  OBSFORGE_ARQ_QUEUE_NAME: {{ .Values.config.arqQueueName | quote }}
+  OBSFORGE_ARQ_QUEUE_URL: "redis://obsforge-redis.{{ .Release.Namespace }}:6379/0"
+  OBSFORGE_BUTLER_LABEL: {{ .Values.config.butlerLabel | quote }}
+  OBSFORGE_BUTLER_REPOSITORY: {{ .Values.config.butlerRepository | quote }}
+  OBSFORGE_DATABASE_URL: {{ .Values.config.databaseUrl | quote }}
+  OBSFORGE_ENRICHMENT_MAX_TRIES: {{ .Values.config.enrichmentMaxTries | quote }}
   OBSFORGE_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
   OBSFORGE_LOG_PROFILE: {{ .Values.config.logProfile | quote }}
+  OBSFORGE_OBSCORE_CONFIG: {{ .Values.config.obscoreConfig | quote }}
+  OBSFORGE_OBSCORE_DATASET_TYPE: {{ .Values.config.obscoreDatasetType | quote }}
   OBSFORGE_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
   REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}
