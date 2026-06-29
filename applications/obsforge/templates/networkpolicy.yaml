@@ -6,6 +6,7 @@ spec:
   podSelector:
     matchLabels:
       {{- include "obsforge.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "api"
   policyTypes:
     - "Ingress"
   ingress:
