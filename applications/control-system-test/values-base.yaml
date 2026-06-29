@@ -29,4 +29,4 @@ kafka-rw-broker-test:
     throughput: 50000
     timeoutMs: 240000
   kafka:
-    partitions: 1
+    partitions: 32
