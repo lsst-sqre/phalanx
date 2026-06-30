@@ -482,11 +482,11 @@ mtmount-ccw-only:
     CCW_ONLY: yes
   resources:
     limits:
-      cpu: 500m
+      cpu: 2
       memory: 1000Mi
     requests:
-      cpu: 50m
-      memory: 300Mi
+      cpu: 1900m
+      memory: 425Mi
 
 mtmount-sim:
   enabled: false
