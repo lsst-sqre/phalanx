@@ -89,6 +89,15 @@ config:
   # @default -- null disables the Semaphore integration
   semaphoreUrl: null
 
+  # -- Enable the user-facing notifications UI: the unread badge in the header
+  # user menu and the /notifications inbox and detail pages. Requires
+  # semaphoreUrl to be set for the underlying Semaphore API.
+  enableUserNotifications: false
+
+  # -- Background polling cadence, in seconds, for the unread notification count
+  # in the header user menu. Only relevant when enableUserNotifications is true.
+  userNotificationsPollIntervalSeconds: 300
+
   # -- URL to the Times Square (parameterized notebooks) API service.
   # @default -- null disables the Times Square integration
   timesSquareUrl: null
