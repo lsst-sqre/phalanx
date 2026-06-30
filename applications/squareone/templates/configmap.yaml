@@ -16,6 +16,8 @@ data:
     {{- if .Values.config.semaphoreUrl }}
     semaphoreUrl: {{ .Values.config.semaphoreUrl | quote }}
     {{- end}}
+    enableUserNotifications: {{ .Values.config.enableUserNotifications }}
+    userNotificationsPollIntervalSeconds: {{ .Values.config.userNotificationsPollIntervalSeconds }}
     {{- if .Values.config.timesSquareUrl }}
     timesSquareUrl: {{ .Values.config.timesSquareUrl | quote }}
     {{- end}}
