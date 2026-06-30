@@ -22,6 +22,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | config.docsBaseUrl | string | `"https://rsp.lsst.io"` | Base URL for user documentation (excludes trailing slash) |
 | config.enableAppsMenu | bool | `false` | Enable the App menu |
 | config.enableSentry | bool | `false` | Enable Sentry |
+| config.enableUserNotifications | bool | `false` | Enable the user-facing notifications UI: the unread badge in the header user menu and the /notifications inbox and detail pages. Requires semaphoreUrl to be set for the underlying Semaphore API. |
 | config.headerLogoAlt | string | `"Logo"` | Alternative text for header logo for accessibility |
 | config.headerLogoData | string | null uses Squareone's default built-in logo | Base64-encoded image data for header logo (without data URL prefix). Must be used with headerLogoMimeType. Used only if both headerLogoUrl and headerLogoFile are null. |
 | config.headerLogoFile | string | null uses Squareone's default built-in logo | Filename of a logo image in the content/{environment}/ directory (e.g., "header-logo.png"). The file will be base64-encoded automatically. Used only if headerLogoUrl is null. Supported formats: .png, .jpg, .jpeg, .svg, .webp, .gif. Note: unlike MDX files, logo files do NOT fall back to idfprod if not found in the environment directory. |
@@ -40,6 +41,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | config.siteDescription | string | See `values.yaml` | Site description, used in meta tags |
 | config.siteName | string | `"Rubin Science Platform"` | Name of the site, used in the title and meta tags. |
 | config.timesSquareUrl | string | null disables the Times Square integration | URL to the Times Square (parameterized notebooks) API service. |
+| config.userNotificationsPollIntervalSeconds | int | `300` | Background polling cadence, in seconds, for the unread notification count in the header user menu. Only relevant when enableUserNotifications is true. |
 | fullnameOverride | string | `""` | Overrides the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD Application | Base URL for the environment |
 | global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
