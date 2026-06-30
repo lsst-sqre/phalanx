@@ -23,6 +23,17 @@ cadc-tap:
     # -- Advertise VOParquet as a supported output format
     voParquet: true
 
+    # -- Director tables for TAP_UPLOAD spatial partitioning
+    uploadPartitionDirectors:
+      - "dp1.Object:objectId"
+      - "dp1.Source:sourceId"
+      - "dp1.DiaObject:diaObjectId"
+      - "dp2.Object:objectId"
+      - "dp2.Source:sourceId"
+      - "dp2.ShearObject:shearObjectId"
+      - "dp2.IsolatedStarStellarMotions:isolated_star_id"
+      - "dp2.DiaObject:diaObjectId"
+
   serviceAccount:
     # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
     name: "tap"

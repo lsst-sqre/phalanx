@@ -60,9 +60,10 @@ IVOA TAP service
 | config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
 | config.serviceName | string | None, must be set | Name of the service from Gafaelfawr's perspective, used for metrics reporting |
 | config.tapSchemaAddress | string | `"cadc-tap-schema-db:3306"` | Address to a MySQL database containing TAP schema data |
-| config.urlRewrite | object | `{"enabled":true,"rules":"ivoa.ObsCore:access_url"}` | Rules for renaming Columns |
+| config.uploadPartitionDirectors | list | `[]` | List of Qserv director tables for dependent upload partition detection. Format: ["database.table:idCol", ...] |
+| config.urlRewrite | object | `{"enabled":true,"rules":["ivoa.ObsCore:access_url"]}` | Rules for renaming Columns |
 | config.urlRewrite.enabled | bool | `true` | Whether it is enabled |
-| config.urlRewrite.rules | string | `"ivoa.ObsCore:access_url"` | String with a comma-separated list of schema.table:column rules |
+| config.urlRewrite.rules | list | `["ivoa.ObsCore:access_url"]` | List of schema.table:column rules for URL rewriting |
 | config.vaultSecretName | string | `""` | Vault secret name, this is appended to the global path to find the vault secrets associated with this deployment. |
 | config.voParquet | bool | `false` | Whether to advertise VOParquet (application/vnd.apache.parquet) as a supported output format in the TAP capabilities. |
 | fullnameOverride | string | `"cadc-tap"` | Override the full name for resources (includes the release name) |
