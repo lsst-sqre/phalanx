@@ -35,6 +35,8 @@ ccheaderservice:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  nodeSelector:
+    kubernetes.io/hostname: yagan05
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -65,6 +67,8 @@ ccheaderservice-sim:
     readOnly: true
     server: nfs-scratch.cp.lsst.org
     serverPath: /scratch/header_service
+  nodeSelector:
+    kubernetes.io/hostname: yagan06
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -88,6 +92,8 @@ ccoods:
   - lfa-credentials.ini
   - oods-lsstcam-credentials.ini
   <<: *butler-secret
+  nodeSelector:
+    kubernetes.io/hostname: yagan07
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -152,6 +158,8 @@ gcheaderservice101:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  nodeSelector:
+    kubernetes.io/hostname: yagan08
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -175,6 +183,8 @@ gcheaderservice102:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  nodeSelector:
+    kubernetes.io/hostname: yagan09
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -198,6 +208,8 @@ gcheaderservice103:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  nodeSelector:
+    kubernetes.io/hostname: yagan10
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -214,6 +226,8 @@ lasertracker1:
     repository: ts-dockerhub.lsst.org/lasertracker
   env:
     RUN_ARG: 1
+  nodeSelector:
+    kubernetes.io/hostname: yagan05
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -230,6 +244,8 @@ mtaircompressor1:
     repository: ts-dockerhub.lsst.org/mtaircompressor
   env:
     RUN_ARG: 1 --state disabled
+  nodeSelector:
+    kubernetes.io/hostname: yagan06
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -246,6 +262,8 @@ mtaircompressor2:
     repository: ts-dockerhub.lsst.org/mtaircompressor
   env:
     RUN_ARG: 2 --state disabled
+  nodeSelector:
+    kubernetes.io/hostname: yagan07
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -292,6 +310,8 @@ mtaos:
     readOnly: true
     server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
+  nodeSelector:
+    kubernetes.io/hostname: yagan08
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -315,6 +335,8 @@ mtcamhexapod:
     readOnly: true
     server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
+  nodeSelector:
+    kubernetes.io/hostname: yagan09
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -332,6 +354,8 @@ mtcamhexapod-sim:
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: --simulate 1
+  nodeSelector:
+    kubernetes.io/hostname: yagan10
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -346,6 +370,8 @@ mtdome:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/mtdome
+  nodeSelector:
+    kubernetes.io/hostname: yagan05
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -362,6 +388,8 @@ mtdome-sim:
     repository: ts-dockerhub.lsst.org/mtdome
   env:
     RUN_ARG: --simulate 1
+  nodeSelector:
+    kubernetes.io/hostname: yagan06
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -375,6 +403,8 @@ mtdometrajectory:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/mtdometrajectory
+  nodeSelector:
+    kubernetes.io/hostname: yagan07
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -398,6 +428,8 @@ mtheaderservice:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  nodeSelector:
+    kubernetes.io/hostname: yagan08
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -415,6 +447,8 @@ mtm1m3-sim:
   env:
     LSST_KAFKA_TLM_FLUSH_MS: 0
     LSST_KAFKA_CMDEVT_FLUSH_MS: 0
+  nodeSelector:
+    kubernetes.io/hostname: yagan09
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -428,6 +462,8 @@ mtm2:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/m2
+  nodeSelector:
+    kubernetes.io/hostname: yagan10
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -444,6 +480,8 @@ mtm2-sim:
     repository: ts-dockerhub.lsst.org/m2
   env:
     RUN_ARG: --simulate
+  nodeSelector:
+    kubernetes.io/hostname: yagan5
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -467,6 +505,8 @@ mtm2hexapod:
     readOnly: true
     server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
+  nodeSelector:
+    kubernetes.io/hostname: yagan06
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -484,6 +524,8 @@ mtm2hexapod-sim:
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: --simulate 2
+  nodeSelector:
+    kubernetes.io/hostname: yagan7
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -499,7 +541,7 @@ mtmount:
     revision: 6
     repository: ts-dockerhub.lsst.org/mtmount
   nodeSelector:
-    kubernetes.io/hostname: yagan11
+    kubernetes.io/hostname: yagan8
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -516,6 +558,8 @@ mtmount-ccw-only:
     repository: ts-dockerhub.lsst.org/mtmount
   env:
     CCW_ONLY: yes
+  nodeSelector:
+    kubernetes.io/hostname: yagan9
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -532,6 +576,8 @@ mtmount-sim:
     repository: ts-dockerhub.lsst.org/mtmount
   env:
     RUN_ARG: --simulate
+  nodeSelector:
+    kubernetes.io/hostname: yagan10
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -555,6 +601,8 @@ mtoods:
   - lfa-credentials.ini
   - oods-lsstcam-credentials.ini
   <<: *butler-secret
+  nodeSelector:
+    kubernetes.io/hostname: yagan5
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -619,7 +667,7 @@ mtptg:
     LSST_KAFKA_TLM_FLUSH_MS: 0
     LSST_KAFKA_CMDEVT_FLUSH_MS: 0
   nodeSelector:
-    kubernetes.io/hostname: yagan10
+    kubernetes.io/hostname: yagan6
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -633,6 +681,8 @@ mtrotator:
   image:
     revision: 1
     repository: ts-dockerhub.lsst.org/mtrotator
+  nodeSelector:
+    kubernetes.io/hostname: yagan7
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -649,6 +699,8 @@ mtrotator-sim:
     repository: ts-dockerhub.lsst.org/mtrotator
   env:
     RUN_ARG: --simulate
+  nodeSelector:
+    kubernetes.io/hostname: yagan8
   <<: *pod-antiaffinity
   resources:
     limits:
@@ -673,6 +725,8 @@ wfoods:
   - oods-lsstcam-credentials.ini
   <<: *butler-secret
   <<: *pod-antiaffinity
+  nodeSelector:
+    kubernetes.io/hostname: yagan09
   resources:
     limits:
       cpu: 500m
