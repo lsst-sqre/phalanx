@@ -44,7 +44,7 @@ rubintv:
         memory: 3Gi
       limits:
         cpu: 2
-        memory: 6Gi
+        memory: 12Gi
 
   workers:
     replicas: 1
