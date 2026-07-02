@@ -1,3 +1,16 @@
+x-pod-antiaffinity:
+  &pod-antiaffinity
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: csc-name
+              operator: Exists
+          topologyKey: kubernetes.io/hostname
+
 x-butler-secret:
   &butler-secret
   butlerSecret:
@@ -23,6 +36,7 @@ ccheaderservice:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 1000m
@@ -52,6 +66,7 @@ ccheaderservice-sim:
     readOnly: true
     server: nfs-scratch.cp.lsst.org
     serverPath: /scratch/header_service
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 1000m
@@ -74,6 +89,7 @@ ccoods:
   - lfa-credentials.ini
   - oods-lsstcam-credentials.ini
   <<: *butler-secret
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 100m
@@ -137,6 +153,7 @@ gcheaderservice101:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 2000m
@@ -159,6 +176,7 @@ gcheaderservice102:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 2000m
@@ -181,6 +199,7 @@ gcheaderservice103:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 2000m
@@ -196,6 +215,7 @@ lasertracker1:
     repository: ts-dockerhub.lsst.org/lasertracker
   env:
     RUN_ARG: 1
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 300m
@@ -211,6 +231,7 @@ mtaircompressor1:
     repository: ts-dockerhub.lsst.org/mtaircompressor
   env:
     RUN_ARG: 1 --state disabled
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 100m
@@ -226,6 +247,7 @@ mtaircompressor2:
     repository: ts-dockerhub.lsst.org/mtaircompressor
   env:
     RUN_ARG: 2 --state disabled
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 100m
@@ -271,6 +293,7 @@ mtaos:
     readOnly: true
     server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 12000m
@@ -293,6 +316,7 @@ mtcamhexapod:
     readOnly: true
     server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 500m
@@ -309,6 +333,7 @@ mtcamhexapod-sim:
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: --simulate 1
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 500m
@@ -322,6 +347,7 @@ mtdome:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/mtdome
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 900m
@@ -337,6 +363,7 @@ mtdome-sim:
     repository: ts-dockerhub.lsst.org/mtdome
   env:
     RUN_ARG: --simulate 1
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 900m
@@ -349,6 +376,7 @@ mtdometrajectory:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/mtdometrajectory
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 250m
@@ -371,6 +399,7 @@ mtheaderservice:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 2000m
@@ -387,6 +416,7 @@ mtm1m3-sim:
   env:
     LSST_KAFKA_TLM_FLUSH_MS: 0
     LSST_KAFKA_CMDEVT_FLUSH_MS: 0
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 1000m
@@ -399,6 +429,7 @@ mtm2:
   image:
     revision: 0
     repository: ts-dockerhub.lsst.org/m2
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 850m
@@ -414,6 +445,7 @@ mtm2-sim:
     repository: ts-dockerhub.lsst.org/m2
   env:
     RUN_ARG: --simulate
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 850m
@@ -436,6 +468,7 @@ mtm2hexapod:
     readOnly: true
     server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 400m
@@ -452,6 +485,7 @@ mtm2hexapod-sim:
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: --simulate 2
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 400m
@@ -465,6 +499,7 @@ mtmount:
   image:
     revision: 6
     repository: ts-dockerhub.lsst.org/mtmount
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 2
@@ -480,6 +515,7 @@ mtmount-ccw-only:
     repository: ts-dockerhub.lsst.org/mtmount
   env:
     CCW_ONLY: yes
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 2
@@ -495,6 +531,7 @@ mtmount-sim:
     repository: ts-dockerhub.lsst.org/mtmount
   env:
     RUN_ARG: --simulate
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 500m
@@ -517,6 +554,7 @@ mtoods:
   - lfa-credentials.ini
   - oods-lsstcam-credentials.ini
   <<: *butler-secret
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 1500m
@@ -579,6 +617,7 @@ mtptg:
     TELESCOPE: MT
     LSST_KAFKA_TLM_FLUSH_MS: 0
     LSST_KAFKA_CMDEVT_FLUSH_MS: 0
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 1200m
@@ -591,6 +630,7 @@ mtrotator:
   image:
     revision: 1
     repository: ts-dockerhub.lsst.org/mtrotator
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 1
@@ -606,6 +646,7 @@ mtrotator-sim:
     repository: ts-dockerhub.lsst.org/mtrotator
   env:
     RUN_ARG: --simulate
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 400m
@@ -628,6 +669,7 @@ wfoods:
   - lfa-credentials.ini
   - oods-lsstcam-credentials.ini
   <<: *butler-secret
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 500m
