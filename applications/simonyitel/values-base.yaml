@@ -1,3 +1,16 @@
+x-pod-antiaffinity:
+  &pod-antiaffinity
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: csc-name
+              operator: Exists
+          topologyKey: kubernetes.io/hostname
+
 x-butler-secret:
   &butler-secret
   butlerSecret:
@@ -15,6 +28,7 @@ lasertracker1-sim:
     repository: ts-dockerhub.lsst.org/lasertracker
   env:
     RUN_ARG: 1 --simulate 2
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 200m
@@ -29,6 +43,7 @@ mtaircompressor1-sim:
     repository: ts-dockerhub.lsst.org/mtaircompressor
   env:
     RUN_ARG: 1 --simulate --state disabled
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 100m
@@ -43,6 +58,7 @@ mtaircompressor2-sim:
     repository: ts-dockerhub.lsst.org/mtaircompressor
   env:
     RUN_ARG: 2 --simulate --state disabled
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 100m
@@ -78,6 +94,7 @@ mtaos:
     readOnly: true
     server: nfs-obsenv.ls.lsst.org
     serverPath: /obs-env
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 1000m
@@ -93,6 +110,7 @@ mtcamhexapod-sim:
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: --simulate 1
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 500m
@@ -107,6 +125,7 @@ mtdome-sim:
     repository: ts-dockerhub.lsst.org/mtdome
   env:
     RUN_ARG: --simulate 1
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 1
@@ -118,6 +137,7 @@ mtdome-sim:
 mtdometrajectory:
   image:
     repository: ts-dockerhub.lsst.org/mtdometrajectory
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 250m
@@ -140,6 +160,7 @@ mtheaderservice:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 2000m
@@ -170,6 +191,7 @@ mtheaderservice-sim:
     readOnly: false
     server: nfs-project.ls.lsst.org
     serverPath: /project
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 2000m
@@ -187,6 +209,7 @@ mtm1m3-sim:
     LSST_KAFKA_CMDEVT_FLUSH_MS: 0
     LSST_KAFKA_MAX_QUEUE_MSG: 200
     LSST_KAFKA_MAX_QUEUE_MS: 100
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 1
@@ -199,6 +222,7 @@ mtm1m3ts-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtm1m3ts_sim
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 400m
@@ -214,6 +238,7 @@ mtm2hexapod-sim:
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: --simulate 2
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 400m
@@ -228,6 +253,7 @@ mtm2-hwsim:
     repository: ts-dockerhub.lsst.org/m2
   env:
     RUN_ARG: --host m2-crio-simulator.ls.lsst.org
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 850m
@@ -242,6 +268,7 @@ mtmount-sim:
     repository: ts-dockerhub.lsst.org/mtmount
   env:
     RUN_ARG: --simulate
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 500m
@@ -263,6 +290,7 @@ mtoods:
   - lfa-credentials.ini
   - oods-lsstcam-credentials.ini
   <<: *butler-secret
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 1
@@ -335,6 +363,7 @@ wfoods:
   - lfa-credentials.ini
   - oods-lsstcam-credentials.ini
   <<: *butler-secret
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 1
@@ -396,6 +425,7 @@ mtptg:
     TELESCOPE: MT
     LSST_KAFKA_TLM_FLUSH_MS: 0
     LSST_KAFKA_CMDEVT_FLUSH_MS: 0
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 1200m
@@ -410,6 +440,7 @@ mtrotator-sim:
     repository: ts-dockerhub.lsst.org/mtrotator
   env:
     RUN_ARG: --simulate
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 400m
@@ -424,6 +455,7 @@ mtvms-camera-rotator-sim:
     repository: ts-dockerhub.lsst.org/vms_sim
   env:
     RUN_ARG: CameraRotator
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 250m
@@ -438,6 +470,7 @@ mtvms-m1m3-sim:
     repository: ts-dockerhub.lsst.org/vms_sim
   env:
     RUN_ARG: M1M3
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 250m
@@ -452,6 +485,7 @@ mtvms-m2-sim:
     repository: ts-dockerhub.lsst.org/vms_sim
   env:
     RUN_ARG: M2
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 250m
