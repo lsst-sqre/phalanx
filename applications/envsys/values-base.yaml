@@ -6,8 +6,9 @@ x-pod-antiaffinity:
       - weight: 100
         podAffinityTerm:
           labelSelector:
-            matchLabels:
-              csc-name: sim
+            matchExpressions:
+            - key: csc-name
+              operator: Exists
           topologyKey: kubernetes.io/hostname
 
 automatic-transfer-switch-ess309-sim:
