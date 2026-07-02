@@ -602,15 +602,15 @@ mtoods:
   - oods-lsstcam-credentials.ini
   <<: *butler-secret
   nodeSelector:
-    kubernetes.io/hostname: yagan5
+    kubernetes.io/hostname: yagan05
   <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 1500m
       memory: 2100Mi
     requests:
-      cpu: 500m
-      memory: 800Mi
+      cpu: 1000m
+      memory: 2000Mi
   configfile:
     path: /etc
     filename: mtoods.yaml
