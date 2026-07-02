@@ -1,3 +1,16 @@
+x-pod-antiaffinity:
+  &pod-antiaffinity
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: csc-name
+              operator: Exists
+          topologyKey: kubernetes.io/hostname
+
 automatic-transfer-switch-ess309-sim:
   enabled: true
   classifier: ess309
@@ -5,6 +18,7 @@ automatic-transfer-switch-ess309-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 309 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -20,6 +34,7 @@ auxtel-ess201-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 201 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -35,6 +50,7 @@ auxtel-ess202-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 202 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -50,6 +66,7 @@ auxtel-ess308-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 308 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -65,6 +82,7 @@ auxtel-ess204-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 204 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -80,6 +98,7 @@ calibhill-ess301-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 301 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -95,6 +114,7 @@ camera-ess111-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 111 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -110,6 +130,7 @@ cleanroom-ess109-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 109 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -124,6 +145,7 @@ dimm1-sim:
     repository: ts-dockerhub.lsst.org/dimm
   env:
     RUN_ARG: 1 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 25m
@@ -138,6 +160,7 @@ dimm2-sim:
     repository: ts-dockerhub.lsst.org/dimm
   env:
     RUN_ARG: 2 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 26m
@@ -158,6 +181,7 @@ dream-sim:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 200m
@@ -173,6 +197,7 @@ dsm1-sim:
   env:
     CSC_INDEX: 1
     RUN_ARG: --simulate 1 --state enabled
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 14m
@@ -188,6 +213,7 @@ dsm2-sim:
   env:
     CSC_INDEX: 2
     RUN_ARG: --simulate 2 --state enabled
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 10m
@@ -202,6 +228,7 @@ eas-sim:
     repository: ts-dockerhub.lsst.org/eas
   env:
     RUN_ARG: --simulate
+  <<: *pod-antiaffinity
   resources:
     limits:
       cpu: 750m
@@ -217,6 +244,7 @@ epm-ess303-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 303 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -232,6 +260,7 @@ epm-generator-ess305-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 305 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 50m
@@ -247,6 +276,7 @@ epm-generator-ess306-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 306 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 50m
@@ -261,6 +291,7 @@ hvac-sim:
     repository: ts-dockerhub.lsst.org/hvac
   env:
     RUN_ARG: --state enabled --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 160m
@@ -276,6 +307,7 @@ louver-h1-ess441-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 441 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -291,6 +323,7 @@ louver-h1h2-ess442-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 442 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -306,6 +339,7 @@ louver-h2-ess443-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 443 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -321,6 +355,7 @@ m1m3-ess113-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 113 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -336,6 +371,7 @@ m1m3-ess114-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 114 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -351,6 +387,7 @@ m1m3-ess115-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 115 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -366,6 +403,7 @@ m1m3-ess116-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 116 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -381,6 +419,7 @@ m1m3-ess117-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 117 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -396,6 +435,7 @@ m2-ess106-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 106 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -411,6 +451,7 @@ m2-ess112-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 112 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -426,6 +467,7 @@ mtdome-ess404-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 404 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -441,6 +483,7 @@ mtdome-ess405-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 405 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -456,6 +499,7 @@ partsens-ess127-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 127 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -471,6 +515,7 @@ partsens-ess128-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 128 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -486,6 +531,7 @@ partsens-ess129-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 129 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -501,6 +547,7 @@ ringss-ess304-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 304 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -516,6 +563,7 @@ tea-ess123-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 123 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -531,6 +579,7 @@ tea-ess124-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 124 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -546,6 +595,7 @@ tea-ess125-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 125 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -561,6 +611,7 @@ tea-ess126-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 126 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -576,6 +627,7 @@ tma-ess121-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 121 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -591,6 +643,7 @@ tma-ess122-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 122 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -606,6 +659,7 @@ tma-ess104-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 104 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -621,6 +675,7 @@ tma-ess105-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 105 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -636,6 +691,7 @@ tma-ess110-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 110 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -651,6 +707,7 @@ ups-server-room1-ess310-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 310 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -666,6 +723,7 @@ ups-server-room2-ess311-sim:
     repository: ts-dockerhub.lsst.org/ess
   env:
     RUN_ARG: 311 --simulate
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 19m
@@ -682,6 +740,7 @@ weatherforecast:
   envSecrets:
   - name: METEOBLUE_API_KEY
     key: meteoblue-api-key
+  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 100m
