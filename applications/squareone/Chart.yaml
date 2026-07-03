@@ -9,8 +9,4 @@ maintainers:
   - name: jonathansick
     url: https://github.com/jonathansick
 
-# The default version tag of the squareone docker image
-# NOTE: temporarily pinned to the DM-55290 ticket branch image to exercise the
-# user-notifications UI on data-dev (idfdev). Revert to a released version
-# (e.g. "0.34.0") before merging this PR.
-appVersion: "tickets-DM-55290-notifications-ui"
+appVersion: "0.35.0"
