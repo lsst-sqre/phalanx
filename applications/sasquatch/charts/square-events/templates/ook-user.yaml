@@ -29,6 +29,15 @@ spec:
         host: "*"
       - resource:
           type: topic
+          name: "lsst.square-events.ook.linkcheck"
+          patternType: literal
+        operations:
+          - "Describe"
+          - "Read"
+          - "Write"
+        host: "*"
+      - resource:
+          type: topic
           name: "lsst.square-events.squarebot.slack.app.mention"
           patternType: literal
         type: allow

@@ -12,6 +12,9 @@ ingestUpdated:
   enabled: true
   window: "2d"
   schedule: "30 3 * * *"
+linkcheckRecheck:
+  enabled: true
+  schedule: "45 4 * * *"
 ingestLsstTexmf:
   enabled: true
 

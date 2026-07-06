@@ -1,5 +1,8 @@
 ---
-# Ook endpoints default to anonymous scope
+# Ook endpoints default to anonymous scope. This includes the OpenAPI spec
+# at /ook/openapi.json, which must stay unauthenticated so that API clients
+# can read it (only the Swagger browser at /ook/docs requires a login, via
+# the ook-apibrowser ingress below).
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
@@ -103,6 +106,45 @@ template:
         http:
           paths:
             - path: "{{ .Values.ingress.path }}/ingest"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "ook"
+                  port:
+                    number: {{ .Values.service.port }}
+
+---
+# The link-check submit-and-poll API requires the exec:linkcheck scope
+# (delegated to documentation CI via OOK_TOKEN). This covers POST
+# /ook/linkcheck/checks and GET /ook/linkcheck/checks/{id}; the submitting
+# client polls its own check with the same token. The other linkcheck read
+# endpoints (/ook/linkcheck/urls and /ook/linkcheck/projects/...) remain
+# anonymous via the catch-all ook ingress.
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "ook-linkcheck"
+  labels:
+    {{- include "ook.labels" . | nindent 4 }}
+config:
+  loginRedirect: false
+  scopes:
+    all:
+      - "exec:linkcheck"
+  service: "ook"
+template:
+  metadata:
+    name: "ook-linkcheck"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.ingress.path }}/linkcheck/checks"
               pathType: "Prefix"
               backend:
                 service:
