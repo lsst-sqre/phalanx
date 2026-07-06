@@ -1,4 +1,5 @@
 config:
+  jobRunBatchSize: 50
   logLevel: "DEBUG"
   metrics:
     enabled: true
@@ -7,6 +8,7 @@ config:
   slack:
     enabled: true
   qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-int.slac.stanford.edu:4090/"
+  qservRestMaxConnections: 55
   qservRestSendApiVersion: false
   qservRestUrl: "https://qserv-int-https.slac.stanford.edu:4098/"
   qservRestUsername: "qsmaster"
