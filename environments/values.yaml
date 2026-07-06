@@ -70,6 +70,9 @@ applications:
   # -- Enable the cm-service application
   cm-service: false
 
+  # -- Enable the conesearch application
+  conesearch: false
+
   # -- Enable the consdbtap application
   consdbtap: false
 
