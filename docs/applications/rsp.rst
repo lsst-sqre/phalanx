@@ -11,6 +11,7 @@ Argo CD project: ``rsp``
 
    bigquery-kafka/index
    butler/index
+   conesearch/index
    consdbtap/index
    datalinker/index
    fov-quicklook/index
