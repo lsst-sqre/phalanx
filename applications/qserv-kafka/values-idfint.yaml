@@ -6,9 +6,9 @@ config:
     enabled: true
   slack:
     enabled: true
-  qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-int.slac.stanford.edu:4090/"
+  qservDatabaseUrl: "mysql+asyncmy://qsmaster@134.79.23.230:4040/"
   qservRestSendApiVersion: false
-  qservRestUrl: "https://qserv-int-https.slac.stanford.edu:4098/"
+  qservRestUrl: "https://134.79.23.230:4048/"
   qservRestUsername: "qsmaster"
 frontend:
   allowRootDebug: true
