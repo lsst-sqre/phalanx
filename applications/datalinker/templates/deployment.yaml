@@ -28,8 +28,6 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-            - name: "DAF_BUTLER_REPOSITORIES"
-              value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
             {{- if .Values.config.slackAlerts }}
             - name: "DATALINKER_SLACK_WEBHOOK"
               valueFrom:

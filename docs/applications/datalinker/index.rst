@@ -4,13 +4,13 @@
 datalinker — IVOA DataLink service
 ##################################
 
-datalinker provides various facilities for discovering and referring to data products and services within the Rubin Science Platform.
-It is primarily based on the IVOA DataLink standard, but also provides some related service discovery facilities beyond the scope of that standard.
-
-Most significantly, datalinker is used to retrieve images referenced in the results of an ObsTAP search.
+datalinker is used to retrieve images referenced in the results of an ObsTAP search.
 It does this by returning a DataLink response for the image that includes a signed URL, allowing direct image download from the underlying data store.
+Included in that response are service descriptors for any related services for acting on that image.
 
-It also provides the HiPS list service, which collects the property files of HiPS data sets served by :px-app:`hips` and returns them with appropriate URLs, and implements a variety of "microservice" endpoints that rewrite simple service-descriptor-friendly APIs into redirects to other RSP services.
+Currently, datalinker also provides several small redirect-only services to run TAP queries.
+These are referenced in DataLink descriptors added to TAP results by the TAP service, and are used by clients to perform related TAP queries for a row of TAP results.
+These services will eventually be moved into a separate service.
 
 .. jinja:: datalinker
    :file: applications/_summary.rst.jinja

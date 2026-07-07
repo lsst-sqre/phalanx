@@ -1,6 +1,6 @@
 # datalinker
 
-IVOA DataLink-based service and data discovery
+IVOA DataLink image matadata and location service
 
 ## Source Code
 
@@ -17,7 +17,6 @@ IVOA DataLink-based service and data discovery
 | config.sentry.enabled | bool | `false` | Whether to enable the Sentry integration |
 | config.slackAlerts | bool | `false` | Whether to send certain serious alerts to Slack |
 | config.tapMetadataUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/DP1-v1.2.0/datalink-columns.zip"` | URL containing TAP schema metadata used to construct queries |
-| global.butlerServerRepositories | string | Set by Argo CD | Butler repositories accessible via Butler server |
 | global.environmentName | string | Set by Argo CD | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.repertoireUrl | string | Set by Argo CD | Base URL for Repertoire discovery API |
