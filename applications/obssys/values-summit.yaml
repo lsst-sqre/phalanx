@@ -60,10 +60,10 @@ atqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 8
+      cpu: 12
       memory: 48Gi
     requests:
-      cpu: 4
+      cpu: 8
       memory: 8Gi
 
 atscheduler:
@@ -177,7 +177,7 @@ mtqueue:
       cpu: 12
       memory: 48Gi
     requests:
-      cpu: 6
+      cpu: 8
       memory: 8Gi
 
 mtscheduler:
