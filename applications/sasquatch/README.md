@@ -145,6 +145,15 @@ Rubin Observatory's telemetry service
 | trickster.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | Kubernetes resource requests and limits for Trickster |
 | alert-brokers.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Prompt Kafka chart. |
 | alert-database.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| alert-database.ingester.autoscaling.activationLagThreshold | string | `"10"` | Minimum lag per partition required to activate scaling from zero. Only relevant when minReplicaCount is 0. |
+| alert-database.ingester.autoscaling.consumerGroup | string | `"alertdb-ingester"` | Kafka consumer group to monitor for lag. Must match the consumer group used by the ingester application. |
+| alert-database.ingester.autoscaling.cooldownPeriod | int | `300` | Period to wait after the last trigger fires before scaling down (seconds). |
+| alert-database.ingester.autoscaling.enabled | bool | `true` | Enable KEDA-based autoscaling for the ingester. When enabled, KEDA manages the replica count based on Kafka consumer group lag. |
+| alert-database.ingester.autoscaling.lagThreshold | string | `"100"` | Target lag (messages) per partition that triggers scaling. |
+| alert-database.ingester.autoscaling.maxReplicaCount | int | `10` | Maximum number of replicas the ingester can scale to. |
+| alert-database.ingester.autoscaling.minReplicaCount | int | `3` | Minimum number of replicas. Set to 0 to allow scale-to-zero. |
+| alert-database.ingester.autoscaling.offsetResetPolicy | string | `"latest"` | Kafka offset reset policy for the KEDA scaler if the consumer group has no committed offset. |
+| alert-database.ingester.autoscaling.pollingInterval | int | `30` | How often KEDA checks Kafka consumer group lag (seconds). |
 | alert-database.ingester.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alert-database.ingester.image.repository | string | `"lsstdm/alert_database_ingester"` |  |
 | alert-database.ingester.image.tag | string | `""` |  |
@@ -153,6 +162,7 @@ Rubin Observatory's telemetry service
 | alert-database.ingester.kafka.topic | list | `["alerts-simulated"]` | Name of the topic which will holds alert data. |
 | alert-database.ingester.kafka.user | string | `"alert-database-ingester"` | The username of the Kafka user identity used to connect to the broker. |
 | alert-database.ingester.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
+| alert-database.ingester.replicas | int | `1` | Number of static replicas when autoscaling is disabled. |
 | alert-database.ingester.s3.alertBucket | string | `"rubin-alert-archive"` |  |
 | alert-database.ingester.s3.endpointURL | string | `"https://sdfdatas3.slac.stanford.edu/"` |  |
 | alert-database.ingester.s3.schemaBucket | string | `"rubin-alert-archive"` |  |
