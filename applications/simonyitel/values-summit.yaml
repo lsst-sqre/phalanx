@@ -351,10 +351,10 @@ mtdome:
   resources:
     limits:
       cpu: 900m
-      memory: 320Mi
+      memory: 500Mi
     requests:
       cpu: 90m
-      memory: 160Mi
+      memory: 250Mi
 
 mtdome-sim:
   enabled: false
