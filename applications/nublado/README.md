@@ -23,6 +23,21 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy pod |
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `cloud-sql-proxy` Kubernetes service account and has the `cloudsql.client` role |
 | cloudsql.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the Cloud SQL Auth Proxy pod |
+| collab.affinity | object | `{}` | Affinity rules for collab |
+| collab.config.collabDir | string | `"/mnt/collab"` | Collaboration volume mount point inside container. |
+| collab.config.excludedGroupsPath | string | `"/etc/collab-group/exclude-groups.yaml"` | Path to list of excluded groups. |
+| collab.config.gafaelfawrTokenPath | string | `"/etc/gafaelfawr/token"` | Path to Gafaelfawr token with "admin:userinfo" scope. |
+| collab.enabled | bool | `false` | Monitor collab volume and create ad-hoc directories? |
+| collab.exclude | list | empty list, must be set for each environment. | List of excluded user groups. |
+| collab.image.pullPolicy | string | `"Always"` | Pull policy for the collab-group image |
+| collab.image.repository | string | `"ghcr.io/lsst-sqre/collab-group"` | collab-group image to use (will eventually be rolled into nublado) |
+| collab.image.tag | string | The appVersion of the chart | Tag of collab-group image to use |
+| collab.nodeSelector | object | `{}` |  |
+| collab.podAnnotations | object | `{}` | Annotations for the collab pod |
+| collab.resources | object | See `values.yaml` | Resource limits and requests for the filesystem purger |
+| collab.schedule | string | `"*/5 * * * *"` | Crontab entry for when to run. |
+| collab.tolerations | list | Tolerate GKE arm64 taint | Tolerations for collab |
+| collab.volumeName | string | None, must be set for each environment | Name of collab volume (from controller.lab.config.volumes) |
 | controller.affinity | object | `{}` | Affinity rules for the Nublado controller |
 | controller.config.fileserver.affinity | object | `{}` | Affinity rules for user file server pods |
 | controller.config.fileserver.application | string | `"nublado-fileservers"` | Argo CD application in which to collect user file servers |

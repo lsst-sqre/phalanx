@@ -842,6 +842,10 @@ purger:
   # -- Crontab entry for when to run.
   schedule: "05 03 * * *"
 
+  # -- Name of volume to purge (from controller.lab.config.volumes)
+  # @default -- None, must be set for each environment
+  volumeName: null
+
   config:
     # -- Add timestamps to log messages
     addTimestamp: false
@@ -863,11 +867,9 @@ purger:
     # @default -- See `values.yaml`
     directories:
       - path: /scratch
-
         # Files this large or larger will be subject to the "large" interval
         # set
         threshold: 1GiB
-
         # If any of these times are older than specified, remove the file.
         # Zero means "never remove".
         intervals:
@@ -880,7 +882,63 @@ purger:
             modificationInterval: 0
             creationInterval: 0
 
-  # -- Name of volume to purge (from controller.lab.config.volumes)
+collab:
+  # -- Monitor collab volume and create ad-hoc directories?
+  enabled: false
+
+  # -- Affinity rules for collab
+  affinity: {}
+
+  config:
+    # -- Collaboration volume mount point inside container
+    collabDir: "/mnt/collab"
+
+    # -- Excluded groups
+    # @default -- None, must be set for each environment
+    excludedGroups: null
+
+    # -- Path to Gafaelfawr token with "admin:userinfo" scope
+    gafaelfawrTokenPath: "/etc/gafaelfawr/token"
+
+  image:
+    # -- collab-group image to use (will eventually be rolled into nublado)
+    repository: "ghcr.io/lsst-sqre/collab-group"
+
+    # -- Pull policy for the collab-group image
+    pullPolicy: "Always"
+
+    # -- Tag of collab-group image to use
+    # @default -- The appVersion of the chart
+    tag: "0.0.1"
+
+    # -- Node selector rules for collab
+  nodeSelector: {}
+
+  # -- Annotations for the collab pod
+  podAnnotations: {}
+
+  # -- Tolerations for collab
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
+
+  # -- Resource limits and requests for the filesystem purger
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "0.05"
+      memory: "120Mi"
+
+  # -- Crontab entry for when to run.
+  schedule: "*/5 * * * *"
+
+  # -- Name of collab volume (from controller.lab.config.volumes)
   # @default -- None, must be set for each environment
   volumeName: null
 

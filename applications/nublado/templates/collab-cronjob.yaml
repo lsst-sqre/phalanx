@@ -1,0 +1,87 @@
+{{if .Values.collab.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: collab
+spec:
+  schedule: {{ .Values.collab.schedule | quote }}
+  successfulJobsHistoryLimit: 1
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          {{- with .Values.purger.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.purger.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          containers:
+          - name: "{{ .Chart.Name }}-collab"
+            {{- if or .Values.controller.slackAlerts .Values.sentry.enabled }}
+            env:
+            {{- if .Values.controller.slackAlerts }}
+            - name: "NUBLADO_ALERT_HOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "nublado-secret"
+                  key: "slack-webhook"
+            {{- end }}
+            - name: "REPERTOIRE_BASE_URL"
+              value: {{ .Values.global.repertoireUrl }}
+            {{- if .Values.sentry.enabled }}
+            - name: "SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: "nublado-secret"
+                  key: "sentry-dsn"
+            - name: "SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.environmentName }}
+            {{- end }}
+            {{- end }}
+            command: [ "collab-dir-builder" ]
+            image: "{{ .Values.collab.image.repository }}:{{ .Values.collab.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.collab.image.pullPolicy }}"
+            {{- with .Values.purger.resources }}
+            resources:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            securityContext:
+              allowPrivilegeEscalation: true
+              privileged: true
+              runAsUser: 0
+              runAsNonRoot: false
+              readOnlyRootFilesystem: true
+            volumeMounts:
+            - mountPath: {{ .Values.collab.config.collabDir }}
+              name: {{ .Values.collab.volumeName }}
+            - mountPath: /etc/collab-group
+              name: config
+            - mountPath: {{ .Values.collab.config.gafaelfawrTokenPath }}
+              name: token
+              subPath: token
+          # We need to extend this for PVCs too
+          volumes:
+          {{- range .Values.controller.config.lab.volumes }}
+          - name: {{ .name | quote }}
+          {{- if eq .source.type "nfs" }}
+            nfs:
+              server: {{ .source.server | quote }}
+              path: {{ .source.serverPath | quote }}
+          {{- else if eq .source.type "hostPath" }}
+            hostPath:
+              path: {{ .source.path | quote }}
+          {{- end }}
+          {{- end }}
+          - name: config
+            configMap:
+              name: "collab-configmap"
+          - name: "token"
+            secret:
+              secretName: "collab-gafaelfawr-token"
+{{- end }}
