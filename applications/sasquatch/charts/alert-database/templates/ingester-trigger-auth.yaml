@@ -1,0 +1,19 @@
+{{- if .Values.ingester.autoscaling.enabled }}
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: {{ include "alertDatabase.ingesterName" . }}-kafka-auth
+  labels:
+    {{- include "alertDatabase.labels" . | nindent 4 }}
+spec:
+  secretTargetRef:
+    - parameter: ca
+      name: {{ .Values.ingester.kafka.cluster }}-cluster-ca-cert
+      key: ca.crt
+    - parameter: cert
+      name: {{ .Values.ingester.kafka.user }}
+      key: user.crt
+    - parameter: key
+      name: {{ .Values.ingester.kafka.user }}
+      key: user.key
+{{- end }}
