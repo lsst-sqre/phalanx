@@ -6,6 +6,10 @@ config:
     - "dp2"
     - "prompt"
   hips:
+    datasets:
+      dp2:
+        paths:
+          - "cosmost2/color_gri"
     legacy:
       dataset: "dp1"
   metrics:
