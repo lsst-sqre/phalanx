@@ -1,0 +1,27 @@
+{{- if .Values.ingester.autoscaling.enabled }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ include "alertDatabase.ingesterName" . }}
+  labels:
+    {{- include "alertDatabase.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    name: {{ include "alertDatabase.ingesterName" . }}
+  pollingInterval: {{ .Values.ingester.autoscaling.pollingInterval }}
+  cooldownPeriod: {{ .Values.ingester.autoscaling.cooldownPeriod }}
+  minReplicaCount: {{ .Values.ingester.autoscaling.minReplicaCount }}
+  maxReplicaCount: {{ .Values.ingester.autoscaling.maxReplicaCount }}
+  triggers:
+    - type: kafka
+      metadata:
+        bootstrapServers: {{ .Values.ingester.kafka.cluster }}-kafka-bootstrap:{{ .Values.ingester.kafka.port }}
+        consumerGroup: {{ .Values.ingester.autoscaling.consumerGroup }}
+        topic: {{ range $i, $topic := .Values.ingester.kafka.topic }}{{if $i}},{{end}}{{$topic}}{{end}}
+        lagThreshold: {{ .Values.ingester.autoscaling.lagThreshold | quote }}
+        activationLagThreshold: {{ .Values.ingester.autoscaling.activationLagThreshold | quote }}
+        offsetResetPolicy: {{ .Values.ingester.autoscaling.offsetResetPolicy }}
+        tls: "enable"
+      authenticationRef:
+        name: {{ include "alertDatabase.ingesterName" . }}-kafka-auth
+{{- end }}

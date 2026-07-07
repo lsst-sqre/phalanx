@@ -7,6 +7,15 @@ Archival database of alerts sent through the alert stream.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| ingester.autoscaling.activationLagThreshold | string | `"10"` | Minimum lag per partition required to activate scaling from zero. Only relevant when minReplicaCount is 0. |
+| ingester.autoscaling.consumerGroup | string | `"alertdb-ingester"` | Kafka consumer group to monitor for lag. Must match the consumer group used by the ingester application. |
+| ingester.autoscaling.cooldownPeriod | int | `300` | Period to wait after the last trigger fires before scaling down (seconds). |
+| ingester.autoscaling.enabled | bool | `true` | Enable KEDA-based autoscaling for the ingester. When enabled, KEDA manages the replica count based on Kafka consumer group lag. |
+| ingester.autoscaling.lagThreshold | string | `"100"` | Target lag (messages) per partition that triggers scaling. |
+| ingester.autoscaling.maxReplicaCount | int | `10` | Maximum number of replicas the ingester can scale to. |
+| ingester.autoscaling.minReplicaCount | int | `3` | Minimum number of replicas. Set to 0 to allow scale-to-zero. |
+| ingester.autoscaling.offsetResetPolicy | string | `"latest"` | Kafka offset reset policy for the KEDA scaler if the consumer group has no committed offset. |
+| ingester.autoscaling.pollingInterval | int | `30` | How often KEDA checks Kafka consumer group lag (seconds). |
 | ingester.image.pullPolicy | string | `"IfNotPresent"` |  |
 | ingester.image.repository | string | `"lsstdm/alert_database_ingester"` |  |
 | ingester.image.tag | string | `""` |  |
@@ -15,6 +24,7 @@ Archival database of alerts sent through the alert stream.
 | ingester.kafka.topic | list | `["alerts-simulated"]` | Name of the topic which will holds alert data. |
 | ingester.kafka.user | string | `"alert-database-ingester"` | The username of the Kafka user identity used to connect to the broker. |
 | ingester.logLevel | string | `"verbose"` | set the log level of the application. can be 'info', or 'debug', or anything else to suppress logging. |
+| ingester.replicas | int | `1` | Number of static replicas when autoscaling is disabled. |
 | ingester.s3.alertBucket | string | `"rubin-alert-archive"` |  |
 | ingester.s3.endpointURL | string | `"https://sdfdatas3.slac.stanford.edu/"` |  |
 | ingester.s3.schemaBucket | string | `"rubin-alert-archive"` |  |
