@@ -30,3 +30,4 @@ Argo CD project: ``rubin``
    s3proxy/index
    schedview-snapshot/index
    schedview-static-pages/index
+   weatherbroadcaster/index

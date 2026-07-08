@@ -1,0 +1,30 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "weatherbroadcaster"
+  labels:
+    {{- include "weatherbroadcaster.labels" . | nindent 4 }}
+config:
+  scopes:
+    all:
+      - "read:image"
+  service: "weatherbroadcaster"
+template:
+  metadata:
+    name: "weatherbroadcaster"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.config.pathPrefix | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "weatherbroadcaster"
+                  port:
+                    number: 8080
