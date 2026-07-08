@@ -209,6 +209,7 @@ config:
         datasets:
           - "dp02"
           - "dp1"
+          - "dp2"
         template: "https://{{base_hostname}}/api/datalink"
         versions:
           datalink-links-1.1:
@@ -397,6 +398,7 @@ config:
         datasets:
           - "dp02"
           - "dp1"
+          - "dp2"
         template: "https://{{base_hostname}}/api/cutout"
         versions:
           soda-async-1.0:
