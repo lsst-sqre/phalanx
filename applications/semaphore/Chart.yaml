@@ -9,10 +9,13 @@ description: >-
   User notification and messaging service for the Rubin Science Platform.
 sources:
   - https://github.com/lsst-sqre/semaphore
-appVersion: 1.0.1
+appVersion: 2.0.0
 
 annotations:
   phalanx.lsst.io/docs: |
     - id: "SQR-060"
       title: "Design of the Semaphore user broadcast message system for the Rubin Science Platform"
       url: "https://sqr-060.lsst.io/"
+    - id: "SQR-118"
+      title: "RSP user notifications"
+      url: "https://sqr-118.lsst.io/"

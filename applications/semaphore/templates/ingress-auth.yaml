@@ -1,0 +1,43 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "semaphore-auth"
+  labels:
+    {{- include "semaphore.labels" . | nindent 4 }}
+config:
+  scopes:
+    all: []
+  service: "semaphore"
+template:
+  metadata:
+    name: "semaphore-auth"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.config.pathPrefix }}/docs"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "semaphore"
+                  port:
+                    number: 80
+            - path: "{{ .Values.config.pathPrefix }}/redoc"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "semaphore"
+                  port:
+                    number: 80
+            - path: "{{ .Values.config.pathPrefix }}/v1/notifications"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "semaphore"
+                  port:
+                    number: 80
