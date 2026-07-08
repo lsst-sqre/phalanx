@@ -147,6 +147,7 @@ app-metrics:
   enabled: true
   apps:
     - bigquerykafka
+    - datalinker
     - gafaelfawr
     - herald
     - mobu

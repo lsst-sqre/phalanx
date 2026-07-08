@@ -84,6 +84,7 @@ chronograf:
 app-metrics:
   enabled: true
   apps:
+    - datalinker
     - gafaelfawr
     - herald
     - mobu
