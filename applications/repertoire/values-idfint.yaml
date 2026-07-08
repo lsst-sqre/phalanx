@@ -16,7 +16,7 @@ config:
     enabled: true
   slackAlerts: true
   tap:
-    schemaVersion: "main"
+    schemaVersion: "tickets/DM-55438"
     servers:
       tap:
         enabled: true
