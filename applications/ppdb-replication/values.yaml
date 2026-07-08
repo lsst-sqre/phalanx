@@ -56,6 +56,33 @@ global:
   # @default -- Set by Argo CD
   vaultSecretsPath: null
 
+# Cloud SQL Proxy
+cloudSqlProxy:
+
+  image:
+    # -- Image to use for cloudsql proxy
+    repository: "gcr.io/cloud-sql-connectors/cloud-sql-proxy"
+
+    # -- Pull policy for the allow db proxy image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of image to use
+    tag: "2.23.0"
+
+  config:
+    # -- Uri for Allow DB instance
+    instanceUri: ""
+
+  # -- Resource limits and requests for the cloudsql proxy pod
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
 # Application-specific configuration
 config:
   # -- Logging level

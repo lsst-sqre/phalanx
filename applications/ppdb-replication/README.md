@@ -11,6 +11,11 @@ Replicates data from the APDB to the PPDB
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the ppdb-replication deployment pod |
+| cloudSqlProxy.config.instanceUri | string | `""` | Uri for Allow DB instance |
+| cloudSqlProxy.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the allow db proxy image |
+| cloudSqlProxy.image.repository | string | `"gcr.io/cloud-sql-connectors/cloud-sql-proxy"` | Image to use for cloudsql proxy |
+| cloudSqlProxy.image.tag | string | `"2.23.0"` | Tag of image to use |
+| cloudSqlProxy.resources | object | See `values.yaml` | Resource limits and requests for the cloudsql proxy pod |
 | config.additionalS3ProfileName | string | `"embargo"` | S3 profile name for additional S3 profile |
 | config.additionalS3ProfileUrl | string | `"https://sdfembs3.sdf.slac.stanford.edu"` | S3 profile URL for additional S3 profile |
 | config.apdbConfig | string | `nil` | APDB config file resource |
