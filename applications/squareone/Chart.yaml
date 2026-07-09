@@ -9,4 +9,5 @@ maintainers:
   - name: jonathansick
     url: https://github.com/jonathansick
 
-appVersion: "0.35.1"
+# The default version tag of the squareone docker image
+appVersion: "0.36.0"
