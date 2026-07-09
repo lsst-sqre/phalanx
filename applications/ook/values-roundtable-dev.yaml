@@ -17,6 +17,10 @@ audit:
 ingestUpdated:
   enabled: false
 
+linkcheckRecheck:
+  enabled: true
+  schedule: "45 4 * * *"
+
 ingestLsstTexmf:
   enabled: true
 

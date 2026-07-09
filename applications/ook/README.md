@@ -31,9 +31,19 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `ook` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.algolia.documents_index | string | `"documents_dev"` | Name of the Algolia index for documents |
 | config.databaseUrl | string | `""` | Database URL |
+| config.linkcheck.brokenMinAttempts | int | `3` | Minimum number of consecutive failed attempts before a previously-OK link is declared broken instead of failing |
+| config.linkcheck.brokenThreshold | string | `"48h"` | Minimum span of consecutive failures before a previously-OK link is declared broken instead of failing |
+| config.linkcheck.checkRetention | string | `"30d"` | Age beyond which link-check submission records are purged by the scheduled linkcheck-recheck maintenance command |
+| config.linkcheck.freshnessTtl | string | `"24h"` | Age below which a URL's stored check result is considered fresh and is not rechecked on submission |
+| config.linkcheck.hostInterval | string | `"1s"` | Minimum politeness interval between link-check requests to the same host |
+| config.linkcheck.maxConcurrency | int | `10` | Maximum number of concurrent link-check HTTP requests across all hosts |
+| config.linkcheck.maxUrlsPerCheck | int | `1000` | Maximum number of unique canonical URLs accepted in a single link-check submission |
+| config.linkcheck.recheckIntervals | list | `["1h","4h","24h","48h"]` | Delays until the next recheck of a failing link, indexed by the number of consecutive failures so far |
+| config.linkcheck.requestTimeout | string | `"30s"` | Total timeout applied to each link-check HTTP request |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.migrateCountryCodes | bool | false to disable country code migration | Whether to migrate country codes in the database |
 | config.topics.ingest | string | `"lsst.square-events.ook.ingest"` | Kafka topic name for ingest events |
+| config.topics.linkcheck | string | `"lsst.square-events.ook.linkcheck"` | Kafka topic name for link-check execution requests |
 | config.updateSchema | bool | false to disable schema upgrades | Whether to run the database migration job |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
@@ -62,6 +72,14 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | ingestUpdated.window | string | `"2d"` | Time window to look for updated documents (e.g. 1h, 2d, 3w). This must be set to a value greater than the cron schedule for the ingest-updated job. |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | ingress.path | string | `"/ook"` | Path prefix where Squarebot is hosted |
+| linkcheckRecheck.affinity | object | `{}` | Affinity rules for Ook linkcheck-recheck pods |
+| linkcheckRecheck.enabled | bool | `false` | Enable the linkcheck-recheck job |
+| linkcheckRecheck.nodeSelector | object | `{}` | Node selection rules for Ook linkcheck-recheck pods |
+| linkcheckRecheck.podAnnotations | object | `{}` | Annotations for Ook linkcheck-recheck pods |
+| linkcheckRecheck.resources | object | `{}` | Resource limits and requests for Ook linkcheck-recheck pods |
+| linkcheckRecheck.schedule | string | `"45 4 * * *"` | Cron schedule string for the ook linkcheck-recheck job (UTC) |
+| linkcheckRecheck.tolerations | list | `[]` | Tolerations for Ook linkcheck-recheck pods |
+| linkcheckRecheck.ttlSecondsAfterFinished | int | `86400` | Time (second) to keep a finished job before cleaning up |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` | Annotations for API and worker pods |

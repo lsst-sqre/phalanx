@@ -36,6 +36,8 @@ config:
       Can read and write to the Turborepo remote cache
     "exec:docverse": >-
       Can access Docverse's as a user in an organization
+    "exec:linkcheck": >-
+      Can submit link-check requests to Ook
 
   groupMapping:
     "admin:userinfo":
@@ -61,6 +63,10 @@ config:
           organization: "lsst-sqre"
           team: "friends"
     "exec:internal-tools":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:linkcheck":
       - github:
           organization: "lsst-sqre"
           team: "square"
