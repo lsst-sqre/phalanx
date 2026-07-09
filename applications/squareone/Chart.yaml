@@ -9,8 +9,4 @@ maintainers:
   - name: jonathansick
     url: https://github.com/jonathansick
 
-# The default version tag of the squareone docker image
-# NOTE: temporarily pinned to the DM-55450 ticket branch image to exercise the
-# Semaphore 2.0 notifications API and the "Mark as unread" inbox UI on data-dev
-# (idfdev). Revert to a released version (e.g. "0.35.0") before merging this PR.
-appVersion: "tickets-DM-55450"
+appVersion: "0.35.1"
