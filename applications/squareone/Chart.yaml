@@ -10,8 +10,4 @@ maintainers:
     url: https://github.com/jonathansick
 
 # The default version tag of the squareone docker image
-# NOTE: temporarily pinned to the DM-55384 ticket branch image to preview the
-# Times Square sidebar navigation work (icons, collapsible tree, ts_nav_focus
-# focus mode) on data-dev (idfdev). Revert to a released version
-# (e.g. "0.35.1") before merging this PR.
-appVersion: "tickets-DM-55384"
+appVersion: "0.36.0"
