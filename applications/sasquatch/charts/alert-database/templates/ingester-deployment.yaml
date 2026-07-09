@@ -74,6 +74,7 @@ spec:
             secretName: sasquatch
         {{- end }}
       serviceAccountName: "{{ .Values.ingester.serviceAccountName }}"
+      terminationGracePeriodSeconds: {{ .Values.ingester.terminationGracePeriodSeconds }}
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

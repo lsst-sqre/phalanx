@@ -32,6 +32,7 @@ Archival database of alerts sent through the alert stream.
 | ingester.s3.usdf | bool | `true` |  |
 | ingester.schemaRegistryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | URL of a schema registry instance |
 | ingester.serviceAccountName | string | `"alert-database-ingester"` | The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM service account!) which is used by the alert database ingester. |
+| ingester.terminationGracePeriodSeconds | int | `60` | Seconds Kubernetes waits after SIGTERM before sending SIGKILL. Should be long enough for the ingester to finish processing its current batch, commit offsets, and leave the Kafka consumer group cleanly. |
 | ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
 | ingress.enabled | bool | `false` | Whether to create an ingress |
 | ingress.host | string | None, must be set if the ingress is enabled | Hostname for the ingress |
