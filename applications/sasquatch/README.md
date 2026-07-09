@@ -170,6 +170,7 @@ Rubin Observatory's telemetry service
 | alert-database.ingester.s3.usdf | bool | `true` |  |
 | alert-database.ingester.schemaRegistryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | URL of a schema registry instance |
 | alert-database.ingester.serviceAccountName | string | `"alert-database-ingester"` | The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM service account!) which is used by the alert database ingester. |
+| alert-database.ingester.terminationGracePeriodSeconds | int | `60` | Seconds Kubernetes waits after SIGTERM before sending SIGKILL. Should be long enough for the ingester to finish processing its current batch, commit offsets, and leave the Kafka consumer group cleanly. |
 | alert-database.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
 | alert-database.ingress.enabled | bool | `false` | Whether to create an ingress |
 | alert-database.ingress.host | string | None, must be set if the ingress is enabled | Hostname for the ingress |

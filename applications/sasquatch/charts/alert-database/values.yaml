@@ -48,6 +48,11 @@ ingester:
   # anything else to suppress logging.
   logLevel: verbose
 
+  # -- Seconds Kubernetes waits after SIGTERM before sending SIGKILL. Should
+  # be long enough for the ingester to finish processing its current batch,
+  # commit offsets, and leave the Kafka consumer group cleanly.
+  terminationGracePeriodSeconds: 60
+
   # -- Number of static replicas when autoscaling is disabled.
   replicas: 1
 
