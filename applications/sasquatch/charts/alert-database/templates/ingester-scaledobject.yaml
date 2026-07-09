@@ -15,7 +15,7 @@ spec:
   triggers:
     - type: kafka
       metadata:
-        bootstrapServers: {{ .Values.ingester.kafka.cluster }}-kafka-bootstrap:{{ .Values.ingester.kafka.port }}
+        bootstrapServers: {{ .Values.ingester.kafka.cluster }}-kafka-bootstrap.{{ .Release.Namespace }}:{{ .Values.ingester.kafka.port }}
         consumerGroup: {{ .Values.ingester.autoscaling.consumerGroup }}
         topic: {{ range $i, $topic := .Values.ingester.kafka.topic }}{{if $i}},{{end}}{{$topic}}{{end}}
         lagThreshold: {{ .Values.ingester.autoscaling.lagThreshold | quote }}
