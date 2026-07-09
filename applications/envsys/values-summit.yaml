@@ -220,7 +220,7 @@ earthquake-ess302:
 eas:
   enabled: true
   image:
-    revision: 6
+    revision: 9
     repository: ts-dockerhub.lsst.org/eas
   <<: *pod-antiaffinity
   resources:
