@@ -1,3 +1,5 @@
 config:
   logLevel: "DEBUG"
+  metrics:
+    enabled: true
   slackAlerts: true
