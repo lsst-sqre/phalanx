@@ -78,7 +78,7 @@ alert-database:
   ingester:
     # The image can use either a tag or a digest to determine which is being used.
     image:
-      tag: v4.1.0
+      tag: values-usdfdev-prompt-processing.yaml
 
     logLevel: verbose
 
@@ -90,6 +90,19 @@ alert-database:
       cluster: sasquatch
       topic:
         - lsst-alerts-v11
+
+    terminationGracePeriodSeconds: 60
+
+    autoscaling:
+      enabled: true
+      minReplicaCount: 1
+      maxReplicaCount: 20
+      lagThreshold: "100"
+      activationLagThreshold: "10"
+      pollingInterval: 30
+      cooldownPeriod: 300
+      consumerGroup: "alertdb-ingester"
+      offsetResetPolicy: "latest"
 
   ingress:
     enabled: true
