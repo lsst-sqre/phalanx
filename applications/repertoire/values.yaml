@@ -321,7 +321,7 @@ config:
         template: "https://{{base_hostname}}/chronograf"
       - type: "ui"
         name: "kafdrop"
-        template: "https://{{base_hostname}}/chronograf"
+        template: "https://{{base_hostname}}/kafdrop"
     sia:
       - type: "data"
         name: "sia"
