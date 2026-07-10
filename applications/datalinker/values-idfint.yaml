@@ -1,2 +1,4 @@
 config:
+  metrics:
+    enabled: true
   slackAlerts: true

@@ -12,4 +12,9 @@ data:
   DATALINKER_TAP_METADATA_DIR: "/tmp/tap-metadata"
   DATALINKER_TAP_METADATA_URL: {{ .Values.config.tapMetadataUrl | quote }}
   {{- end }}
+  METRICS_APPLICATION: {{ .Values.config.metrics.application | quote }}
+  METRICS_ENABLED: {{ .Values.config.metrics.enabled | quote }}
+  METRICS_EVENTS_TOPIC_PREFIX: {{ .Values.config.metrics.events.topicPrefix | quote }}
   REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}
+  SCHEMA_MANAGER_REGISTRY_URL: {{ .Values.config.metrics.schemaManager.registryUrl | quote }}
+  SCHEMA_MANAGER_SUFFIX: {{ .Values.config.metrics.schemaManager.suffix | quote }}

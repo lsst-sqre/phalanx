@@ -1,10 +1,10 @@
 apiVersion: v2
 name: datalinker
 version: 1.0.0
-description: IVOA DataLink-based service and data discovery
+description: IVOA DataLink image matadata and location service
 sources:
   - "https://github.com/lsst-sqre/datalinker"
-appVersion: 4.3.0
+appVersion: 4.4.0
 
 annotations:
   phalanx.lsst.io/docs: |

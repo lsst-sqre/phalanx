@@ -14,9 +14,9 @@ spec:
       annotations:
         # Force the pod to restart when the config map is updated.
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-      {{- with .Values.podAnnotations }}
+        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "datalinker.selectorLabels" . | nindent 8 }}
     spec:
@@ -28,14 +28,30 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-            - name: "DAF_BUTLER_REPOSITORIES"
-              value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
             {{- if .Values.config.slackAlerts }}
             - name: "DATALINKER_SLACK_WEBHOOK"
               valueFrom:
                 secretKeyRef:
                   name: "datalinker"
                   key: "slack-webhook"
+            {{- end }}
+            {{- if .Values.config.metrics.enabled }}
+            - name: "KAFKA_BOOTSTRAP_SERVERS"
+              valueFrom:
+                secretKeyRef:
+                  name: "datalinker-kafka"
+                  key: "bootstrapServers"
+            - name: "KAFKA_CLIENT_CERT_PATH"
+              value: "/etc/datalinker-kafka/user.crt"
+            - name: "KAFKA_CLIENT_KEY_PATH"
+              value: "/etc/datalinker-kafka/user.key"
+            - name: "KAFKA_CLUSTER_CA_PATH"
+              value: "/etc/datalinker-kafka/ca.crt"
+            - name: "KAFKA_SECURITY_PROTOCOL"
+              valueFrom:
+                secretKeyRef:
+                  name: "datalinker-kafka"
+                  key: "securityProtocol"
             {{- end }}
             {{- if .Values.config.sentry.enabled }}
             - name: "SENTRY_DSN"
@@ -94,6 +110,20 @@ spec:
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"
+            {{- if .Values.config.metrics.enabled }}
+            - name: "kafka"
+              mountPath: "/etc/datalinker-kafka/ca.crt"
+              readOnly: true
+              subPath: "ssl.truststore.crt"
+            - name: "kafka"
+              mountPath: "/etc/datalinker-kafka/user.crt"
+              readOnly: true
+              subPath: "ssl.keystore.crt"
+            - name: "kafka"
+              mountPath: "/etc/datalinker-kafka/user.key"
+              readOnly: true
+              subPath: "ssl.keystore.key"
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -111,3 +141,8 @@ spec:
         - name: "tmp"
           emptyDir:
             medium: "Memory"
+        {{- if .Values.config.metrics.enabled }}
+        - name: "kafka"
+          secret:
+            secretName: "datalinker-kafka"
+        {{- end }}
