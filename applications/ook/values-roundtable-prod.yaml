@@ -4,6 +4,12 @@ image:
 
 config:
   databaseUrl: "postgresql://ook@localhost/ook"
+  linkcheck:
+    # Temporarily shortened from the 24h default for the DM-55386
+    # bot-block investigation so resubmitted checks re-fetch URLs
+    # instead of serving stored results. Revert with the image
+    # override at teardown.
+    freshnessTtl: "5m"
   algolia:
     documentIndex: "document_dev"
   updateSchema: true
