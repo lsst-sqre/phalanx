@@ -1,3 +1,7 @@
+image:
+  pullPolicy: Always
+  tag: "tickets-DM-55386-linkcheck-bot-blocks"
+
 config:
   databaseUrl: "postgresql://ook@localhost/ook"
   algolia:
