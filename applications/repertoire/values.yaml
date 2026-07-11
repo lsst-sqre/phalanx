@@ -310,10 +310,18 @@ config:
         datasets:
           - "prompt"
         template: "https://{{base_hostname}}/api/ppdbtap"
+    repertoire:
+      - type: "internal"
+        name: "repertoire"
+        template: "https://{{base_hostname}}/repertoire"
+        openapi: "https://{{base_hostname}}/repertoire/openapi.json"
     semaphore:
       - type: "internal"
         name: "semaphore"
         template: "https://{{base_hostname}}/semaphore"
+        versions:
+          v1:
+            template: "https://{{base_hostname}}/semaphore/v1"
         openapi: "https://{{base_hostname}}/semaphore/openapi.json"
     sasquatch:
       - type: "ui"
