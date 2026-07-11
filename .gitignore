@@ -1,6 +1,7 @@
 /applications/*/charts/*.tgz
 /applications-expanded/
 **/Chart.lock
+/docs/extras/discovery/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

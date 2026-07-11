@@ -25,16 +25,17 @@ dependencies = [
     "click!=8.2.0",
     "cryptography",
     "GitPython",
+    "google-cloud-compute-v1beta<1",
+    "google-cloud-container>=2,<3",
+    "google-cloud-gke-backup<1",
     "hvac",
     "jinja2",
     "onepasswordconnectsdk",
     "pydantic>2",
     "pyyaml",
     "rubin-gafaelfawr",
+    "rubin-repertoire",
     "safir>=14.3",
-    "google-cloud-gke-backup<1",
-    "google-cloud-compute-v1beta<1",
-    "google-cloud-container>=2,<3",
 ]
 
 [project.scripts]
@@ -80,7 +81,6 @@ typing = [
 
 [tool.black]
 line-length = 79
-target-version = ["py313"]
 
 [tool.coverage.run]
 parallel = true
@@ -88,7 +88,7 @@ branch = true
 source = ["phalanx"]
 
 [tool.coverage.paths]
-source = ["src", ".tox/*/site-packages"]
+source = ["src"]
 
 [tool.coverage.report]
 show_missing = true
