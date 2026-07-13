@@ -58,6 +58,14 @@ config:
         LSST Commissioning Camera of seven ~1 square degree fields, over seven
         weeks in late 2024.
       docsUrl: "https://dp1.lsst.io/"
+      ivoaRegistry:
+        ivoid: "ivo://org.rubinobs/lsst-dp1/datasets"
+        title: "Rubin Observatory DP1 Datasets"
+        created: "2026-05-20T00:00:00"
+        description: >-
+          Dataset collection for Data Preview 1, serving as the resolvable
+          registry target for per-object IVOIDs referencing Butler datasets
+          and HiPS surveys from this data release.
     dp2:
       description: >-
         Data Preview 2.
@@ -151,7 +159,7 @@ config:
     subjects:
       - "surveys"
       - "wide-band photometry"
-    facility:
+    facilities:
       - "Rubin:Simonyi"
     organisation:
       created: "2026-05-20T00:00:00Z"
@@ -351,7 +359,7 @@ config:
           ivoaServiceType: "sia"
           records:
             dp1:
-              ivoid: "ivo://org.rubinobs/sia/lsst-dp1"
+              ivoid: "ivo://org.rubinobs/lsst-dp1/sia"
               title: "Rubin SIA Service (DP1)"
               created: "2026-05-20T00:00:00"
               description: >-
@@ -388,7 +396,7 @@ config:
             ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
         ivoaRegistry:
           ivoaServiceType: "tap"
-          ivoid: "ivo://org.rubinobs/tap"
+          ivoid: "ivo://org.rubinobs/qserv-tap"
           title: "Rubin TAP Service"
           created: "2026-05-20T00:00:00"
           description: >-
@@ -403,12 +411,12 @@ config:
                 - "parquet"
           datasets:
             dp1:
-              ivoid: "ivo://org.rubinobs/catalogs/lsst-dp1"
+              ivoid: "ivo://org.rubinobs/lsst-dp1/catalogs"
               title: "Rubin TAP (DP1)"
               created: "2026-05-20T00:00:00"
               description: "DP1 catalog data accessible via the Rubin TAP service."
-              instrument:
-                - "LSSTCam"
+              instruments:
+                - "LSSTComCam"
     times-square:
       - type: "internal"
         name: "times-square"
