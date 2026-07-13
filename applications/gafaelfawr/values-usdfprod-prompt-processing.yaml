@@ -220,6 +220,9 @@ config:
     "write:sasquatch":
       - "rubinmgr"
       - "unix-admin"
+  knownScopes:
+    "read:alertdb": >-
+      Retrieve alert packets and schemas from the alert archive database
 
   initialAdmins:
     - "afausti"
