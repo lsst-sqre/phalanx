@@ -10,7 +10,7 @@ image:
   pullPolicy: IfNotPresent
 
   # -- Tag of image to use
-  tag: "2026.5"
+  tag: "2026.7"
 
 config:
   configVolume:
