@@ -312,7 +312,7 @@ lsstcamAosWorkerSet:
       memory: 4G
     limits:
       cpu: 4.2
-      memory: 8G
+      memory: 10G
 lsstcamGather1bSet:
   name: LSSTCam/runStep1bWorker.py
   mounts:
@@ -331,14 +331,14 @@ lsstcamGather1bAosSet:
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 4
+  replicas: 5
   resources:
     requests:
       cpu: 1.0
       memory: 4G
     limits:
       cpu: 1.1
-      memory: 10G
+      memory: 12G
 lsstcamBacklogWorkerSet:
   name: LSSTCam/runBacklogWorker.py
   mounts:
