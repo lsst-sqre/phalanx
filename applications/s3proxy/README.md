@@ -16,6 +16,7 @@ Simple application to gateway S3 URLs to HTTPS
 | config.pathPrefix | string | `"/s3proxy"` | URL path prefix |
 | config.profiles | list | `[]` | Profiles using different endpoint URLs and credentials |
 | config.s3EndpointUrl | string | `""` | Default S3 endpoint URL |
+| config.cacheMaxAge | int | `0` | Cache-Control max-age in seconds for image MIME types (0 disables) |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the s3proxy image |
