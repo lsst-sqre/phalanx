@@ -26,11 +26,10 @@ prompt-keda:
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         # FBS Pre-Operations Survey
         - {survey: BLOCK-407, pipelines: *std-main-pipelines}
-        - {survey: BLOCK-408, pipelines: *std-main-pipelines}
-        - {survey: BLOCK-416, pipelines: *std-main-pipelines}
-        - {survey: BLOCK-417, pipelines: *std-main-pipelines}
-        - {survey: BLOCK-419, pipelines: *std-main-pipelines}
-        - {survey: BLOCK-421, pipelines: *std-main-pipelines}
+        # FBS Survey (v5.3)
+        - {survey: BLOCK-430, pipelines: *std-main-pipelines}
+        # A test of 20s exposures for RFC-1185
+        - {survey: BLOCK-432, pipelines: *std-main-pipelines}
         # TMA checkout, no images
         - {survey: BLOCK-T250, pipelines: []}
         # Daytime checkout
@@ -53,11 +52,8 @@ prompt-keda:
           pipelines: &std-pre-pipelines
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Preprocessing.yaml
         - {survey: BLOCK-407, pipelines: *std-pre-pipelines}
-        - {survey: BLOCK-408, pipelines: *std-pre-pipelines}
-        - {survey: BLOCK-416, pipelines: *std-pre-pipelines}
-        - {survey: BLOCK-417, pipelines: *std-pre-pipelines}
-        - {survey: BLOCK-419, pipelines: *std-pre-pipelines}
-        - {survey: BLOCK-421, pipelines: *std-pre-pipelines}
+        - {survey: BLOCK-430, pipelines: *std-pre-pipelines}
+        - {survey: BLOCK-432, pipelines: *std-pre-pipelines}
         - {survey: BLOCK-T698, pipelines: *std-pre-pipelines}
         - {survey: BLOCK-T703, pipelines: *std-pre-pipelines}
         - {survey: BLOCK-T704, pipelines: *std-pre-pipelines}
