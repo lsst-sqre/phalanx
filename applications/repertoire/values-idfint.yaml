@@ -10,6 +10,8 @@ config:
       dp2:
         paths:
           - "color_gri"
+          - "color_u"
+          - "color_y"
     legacy:
       dataset: "dp1"
   metrics:
