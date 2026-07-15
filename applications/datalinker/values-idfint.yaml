@@ -2,3 +2,6 @@ config:
   metrics:
     enabled: true
   slackAlerts: true
+
+  # -- TAP configuration
+  tapMetadataUrl: "https://github.com/lsst/sdm_schemas/releases/download/dp2-datalink-timeseries-v4/datalink-columns.zip"

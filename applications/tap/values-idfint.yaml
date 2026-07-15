@@ -14,6 +14,8 @@ cadc-tap:
         - "dp02_dc2_catalogs.ObsCore:access_url"
         - "dp1.ObsCore:access_url"
 
+    datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/dp2-datalink-timeseries-v4/datalink-snippets.zip"
+
   cloudsql:
     enabled: true
     instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
