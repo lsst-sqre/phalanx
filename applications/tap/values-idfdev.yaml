@@ -3,11 +3,6 @@ cadc-tap:
     kafka:
       enabled: true
 
-    qserv:
-      image:
-        pullPolicy: "Always"
-        tag: "tickets-DM-55169"
-
     urlRewrite:
       enabled: true
       rules:
