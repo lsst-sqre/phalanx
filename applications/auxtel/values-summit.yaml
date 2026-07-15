@@ -204,7 +204,7 @@ atptg:
 atspectrograph:
   enabled: true
   image:
-    revision: 0
+    revision: 9
     repository: ts-dockerhub.lsst.org/atspec
   resources:
     limits:
