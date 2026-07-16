@@ -11,6 +11,10 @@ config:
         paths:
           - "color_gri"
           - "color_u"
+          - "color_g"
+          - "color_r"
+          - "color_i"
+          - "color_z"
           - "color_y"
     legacy:
       dataset: "dp1"
