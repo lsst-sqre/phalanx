@@ -48,6 +48,46 @@ ingester:
   # anything else to suppress logging.
   logLevel: verbose
 
+  # -- Seconds Kubernetes waits after SIGTERM before sending SIGKILL. Should
+  # be long enough for the ingester to finish processing its current batch,
+  # commit offsets, and leave the Kafka consumer group cleanly.
+  terminationGracePeriodSeconds: 60
+
+  # -- Number of static replicas when autoscaling is disabled.
+  replicas: 1
+
+  autoscaling:
+    # -- Enable KEDA-based autoscaling for the ingester. When enabled, KEDA
+    # manages the replica count based on Kafka consumer group lag.
+    enabled: true
+
+    # -- Minimum number of replicas. Set to 0 to allow scale-to-zero.
+    minReplicaCount: 3
+
+    # -- Maximum number of replicas the ingester can scale to.
+    maxReplicaCount: 10
+
+    # -- Target lag (messages) per partition that triggers scaling.
+    lagThreshold: "100"
+
+    # -- Minimum lag per partition required to activate scaling from zero.
+    # Only relevant when minReplicaCount is 0.
+    activationLagThreshold: "10"
+
+    # -- How often KEDA checks Kafka consumer group lag (seconds).
+    pollingInterval: 30
+
+    # -- Period to wait after the last trigger fires before scaling down (seconds).
+    cooldownPeriod: 300
+
+    # -- Kafka consumer group to monitor for lag. Must match the consumer
+    # group used by the ingester application.
+    consumerGroup: "alertdb-ingester"
+
+    # -- Kafka offset reset policy for the KEDA scaler if the consumer group
+    # has no committed offset.
+    offsetResetPolicy: "latest"
+
 server:
   image:
     repository: lsstdm/alert_database_server

@@ -78,7 +78,7 @@ alert-database:
   ingester:
     # The image can use either a tag or a digest to determine which is being used.
     image:
-      tag: v4.1.0
+      tag: tickets-DM-55425
 
     logLevel: verbose
 
@@ -91,6 +91,19 @@ alert-database:
       topic:
         - lsst-alerts-v11
 
+    terminationGracePeriodSeconds: 60
+
+    autoscaling:
+      enabled: true
+      minReplicaCount: 1
+      maxReplicaCount: 20
+      lagThreshold: "100"
+      activationLagThreshold: "10"
+      pollingInterval: 30
+      cooldownPeriod: 300
+      consumerGroup: "alertdb-ingester"
+      offsetResetPolicy: "latest"
+
   ingress:
     enabled: true
     host: usdfprod-prompt-processing.slac.stanford.edu
@@ -99,7 +112,7 @@ alert-stream-schema-sync:
   enabled: true
   schemaSync:
     image:
-      tag: w.2026.19
+      tag: w.2026.28
 
 chronograf:
   enabled: false

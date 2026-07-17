@@ -86,7 +86,7 @@ alert-database:
   ingester:
     # The image can use either a tag or a digest to determine which is being used.
     image:
-      tag: v4.1.0
+      tag: tickets-DM-55425
 
     logLevel: verbose
 
@@ -107,7 +107,7 @@ alert-stream-schema-sync:
   enabled: true
   schemaSync:
     image:
-      tag: w.2026.19
+      tag: w.2026.28
 
 chronograf:
   enabled: false
