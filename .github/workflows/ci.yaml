@@ -120,9 +120,10 @@ jobs:
               - "applications/*/values.yaml"
               - "applications/argocd/values-*.yaml"
               - "applications/gafaelfawr/values-*.yaml"
+              - "applications/repertoire/values-*.yaml"
               - "environments/values-*.yaml"
-              - "requirements/*.txt"
               - "src/phalanx/**"
+              - "uv.lock"
             docs-specific:
               - "docs/**"
             minikube:
