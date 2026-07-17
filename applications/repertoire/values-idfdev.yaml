@@ -1,3 +1,6 @@
+image:
+  pullPolicy: "Always"
+  tag: "t-DM-55530"
 config:
   availableDatasets:
     - "dp02"
