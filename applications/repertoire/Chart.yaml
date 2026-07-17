@@ -6,7 +6,7 @@ description: Service discovery
 home: "https://repertoire.lsst.io/"
 sources:
   - "https://github.com/lsst-sqre/repertoire"
-appVersion: 2.0.0
+appVersion: 2.1.0
 
 annotations:
   phalanx.lsst.io/docs: |
