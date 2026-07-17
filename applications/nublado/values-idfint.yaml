@@ -32,7 +32,7 @@ controller:
       numReleases: 0
       pin:
         - "r30_0_9_rc1_rsp2957"
-      recommended: "r30_0_9_rc1_rsp2957"
+      recommendedTag: "r30_0_9_rc1_rsp2957"
       source:
         type: "google"
         location: "us-central1"
