@@ -35,4 +35,4 @@ Simple Image Access (SIA) IVOA Service using Butler
 | podAnnotations | object | `{}` | Annotations for the sia deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the sia deployment pod |
-| tolerations | list | `[]` | Tolerations for the sia deployment pod |
+| tolerations | list | Tolerate GKE amd64 and arm64 taints | Tolerations for the sia deployment pod |
