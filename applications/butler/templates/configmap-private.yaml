@@ -48,7 +48,7 @@ data:
         datastores: lsst.daf.butler.registry.bridge.monolithic.MonolithicDatastoreRegistryBridgeManager
         dimensions: lsst.daf.butler.registry.dimensions.static.StaticDimensionRecordStorageManager
         opaque: lsst.daf.butler.registry.opaque.ByNameOpaqueTableStorageManager
-      namespace: dp2_mini_dm_55293_try2
+      namespace: dp2_mini_dm_55560
 
   prompt.yaml: |
     datastore:
