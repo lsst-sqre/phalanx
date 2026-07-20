@@ -49,17 +49,6 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-            - name: "SIA_BUTLER_DATA_COLLECTIONS"
-              value: {{ .Values.config.butlerDataCollections | toJson | quote }}
-            - name: "SIA_ENVIRONMENT_NAME"
-              value: {{ .Values.global.host }}
-            {{- if .Values.config.slackAlerts }}
-            - name: "SIA_SLACK_WEBHOOK"
-              valueFrom:
-                secretKeyRef:
-                  name: "sia"
-                  key: "slack-webhook"
-            {{- end }}
             {{- if .Values.config.directButlerEnabled }}
             - name: "AWS_SHARED_CREDENTIALS_FILE"
               value: "/tmp/secrets/aws-credentials.ini"
@@ -69,15 +58,6 @@ spec:
               value: "/etc/butler/secrets/postgres-credentials.txt"
             - name: "GOOGLE_APPLICATION_CREDENTIALS"
               value: "/tmp/secrets/butler-gcs-idf-creds.json"
-            {{- end }}
-            {{- if .Values.config.enableSentry }}
-            - name: "SIA_SENTRY_DSN"
-              valueFrom:
-                secretKeyRef:
-                  name: "sia"
-                  key: "sentry-dsn"
-            - name: "SIA_SENTRY_TRACES_SAMPLE_RATE"
-              value: {{ .Values.config.sentryTracesSampleRate | quote }}
             {{- end }}
             {{- if .Values.config.metrics.enabled }}
             - name: "KAFKA_BOOTSTRAP_SERVERS"
@@ -97,19 +77,61 @@ spec:
             - name: "KAFKA_CLUSTER_CA_PATH"
               value: "/etc/sia-kafka/ca.crt"
             {{- end }}
+            - name: "SIA_BUTLER_DATA_COLLECTIONS"
+              value: {{ .Values.config.butlerDataCollections | toJson | quote }}
+            - name: "SIA_ENVIRONMENT_NAME"
+              value: {{ .Values.global.host }}
+            {{- if .Values.config.enableSentry }}
+            - name: "SIA_SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: "sia"
+                  key: "sentry-dsn"
+            - name: "SIA_SENTRY_TRACES_SAMPLE_RATE"
+              value: {{ .Values.config.sentryTracesSampleRate | quote }}
+            {{- end }}
+            {{- if .Values.config.slackAlerts }}
+            - name: "SIA_SLACK_WEBHOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "sia"
+                  key: "slack-webhook"
+            {{- end }}
+            # Uvicorn keepalive timeout, in seconds. This should be longer
+            # than any keepalive timeouts on any downstream proxies. The
+            # keepalive timeout for ingress-nginx connections is 60s.
+            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
+              value: "61"
           envFrom:
             - configMapRef:
                 name: "sia"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: "http"
-              containerPort: 8080
-              protocol: "TCP"
+          lifecycle:
+            # Number of seconds k8s should wait before sending SIGTERM on
+            # graceful restarts/deployments/shutdowns. We need this because it
+            # takes ingress-nginx some time to configure itself to stop
+            # sending traffic to the pods scheduled for termination. If
+            # Uvicorn gets the SIGTERM and starts closing connections, we
+            # could end up with a TCP race condition if ingress-nginx still
+            # tries to send data over those connections.
+            #
+            # Note that terminationGracePeriodSeconds includes the time that
+            # is spent in the preStop hook. If you’re adding a preStop hook
+            # and your terminationGracePeriodSeconds is super fine-tuned, then
+            # you should update your terminationGracePeriodSeconds to add the
+            # amount of time you’ll be spending in your preStop hook.
+            preStop:
+              sleep:
+                seconds: 10
           livenessProbe:
             httpGet:
               path: /healthcheck
               port: http
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
           readinessProbe:
             httpGet:
               path: /healthcheck
