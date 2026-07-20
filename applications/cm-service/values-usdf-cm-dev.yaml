@@ -28,6 +28,7 @@ config:
     DAEMON_CAMPAIGNS: 1
     DAEMON_NODES: 1
     SCHEDULER: 1
+    NOTIFIER: 1
     STORE_FSM: 1
     ALLOW_TASK_UPSERT: 1
     MOCK_BUTLER: 0
@@ -67,7 +68,7 @@ config:
     useNativeHttplib: "1"
 
 image:
-  tag: "0.8.0-rc.1"
+  tag: "tickets-DM-55418-notifier"
   pullPolicy: Always
 
 daemon:
@@ -76,7 +77,7 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.8.0-rc.1"
+    tag: "tickets-DM-55418-notifier"
     pullPolicy: Always
   resources:
     limits:
@@ -88,5 +89,5 @@ daemon:
 
 web:
   image:
-    tag: "0.8.0-rc.1"
+    tag: "tickets-DM-55418-notifier"
     pullPolicy: Always
