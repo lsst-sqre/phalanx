@@ -77,8 +77,13 @@ spec:
             - name: NOTIFICATIONS__SLACK_WEBHOOK_URL
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.config.slack.secretName }}
-                  key: {{ .Values.config.slack.webhookUrlSecretKey }}
+                  name: {{ .Values.config.notifications.secretName }}
+                  key: {{ .Values.config.notifications.webhookUrlSecretKey }}
+            - name: NOTIFICATIONS__FERNET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.config.notifications.secretName }}
+                  key: {{ .Values.config.notifications.fernetSecretKey }}
 # {{- with .Values.config.aws }}
 #             - name: AWS_ACCESS_KEY_ID
 #               valueFrom:

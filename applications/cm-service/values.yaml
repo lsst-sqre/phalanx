@@ -155,13 +155,16 @@ config:
     # -- Secret key for PanDA refresh-token value
     refreshTokenSecretKey: "panda-refresh-token"
 
-  slack:
+  notifications:
 
-    # -- Name of Secret with Slack secrets
+    # -- Name of Secret with Notification secrets
     secretName: "cm-service"
 
-    # -- Secret key for Slack webhook URL
+    # -- Secret key for Default Slack webhook URL
     webhookUrlSecretKey: "slack-webhook-url"
+
+    # -- Key used to decrypt Notification secrets
+    fernetSecretKey: "notifications-fernet-key"
 
 image:
   # -- Image to use for frontend containers
