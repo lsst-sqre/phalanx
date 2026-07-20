@@ -19,5 +19,10 @@ data:
   OOK_LINKCHECK_BROKEN_THRESHOLD: {{ .Values.config.linkcheck.brokenThreshold | quote }}
   OOK_LINKCHECK_BROKEN_MIN_ATTEMPTS: {{ .Values.config.linkcheck.brokenMinAttempts | quote }}
   OOK_LINKCHECK_RECHECK_INTERVALS: {{ .Values.config.linkcheck.recheckIntervals | toJson | quote }}
+  OOK_LINKCHECK_BROKEN_RECHECK_INTERVAL: {{ .Values.config.linkcheck.brokenRecheckInterval | quote }}
+  OOK_LINKCHECK_BLOCKED_RECHECK_INTERVAL: {{ .Values.config.linkcheck.blockedRecheckInterval | quote }}
   OOK_LINKCHECK_CHECK_RETENTION: {{ .Values.config.linkcheck.checkRetention | quote }}
+  {{- with .Values.config.linkcheck.userAgent }}
+  OOK_LINKCHECK_USER_AGENT: {{ . | quote }}
+  {{- end }}
   ALGOLIA_DOCUMENT_INDEX: {{ .Values.config.algolia.documentIndex | quote }}

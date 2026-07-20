@@ -31,7 +31,9 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `ook` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.algolia.documents_index | string | `"documents_dev"` | Name of the Algolia index for documents |
 | config.databaseUrl | string | `""` | Database URL |
+| config.linkcheck.blockedRecheckInterval | string | `"1h"` | Delay until the next recheck of a bot-blocked link, revisited at this near-term cadence because a block is inconclusive and tends to flap |
 | config.linkcheck.brokenMinAttempts | int | `3` | Minimum number of consecutive failed attempts before a previously-OK link is declared broken instead of failing |
+| config.linkcheck.brokenRecheckInterval | string | `"24h"` | Delay until the next recheck of a broken link, revisited at this slow cadence so a since-fixed link can heal without waiting to be resubmitted |
 | config.linkcheck.brokenThreshold | string | `"48h"` | Minimum span of consecutive failures before a previously-OK link is declared broken instead of failing |
 | config.linkcheck.checkRetention | string | `"30d"` | Age beyond which link-check submission records are purged by the scheduled linkcheck-recheck maintenance command |
 | config.linkcheck.freshnessTtl | string | `"24h"` | Age below which a URL's stored check result is considered fresh and is not rechecked on submission |
@@ -40,6 +42,7 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | config.linkcheck.maxUrlsPerCheck | int | `1000` | Maximum number of unique canonical URLs accepted in a single link-check submission |
 | config.linkcheck.recheckIntervals | list | `["1h","4h","24h","48h"]` | Delays until the next recheck of a failing link, indexed by the number of consecutive failures so far |
 | config.linkcheck.requestTimeout | string | `"30s"` | Total timeout applied to each link-check HTTP request |
+| config.linkcheck.userAgent | string | `""` | Override for the User-Agent header sent on every link-check request. Leave empty to use Ook's built-in browser-prefixed hybrid default, which carries the running Ook version and repo URL |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.migrateCountryCodes | bool | false to disable country code migration | Whether to migrate country codes in the database |
 | config.topics.ingest | string | `"lsst.square-events.ook.ingest"` | Kafka topic name for ingest events |
