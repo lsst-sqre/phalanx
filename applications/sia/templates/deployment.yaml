@@ -48,25 +48,6 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          envFrom:
-            - configMapRef:
-                name: "sia"
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: "http"
-              containerPort: 8080
-              protocol: "TCP"
-          livenessProbe:
-            httpGet:
-              path: /healthcheck
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /healthcheck
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
           env:
             - name: "SIA_BUTLER_DATA_COLLECTIONS"
               value: {{ .Values.config.butlerDataCollections | toJson | quote }}
@@ -93,7 +74,7 @@ spec:
             - name: "SIA_SENTRY_DSN"
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "sia.fullname" . }}
+                  name: "sia"
                   key: "sentry-dsn"
             - name: "SIA_SENTRY_TRACES_SAMPLE_RATE"
               value: {{ .Values.config.sentryTracesSampleRate | quote }}
@@ -116,6 +97,25 @@ spec:
             - name: "KAFKA_CLUSTER_CA_PATH"
               value: "/etc/sia-kafka/ca.crt"
             {{- end }}
+          envFrom:
+            - configMapRef:
+                name: "sia"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             {{- if .Values.config.metrics.enabled }}
             - name: "kafka"
