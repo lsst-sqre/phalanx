@@ -1,4 +1,8 @@
 image:
+  # Deploy the branch image built from lsst-sqre/ook#284 (DM-55387) to test
+  # the intersphinx inventory cache service. Remove this override once the
+  # feature ships in a tagged release.
+  tag: "tickets-DM-55387"
   pullPolicy: Always
 
 config:
@@ -20,6 +24,10 @@ ingestUpdated:
 linkcheckRecheck:
   enabled: true
   schedule: "45 4 * * *"
+
+intersphinxRefresh:
+  enabled: true
+  schedule: "15 * * * *"
 
 ingestLsstTexmf:
   enabled: true

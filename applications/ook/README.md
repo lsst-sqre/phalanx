@@ -31,6 +31,9 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `ook` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.algolia.documents_index | string | `"documents_dev"` | Name of the Algolia index for documents |
 | config.databaseUrl | string | `""` | Database URL |
+| config.intersphinx.activeWindow | string | `"30d"` | Active window for the intersphinx refresh job. The scheduled refresh only revalidates cached inventories requested by a client within this window; inventories last requested longer ago are skipped (not deleted) |
+| config.intersphinx.negativeTtl | string | `"5m"` | Negative-cache TTL for cold-miss intersphinx inventory fetch failures. A repeat request inside this window returns the error without re-contacting upstream |
+| config.intersphinx.ttl | string | `"1h"` | Freshness TTL for cached intersphinx inventories. An inventory fetched within this window is served as a fresh cache hit; an older one is served stale on the request path while the refresh job revalidates it |
 | config.linkcheck.blockedRecheckInterval | string | `"1h"` | Delay until the next recheck of a bot-blocked link, revisited at this near-term cadence because a block is inconclusive and tends to flap |
 | config.linkcheck.brokenMinAttempts | int | `3` | Minimum number of consecutive failed attempts before a previously-OK link is declared broken instead of failing |
 | config.linkcheck.brokenRecheckInterval | string | `"24h"` | Delay until the next recheck of a broken link, revisited at this slow cadence so a since-fixed link can heal without waiting to be resubmitted |
@@ -75,6 +78,14 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | ingestUpdated.window | string | `"2d"` | Time window to look for updated documents (e.g. 1h, 2d, 3w). This must be set to a value greater than the cron schedule for the ingest-updated job. |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | ingress.path | string | `"/ook"` | Path prefix where Squarebot is hosted |
+| intersphinxRefresh.affinity | object | `{}` | Affinity rules for Ook intersphinx-refresh pods |
+| intersphinxRefresh.enabled | bool | `false` | Enable the intersphinx-refresh job |
+| intersphinxRefresh.nodeSelector | object | `{}` | Node selection rules for Ook intersphinx-refresh pods |
+| intersphinxRefresh.podAnnotations | object | `{}` | Annotations for Ook intersphinx-refresh pods |
+| intersphinxRefresh.resources | object | `{}` | Resource limits and requests for Ook intersphinx-refresh pods |
+| intersphinxRefresh.schedule | string | `"15 * * * *"` | Cron schedule string for the ook intersphinx-refresh job (UTC) |
+| intersphinxRefresh.tolerations | list | `[]` | Tolerations for Ook intersphinx-refresh pods |
+| intersphinxRefresh.ttlSecondsAfterFinished | int | `86400` | Time (second) to keep a finished job before cleaning up |
 | linkcheckRecheck.affinity | object | `{}` | Affinity rules for Ook linkcheck-recheck pods |
 | linkcheckRecheck.enabled | bool | `false` | Enable the linkcheck-recheck job |
 | linkcheckRecheck.nodeSelector | object | `{}` | Node selection rules for Ook linkcheck-recheck pods |

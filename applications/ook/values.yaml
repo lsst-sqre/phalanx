@@ -148,6 +148,23 @@ config:
     # scheduled linkcheck-recheck maintenance command
     checkRetention: "30d"
 
+  intersphinx:
+    # -- Freshness TTL for cached intersphinx inventories. An inventory
+    # fetched within this window is served as a fresh cache hit; an older one
+    # is served stale on the request path while the refresh job revalidates
+    # it
+    ttl: "1h"
+
+    # -- Negative-cache TTL for cold-miss intersphinx inventory fetch
+    # failures. A repeat request inside this window returns the error without
+    # re-contacting upstream
+    negativeTtl: "5m"
+
+    # -- Active window for the intersphinx refresh job. The scheduled refresh
+    # only revalidates cached inventories requested by a client within this
+    # window; inventories last requested longer ago are skipped (not deleted)
+    activeWindow: "30d"
+
 audit:
   # -- Enable the audit job
   enabled: true
@@ -228,6 +245,31 @@ linkcheckRecheck:
   tolerations: []
 
   # -- Affinity rules for Ook linkcheck-recheck pods
+  affinity: {}
+
+intersphinxRefresh:
+  # -- Enable the intersphinx-refresh job
+  enabled: false
+
+  # -- Cron schedule string for the ook intersphinx-refresh job (UTC)
+  schedule: "15 * * * *"
+
+  # -- Time (second) to keep a finished job before cleaning up
+  ttlSecondsAfterFinished: 86400
+
+  # -- Resource limits and requests for Ook intersphinx-refresh pods
+  resources: {}
+
+  # -- Annotations for Ook intersphinx-refresh pods
+  podAnnotations: {}
+
+  # -- Node selection rules for Ook intersphinx-refresh pods
+  nodeSelector: {}
+
+  # -- Tolerations for Ook intersphinx-refresh pods
+  tolerations: []
+
+  # -- Affinity rules for Ook intersphinx-refresh pods
   affinity: {}
 
 ingestLsstTexmf:
