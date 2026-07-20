@@ -1,3 +1,7 @@
+image:
+  tag: "t-DM-55537"
+  pullPolicy: "Always"
+
 config:
   metrics:
     enabled: false
