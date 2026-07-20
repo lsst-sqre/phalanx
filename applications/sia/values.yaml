@@ -2,12 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# -- Override the base name for resources
-nameOverride: ""
-
-# -- Override the full name for resources (includes the release name)
-fullnameOverride: ""
-
 # -- Number of web deployment pods to start
 replicaCount: 1
 
@@ -23,37 +17,17 @@ image:
   tag: ""
 
 config:
-  # -- Whether to send alerts and status to Slack.
-  slackAlerts: false
-
-  # -- Logging level
-  logLevel: "INFO"
-
-  # -- Logging profile (`production` for JSON, `development` for
-  # human-friendly)
-  logProfile: "production"
-
-  # -- URL path prefix
-  pathPrefix: "/api/sia"
+  # -- List of data (Butler) Collections. Expected attributes: `config`,
+  # `label`, `name`, `butler_type`, `repository`, and `datalink_url`
+  butlerDataCollections: []
 
   # -- Whether direct butler access is enabled
   directButlerEnabled: false
-
-  # -- List of data (Butler) Collections
-  # Expected attributes: `config`, `label`, `name`, `butler_type`, `repository` & `datalink_url`
-  butlerDataCollections: []
-
-  # -- User to use from the PGPASSFILE if sia is using a direct Butler
-  # connection
-  pgUser: "rubin"
 
   # -- Whether to send trace and telemetry information to Sentry. This traces
   # every call and therefore should only be enabled in non-production
   # environments.
   enableSentry: false
-
-  # Sentry tracing sample rate
-  sentryTracesSampleRate: 0.0
 
   metrics:
     # -- Whether to enable sending metrics
@@ -77,12 +51,29 @@ config:
       # for experimentation during development.
       suffix: ""
 
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/api/sia"
+
+  # -- Whether to send alerts and status to Slack.
+  slackAlerts: false
+
+  # -- User to use from the PGPASSFILE if sia is using a direct Butler
+  # connection.
+  pgUser: "rubin"
+
+  # Sentry tracing sample rate.
+  sentryTracesSampleRate: 0.0
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
-
-  # -- Path prefix where app is hosted
-  path: "/api/sia"
 
 # -- Affinity rules for the sia deployment pod
 affinity: {}
