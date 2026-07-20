@@ -107,6 +107,11 @@ config:
     # host
     hostInterval: "1s"
 
+    # -- Override for the User-Agent header sent on every link-check request.
+    # Leave empty to use Ook's built-in browser-prefixed hybrid default, which
+    # carries the running Ook version and repo URL
+    userAgent: ""
+
     # -- Age below which a URL's stored check result is considered fresh and
     # is not rechecked on submission
     freshnessTtl: "24h"
@@ -130,6 +135,14 @@ config:
       - "4h"
       - "24h"
       - "48h"
+
+    # -- Delay until the next recheck of a broken link, revisited at this slow
+    # cadence so a since-fixed link can heal without waiting to be resubmitted
+    brokenRecheckInterval: "24h"
+
+    # -- Delay until the next recheck of a bot-blocked link, revisited at this
+    # near-term cadence because a block is inconclusive and tends to flap
+    blockedRecheckInterval: "1h"
 
     # -- Age beyond which link-check submission records are purged by the
     # scheduled linkcheck-recheck maintenance command
