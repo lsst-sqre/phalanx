@@ -1,0 +1,11 @@
+image:
+  pullPolicy: "Always"
+  tag: tickets-DM-55184
+
+config:
+  databaseUrl: "postgresql://obsforge@134.79.23.231:5432/obsdb"
+  updateSchema: true
+  butlerRepository: "https://data-int.lsst.cloud/api/butler/repo/prompt/butler.yaml"
+  obscoreConfig: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/prompt.yaml"
+  logLevel: "DEBUG"
+  logProfile: "development"
