@@ -44,6 +44,20 @@ redis:
   # -- Tolerations for the persistent Redis pod
   tolerations: []
 
+redis-stream-exporter:
+
+  # -- How long to sleep between redis stream exporter polling cycles
+  sleepInterval: 5
+
+  # -- Resource limits and requests for the Redis Stream Exporter
+  resources:
+    limits:
+      cpu: "1"
+      memory: "2Gi"
+    requests:
+      cpu: "1"
+      memory: "2Gi"
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
