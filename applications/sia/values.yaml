@@ -21,9 +21,6 @@ config:
   # `label`, `name`, `butler_type`, `repository`, and `datalink_url`
   butlerDataCollections: []
 
-  # -- Whether direct butler access is enabled
-  directButlerEnabled: false
-
   metrics:
     # -- Whether to enable sending metrics
     enabled: false
@@ -66,10 +63,6 @@ config:
 
   # -- Whether to send alerts and status to Slack.
   slackAlerts: false
-
-  # -- User to use from the PGPASSFILE if sia is using a direct Butler
-  # connection.
-  pgUser: "rubin"
 
 ingress:
   # -- Additional annotations for the ingress rule
