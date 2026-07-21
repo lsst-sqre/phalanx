@@ -100,6 +100,8 @@ config:
       - "g_users"
     "write:sasquatch":
       - "g_admins"
+    "write:obsforge":
+      - "g_admins"
 
   initialAdmins:
     - "adam"
