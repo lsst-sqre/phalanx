@@ -60,7 +60,9 @@ config:
       docsUrl: "https://dp1.lsst.io/"
     dp2:
       description: >-
-        Data Preview 2.
+        Data Preview 2 contains image and catalog products from Rubin Science
+        Pipelines v30 processing of observations obtained with the LSST Camera
+        between April 2025 and January 2026.
       docsUrl: "https://dp2.lsst.io/"
     efd:
       description: "Engineering Field Database."
