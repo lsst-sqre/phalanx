@@ -1,0 +1,5 @@
+apiVersion: v2
+name: redis-stream-trim
+version: 1.0.0
+description: A subchart to deploy a cronjob to trim events from Redis Streams
+appVersion: 1.0.0

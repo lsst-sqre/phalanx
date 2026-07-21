@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "redis-stream-trim.name" . }}
+spec:
+  schedule: {{ .Values.cronSchedule| toString | quote }}
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 3600
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: redis-stream-trim
+            image:
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            env:
+            - name: REDIS_HOST
+              value: prompt-redis.prompt-redis
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_STREAM
+              value: "instrument:lsstcam"
+            - name: MAX_STREAM_LEN
+              value: {{ .Values.maxStreamLength | toString | quote }}
+            command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+
+              # Export REDISCLI_AUTH so redis-cli reads it implicitly
+              if [ -n "$REDIS_PASSWORD" ]; then
+                export REDISCLI_AUTH="$REDIS_PASSWORD"
+              fi
+
+              echo "Starting Redis Stream Trimming Task"
+              echo "Target Stream: $REDIS_STREAM"
+              echo "Max Length Target: $MAX_STREAM_LEN"
+
+              # Check length BEFORE trim
+              BEFORE_LEN=$(redis-cli --raw -h "$REDIS_HOST" -p "$REDIS_PORT" XLEN "$REDIS_STREAM")
+              echo "Stream length BEFORE trimming: $BEFORE_LEN"
+
+              # Trim Redis Stream
+              TRIMMED=$(redis-cli --raw -h "$REDIS_HOST" -p "$REDIS_PORT" XTRIM "$REDIS_STREAM" MAXLEN "$MAX_STREAM_LEN")
+              echo "Entries removed by XTRIM: $TRIMMED"
+
+              # Check length AFTER trim
+              AFTER_LEN=$(redis-cli --raw -h "$REDIS_HOST" -p "$REDIS_PORT" XLEN "$REDIS_STREAM")
+              echo "Stream length AFTER trimming: $AFTER_LEN"
+
+              echo "Trimming Complete Successfully"
