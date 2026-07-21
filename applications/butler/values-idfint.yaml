@@ -21,5 +21,5 @@ config:
       authorized_groups: ["*"]
   shareNubladoSecrets: false
   additionalS3EndpointUrls:
-    slac: "https://sdfdatas3.slac.stanford.edu"
+    slac: "https://sdfdatas3-new.slac.stanford.edu"
   enableSentry: true
