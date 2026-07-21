@@ -77,27 +77,6 @@ config:
         options:
           cell_execution_timeout: "1000s"
           repo_url: "https://github.com/lsst/tutorial-notebooks.git"
-          repo_ref: "main"
-          max_executions: 1
-        restart: true
-    - name: "tutorial-dp2"
-      count: 1
-      users:
-        - username: "bot-mobu-tutorial-dp2"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          cell_execution_timeout: "1000s"
-          collection_rules:
-            - type: "intersect_union_of"
-              patterns:
-                - "DP2/**"
-          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
           repo_ref: "tickets/SP-3298"
           max_executions: 1
         restart: true
