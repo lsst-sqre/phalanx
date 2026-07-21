@@ -77,19 +77,19 @@ spec:
             - name: "KAFKA_CLUSTER_CA_PATH"
               value: "/etc/sia-kafka/ca.crt"
             {{- end }}
-            - name: "SIA_BUTLER_DATA_COLLECTIONS"
-              value: {{ .Values.config.butlerDataCollections | toJson | quote }}
-            - name: "SIA_ENVIRONMENT_NAME"
-              value: {{ .Values.global.host }}
-            {{- if .Values.config.enableSentry }}
-            - name: "SIA_SENTRY_DSN"
+            {{- if .Values.config.sentry.enabled }}
+            - name: "SENTRY_DSN"
               valueFrom:
                 secretKeyRef:
                   name: "sia"
                   key: "sentry-dsn"
-            - name: "SIA_SENTRY_TRACES_SAMPLE_RATE"
-              value: {{ .Values.config.sentryTracesSampleRate | quote }}
+            - name: "SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.environmentName | quote }}
+            - name: "SENTRY_TRACES_SAMPLE_RATE"
+              value: {{ .Values.config.sentry.tracesSampleRate | quote }}
             {{- end }}
+            - name: "SIA_BUTLER_DATA_COLLECTIONS"
+              value: {{ .Values.config.butlerDataCollections | toJson | quote }}
             {{- if .Values.config.slackAlerts }}
             - name: "SIA_SLACK_WEBHOOK"
               valueFrom:
