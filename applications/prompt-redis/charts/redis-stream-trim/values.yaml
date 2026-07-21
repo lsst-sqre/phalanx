@@ -1,0 +1,39 @@
+# Default values for Redis Stream Trim
+
+# -- Number of Redis Stream Trim pods to run in the deployment.
+replicaCount: 1
+
+image:
+  # -- Redis Stream Trim Docker image repository
+  repository: redis
+
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+  # -- Redis Stream Trim image version
+  tag: 7-alpine
+
+# Cron Schedule
+cronSchedule: "0 18 * * *"
+
+# -- Maximum Stream Length
+maxStreamLength: 1000
+
+# -- Kubernetes requests and limits for Redis Exporter
+# @default -- See `values.yaml`
+resources:
+  requests:
+    memory: "16Mi"
+    cpu: "10Mi"
+  limits:
+    memory: "64Mi"
+    cpu: "100Mi"
+
+# -- Node selector configuration
+nodeSelector: {}
+
+# -- Tolerations configuration
+tolerations: []
+
+# -- Affinity configuration
+affinity: {}

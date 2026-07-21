@@ -12,3 +12,6 @@ dependencies:
 - name: redis-stream-exporter
   condition: redis-stream-exporter.enabled
   version: 1.0.0
+- name: redis-stream-trim
+  condition: redis-stream-trim.enabled
+  version: 1.0.0

@@ -10,6 +10,7 @@ Redis cluster for prompt processing
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | redis-stream-exporter.resources | object | `{"limits":{"cpu":"1","memory":"2Gi"},"requests":{"cpu":"1","memory":"2Gi"}}` | Resource limits and requests for the Redis Stream Exporter |
 | redis-stream-exporter.sleepInterval | int | `5` | How long to sleep between redis stream exporter polling cycles |
+| redis-stream-trim.enabled | bool | `true` | Enabled Redis Stream trim cronjob |
 | redis.affinity | object | `{}` | Affinity rules for the persistent Redis pod |
 | redis.nodeSelector | object | `{}` | Node selection rules for the persistent Redis pod |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
@@ -31,3 +32,13 @@ Redis cluster for prompt processing
 | redis-stream-exporter.resources | object | See `values.yaml` | Kubernetes requests and limits for Redis Exporter |
 | redis-stream-exporter.sleepInterval | int | `10` | How long to sleep between redis stream exporter polling cycles |
 | redis-stream-exporter.tolerations | list | `[]` | Tolerations configuration |
+| redis-stream-trim.affinity | object | `{}` | Affinity configuration |
+| redis-stream-trim.cronSchedule | string | `"0 18 * * *"` |  |
+| redis-stream-trim.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| redis-stream-trim.image.repository | string | `"redis"` | Redis Stream Trim Docker image repository |
+| redis-stream-trim.image.tag | string | `"7-alpine"` | Redis Stream Trim image version |
+| redis-stream-trim.maxStreamLength | int | `1000` | Maximum Stream Length |
+| redis-stream-trim.nodeSelector | object | `{}` | Node selector configuration |
+| redis-stream-trim.replicaCount | int | `1` | Number of Redis Stream Trim pods to run in the deployment. |
+| redis-stream-trim.resources | object | See `values.yaml` | Kubernetes requests and limits for Redis Exporter |
+| redis-stream-trim.tolerations | list | `[]` | Tolerations configuration |
