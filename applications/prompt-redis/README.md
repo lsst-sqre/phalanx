@@ -8,6 +8,8 @@ Redis cluster for prompt processing
 |-----|------|---------|-------------|
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| redis-stream-exporter.resources | object | `{"limits":{"cpu":"1","memory":"2Gi"},"requests":{"cpu":"1","memory":"2Gi"}}` | Resource limits and requests for the Redis Stream Exporter |
+| redis-stream-exporter.sleepInterval | int | `5` | How long to sleep between redis stream exporter polling cycles |
 | redis.affinity | object | `{}` | Affinity rules for the persistent Redis pod |
 | redis.nodeSelector | object | `{}` | Node selection rules for the persistent Redis pod |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
