@@ -165,6 +165,21 @@ scripts:
     limits:
       cpu: 1.0
       memory: 25G
+- name: LSSTCam/runSummitSyncExporter.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  env:
+    # Artifact copy + S3 upload are I/O-bound, so use a thread pool well above
+    # the core count for the parallel retrieveArtifacts copy.
+    LSST_RESOURCES_NUM_WORKERS: 16
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 2.0
+      memory: 8G
 - name: LSSTCam/runPlotter.py
   replicas: 2
   mounts:
