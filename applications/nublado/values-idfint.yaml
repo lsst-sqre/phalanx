@@ -31,8 +31,8 @@ controller:
     images:
       numReleases: 0
       pin:
-        - "r30_0_9_rc1_rsp2957"
-      recommendedTag: "r30_0_9_rc1_rsp2957"
+        - "r30_0_10_rc1_rsp2969"
+      recommendedTag: "r30_0_10_rc1_rsp2969"
       source:
         type: "google"
         location: "us-central1"
