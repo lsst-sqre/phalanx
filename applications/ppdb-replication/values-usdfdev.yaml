@@ -1,3 +1,10 @@
+cloudSqlProxy:
+  image:
+    tag: "2.23.0"
+
+  config:
+    instanceUri: "ppdb-dev-5c07:us-central1:ppdb-dev"
+
 config:
 
   # -- Logging profile (`production` for JSON, `development` for
@@ -8,7 +15,7 @@ config:
   apdbConfig: "/sdf/data/rubin/user/jeremym/ppdb-config/apdb_dev.yaml"
 
   # -- PPDB config file resource
-  ppdbConfig: "gs://ppdb-dev/config/ppdb_dev.yaml"
+  ppdbConfig: "gs://ppdb-dev-config/ppdb-dev-5c07_config.yaml"
 
   # -- Time to wait before checking for new chunks, if no chunk appears
   checkInterval: 60
