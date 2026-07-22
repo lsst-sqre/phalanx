@@ -2,8 +2,28 @@ replicaCount: 2
 
 config:
   alertMessage: |
-    This is a test alert message.
-    It should be shown to all users.
+    <style>
+    .myWarning{
+        background-color: var(--joy-palette-primary-softBg);
+        text-align: center;
+        font-size:var(--joy-fontSize-lg);
+        margin-top: 5px
+        a:any-link {
+          color: var(--joy-palette-primary-400);
+          text-decoration-line: underline;
+          cursor: auto;
+        }
+    }
+    div div:has(.myWarning) {
+        padding:0;
+    }
+    div:has(.myWarning) {
+        width: 100%;
+    }
+    </style>
+    <div class= 'myWarning'>
+    keep calm and <a href="https://rsp.lsst.io">read the docs</a>
+    </div>
   volumes:
     cleanupInterval: "1h"
     sharedWorkarea:
