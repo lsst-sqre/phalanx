@@ -7,6 +7,14 @@ config:
     - "live"
   hips:
     datasets: {}
+  tap:
+    schemaVersion: "w.2026.28"
+    schemaSourceTemplate: "https://github.com/lsst/sdm_schemas/archive/refs/tags/{version}.tar.gz"
+    servers:
+      tap:
+        enabled: true
+        databaseUrl: "postgresql://tap_schema_admin_tap@rsp-db-rw.postgres-db:5432/tap"
+        databasePasswordKey: "tap-schema-admin-password"
   influxdbDatabases:
     usdfdev_efd:
       url: "https://usdf-rsp-dev.slac.stanford.edu/influxdb/"

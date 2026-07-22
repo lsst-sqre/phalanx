@@ -1,17 +1,19 @@
 cadc-tap:
   tapSchema:
-    image:
-      repository: "lsstsqre/tap-schema-usdf-dev-tap"
-    type: "containerized"
-    database: "TAP_SCHEMA"
-    username: "TAP_SCHEMA"
-    useVaultPassword: false
+    type: "external"
+    database: "tap"
+    username: "tap_schema_tap"
+    useVaultPassword: true
+    external:
+      host: "rsp-db-ro.postgres-db"
 
   uws:
-    type: "containerized"
-    database: "postgres"
-    username: "postgres"
-    useVaultPassword: false
+    type: "external"
+    database: "tap"
+    username: "uws_tap"
+    useVaultPassword: true
+    external:
+      host: "rsp-db-rw.postgres-db"
 
   config:
     qserv:
