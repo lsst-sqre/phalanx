@@ -58,6 +58,7 @@ IVOA TAP service
 | config.qserv.jdbcParams | string | `""` | Extra JDBC connection parameters |
 | config.qserv.passwordEnabled | bool | false | Whether the Qserv database is password protected |
 | config.qserv.schemaMappings | string | `""` | Schema name mappings: comma-separated list of user_schema:internal_schema pairs. Example: "dp1:dp1_pilot" dp1 queries execute against dp1_pilot. |
+| config.qserv.tableMappings | list | `[]` | Table name mappings for query rewriting Example: ["dp1.Object:dp1_pilot.Object"] rewrites references to dp1.Object so they query dp1_pilot.Object instead. |
 | config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
 | config.serviceName | string | None, must be set | Name of the service from Gafaelfawr's perspective, used for metrics reporting |
 | config.tapSchemaAddress | string | `"cadc-tap-schema-db:3306"` | Address to a MySQL database containing TAP schema data |

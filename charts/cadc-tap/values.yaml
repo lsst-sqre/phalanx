@@ -90,6 +90,11 @@ config:
     # Example: "dp1:dp1_pilot" dp1 queries execute against dp1_pilot.
     schemaMappings: ""
 
+    # -- Table name mappings for query rewriting
+    # Example: ["dp1.Object:dp1_pilot.Object"] rewrites references to
+    # dp1.Object so they query dp1_pilot.Object instead.
+    tableMappings: []
+
     image:
       # -- TAP image to use
       repository: "ghcr.io/lsst-sqre/lsst-tap-service"
