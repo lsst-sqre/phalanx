@@ -55,6 +55,7 @@ argo-cd:
         g, loi@lsst.cloud, role:developer
         g, roby@lsst.cloud, role:developer
         g, salnikov@lsst.cloud, role:developer
+        g, tjenness@lsst.cloud, role:developer
       scopes: "[email]"
 
   server:
