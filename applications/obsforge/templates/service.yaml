@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "obsforge"
+  labels:
+    {{- include "obsforge.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: 8080
+      targetPort: "http"
+      protocol: "TCP"
+      name: "http"
+  selector:
+    {{- include "obsforge.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: "api"

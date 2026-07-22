@@ -1,0 +1,179 @@
+# Default values for obsforge.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the obsforge deployment
+  repository: "ghcr.io/lsst-sqre/obsforge"
+
+  # -- Pull policy for the obsforge image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+config:
+  # -- PostgreSQL DSN for ObsForge durable state
+  # @default -- None, must be set
+  databaseUrl: null
+
+  # -- Mode for the arq queue dependency
+  arqMode: "production"
+
+  # -- Name of the arq queue used by ObsForge
+  arqQueueName: "arq:queue"
+
+  # -- Maximum arq attempts for an enrichment job
+  enrichmentMaxTries: 5
+
+  # -- Whether to run Alembic schema migrations on install/upgrade
+  updateSchema: false
+
+  # -- Butler repository label used by worker enrichment
+  butlerLabel: "prompt"
+
+  # -- Prompt Butler repository path or URL for worker enrichment
+  # @default -- None, must be set
+  butlerRepository: null
+
+  # -- Path or URL to the lsst.dax.obscore prompt.yaml config
+  # @default -- None, must be set
+  obscoreConfig: null
+
+  # -- Dataset type selected from the ObsCore exporter config
+  obscoreDatasetType: "preliminary_visit_image"
+
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/obsforge"
+
+  # -- Whether to send Slack alerts for unexpected failures
+  slackAlerts: false
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# -- Affinity rules for the obsforge deployment pod
+affinity: {}
+
+# -- Node selection rules for the obsforge deployment pod
+nodeSelector: {}
+
+# -- Annotations for the obsforge deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the obsforge deployment pod
+# @default -- See `values.yaml`
+resources: {}
+
+# -- Tolerations for the obsforge deployment pod
+tolerations: []
+
+worker:
+  # -- Affinity rules for the obsforge worker pods
+  affinity: {}
+
+  autoscaling:
+    # -- Enable autoscaling of obsforge worker pods
+    enabled: true
+
+    # -- Minimum number of obsforge worker pods
+    minReplicas: 1
+
+    # -- Maximum number of obsforge worker pods
+    maxReplicas: 10
+
+    # -- Target CPU utilization of obsforge worker pods
+    targetCPUUtilizationPercentage: 75
+
+  # -- Node selection rules for the obsforge worker pods
+  nodeSelector: {}
+
+  # -- Annotations for the obsforge worker pods
+  podAnnotations: {}
+
+  # -- Number of worker pods to start if autoscaling is disabled
+  replicaCount: 1
+
+  # -- Resource limits and requests for the obsforge worker pods
+  # @default -- See `values.yaml`
+  resources: {}
+
+  # -- Tolerations for the obsforge worker pods
+  tolerations: []
+
+schemaUpdate:
+  # -- Affinity rules for the schema update job
+  affinity: {}
+
+  # -- Node selection rules for the schema update job
+  nodeSelector: {}
+
+  # -- Annotations for the schema update job pod
+  podAnnotations: {}
+
+  # -- Resource limits and requests for the schema update job
+  # @default -- See `values.yaml`
+  resources: {}
+
+  # -- Tolerations for the schema update job
+  tolerations: []
+
+redis:
+  config:
+    # -- Name of secret containing Redis password
+    secretName: "obsforge"
+
+    # -- Key inside secret from which to get the Redis password
+    secretKey: "redis-password"
+
+  persistence:
+    # -- Whether to persist Redis storage. Redis is arq transport state; keeping
+    # persistence enabled preserves queued and in-flight jobs across restarts.
+    enabled: true
+
+    # -- Access mode of storage to request
+    accessMode: "ReadWriteOnce"
+
+    # -- Amount of persistent storage to request
+    size: "100Mi"
+
+    # -- Class of storage to request
+    storageClass: null
+
+    # -- Use an existing PVC, not dynamic provisioning. If this is set, the
+    # size, storageClass, and accessMode settings are ignored.
+    volumeClaimName: null
+
+  # -- Resource limits and requests for the Redis pod
+  # @default -- See `values.yaml`
+  resources: {}
+
+  # -- Tolerations for the Redis pod
+  tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base URL for Repertoire discovery API
+  # @default -- Set by Argo CD
+  repertoireUrl: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
