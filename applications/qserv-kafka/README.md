@@ -10,6 +10,7 @@ Qserv Kafka bridge
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| config.backendApiTimeout | string | `"60s"` | Timeout for REST API calls in Safir `parse_timedelta` format. This includes time spent waiting for a connection if the maximum number of connections has been reached. |
 | config.consumerGroupId | string | `"qserv"` | Kafka consumer group ID |
 | config.jobCancelTopic | string | `"lsst.tap.job-delete"` | Kafka topic for query cancellation requests |
 | config.jobRunBatchSize | int | `10` | Maximum batch size for query execution requests. This should generally be the same as `qservRestMaxConnections`. |
@@ -31,7 +32,6 @@ Qserv Kafka bridge
 | config.qservPollInterval | string | `"1s"` | Interval at which Qserv is polled for query status in Safir `parse_timedelta` format |
 | config.qservRestMaxConnections | int | `15` | Maximum simultaneous connections to open to the REST API. This should be set to `jobRunBatchSize` plus some extra connections for the monitor and cancel jobs. |
 | config.qservRestSendApiVersion | bool | `true` | Whether to send the expected API version in REST API calls to Qserv |
-| config.qservRestTimeout | string | `"30s"` | Timeout for REST API calls in Safir `parse_timedelta` format. This includes time spent waiting for a connection if the maximum number of connections has been reached. |
 | config.qservRestUrl | string | None, must be set | URL to the Qserv REST API |
 | config.qservRestUsername | string | `nil` | Username for HTTP Basic Authentication for the Qserv REST API. If not null, the password will be assumed to be the same as the database password. |
 | config.qservRetryCount | int | `3` | How many times to retry after a Qserv API network failure |

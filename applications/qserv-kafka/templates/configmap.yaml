@@ -28,7 +28,7 @@ data:
   {{- if not .Values.config.qservRestSendApiVersion }}
   QSERV_KAFKA_QSERV_REST_SEND_API_VERSION: "false"
   {{- end }}
-  QSERV_KAFKA_QSERV_REST_TIMEOUT: {{ .Values.config.qservRestTimeout | quote }}
+  QSERV_KAFKA_BACKEND_API_TIMEOUT: {{ .Values.config.backendApiTimeout | quote }}
   QSERV_KAFKA_QSERV_REST_URL: {{ .Values.config.qservRestUrl | quote }}
   {{- if .Values.config.qservRestUsername }}
   QSERV_KAFKA_QSERV_REST_USERNAME: {{ .Values.config.qservRestUsername | quote }}

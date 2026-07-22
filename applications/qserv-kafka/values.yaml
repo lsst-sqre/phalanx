@@ -102,7 +102,7 @@ config:
   # -- Timeout for REST API calls in Safir `parse_timedelta` format. This
   # includes time spent waiting for a connection if the maximum number of
   # connections has been reached.
-  qservRestTimeout: "30s"
+  backendApiTimeout: "60s"
 
   # -- URL to the Qserv REST API
   # @default -- None, must be set
