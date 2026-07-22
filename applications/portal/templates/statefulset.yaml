@@ -93,26 +93,18 @@ spec:
               value: "37.98, 7.0"
             - name: PROPS_OP_dataServiceOptions_DP1ImagesSIAv2_targetPanelExampleRow2_0
               value: "95.04, -25.0 EQ_J2000"
+            - name: PROPS_OP_dataServiceOptions_DP2ImagesSIAv2_targetPanelExampleRow1_0
+              value: "NGC 1494"
+            - name: PROPS_OP_dataServiceOptions_DP2ImagesSIAv2_targetPanelExampleRow1_1
+              value: "53.01, -28.35"
+            - name: PROPS_OP_dataServiceOptions_DP2ImagesSIAv2_targetPanelExampleRow1_2
+              value: "37.98, 7.0"
+            - name: PROPS_OP_dataServiceOptions_DP2ImagesSIAv2_targetPanelExampleRow2_0
+              value: "95.04, -25.0 EQ_J2000"
             - name: PROPS_OP_hips_defHipsSources_label
-              value: "'Rubin Featured'"
+              value: "Rubin Featured"
             - name: PROPS_OP_hips_adhocMocSource_label
-              value: "'Rubin Featured MOC'"
-            - name: PROPS_OP_hips_adhocMocSource_sources_0
-              value: temp://lsst/dp02_dc2/hips/images/color_gri
-            - name: PROPS_OP_hips_adhocMocSource_sources_1
-              value: temp://lsst/dp02_dc2/hips/images/band_u
-            - name: PROPS_OP_hips_adhocMocSource_sources_2
-              value: temp://lsst/dp02_dc2/hips/images/band_g
-            - name: PROPS_OP_hips_adhocMocSource_sources_3
-              value: temp://lsst/dp02_dc2/hips/images/band_r
-            - name: PROPS_OP_hips_adhocMocSource_sources_4
-              value: temp://lsst/dp02_dc2/hips/images/band_i
-            - name: PROPS_OP_hips_adhocMocSource_sources_5
-              value: temp://lsst/dp02_dc2/hips/images/band_z
-            - name: PROPS_OP_hips_adhocMocSource_sources_6
-              value: temp://lsst/dp02_dc2/hips/images/band_y
-            - name: PROPS_OP_hips_adhocMocSource_sources_7
-              value: ivo://CDS/P/2MASS/color
+              value: "Rubin Featured MOC"
             - name: PROPS_inventory.serverURLAry
               value: "[\"https://raw.githubusercontent.com/lsst-sqre/portal-config/refs/heads/main/dce-searchPage-idf.xml\"]"
             - name: PROPS_uws.history.svcs
@@ -146,6 +138,18 @@ spec:
                    "SIAv2" : {
                       "additional": {
                           "services": [
+                            {
+                               "label": "DP2 Images SIAv2",
+                               "serviceId": "DP2ImagesSIAv2",
+                               "value": "{{ .Values.global.baseUrl }}/api/sia/dp2/query",
+                               {{- if .Values.config.hipsUrl }}
+                               "hipsUrl": "{{ .Values.config.hipsUrl }}",
+                               {{- else }}
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                               {{- end }}
+                               "centerWP": "40.1;-34.4;EQ_J2000",
+                               "fovDeg": 10
+                            },
                             {
                                "label": "DP1 Images SIAv2",
                                "serviceId": "DP1ImagesSIAv2",

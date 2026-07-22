@@ -12,6 +12,8 @@ fullnameOverride: ""
 image:
   # -- Portal image to use
   repository: "ghcr.io/lsst/suit"
+  # for testing use docker hub
+  # repository: "ipac/suit"
 
   # -- Pull policy for the Portal image
   pullPolicy: "IfNotPresent"
