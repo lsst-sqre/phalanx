@@ -36,6 +36,11 @@ Common environment variables from secrets
     secretKeyRef:
       name: "obsforge"
       key: "redis-password"
+- name: "OBSFORGE_BUTLER_ACCESS_TOKEN"
+  valueFrom:
+    secretKeyRef:
+      name: "obsforge"
+      key: "butler-access-token"
 {{- if .Values.config.slackAlerts }}
 - name: "OBSFORGE_SLACK_WEBHOOK"
   valueFrom:
