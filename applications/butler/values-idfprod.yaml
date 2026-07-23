@@ -3,6 +3,8 @@ autoscaling:
 config:
   dp02PostgresUri: postgresql://butler@alloydb-dp.rsp-sql-stable.internal:5432/dp02
   dp1PostgresUri: postgresql://butler@alloydb-dp.rsp-sql-stable.internal:5432/dp1
+  dp2PostgresUri: postgresql://butler@alloydb-dp.rsp-sql-stable.internal:5432/dp2
+  dp2PostgresSchema: dp2_mini_dm_55598
   s3EndpointUrl: "https://storage.googleapis.com"
   repositories:
     dp02:
@@ -11,6 +13,9 @@ config:
     dp1:
       config_uri: "file:///opt/lsst/butler/config/dp1.yaml"
       authorized_groups: ["*"]
+    dp2:
+      config_uri: "file:///opt/lsst/butler/config/dp2.yaml"
+      authorized_groups: ["g_rubin"]
   shareNubladoSecrets: false
   additionalS3EndpointUrls:
     slac: "https://sdfdatas3.slac.stanford.edu"
