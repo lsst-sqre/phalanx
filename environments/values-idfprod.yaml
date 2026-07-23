@@ -4,6 +4,7 @@ appOfAppsName: "science-platform"
 butlerServerRepositories:
   dp02: "https://data.lsst.cloud/api/butler/repo/dp02/butler.yaml"
   dp1: "https://data.lsst.cloud/api/butler/repo/dp1/butler.yaml"
+  dp2: "https://data.lsst.cloud/api/butler/repo/dp2/butler.yaml"
 gcp:
   projectId: "science-platform-stable-6994"
   region: "us-central1"
