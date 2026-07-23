@@ -18,6 +18,7 @@ Rubin Science Platform Portal Aspect
 | config.hipsListUrl | string | `/api/hips/list` in the local Science Platform | URL for master list of Rubin-featured HiPS datasets |
 | config.hipsUrl | string | `/api/hips/images/color_gri` in the local Science Platform | URL for default HiPS map to be used for coverage displays |
 | config.livetap | string | `""` | Endpoint under `/api/` for the live TAP service on the instance, if present |
+| config.mocListUrl | string | `/api/hips/v2/dp2/dp2-moc-list.tbl` in the local Science Platform | URL for master list of Rubin-featured MOC datasets |
 | config.showUserInfo | string | `"true"` | Whether to show information about the logged-in user |
 | config.ssotap | string | `""` | Endpoint under `/api/` for the DP0.3 SSO TAP service on the instance, if present |
 | config.tapHistoryLimit | string | `"1000"` | Maximum number of recent TAP queries to show in history |

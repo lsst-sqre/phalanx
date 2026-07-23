@@ -69,6 +69,10 @@ config:
   # @default -- `/api/hips/images/color_gri` in the local Science Platform
   hipsUrl: ""
 
+  # -- URL for master list of Rubin-featured MOC datasets
+  # @default -- `/api/hips/v2/dp2/dp2-moc-list.tbl` in the local Science Platform
+  mocListUrl: ""
+
   # -- Whether to show information about the logged-in user
   showUserInfo: "true"
 
