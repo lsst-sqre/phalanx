@@ -15,7 +15,7 @@ config:
   rootPath: ""
   # deprecated, should use rootPath instead with a rewriting ingress
   docsPrefix: "/docs"
-  pathPrefix: "/cm-service"
+  routePrefix: "/cm-service"
   db:
     hostname: "postgres.postgres"
     echo: false
@@ -27,6 +27,8 @@ config:
     DAEMON_V2: 1
     DAEMON_CAMPAIGNS: 1
     DAEMON_NODES: 1
+    SCHEDULER: 1
+    NOTIFIER: 0
     STORE_FSM: 1
     ALLOW_TASK_UPSERT: 1
     MOCK_BUTLER: 0
@@ -67,7 +69,7 @@ config:
     useNativeHttplib: "1"
 
 image:
-  tag: "0.7.0"
+  tag: "0.8.0-alpha.8"
   pullPolicy: IfNotPresent
 
 daemon:
@@ -76,10 +78,13 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.7.0"
+    tag: "0.8.0-alpha.8"
     pullPolicy: IfNotPresent
 
 web:
+  grafana:
+    url: https://grafana.slac.stanford.edu
+    campaignHistoryDashboard: d/af2z9b83w83k0d/campaign-history
   image:
-    tag: "0.7.0"
+    tag: "0.8.0-alpha.8"
     pullPolicy: IfNotPresent
