@@ -2,12 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# -- Override the base name for resources
-nameOverride: ""
-
-# -- Override the full name for resources (includes the release name)
-fullnameOverride: ""
-
 # -- Number of web deployment pods to start
 replicaCount: 1
 
@@ -23,37 +17,9 @@ image:
   tag: ""
 
 config:
-  # -- Whether to send alerts and status to Slack.
-  slackAlerts: false
-
-  # -- Logging level
-  logLevel: "INFO"
-
-  # -- Logging profile (`production` for JSON, `development` for
-  # human-friendly)
-  logProfile: "production"
-
-  # -- URL path prefix
-  pathPrefix: "/api/sia"
-
-  # -- Whether direct butler access is enabled
-  directButlerEnabled: false
-
-  # -- List of data (Butler) Collections
-  # Expected attributes: `config`, `label`, `name`, `butler_type`, `repository` & `datalink_url`
+  # -- List of data (Butler) Collections. Expected attributes: `config`,
+  # `label`, `name`, `butler_type`, `repository`, and `datalink_url`
   butlerDataCollections: []
-
-  # -- User to use from the PGPASSFILE if sia is using a direct Butler
-  # connection
-  pgUser: "rubin"
-
-  # -- Whether to send trace and telemetry information to Sentry. This traces
-  # every call and therefore should only be enabled in non-production
-  # environments.
-  enableSentry: false
-
-  # Sentry tracing sample rate
-  sentryTracesSampleRate: 0.0
 
   metrics:
     # -- Whether to enable sending metrics
@@ -77,12 +43,30 @@ config:
       # for experimentation during development.
       suffix: ""
 
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/api/sia"
+
+  sentry:
+    # -- Set to true to enable the Sentry integration.
+    enabled: false
+
+    # -- The percentage of requests that should be traced. This should be a
+    # float between 0 and 1.
+    tracesSampleRate: 0.0
+
+  # -- Whether to send alerts and status to Slack.
+  slackAlerts: false
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
-
-  # -- Path prefix where app is hosted
-  path: "/api/sia"
 
 # -- Affinity rules for the sia deployment pod
 affinity: {}
@@ -104,11 +88,24 @@ resources:
     memory: "32Gi"
 
 # -- Tolerations for the sia deployment pod
-tolerations: []
+# @default -- Tolerate GKE amd64 and arm64 taints
+tolerations:
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "amd64"
+    effect: "NoSchedule"
+  - key: "kubernetes.io/arch"
+    operator: "Equal"
+    value: "arm64"
+    effect: "NoSchedule"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD Application
+  environmentName: null
+
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null

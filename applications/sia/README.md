@@ -11,9 +11,7 @@ Simple Image Access (SIA) IVOA Service using Butler
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the sia deployment pod |
-| config.butlerDataCollections | list | `[]` | List of data (Butler) Collections Expected attributes: `config`, `label`, `name`, `butler_type`, `repository` & `datalink_url` |
-| config.directButlerEnabled | bool | `false` | Whether direct butler access is enabled |
-| config.enableSentry | bool | `false` | Whether to send trace and telemetry information to Sentry. This traces every call and therefore should only be enabled in non-production environments. |
+| config.butlerDataCollections | list | `[]` | List of data (Butler) Collections. Expected attributes: `config`, `label`, `name`, `butler_type`, `repository`, and `datalink_url` |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.metrics.application | string | `"sia"` | Name under which to log metrics. Generally there is no reason to change this. |
@@ -22,20 +20,18 @@ Simple Image Access (SIA) IVOA Service using Butler
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.pathPrefix | string | `"/api/sia"` | URL path prefix |
-| config.pgUser | string | `"rubin"` | User to use from the PGPASSFILE if sia is using a direct Butler connection |
-| config.sentryTracesSampleRate | float | `0` |  |
+| config.sentry.enabled | bool | `false` | Set to true to enable the Sentry integration. |
+| config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1. |
 | config.slackAlerts | bool | `false` | Whether to send alerts and status to Slack. |
-| fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the sia image |
 | image.repository | string | `"ghcr.io/lsst-sqre/sia"` | Image to use in the sia deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
-| ingress.path | string | `"/api/sia"` | Path prefix where app is hosted |
-| nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selection rules for the sia deployment pod |
 | podAnnotations | object | `{}` | Annotations for the sia deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the sia deployment pod |
-| tolerations | list | `[]` | Tolerations for the sia deployment pod |
+| tolerations | list | Tolerate GKE amd64 and arm64 taints | Tolerations for the sia deployment pod |

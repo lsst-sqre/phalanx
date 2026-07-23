@@ -1,7 +1,7 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: {{ template "sia.fullname" . }}
+  name: "sia"
   labels:
     {{- include "sia.labels" . | nindent 4 }}
 config:
@@ -17,7 +17,7 @@ config:
         - "read:image"
 template:
   metadata:
-    name: {{ template "sia.fullname" . }}
+    name: "sia"
     annotations:
       nginx.ingress.kubernetes.io/proxy-connect-timeout: "1800"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
