@@ -62,7 +62,7 @@ config:
           idle_time: 300
           image:
             image_class: "by-tag"
-            tag: "exp_r30_0_10_rc2_rsp2981_nojsd"
+            tag: "exp_r30_0_10_rc3_rsp2986_nojsdrje"
           repo_ref: "main"
           repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
         restart: true
@@ -81,7 +81,7 @@ config:
           cell_execution_timeout: "1000s"
           image:
             image_class: "by-tag"
-            tag: "exp_r30_0_10_rc2_rsp2981_nojsd"
+            tag: "exp_r30_0_10_rc3_rsp2986_nojsdrje"
           repo_url: "https://github.com/lsst/tutorial-notebooks.git"
           repo_ref: "tickets/SP-3298"
           max_executions: 1
