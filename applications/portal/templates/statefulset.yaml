@@ -49,6 +49,8 @@ spec:
               value: "{{ .Values.global.baseUrl }}/api/alerts"
             - name: "PROPS_lsst__hips__masterUrl"
               value: "{{ .Values.global.baseUrl }}/api/hips/list"
+            - name: "PROPS_lsst__moc__masterUrl"
+              value: "{{ .Values.global.baseUrl }}/api/hips/v2/dp2/dp2-moc-list.tbl"
             - name: PROPS_job__cleanup__interval
               value: "120"
             - name: PROPS_OP_searchActionsCmdMask_0
