@@ -269,6 +269,13 @@ web:
   # -- ASGI Root path for application
   rootPath: "/gui"
 
+  grafana:
+    # -- Grafana base url
+    url: "http://grafana:3000"
+
+    # -- Campaign History Dashboard path
+    campaignHistoryDashboard: "d/abcdef/campaign-history"
+
   security:
     # -- Effective UID for nonroot user
     uid: 65532
