@@ -24,6 +24,8 @@ config:
         enabled: true
       ssotap:
         enabled: true
+      ppdbtap:
+        enabled: true
   useSubdomains:
     - "nublado"
 

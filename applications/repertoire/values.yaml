@@ -498,6 +498,13 @@ config:
         databaseUrl: "postgresql://livetap@127.0.0.1:5432/livetap"
         databasePasswordKey: "livetap-database-password"
 
+      ppdbtap:
+        enabled: false
+        schemas:
+          - ppdb
+        databaseUrl: "postgresql://ppdbtap@127.0.0.1:5432/ppdbtap"
+        databasePasswordKey: "ppdbtap-database-password"
+
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on
   # Google Cloud
