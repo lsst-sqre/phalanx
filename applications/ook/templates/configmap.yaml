@@ -25,4 +25,7 @@ data:
   {{- with .Values.config.linkcheck.userAgent }}
   OOK_LINKCHECK_USER_AGENT: {{ . | quote }}
   {{- end }}
+  OOK_INTERSPHINX_TTL: {{ .Values.config.intersphinx.ttl | quote }}
+  OOK_INTERSPHINX_NEGATIVE_TTL: {{ .Values.config.intersphinx.negativeTtl | quote }}
+  OOK_INTERSPHINX_ACTIVE_WINDOW: {{ .Values.config.intersphinx.activeWindow | quote }}
   ALGOLIA_DOCUMENT_INDEX: {{ .Values.config.algolia.documentIndex | quote }}

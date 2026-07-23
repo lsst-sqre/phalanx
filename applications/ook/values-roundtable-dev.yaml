@@ -1,6 +1,3 @@
-image:
-  pullPolicy: Always
-
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://ook@localhost/ook"
@@ -20,6 +17,10 @@ ingestUpdated:
 linkcheckRecheck:
   enabled: true
   schedule: "45 4 * * *"
+
+intersphinxRefresh:
+  enabled: true
+  schedule: "15 * * * *"
 
 ingestLsstTexmf:
   enabled: true
