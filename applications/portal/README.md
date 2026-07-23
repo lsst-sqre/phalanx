@@ -15,6 +15,7 @@ Rubin Science Platform Portal Aspect
 | config.alertMessage | string | `nil` | If not null, display this alert to all users in a banner |
 | config.cleanupInterval | string | `"36h"` | How long results should be retained before being deleted |
 | config.debug | string | `"FALSE"` | Set to `TRUE` to enable service debugging |
+| config.hipsListUrl | string | `/api/hips/list` in the local Science Platform | URL for master list of Rubin-featured HiPS datasets |
 | config.hipsUrl | string | `/api/hips/images/color_gri` in the local Science Platform | URL for default HiPS map to be used for coverage displays |
 | config.livetap | string | `""` | Endpoint under `/api/` for the live TAP service on the instance, if present |
 | config.showUserInfo | string | `"true"` | Whether to show information about the logged-in user |

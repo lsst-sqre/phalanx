@@ -61,6 +61,10 @@ config:
   # -- How long results should be retained before being deleted
   cleanupInterval: "36h"
 
+  # -- URL for master list of Rubin-featured HiPS datasets
+  # @default -- `/api/hips/list` in the local Science Platform
+  hipsListUrl: ""
+
   # -- URL for default HiPS map to be used for coverage displays
   # @default -- `/api/hips/images/color_gri` in the local Science Platform
   hipsUrl: ""

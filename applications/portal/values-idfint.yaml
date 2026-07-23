@@ -12,6 +12,7 @@ config:
         size: "20Gi"
         storageClass: "standard-rwo"
   ssotap: "ssotap"
+  hipsListUrl: "https://data-int.lsst.cloud/api/hips/v2/dp2/list"
   hipsUrl: "https://data-int.lsst.cloud/api/hips/v2/dp2/color_gri"
 
 redis:
