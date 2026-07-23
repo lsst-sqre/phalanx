@@ -24,6 +24,9 @@ cadc-tap:
       project: "ppdb-prod"
       dataset: "ppdb_lsstcam"
       schema: "ppdb"
+      image:
+        tag: "3.18.0"
+        imagePullPolicy: "Always"
 
   cloudsql:
     enabled: true
