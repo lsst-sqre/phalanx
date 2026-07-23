@@ -1,8 +1,9 @@
 image:
-  # Deploy the branch image built from lsst-sqre/ook#284 (DM-55387) to test
-  # the intersphinx inventory cache service. Remove this override once the
-  # feature ships in a tagged release.
-  tag: "tickets-DM-55387"
+  # Deploy the branch image built from lsst-sqre/ook#298 (DM-55600) to test
+  # the intersphinx inventory cache service with ETag/304 revalidation
+  # (lsst-sqre/ook#284 merged to main plus lsst-sqre/ook#294). Remove this
+  # override once the feature ships in a tagged release.
+  tag: "tickets-DM-55600"
   pullPolicy: Always
 
 config:
