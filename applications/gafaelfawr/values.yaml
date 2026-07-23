@@ -270,6 +270,8 @@ config:
       Service can send notifications to users and manage its notifications
     "write:sasquatch": >-
       Write access to the Sasquatch telemetry service
+    "write:obsforge": >-
+      Send notifications to ObsForge and register observations
     "user:token": >-
       Can create and modify user tokens
 
