@@ -107,9 +107,14 @@ config:
   dp1PostgresUri: ""
 
   # -- Postgres connection string pointing to the registry database hosting
-  # Data Preview 1 data.
+  # Data Preview 2 data.
   # @default -- No configuration file for DP2 will be generated.
   dp2PostgresUri: ""
+
+  # -- Name of the Postgres schema holding the current Butler database for
+  # Data Preview 2.
+  # @default -- Must be set.
+  dp2PostgresSchema: ""
 
   # -- Postgres connection string pointing to the registry database hosting
   # Prompt Data Products.
