@@ -39,6 +39,11 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.config.db.secretName }}
                   key: {{ .Values.config.db.secretKey }}
+            - name: NOTIFICATIONS__FERNET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.config.notifications.secretName }}
+                  key: {{ .Values.config.notifications.fernetSecretKey }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -59,12 +64,17 @@ spec:
             readOnlyRootFilesystem: true
           # TODO: we hopefully do not actually need this mounted on the API
           volumeMounts:
+            - name: tmp-volume
+              mountPath: "/tmp"
             {{- with .Values.config.outputVolume }}
             - mountPath: {{ .mountPath }}
               name: "output-volume"
               subPath: {{ .subPath }}
             {{- end }}
       volumes:
+        - name: tmp-volume
+          emptyDir:
+            sizeLimit: 500Mi
         - name: output-volume
           persistentVolumeClaim:
             claimName: {{ .Chart.Name }}-output

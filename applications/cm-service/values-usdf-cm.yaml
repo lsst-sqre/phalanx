@@ -15,7 +15,7 @@ config:
   rootPath: ""
   # deprecated, should use rootPath instead with a rewriting ingress
   docsPrefix: "/docs"
-  pathPrefix: "/cm-service"
+  routePrefix: "/cm-service"
   db:
     hostname: "postgres.postgres"
     echo: false
@@ -82,6 +82,9 @@ daemon:
     pullPolicy: IfNotPresent
 
 web:
+  grafana:
+    url: https://grafana.slac.stanford.edu
+    campaignHistoryDashboard: d/af2z9b83w83k0d/campaign-history
   image:
     tag: "0.8.0-alpha.8"
     pullPolicy: IfNotPresent

@@ -15,7 +15,7 @@ config:
   rootPath: ""
   # deprecated, should use rootPath instead with a rewriting ingress
   docsPrefix: "/docs"
-  pathPrefix: "/cm-service"
+  routePrefix: "/cm-service"
   db:
     hostname: "postgres.postgres"
     echo: false
@@ -68,7 +68,7 @@ config:
     useNativeHttplib: "1"
 
 image:
-  tag: "tickets-DM-55418-notifier"
+  tag: "tickets-DM-55908-provenance"
   pullPolicy: Always
 
 daemon:
@@ -77,7 +77,7 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "tickets-DM-55418-notifier"
+    tag: "tickets-DM-55908-provenance"
     pullPolicy: Always
   resources:
     limits:
@@ -88,6 +88,9 @@ daemon:
       memory: "4Gi"
 
 web:
+  grafana:
+    url: https://grafana.slac.stanford.edu
+    campaignHistoryDashboard: d/af2z9b83w83k0d/campaign-history
   image:
-    tag: "tickets-DM-55418-notifier"
+    tag: "tickets-DM-55908-provenance"
     pullPolicy: Always

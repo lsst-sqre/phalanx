@@ -86,6 +86,8 @@ Campaign Management for Rubin Data Release Production
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | internalDB | bool | `false` | Whether to use the internal (phalanx) database |
 | web.affinity | object | `{}` | Affinity rules for the web pods |
+| web.grafana.campaignHistoryDashboard | string | `"d/abcdef/campaign-history"` | Campaign History Dashboard path |
+| web.grafana.url | string | `"http://grafana:3000"` | Grafana base url |
 | web.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the web image |
 | web.image.repository | string | `"ghcr.io/lsst-dm/cm-web"` | Image to use for web containers |
 | web.image.tag | string | The appVersion of the chart | Tag of web image to use |
