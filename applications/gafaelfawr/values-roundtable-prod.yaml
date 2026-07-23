@@ -38,6 +38,8 @@ config:
       Can access Docverse's as a user in an organization
     "exec:linkcheck": >-
       Can submit link-check requests to Ook
+    "write:intersphinx": >-
+      Can read and refresh Ook's cached intersphinx inventories
 
   groupMapping:
     "admin:userinfo":
@@ -70,6 +72,10 @@ config:
           organization: "lsst-sqre"
           team: "square"
     "exec:linkcheck":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "write:intersphinx":
       - github:
           organization: "lsst-sqre"
           team: "square"
