@@ -4,7 +4,7 @@ version: 1.0.0
 description: IVOA DataLink image matadata and location service
 sources:
   - "https://github.com/lsst-sqre/datalinker"
-appVersion: 4.4.0
+appVersion: 4.4.1
 
 annotations:
   phalanx.lsst.io/docs: |
