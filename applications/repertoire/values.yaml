@@ -105,6 +105,15 @@ config:
           - "deep_coadd/band_i"
           - "deep_coadd/band_z"
           - "deep_coadd/band_y"
+      dp2:
+        paths:
+          - "color_gri"
+          - "color_u"
+          - "color_g"
+          - "color_r"
+          - "color_i"
+          - "color_z"
+          - "color_y"
 
     legacy:
       # -- If set, specifies the dataset that should be shown at the legacy
