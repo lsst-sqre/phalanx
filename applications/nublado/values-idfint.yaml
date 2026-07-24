@@ -29,10 +29,7 @@ controller:
         - containerPath: "/home"
           volumeName: "home"
     images:
-      numReleases: 0
-      pin:
-        - "r30_0_10_rc3_rsp2984"
-      recommendedTag: "r30_0_10_rc3_rsp2984"
+      recommendedTag: "r30_0_10_rsp2991"
       source:
         type: "google"
         location: "us-central1"
