@@ -171,6 +171,9 @@ spec:
                 {{- if .Values.config.qserv.schemaMappings }}
                 -Dtap.schema.mappings={{ .Values.config.qserv.schemaMappings }}
                 {{- end }}
+                {{- if .Values.config.qserv.tableMappings }}
+                -Dtap.table.mappings={{ .Values.config.qserv.tableMappings | join "," }}
+                {{- end }}
                 {{- end }}
                 -Dgafaelfawr_url={{ .Values.global.baseUrl }}/auth/api/v1/user-info
                 -Dgcs_bucket={{ .Values.config.gcsBucket }}
