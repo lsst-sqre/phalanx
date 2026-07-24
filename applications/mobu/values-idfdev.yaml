@@ -61,6 +61,32 @@ config:
           execution_idle_time: 0
           idle_time: 300
         restart: true
+    - name: "phalanx-recommended"
+      count: 1
+      users:
+        - username: "bot-mobu-recommended"
+          groups:
+            - name: "g_users"
+              id: 2000003
+      scopes:
+        - "exec:internal-tools"
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+        - "write:sasquatch"
+      business:
+        type: "NotebookRunnerCounting"
+        options:
+          cell_execution_timeout: "1h"
+          image:
+            image_class: "by-tag"
+            tag: "r30_0_10_rsp2991"
+          repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
+          repo_ref: "main"
+          execution_idle_time: 0
+          idle_time: 300
+        restart: true
     - name: "muster"
       count: 1
       users:
