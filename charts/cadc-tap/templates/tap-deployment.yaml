@@ -197,6 +197,15 @@ spec:
                 {{- if .Values.config.maxRec }}
                 -Dtap.maxRec={{ .Values.config.maxRec }}
                 {{- end }}
+                {{- if .Values.config.maxExecutionDuration }}
+                -Dtap.maxExecutionDuration={{ .Values.config.maxExecutionDuration }}
+                {{- end }}
+                {{- if .Values.config.maxDestruction }}
+                -Dtap.maxDestruction={{ .Values.config.maxDestruction }}
+                {{- end }}
+                {{- if .Values.config.maxQuote }}
+                -Dtap.maxQuote={{ .Values.config.maxQuote }}
+                {{- end }}
                 {{- if .Values.config.voParquet }}
                 -Dtap.enableVOParquet=true
                 {{- end }}

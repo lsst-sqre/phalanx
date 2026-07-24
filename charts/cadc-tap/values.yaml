@@ -90,7 +90,9 @@ config:
     # Example: "dp1:dp1_pilot" dp1 queries execute against dp1_pilot.
     schemaMappings: ""
 
-    # -- Table name mappings for query rewriting
+    # -- Table name mappings for query rewriting (as visible:backend pairs).
+    # The visible name is the Felis / TAP_SCHEMA table
+    # The backend name is the actual Qserv / BigQuery table name.
     # Example: ["dp1.Object:dp1_pilot.Object"] rewrites references to
     # dp1.Object so they query dp1_pilot.Object instead.
     tableMappings: []
@@ -203,6 +205,19 @@ config:
   # -- Maximum row limit (MAXREC) enforced server-side.
   # Leave empty to use the default (100000000).
   maxRec: ""
+
+  # -- Maximum execution duration for TAP queries in seconds.
+  # Also used for sizing the signed result upload URL's expiration
+  # Leave empty to use the default (14400, 4 hours).
+  maxExecutionDuration: ""
+
+  # -- Maximum UWS job destruction time in seconds.
+  # Leave empty to use the default (604800, 1 week).
+  maxDestruction: ""
+
+  # -- Maximum UWS job quote in seconds.
+  # Leave empty to use the default (86400, 24 hours).
+  maxQuote: ""
 
   # -- Whether to advertise VOParquet (application/vnd.apache.parquet) as a
   # supported output format in the TAP capabilities.

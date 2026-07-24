@@ -25,8 +25,8 @@ cadc-tap:
       dataset: "ppdb_lsstcam"
       schema: "ppdb"
       image:
-        tag: "3.18.0"
-        imagePullPolicy: "Always"
+        tag: "tickets-DM-55648-release-3.21.0"
+        pullPolicy: "Always"
 
   cloudsql:
     enabled: true

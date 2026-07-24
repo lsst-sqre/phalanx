@@ -42,6 +42,9 @@ IVOA TAP service
 | config.kafka.topics.jobDelete | string | `"lsst.tap.job-delete"` | Job Delete topic |
 | config.kafka.topics.jobRun | string | `"lsst.tap.job-run"` | Job Run topic |
 | config.kafka.topics.jobStatus | string | `"lsst.tap.job-status"` | Job Status topic |
+| config.maxDestruction | string | `""` | Maximum UWS job destruction time in seconds. Leave empty to use the default (604800, 1 week). |
+| config.maxExecutionDuration | string | `""` | Maximum execution duration for TAP queries in seconds. Also used for sizing the signed result upload URL's expiration Leave empty to use the default (14400, 4 hours). |
+| config.maxQuote | string | `""` | Maximum UWS job quote in seconds. Leave empty to use the default (86400, 24 hours). |
 | config.maxRec | string | `""` | Maximum row limit (MAXREC) enforced server-side. Leave empty to use the default (100000000). |
 | config.outputLimit | string | `""` | Output limit value for TAP queries advertised in capabilities. Leave empty to use the default (100000000). |
 | config.outputLimitUnit | string | `""` | Unit for the output limit: "byte" or "row". Leave empty to use the default ("row"). |
@@ -58,7 +61,7 @@ IVOA TAP service
 | config.qserv.jdbcParams | string | `""` | Extra JDBC connection parameters |
 | config.qserv.passwordEnabled | bool | false | Whether the Qserv database is password protected |
 | config.qserv.schemaMappings | string | `""` | Schema name mappings: comma-separated list of user_schema:internal_schema pairs. Example: "dp1:dp1_pilot" dp1 queries execute against dp1_pilot. |
-| config.qserv.tableMappings | list | `[]` | Table name mappings for query rewriting Example: ["dp1.Object:dp1_pilot.Object"] rewrites references to dp1.Object so they query dp1_pilot.Object instead. |
+| config.qserv.tableMappings | list | `[]` | Table name mappings for query rewriting (as visible:backend pairs). The visible name is the Felis/TAP_SCHEMA table The backend name is the actual Qserv / BigQuery table name. Example: ["dp1.Object:dp1_pilot.Object"] rewrites references to dp1.Object so they query dp1_pilot.Object instead. |
 | config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
 | config.serviceName | string | None, must be set | Name of the service from Gafaelfawr's perspective, used for metrics reporting |
 | config.tapSchemaAddress | string | `"cadc-tap-schema-db:3306"` | Address to a MySQL database containing TAP schema data |
