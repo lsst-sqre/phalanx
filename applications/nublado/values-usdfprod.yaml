@@ -150,6 +150,15 @@ controller:
             resources:
               requests:
                 storage: "1Gi"
+        - name: "zfs-lscratch-storage"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "zfs-lscratch-storage"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "10Gi"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "sdf-home"
@@ -162,6 +171,8 @@ controller:
           volumeName: "sdf-data-rubin"
         - containerPath: "/scratch"
           volumeName: "sdf-scratch"
+        - containerPath: "/lscratch"
+          volumeName: "zfs-lscratch-storage"
 
 proxy:
   ingress:
