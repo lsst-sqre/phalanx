@@ -1,5 +1,8 @@
 image:
   pullPolicy: Always
+  # Temporary branch-image override for DM-55619 testing; remove before
+  # merging (a squareone release will supersede this).
+  tag: "tickets-DM-55619-hero"
 
 ingress:
   timesSquareScope: "exec:admin"
