@@ -17,9 +17,10 @@ image:
   tag: ""
 
 config:
-  # -- List of data (Butler) Collections. Expected attributes: `config`,
-  # `label`, `name`, `butler_type`, `repository`, and `datalink_url`
-  butlerDataCollections: []
+  # -- List of datasets enabled in this environment.
+  datasets:
+    - "dp02"
+    - "dp1"
 
   metrics:
     # -- Whether to enable sending metrics
@@ -49,6 +50,13 @@ config:
   # -- Logging profile (`production` for JSON, `development` for
   # human-friendly)
   logProfile: "production"
+
+  # -- ObsCore exporter configurations by dataset
+  # @default -- See `values.yaml`
+  obscoreConfig:
+    dp02: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp02.yaml"
+    dp1: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp1.yaml"
+    dp2: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/edp2.yaml"
 
   # -- URL path prefix
   pathPrefix: "/api/sia"
