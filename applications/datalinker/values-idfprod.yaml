@@ -2,3 +2,6 @@ config:
   metrics:
     enabled: true
   slackAlerts: true
+
+  # -- TAP configuration
+  tapMetadataUrl: "https://github.com/lsst/sdm_schemas/releases/download/EDP2-deploy-v1/datalink-columns.zip"

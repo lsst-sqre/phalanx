@@ -12,6 +12,8 @@ cadc-tap:
         - "dp02_dc2_catalogs.ObsCore:access_url"
         - "dp1.ObsCore:access_url"
 
+    datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/EDP2-deploy-v1/datalink-snippets.zip"
+
   cloudsql:
     enabled: true
     instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
