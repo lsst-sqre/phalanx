@@ -3,6 +3,7 @@ config:
     - "dp02"
     - "dp03"
     - "dp1"
+    - "dp2"
     - "prompt"
   hips:
     legacy:
@@ -14,6 +15,11 @@ config:
     servers:
       tap:
         enabled: true
+        schemas:
+          - dp2
+          - dp1
+          - ivoa_obscore
+          - dp02_dc2
       ssotap:
         enabled: true
   useSubdomains:
