@@ -25,6 +25,9 @@ config:
       count: 1
       users:
         - username: "bot-mobu-phlx-rec"
+          groups:
+            - name: "g_rubin"
+              id: 2000007
       scopes:
         - "exec:internal-tools"
         - "exec:notebook"
@@ -45,6 +48,9 @@ config:
       count: 1
       users:
         - username: "bot-mobu-tutorial"
+          groups:
+            - name: "g_rubin"
+              id: 2000007
       scopes:
         - "exec:notebook"
         - "exec:portal"
@@ -62,6 +68,9 @@ config:
       count: 1
       users:
         - username: "bot-mobu-tap"
+          groups:
+            - name: "g_rubin"
+              id: 2000007
       scopes: ["read:tap"]
       business:
         type: "TAPQuerySetRunner"
