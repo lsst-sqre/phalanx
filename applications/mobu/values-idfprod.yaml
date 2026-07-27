@@ -36,6 +36,10 @@ config:
         type: "NotebookRunnerCounting"
         options:
           cell_execution_timeout: "1h"
+          collection_rules:
+            - type: exclude_union_of
+              patterns:
+                - "sasquatch.ipynb"
           repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
           repo_ref: "main"
           execution_idle_time: 0
