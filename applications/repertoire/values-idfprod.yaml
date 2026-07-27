@@ -3,6 +3,7 @@ config:
     - "dp02"
     - "dp03"
     - "dp1"
+    - "dp2"
     - "prompt"
   hips:
     legacy:
