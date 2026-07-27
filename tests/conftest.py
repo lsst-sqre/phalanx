@@ -126,6 +126,7 @@ def mock_google_cloud() -> Iterator[MockGoogleCloudClients]:
 
 @pytest.fixture
 def mock_recover(
+    *,
     data: PhalanxData,
     factory: Factory,
     mock_helm: MockHelmCommand,
