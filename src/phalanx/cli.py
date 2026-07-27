@@ -1219,6 +1219,7 @@ def recover_scale_up(config: Path | None, context: str) -> None:
 )
 @_report_usage_errors
 def recover_restore(
+    *,
     config: Path | None,
     old_context: str,
     new_context: str,
@@ -1363,6 +1364,7 @@ def recover_restore(
 )
 @_report_usage_errors
 def recover_preflight_check(
+    *,
     config: Path | None,
     old_context: str,
     new_context: str,

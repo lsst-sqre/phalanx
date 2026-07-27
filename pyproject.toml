@@ -147,13 +147,8 @@ python_files = [
     "tests/*/*.py"
 ]
 
-# The rule used with Ruff configuration is to disable every lint that has
-# legitimate exceptions that are not dodgy code, rather than cluttering code
-# with noqa markers. This is therefore a reiatively relaxed configuration that
-# errs on the side of disabling legitimate lints.
-#
-# Reference for settings: https://beta.ruff.rs/docs/settings/
-# Reference for rules: https://beta.ruff.rs/docs/rules/
+# Use the generic Ruff configuration in ruff.toml and extend it with only
+# project-specific settings.
 [tool.ruff]
 extend = "ruff-shared.toml"
 
@@ -164,6 +159,5 @@ extend = "ruff-shared.toml"
 
 [tool.ruff.lint.isort]
 known-first-party = ["phalanx", "tests"]
-split-on-trailing-comma = false
 
 [tool.setuptools_scm]

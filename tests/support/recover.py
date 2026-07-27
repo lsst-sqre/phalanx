@@ -22,6 +22,7 @@ class MockRecover:
 
     def __init__(
         self,
+        *,
         data: PhalanxData,
         factory: Factory,
         mock_helm: MockHelmCommand,
