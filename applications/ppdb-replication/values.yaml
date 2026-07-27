@@ -67,7 +67,7 @@ cloudSqlProxy:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of image to use
-    tag: "2.23.0"
+    tag: "2.24.1"
 
   config:
     # -- Uri for Allow DB instance
