@@ -11,7 +11,7 @@ image:
   pullPolicy: IfNotPresent
 
   # -- Redis Stream Trim image version
-  tag: 7-alpine
+  tag: 8-alpine
 
 # Cron Schedule
 cronSchedule: "0 18 * * *"
