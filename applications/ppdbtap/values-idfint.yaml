@@ -2,7 +2,7 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfint-ppdbtap"
-      tag: "main"
+      tag: "tickets-DM-55642"
       pullPolicy: "Always"
 
   config:
