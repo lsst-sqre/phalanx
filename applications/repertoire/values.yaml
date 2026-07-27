@@ -472,7 +472,7 @@ config:
   tap:
     # -- Default schema version for all TAP services (can be overridden
     # per-app)
-    schemaVersion: "releases/w.2026.17"
+    schemaVersion: "releases/EDP2-deploy-v1"
 
     # -- Template for schema artifact URLs (use {schemaVersion} placeholder)
     # @default -- GCS rubin-sdm-schemas-artifacts bucket
