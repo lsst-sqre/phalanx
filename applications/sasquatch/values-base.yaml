@@ -277,7 +277,7 @@ telegraf:
       tags: |
         [ "Agent", "Aspic", "Axis", "Bay", "Buffer", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck", "VersionType" ]
       topicRegexps: |
-        [ "lsst.sal.MTCamera","lsst.sal.MTHeaderService", "lsst.sal.MTOODS", "lsst.sal.WFOODS" ]
+        [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS", "lsst.sal.WFOODS" ]
     calsys:
       enabled: true
       database: "efd"
