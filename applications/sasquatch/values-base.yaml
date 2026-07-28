@@ -310,7 +310,7 @@ telegraf:
       tags: |
         [ "Agent", "Aspic", "Buffer", "Location", "Raft", "Reb", "Sensor", "Source", "VersionType" ]
       topicRegexps: |
-        [ "lsst\.ATCamera" ]
+        [ "lsst\.ATCamera.*" ]
     mtcamera:
       enabled: true
       database: "lsst.MTCamera"
