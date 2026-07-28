@@ -32,10 +32,10 @@ lasertracker1-sim:
   resources:
     limits:
       cpu: 200m
-      memory: 400Mi
+      memory: 500Mi
     requests:
       cpu: 50m
-      memory: 200Mi
+      memory: 250Mi
 
 mtaircompressor1-sim:
   enabled: true
@@ -98,10 +98,10 @@ mtaos:
   resources:
     limits:
       cpu: 1000m
-      memory: 1800Mi
+      memory: 2000Mi
     requests:
       cpu: 50m
-      memory: 900Mi
+      memory: 1000Mi
 
 mtcamhexapod-sim:
   enabled: true
@@ -116,7 +116,7 @@ mtcamhexapod-sim:
       cpu: 500m
       memory: 840Mi
     requests:
-      cpu: 60m
+      cpu: 100m
       memory: 420Mi
 
 mtdome-sim:
@@ -131,7 +131,7 @@ mtdome-sim:
       cpu: 1
       memory: 320Mi
     requests:
-      cpu: 400m
+      cpu: 500m
       memory: 160Mi
 
 mtdometrajectory:
@@ -143,7 +143,7 @@ mtdometrajectory:
       cpu: 250m
       memory: 512Mi
     requests:
-      cpu: 25m
+      cpu: 100m
       memory: 256Mi
 
 mtheaderservice:
@@ -215,7 +215,7 @@ mtm1m3-sim:
       cpu: 1
       memory: 1Gi
     requests:
-      cpu: 300m
+      cpu: 500m
       memory: 300Mi
 
 mtm1m3ts-sim:
@@ -241,10 +241,10 @@ mtm2hexapod-sim:
   <<: *pod-antiaffinity
   resources:
     limits:
-      cpu: 400m
+      cpu: 500m
       memory: 800Mi
     requests:
-      cpu: 40m
+      cpu: 100m
       memory: 400Mi
 
 mtm2-hwsim:
@@ -259,7 +259,7 @@ mtm2-hwsim:
       cpu: 850m
       memory: 1500Mi
     requests:
-      cpu: 200m
+      cpu: 250m
       memory: 500Mi
 
 mtmount-sim:
@@ -274,7 +274,7 @@ mtmount-sim:
       cpu: 500m
       memory: 1000Mi
     requests:
-      cpu: 100m
+      cpu: 250m
       memory: 512Mi
 
 mtoods:
@@ -293,10 +293,10 @@ mtoods:
   <<: *pod-antiaffinity
   resources:
     limits:
-      cpu: 1
+      cpu: 2
       memory: 4Gi
     requests:
-      cpu: 100m
+      cpu: 1
       memory: 1Gi
   configfile:
     path: /etc
@@ -366,10 +366,10 @@ wfoods:
   <<: *pod-antiaffinity
   resources:
     limits:
-      cpu: 1
+      cpu: 2
       memory: 4000Mi
     requests:
-      cpu: 100m
+      cpu: 1
       memory: 800Mi
   configfile:
     path: /etc
@@ -446,7 +446,7 @@ mtrotator-sim:
       cpu: 400m
       memory: 600Mi
     requests:
-      cpu: 120m
+      cpu: 200m
       memory: 280Mi
 
 mtvms-camera-rotator-sim:
@@ -459,10 +459,10 @@ mtvms-camera-rotator-sim:
   resources:
     limits:
       cpu: 250m
-      memory: 180Mi
+      memory: 100Mi
     requests:
       cpu: 25m
-      memory: 90Mi
+      memory: 50Mi
 
 mtvms-m1m3-sim:
   enabled: true
