@@ -7,10 +7,10 @@ cbp-sim:
   resources:
     limits:
       cpu: 110m
-      memory: 320Mi
+      memory: 400Mi
     requests:
-      cpu: 11m
-      memory: 160Mi
+      cpu: 15m
+      memory: 200Mi
 
 electrometer101-sim:
   enabled: true
@@ -69,7 +69,7 @@ electrometer103-sim:
       cpu: 100m
       memory: 360Mi
     requests:
-      cpu: 14m
+      cpu: 16m
       memory: 180Mi
 
 electrometer201-sim:
@@ -89,7 +89,7 @@ electrometer201-sim:
       cpu: 100m
       memory: 320Mi
     requests:
-      cpu: 14m
+      cpu: 20m
       memory: 160Mi
 
 fiberspectrograph101-sim:
@@ -151,10 +151,10 @@ ledprojector-sim:
   resources:
     limits:
       cpu: 100m
-      memory: 360Mi
+      memory: 500Mi
     requests:
-      cpu: 10m
-      memory: 180Mi
+      cpu: 20m
+      memory: 250Mi
 
 linearstage101-sim:
   enabled: true
@@ -167,7 +167,7 @@ linearstage101-sim:
       cpu: 100m
       memory: 360Mi
     requests:
-      cpu: 12m
+      cpu: 20m
       memory: 180Mi
 
 linearstage102-sim:
@@ -181,7 +181,7 @@ linearstage102-sim:
       cpu: 120m
       memory: 360Mi
     requests:
-      cpu: 12m
+      cpu: 20m
       memory: 180Mi
 
 linearstage103-sim:
@@ -195,7 +195,7 @@ linearstage103-sim:
       cpu: 100m
       memory: 400Mi
     requests:
-      cpu: 12m
+      cpu: 20m
       memory: 200Mi
 
 linearstage104-sim:
@@ -209,7 +209,7 @@ linearstage104-sim:
       cpu: 100m
       memory: 400Mi
     requests:
-      cpu: 12m
+      cpu: 20m
       memory: 200Mi
 
 mtreflector-sim:
@@ -223,7 +223,7 @@ mtreflector-sim:
       cpu: 100m
       memory: 320Mi
     requests:
-      cpu: 13m
+      cpu: 20m
       memory: 160Mi
 
 simulation-gencam:
@@ -259,8 +259,8 @@ tunablelaser-sim:
     RUN_ARG: --simulate 1
   resources:
     limits:
-      cpu: "2"
+      cpu: 1
       memory: 1000Mi
     requests:
       cpu: 50m
-      memory: 200Mi
+      memory: 250Mi
