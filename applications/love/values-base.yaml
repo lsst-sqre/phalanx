@@ -516,6 +516,10 @@ love-producer:
   - name: atspectrograph
     csc: ATSpectrograph:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
+  - name: aurora-cloud-sensor-ess307
+    csc: ESS:307 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: automatic-transfer-switch-ess309
     csc: ESS:309 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
