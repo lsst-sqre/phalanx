@@ -184,12 +184,7 @@ telegraf:
       tags: |
         [ "Agent", "Aspic", "Buffer", "Location", "Raft", "Reb", "Sensor", "Source", "VersionType" ]
       topicRegexps: |
-        [ "lsst.sal.ATCamera" ]
-    latiss-support:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
+        [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
     m1m3:
       enabled: true
       database: "efd"
@@ -282,12 +277,7 @@ telegraf:
       tags: |
         [ "Agent", "Aspic", "Axis", "Bay", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck", "VersionType" ]
       topicRegexps: |
-        [ "lsst.sal.MTCamera" ]
-    lsstcam-support:
-      enabled: true
-      database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTHeaderService", "lsst.sal.MTOODS", "lsst.sal.WFOODS" ]
+        [ "lsst.sal.MTCamera","lsst.sal.MTHeaderService", "lsst.sal.MTOODS", "lsst.sal.WFOODS" ]
     calsys:
       enabled: true
       database: "efd"
