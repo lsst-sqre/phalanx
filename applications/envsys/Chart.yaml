@@ -7,6 +7,16 @@ dependencies:
   version: 1.0.0
   repository: file://../../charts/csc_shared
 - name: csc
+  alias: aurora-cloud-sensor-ess307-sim
+  version: 1.0.0
+  condition: aurora-cloud-sensor-ess307-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: aurora-cloud-sensor-ess307
+  version: 1.0.0
+  condition: aurora-cloud-sensor-ess307.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: automatic-transfer-switch-ess309
   version: 1.0.0
   condition: automatic-transfer-switch-ess309.enabled
