@@ -49,6 +49,7 @@ Publish versioned docs
 | global.repertoireUrl | string | Set by Argo CD | Base URL for Repertoire discovery API |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the docverse image |
+| image.pythonModule | string | `"docverse_server"` | Top-level Python module of the server in this image. Images built after the DM-55658 packaging restructure use "docverse_server"; earlier images use "docverse". Must match the deployed image tag. |
 | image.repository | string | `"ghcr.io/lsst-sqre/docverse"` | Image to use in the docverse deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |

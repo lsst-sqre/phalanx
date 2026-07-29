@@ -38,7 +38,7 @@ spec:
       containers:
         - name: "docverse-worker"
           command: ["arq"]
-          args: ["docverse.worker.main.WorkerSettings"]
+          args: ["{{ .Values.image.pythonModule }}.worker.main.WorkerSettings"]
           env:
             {{- include "docverse.envVars" . | nindent 12 }}
             {{- include "docverse.kafkaEnvVars" . | nindent 12 }}

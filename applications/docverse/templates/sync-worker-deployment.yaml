@@ -39,7 +39,7 @@ spec:
       containers:
         - name: "docverse-sync-worker"
           command: ["arq"]
-          args: ["docverse.worker.main.KeeperSyncWorkerSettings"]
+          args: ["{{ .Values.image.pythonModule }}.worker.main.KeeperSyncWorkerSettings"]
           env:
             {{- include "docverse.envVars" . | nindent 12 }}
             {{- include "docverse.kafkaEnvVars" . | nindent 12 }}
