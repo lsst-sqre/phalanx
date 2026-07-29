@@ -31,6 +31,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.htmlKeyMigration.dryRun | bool | `true` | Whether to run the HTML key migration job as a dry-run only |
 | config.htmlKeyMigration.enabled | bool | `false` | Whether to run the HTML key migration job as a pre-install/upgrade hook |
 | config.htmlKeyMigration.page | string | `""` | The name of the page to migrate, if set |
+| config.httpClientTimeout | string | `"30"` | Timeout for the shared HTTP client used for all outbound requests (GitHub API and Noteburst) in seconds |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.name | string | `"times-square"` | Name of the service. |
 | config.nbstripoutMigration.dryRun | bool | `false` | Whether to run the nbstripout migration job as a dry-run only |

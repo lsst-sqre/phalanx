@@ -151,6 +151,10 @@ config:
   # -- Default execution timeout for notebooks in seconds
   defaultExecutionTimeout: "300" # 5 minutes
 
+  # -- Timeout for the shared HTTP client used for all outbound requests
+  # (GitHub API and Noteburst) in seconds
+  httpClientTimeout: "30"
+
   # Sentry tracing sample rate
   sentryTracesSampleRate: 0.0
 
