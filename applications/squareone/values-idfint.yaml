@@ -10,3 +10,4 @@ config:
   enableSentry: true
   sentryTracesSampleRate: 1.0
   sentryReplaysOnErrorSampleRate: 1.0
+  enableUserNotifications: true
