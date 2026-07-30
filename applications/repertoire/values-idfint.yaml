@@ -12,7 +12,6 @@ config:
     enabled: true
   slackAlerts: true
   tap:
-    schemaVersion: "main"
     servers:
       tap:
         enabled: true
