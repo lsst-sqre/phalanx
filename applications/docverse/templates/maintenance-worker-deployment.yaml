@@ -39,7 +39,7 @@ spec:
       containers:
         - name: "docverse-maintenance-worker"
           command: ["arq"]
-          args: ["docverse.worker.main.MaintenanceWorkerSettings"]
+          args: ["{{ .Values.image.pythonModule }}.worker.main.MaintenanceWorkerSettings"]
           env:
             {{- include "docverse.envVars" . | nindent 12 }}
             {{- include "docverse.kafkaEnvVars" . | nindent 12 }}
