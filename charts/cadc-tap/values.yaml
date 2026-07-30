@@ -90,7 +90,9 @@ config:
     # Example: "dp1:dp1_pilot" dp1 queries execute against dp1_pilot.
     schemaMappings: ""
 
-    # -- Table name mappings for query rewriting
+    # -- Table name mappings for query rewriting (as visible:backend pairs).
+    # The visible name is the Felis / TAP_SCHEMA table
+    # The backend name is the actual Qserv / BigQuery table name.
     # Example: ["dp1.Object:dp1_pilot.Object"] rewrites references to
     # dp1.Object so they query dp1_pilot.Object instead.
     tableMappings: []
@@ -103,7 +105,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.20.0"
+      tag: "3.21.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -129,7 +131,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.20.0"
+      tag: "3.21.0"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
@@ -203,6 +205,19 @@ config:
   # -- Maximum row limit (MAXREC) enforced server-side.
   # Leave empty to use the default (100000000).
   maxRec: ""
+
+  # -- Maximum execution duration for TAP queries in seconds.
+  # Also used for sizing the signed result upload URL's expiration
+  # Leave empty to use the default (14400, 4 hours).
+  maxExecutionDuration: ""
+
+  # -- Maximum UWS job destruction time in seconds.
+  # Leave empty to use the default (604800, 1 week).
+  maxDestruction: ""
+
+  # -- Maximum UWS job quote in seconds.
+  # Leave empty to use the default (86400, 24 hours).
+  maxQuote: ""
 
   # -- Whether to advertise VOParquet (application/vnd.apache.parquet) as a
   # supported output format in the TAP capabilities.
@@ -373,7 +388,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "3.20.0"
+    tag: "3.21.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`

@@ -25,7 +25,7 @@ IVOA TAP service
 | config.bigquery.dataset | string | None, must be set if backend is `bigquery` | BigQuery dataset name |
 | config.bigquery.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.bigquery.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
-| config.bigquery.image.tag | string | `"3.20.0"` | Tag of TAP image to use |
+| config.bigquery.image.tag | string | `"3.21.0"` | Tag of TAP image to use |
 | config.bigquery.project | string | None, must be set if backend is `bigquery` | BigQuery project ID |
 | config.bigquery.schema | string | `""` | Schema name for table mappings (optional) |
 | config.database | string | `"dp02"` | Data Database name |
@@ -42,6 +42,9 @@ IVOA TAP service
 | config.kafka.topics.jobDelete | string | `"lsst.tap.job-delete"` | Job Delete topic |
 | config.kafka.topics.jobRun | string | `"lsst.tap.job-run"` | Job Run topic |
 | config.kafka.topics.jobStatus | string | `"lsst.tap.job-status"` | Job Status topic |
+| config.maxDestruction | string | `""` | Maximum UWS job destruction time in seconds. Leave empty to use the default (604800, 1 week). |
+| config.maxExecutionDuration | string | `""` | Maximum execution duration for TAP queries in seconds. Also used for sizing the signed result upload URL's expiration Leave empty to use the default (14400, 4 hours). |
+| config.maxQuote | string | `""` | Maximum UWS job quote in seconds. Leave empty to use the default (86400, 24 hours). |
 | config.maxRec | string | `""` | Maximum row limit (MAXREC) enforced server-side. Leave empty to use the default (100000000). |
 | config.outputLimit | string | `""` | Output limit value for TAP queries advertised in capabilities. Leave empty to use the default (100000000). |
 | config.outputLimitUnit | string | `""` | Unit for the output limit: "byte" or "row". Leave empty to use the default ("row"). |
@@ -54,11 +57,11 @@ IVOA TAP service
 | config.qserv.host | string | `"mock-db:3306"` (the mock QServ) | QServ hostname:port to connect to |
 | config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.qserv.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
-| config.qserv.image.tag | string | `"3.20.0"` | Tag of TAP image to use |
+| config.qserv.image.tag | string | `"3.21.0"` | Tag of TAP image to use |
 | config.qserv.jdbcParams | string | `""` | Extra JDBC connection parameters |
 | config.qserv.passwordEnabled | bool | false | Whether the Qserv database is password protected |
 | config.qserv.schemaMappings | string | `""` | Schema name mappings: comma-separated list of user_schema:internal_schema pairs. Example: "dp1:dp1_pilot" dp1 queries execute against dp1_pilot. |
-| config.qserv.tableMappings | list | `[]` | Table name mappings for query rewriting Example: ["dp1.Object:dp1_pilot.Object"] rewrites references to dp1.Object so they query dp1_pilot.Object instead. |
+| config.qserv.tableMappings | list | `[]` | Table name mappings for query rewriting (as visible:backend pairs). The visible name is the Felis / TAP_SCHEMA table The backend name is the actual Qserv / BigQuery table name. Example: ["dp1.Object:dp1_pilot.Object"] rewrites references to dp1.Object so they query dp1_pilot.Object instead. |
 | config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
 | config.serviceName | string | None, must be set | Name of the service from Gafaelfawr's perspective, used for metrics reporting |
 | config.tapSchemaAddress | string | `"cadc-tap-schema-db:3306"` | Address to a MySQL database containing TAP schema data |
@@ -122,7 +125,7 @@ IVOA TAP service
 | uws.external.port | int | `5432` | Port of external PostgreSQL server |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
 | uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
-| uws.image.tag | string | `"3.20.0"` | Tag of UWS database image to use |
+| uws.image.tag | string | `"3.21.0"` | Tag of UWS database image to use |
 | uws.maxActive | int | `5` | Maximum active connections (maxIdle will be set to this value) |
 | uws.nodeSelector | object | `{}` | Node selection rules for the UWS database pod |
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |
