@@ -459,10 +459,10 @@ mtvms-camera-rotator-sim:
   resources:
     limits:
       cpu: 250m
-      memory: 100Mi
+      memory: 200Mi
     requests:
       cpu: 25m
-      memory: 50Mi
+      memory: 100Mi
 
 mtvms-m1m3-sim:
   enabled: true
@@ -474,10 +474,10 @@ mtvms-m1m3-sim:
   resources:
     limits:
       cpu: 250m
-      memory: 180Mi
+      memory: 200Mi
     requests:
       cpu: 25m
-      memory: 60Mi
+      memory: 100Mi
 
 mtvms-m2-sim:
   enabled: true
@@ -489,7 +489,7 @@ mtvms-m2-sim:
   resources:
     limits:
       cpu: 250m
-      memory: 180Mi
+      memory: 200Mi
     requests:
       cpu: 25m
-      memory: 90Mi
+      memory: 100Mi
