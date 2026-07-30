@@ -19,3 +19,6 @@ cadc-tap:
     instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
     serviceAccount: "tap-service@science-platform-stable-6994.iam.gserviceaccount.com"
     database: "tap"
+
+  uws:
+    maxActive: 20
