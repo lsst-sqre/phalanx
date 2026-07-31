@@ -42,9 +42,9 @@ spec:
           - name: integrationtest
             value: "-A Test_Report_MainTel_CSC_End_of_Night.list"
           - name: jobname
-            value: mtcscendofnight.xml
+            value: maintel-end-night
           - name: reportname
-            value: maintel_end_night.xml
+            value: mtcscendofnight.xml
       - name: auxtel-end-night
         depends: call-cleanup-reports
         templateRef:
