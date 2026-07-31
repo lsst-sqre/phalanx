@@ -1,9 +1,9 @@
 cadc-tap:
   tapSchema:
-    image:
-      repository: "lsstsqre/tap-schema-idfint-ppdbtap"
-      tag: "tickets-DM-51914"
-      pullPolicy: "Always"
+    type: "cloudsql"
+    database: "ppdbtap"
+    username: "ppdbtap"
+    useVaultPassword: true
 
   config:
     backend: "bigquery"
