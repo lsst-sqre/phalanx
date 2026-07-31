@@ -475,7 +475,7 @@ config:
     # per-app)
     schemaVersion: "releases/EDP2-deploy-v2"
 
-    # -- Template for schema artifact URLs (use {schemaVersion} placeholder)
+    # -- Template for schema artifact URLs (use {version} placeholder)
     # @default -- GCS rubin-sdm-schemas-artifacts bucket
     schemaSourceTemplate: "gs://rubin-sdm-schemas-artifacts/{version}/schemas.tar.gz"
 
