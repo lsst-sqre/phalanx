@@ -92,14 +92,6 @@ spec:
         operations:
           - All
       - resource:
-          type: topic
-          name: "lsst.sal"
-          patternType: prefix
-        type: allow
-        host: "*"
-        operations:
-          - All
-      - resource:
           type: cluster
         operations:
           - Describe
