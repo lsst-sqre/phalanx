@@ -11,6 +11,15 @@ config:
   # -- APDB config file resource
   apdbConfig: "/sdf/data/rubin/user/jeremym/ppdb-config/apdb_dev.yaml"
 
+    # -- CloudSQL Python Connector configuration
+  cloudSql:
+
+    # -- CloudSQL Connection Name
+    connectionName: "ppdb-dev-5c07:us-central1:ppdb-dev"
+
+    # -- Username in sa_name@project.iam format
+    user: "usdf-replication@ppdb-dev-5c07.iam"
+
   # -- PPDB config file resource
   ppdbConfig: "gs://ppdb-dev-config/ppdb-dev-5c07_config.yaml"
 

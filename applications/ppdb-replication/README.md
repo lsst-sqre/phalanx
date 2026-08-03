@@ -11,16 +11,17 @@ Replicates data from the APDB to the PPDB
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the ppdb-replication deployment pod |
-| cloudSqlProxy.config.instanceUri | string | `""` | Uri for Allow DB instance |
-| cloudSqlProxy.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the allow db proxy image |
-| cloudSqlProxy.image.repository | string | `"gcr.io/cloud-sql-connectors/cloud-sql-proxy"` | Image to use for cloudsql proxy |
-| cloudSqlProxy.image.tag | string | `"2.24.1"` | Tag of image to use |
-| cloudSqlProxy.resources | object | See `values.yaml` | Resource limits and requests for the cloudsql proxy pod |
 | config.additionalS3ProfileName | string | `"embargo"` | S3 profile name for additional S3 profile |
 | config.additionalS3ProfileUrl | string | `"https://sdfembs3.sdf.slac.stanford.edu"` | S3 profile URL for additional S3 profile |
 | config.apdbConfig | string | `nil` | APDB config file resource |
 | config.apdbIndexUri | string | `"/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"` | APDB index URI |
 | config.checkInterval | int | `300` | Time to wait before checking for new chunks, if no chunk appears |
+| config.cloudSql | object | `{"connectionName":"","dbName":"ppdb-chunk-tracking","enabled":"true","ipType":"public","user":""}` | CloudSQL Python Connector configuration |
+| config.cloudSql.connectionName | string | `""` | CloudSQL Connection Name |
+| config.cloudSql.dbName | string | `"ppdb-chunk-tracking"` | Database name to connect to |
+| config.cloudSql.enabled | string | `"true"` | Enable CloudSQL Python Connector |
+| config.cloudSql.ipType | string | `"public"` | Cloud SQL IP Type.  Set to Public since there is no interconnect or VPN to GCP |
+| config.cloudSql.user | string | `""` | Username in sa_name@project.iam format |
 | config.disableBucketValidation | int | `1` | Disable bucket validation in LSST S3 tools |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
