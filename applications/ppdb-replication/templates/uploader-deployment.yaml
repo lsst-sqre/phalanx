@@ -72,9 +72,19 @@ spec:
             - name: LSST_DISABLE_BUCKET_VALIDATION
               value: {{ .Values.config.disableBucketValidation | quote }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: "/app/secrets/gcs-credentials.json"
+              value: "/app/secrets/gcp-credentials.json"
             - name: DAX_APDB_MONITOR_CONFIG
               value: "logging:lsst.dax.ppdb.metrics,lsst.dax.ppdb.bigquery.chunk_uploader,-any"
+            - name: CLOUDSQL_ENABLED
+              value: {{ .Values.config.cloudSql.enabled | quote }}
+            - name: CLOUDSQL_INSTANCE_CONNECTION_NAME
+              value: {{ .Values.config.cloudSql.connectionName | quote }}
+            - name: CLOUDSQL_IP_TYPE
+              value: {{ .Values.config.cloudSql.ipType | quote }}
+            - name: CLOUDSQL_USER
+              value: {{ .Values.config.cloudSql.user | quote }}
+            - name: CLOUDSQL_DB_NAME
+              value: {{ .Values.config.cloudSql.dbName | quote }}
           volumeMounts:
             - name: "ppdb-replication-secrets"
               mountPath: "/app/secrets"
