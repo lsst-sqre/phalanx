@@ -33,6 +33,9 @@ config:
   # -- Default S3 endpoint URL
   s3EndpointUrl: ""
 
+  # -- Cache-Control max-age in seconds for image MIME types (0 disables)
+  cacheMaxAge: 0
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
