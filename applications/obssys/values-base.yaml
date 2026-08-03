@@ -47,11 +47,11 @@ atqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 3
-      memory: 10Gi
+      cpu: 8
+      memory: 16Gi
     requests:
-      cpu: 500m
-      memory: 2Gi
+      cpu: 4
+      memory: 8Gi
 
 atscheduler:
   classifier: scheduler2
@@ -207,11 +207,11 @@ ocsqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 3
-      memory: 10Gi
+      cpu: 8
+      memory: 16Gi
     requests:
-      cpu: 500m
-      memory: 1Gi
+      cpu: 4
+      memory: 8Gi
 
 ocsscheduler:
   classifier: scheduler3
