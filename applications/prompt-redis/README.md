@@ -36,7 +36,7 @@ Redis cluster for prompt processing
 | redis-stream-trim.cronSchedule | string | `"0 18 * * *"` |  |
 | redis-stream-trim.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | redis-stream-trim.image.repository | string | `"redis"` | Redis Stream Trim Docker image repository |
-| redis-stream-trim.image.tag | string | `"7-alpine"` | Redis Stream Trim image version |
+| redis-stream-trim.image.tag | string | `"8-alpine"` | Redis Stream Trim image version |
 | redis-stream-trim.maxStreamLength | int | `1000` | Maximum Stream Length |
 | redis-stream-trim.nodeSelector | object | `{}` | Node selector configuration |
 | redis-stream-trim.replicaCount | int | `1` | Number of Redis Stream Trim pods to run in the deployment. |
