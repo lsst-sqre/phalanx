@@ -178,20 +178,11 @@ telegraf:
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
-    latiss-telemetry:
-      enabled: true
-      database: "lsst.ATCamera"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      tags: |
-        [ "Agent", "Aspic", "Buffer", "Location", "Raft", "Reb", "Sensor", "Source", "VersionType" ]
-      topicRegexps: |
-        [ "lsst.sal.ATCamera"]
     latiss:
       enabled: true
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph", "lsst.sal.ATCamera.command", "lsst.sal.ATCamera.logevent" ]
+        [ "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph", "lsst.sal.ATCamera" ]
     m1m3:
       enabled: true
       database: "efd"
@@ -276,20 +267,11 @@ telegraf:
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
-    lsstcam-telemetry:
-      enabled: true
-      database: "lsst.MTCamera"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      tags: |
-        [ "Agent", "Aspic", "Axis", "Bay", "Buffer", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck", "VersionType" ]
-      topicRegexps: |
-        [ "lsst.sal.MTCamera" ]
     lsstcam:
       enabled: true
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.MTHeaderService", "lsst.sal.MTOODS", "lsst.sal.WFOODS", "lsst.sal.MTCamera.command", "lsst.sal.MTCamera.logevent" ]
+        [ "lsst.sal.MTHeaderService", "lsst.sal.MTOODS", "lsst.sal.WFOODS", "lsst.sal.MTCamera" ]
     calsys:
       enabled: true
       database: "efd"
@@ -308,7 +290,7 @@ telegraf:
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: |
-        [ "Agent", "Aspic", "Buffer", "Location", "Raft", "Reb", "Sensor", "Source", "VersionType" ]
+        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source", "VersionType" ]
       topicRegexps: |
         [ "lsst.ATCamera" ]
     mtcamera:
@@ -317,7 +299,7 @@ telegraf:
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: |
-        [ "Agent", "Aspic", "Axis", "Bay", "Buffer", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck", "VersionType" ]
+        [ "Agent", "Aspic", "Axis", "Bay", "Buffer", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway" , "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck", "VersionType" ]
       topicRegexps: |
         [ "lsst.MTCamera" ]
   resources:
