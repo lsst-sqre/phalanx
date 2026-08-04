@@ -12,7 +12,7 @@ x-pod-antiaffinity:
           topologyKey: kubernetes.io/hostname
 
 aurora-cloud-sensor-ess307-sim:
-  enabled: true
+  enabled: false
   classifier: ess307
   image:
     repository: ts-dockerhub.lsst.org/ess
