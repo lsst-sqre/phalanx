@@ -1,0 +1,88 @@
+cadc-tap:
+  ingress:
+    # -- Ingress path that should be routed to this service
+    path: "obsforgetap"
+
+  config:
+    # -- What type of backend?
+    backend: "pg"
+
+    # -- Name of the service from Gafaelfawr's perspective
+    serviceName: "obsforgetap"
+
+    # -- Whether Sentry is enabled in this environment
+    sentryEnabled: false
+
+    pg:
+      # -- Postgres hostname:port to connect to
+      # @default -- None, must be set
+      host: ""
+
+      # -- Postgres database to connect to
+      database: "obsdb"
+
+      # -- Postgres username to use to connect
+      username: "obsforge"
+
+    # -- Vault secret name: the final key in the vault path
+    vaultSecretName: "obsforgetap"
+
+  serviceAccount:
+    # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
+    name: "obsforgetap"
+
+  tapSchema:
+    # -- Database backend type: "containerized", "cloudsql", or "external"
+    # @default -- "cloudsql"
+    type: "cloudsql"
+
+    # -- Database name
+    database: "obsforgetap"
+
+    # -- Database username
+    username: "obsforgetap"
+
+    # -- Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external)
+    useVaultPassword: true
+
+    # -- Connection pool configuration for jdbc/tapadm
+    tapadm:
+      # -- Maximum active connections (maxIdle will be set to this value)
+      maxActive: 2
+
+    # -- Connection pool configuration for jdbc/tapuser (query planning and tap_upload)
+    tapuser:
+      # -- Maximum active connections (maxIdle will be set to this value)
+      maxActive: 5
+
+  uws:
+    # -- Database backend type: "containerized", "cloudsql", or "external"
+    type: "cloudsql"
+
+    # -- Database name
+    database: "obsforgetap"
+
+    # -- Database username
+    username: "obsforgetap"
+
+    # -- Whether the UWS database requires a password in Vault (true for cloudsql/external)
+    useVaultPassword: true
+
+    # -- Connection pool configuration
+    # -- Maximum active connections (maxIdle will be set to this value)
+    maxActive: 8
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
