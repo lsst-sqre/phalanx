@@ -20,7 +20,10 @@ controller:
     fileserver:
       enabled: true
       nodeSelector:
-        node_pool: "user-lab-pool"
+        # Google Cloud has no more capacity in us-central1-b for n2-highmem-16s
+        # on 2026-08-04. Use an AMD nodepool with the same size and tier of
+        # instance; these seem to be available
+        node_pool: "user-lab-pool-amd"
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
@@ -46,7 +49,10 @@ controller:
         TUTORIAL_DATA: "/rubin/cst_repos/tutorial-notebooks/data"
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       nodeSelector:
-        node_pool: "user-lab-pool"
+        # Google Cloud has no more capacity in us-central1-b for n2-highmem-16s
+        # on 2026-08-04. Use an AMD nodepool with the same size and tier of
+        # instance; these seem to be available
+        node_pool: "user-lab-pool-amd"
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "rubin-epo-cit-sci-pipeline.json"
