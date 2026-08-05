@@ -11,7 +11,7 @@ Google provides a mechanism to obtain those credentials using the :command:`gclo
 
 #. `Install gcloud <https://docs.cloud.google.com/sdk/docs/install-sdk>`__ on the system on which you want to run privileged Kubernetes commands.
 
-#. `Initialize gcloud <https://docs.cloud.google.com/sdk/docs/initializing>`__.
+#. `Initialize gcloud <https://docs.cloud.google.com/sdk/docs/initialize>`__.
    You will need to have access to the Google Cloud Platform project where your target Kubernetes cluster is running.
 
    If you have access to multiple Google Cloud Platform projects, you will be asked to select one as your default project.

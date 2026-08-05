@@ -22,8 +22,8 @@ class GoogleCloudService:
     done and that the Google Cloud Python SDK can find whatever it needs to
     send authenticated requests.
 
-    If you're running locally, ``gcloud auth application-default login`` should
-    work.
+    If you're running locally, :command:`gcloud auth application-default
+    login` should work.
 
     Parameters
     ----------
