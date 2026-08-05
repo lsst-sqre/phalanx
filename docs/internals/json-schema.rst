@@ -4,7 +4,7 @@ JSON schema
 
 Some of the YAML configuration files used by Phalanx have published JSON schemas, generated from their Pydantic_ models.
 
-.. _Pydantic: https://docs.pydantic.dev/latest/
+.. _Pydantic: https://pydantic.dev/docs/validation/latest/get-started/
 
 These schemas are used by the check-jsonschema_ pre-commit hook to validate changes to those files before commit.
 If the underlying model changes, the schema will be detected as out-of-date by the Phalanx test suite.

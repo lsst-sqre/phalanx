@@ -13,7 +13,7 @@ Set up
 ======
 
 To use this technique, you need to have the 1Password CLI (:command:`op`) installed.
-See the `1Password CLI documentation <https://developer.1password.com/docs/cli>`__ for installation instructions.
+See the `1Password CLI documentation <https://www.1password.dev/cli>`__ for installation instructions.
 
 Next, ensure that you're signed into the 1Password Vault containing the Phalanx secrets:
 

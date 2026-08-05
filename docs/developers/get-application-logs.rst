@@ -56,4 +56,4 @@ Getting older logs
 ==================
 
 Logs older than that may or may not be available depending on whether this Science Platform environment is running somewhere that captures older logs.
-For Science Platform environments hosted by Google Kubernetes Engine, older logs can be viewed and searched by going to `Log Explorer <https://cloud.google.com/logging/docs/view/logs-explorer-interface>`__ for that Google Cloud Platform project.
+For Science Platform environments hosted by Google Kubernetes Engine, older logs can be viewed and searched by going to `Log Explorer <https://docs.cloud.google.com/logging/docs/view/logs-explorer-interface>`__ for that Google Cloud Platform project.
