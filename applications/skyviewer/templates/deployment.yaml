@@ -122,3 +122,9 @@ spec:
         # matches the nextjs user the image builds and chowns its files to
         runAsUser: 1001
         runAsGroup: 1001
+        {{- with .Values.hipsData.supplementalGroups }}
+        # group access to the HiPS exports: /sdf/data/rubin/shared is
+        # drwxr-s--- root-of-tree, readable only by its group
+        supplementalGroups:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}

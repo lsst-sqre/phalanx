@@ -62,6 +62,13 @@ hipsData:
   # imagery.
   enabled: true
 
+  # -- Supplemental group IDs the pod runs with. The data exports are
+  # group-readable only (/sdf/data/rubin/shared is drwxr-s---, group 4085),
+  # so without the right group every read is denied even with the volumes
+  # mounted.
+  supplementalGroups:
+    - 4085
+
   # -- Claims to create and mount. Each entry needs `name`,
   # `storageClassName`, `capacity` and `mountPath`. `config.hipsDataDir` must
   # resolve below one of them, following symlinks.
