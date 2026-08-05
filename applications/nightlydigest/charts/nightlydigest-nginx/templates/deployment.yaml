@@ -17,6 +17,8 @@ spec:
     spec:
       imagePullSecrets:
       - name: pull-secret
+      securityContext:
+        fsGroup: {{ .Values.initContainers.frontend.uid | default 1000 }}
       initContainers:
       - name: nightlydigest-frontend
         image: "{{ .Values.initContainers.frontend.image.repository }}:{{ .Values.initContainers.frontend.image.tag | default .Chart.AppVersion }}"
