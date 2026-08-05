@@ -100,7 +100,7 @@ alert-database:
       lagThreshold: "100"
       activationLagThreshold: "10"
       pollingInterval: 30
-      cooldownPeriod: 300
+      cooldownPeriod: 900
       consumerGroup: "alertdb-ingester"
       offsetResetPolicy: "latest"
 

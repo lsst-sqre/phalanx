@@ -8,11 +8,6 @@ alert-brokers:
     - name: alerts-simulated
       partitions: 45
       replicas: 3
-    - name: lsst-alerts-v10.0
-      partitions: 45
-      replicas: 3
-      bytesRetained: "300000000000"
-      millisecondsRetained: "2629740000"
     - name: lsst-alerts-v11
       partitions: 45
       replicas: 3
@@ -105,6 +100,19 @@ alert-database:
       cluster: sasquatch
       topic:
         - lsst-alerts-v11
+
+    terminationGracePeriodSeconds: 60
+
+    autoscaling:
+      enabled: true
+      minReplicaCount: 1
+      maxReplicaCount: 20
+      lagThreshold: "100"
+      activationLagThreshold: "10"
+      pollingInterval: 30
+      cooldownPeriod: 900
+      consumerGroup: "alertdb-ingester"
+      offsetResetPolicy: "latest"
 
   ingress:
     enabled: true
