@@ -69,11 +69,6 @@ spec:
                 secretKeyRef:
                   name: "skyviewer"
                   key: "craft-revalidate-secret-token"
-            - name: "NEXT_PUBLIC_ASTRO_OBJECTS_API_TOKEN"
-              valueFrom:
-                secretKeyRef:
-                  name: "skyviewer"
-                  key: "astro-objects-api-token"
           readinessProbe:
             httpGet:
               # the app answers under its base path; / is a 404
