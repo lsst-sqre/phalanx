@@ -1,0 +1,14 @@
+config:
+  # a private processing staged under /sdf/group/rubin/shared/hips_views;
+  # the CMS has no entry for it, so it is named explicitly here
+  hipsSurvey: "LSSTCam/hips/ltl2/color_gri"
+
+image:
+  pullPolicy: "Always"
+  tag: "tickets-DM-55722"
+
+hipsData:
+  enabled: true
+  name: "sdf-group-rubin"
+  storageClassName: "sdf-group-rubin"
+  mountPath: "/sdf/group/rubin"
