@@ -64,6 +64,10 @@ spec:
             - name: "HIPS_SURVEY"
               value: {{ . | quote }}
             {{- end }}
+            {{- if ne .Values.config.tileCacheBytes "0" }}
+            - name: "HIPS_TILE_CACHE_BYTES"
+              value: {{ .Values.config.tileCacheBytes | quote }}
+            {{- end }}
             # only gate the CMS preview and revalidate routes, which this
             # deployment does not use, but the schema requires them to be set
             - name: "CRAFT_SECRET_TOKEN"

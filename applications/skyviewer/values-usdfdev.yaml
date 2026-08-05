@@ -3,9 +3,22 @@ config:
   # the CMS has no entry for it, so it is named explicitly here
   hipsSurvey: "LSSTCam/hips/ltl2/color_gri"
 
+  # 6 GiB of tiles held in memory, sized against the 10Gi limit below: tile
+  # traffic otherwise re-reads networked disk on every request
+  tileCacheBytes: "6442450944"
+
 image:
   pullPolicy: "Always"
   tag: "tickets-DM-55722"
+
+resources:
+  requests:
+    cpu: 1
+    memory: "7Gi"
+  limits:
+    cpu: 4
+    # sized for the 6 GiB tile cache plus the application itself
+    memory: "10Gi"
 
 # both exports are needed: /sdf/group/rubin/shared is a symlink to
 # /sdf/data/rubin/shared, so the group mount alone leaves the surveys behind
