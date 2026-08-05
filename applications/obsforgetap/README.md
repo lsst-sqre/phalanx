@@ -1,0 +1,38 @@
+# obsforgetap
+
+ObsForge TAP service
+
+## Source Code
+
+* <https://github.com/lsst-sqre/tap-postgres>
+* <https://github.com/opencadc/tap>
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| cadc-tap.config.backend | string | `"pg"` | What type of backend? |
+| cadc-tap.config.pg.database | string | `"obsdb"` | Postgres database to connect to |
+| cadc-tap.config.pg.host | string | `"134.79.23.231:5432"` | Postgres hostname:port to connect to |
+| cadc-tap.config.pg.username | string | `"obsforge"` | Postgres username to use to connect |
+| cadc-tap.config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
+| cadc-tap.config.serviceName | string | `"obsforgetap"` | Name of the service from Gafaelfawr's perspective |
+| cadc-tap.config.vaultSecretName | string | `"obsforgetap"` | Vault secret name: the final key in the vault path |
+| cadc-tap.ingress.path | string | `"obsforgetap"` | Ingress path that should be routed to this service |
+| cadc-tap.serviceAccount.name | string | `"obsforgetap"` | Name of the Kubernetes `ServiceAccount`, used for CloudSQL access |
+| cadc-tap.tapSchema.database | string | `"obsforge"` | Database name |
+| cadc-tap.tapSchema.tapadm | object | `{"maxActive":2}` | Connection pool configuration for jdbc/tapadm |
+| cadc-tap.tapSchema.tapadm.maxActive | int | `2` | Maximum active connections (maxIdle will be set to this value) |
+| cadc-tap.tapSchema.tapuser | object | `{"maxActive":5}` | Connection pool configuration for jdbc/tapuser (query planning and tap_upload) |
+| cadc-tap.tapSchema.tapuser.maxActive | int | `5` | Maximum active connections (maxIdle will be set to this value) |
+| cadc-tap.tapSchema.type | string | "cloudsql" | Database backend type: "containerized", "cloudsql", or "external" |
+| cadc-tap.tapSchema.useVaultPassword | bool | `true` | Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external) |
+| cadc-tap.tapSchema.username | string | `"obsforge"` | Database username |
+| cadc-tap.uws.database | string | `"obsforge"` | Database name |
+| cadc-tap.uws.maxActive | int | `8` | Maximum active connections (maxIdle will be set to this value) |
+| cadc-tap.uws.type | string | `"cloudsql"` | Database backend type: "containerized", "cloudsql", or "external" |
+| cadc-tap.uws.useVaultPassword | bool | `true` | Whether the UWS database requires a password in Vault (true for cloudsql/external) |
+| cadc-tap.uws.username | string | `"obsforge"` | Database username |
+| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.host | string | Set by Argo CD | Host name for ingress |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

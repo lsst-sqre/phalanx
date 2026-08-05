@@ -122,6 +122,9 @@ applications:
   # -- Enable the muster application
   muster: false
 
+  # -- Enable the obsforgetap application
+  obsforgetap: false
+
   # -- Enable the prompt-pub application
   prompt-pub: false
 
