@@ -21,6 +21,7 @@ Sky imagery browser for private HiPS surveys
 | hipsData | object | See `values.yaml` | Volumes holding the HiPS surveys, mounted read-only. More than one is usually needed: /sdf/group/rubin/shared is a symlink to /sdf/data/rubin/shared, so mounting only the group export leaves the surveys unreachable through a dangling symlink. |
 | hipsData.enabled | bool | `true` | Whether to mount the HiPS volumes. Without them the viewer has no imagery. |
 | hipsData.mounts | list | `[{"capacity":"1Gi","mountPath":"/sdf/group/rubin","name":"sdf-group-rubin","storageClassName":"sdf-group-rubin"},{"capacity":"1Gi","mountPath":"/sdf/data/rubin","name":"sdf-data-rubin","storageClassName":"sdf-data-rubin"}]` | Claims to create and mount. Each entry needs `name`, `storageClassName`, `capacity` and `mountPath`. `config.hipsDataDir` must resolve below one of them, following symlinks. |
+| hipsData.supplementalGroups | list | `[4085]` | Supplemental group IDs the pod runs with. The data exports are group-readable only (/sdf/data/rubin/shared is drwxr-s---, group 4085), so without the right group every read is denied even with the volumes mounted. |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the skyviewer image |
 | image.repository | string | `"ghcr.io/lsst-dm/skyviewer-client"` | Image to use in the skyviewer deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
