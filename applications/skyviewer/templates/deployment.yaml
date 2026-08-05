@@ -82,9 +82,15 @@ spec:
                   key: "craft-revalidate-secret-token"
           readinessProbe:
             httpGet:
-              # the app answers under its base path; / is a 404
-              path: {{ .Values.ingress.path | quote }}
+              # the app's health route (it answers under its base path).
+              # Probing a page path renders the whole home page against the
+              # CMS, which intermittently overran the default one-second
+              # timeout and yanked the only pod out of the Service
+              path: {{ printf "%s/api/health" .Values.ingress.path | quote }}
               port: "http"
+            # headroom over the default 1s for when the server is genuinely
+            # busy; the health route itself answers without rendering
+            timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           securityContext:
