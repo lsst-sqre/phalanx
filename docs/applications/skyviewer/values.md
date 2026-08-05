@@ -4,7 +4,7 @@ Sky imagery browser for private HiPS surveys
 
 ## Source Code
 
-* <https://github.com/lsst-sqre/skyviewer>
+* <https://github.com/lsst-dm/skyviewer-client>
 
 ## Values
 

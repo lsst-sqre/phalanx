@@ -3,6 +3,6 @@ appVersion: 0.1.0
 description: Sky imagery browser for private HiPS surveys
 name: skyviewer
 sources:
-- https://github.com/lsst-sqre/skyviewer
+- https://github.com/lsst-dm/skyviewer-client
 type: application
 version: 1.0.0
