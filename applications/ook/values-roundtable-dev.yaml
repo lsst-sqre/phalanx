@@ -1,3 +1,7 @@
+image:
+  tag: "tickets-DM-55725"
+  pullPolicy: "Always"
+
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://ook@localhost/ook"
