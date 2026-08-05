@@ -1,0 +1,121 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "skyviewer"
+  labels:
+    {{- include "skyviewer.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "skyviewer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "skyviewer.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          env:
+            # the app validates its environment when the server boots, not
+            # only when the image is built, so every variable has to be
+            # present here too or the container crash-loops
+            - name: "NEXT_PUBLIC_BASE_URL"
+              value: {{ printf "https://%s" .Values.global.host | quote }}
+            - name: "NEXT_PUBLIC_BASE_PATH"
+              value: {{ .Values.ingress.path | quote }}
+            - name: "NEXT_PUBLIC_API_URL"
+              value: {{ .Values.config.apiUrl | quote }}
+            - name: "NEXT_PUBLIC_ASTRO_API_URL"
+              value: {{ .Values.config.astroApiUrl | quote }}
+            - name: "CLOUD_ENV"
+              value: {{ .Values.config.cloudEnv | quote }}
+            {{- if .Values.hipsData.enabled }}
+            - name: "HIPS_DATA_DIR"
+              value: {{ .Values.config.hipsDataDir | quote }}
+            {{- end }}
+            {{- with .Values.config.hipsSurvey }}
+            - name: "HIPS_SURVEY"
+              value: {{ . | quote }}
+            {{- end }}
+            # only gate the CMS preview and revalidate routes, which this
+            # deployment does not use, but the schema requires them to be set
+            - name: "CRAFT_SECRET_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "skyviewer"
+                  key: "craft-secret-token"
+            - name: "CRAFT_REVALIDATE_SECRET_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "skyviewer"
+                  key: "craft-revalidate-secret-token"
+            - name: "NEXT_PUBLIC_ASTRO_OBJECTS_API_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "skyviewer"
+                  key: "astro-objects-api-token"
+          readinessProbe:
+            httpGet:
+              # the app answers under its base path; / is a 404
+              path: {{ .Values.ingress.path | quote }}
+              port: "http"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            # Next.js writes its image and data caches at runtime, which the
+            # read-only root filesystem otherwise refuses
+            - name: "cache"
+              mountPath: "/app/.next/cache"
+            - name: "tmp"
+              mountPath: "/tmp"
+            {{- if .Values.hipsData.enabled }}
+            - name: "hips-data"
+              mountPath: {{ .Values.hipsData.mountPath | quote }}
+              readOnly: true
+            {{- end }}
+      volumes:
+        - name: "cache"
+          emptyDir: {}
+        - name: "tmp"
+          emptyDir: {}
+        {{- if .Values.hipsData.enabled }}
+        - name: "hips-data"
+          persistentVolumeClaim:
+            claimName: {{ .Values.hipsData.name | quote }}
+            readOnly: true
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        # matches the nextjs user the image builds and chowns its files to
+        runAsUser: 1001
+        runAsGroup: 1001

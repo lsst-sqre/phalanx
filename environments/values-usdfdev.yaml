@@ -42,6 +42,7 @@ applications:
   schedview-snapshot: true
   semaphore: true
   sia: true
+  skyviewer: true
   squareone: true
   ssotap: true
   strimzi-access-operator: true
