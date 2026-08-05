@@ -52,24 +52,30 @@ config:
   # debug UI.
   cloudEnv: "PROD"
 
-# -- Persistent volume holding the HiPS surveys, mounted read-only.
+# -- Volumes holding the HiPS surveys, mounted read-only. More than one is
+# usually needed: /sdf/group/rubin/shared is a symlink to
+# /sdf/data/rubin/shared, so mounting only the group export leaves the
+# surveys unreachable through a dangling symlink.
 # @default -- See `values.yaml`
 hipsData:
-  # -- Whether to mount the HiPS volume. Without it the viewer has no imagery.
+  # -- Whether to mount the HiPS volumes. Without them the viewer has no
+  # imagery.
   enabled: true
 
-  # -- Name of the PersistentVolumeClaim to create
-  name: "sdf-group-rubin"
-
-  # -- Storage class backing the claim
-  storageClassName: "sdf-group-rubin"
-
-  # -- Requested capacity. The claim binds an existing export, so this is
-  # nominal rather than an allocation.
-  capacity: "1Gi"
-
-  # -- Path the volume is mounted at. `config.hipsDataDir` must sit below it.
-  mountPath: "/sdf/group/rubin"
+  # -- Claims to create and mount. Each entry needs `name`,
+  # `storageClassName`, `capacity` and `mountPath`. `config.hipsDataDir` must
+  # resolve below one of them, following symlinks.
+  mounts:
+    - name: "sdf-group-rubin"
+      storageClassName: "sdf-group-rubin"
+      # the claim binds an existing export, so this is nominal rather than an
+      # allocation
+      capacity: "1Gi"
+      mountPath: "/sdf/group/rubin"
+    - name: "sdf-data-rubin"
+      storageClassName: "sdf-data-rubin"
+      capacity: "1Gi"
+      mountPath: "/sdf/data/rubin"
 
 # -- Affinity rules for the skyviewer deployment pod
 affinity: {}
