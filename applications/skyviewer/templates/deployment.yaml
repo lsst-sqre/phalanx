@@ -6,6 +6,13 @@ metadata:
     {{- include "skyviewer.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  # at one replica, RollingUpdate's maxUnavailable floors to zero, so the old
+  # pod is kept until the new one passes readiness — and a rollout whose new
+  # pod never comes up wedges with two unready pods that Argo CD cannot
+  # converge. Brief downtime on upgrade is fine for this app; a wedged
+  # rollout is not
+  strategy:
+    type: "Recreate"
   selector:
     matchLabels:
       {{- include "skyviewer.selectorLabels" . | nindent 6 }}
