@@ -14,11 +14,6 @@ cadc-tap:
     useVaultPassword: false
 
   config:
-    qserv:
-      host: "sdfqserv001.sdf.slac.stanford.edu:4040"
-      jdbcParams: "?enabledTLSProtocols=TLSv1.3"
-      passwordEnabled: true
-
     kafka:
       enabled: true
 
