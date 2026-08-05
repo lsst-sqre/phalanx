@@ -16,6 +16,7 @@ Sky imagery browser for private HiPS surveys
 | config.cloudEnv | string | `"PROD"` | PROD, INT or DEV. DEV additionally enables the GCS proxy route and the debug UI. |
 | config.hipsDataDir | string | `"/sdf/group/rubin/shared/hips_views"` | Directory holding the HiPS surveys. Must sit below `hipsData.mountPath`. |
 | config.hipsSurvey | string | `""` | Path below `hipsDataDir` of the single survey to display, e.g. `LSSTCam/hips/ltl2/color_gri`. The CMS advertises public datasets absent from this tree, so without this the viewer offers surveys whose every tile 404s. |
+| config.tileCacheBytes | string | `"0"` | Byte cap for the in-memory FIFO cache of served tiles; "0" disables it. The pod serves all tile traffic itself, so without it every tile is re-read from networked disk on every request. Must fit inside the memory limit with room for the application itself. |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | hipsData | object | See `values.yaml` | Volumes holding the HiPS surveys, mounted read-only. More than one is usually needed: /sdf/group/rubin/shared is a symlink to /sdf/data/rubin/shared, so mounting only the group export leaves the surveys unreachable through a dangling symlink. |

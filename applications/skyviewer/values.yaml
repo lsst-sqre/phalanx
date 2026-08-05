@@ -52,6 +52,12 @@ config:
   # debug UI.
   cloudEnv: "PROD"
 
+  # -- Byte cap for the in-memory FIFO cache of served tiles; "0" disables
+  # it. The pod serves all tile traffic itself, so without it every tile is
+  # re-read from networked disk on every request. Must fit inside the memory
+  # limit with room for the application itself.
+  tileCacheBytes: "0"
+
 # -- Volumes holding the HiPS surveys, mounted read-only. More than one is
 # usually needed: /sdf/group/rubin/shared is a symlink to
 # /sdf/data/rubin/shared, so mounting only the group export leaves the
