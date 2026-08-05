@@ -7,8 +7,17 @@ image:
   pullPolicy: "Always"
   tag: "tickets-DM-55722"
 
+# both exports are needed: /sdf/group/rubin/shared is a symlink to
+# /sdf/data/rubin/shared, so the group mount alone leaves the surveys behind
+# a dangling symlink and the viewer finds no imagery
 hipsData:
   enabled: true
-  name: "sdf-group-rubin"
-  storageClassName: "sdf-group-rubin"
-  mountPath: "/sdf/group/rubin"
+  mounts:
+    - name: "sdf-group-rubin"
+      storageClassName: "sdf-group-rubin"
+      capacity: "1Gi"
+      mountPath: "/sdf/group/rubin"
+    - name: "sdf-data-rubin"
+      storageClassName: "sdf-data-rubin"
+      capacity: "1Gi"
+      mountPath: "/sdf/data/rubin"

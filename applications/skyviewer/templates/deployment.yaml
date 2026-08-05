@@ -90,9 +90,11 @@ spec:
             - name: "tmp"
               mountPath: "/tmp"
             {{- if .Values.hipsData.enabled }}
-            - name: "hips-data"
-              mountPath: {{ .Values.hipsData.mountPath | quote }}
+            {{- range .Values.hipsData.mounts }}
+            - name: {{ .name | quote }}
+              mountPath: {{ .mountPath | quote }}
               readOnly: true
+            {{- end }}
             {{- end }}
       volumes:
         - name: "cache"
@@ -100,10 +102,12 @@ spec:
         - name: "tmp"
           emptyDir: {}
         {{- if .Values.hipsData.enabled }}
-        - name: "hips-data"
+        {{- range .Values.hipsData.mounts }}
+        - name: {{ .name | quote }}
           persistentVolumeClaim:
-            claimName: {{ .Values.hipsData.name | quote }}
+            claimName: {{ .name | quote }}
             readOnly: true
+        {{- end }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

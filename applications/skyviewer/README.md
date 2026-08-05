@@ -18,12 +18,9 @@ Sky imagery browser for private HiPS surveys
 | config.hipsSurvey | string | `""` | Path below `hipsDataDir` of the single survey to display, e.g. `LSSTCam/hips/ltl2/color_gri`. The CMS advertises public datasets absent from this tree, so without this the viewer offers surveys whose every tile 404s. |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| hipsData | object | See `values.yaml` | Persistent volume holding the HiPS surveys, mounted read-only. |
-| hipsData.capacity | string | `"1Gi"` | Requested capacity. The claim binds an existing export, so this is nominal rather than an allocation. |
-| hipsData.enabled | bool | `true` | Whether to mount the HiPS volume. Without it the viewer has no imagery. |
-| hipsData.mountPath | string | `"/sdf/group/rubin"` | Path the volume is mounted at. `config.hipsDataDir` must sit below it. |
-| hipsData.name | string | `"sdf-group-rubin"` | Name of the PersistentVolumeClaim to create |
-| hipsData.storageClassName | string | `"sdf-group-rubin"` | Storage class backing the claim |
+| hipsData | object | See `values.yaml` | Volumes holding the HiPS surveys, mounted read-only. More than one is usually needed: /sdf/group/rubin/shared is a symlink to /sdf/data/rubin/shared, so mounting only the group export leaves the surveys unreachable through a dangling symlink. |
+| hipsData.enabled | bool | `true` | Whether to mount the HiPS volumes. Without them the viewer has no imagery. |
+| hipsData.mounts | list | `[{"capacity":"1Gi","mountPath":"/sdf/group/rubin","name":"sdf-group-rubin","storageClassName":"sdf-group-rubin"},{"capacity":"1Gi","mountPath":"/sdf/data/rubin","name":"sdf-data-rubin","storageClassName":"sdf-data-rubin"}]` | Claims to create and mount. Each entry needs `name`, `storageClassName`, `capacity` and `mountPath`. `config.hipsDataDir` must resolve below one of them, following symlinks. |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the skyviewer image |
 | image.repository | string | `"ghcr.io/lsst-dm/skyviewer-client"` | Image to use in the skyviewer deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
