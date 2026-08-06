@@ -40,6 +40,9 @@ Campaign Management for Rubin Data Release Production
 | config.htcondor.scheddHost | string | `nil` | If specified, name of an htcondor schedd host |
 | config.logLevel | string | `"INFO"` | Logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`, or `CRITICAL`) |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
+| config.notifications.fernetSecretKey | string | `"notifications-fernet-key"` | Key used to decrypt Notification secrets |
+| config.notifications.secretName | string | `"cm-service"` | Name of Secret with Notification secrets |
+| config.notifications.webhookUrlSecretKey | string | `"slack-webhook-url"` | Secret key for Default Slack webhook URL |
 | config.outputVolume.mountPath | string | `nil` | If specified, full path to the output volume mount target |
 | config.outputVolume.storage | string | `"1Gi"` | Minimum storage requested in service output area PVC |
 | config.outputVolume.storageClassName | string | `nil` | If specified, name of storage class requested in service output area PVC |
@@ -55,8 +58,6 @@ Campaign Management for Rubin Data Release Production
 | config.panda.virtualOrganization | string | `"Rubin"` | PanDA Virtual Organization Name for oidc |
 | config.rootPath | string | `"/cm-service"` | URL root path |
 | config.routePrefix | string | `"/cm-service"` | URL path prefix (deprecated) |
-| config.slack.secretName | string | `"cm-service"` | Name of Secret with Slack secrets |
-| config.slack.webhookUrlSecretKey | string | `"slack-webhook-url"` | Secret key for Slack webhook URL |
 | daemon.affinity | object | `{}` | Affinity rules for the daemon pods |
 | daemon.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the daemon image |
 | daemon.image.repository | string | `"ghcr.io/lsst-dm/cm-daemon"` | Image to use for daemon containers |
@@ -85,6 +86,8 @@ Campaign Management for Rubin Data Release Production
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | internalDB | bool | `false` | Whether to use the internal (phalanx) database |
 | web.affinity | object | `{}` | Affinity rules for the web pods |
+| web.grafana.campaignHistoryDashboard | string | `"d/abcdef/campaign-history"` | Campaign History Dashboard path |
+| web.grafana.url | string | `"http://grafana:3000"` | Grafana base url |
 | web.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the web image |
 | web.image.repository | string | `"ghcr.io/lsst-dm/cm-web"` | Image to use for web containers |
 | web.image.tag | string | The appVersion of the chart | Tag of web image to use |
