@@ -22,6 +22,11 @@ config:
     - "dp02"
     - "dp1"
 
+  # -- Format string for the IVOID used for self-identification. This must
+  # contain a `dataset` variable that will be replaced with the label of the
+  # dataset.
+  ivoidFormat: "ivo://org.rubinobs/{dataset}/sia"
+
   metrics:
     # -- Whether to enable sending metrics
     enabled: false
