@@ -12,6 +12,7 @@ Simple Image Access (SIA) IVOA Service using Butler
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the sia deployment pod |
 | config.datasets | list | `["dp02","dp1"]` | List of datasets enabled in this environment. |
+| config.ivoidFormat | string | `"ivo://org.rubinobs/{dataset}/sia"` | Format string for the IVOID used for self-identification. This must contain a `dataset` variable that will be replaced with the label of the dataset. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.metrics.application | string | `"sia"` | Name under which to log metrics. Generally there is no reason to change this. |
