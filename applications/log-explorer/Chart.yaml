@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Rapid analysis log explorer
+name: log-explorer
+sources:
+  - https://github.com/lsst-so/ra_log_explorer
+type: application
+version: 1.0.0
