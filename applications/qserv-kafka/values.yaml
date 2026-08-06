@@ -3,6 +3,11 @@
 # Declare variables to be passed into your templates.
 
 config:
+  # -- Timeout for REST API calls in Safir `parse_timedelta` format. This
+  # includes time spent waiting for a connection if the maximum number of
+  # connections has been reached.
+  backendApiTimeout: "60s"
+
   # -- Kafka consumer group ID
   consumerGroupId: "qserv"
 
@@ -99,11 +104,6 @@ config:
   # -- Whether to send the expected API version in REST API calls to Qserv
   qservRestSendApiVersion: true
 
-  # -- Timeout for REST API calls in Safir `parse_timedelta` format. This
-  # includes time spent waiting for a connection if the maximum number of
-  # connections has been reached.
-  backendApiTimeout: "60s"
-
   # -- URL to the Qserv REST API
   # @default -- None, must be set
   qservRestUrl: null
@@ -115,7 +115,7 @@ config:
 
   # -- How long to allow for user table upload before timing out in Safir
   # `parse_timedelta` format.
-  qservUploadTimeout: "5m"
+  qservUploadTimeout: "30m"
 
   # -- How many times to retry after a Qserv API network failure
   qservRetryCount: 3
