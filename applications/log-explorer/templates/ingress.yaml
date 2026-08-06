@@ -1,0 +1,33 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "log-explorer"
+  labels:
+    {{- include "log-explorer.labels" . | nindent 4 }}
+config:
+  # a browser app rather than an API client: send anonymous users to log in
+  # rather than answering them with a 401 they cannot act on
+  loginRedirect: true
+  scopes:
+    all:
+      - "read:image"
+  service: "log-explorer"
+template:
+  metadata:
+    name: "log-explorer"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.ingress.path | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "log-explorer"
+                  port:
+                    number: 8080

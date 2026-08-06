@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "log-explorer"
+  labels:
+    {{- include "log-explorer.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  # at one replica, RollingUpdate's maxUnavailable floors to zero, so the old
+  # pod is kept until the new one passes readiness — and a rollout whose new
+  # pod never comes up wedges with two unready pods that Argo CD cannot
+  # converge. Recreate also lets the old pod release the ReadWriteOnce cache
+  # volume before the new one claims it
+  strategy:
+    type: "Recreate"
+  selector:
+    matchLabels:
+      {{- include "log-explorer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        # the site catalog is a file, not an env var, so a change to it would
+        # otherwise leave the running pod reading the old one until something
+        # else happened to restart it
+        checksum/sites: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "log-explorer.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          env:
+            # the image bakes in no environment, so everything that makes
+            # this deployment *this* deployment is set here
+            - name: "RA_LOG_EXPLORER_BASE_PATH"
+              value: {{ .Values.ingress.path | quote }}
+            - name: "RA_LOG_EXPLORER_CACHE"
+              value: {{ .Values.cache.mountPath | quote }}
+            - name: "RA_LOG_EXPLORER_CONFIG_DIR"
+              value: "/var/lib/ra-log-explorer"
+            - name: "RA_LOG_EXPLORER_SITES_FILE"
+              value: "/etc/ra-log-explorer/sites.toml"
+            - name: "LOKI_USERNAME"
+              value: {{ .Values.config.lokiUsername | quote }}
+            # set server-side so nobody has to type Loki credentials into
+            # the browser; the UI's credentials panel stays as an override
+            - name: "LOKI_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "log-explorer"
+                  key: "loki-password"
+          readinessProbe:
+            httpGet:
+              # answered under the base path, and deliberately touches no
+              # state: a probe that a slow fetch could fail would pull the
+              # only pod out of the Service mid-investigation
+              path: {{ printf "%s/healthz" .Values.ingress.path | quote }}
+              port: "http"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "cache"
+              mountPath: {{ .Values.cache.mountPath | quote }}
+            # the app persists its own settings (cache ceiling, cache root)
+            # here; deliberately not on the cache volume, since one of the
+            # settings is where the cache lives
+            - name: "config"
+              mountPath: "/var/lib/ra-log-explorer"
+            # logcli streams each pod's download through a temp file
+            - name: "tmp"
+              mountPath: "/tmp"
+            - name: "sites"
+              mountPath: "/etc/ra-log-explorer"
+              readOnly: true
+      volumes:
+        - name: "cache"
+          persistentVolumeClaim:
+            claimName: "log-explorer-cache"
+        - name: "config"
+          emptyDir: {}
+        - name: "tmp"
+          emptyDir: {}
+        - name: "sites"
+          configMap:
+            name: "log-explorer-sites"
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        # matches the `explorer` user the image creates and runs as
+        runAsUser: 1000
+        runAsGroup: 1000
+        # the cache volume is created by the storage class as root-owned;
+        # without this the app cannot write to its own cache
+        fsGroup: 1000

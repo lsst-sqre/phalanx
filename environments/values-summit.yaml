@@ -20,6 +20,7 @@ applications:
   csc-versions: true
   envsys: true
   exposurelog: true
+  log-explorer: true
   love: true
   mobu: true
   narrativelog: true
