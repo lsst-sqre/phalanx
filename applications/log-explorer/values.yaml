@@ -36,24 +36,41 @@ ingress:
 
 config:
   # -- Loki HTTP basic-auth username. The password comes from the
-  # `loki-password` Vault secret. Setting both server-side means nobody has
-  # to type Loki credentials into the browser to use the tool.
+  # `loki-password` Vault secret. Both are set server-side because the
+  # application takes no configuration from the browser at all: one process
+  # serves every user, so a credentials field would let whoever filled it
+  # in last break fetches for everybody else.
   lokiUsername: "omega"
 
-  # -- Name of the site the UI starts on.
-  # @default -- the first entry of `config.sites`
-  defaultSite: ""
+  # -- Parallel log-download workers per fetch. Each is a `logcli` process
+  # streaming one pod's window, so this trades cluster load and pod CPU
+  # against how long a night-wide fetch takes.
+  workers: 8
 
-  # -- Sites the deployment can query. A *site* pairs a Loki cluster (where
-  # the logs live) with the ConsDB endpoint that owns shutter-close truth
-  # for that cluster's data; the two must match or a dataId resolves against
-  # the wrong observatory. Each entry needs `name`, `cluster`, `namespace`,
-  # `lokiAddr` and `consdbUrl`, and may carry `consdbTokenFile` — omit that
-  # for a ConsDB reached at a cluster-internal Service address, which never
-  # passes through Gafaelfawr and so needs no bearer token. Rendered into
-  # the `sites.toml` the application reads.
+  # -- Seconds before shutter close that a fetch window starts. This is the
+  # *starting* value of an editable field, not a cap: widening a window to
+  # catch a neighbouring exposure is a normal investigative move.
+  windowBeforeS: 5
+
+  # -- Seconds after shutter close that a fetch window ends. As above, a
+  # starting value rather than a cap. Worth raising where the pipeline runs
+  # slower than the exposure cadence.
+  windowAfterS: 300
+
+  # -- The one site this deployment serves. A *site* pairs a Loki cluster
+  # (where the logs live) with the ConsDB endpoint that owns shutter-close
+  # truth for that cluster's data; the two must match or a dataId resolves
+  # against the wrong observatory. Singular on purpose: an instance on
+  # manke *is* BTS and one on yagan *is* the summit, and because the same
+  # 13-digit dataId exists at both with different obs_end values, an
+  # instance that could be pointed at the other one would return answers
+  # that looked plausible rather than obviously wrong. Needs `name`,
+  # `cluster`, `namespace`, `lokiAddr` and `consdbUrl`; `consdbTokenFile`
+  # is omitted because an in-cluster ConsDB Service address never passes
+  # through Gafaelfawr and so takes no bearer token. Rendered into the
+  # `sites.toml` the application reads.
   # @default -- See the per-environment values files
-  sites: []
+  site: {}
 
 # -- Persistent volume for the log cache. Fetching a night out of Loki takes
 # minutes, so the cache is what makes the tool usable a second time; an
@@ -63,10 +80,18 @@ cache:
   # -- Storage class for the cache volume
   storageClassName: "rook-ceph-block"
 
-  # -- Size of the cache volume. The application evicts least-recently-used
-  # windows to stay under its own `maxCacheBytes` setting, so this is the
-  # ceiling rather than an expected steady state.
-  size: "50Gi"
+  # -- Size of the cache volume, in GiB. Given as a bare number rather than
+  # a quantity string because it sets two things that must not disagree: the
+  # volume's size, and the byte ceiling the application's LRU eviction keeps
+  # the cache under (`usagePercent` of it). Deriving both from one value is
+  # what stops the app happily filling a disk it thinks is bigger than it is.
+  sizeGi: 50
+
+  # -- Percentage of the volume the application will fill before it starts
+  # evicting least-recently-used windows. The headroom covers filesystem
+  # overhead and the gap between a fetch finishing and the eviction sweep
+  # that follows it — the cache is briefly over its ceiling in between.
+  usagePercent: 85
 
   # -- Where the cache volume is mounted, and what the application is told
   # to use as its cache root.

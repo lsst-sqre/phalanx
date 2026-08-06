@@ -53,14 +53,24 @@ spec:
               value: {{ .Values.ingress.path | quote }}
             - name: "RA_LOG_EXPLORER_CACHE"
               value: {{ .Values.cache.mountPath | quote }}
-            - name: "RA_LOG_EXPLORER_CONFIG_DIR"
-              value: "/var/lib/ra-log-explorer"
+            # Derived from the volume's own size rather than configured
+            # separately, so the app cannot believe it has more room than
+            # the PVC actually provides.
+            - name: "RA_LOG_EXPLORER_MAX_CACHE_BYTES"
+              value: {{ div (mul .Values.cache.sizeGi 1073741824 .Values.cache.usagePercent) 100 | quote }}
             - name: "RA_LOG_EXPLORER_SITES_FILE"
               value: "/etc/ra-log-explorer/sites.toml"
+            - name: "RA_LOG_EXPLORER_WORKERS"
+              value: {{ .Values.config.workers | quote }}
+            - name: "RA_LOG_EXPLORER_WINDOW_BEFORE_S"
+              value: {{ .Values.config.windowBeforeS | quote }}
+            - name: "RA_LOG_EXPLORER_WINDOW_AFTER_S"
+              value: {{ .Values.config.windowAfterS | quote }}
             - name: "LOKI_USERNAME"
               value: {{ .Values.config.lokiUsername | quote }}
-            # set server-side so nobody has to type Loki credentials into
-            # the browser; the UI's credentials panel stays as an override
+            # The application takes no configuration from the browser at
+            # all, so this is the only way it can authenticate: there is no
+            # credentials panel to fall back on.
             - name: "LOKI_PASSWORD"
               valueFrom:
                 secretKeyRef:
@@ -92,11 +102,6 @@ spec:
           volumeMounts:
             - name: "cache"
               mountPath: {{ .Values.cache.mountPath | quote }}
-            # the app persists its own settings (cache ceiling, cache root)
-            # here; deliberately not on the cache volume, since one of the
-            # settings is where the cache lives
-            - name: "config"
-              mountPath: "/var/lib/ra-log-explorer"
             # logcli streams each pod's download through a temp file
             - name: "tmp"
               mountPath: "/tmp"
@@ -107,8 +112,6 @@ spec:
         - name: "cache"
           persistentVolumeClaim:
             claimName: "log-explorer-cache"
-        - name: "config"
-          emptyDir: {}
         - name: "tmp"
           emptyDir: {}
         - name: "sites"
