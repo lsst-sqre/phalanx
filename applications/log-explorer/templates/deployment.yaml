@@ -73,6 +73,14 @@ spec:
               # only pod out of the Service mid-investigation
               path: {{ printf "%s/healthz" .Values.ingress.path | quote }}
               port: "http"
+            # headroom over the defaults for the same reason. Parsing a
+            # night of logs is CPU-bound pure Python competing for the GIL
+            # with the fetch threads, so response latency spikes while a big
+            # fetch is in flight — the one moment when dropping the only pod
+            # out of the Service would be most destructive
+            timeoutSeconds: 5
+            periodSeconds: 15
+            failureThreshold: 4
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           securityContext:
