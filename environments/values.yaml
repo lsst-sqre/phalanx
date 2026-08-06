@@ -125,6 +125,9 @@ applications:
   # -- Enable the hoverdrive application
   hoverdrive: false
 
+  # -- Enable the log-explorer application
+  log-explorer: false
+
   # -- Enable the muster application
   muster: false
 
