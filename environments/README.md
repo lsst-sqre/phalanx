@@ -39,6 +39,7 @@
 | applications.jira-data-proxy | bool | `false` | Enable the jira-data-proxy application |
 | applications.keda | bool | `false` | Enable the keda application |
 | applications.livetap | bool | `false` | Enable the livetap application |
+| applications.log-explorer | bool | `false` | Enable the log-explorer application |
 | applications.love | bool | `false` | Enable the love control system application |
 | applications.mobu | bool | `false` | Enable the mobu application |
 | applications.mpsky | bool | `false` | Enable the mpsky application |

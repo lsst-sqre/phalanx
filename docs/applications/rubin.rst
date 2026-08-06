@@ -14,6 +14,7 @@ Argo CD project: ``rubin``
    exposurelog/index
    exposure-checker/index
    fastapi-bootcamp/index
+   log-explorer/index
    mpsky/index
    nvr-control/index
    rubin-rag/index
