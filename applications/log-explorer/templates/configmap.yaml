@@ -6,21 +6,20 @@ metadata:
     {{- include "log-explorer.labels" . | nindent 4 }}
 data:
   # The application's site catalog, pointed at by RA_LOG_EXPLORER_SITES_FILE.
-  # A site pairs a Loki cluster with the ConsDB that owns shutter-close truth
-  # for that cluster's data. `consdbTokenFile` is omitted for an in-cluster
-  # ConsDB Service address: that never passes through Gafaelfawr, so there is
-  # no bearer token to send.
+  # It supports several entries — that is what lets a laptop look at either
+  # observatory — but a deployment declares exactly one, because which
+  # cluster's logs it serves is decided by where it runs. No
+  # `consdbTokenFile`: the in-cluster ConsDB Service address never passes
+  # through Gafaelfawr, so there is no bearer token to send.
   sites.toml: |
-    default_site = {{ .Values.config.defaultSite | default (first .Values.config.sites).name | quote }}
-    {{- range .Values.config.sites }}
+    default_site = {{ required "config.site.name is required" .Values.config.site.name | quote }}
 
     [[site]]
-    name = {{ .name | quote }}
-    cluster = {{ .cluster | quote }}
-    namespace = {{ .namespace | quote }}
-    lokiAddr = {{ .lokiAddr | quote }}
-    consdbUrl = {{ .consdbUrl | quote }}
-    {{- with .consdbTokenFile }}
+    name = {{ .Values.config.site.name | quote }}
+    cluster = {{ required "config.site.cluster is required" .Values.config.site.cluster | quote }}
+    namespace = {{ required "config.site.namespace is required" .Values.config.site.namespace | quote }}
+    lokiAddr = {{ required "config.site.lokiAddr is required" .Values.config.site.lokiAddr | quote }}
+    consdbUrl = {{ required "config.site.consdbUrl is required" .Values.config.site.consdbUrl | quote }}
+    {{- with .Values.config.site.consdbTokenFile }}
     consdbTokenFile = {{ . | quote }}
-    {{- end }}
     {{- end }}
