@@ -12,5 +12,5 @@ spec:
     - "ReadWriteOnce"
   resources:
     requests:
-      storage: {{ .Values.cache.size | quote }}
+      storage: "{{ .Values.cache.sizeGi }}Gi"
   storageClassName: {{ .Values.cache.storageClassName | quote }}
