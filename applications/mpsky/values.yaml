@@ -19,6 +19,10 @@ image:
   #tag: null
   tag: auto-load
 
+# -- Base URL of the datastore holding the nightly caches. Must follow the
+# layout produced by the cache builder: `caches/` and `catalogs/` beneath it.
+datastoreUrl: "https://epyc.astro.washington.edu/~mjuric/mpsky-data"
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}

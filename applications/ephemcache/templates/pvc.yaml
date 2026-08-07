@@ -1,0 +1,21 @@
+{{- if .Values.outputDirMount.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.outputDirMount.claimName | quote }}
+  labels:
+    {{- include "ephemcache.labels" . | nindent 4 }}
+  annotations:
+    # This storage class provisions PVs whose source path is the whole shared
+    # filesystem, with reclaimPolicy Delete. Do not let anything delete this
+    # claim automatically.
+    argocd.argoproj.io/sync-options: Prune=false
+    helm.sh/resource-policy: keep
+spec:
+  storageClassName: {{ .Values.outputDirMount.storageClassName | quote }}
+  accessModes:
+    - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "1Gi"
+{{- end }}

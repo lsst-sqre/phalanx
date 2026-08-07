@@ -1,0 +1,110 @@
+# Default values for ephemcache.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  # -- Image to run, built by the `lsst-gen-ephemcache` repository
+  repository: "ghcr.io/mjuric/lsst-gen-ephemcache"
+
+  # -- Tag of the image to run
+  tag: "u-mjuric-ephemcache"
+
+  # -- Pull policy for the image. Use `Always` where the tag is mutable, such as
+  # a branch name.
+  pullPolicy: "IfNotPresent"
+
+# -- Cron schedule for the cache build. Runs are idempotent and skip when the
+# cache for the current observing night already exists, so this only has to be
+# frequent enough to catch the night.
+schedule: "0 */3 * * *"
+
+# -- Whether to suspend the CronJob
+suspend: true
+
+# -- Entrypoint subcommand. `selftest` checks the image and needs no database
+# credential; `run` builds the cache for the current observing night.
+command: "selftest"
+
+# -- Value of `NCORES`, which bounds sorcha's parallelism. Must match
+# `resources.limits.cpu`: the scripts otherwise default it to `nproc`, which
+# reports the node's core count rather than the pod's limit.
+ncores: ""
+
+# -- Resource requests and limits. Sized for `selftest`; a real `run` needs far
+# more, and must be raised together with `ncores`.
+resources:
+  requests:
+    cpu: "1"
+    memory: "2Gi"
+  limits:
+    cpu: "1"
+    memory: "2Gi"
+
+# -- Deadline for a single run, in seconds, so a wedged job cannot run forever
+activeDeadlineSeconds: 3600
+
+# -- Number of retries before the Job is considered failed. Zero, because the
+# next scheduled invocation retries anyway.
+backoffLimit: 0
+
+# -- Number of completed Jobs to retain
+successfulJobsHistoryLimit: 3
+
+# -- Number of failed Jobs to retain
+failedJobsHistoryLimit: 3
+
+# -- Whether to also write each run's log to a file under the output directory.
+# Logs always go to stdout; this is a durable second copy that outlives the pod.
+logToFile: false
+
+outputDirMount:
+  # -- Whether to mount the shared filesystem that output is published to. When
+  # disabled, output goes to an emptyDir and is discarded with the pod.
+  enabled: false
+
+  # -- Name shared by the PVC, its storage class, and the pod volume
+  claimName: "sdf-group-rubin"
+
+  # -- Storage class backing the claim
+  storageClassName: "sdf-group-rubin"
+
+  # -- Path within that filesystem to expose. Only this subtree is visible to
+  # the container, so widening it is a deliberate change.
+  subPath: "web_data/mpsky-data/test"
+
+database:
+  # -- SQLAlchemy DSN for the MPC replica, supplied as `MPCDB`. Empty uses the
+  # value baked into the image. Must not contain a username or password: it is
+  # passed to `get-mpcorb.py` as a command-line argument.
+  url: ""
+
+  # -- Key in this application's Vault secret holding the database username,
+  # supplied to the pod as `PGUSER`
+  userSecretKey: "usdf_mpc_postgres_user"
+
+  # -- Key in this application's Vault secret holding the database password,
+  # supplied to the pod as `PGPASSWORD`
+  passwordSecretKey: "usdf_mpc_postgres_password"
+
+# -- Security context for the pod
+podSecurityContext: {}
+
+# -- Node selector rules for the pod
+nodeSelector: {}
+
+# -- Tolerations for the pod
+tolerations: []
+
+# -- Affinity rules for the pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

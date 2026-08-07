@@ -88,6 +88,9 @@ applications:
   # -- Enable the envsys control system application
   envsys: false
 
+  # -- Enable the ephemcache application
+  ephemcache: false
+
   # -- Enable the eups-distributor application
   eups-distributor: false
 

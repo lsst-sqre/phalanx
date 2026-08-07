@@ -21,6 +21,7 @@
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
 | applications.docverse | bool | `false` | Enable the docverse application |
 | applications.envsys | bool | `false` | Enable the envsys control system application |
+| applications.ephemcache | bool | `false` | Enable the ephemcache application |
 | applications.eups-distributor | bool | `false` | Enable the eups-distributor application |
 | applications.exposure-checker | bool | `false` | Enable the exposure-checker application |
 | applications.exposurelog | bool | `false` | Enable the exposurelog application |
