@@ -20,7 +20,7 @@ controller:
     fileserver:
       enabled: true
       nodeSelector:
-        node_pool: "user-lab-pool"
+        node_pool: "user-lab-pool-amd"
       tolerations:
         - key: "nublado.lsst.io/permitted"
           operator: "Exists"
@@ -56,7 +56,7 @@ controller:
         TUTORIAL_NOTEBOOKS_CACHE_DIR: "/rubin/cst_repos/tutorial-notebooks"
       initContainers:
       nodeSelector:
-        node_pool: "user-lab-pool"
+        node_pool: "user-lab-pool-amd"
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "rubin-epo-cit-sci-pipeline.json"
@@ -129,8 +129,8 @@ hub:
 
 jupyterhub:
   cull:
-    timeout: 90000  # 25 hours
-    maxAge: 432000  # 5 days
+    timeout: 90000 # 25 hours
+    maxAge: 432000 # 5 days
   hub:
     config:
       JupyterHub:
@@ -143,7 +143,7 @@ jupyterhub:
 
 purger:
   enabled: true
-  schedule: "27 05 * * 0"  # Sunday morning, 12:27 AM (UTC-5)
+  schedule: "27 05 * * 0" # Sunday morning, 12:27 AM (UTC-5)
   volumeName: "deleted-sundays"
   policy:
     directories:
