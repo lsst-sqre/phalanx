@@ -1,0 +1,94 @@
+suite: Site catalog ConfigMap
+# The application parses this file with tomllib at startup. It is templated
+# YAML producing TOML, so nothing catches a malformed result until the pod
+# refuses to start — pin the exact rendering here instead.
+set:
+  global:
+    host: "example.com"
+    vaultSecretsPath: "secret/phalanx/test"
+tests:
+  - it: "renders exactly the TOML the application expects"
+    template: "configmap.yaml"
+    values:
+      - "../values-base.yaml"
+    asserts:
+      - containsDocument:
+          kind: "ConfigMap"
+          apiVersion: "v1"
+      - equal:
+          path: "metadata.name"
+          value: "log-explorer-sites"
+      - equal:
+          path: "data['sites.toml']"
+          value: |
+            default_site = "bts"
+
+            [[site]]
+            name = "bts"
+            cluster = "manke"
+            namespace = "rapid-analysis"
+            lokiAddr = "https://loki-query.ls.lsst.org"
+            consdbUrl = "http://consdb-pq.consdb.svc.cluster.local:8080/consdb/query"
+
+  - it: "pairs the summit with its own cluster and ConsDB"
+    template: "configmap.yaml"
+    values:
+      - "../values-summit.yaml"
+    asserts:
+      # The pairing is the whole point of the catalog: the same 13-digit
+      # dataId exists at both observatories with different obs_end values,
+      # so a summit deployment reading the BTS ConsDB would return answers
+      # that looked plausible rather than obviously wrong.
+      - matchRegex:
+          path: "data['sites.toml']"
+          pattern: 'default_site = "summit"'
+      - matchRegex:
+          path: "data['sites.toml']"
+          pattern: 'cluster = "yagan"'
+
+  - it: "omits consdbTokenFile, because an in-cluster ConsDB needs none"
+    template: "configmap.yaml"
+    values:
+      - "../values-base.yaml"
+    asserts:
+      # The Service address never passes through Gafaelfawr, so there is no
+      # bearer token to send. Emitting an empty one would make the
+      # application look for a file that will never exist.
+      - notMatchRegex:
+          path: "data['sites.toml']"
+          pattern: "consdbTokenFile"
+
+  - it: "emits consdbTokenFile when one is configured"
+    template: "configmap.yaml"
+    values:
+      - "../values-base.yaml"
+    set:
+      config:
+        site:
+          consdbTokenFile: "/etc/tokens/consdb"
+    asserts:
+      - matchRegex:
+          path: "data['sites.toml']"
+          pattern: 'consdbTokenFile = "/etc/tokens/consdb"'
+
+  # These two assert against deployment.yaml, not configmap.yaml. The
+  # deployment `include`s the ConfigMap template to checksum it, so Helm
+  # attributes the `required` failure to whichever template triggered the
+  # include rather than to the one containing it.
+  - it: "refuses to render a catalog with no site rather than an empty one"
+    template: "deployment.yaml"
+    asserts:
+      # A chart that rendered `default_site = ""` would produce a pod that
+      # crash-loops on an unparseable catalog. Failing here says why.
+      - failedTemplate:
+          errorMessage: "config.site.name is required"
+
+  - it: "requires every field the application needs"
+    template: "deployment.yaml"
+    set:
+      config:
+        site:
+          name: "bts"
+    asserts:
+      - failedTemplate:
+          errorMessage: "config.site.cluster is required"

@@ -1,0 +1,16 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: "log-explorer-cache"
+  labels:
+    {{- include "log-explorer.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    # one writer: the cache belongs to the single serving pod, and the
+    # Recreate strategy makes sure the old one has let go before the new
+    # one claims it
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "{{ .Values.cache.sizeGi }}Gi"
+  storageClassName: {{ .Values.cache.storageClassName | quote }}
