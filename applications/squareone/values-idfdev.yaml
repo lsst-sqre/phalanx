@@ -1,6 +1,5 @@
 image:
   pullPolicy: Always
-  tag: "tickets-DM-55470"
 
 ingress:
   timesSquareScope: "exec:admin"
