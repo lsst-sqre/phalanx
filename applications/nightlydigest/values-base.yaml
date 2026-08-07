@@ -9,9 +9,10 @@ nightlydigest-nginx:
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
   initContainers:
     frontend:
+      uid: 73006
       image:
-        repository: ts-dockerhub.lsst.org/nightlydigest-frontend
-        tag: c0045
+        repository: rubincr.lsst.org/nightlydigest-frontend
+        tag: develop
         pullPolicy: Always
   staticStore:
     name: nightlydigest-nginx-static
@@ -75,8 +76,8 @@ nightlydigest-nginx:
 nightlydigest-backend:
   replicas: 4
   image:
-    repository: ts-dockerhub.lsst.org/nightlydigest-backend
-    tag: c0045
+    repository: rubincr.lsst.org/nightlydigest-backend
+    tag: develop
     pullPolicy: Always
   env:
     - name: JIRA_API_HOSTNAME
