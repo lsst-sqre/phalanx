@@ -42,6 +42,16 @@ config:
   # in last break fetches for everybody else.
   lokiUsername: "omega"
 
+  # -- Loki password in the clear, for bringing an environment up before
+  # its Vault secret exists. **Do not commit a real value**: this repository
+  # is public, and anything set here also shows in plain text in `kubectl
+  # describe pod` and the Argo CD UI. Pass it as a Helm parameter override
+  # on the Argo CD Application instead, and clear it once the `loki-password`
+  # Vault secret is populated. Empty (the normal state) reads the password
+  # from that secret, and the pod starts either way — with neither, log
+  # fetches fail with a legible error and the rest of the app works.
+  lokiPassword: ""
+
   # -- Parallel log-download workers per fetch. Each is a `logcli` process
   # streaming one pod's window, so this trades cluster load and pod CPU
   # against how long a night-wide fetch takes.
