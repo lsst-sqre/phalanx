@@ -1,3 +1,7 @@
 config:
   siteName: "Rubin Science Platform @ Summit"
   docsBaseUrl: "https://rsp.lsst.io/v/summit"
+  applinks:
+    - label: "Nightly Digest"
+      href: "/nightlydigest/"
+      internal: false
