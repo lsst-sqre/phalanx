@@ -1,0 +1,130 @@
+suite: Environment configuration
+# The application takes no configuration from the browser: everything that
+# makes an instance *this* instance is an environment variable set here. A
+# variable the app reads that this chart never sets means production
+# silently runs on the built-in default, which presents as a setting that
+# appears to do nothing.
+set:
+  global:
+    host: "example.com"
+    vaultSecretsPath: "secret/phalanx/test"
+values:
+  - "../values-base.yaml"
+tests:
+  - it: "sets every variable the application reads"
+    template: "deployment.yaml"
+    asserts:
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "RA_LOG_EXPLORER_BASE_PATH"
+            value: "/log-explorer"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "RA_LOG_EXPLORER_CACHE"
+            value: "/var/cache/ra-log-explorer"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "RA_LOG_EXPLORER_SITES_FILE"
+            value: "/etc/ra-log-explorer/sites.toml"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "RA_LOG_EXPLORER_WORKERS"
+            value: "8"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "RA_LOG_EXPLORER_WINDOW_BEFORE_S"
+            value: "5"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "RA_LOG_EXPLORER_WINDOW_AFTER_S"
+            value: "300"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "LOKI_USERNAME"
+            value: "omega"
+
+  - it: "serves under the same path the ingress routes"
+    template: "deployment.yaml"
+    asserts:
+      # Both come from `ingress.path`. If they could be set independently
+      # they would eventually disagree, and the app would 404 every request
+      # the ingress sent it.
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "RA_LOG_EXPLORER_BASE_PATH"
+            value: "/tools/logs"
+      - equal:
+          path: "spec.template.spec.containers[0].readinessProbe.httpGet.path"
+          value: "/tools/logs/healthz"
+    set:
+      ingress:
+        path: "/tools/logs"
+
+  - it: "derives the cache ceiling from the size of the volume"
+    template: "deployment.yaml"
+    asserts:
+      # 50 GiB × 85% = 45634027520. Deriving it rather than configuring it
+      # separately is what stops the application believing it has more room
+      # than the PVC actually gives it.
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "RA_LOG_EXPLORER_MAX_CACHE_BYTES"
+            value: "45634027520"
+
+  - it: "tracks a resized cache volume"
+    template: "deployment.yaml"
+    set:
+      cache:
+        sizeGi: 10
+        usagePercent: 50
+    asserts:
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "RA_LOG_EXPLORER_MAX_CACHE_BYTES"
+            value: "5368709120"
+
+  - it: "lets an environment tune the fetch width and window"
+    template: "deployment.yaml"
+    set:
+      config:
+        workers: 16
+        windowBeforeS: 10
+        windowAfterS: 900
+    asserts:
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "RA_LOG_EXPLORER_WORKERS"
+            value: "16"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "RA_LOG_EXPLORER_WINDOW_AFTER_S"
+            value: "900"
+
+  - it: "does not bake a config directory the application no longer uses"
+    template: "deployment.yaml"
+    asserts:
+      # RA_LOG_EXPLORER_CONFIG_DIR and its emptyDir went with the settings
+      # file they existed for. A leftover mount would be harmless but
+      # misleading about where state lives.
+      - notContains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "RA_LOG_EXPLORER_CONFIG_DIR"
+      - notContains:
+          path: "spec.template.spec.volumes"
+          any: true
+          content:
+            name: "config"
