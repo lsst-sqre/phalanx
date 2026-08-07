@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "qserv-kafka-upload-worker"
+  labels:
+    {{- include "qserv-kafka.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.uploadWorker.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "qserv-kafka.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "upload-worker"
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.uploadWorker.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "qserv-kafka.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "upload-worker"
+        qserv-kafka-redis-client: "true"
+    spec:
+      {{- with .Values.uploadWorker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: "{{ .Chart.Name }}-upload-worker"
+          command:
+            - "arq"
+            - "qservkafka.workers.main.UploadWorkerSettings"
+          env:
+            {{- include "qserv-kafka.envVars" (dict "Values" .Values) | nindent 12 }}
+          envFrom:
+          - configMapRef:
+              name: "qserv-kafka"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.uploadWorker.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "kafka"
+              mountPath: "/etc/qserv-kafka/ca.crt"
+              readOnly: true
+              subPath: "ssl.truststore.crt"
+            - name: "kafka"
+              mountPath: "/etc/qserv-kafka/user.crt"
+              readOnly: true
+              subPath: "ssl.keystore.crt"
+            - name: "kafka"
+              mountPath: "/etc/qserv-kafka/user.key"
+              readOnly: true
+              subPath: "ssl.keystore.key"
+      {{- with .Values.uploadWorker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      terminationGracePeriodSeconds: {{ add .Values.config.uploadWorkerTimeout 10 }}
+      {{- with .Values.uploadWorker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: {{ not .Values.uploadWorker.allowRootDebug }}
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: "kafka"
+          secret:
+            secretName: "qserv-kafka-access"

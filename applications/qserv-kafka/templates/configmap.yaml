@@ -41,6 +41,8 @@ data:
   QSERV_KAFKA_RESULT_TIMEOUT: {{ .Values.config.resultTimeout | quote }}
   QSERV_KAFKA_SLACK_ENABLED: {{ .Values.config.slack.enabled | quote }}
   QSERV_KAFKA_TAP_SERVICE: {{ .Values.config.tapService | quote }}
+  QSERV_KAFKA_UPLOAD_WORKER_MAX_JOBS: {{ .Values.config.uploadWorkerMaxJobs | quote }}
+  QSERV_KAFKA_UPLOAD_WORKER_TIMEOUT: {{ .Values.config.uploadWorkerTimeout | quote }}
   REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}
   SCHEMA_MANAGER_REGISTRY_URL: {{ .Values.config.metrics.schemaManager.registryUrl | quote }}
   SCHEMA_MANAGER_SUFFIX: {{ .Values.config.metrics.schemaManager.suffix | quote }}

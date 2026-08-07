@@ -43,6 +43,8 @@ Qserv Kafka bridge
 | config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1 |
 | config.slack.enabled | bool | `false` | Set to true to enable the Slack integration. If true, the slack-webhook secret must be provided. |
 | config.tapService | string | `"qserv"` | Name of the TAP service for which this Qserv Kafka instance is managing queries. This must match the name of the TAP service for the corresponding query quota in the Gafaelfawr configuration. |
+| config.uploadWorkerMaxJobs | int | `10` | Maximum number of arq jobs each upload worker can process simultaneously.. |
+| config.uploadWorkerTimeout | int | 900 (15 minutes) | How long to allow an upload worker to upload tables and submit the query to the backend before timing out, in seconds. |
 | frontend.affinity | object | `{}` | Affinity rules for the qserv-kafka frontend pod |
 | frontend.debug.disablePymalloc | bool | `false` |  |
 | frontend.debug.enabled | bool | `false` | Set to true to allow containers to run as root and to create and mount a debug PVC. Useful ro run debug containers to diagnose issues such as memory leaks. |
@@ -84,3 +86,10 @@ Qserv Kafka bridge
 | resultWorker.replicaCount | int | `1` | Number of result worker pods to start if autoscaling is disabled |
 | resultWorker.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka worker pods |
 | resultWorker.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the qserv-kafka worker pods |
+| uploadWorker.affinity | object | `{}` | Affinity rules for the qserv-kafka upload worker pods |
+| uploadWorker.allowRootDebug | bool | `false` | Whether to allow containers to run as root. Set to true to allow use of debug containers to diagnose issues such as memory leaks. |
+| uploadWorker.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka upload worker pods |
+| uploadWorker.podAnnotations | object | `{}` | Annotations for the qserv-kafka upload worker pods |
+| uploadWorker.replicaCount | int | `1` | Number of upload worker pods to start |
+| uploadWorker.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka upload worker pods |
+| uploadWorker.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the qserv-kafka upload worker pods |
