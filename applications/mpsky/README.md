@@ -11,6 +11,7 @@ Solar System Ephemerides
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the mpsky deployment pod |
+| datastoreUrl | string | `"https://epyc.astro.washington.edu/~mjuric/mpsky-data"` | Base URL of the datastore holding the nightly caches. Must follow the layout produced by the cache builder: `caches/` and `catalogs/` beneath it. |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"Always"` |  |

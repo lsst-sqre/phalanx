@@ -1,3 +1,5 @@
+datastoreUrl: "https://s3df.slac.stanford.edu/data/rubin/mpsky-data"
+
 serviceAnnotations:
   metallb.io/address-pool: sdf-rubin-ingest
   metallb.io/loadBalancerIPs: 172.24.10.34

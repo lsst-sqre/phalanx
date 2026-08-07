@@ -1,0 +1,98 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: "ephemcache"
+  labels:
+    {{- include "ephemcache.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  suspend: {{ .Values.suspend }}
+  concurrencyPolicy: "Forbid"
+  successfulJobsHistoryLimit: {{ .Values.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.failedJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      backoffLimit: {{ .Values.backoffLimit }}
+      activeDeadlineSeconds: {{ .Values.activeDeadlineSeconds }}
+      template:
+        metadata:
+          labels:
+            {{- include "ephemcache.selectorLabels" . | nindent 12 }}
+        spec:
+          restartPolicy: "Never"
+          automountServiceAccountToken: false
+          {{- with .Values.podSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          containers:
+            - name: "ephemcache"
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+              args:
+                - {{ .Values.command | quote }}
+              env:
+                {{- with .Values.ncores }}
+                - name: "NCORES"
+                  value: {{ . | quote }}
+                {{- end }}
+                {{- if .Values.logToFile }}
+                - name: "EPHEMCACHE_LOG_TO_FILE"
+                  value: "true"
+                {{- end }}
+                {{- with .Values.database.url }}
+                - name: "MPCDB"
+                  value: {{ . | quote }}
+                {{- end }}
+                {{- with .Values.database.userSecretKey }}
+                - name: "PGUSER"
+                  valueFrom:
+                    secretKeyRef:
+                      name: "ephemcache"
+                      key: {{ . | quote }}
+                      optional: true
+                {{- end }}
+                {{- with .Values.database.passwordSecretKey }}
+                - name: "PGPASSWORD"
+                  valueFrom:
+                    secretKeyRef:
+                      name: "ephemcache"
+                      key: {{ . | quote }}
+                      optional: true
+                {{- end }}
+              resources:
+                {{- toYaml .Values.resources | nindent 16 }}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - "all"
+                readOnlyRootFilesystem: false
+              volumeMounts:
+                - name: "outputs"
+                  mountPath: "/app/outputs"
+                  {{- if .Values.outputDirMount.enabled }}
+                  subPath: {{ .Values.outputDirMount.subPath | quote }}
+                  {{- end }}
+          volumes:
+            {{- if .Values.outputDirMount.enabled }}
+            - name: "outputs"
+              persistentVolumeClaim:
+                claimName: {{ .Values.outputDirMount.claimName | quote }}
+            {{- else }}
+            - name: "outputs"
+              emptyDir:
+                sizeLimit: "1Gi"
+            {{- end }}

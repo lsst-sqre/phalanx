@@ -1,0 +1,41 @@
+image:
+  pullPolicy: "Always"
+
+suspend: false
+
+command: "run"
+
+# uid 18728 has write access to the output directory through an explicit ACL, so
+# changing it silently breaks writes.
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 18728
+  runAsGroup: 4085
+  fsGroup: 4085
+
+logToFile: true
+
+outputDirMount:
+  enabled: true
+  subPath: "web_data/mpsky-data"
+
+resources:
+  requests:
+    cpu: "48"
+    memory: "64Gi"
+  limits:
+    cpu: "48"
+    memory: "64Gi"
+
+ncores: "48"
+
+activeDeadlineSeconds: 5400
+
+nodeSelector:
+  edu.stanford.slac.sdf.project/rsp: "true"
+
+tolerations:
+  - key: "edu.stanford.slac.sdf.project/rsp"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"

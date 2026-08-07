@@ -1,0 +1,5 @@
+apiVersion: v2
+description: Nightly ephemerides cache generator for mpsky
+name: ephemcache
+type: application
+version: 1.0.0
