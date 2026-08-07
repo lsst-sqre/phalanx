@@ -80,7 +80,7 @@ Qserv Kafka bridge
 | resultWorker.autoscaling.enabled | bool | `true` | Enable autoscaling of qserv-kafka result workers |
 | resultWorker.autoscaling.maxReplicas | int | `10` | Maximum number of qserv-kafka worker pods. Each replica will open database connections up to the configured pool size and overflow limits, so make sure the combined connections are under the postgres connection limit. |
 | resultWorker.autoscaling.minReplicas | int | `1` | Minimum number of qserv-kafka worker pods |
-| resultWorker.autoscaling.targetCPUUtilizationPercentage | int | `75` | Target CPU utilization of qserv-kafka worker pods. |
+| resultWorker.autoscaling.targetCPUUtilizationPercentage | int | `30` | Target CPU utilization of qserv-kafka worker pods. |
 | resultWorker.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka worker pods |
 | resultWorker.podAnnotations | object | `{}` | Annotations for the qserv-kafka worker pods |
 | resultWorker.replicaCount | int | `1` | Number of result worker pods to start if autoscaling is disabled |

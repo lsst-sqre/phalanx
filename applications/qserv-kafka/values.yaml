@@ -271,7 +271,7 @@ resultWorker:
     maxReplicas: 10
 
     # -- Target CPU utilization of qserv-kafka worker pods.
-    targetCPUUtilizationPercentage: 75
+    targetCPUUtilizationPercentage: 30
 
   # -- Node selection rules for the qserv-kafka worker pods
   nodeSelector: {}
