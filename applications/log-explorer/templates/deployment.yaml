@@ -72,10 +72,23 @@ spec:
             # all, so this is the only way it can authenticate: there is no
             # credentials panel to fall back on.
             - name: "LOKI_PASSWORD"
+              {{- if .Values.config.lokiPassword }}
+              value: {{ .Values.config.lokiPassword | quote }}
+              {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: "log-explorer"
                   key: "loki-password"
+                  # Optional so the pod still starts before the environment's
+                  # Vault secret exists — everything except fetching logs can
+                  # then be brought up and checked. Without it the container
+                  # sits in CreateContainerConfigError and nothing is
+                  # reachable. Degrading here is safe rather than silent: the
+                  # application refuses to run logcli with no password and
+                  # says so in the UI, so a missing secret surfaces as a
+                  # legible error on the first fetch instead of wrong results.
+                  optional: true
+              {{- end }}
           readinessProbe:
             httpGet:
               # answered under the base path, and deliberately touches no
