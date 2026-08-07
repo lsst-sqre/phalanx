@@ -15,5 +15,8 @@ config:
     - label: "FOV Quicklook"
       href: "/fov-quicklook/"
       internal: false
+    - label: "Nightly Digest"
+      href: "/nightlydigest/"
+      internal: false
 ingress:
   timesSquareScope: "exec:notebook"
