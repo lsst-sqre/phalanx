@@ -1,0 +1,147 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "skyviewer"
+  labels:
+    {{- include "skyviewer.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  # at one replica, RollingUpdate's maxUnavailable floors to zero, so the old
+  # pod is kept until the new one passes readiness — and a rollout whose new
+  # pod never comes up wedges with two unready pods that Argo CD cannot
+  # converge. Brief downtime on upgrade is fine for this app; a wedged
+  # rollout is not
+  strategy:
+    type: "Recreate"
+  selector:
+    matchLabels:
+      {{- include "skyviewer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "skyviewer.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          env:
+            # the app validates its environment when the server boots, not
+            # only when the image is built, so every variable has to be
+            # present here too or the container crash-loops
+            - name: "NEXT_PUBLIC_BASE_URL"
+              value: {{ printf "https://%s" .Values.global.host | quote }}
+            - name: "NEXT_PUBLIC_BASE_PATH"
+              value: {{ .Values.ingress.path | quote }}
+            - name: "NEXT_PUBLIC_API_URL"
+              value: {{ .Values.config.apiUrl | quote }}
+            - name: "NEXT_PUBLIC_ASTRO_API_URL"
+              value: {{ .Values.config.astroApiUrl | quote }}
+            - name: "CLOUD_ENV"
+              value: {{ .Values.config.cloudEnv | quote }}
+            {{- if .Values.hipsData.enabled }}
+            - name: "HIPS_DATA_DIR"
+              value: {{ .Values.config.hipsDataDir | quote }}
+            {{- end }}
+            {{- with .Values.config.hipsSurvey }}
+            - name: "HIPS_SURVEY"
+              value: {{ . | quote }}
+            {{- end }}
+            {{- if ne .Values.config.tileCacheBytes "0" }}
+            - name: "HIPS_TILE_CACHE_BYTES"
+              value: {{ .Values.config.tileCacheBytes | quote }}
+            {{- end }}
+            # only gate the CMS preview and revalidate routes, which this
+            # deployment does not use, but the schema requires them to be set
+            - name: "CRAFT_SECRET_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "skyviewer"
+                  key: "craft-secret-token"
+            - name: "CRAFT_REVALIDATE_SECRET_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "skyviewer"
+                  key: "craft-revalidate-secret-token"
+          readinessProbe:
+            httpGet:
+              # the app's health route (it answers under its base path).
+              # Probing a page path renders the whole home page against the
+              # CMS, which intermittently overran the default one-second
+              # timeout and yanked the only pod out of the Service
+              path: {{ printf "%s/api/health" .Values.ingress.path | quote }}
+              port: "http"
+            # headroom over the default 1s for when the server is genuinely
+            # busy; the health route itself answers without rendering
+            timeoutSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            # Next.js writes its image and data caches at runtime, which the
+            # read-only root filesystem otherwise refuses
+            - name: "cache"
+              mountPath: "/app/.next/cache"
+            - name: "tmp"
+              mountPath: "/tmp"
+            {{- if .Values.hipsData.enabled }}
+            {{- range .Values.hipsData.mounts }}
+            - name: {{ .name | quote }}
+              mountPath: {{ .mountPath | quote }}
+              readOnly: true
+            {{- end }}
+            {{- end }}
+      volumes:
+        - name: "cache"
+          emptyDir: {}
+        - name: "tmp"
+          emptyDir: {}
+        {{- if .Values.hipsData.enabled }}
+        {{- range .Values.hipsData.mounts }}
+        - name: {{ .name | quote }}
+          persistentVolumeClaim:
+            claimName: {{ .name | quote }}
+            readOnly: true
+        {{- end }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        # matches the nextjs user the image builds and chowns its files to
+        runAsUser: 1001
+        runAsGroup: 1001
+        {{- with .Values.hipsData.supplementalGroups }}
+        # group access to the HiPS exports: /sdf/data/rubin/shared is
+        # drwxr-s--- root-of-tree, readable only by its group
+        supplementalGroups:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}

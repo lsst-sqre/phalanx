@@ -80,6 +80,7 @@
 | applications.semaphore | bool | `false` | Enable the semaphore application |
 | applications.sia | bool | `false` | Enable the sia over butler application |
 | applications.simonyitel | bool | `false` | Enable the simonyitel control system application |
+| applications.skyviewer | bool | `false` | Enable the skyviewer application |
 | applications.squarebot | bool | `false` | Enable the squarebot application |
 | applications.squareone | bool | `false` | Enable the squareone application |
 | applications.ssotap | bool | `false` | Enable the ssotap application |
