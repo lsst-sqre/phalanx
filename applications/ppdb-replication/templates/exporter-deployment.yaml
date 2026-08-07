@@ -81,6 +81,16 @@ spec:
               value: "/app/secrets/gcp-credentials.json"
             - name: DAX_APDB_MONITOR_CONFIG
               value: "logging:lsst.dax.ppdb.metrics,lsst.dax.ppdb.bigquery.ppdb_bigquery,-any"
+            - name: CLOUDSQL_ENABLED
+              value: {{ .Values.config.cloudSql.enabled | quote }}
+            - name: CLOUDSQL_INSTANCE_CONNECTION_NAME
+              value: {{ .Values.config.cloudSql.connectionName | quote }}
+            - name: CLOUDSQL_IP_TYPE
+              value: {{ .Values.config.cloudSql.ipType | quote }}
+            - name: CLOUDSQL_USER
+              value: {{ .Values.config.cloudSql.user | quote }}
+            - name: CLOUDSQL_DB_NAME
+              value: {{ .Values.config.cloudSql.dbName | quote }}
           volumeMounts:
             - name: "ppdb-replication-secrets"
               mountPath: "/app/secrets"
@@ -98,48 +108,6 @@ spec:
             - "--min-wait-time={{ .Values.config.minWaitTime }}"
             - "--max-wait-time={{ .Values.config.maxWaitTime }}"
             - "--check-interval={{ .Values.config.checkInterval }}"
-        - name: cloud-sql-proxy
-          image: "{{ .Values.cloudSqlProxy.image.repository }}:{{ .Values.cloudSqlProxy.image.tag }}"
-          imagePullPolicy: {{ .Values.cloudSqlProxy.image.pullPolicy | quote }}
-          args:
-            - {{ .Values.cloudSqlProxy.config.instanceUri | quote }}
-            - "--http-address=$(POD_IP)"
-            - "--http-port=9090"
-            - "--port=5432"
-            - "--credentials-file=/app/secrets/gcp-credentials.json"
-            - "--auto-iam-authn"
-          env:
-            - name: POD_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.podIP
-          startupProbe:
-            httpGet:
-              path: /startup
-              port: 9090
-            failureThreshold: 30
-          livenessProbe:
-            httpGet:
-              path: /liveness
-              port: 9090
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
-            periodSeconds: 1
-          securityContext:
-            runAsNonRoot: true
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - "all"
-            readOnlyRootFilesystem: true
-          resources:
-            {{- toYaml .Values.cloudSqlProxy.resources | nindent 12 }}
-          volumeMounts:
-            - name: gcp-credentials-file
-              mountPath: /app/secrets/gcp-credentials.json
-              subPath: gcp-credentials.json
-              readOnly: true
       securityContext:
         runAsNonRoot: true
         runAsUser: 8286  # jeremym

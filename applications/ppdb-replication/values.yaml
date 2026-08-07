@@ -56,33 +56,6 @@ global:
   # @default -- Set by Argo CD
   vaultSecretsPath: null
 
-# Cloud SQL Proxy
-cloudSqlProxy:
-
-  image:
-    # -- Image to use for cloudsql proxy
-    repository: "gcr.io/cloud-sql-connectors/cloud-sql-proxy"
-
-    # -- Pull policy for the allow db proxy image
-    pullPolicy: "IfNotPresent"
-
-    # -- Tag of image to use
-    tag: "2.24.1"
-
-  config:
-    # -- Uri for Allow DB instance
-    instanceUri: ""
-
-  # -- Resource limits and requests for the cloudsql proxy pod
-  # @default -- See `values.yaml`
-  resources:
-    requests:
-      memory: "256Mi"
-      cpu: "100m"
-    limits:
-      memory: "512Mi"
-      cpu: "500m"
-
 # Application-specific configuration
 config:
   # -- Logging level
@@ -133,3 +106,21 @@ config:
 
   # -- S3 profile URL for additional S3 profile
   additionalS3ProfileUrl: "https://sdfembs3.sdf.slac.stanford.edu"
+
+  # -- CloudSQL Python Connector configuration
+  cloudSql:
+
+    # -- Enable CloudSQL Python Connector
+    enabled: "true"
+
+    # -- CloudSQL Connection Name
+    connectionName: ""
+
+    # -- Cloud SQL IP Type.  Set to Public since there is no interconnect or VPN to GCP
+    ipType: "public"
+
+    # -- Username in sa_name@project.iam format
+    user: ""
+
+    # -- Database name to connect to
+    dbName: "ppdb-chunk-tracking"
