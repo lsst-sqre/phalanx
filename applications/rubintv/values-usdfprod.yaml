@@ -49,7 +49,7 @@ rubintv:
     uid: 17951
     gid: 4085
     scriptsLocation: /repos/rubintv_analysis_service/scripts
-    script: rubintv_worker.py -a rubintv -p 8080 -l usdf
+    script: rubintv_worker.py -a rubintv -p 8080 -l usdf --path /ws/worker
     env:
     - name: S3_ENDPOINT_URL
       value: *s3E
