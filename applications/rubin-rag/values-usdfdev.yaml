@@ -1,3 +1,6 @@
 weaviate:
   storage:
     size: 500Gi
+image:
+  tag: "tickets-DM-55408"
+  pullPolicy: Always
