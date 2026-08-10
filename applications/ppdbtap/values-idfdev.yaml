@@ -21,8 +21,8 @@ cadc-tap:
       rules: "ivoa.ObsCore:access_url"
 
     bigquery:
-      project: "ppdb-dev-438721"
-      dataset: "ppdb_lsstcam"
+      project: "ppdb-dev-5c07"
+      dataset: "ppdb_public"
       schema: "ppdb"
 
   cloudsql:
