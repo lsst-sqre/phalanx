@@ -24,7 +24,7 @@ Every environment must have a separate 1Password vault in the **LSST IT** 1Passw
 The vault for the environment should be named ``RSP <fqdn>`` where ``<fqdn>`` is the top-level FQDN for that environment.
 (In hindsight the vaults should be named after the short environment names used in Phalanx, but sadly that's not what we did.)
 
-When following these instructions, you will be modifying a `Secrets Automation workflow <https://developer.1password.com/docs/connect/get-started/>`__.
+When following these instructions, you will be modifying a `Secrets Automation workflow <https://www.1password.dev/connect/get-started>`__.
 You will need to have permissions to modify the workflow for the 1Password Connet server that will be serving your environment.
 
 Process

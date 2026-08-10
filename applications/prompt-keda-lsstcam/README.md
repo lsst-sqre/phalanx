@@ -2,7 +2,7 @@
 
 KEDA Prompt Processing instance for LSSTCam
 
-**Homepage:** <https://github.com/lsst-dm/prompt_processing/blob/main/doc/playbook.rst>
+**Homepage:** <https://github.com/lsst-dm/prompt_processing/blob/main/docs/playbook.rst>
 
 ## Source Code
 
