@@ -66,6 +66,15 @@ spec:
               value: {{ .Values.config.windowBeforeS | quote }}
             - name: "RA_LOG_EXPLORER_WINDOW_AFTER_S"
               value: {{ .Values.config.windowAfterS | quote }}
+            # Live mode: keep the current night's logs continuously fetched
+            # so exposure views during observing are served from the cache
+            # volume rather than by a fresh Loki query. The nightly data
+            # lands on the cache PVC; cache.sizeGi is sized with that in
+            # mind. Set livePollS to 0 to fall back to on-demand fetching.
+            - name: "RA_LOG_EXPLORER_LIVE_POLL_S"
+              value: {{ .Values.config.livePollS | quote }}
+            - name: "RA_LOG_EXPLORER_LIVE_LAG_S"
+              value: {{ .Values.config.liveLagS | quote }}
             - name: "LOKI_USERNAME"
               value: {{ .Values.config.lokiUsername | quote }}
             # The application takes no configuration from the browser at
