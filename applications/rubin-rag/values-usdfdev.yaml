@@ -1,10 +1,8 @@
 weaviate:
+  service:
+    type: ClusterIP
   storage:
     size: 500Gi
-  service:
-    type: LoadBalancer
-    annotations:
-      metallb.io/address-pool: sdf-services
 image:
   tag: "tickets-DM-55408"
   pullPolicy: Always
