@@ -1,6 +1,6 @@
 image:
   pullPolicy: "Always"
-  tag: "tickets-DM-55658"
+  tag: "tickets-DM-55772"
 
 config:
   logLevel: "DEBUG"
