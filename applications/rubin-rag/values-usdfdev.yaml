@@ -1,6 +1,8 @@
 weaviate:
   storage:
     size: 500Gi
+  service:
+    type: ClusterIP
 image:
   tag: "tickets-DM-55408"
   pullPolicy: Always
