@@ -67,6 +67,24 @@ config:
   # slower than the exposure cadence.
   windowAfterS: 300
 
+  # -- Poll interval, in seconds, for live mode: the server continuously
+  # fetches the current night's logs (all pods) into its cache, so
+  # exposure views during the night are served by slicing what is already
+  # on disk instead of querying Loki. Nightly data volume lands on the
+  # cache PVC (~9 GiB measured for a busy night, before LRU eviction
+  # reclaims it), so `cache.sizeGi` must keep room for a few nights.
+  # 0 disables live mode and returns the app to purely on-demand
+  # fetching.
+  # 300 keeps the Loki query load modest; an exposure becomes viewable
+  # at most ~5 minutes after its shutter+5min ideal.
+  livePollS: 300
+
+  # -- How far behind "now", in seconds, each live poll stops. Covers Loki
+  # ingestion lag: a log line stamped t can be ingested seconds after t,
+  # and a poll that raced it would miss it. Raise this if the end-of-night
+  # verification pass reports pods needing refetches.
+  liveLagS: 60
+
   # -- The one site this deployment serves. A *site* pairs a Loki cluster
   # (where the logs live) with the ConsDB endpoint that owns shutter-close
   # truth for that cluster's data; the two must match or a dataId resolves
