@@ -26,7 +26,7 @@ spec:
         fsGroup: 73006
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:develop"
+          image: "{{ .Values.image.repository }}:alpha"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
             - /bin/sh
