@@ -1,9 +1,14 @@
 image:
+  # Trial the DM-55222 branch build ahead of the next Times Square release.
+  tag: "tickets-DM-55222"
   pullPolicy: Always
 ingress:
   defaultScope: "exec:admin"
 config:
   logLevel: "DEBUG"
+  # DM-55222 adds the GitHub numeric ID columns. Drop this again once the
+  # migration has been applied.
+  updateSchema: true
   databaseUrl: "postgresql://times-square@localhost/times-square"
   githubAppId: "196798"
   enableGitHubApp: "True"
