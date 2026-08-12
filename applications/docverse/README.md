@@ -80,6 +80,7 @@ Publish versioned docs
 | syncWorker.podAnnotations | object | `{}` | Annotations for the Keeper-sync worker pod |
 | syncWorker.replicaCount | int | `1` | Number of Keeper-sync worker pods to start |
 | syncWorker.resources | object | See `values.yaml` | Resource limits and requests for the Keeper-sync worker pod |
+| syncWorker.resources.limits.memory | string | `"1Gi"` | Higher than the other workers because keeper-sync buffers whole LTD objects in memory while copying builds, across several concurrent jobs. Measured worst-case RSS is about 200Mi. |
 | syncWorker.tolerations | list | `[]` | Tolerations for the Keeper-sync worker pod |
 | tolerations | list | `[]` | Tolerations for the docverse deployment pod |
 | workerResources | object | See `values.yaml` | Resource limits and requests for the docverse worker pod |

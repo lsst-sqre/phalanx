@@ -174,10 +174,13 @@ syncWorker:
   resources:
     limits:
       cpu: "1"
-      memory: "512Mi"
+      # -- Higher than the other workers because keeper-sync buffers whole
+      # LTD objects in memory while copying builds, across several
+      # concurrent jobs. Measured worst-case RSS is about 200Mi.
+      memory: "1Gi"
     requests:
       cpu: "50m"
-      memory: "128Mi"
+      memory: "256Mi"
 
   # -- Affinity rules for the Keeper-sync worker pod
   affinity: {}
