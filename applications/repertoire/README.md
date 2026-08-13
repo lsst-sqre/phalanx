@@ -46,7 +46,7 @@ Service discovery
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
 | config.subdomainRules | object | See `values.yaml` | Rules for determining the expected URLs of deployed services that use a subdomain. See the [Repertoire documentation](https://repertoire.lsst.io/) for more information. |
 | config.tap.schemaSourceTemplate | string | GCS rubin-sdm-schemas-artifacts bucket | Template for schema artifact URLs (use {version} placeholder) |
-| config.tap.schemaVersion | string | `"releases/EDP2-deploy-v2"` | Default schema version for all TAP services (can be overridden per-app) |
+| config.tap.schemaVersion | string | `"tickets/DM-55790"` | Default schema version for all TAP services (can be overridden per-app) |
 | config.tap.servers | object | See `values.yaml` | TAP Server configuration by application name. Configuration is used to populate & update the TAP_SCHEMA database for each enabled TAP application |
 | config.useSubdomains | list | `[]` | List of services that use subdomains instead of the main hostname. See the [Repertoire documentation](https://repertoire.lsst.io/) for more information. |
 | global.environmentName | string | Set by Argo CD | Name of the Phalanx environment |
