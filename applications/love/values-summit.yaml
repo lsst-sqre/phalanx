@@ -239,7 +239,7 @@ love-manager:
 love-nginx:
   image:
     repository: nginx
-    tag: 1.25.1
+    tag: 1.31.3
     pullPolicy: Always
   ingress:
     hostname: summit-lsp.lsst.codes
