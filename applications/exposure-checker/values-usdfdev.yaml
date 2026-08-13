@@ -17,4 +17,4 @@ config:
   butler_collection: "u/kadrlica/LSSTCam/binCalexp4/20250428"
 
   db:
-    hostname: "postgres.postgres"
+    hostname: "rsp-db-rw.postgres-db.svc.cluster.local"
