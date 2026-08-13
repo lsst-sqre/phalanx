@@ -32,8 +32,10 @@ ingress:
   path: "/skyviewer"
 
 config:
-  # -- Directory holding the HiPS surveys. Must sit below `hipsData.mountPath`.
-  hipsDataDir: "/sdf/group/rubin/shared/hips_views"
+  # -- Directory holding the HiPS surveys. Must resolve below one of
+  # `hipsData.mounts`, following symlinks. Required when `hipsData.enabled`
+  # is true.
+  hipsDataDir: ""
 
   # -- Path below `hipsDataDir` of the single survey to display, e.g.
   # `LSSTCam/hips/ltl2/color_gri`. The CMS advertises public datasets absent
@@ -41,12 +43,12 @@ config:
   # 404s.
   hipsSurvey: ""
 
-  # -- Craft CMS GraphQL API, used for page content and tours. Imagery comes
-  # from `hipsSurvey`, not from here.
-  apiUrl: "https://api.skyviewer.app/api"
+  # -- Craft CMS GraphQL API, used for page content and tours. Required.
+  # Imagery comes from `hipsSurvey`, not from here.
+  apiUrl: ""
 
-  # -- Astro objects API, used by the search panel.
-  astroApiUrl: "https://us-central1-edc-prod-eef0.cloudfunctions.net/astro-objects-api"
+  # -- Astro objects API, used by the search panel. Required.
+  astroApiUrl: ""
 
   # -- PROD, INT or DEV. DEV additionally enables the GCS proxy route and the
   # debug UI.
@@ -58,37 +60,24 @@ config:
   # limit with room for the application itself.
   tileCacheBytes: "0"
 
-# -- Volumes holding the HiPS surveys, mounted read-only. More than one is
-# usually needed: /sdf/group/rubin/shared is a symlink to
-# /sdf/data/rubin/shared, so mounting only the group export leaves the
-# surveys unreachable through a dangling symlink.
+# -- Volumes holding the HiPS surveys, mounted read-only. All of this is
+# specific to where the surveys are staged, so it is set per environment.
 # @default -- See `values.yaml`
 hipsData:
   # -- Whether to mount the HiPS volumes. Without them the viewer has no
-  # imagery.
-  enabled: true
+  # imagery, so an environment that enables it must also set
+  # `config.hipsDataDir`, `mounts` and usually `supplementalGroups`.
+  enabled: false
 
-  # -- Supplemental group IDs the pod runs with. The data exports are
-  # group-readable only (/sdf/data/rubin/shared is drwxr-s---, group 4085),
-  # so without the right group every read is denied even with the volumes
-  # mounted.
-  supplementalGroups:
-    - 4085
+  # -- Supplemental group IDs the pod runs with. The exports holding the
+  # surveys are typically group-readable only, and without the right group
+  # every read is denied even with the volumes mounted.
+  supplementalGroups: []
 
   # -- Claims to create and mount. Each entry needs `name`,
   # `storageClassName`, `capacity` and `mountPath`. `config.hipsDataDir` must
   # resolve below one of them, following symlinks.
-  mounts:
-    - name: "sdf-group-rubin"
-      storageClassName: "sdf-group-rubin"
-      # the claim binds an existing export, so this is nominal rather than an
-      # allocation
-      capacity: "1Gi"
-      mountPath: "/sdf/group/rubin"
-    - name: "sdf-data-rubin"
-      storageClassName: "sdf-data-rubin"
-      capacity: "1Gi"
-      mountPath: "/sdf/data/rubin"
+  mounts: []
 
 # -- Affinity rules for the skyviewer deployment pod
 affinity: {}
