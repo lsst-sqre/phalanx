@@ -1,7 +1,4 @@
 config:
-  logLevel: DEBUG
-  logMonkeysToFile: false
-  logProfile: development
   metrics:
     enabled: true
   sentryTracesSampleConfig: errors
