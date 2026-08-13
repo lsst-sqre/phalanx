@@ -6,11 +6,10 @@ metadata:
     {{- include "skyviewer.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
-  # at one replica, RollingUpdate's maxUnavailable floors to zero, so the old
-  # pod is kept until the new one passes readiness — and a rollout whose new
-  # pod never comes up wedges with two unready pods that Argo CD cannot
-  # converge. Brief downtime on upgrade is fine for this app; a wedged
-  # rollout is not
+  # a single replica requesting several GiB for its tile cache: rolling would
+  # surge a second pod and briefly ask the cluster for twice that. A few
+  # seconds of downtime on upgrade is fine for a staff tool; reserving double
+  # the memory to avoid it is not
   strategy:
     type: "Recreate"
   selector:
@@ -43,9 +42,10 @@ spec:
               containerPort: 8080
               protocol: "TCP"
           env:
-            # the app validates its environment when the server boots, not
-            # only when the image is built, so every variable has to be
-            # present here too or the container crash-loops
+            # NEXT_PUBLIC_ values were compiled into the client bundle when
+            # the image was built; setting them here cannot change what the
+            # browser uses, but the server revalidates them at boot, so they
+            # must be present and must match what the image was built with
             - name: "NEXT_PUBLIC_BASE_URL"
               value: {{ printf "https://%s" .Values.global.host | quote }}
             - name: "NEXT_PUBLIC_BASE_PATH"
