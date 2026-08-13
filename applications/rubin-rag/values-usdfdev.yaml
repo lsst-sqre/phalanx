@@ -1,4 +1,9 @@
 weaviate:
+  service:
+    type: LoadBalancer
+    annotations:
+      metallb.io/address-pool: sdf-services
+    allocateLoadBalancerNodePorts: false
   grpcService:
     type: ClusterIP
   storage:
