@@ -266,7 +266,6 @@ love-nginx:
     storageClass: rook-ceph-block
     accessMode: ReadWriteOnce
     claimSize: 2Gi
-  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 120m
