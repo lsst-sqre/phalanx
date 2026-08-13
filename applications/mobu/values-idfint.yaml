@@ -107,7 +107,7 @@ config:
           cell_execution_timeout: "1h"
           image:
             image_class: "by-tag"
-            tag: "exp_d_2026_08_10_update"
+            tag: "exp_w_2026_33_update"
           repo_url: "https://github.com/lsst/tutorial-notebooks.git"
           repo_ref: "main"
           max_executions: 1
