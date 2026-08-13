@@ -11,18 +11,18 @@ Sky imagery browser for private HiPS surveys
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the skyviewer deployment pod |
-| config.apiUrl | string | `"https://api.skyviewer.app/api"` | Craft CMS GraphQL API, used for page content and tours. Imagery comes from `hipsSurvey`, not from here. |
-| config.astroApiUrl | string | `"https://us-central1-edc-prod-eef0.cloudfunctions.net/astro-objects-api"` | Astro objects API, used by the search panel. |
+| config.apiUrl | string | `""` | Craft CMS GraphQL API, used for page content and tours. Required. Imagery comes from `hipsSurvey`, not from here. |
+| config.astroApiUrl | string | `""` | Astro objects API, used by the search panel. Required. |
 | config.cloudEnv | string | `"PROD"` | PROD, INT or DEV. DEV additionally enables the GCS proxy route and the debug UI. |
-| config.hipsDataDir | string | `"/sdf/group/rubin/shared/hips_views"` | Directory holding the HiPS surveys. Must sit below `hipsData.mountPath`. |
+| config.hipsDataDir | string | `""` | Directory holding the HiPS surveys. Must resolve below one of `hipsData.mounts`, following symlinks. Required when `hipsData.enabled` is true. |
 | config.hipsSurvey | string | `""` | Path below `hipsDataDir` of the single survey to display, e.g. `LSSTCam/hips/ltl2/color_gri`. The CMS advertises public datasets absent from this tree, so without this the viewer offers surveys whose every tile 404s. |
 | config.tileCacheBytes | string | `"0"` | Byte cap for the in-memory FIFO cache of served tiles; "0" disables it. The pod serves all tile traffic itself, so without it every tile is re-read from networked disk on every request. Must fit inside the memory limit with room for the application itself. |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| hipsData | object | See `values.yaml` | Volumes holding the HiPS surveys, mounted read-only. More than one is usually needed: /sdf/group/rubin/shared is a symlink to /sdf/data/rubin/shared, so mounting only the group export leaves the surveys unreachable through a dangling symlink. |
-| hipsData.enabled | bool | `true` | Whether to mount the HiPS volumes. Without them the viewer has no imagery. |
-| hipsData.mounts | list | `[{"capacity":"1Gi","mountPath":"/sdf/group/rubin","name":"sdf-group-rubin","storageClassName":"sdf-group-rubin"},{"capacity":"1Gi","mountPath":"/sdf/data/rubin","name":"sdf-data-rubin","storageClassName":"sdf-data-rubin"}]` | Claims to create and mount. Each entry needs `name`, `storageClassName`, `capacity` and `mountPath`. `config.hipsDataDir` must resolve below one of them, following symlinks. |
-| hipsData.supplementalGroups | list | `[4085]` | Supplemental group IDs the pod runs with. The data exports are group-readable only (/sdf/data/rubin/shared is drwxr-s---, group 4085), so without the right group every read is denied even with the volumes mounted. |
+| hipsData | object | See `values.yaml` | Volumes holding the HiPS surveys, mounted read-only. All of this is specific to where the surveys are staged, so it is set per environment. |
+| hipsData.enabled | bool | `false` | Whether to mount the HiPS volumes. Without them the viewer has no imagery, so an environment that enables it must also set `config.hipsDataDir`, `mounts` and usually `supplementalGroups`. |
+| hipsData.mounts | list | `[]` | Claims to create and mount. Each entry needs `name`, `storageClassName`, `capacity` and `mountPath`. `config.hipsDataDir` must resolve below one of them, following symlinks. |
+| hipsData.supplementalGroups | list | `[]` | Supplemental group IDs the pod runs with. The exports holding the surveys are typically group-readable only, and without the right group every read is denied even with the volumes mounted. |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the skyviewer image |
 | image.repository | string | `"ghcr.io/lsst-dm/skyviewer-client"` | Image to use in the skyviewer deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |

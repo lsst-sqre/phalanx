@@ -51,14 +51,14 @@ spec:
             - name: "NEXT_PUBLIC_BASE_PATH"
               value: {{ .Values.ingress.path | quote }}
             - name: "NEXT_PUBLIC_API_URL"
-              value: {{ .Values.config.apiUrl | quote }}
+              value: {{ required "config.apiUrl must be set" .Values.config.apiUrl | quote }}
             - name: "NEXT_PUBLIC_ASTRO_API_URL"
-              value: {{ .Values.config.astroApiUrl | quote }}
+              value: {{ required "config.astroApiUrl must be set" .Values.config.astroApiUrl | quote }}
             - name: "CLOUD_ENV"
               value: {{ .Values.config.cloudEnv | quote }}
             {{- if .Values.hipsData.enabled }}
             - name: "HIPS_DATA_DIR"
-              value: {{ .Values.config.hipsDataDir | quote }}
+              value: {{ required "config.hipsDataDir must be set when hipsData.enabled is true" .Values.config.hipsDataDir | quote }}
             {{- end }}
             {{- with .Values.config.hipsSurvey }}
             - name: "HIPS_SURVEY"
