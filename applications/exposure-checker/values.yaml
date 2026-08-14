@@ -6,6 +6,9 @@ image:
   # @default -- The appVersion of the chart
   tag: ""
 
+# -- Number of pods to start
+replicaCount: 1
+
 # -- Environment variables
 environment: {}
 

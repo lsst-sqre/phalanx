@@ -1,6 +1,8 @@
 image:
   tag: v1.0
 
+replicaCount: 0
+
 environment:
   AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"
   S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
