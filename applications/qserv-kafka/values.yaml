@@ -3,6 +3,14 @@
 # Declare variables to be passed into your templates.
 
 config:
+  # -- Maximum number of jobs each fast worker (used for I/O-intensive tasks)
+  # can process simultaneously
+  arqFastMaxJobs: 50
+
+  # -- Maximum number of jobs each slow worker (used for results processing)
+  # can process simultaneously
+  arqSlowMaxJobs: 2
+
   # -- Timeout for REST API calls in Safir `parse_timedelta` format. This
   # includes time spent waiting for a connection if the maximum number of
   # connections has been reached.
@@ -35,9 +43,6 @@ config:
   # -- Logging profile (`production` for JSON, `development` for
   # human-friendly)
   logProfile: "production"
-
-  # -- Maximum number of arq jobs each worker can process simultaneously
-  maxWorkerJobs: 2
 
   metrics:
     # -- Whether to enable sending metrics
@@ -140,15 +145,6 @@ config:
   # query quota in the Gafaelfawr configuration.
   tapService: "qserv"
 
-  # -- Maximum number of arq jobs each upload worker can process
-  # simultaneously..
-  uploadWorkerMaxJobs: 10
-
-  # -- How long to allow an upload worker to upload tables and submit the
-  # query to the backend before timing out, in seconds.
-  # @default -- 900 (15 minutes)
-  uploadWorkerTimeout: 900
-
 image:
   # -- Image to use in the qserv-kafka deployment
   repository: "ghcr.io/lsst-sqre/qserv-kafka"
@@ -203,6 +199,108 @@ frontend:
       value: "arm64"
       effect: "NoSchedule"
 
+fastWorker:
+  # -- Affinity rules for the qserv-kafka fast worker pods
+  affinity: {}
+
+  # -- Whether to allow containers to run as root. Set to true to allow use of
+  # debug containers to diagnose issues such as memory leaks.
+  allowRootDebug: false
+
+  autoscaling:
+    # -- Enable autoscaling of qserv-kafka fast workers
+    enabled: true
+
+    # -- Minimum number of qserv-kafka fast worker pods
+    minReplicas: 1
+
+    # -- Maximum number of qserv-kafka fast worker pods. Each replica will
+    # open database connections up to the configured pool size and overflow
+    # limits, so make sure the combined connections are under the connection
+    # limit.
+    maxReplicas: 10
+
+    # -- Target CPU utilization of qserv-kafka fast worker pods.
+    targetCPUUtilizationPercentage: 75
+
+  # -- Node selection rules for the qserv-kafka fast worker pods
+  nodeSelector: {}
+
+  # -- Annotations for the qserv-kafka fast worker pods
+  podAnnotations: {}
+
+  # -- Number of fast worker pods to start
+  replicaCount: 1
+
+  # -- Resource limits and requests for the qserv-kafka fast worker pods
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "250m"
+      memory: "300Mi"
+    requests:
+      cpu: "50m"
+      memory: "145Mi"
+
+  # -- Tolerations for the qserv-kafka fast worker pods
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
+
+slowWorker:
+  # -- Affinity rules for the qserv-kafka slow worker pods
+  affinity: {}
+
+  # -- Whether to allow containers to run as root. Set to true to allow use of
+  # debug containers to diagnose issues such as memory leaks.
+  allowRootDebug: false
+
+  autoscaling:
+    # -- Enable autoscaling of qserv-kafka slow workers
+    enabled: true
+
+    # -- Minimum number of qserv-kafka slow worker pods
+    minReplicas: 1
+
+    # -- Maximum number of qserv-kafka slow worker pods. Each replica will
+    # open database connections up to the configured pool size and overflow
+    # limits, so make sure the combined connections are under the connection
+    # limit.
+    maxReplicas: 10
+
+    # -- Target CPU utilization of qserv-kafka slow worker pods.
+    targetCPUUtilizationPercentage: 30
+
+  # -- Node selection rules for the qserv-kafka worker pods
+  nodeSelector: {}
+
+  # -- Annotations for the qserv-kafka worker pods
+  podAnnotations: {}
+
+  # -- Number of slow worker pods to start if autoscaling is disabled
+  replicaCount: 1
+
+  # -- Resource limits and requests for the qserv-kafka slow worker pods
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "500Mi"
+    requests:
+      cpu: "1"
+      memory: "145Mi"
+
+  # -- Tolerations for the qserv-kafka slow worker pods
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
+
 redis:
   config:
     # -- Name of secret containing Redis password
@@ -242,92 +340,6 @@ redis:
       memory: "20Mi"
 
   # -- Tolerations for the qserv-kafka Redis pod
-  # @default -- Tolerate GKE arm64 taint
-  tolerations:
-    - key: "kubernetes.io/arch"
-      operator: "Equal"
-      value: "arm64"
-      effect: "NoSchedule"
-
-resultWorker:
-  # -- Affinity rules for the qserv-kafka worker pods
-  affinity: {}
-
-  # -- Whether to allow containers to run as root. Set to true to allow use of
-  # debug containers to diagnose issues such as memory leaks.
-  allowRootDebug: false
-
-  autoscaling:
-    # -- Enable autoscaling of qserv-kafka result workers
-    enabled: true
-
-    # -- Minimum number of qserv-kafka worker pods
-    minReplicas: 1
-
-    # -- Maximum number of qserv-kafka worker pods. Each replica will open
-    # database connections up to the configured pool size and overflow limits,
-    # so make sure the combined connections are under the postgres connection
-    # limit.
-    maxReplicas: 10
-
-    # -- Target CPU utilization of qserv-kafka worker pods.
-    targetCPUUtilizationPercentage: 30
-
-  # -- Node selection rules for the qserv-kafka worker pods
-  nodeSelector: {}
-
-  # -- Annotations for the qserv-kafka worker pods
-  podAnnotations: {}
-
-  # -- Number of result worker pods to start if autoscaling is disabled
-  replicaCount: 1
-
-  # -- Resource limits and requests for the qserv-kafka worker pods
-  # @default -- See `values.yaml`
-  resources:
-    limits:
-      cpu: "1"
-      memory: "500Mi"
-    requests:
-      cpu: "1"
-      memory: "145Mi"
-
-  # -- Tolerations for the qserv-kafka worker pods
-  # @default -- Tolerate GKE arm64 taint
-  tolerations:
-    - key: "kubernetes.io/arch"
-      operator: "Equal"
-      value: "arm64"
-      effect: "NoSchedule"
-
-uploadWorker:
-  # -- Affinity rules for the qserv-kafka upload worker pods
-  affinity: {}
-
-  # -- Whether to allow containers to run as root. Set to true to allow use of
-  # debug containers to diagnose issues such as memory leaks.
-  allowRootDebug: false
-
-  # -- Node selection rules for the qserv-kafka upload worker pods
-  nodeSelector: {}
-
-  # -- Annotations for the qserv-kafka upload worker pods
-  podAnnotations: {}
-
-  # -- Number of upload worker pods to start
-  replicaCount: 1
-
-  # -- Resource limits and requests for the qserv-kafka upload worker pods
-  # @default -- See `values.yaml`
-  resources:
-    limits:
-      cpu: "250m"
-      memory: "300Mi"
-    requests:
-      cpu: "50m"
-      memory: "145Mi"
-
-  # -- Tolerations for the qserv-kafka upload worker pods
   # @default -- Tolerate GKE arm64 taint
   tolerations:
     - key: "kubernetes.io/arch"

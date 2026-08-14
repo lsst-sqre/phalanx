@@ -8,18 +8,19 @@ data:
   METRICS_APPLICATION: {{ .Values.config.metrics.application | quote }}
   METRICS_ENABLED: {{ .Values.config.metrics.enabled | quote }}
   METRICS_EVENTS_TOPIC_PREFIX: {{ .Values.config.metrics.events.topicPrefix | quote }}
-  QSERV_KAFKA_CONSUMER_GROUP_ID: {{ .Values.config.consumerGroupId | quote }}
+  QSERV_KAFKA_ARQ_FAST_MAX_JOBS: {{ .Values.config.arqFastMaxJobs | quote }}
+  QSERV_KAFKA_ARQ_SLOW_MAX_JOBS: {{ .Values.config.arqSlowMaxJobs | quote }}
   QSERV_KAFKA_BACKEND: {{ .Values.config.backend | quote }}
-  {{- if .Values.config.bigqueryProject }}
-  QSERV_KAFKA_BIGQUERY_PROJECT: {{ .Values.config.bigqueryProject | quote }}
-  {{- end }}
+  QSERV_KAFKA_BACKEND_API_TIMEOUT: {{ .Values.config.backendApiTimeout | quote }}
+  QSERV_KAFKA_BACKEND_POLL_INTERVAL: {{ .Values.config.backendPollInterval | quote }}
+  QSERV_KAFKA_BACKEND_RETRY_COUNT: {{ .Values.config.backendRetryCount | quote }}
+  QSERV_KAFKA_BACKEND_RETRY_DELAY: {{ .Values.config.backendRetryDelay | quote }}
   QSERV_KAFKA_BIGQUERY_LOCATION: {{ .Values.config.bigqueryLocation | quote }}
+  QSERV_KAFKA_BIGQUERY_PROJECT: {{ .Values.config.bigqueryProject | quote }}
   {{- if .Values.config.bigqueryMaxBytesBilled }}
   QSERV_KAFKA_BIGQUERY_MAX_BYTES_BILLED: {{ int64 .Values.config.bigqueryMaxBytesBilled | quote }}
   {{- end }}
-  {{- if .Values.config.maxResultBytes }}
-  QSERV_KAFKA_MAX_RESULT_BYTES: {{ int64 .Values.config.maxResultBytes | quote }}
-  {{- end }}
+  QSERV_KAFKA_CONSUMER_GROUP_ID: {{ .Values.config.consumerGroupId | quote }}
   QSERV_KAFKA_JOB_CANCEL_TOPIC: {{ .Values.config.jobCancelTopic | quote }}
   QSERV_KAFKA_JOB_RUN_BATCH_SIZE: {{ .Values.config.jobRunBatchSize | quote }}
   QSERV_KAFKA_JOB_RUN_MAX_BYTES: {{ int64 .Values.config.jobRunMaxBytes | quote }}
@@ -27,11 +28,9 @@ data:
   QSERV_KAFKA_JOB_STATUS_TOPIC: {{ .Values.config.jobStatusTopic | quote }}
   QSERV_KAFKA_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
   QSERV_KAFKA_LOG_PROFILE: {{ .Values.config.logProfile | quote }}
-  QSERV_KAFKA_MAX_WORKER_JOBS: {{ .Values.config.maxWorkerJobs | quote }}
-  QSERV_KAFKA_BACKEND_POLL_INTERVAL: {{ .Values.config.backendPollInterval | quote }}
-  QSERV_KAFKA_BACKEND_RETRY_COUNT: {{ .Values.config.backendRetryCount | quote }}
-  QSERV_KAFKA_BACKEND_RETRY_DELAY: {{ .Values.config.backendRetryDelay | quote }}
-  QSERV_KAFKA_BACKEND_API_TIMEOUT: {{ .Values.config.backendApiTimeout | quote }}
+  {{- if .Values.config.maxResultBytes }}
+  QSERV_KAFKA_MAX_RESULT_BYTES: {{ int64 .Values.config.maxResultBytes | quote }}
+  {{- end }}
   QSERV_KAFKA_REDIS_MAX_CONNECTIONS: {{ .Values.config.redisMaxConnections | quote }}
   QSERV_KAFKA_REDIS_URL: "redis://bigquery-kafka-redis.{{ .Release.Namespace }}:6379/0"
   QSERV_KAFKA_RESULT_TIMEOUT: {{ .Values.config.resultTimeout | quote }}

@@ -1,37 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "qserv-kafka-upload-worker"
+  name: "qserv-kafka-slow-worker"
   labels:
     {{- include "qserv-kafka.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.uploadWorker.replicaCount }}
+  {{- if not .Values.slowWorker.autoscaling.enabled }}
+  replicas: {{ .Values.slowWorker.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "qserv-kafka.selectorLabels" . | nindent 6 }}
-      app.kubernetes.io/component: "upload-worker"
+      app.kubernetes.io/component: "slow-worker"
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        {{- with .Values.uploadWorker.podAnnotations }}
+        {{- with .Values.slowWorker.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
         {{- include "qserv-kafka.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: "upload-worker"
+        app.kubernetes.io/component: "slow-worker"
         qserv-kafka-redis-client: "true"
     spec:
-      {{- with .Values.uploadWorker.affinity }}
+      {{- with .Values.slowWorker.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       automountServiceAccountToken: false
       containers:
-        - name: "{{ .Chart.Name }}-upload-worker"
+        - name: "{{ .Chart.Name }}-slow-worker"
           command:
             - "arq"
-            - "qservkafka.workers.main.UploadWorkerSettings"
+            - "qservkafka.workers.main.SlowWorkerSettings"
           env:
             {{- include "qserv-kafka.envVars" (dict "Values" .Values) | nindent 12 }}
           envFrom:
@@ -40,7 +42,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
-            {{- toYaml .Values.uploadWorker.resources | nindent 12 }}
+            {{- toYaml .Values.slowWorker.resources | nindent 12 }}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -60,17 +62,17 @@ spec:
               mountPath: "/etc/qserv-kafka/user.key"
               readOnly: true
               subPath: "ssl.keystore.key"
-      {{- with .Values.uploadWorker.nodeSelector }}
+      {{- with .Values.slowWorker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      terminationGracePeriodSeconds: {{ add .Values.config.uploadWorkerTimeout 10 }}
-      {{- with .Values.uploadWorker.tolerations }}
+      terminationGracePeriodSeconds: {{ add .Values.config.resultTimeout 10 }}
+      {{- with .Values.slowWorker.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       securityContext:
-        runAsNonRoot: {{ not .Values.uploadWorker.allowRootDebug }}
+        runAsNonRoot: {{ not .Values.slowWorker.allowRootDebug }}
         runAsUser: 1000
         runAsGroup: 1000
       volumes:

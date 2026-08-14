@@ -12,9 +12,6 @@ config:
   qservRestSendApiVersion: false
   qservRestUrl: "https://134.79.23.230:4048/"
   qservRestUsername: "qsmaster"
-frontend:
-  allowRootDebug: true
-resultWorker:
-  allowRootDebug: true
+slowWorker:
   autoscaling:
     maxReplicas: 50

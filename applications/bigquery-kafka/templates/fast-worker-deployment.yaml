@@ -1,55 +1,48 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "bigquery-kafka"
+  name: "bigquery-kafka-fast-worker"
   labels:
     {{- include "bigquery-kafka.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  {{- if not .Values.fastWorker.autoscaling.enabled }}
+  replicas: {{ .Values.fastWorker.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "bigquery-kafka.selectorLabels" . | nindent 6 }}
-  strategy:
-    type: "Recreate"
+      app.kubernetes.io/component: "fast-worker"
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        {{- with .Values.frontend.podAnnotations }}
+        {{- with .Values.fastWorker.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
         {{- include "bigquery-kafka.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "fast-worker"
         bigquery-kafka-redis-client: "true"
     spec:
-      {{- with .Values.frontend.affinity }}
+      {{- with .Values.fastWorker.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      automountServiceAccountToken: true
+      automountServiceAccountToken: false
       containers:
-        - name: {{ .Chart.Name }}
+        - name: "{{ .Chart.Name }}-fast-worker"
+          command:
+            - "arq"
+            - "qservkafka.workers.main.FastWorkerSettings"
           env:
             {{- include "bigquery-kafka.envVars" (dict "Values" .Values) | nindent 12 }}
-            {{- if (and .Values.frontend.debug.enabled .Values.frontend.debug.disablePymalloc) }}
-            - name: PYTHONMALLOC
-              value: malloc
-            {{- end }}
           envFrom:
           - configMapRef:
               name: "bigquery-kafka"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: "http"
-              containerPort: 8080
-              protocol: "TCP"
-          readinessProbe:
-            httpGet:
-              path: "/"
-              port: "http"
           resources:
-            {{- toYaml .Values.frontend.resources | nindent 12 }}
+            {{- toYaml .Values.fastWorker.resources | nindent 12 }}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -69,29 +62,20 @@ spec:
               mountPath: "/etc/bigquery-kafka/user.key"
               readOnly: true
               subPath: "ssl.keystore.key"
-            {{- if .Values.frontend.debug.enabled }}
-            - name: debug-storage
-              mountPath: /debug
-            {{- end }}
-      {{- with .Values.frontend.nodeSelector }}
+      {{- with .Values.fastWorker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      securityContext:
-        runAsNonRoot: {{ not .Values.frontend.debug.enabled }}
-        runAsUser: 1000
-        runAsGroup: 1000
-      {{- with .Values.frontend.tolerations }}
-      serviceAccountName: "bigquery-kafka"
+      terminationGracePeriodSeconds: {{ add .Values.config.resultTimeout 10 }}
+      {{- with .Values.fastWorker.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      securityContext:
+        runAsNonRoot: {{ not .Values.fastWorker.allowRootDebug }}
+        runAsUser: 1000
+        runAsGroup: 1000
       volumes:
         - name: "kafka"
           secret:
             secretName: "bigquery-kafka-access"
-        {{- if .Values.frontend.debug.enabled }}
-        - name: debug-storage
-          persistentVolumeClaim:
-            claimName: bigquery-kafka-debug
-        {{- end }}
