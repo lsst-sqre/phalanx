@@ -23,8 +23,8 @@ Ingress controller
 | ingress-nginx.controller.config.server-snippet | string | See `values.yaml` | Add additional per-server configuration used by Gafaelfawr to report errors from the authorization layer |
 | ingress-nginx.controller.config.ssl-redirect | string | `"true"` | Redirect all non-SSL access to SSL |
 | ingress-nginx.controller.config.use-forwarded-headers | string | `"true"` | Enable the `X-Forwarded-For` processing |
-| ingress-nginx.controller.image.digest | string | `"sha256:241f8fddb99cd24b5ef940e49344f6de11c502afe2778158b91392c39c5a5d26"` |  |
-| ingress-nginx.controller.image.digestChroot | string | `"sha256:fdafd71b232dcb535ed2c34a6e0520dc8de8e03e38513401fd9889571f5571aa"` |  |
+| ingress-nginx.controller.image.digest | string | `"sha256:23661ec31f65606cb806bbe60120bf96f2fd34889058c83c814f8dd3696661c2"` |  |
+| ingress-nginx.controller.image.digestChroot | string | `"sha256:a26637dcbe00be6f6c6d77085c4ab48f1692342eacc6d88750c63533303a7d96"` |  |
 | ingress-nginx.controller.image.image | string | `"lsst-sqre/ingress-nginx-controller"` |  |
 | ingress-nginx.controller.image.pullPolicy | string | `"IfNotPresent"` |  |
 | ingress-nginx.controller.image.registry | string | `"ghcr.io"` |  |
