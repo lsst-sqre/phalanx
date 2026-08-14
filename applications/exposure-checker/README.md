@@ -27,4 +27,5 @@ An interface for visually identifying artifacts in Rubin images.
 | image.repository | string | `"ghcr.io/lsst-sitcom/rubin_exp_checker"` | rubin_exp_checker image to use |
 | image.tag | string | The appVersion of the chart | Tag of rubin_exp_checker image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
+| replicaCount | int | `1` | Number of pods to start |
 | resources | object | see `values.yaml` | Resource limits and requests for the nodejs pod |
