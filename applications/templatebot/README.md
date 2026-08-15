@@ -11,6 +11,7 @@ Create new projects
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the templatebot deployment pod |
+| config.httpTimeout | int | `30` | Timeout, in seconds, for outbound HTTP requests made with the shared HTTP client (Slack, GitHub, and LSST the Docs). Connecting is bounded separately by a fixed 10 second timeout in the application. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/templatebot"` | URL path prefix |
