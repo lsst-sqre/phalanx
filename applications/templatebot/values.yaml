@@ -17,6 +17,11 @@ image:
   tag: null
 
 config:
+  # -- Timeout, in seconds, for outbound HTTP requests made with the shared
+  # HTTP client (Slack, GitHub, and LSST the Docs). Connecting is bounded
+  # separately by a fixed 10 second timeout in the application.
+  httpTimeout: 30
+
   # -- Logging level
   logLevel: "INFO"
 
