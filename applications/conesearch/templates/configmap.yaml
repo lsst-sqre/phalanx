@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "conesearch"
+  labels:
+    {{- include "conesearch.labels" . | nindent 4 }}
+data:
+  REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}
+  METRICS_APPLICATION: {{ .Values.config.metrics.application | quote }}
+  {{- if .Values.config.metrics.enabled }}
+  METRICS_ENABLED: "true"
+  METRICS_EVENTS_TOPIC_PREFIX: {{ .Values.config.metrics.events.topicPrefix | quote }}
+  SCHEMA_MANAGER_REGISTRY_URL: {{ .Values.config.metrics.schemaManager.registryUrl | quote }}
+  {{- if .Values.config.metrics.schemaManager.suffix }}
+  SCHEMA_MANAGER_SUFFIX: {{ .Values.config.metrics.schemaManager.suffix | quote }}
+  {{- end }}
+  {{- else }}
+  METRICS_ENABLED: "false"
+  {{- end }}
+  config.yaml: |
+    logLevel: {{ .Values.config.logLevel | quote }}
+    profile: {{ .Values.config.logProfile | quote }}
+    pathPrefix: {{ .Values.config.pathPrefix | quote }}
+    collections:
+      {{- toYaml .Values.config.collections | nindent 6 }}
