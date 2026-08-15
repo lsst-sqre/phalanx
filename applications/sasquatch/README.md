@@ -750,6 +750,7 @@ Rubin Observatory's telemetry service
 | schema-registry-remote.topic.name | string | `"registry-schemas"` | Name of the Kafka topic used by the Schema Registry to store schemas. |
 | scimma.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | square-events.cluster.name | string | `"sasquatch"` |  |
+| square-events.topics.slackViewSubmission.retentionMs | int | `1800000` | Retention period, in milliseconds, for the Slack `view_submission` interaction topic. These events drive project creation in templatebot, so retaining them well beyond the other Squarebot topics keeps the payload of a failed creation available for debugging and replay. |
 | strimzi-kafka.broker.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for broker pod assignment |
 | strimzi-kafka.broker.backup | bool | `false` | Whether to label the broker PVCs for backup by k8up, enabled on the summit and base environments |
 | strimzi-kafka.broker.enabled | bool | `false` | Enable node pool for the kafka brokers |

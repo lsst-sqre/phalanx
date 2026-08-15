@@ -23,7 +23,7 @@ spec:
   replicas: 3
   config:
     # http://kafka.apache.org/documentation/#topicconfigs
-    retention.ms: 1800000  # 30 minutes
+    retention.ms: {{ int64 .Values.topics.slackViewSubmission.retentionMs }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic

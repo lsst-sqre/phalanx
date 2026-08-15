@@ -95,3 +95,8 @@ app-metrics:
 
 squareEvents:
   enabled: true
+
+square-events:
+  topics:
+    slackViewSubmission:
+      retentionMs: 7776000000  # 90 days
