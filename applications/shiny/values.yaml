@@ -15,6 +15,13 @@ image:
   # a branch name.
   pullPolicy: "IfNotPresent"
 
+  # -- Names of image pull secrets in the app's namespace, for a private
+  # registry. `ghcr.io/mjuric/mppdb` is private (the image bakes the source of a
+  # private repository), so pulling it requires one; at usdfdev this is the
+  # hand-created `shiny-pull` docker-registry secret (a `read:packages` GitHub
+  # PAT), managed the same way as the `shiny` secret until Vault access exists.
+  pullSecrets: []
+
 # -- Command to run in the container. `mppdb up` starts and supervises the
 # service stack, which is what the container image's start script does.
 command:

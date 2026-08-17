@@ -8,4 +8,5 @@ config:
     name: "Shiny"
 
 image:
+  pullSecrets: ["shiny-pull"]
   pullPolicy: "Always"

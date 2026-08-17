@@ -35,6 +35,7 @@ TAP query front end for the mppdb catalogs
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the image. Use `Always` where the tag is mutable, such as a branch name. |
+| image.pullSecrets | list | `[]` | Names of image pull secrets in the app's namespace, for a private registry. `ghcr.io/mjuric/mppdb` is private (the image bakes the source of a private repository), so pulling it requires one; at usdfdev this is the hand-created `shiny-pull` docker-registry secret (a `read:packages` GitHub PAT), managed the same way as the `shiny` secret until Vault access exists. |
 | image.repository | string | `"ghcr.io/mjuric/mppdb"` | Image to run, built by the `mppdb` repository |
 | image.tag | string | `"sha-PLACEHOLDER"` | Tag of the image to run. **PLACEHOLDER**: no image has been published yet, so this must be replaced with a real tag (and pinned per environment) before the chart is deployed. |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
