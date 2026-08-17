@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "shiny"
+  labels:
+    {{- include "shiny.labels" . | nindent 4 }}
+data:
+  # The service reads its [databases] catalog only from this file; every flat
+  # scalar setting is passed as an environment variable by the Deployment.
+  mppdb.toml: |
+    {{- include "shiny.mppdbToml" . | nindent 4 }}

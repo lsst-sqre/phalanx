@@ -1,0 +1,211 @@
+# Default values for shiny.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  # -- Image to run, built by the `mppdb` repository
+  repository: "ghcr.io/mjuric/mppdb"
+
+  # -- Tag of the image to run. **PLACEHOLDER**: no image has been published
+  # yet, so this must be replaced with a real tag (and pinned per environment)
+  # before the chart is deployed.
+  tag: "sha-PLACEHOLDER"
+
+  # -- Pull policy for the image. Use `Always` where the tag is mutable, such as
+  # a branch name.
+  pullPolicy: "IfNotPresent"
+
+# -- Command to run in the container. `mppdb up` starts and supervises the
+# service stack, which is what the container image's start script does.
+command:
+  - "mppdb"
+  - "up"
+
+config:
+  # -- Query engine, supplied as `MPPDB_ENGINE`. `clickhouse` runs ADQL against
+  # a ClickHouse server over HTTP rather than against a local DuckDB.
+  engine: "clickhouse"
+
+  clickhouse:
+    # -- Host name of the ClickHouse server, supplied as
+    # `MPPDB_CLICKHOUSE_HOST`. This is **outside** the Kubernetes cluster, so
+    # egress from the pod to it must be permitted.
+    host: "sdfiana035.sdf.slac.stanford.edu"
+
+    # -- HTTP port of the ClickHouse server, supplied as
+    # `MPPDB_CLICKHOUSE_PORT`
+    port: 8123
+
+  # -- Identity provider, supplied as `MPPDB_AUTH_PROVIDER`. `apikey` validates
+  # the service's own API keys and is what the initial smoke deployment uses;
+  # this flips to `gafaelfawr` once the service can consume the identity
+  # headers injected by the ingress.
+  authProvider: "apikey"
+
+  # -- Public base URL the service advertises in generated URLs, supplied as
+  # `MPPDB_BASE_URL`.
+  # @default -- `global.baseUrl` plus `ingress.pathPrefix`
+  baseUrl: ""
+
+  # -- Container path of the persistent data directory, supplied as
+  # `MPPDB_DATA_DIR`. The state database, spool, lake, and manifests all live
+  # beneath it, and it is where the PVC is mounted.
+  dataDir: "/data"
+
+  # -- Directory holding the snapshot manifests, supplied as
+  # `MPPDB_MANIFESTS_DIR`. Must be set explicitly: leaving it unset silently
+  # yields an empty snapshot.
+  manifestsDir: "/data/manifests"
+
+  # -- Directory used for temporary spill files, supplied as `TMPDIR`. Kept on
+  # the persistent volume rather than in `/tmp`, which is a small in-memory
+  # emptyDir.
+  tmpDir: "/data/tmp"
+
+  # -- Directory **inside the image** holding the registry YAML files that the
+  # `[databases]` entries below refer to. **PLACEHOLDER**: confirm this against
+  # the published image at integration time; nothing in this chart can verify
+  # it.
+  registryDir: "/opt/mppdb/deploy/usdf"
+
+  # -- Database that unqualified ADQL table names resolve to, written to
+  # `default_database` in the TOML configuration. Every other database must be
+  # addressed as `database.table`.
+  defaultDatabase: "mppdb"
+
+  # -- Databases to serve, rendered into the `[databases]` tables of the
+  # generated `mppdb.toml`. `chDatabase` is the physical ClickHouse database.
+  # `registry` is a file name resolved against `config.registryDir`; omitting
+  # it loads the registry packaged in the image. `manifestsDir` and `lakeDir`
+  # are set only for databases that have a Parquet lake and snapshot pointer;
+  # static ClickHouse-only imports leave them out.
+  # @default -- `mppdb`, `ppdb`, and `ssp`; see `values.yaml`
+  databases:
+    mppdb:
+      chDatabase: "mppdb"
+      manifestsDir: "/data/manifests"
+      lakeDir: "/data/lake"
+    ppdb:
+      chDatabase: "ppdb"
+      registry: "ppdb.registry.yaml"
+    ssp:
+      chDatabase: "ssp"
+      registry: "ssp.registry.yaml"
+
+  # -- Display branding, rendered into the `[branding]` table of the generated
+  # `mppdb.toml` as string keys. Empty omits the table, leaving the image's
+  # built-in branding.
+  branding: {}
+
+  # -- Container path the generated `mppdb.toml` is mounted at, supplied as
+  # `MPPDB_CONFIG`
+  configPath: "/etc/mppdb/mppdb.toml"
+
+  # -- Port the Prometheus metrics server listens on, supplied as
+  # `MPPDB_METRICS_PORT`
+  metricsPort: 9100
+
+  # -- Address the metrics server binds to, supplied as `MPPDB_METRICS_ADDR`.
+  # The service defaults this to loopback, which would make the metrics port
+  # unreachable from outside the pod.
+  metricsAddr: "0.0.0.0"
+
+  # -- Port the service listens on, supplied as `MPPDB_PORT`
+  port: 8080
+
+  # -- Address the service binds to, supplied as `MPPDB_HOST`. The service
+  # defaults this to loopback, which would make the pod unreachable.
+  host: "0.0.0.0"
+
+  # -- Additional environment variables for the container, as a mapping of name
+  # to value. Use this for `MPPDB_*` settings that have no dedicated value
+  # above. Never put credentials here; they come from the `shiny` secret.
+  extraEnv: {}
+
+  # -- Whether to create a `VaultSecret` for the `shiny` secret. When false,
+  # the secret is expected to have been created by hand, which is how the
+  # initial smoke deployment works.
+  useVaultSecret: false
+
+persistence:
+  # -- Size of the claim for `config.dataDir`
+  size: "20Gi"
+
+  # -- Storage class backing the claim. `wekafs--sdf-k8s01` is the
+  # Weka-backed dynamic provisioner used by every other USDF application that
+  # needs a read-write-once volume. Omit to use the cluster default.
+  storageClassName: "wekafs--sdf-k8s01"
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+  # -- Authentication challenge Gafaelfawr issues on a 401. `basic` matches the
+  # other TAP services, and lets VO clients that only speak HTTP basic send a
+  # token as the password.
+  authType: "basic"
+
+  # -- Gafaelfawr scope required to reach the service. `read:tap` is the scope
+  # every other TAP service in Phalanx requires.
+  scope: "read:tap"
+
+  # -- URL path the service is served under. The service itself serves at the
+  # root, so the ingress rewrites this prefix away.
+  pathPrefix: "/shiny"
+
+  # -- Whether Gafaelfawr should replace the client's `Authorization` header
+  # with the delegated internal token. Must stay false while
+  # `config.authProvider` is `apikey`, because the service validates that
+  # header itself.
+  useAuthorization: false
+
+  # -- Timeout for proxied requests, in seconds. Synchronous ADQL queries can
+  # run for a long time, and the nginx default of 60s would cut them off.
+  timeout: 1800
+
+# -- Resource requests and limits. **Guess**: this is a query front end, not the
+# database, so it is sized for request handling and result spooling rather than
+# for scans. Revisit once real query load has been measured.
+resources:
+  requests:
+    cpu: "2"
+    memory: "4Gi"
+  limits:
+    cpu: "4"
+    memory: "8Gi"
+
+# -- Security context for the pod. `fsGroup` is what makes the persistent
+# volume writable by the unprivileged service user, so it must match the uid
+# and gid the image runs as.
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+# -- Annotations for the pod
+podAnnotations: {}
+
+# -- Node selector rules for the pod
+nodeSelector: {}
+
+# -- Tolerations for the pod
+tolerations: []
+
+# -- Affinity rules for the pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

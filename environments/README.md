@@ -78,6 +78,7 @@
 | applications.schedview-snapshot | bool | `false` | Enable the schedview-snapshot application |
 | applications.schedview-static-pages | bool | `false` | Enable the schedview-static-pages application |
 | applications.semaphore | bool | `false` | Enable the semaphore application |
+| applications.shiny | bool | `false` | Enable the shiny application |
 | applications.sia | bool | `false` | Enable the sia over butler application |
 | applications.simonyitel | bool | `false` | Enable the simonyitel control system application |
 | applications.squarebot | bool | `false` | Enable the squarebot application |

@@ -1,0 +1,11 @@
+# The base URL is spelled out rather than derived from the injected
+# `global.baseUrl`, so that a bare `helm template` of this environment produces
+# exactly the URL the service is reached at.
+config:
+  baseUrl: "https://usdf-rsp-dev.slac.stanford.edu/shiny"
+
+  branding:
+    name: "Shiny"
+
+image:
+  pullPolicy: "Always"

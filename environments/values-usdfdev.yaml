@@ -41,6 +41,7 @@ applications:
   sasquatch: true
   schedview-snapshot: true
   semaphore: true
+  shiny: true
   sia: true
   squareone: true
   ssotap: true

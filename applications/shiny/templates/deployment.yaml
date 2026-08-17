@@ -1,0 +1,145 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "shiny"
+  labels:
+    {{- include "shiny.labels" . | nindent 4 }}
+spec:
+  # NOT configurable, deliberately. The service keeps its state in a SQLite
+  # database on a ReadWriteOnce volume and is a single writer: a second replica
+  # corrupts it. For the same reason the strategy is Recreate rather than
+  # RollingUpdate, which would briefly run two pods and cannot in any case
+  # attach the volume twice.
+  replicas: 1
+  strategy:
+    type: "Recreate"
+  selector:
+    matchLabels:
+      {{- include "shiny.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "shiny.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          command:
+            {{- toYaml .Values.command | nindent 12 }}
+          env:
+            # Non-secret configuration only. The ClickHouse credentials
+            # (MPPDB_CLICKHOUSE_USER, MPPDB_CLICKHOUSE_PASSWORD) come from the
+            # "shiny" secret via envFrom below, and are never named here.
+            - name: "MPPDB_CONFIG"
+              value: {{ .Values.config.configPath | quote }}
+            - name: "MPPDB_ENGINE"
+              value: {{ .Values.config.engine | quote }}
+            - name: "MPPDB_CLICKHOUSE_HOST"
+              value: {{ .Values.config.clickhouse.host | quote }}
+            - name: "MPPDB_CLICKHOUSE_PORT"
+              value: {{ .Values.config.clickhouse.port | quote }}
+            - name: "MPPDB_AUTH_PROVIDER"
+              value: {{ .Values.config.authProvider | quote }}
+            - name: "MPPDB_BASE_URL"
+              value: {{ include "shiny.baseUrl" . | quote }}
+            - name: "MPPDB_DATA_DIR"
+              value: {{ .Values.config.dataDir | quote }}
+            - name: "MPPDB_MANIFESTS_DIR"
+              value: {{ .Values.config.manifestsDir | quote }}
+            - name: "MPPDB_HOST"
+              value: {{ .Values.config.host | quote }}
+            - name: "MPPDB_PORT"
+              value: {{ .Values.config.port | quote }}
+            - name: "MPPDB_METRICS_ADDR"
+              value: {{ .Values.config.metricsAddr | quote }}
+            - name: "MPPDB_METRICS_PORT"
+              value: {{ .Values.config.metricsPort | quote }}
+            - name: "TMPDIR"
+              value: {{ .Values.config.tmpDir | quote }}
+            {{- range $name, $value := .Values.config.extraEnv }}
+            - name: {{ $name | quote }}
+              value: {{ $value | quote }}
+            {{- end }}
+          envFrom:
+            # Referenced by name only. This secret holds
+            # MPPDB_CLICKHOUSE_USER and MPPDB_CLICKHOUSE_PASSWORD, and is
+            # either created by hand or, when config.useVaultSecret is set,
+            # materialised from Vault by vaultsecret.yaml.
+            - secretRef:
+                name: "shiny"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          ports:
+            - name: "http"
+              containerPort: {{ .Values.config.port }}
+              protocol: "TCP"
+            - name: "metrics"
+              containerPort: {{ .Values.config.metricsPort }}
+              protocol: "TCP"
+          # /availability is the VOSI availability endpoint, which the service
+          # documents as doubling as its health check, and which is on its
+          # anonymous allowlist so the probes need no credential.
+          readinessProbe:
+            httpGet:
+              path: "/availability"
+              port: "http"
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: "/availability"
+              port: "http"
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "data"
+              mountPath: {{ .Values.config.dataDir | quote }}
+            - name: "config"
+              mountPath: {{ .Values.config.configPath | quote }}
+              subPath: "mppdb.toml"
+              readOnly: true
+            - name: "tmp"
+              mountPath: "/tmp"
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: "data"
+          persistentVolumeClaim:
+            claimName: "shiny-data"
+        - name: "config"
+          configMap:
+            name: "shiny"
+        - name: "tmp"
+          emptyDir:
+            medium: "Memory"

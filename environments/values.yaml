@@ -260,6 +260,9 @@ applications:
   # -- Enable the schedview-static-pages application
   schedview-static-pages: false
 
+  # -- Enable the shiny application
+  shiny: false
+
   # -- Enable the sia over butler application
   sia: false
 
