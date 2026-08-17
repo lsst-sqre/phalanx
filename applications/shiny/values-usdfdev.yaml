@@ -13,6 +13,12 @@ config:
   authProvider: "gafaelfawr"
   tokenPageUrl: "https://usdf-rsp-dev.slac.stanford.edu/settings/tokens/new"
 
+  # The console's PyVO/TOPCAT examples and the mppdb-public-url meta tag use
+  # branding.public_url; the code default is the PRIMARY deployment's URL
+  # (mppdb.juriclab.org), which must not leak into this deployment's examples.
+  branding:
+    public_url: "https://usdf-rsp-dev.slac.stanford.edu/shiny"
+
   # Behind the TLS-terminating RSP ingress: pin every generated URL to the
   # external https baseUrl so async job/result URLs are not minted as http://
   # (which the https console blocks under connect-src 'self').
