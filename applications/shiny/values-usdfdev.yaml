@@ -7,6 +7,11 @@ config:
   branding:
     name: "Shiny"
 
+config:
+  # Phase 3: Gafaelfawr authenticates at the ingress; mppdb JIT-provisions its
+  # internal account on first sight of the username header.
+  authProvider: "gafaelfawr"
+
 image:
   pullSecrets: ["shiny-pull"]
   # sha- tag of the u/mjuric/shiny merge that contains both the OCI build and
