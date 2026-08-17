@@ -30,7 +30,7 @@ influxdb:
 
   image:
     # -- InfluxDB image tag
-    tag: "1.12.3"
+    tag: "1.12.4"
 
   livenessProbe:
     # -- Liveness probe initial delay in seconds
