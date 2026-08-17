@@ -44,7 +44,7 @@ schema-registry:
 
 influxdb:
   image:
-    tag: 1.12.3
+    tag: 1.12.4
   ingress:
     enabled: false
     hostname: data-dev.lsst.cloud
@@ -56,7 +56,7 @@ customInfluxDBIngress:
 influxdb-enterprise:
   enabled: true
   image:
-    tag: 1.12.3
+    tag: 1.12.4
   license:
     secret:
       name: sasquatch
