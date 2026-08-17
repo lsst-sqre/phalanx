@@ -28,5 +28,5 @@ image:
   pullSecrets: ["shiny-pull"]
   # sha- tag of the u/mjuric/shiny merge that contains both the OCI build and
   # the gafaelfawr provider (mppdb b439931); CI's in-image test gate passed.
-  tag: "sha-b16865a"
+  tag: "sha-d6e9b5b"
   pullPolicy: "Always"
