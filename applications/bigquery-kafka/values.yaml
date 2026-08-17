@@ -3,23 +3,51 @@
 # Declare variables to be passed into your templates.
 
 config:
+  # -- Maximum number of jobs each fast worker (used for I/O-intensive tasks)
+  # can process simultaneously
+  arqFastMaxJobs: 50
+
+  # -- Maximum number of jobs each slow worker (used for results processing)
+  # can process simultaneously
+  arqSlowMaxJobs: 2
+
   # -- Database backend to use (Qserv or BigQuery)
   backend: "BigQuery"
+
+  # -- Timeout for backend API calls
+  # `parse_timedelta` format. Used for both QServ REST API and BigQuery API.
+  backendApiTimeout: "30s"
+
+  # -- Interval at which the backend is polled for query status in Safir
+  # `parse_timedelta` format
+  backendPollInterval: "1s"
+
+  # -- How long to wait between retries after a backend API network failure in
+  # Safir `parse_timedelta` format
+  backendRetryDelay: "1s"
+
+  # -- How many times to retry after a backend API network failure
+  backendRetryCount: 3
+
+  # -- BigQuery processing location
+  bigqueryLocation: "US"
 
   # -- GCP project ID containing the BigQuery datasets to query
   # @default -- None, must be set
   bigqueryProject: null
 
-  # -- BigQuery processing location
-  bigqueryLocation: "US"
-
-  # -- GCP service account email for Workload Identity
-  # Format: {name}@{project-id}.iam.gserviceaccount.com
-  # @default -- None, must be set for BigQuery backend
-  gcpServiceAccount: null
+  # -- Maximum bytes that can be billed for a single BigQuery query. Queries
+  # exceeding this will fail. Set to null for no limit.
+  # @default -- 1 GB
+  bigqueryMaxBytesBilled: 1000000000
 
   # -- Kafka consumer group ID
   consumerGroupId: "bigquery"
+
+  # -- GCP service account email for Workload Identity.
+  # Format: {name}@{project-id}.iam.gserviceaccount.com
+  # @default -- None, must be set
+  gcpServiceAccount: null
 
   # -- Kafka topic for query cancellation requests
   jobCancelTopic: "lsst.ppdbtap.job-delete"
@@ -32,11 +60,6 @@ config:
   # up to 500KiB in size, so this should be at least 500KiB * 10.
   # @default -- 10MiB
   jobRunMaxBytes: 10485760
-
-  # -- Maximum bytes of encoded output to return per query. Results exceeding
-  # this will be truncated with an overflow marker.
-  # @default -- 3GiB
-  maxResultBytes: 3221225472
 
   # -- Kafka topic for query execution requests
   jobRunTopic: "lsst.ppdbtap.job-run"
@@ -51,8 +74,10 @@ config:
   # human-friendly)
   logProfile: "production"
 
-  # -- Maximum number of arq jobs each worker can process simultaneously
-  maxWorkerJobs: 2
+  # -- Maximum bytes of encoded output to return per query. Results exceeding
+  # this will be truncated with an overflow marker.
+  # @default -- 3GiB
+  maxResultBytes: 3221225472
 
   metrics:
     # -- Whether to enable sending metrics
@@ -76,6 +101,17 @@ config:
       # for experimentation during development.
       suffix: ""
 
+  # -- Size of the Redis connection pool. This should be set to
+  # `jobRunBatchSize` plus some extra connections for the monitor, cancel
+  # jobs.
+  redisMaxConnections: 15
+
+  # -- How long to wait for result processing (retrieval and upload) before
+  # timing out, in seconds. This doubles as the timeout forcibly terminating
+  # result worker pods.
+  # @default -- 3600 (1 hour)
+  resultTimeout: 3600
+
   sentry:
     # -- Set to true to enable the Sentry integration.
     enabled: false
@@ -89,41 +125,10 @@ config:
     # slack-webhook secret must be provided.
     enabled: false
 
-  # -- Interval at which the backend is polled for query status in Safir
-  # `parse_timedelta` format
-  backendPollInterval: "1s"
-
-  # -- How long to wait between retries after a backend API network failure in
-  # Safir `parse_timedelta` format
-  backendRetryDelay: "1s"
-
-  # -- How many times to retry after a backend API network failure
-  backendRetryCount: 3
-
-  # -- Timeout for backend API calls
-  # `parse_timedelta` format. Used for both QServ REST API and BigQuery API.
-  backendApiTimeout: "30s"
-
-  # -- Maximum bytes that can be billed for a single BigQuery query. Queries
-  # exceeding this will fail. Set to null for no limit.
-  # @default -- 1 GB
-  bigqueryMaxBytesBilled: 1000000000
-
-  # -- Size of the Redis connection pool. This should be set to
-  # `jobRunBatchSize` plus some extra connections for the monitor, cancel
-  # jobs.
-  redisMaxConnections: 15
-
-  # -- How long to wait for result processing (retrieval and upload) before
-  # timing out, in seconds. This doubles as the timeout forcibly terminating
-  # result worker pods.
-  # @default -- 3600 (1 hour)
-  resultTimeout: 3600
-
-  # -- Name of the TAP service for which this BigQuery Kafka instance is managing
-  # queries. This must match the name of the TAP service for the corresponding
-  # query quota in the Gafaelfawr configuration.
-  tapService: "bigquery"
+  # -- Name of the TAP service for which this BigQuery Kafka instance is
+  # managing queries. This must match the name of the TAP service for the
+  # corresponding query quota in the Gafaelfawr configuration.
+  tapService: "ppdb"
 
 image:
   # -- Image to use in the bigquery-kafka deployment
@@ -179,6 +184,108 @@ frontend:
       value: "arm64"
       effect: "NoSchedule"
 
+fastWorker:
+  # -- Affinity rules for the bigquery-kafka fast worker pods
+  affinity: {}
+
+  # -- Whether to allow containers to run as root. Set to true to allow use of
+  # debug containers to diagnose issues such as memory leaks.
+  allowRootDebug: false
+
+  autoscaling:
+    # -- Enable autoscaling of bigquery-kafka fast workers
+    enabled: true
+
+    # -- Minimum number of bigquery-kafka fast worker pods
+    minReplicas: 1
+
+    # -- Maximum number of bigquery-kafka fast worker pods. Each replica will
+    # open database connections up to the configured pool size and overflow
+    # limits, so make sure the combined connections are under the connection
+    # limit.
+    maxReplicas: 10
+
+    # -- Target CPU utilization of bigquery-kafka fast worker pods.
+    targetCPUUtilizationPercentage: 75
+
+  # -- Node selection rules for the bigquery-kafka fast worker pods
+  nodeSelector: {}
+
+  # -- Annotations for the bigquery-kafka fast worker pods
+  podAnnotations: {}
+
+  # -- Number of fast worker pods to start
+  replicaCount: 1
+
+  # -- Resource limits and requests for the bigquery-kafka fast worker pods
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "250m"
+      memory: "300Mi"
+    requests:
+      cpu: "50m"
+      memory: "145Mi"
+
+  # -- Tolerations for the bigquery-kafka fast worker pods
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
+
+slowWorker:
+  # -- Affinity rules for the bigquery-kafka slow worker pods
+  affinity: {}
+
+  # -- Whether to allow containers to run as root. Set to true to allow use of
+  # debug containers to diagnose issues such as memory leaks.
+  allowRootDebug: false
+
+  autoscaling:
+    # -- Enable autoscaling of bigquery-kafka slow workers
+    enabled: true
+
+    # -- Minimum number of bigquery-kafka slow worker pods
+    minReplicas: 1
+
+    # -- Maximum number of bigquery-kafka slow worker pods. Each replica will
+    # open database connections up to the configured pool size and overflow
+    # limits, so make sure the combined connections are under the postgres
+    # connection limit.
+    maxReplicas: 10
+
+    # -- Target CPU utilization of bigquery-kafka slow worker pods.
+    targetCPUUtilizationPercentage: 75
+
+  # -- Node selection rules for the bigquery-kafka slow worker pods
+  nodeSelector: {}
+
+  # -- Annotations for the bigquery-kafka slow worker pods
+  podAnnotations: {}
+
+  # -- Number of slow worker pods to start if autoscaling is disabled
+  replicaCount: 1
+
+  # -- Resource limits and requests for the bigquery-kafka slow worker pods
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "2"
+      memory: "1Gi"
+    requests:
+      cpu: "1"
+      memory: "145Mi"
+
+  # -- Tolerations for the bigquery-kafka slow worker pods
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
+
 redis:
   config:
     # -- Name of secret containing Redis password
@@ -218,57 +325,6 @@ redis:
       memory: "20Mi"
 
   # -- Tolerations for the bigquery-kafka Redis pod
-  # @default -- Tolerate GKE arm64 taint
-  tolerations:
-    - key: "kubernetes.io/arch"
-      operator: "Equal"
-      value: "arm64"
-      effect: "NoSchedule"
-
-resultWorker:
-  # -- Affinity rules for the bigquery-kafka worker pods
-  affinity: {}
-
-  # -- Whether to allow containers to run as root. Set to true to allow use of
-  # debug containers to diagnose issues such as memory leaks.
-  allowRootDebug: false
-
-  autoscaling:
-    # -- Enable autoscaling of bigquery-kafka result workers
-    enabled: true
-
-    # -- Minimum number of bigquery-kafka worker pods
-    minReplicas: 1
-
-    # -- Maximum number of bigquery-kafka worker pods. Each replica will open
-    # database connections up to the configured pool size and overflow limits,
-    # so make sure the combined connections are under the postgres connection
-    # limit.
-    maxReplicas: 10
-
-    # -- Target CPU utilization of bigquery-kafka worker pods.
-    targetCPUUtilizationPercentage: 75
-
-  # -- Node selection rules for the bigquery-kafka worker pods
-  nodeSelector: {}
-
-  # -- Annotations for the bigquery-kafka worker pods
-  podAnnotations: {}
-
-  # -- Number of result worker pods to start if autoscaling is disabled
-  replicaCount: 1
-
-  # -- Resource limits and requests for the bigquery-kafka worker pods
-  # @default -- See `values.yaml`
-  resources:
-    limits:
-      cpu: "2"
-      memory: "1Gi"
-    requests:
-      cpu: "1"
-      memory: "145Mi"
-
-  # -- Tolerations for the bigquery-kafka worker pods
   # @default -- Tolerate GKE arm64 taint
   tolerations:
     - key: "kubernetes.io/arch"

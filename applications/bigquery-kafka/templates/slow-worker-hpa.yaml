@@ -1,0 +1,29 @@
+{{- if .Values.slowWorker.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: "bigquery-kafka-slow-worker"
+  labels:
+    {{- include "bigquery-kafka.labels" . | nindent 4 }}
+spec:
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 900
+  maxReplicas: {{ .Values.slowWorker.autoscaling.maxReplicas }}
+  minReplicas: {{ .Values.slowWorker.autoscaling.minReplicas }}
+  metrics:
+    {{- if .Values.slowWorker.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: "cpu"
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.slowWorker.autoscaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+  scaleTargetRef:
+    apiVersion: "apps/v1"
+    kind: "Deployment"
+    name: "bigquery-kafka-slow-worker"
+{{- end }}

@@ -12,5 +12,3 @@ config:
   qservRestSendApiVersion: false
   qservRestUrl: "https://qserv-int-https.slac.stanford.edu:4098/"
   qservRestUsername: "qsmaster"
-resultWorker:
-  allowRootDebug: true

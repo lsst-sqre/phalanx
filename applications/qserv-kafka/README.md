@@ -10,6 +10,8 @@ Qserv Kafka bridge
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| config.arqFastMaxJobs | int | `50` | Maximum number of jobs each fast worker (used for I/O-intensive tasks) can process simultaneously |
+| config.arqSlowMaxJobs | int | `2` | Maximum number of jobs each slow worker (used for results processing) can process simultaneously |
 | config.backendApiTimeout | string | `"60s"` | Timeout for REST API calls in Safir `parse_timedelta` format. This includes time spent waiting for a connection if the maximum number of connections has been reached. |
 | config.consumerGroupId | string | `"qserv"` | Kafka consumer group ID |
 | config.jobCancelTopic | string | `"lsst.tap.job-delete"` | Kafka topic for query cancellation requests |
@@ -19,7 +21,6 @@ Qserv Kafka bridge
 | config.jobStatusTopic | string | `"lsst.tap.job-status"` | Kafka topic for query status |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
-| config.maxWorkerJobs | int | `2` | Maximum number of arq jobs each worker can process simultaneously |
 | config.metrics.application | string | `"qservkafka"` | Name under which to log metrics. Generally there is no reason to change this. |
 | config.metrics.enabled | bool | `false` | Whether to enable sending metrics |
 | config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
@@ -43,8 +44,17 @@ Qserv Kafka bridge
 | config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1 |
 | config.slack.enabled | bool | `false` | Set to true to enable the Slack integration. If true, the slack-webhook secret must be provided. |
 | config.tapService | string | `"qserv"` | Name of the TAP service for which this Qserv Kafka instance is managing queries. This must match the name of the TAP service for the corresponding query quota in the Gafaelfawr configuration. |
-| config.uploadWorkerMaxJobs | int | `10` | Maximum number of arq jobs each upload worker can process simultaneously.. |
-| config.uploadWorkerTimeout | int | 900 (15 minutes) | How long to allow an upload worker to upload tables and submit the query to the backend before timing out, in seconds. |
+| fastWorker.affinity | object | `{}` | Affinity rules for the qserv-kafka fast worker pods |
+| fastWorker.allowRootDebug | bool | `false` | Whether to allow containers to run as root. Set to true to allow use of debug containers to diagnose issues such as memory leaks. |
+| fastWorker.autoscaling.enabled | bool | `true` | Enable autoscaling of qserv-kafka fast workers |
+| fastWorker.autoscaling.maxReplicas | int | `10` | Maximum number of qserv-kafka fast worker pods. Each replica will open database connections up to the configured pool size and overflow limits, so make sure the combined connections are under the connection limit. |
+| fastWorker.autoscaling.minReplicas | int | `1` | Minimum number of qserv-kafka fast worker pods |
+| fastWorker.autoscaling.targetCPUUtilizationPercentage | int | `75` | Target CPU utilization of qserv-kafka fast worker pods. |
+| fastWorker.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka fast worker pods |
+| fastWorker.podAnnotations | object | `{}` | Annotations for the qserv-kafka fast worker pods |
+| fastWorker.replicaCount | int | `1` | Number of fast worker pods to start |
+| fastWorker.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka fast worker pods |
+| fastWorker.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the qserv-kafka fast worker pods |
 | frontend.affinity | object | `{}` | Affinity rules for the qserv-kafka frontend pod |
 | frontend.debug.disablePymalloc | bool | `false` |  |
 | frontend.debug.enabled | bool | `false` | Set to true to allow containers to run as root and to create and mount a debug PVC. Useful ro run debug containers to diagnose issues such as memory leaks. |
@@ -75,21 +85,14 @@ Qserv Kafka bridge
 | redis.persistence.volumeClaimName | string | `nil` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
 | redis.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the qserv-kafka Redis pod |
-| resultWorker.affinity | object | `{}` | Affinity rules for the qserv-kafka worker pods |
-| resultWorker.allowRootDebug | bool | `false` | Whether to allow containers to run as root. Set to true to allow use of debug containers to diagnose issues such as memory leaks. |
-| resultWorker.autoscaling.enabled | bool | `true` | Enable autoscaling of qserv-kafka result workers |
-| resultWorker.autoscaling.maxReplicas | int | `10` | Maximum number of qserv-kafka worker pods. Each replica will open database connections up to the configured pool size and overflow limits, so make sure the combined connections are under the postgres connection limit. |
-| resultWorker.autoscaling.minReplicas | int | `1` | Minimum number of qserv-kafka worker pods |
-| resultWorker.autoscaling.targetCPUUtilizationPercentage | int | `30` | Target CPU utilization of qserv-kafka worker pods. |
-| resultWorker.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka worker pods |
-| resultWorker.podAnnotations | object | `{}` | Annotations for the qserv-kafka worker pods |
-| resultWorker.replicaCount | int | `1` | Number of result worker pods to start if autoscaling is disabled |
-| resultWorker.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka worker pods |
-| resultWorker.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the qserv-kafka worker pods |
-| uploadWorker.affinity | object | `{}` | Affinity rules for the qserv-kafka upload worker pods |
-| uploadWorker.allowRootDebug | bool | `false` | Whether to allow containers to run as root. Set to true to allow use of debug containers to diagnose issues such as memory leaks. |
-| uploadWorker.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka upload worker pods |
-| uploadWorker.podAnnotations | object | `{}` | Annotations for the qserv-kafka upload worker pods |
-| uploadWorker.replicaCount | int | `1` | Number of upload worker pods to start |
-| uploadWorker.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka upload worker pods |
-| uploadWorker.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the qserv-kafka upload worker pods |
+| slowWorker.affinity | object | `{}` | Affinity rules for the qserv-kafka slow worker pods |
+| slowWorker.allowRootDebug | bool | `false` | Whether to allow containers to run as root. Set to true to allow use of debug containers to diagnose issues such as memory leaks. |
+| slowWorker.autoscaling.enabled | bool | `true` | Enable autoscaling of qserv-kafka slow workers |
+| slowWorker.autoscaling.maxReplicas | int | `10` | Maximum number of qserv-kafka slow worker pods. Each replica will open database connections up to the configured pool size and overflow limits, so make sure the combined connections are under the connection limit. |
+| slowWorker.autoscaling.minReplicas | int | `1` | Minimum number of qserv-kafka slow worker pods |
+| slowWorker.autoscaling.targetCPUUtilizationPercentage | int | `30` | Target CPU utilization of qserv-kafka slow worker pods. |
+| slowWorker.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka worker pods |
+| slowWorker.podAnnotations | object | `{}` | Annotations for the qserv-kafka worker pods |
+| slowWorker.replicaCount | int | `1` | Number of slow worker pods to start if autoscaling is disabled |
+| slowWorker.resources | object | See `values.yaml` | Resource limits and requests for the qserv-kafka slow worker pods |
+| slowWorker.tolerations | list | Tolerate GKE arm64 taint | Tolerations for the qserv-kafka slow worker pods |

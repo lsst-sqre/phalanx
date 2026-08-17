@@ -9,7 +9,7 @@ config:
   qservRestSendApiVersion: false
   qservRestUrl: "https://134.79.23.229:4048/"
   qservRestUsername: "qsmaster"
-resultWorker:
+slowWorker:
   autoscaling:
     minReplicas: 4
     maxReplicas: 50
