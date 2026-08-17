@@ -12,6 +12,11 @@ config:
   # internal account on first sight of the username header.
   authProvider: "gafaelfawr"
 
+  # Behind the TLS-terminating RSP ingress: pin every generated URL to the
+  # external https baseUrl so async job/result URLs are not minted as http://
+  # (which the https console blocks under connect-src 'self').
+  advertiseRequestBase: false
+
 image:
   pullSecrets: ["shiny-pull"]
   # sha- tag of the u/mjuric/shiny merge that contains both the OCI build and

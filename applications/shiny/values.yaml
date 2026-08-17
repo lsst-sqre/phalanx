@@ -54,6 +54,14 @@ config:
   # @default -- `global.baseUrl` plus `ingress.pathPrefix`
   baseUrl: ""
 
+  # -- Whether the service advertises the URL a client actually reached it on
+  # (True) or pins the configured `baseUrl` for every generated URL (False).
+  # Behind a TLS-terminating proxy the pod sees plain http, so leaving this True
+  # mints `http://` job/redirect URLs the https console then blocks; set it False
+  # so async job and result URLs are pinned to the external https `baseUrl`.
+  # TOML-only (no env var), so it is rendered into the mppdb.toml ConfigMap.
+  advertiseRequestBase: true
+
   # -- Container path of the persistent data directory, supplied as
   # `MPPDB_DATA_DIR`. The state database, spool, lake, and manifests all live
   # beneath it, and it is where the PVC is mounted.

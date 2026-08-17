@@ -12,6 +12,7 @@ TAP query front end for the mppdb catalogs
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the pod |
 | command | list | `["mppdb","up"]` | Command to run in the container. `mppdb up` starts and supervises the service stack, which is what the container image's start script does. |
+| config.advertiseRequestBase | bool | `true` | Whether the service advertises the URL a client actually reached it on (True) or pins the configured `baseUrl` for every generated URL (False). Behind a TLS-terminating proxy the pod sees plain http, so leaving this True mints `http://` job/redirect URLs the https console then blocks; set it False so async job and result URLs are pinned to the external https `baseUrl`. TOML-only (no env var), so it is rendered into the mppdb.toml ConfigMap. |
 | config.authProvider | string | `"apikey"` | Identity provider, supplied as `MPPDB_AUTH_PROVIDER`. `apikey` validates the service's own API keys and is what the initial smoke deployment uses; this flips to `gafaelfawr` once the service can consume the identity headers injected by the ingress. |
 | config.baseUrl | string | `global.baseUrl` plus `ingress.pathPrefix` | Public base URL the service advertises in generated URLs, supplied as `MPPDB_BASE_URL`. |
 | config.branding | object | `{}` | Display branding, rendered into the `[branding]` table of the generated `mppdb.toml` as string keys. Empty omits the table, leaving the image's built-in branding. |
