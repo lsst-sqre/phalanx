@@ -23,6 +23,7 @@ applications:
   jira-data-proxy: true
   livetap: true
   mobu: true
+  mppdb: true
   mpsky: true
   narrativelog: true
   nightlydigest: true
@@ -41,7 +42,6 @@ applications:
   sasquatch: true
   schedview-snapshot: true
   semaphore: true
-  shiny: true
   sia: true
   squareone: true
   ssotap: true

@@ -1,10 +1,10 @@
-.. px-app:: shiny
+.. px-app:: mppdb
 
 ##################################################
-shiny — TAP query front end for the mppdb catalogs
+mppdb — TAP query front end for the mppdb catalogs
 ##################################################
 
-shiny is a front-end-only deployment of the mppdb IVOA TAP service.
+mppdb is a front-end-only deployment of the mppdb IVOA TAP service.
 It answers TAP and ADQL queries by issuing read-only HTTP queries against an
 external ClickHouse server that is not part of the Kubernetes cluster, so the
 only state it holds itself is the SQLite job and state database, the result
@@ -21,7 +21,7 @@ Weka-backed storage class that exist only there.
 It should be deployed at ``usdfdev`` first, and elsewhere only after the
 back-end catalogs it serves are available in that environment.
 
-.. jinja:: shiny
+.. jinja:: mppdb
    :file: applications/_summary.rst.jinja
 
 Guides

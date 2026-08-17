@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "shiny"
+  name: "mppdb"
   labels:
-    {{- include "shiny.labels" . | nindent 4 }}
+    {{- include "mppdb.labels" . | nindent 4 }}
 spec:
   # NOT configurable, deliberately. The service keeps its state in a SQLite
   # database on a ReadWriteOnce volume and is a single writer: a second replica
@@ -15,7 +15,7 @@ spec:
     type: "Recreate"
   selector:
     matchLabels:
-      {{- include "shiny.selectorLabels" . | nindent 6 }}
+      {{- include "mppdb.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -24,7 +24,7 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "shiny.selectorLabels" . | nindent 8 }}
+        {{- include "mppdb.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.affinity }}
       affinity:
@@ -44,7 +44,7 @@ spec:
           env:
             # Non-secret configuration only. The ClickHouse credentials
             # (MPPDB_CLICKHOUSE_USER, MPPDB_CLICKHOUSE_PASSWORD) come from the
-            # "shiny" secret via envFrom below, and are never named here.
+            # "mppdb" secret via envFrom below, and are never named here.
             - name: "MPPDB_CONFIG"
               value: {{ .Values.config.configPath | quote }}
             - name: "MPPDB_ENGINE"
@@ -60,7 +60,7 @@ spec:
             - name: "MPPDB_AUTH_PROVIDER"
               value: {{ .Values.config.authProvider | quote }}
             - name: "MPPDB_BASE_URL"
-              value: {{ include "shiny.baseUrl" . | quote }}
+              value: {{ include "mppdb.baseUrl" . | quote }}
             - name: "MPPDB_DATA_DIR"
               value: {{ .Values.config.dataDir | quote }}
             - name: "MPPDB_MANIFESTS_DIR"
@@ -93,7 +93,7 @@ spec:
             # either created by hand or, when config.useVaultSecret is set,
             # materialised from Vault by vaultsecret.yaml.
             - secretRef:
-                name: "shiny"
+                name: "mppdb"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
@@ -154,10 +154,10 @@ spec:
       volumes:
         - name: "data"
           persistentVolumeClaim:
-            claimName: "shiny-data"
+            claimName: "mppdb-data"
         - name: "config"
           configMap:
-            name: "shiny"
+            name: "mppdb"
         - name: "tmp"
           emptyDir:
             medium: "Memory"

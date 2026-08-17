@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: "shiny-data"
+  name: "mppdb-data"
   labels:
-    {{- include "shiny.labels" . | nindent 4 }}
+    {{- include "mppdb.labels" . | nindent 4 }}
   annotations:
     # This volume holds the only copy of the service's state: the SQLite state
     # database, the result spool, and the snapshot manifests. Deleting the claim

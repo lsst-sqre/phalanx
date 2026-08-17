@@ -1,8 +1,8 @@
-{{- if (index .Values "applications" "shiny") -}}
+{{- if (index .Values "applications" "mppdb") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "shiny"
+  name: "mppdb"
   {{- if .Values.defaultComputeClass }}
   labels:
     cloud.google.com/default-compute-class: {{ .Values.defaultComputeClass | quote }}
@@ -11,19 +11,19 @@ metadata:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "shiny"
+  name: "mppdb"
   namespace: "argocd"
   finalizers:
     - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: "shiny"
+    namespace: "mppdb"
     server: "https://kubernetes.default.svc"
   project: "rubin"
   source:
-    path: "applications/shiny"
+    path: "applications/mppdb"
     repoURL: {{ .Values.repoUrl | quote }}
-    targetRevision: {{ or (index .Values "revisions" "shiny") .Values.targetRevision | quote }}
+    targetRevision: {{ or (index .Values "revisions" "mppdb") .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.baseUrl"

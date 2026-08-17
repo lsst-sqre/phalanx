@@ -174,6 +174,9 @@ applications:
   # -- Enable the mobu application
   mobu: false
 
+  # -- Enable the mppdb application
+  mppdb: false
+
   # -- Enable the mpsky application
   mpsky: false
 
@@ -260,8 +263,6 @@ applications:
   # -- Enable the schedview-static-pages application
   schedview-static-pages: false
 
-  # -- Enable the shiny application
-  shiny: false
 
   # -- Enable the sia over butler application
   sia: false

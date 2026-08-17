@@ -42,6 +42,7 @@
 | applications.livetap | bool | `false` | Enable the livetap application |
 | applications.love | bool | `false` | Enable the love control system application |
 | applications.mobu | bool | `false` | Enable the mobu application |
+| applications.mppdb | bool | `false` | Enable the mppdb application |
 | applications.mpsky | bool | `false` | Enable the mpsky application |
 | applications.muster | bool | `false` | Enable the muster application |
 | applications.narrativelog | bool | `false` | Enable the narrativelog application |
@@ -78,7 +79,6 @@
 | applications.schedview-snapshot | bool | `false` | Enable the schedview-snapshot application |
 | applications.schedview-static-pages | bool | `false` | Enable the schedview-static-pages application |
 | applications.semaphore | bool | `false` | Enable the semaphore application |
-| applications.shiny | bool | `false` | Enable the shiny application |
 | applications.sia | bool | `false` | Enable the sia over butler application |
 | applications.simonyitel | bool | `false` | Enable the simonyitel control system application |
 | applications.squarebot | bool | `false` | Enable the squarebot application |

@@ -1,4 +1,4 @@
-# Default values for shiny.
+# Default values for mppdb.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -18,8 +18,8 @@ image:
   # -- Names of image pull secrets in the app's namespace, for a private
   # registry. `ghcr.io/mjuric/mppdb` is private (the image bakes the source of a
   # private repository), so pulling it requires one; at usdfdev this is the
-  # hand-created `shiny-pull` docker-registry secret (a `read:packages` GitHub
-  # PAT), managed the same way as the `shiny` secret until Vault access exists.
+  # hand-created `mppdb-pull` docker-registry secret (a `read:packages` GitHub
+  # PAT), managed the same way as the `mppdb` secret until Vault access exists.
   pullSecrets: []
 
 # -- Command to run in the container. `mppdb up` starts and supervises the
@@ -140,10 +140,10 @@ config:
 
   # -- Additional environment variables for the container, as a mapping of name
   # to value. Use this for `MPPDB_*` settings that have no dedicated value
-  # above. Never put credentials here; they come from the `shiny` secret.
+  # above. Never put credentials here; they come from the `mppdb` secret.
   extraEnv: {}
 
-  # -- Whether to create a `VaultSecret` for the `shiny` secret. When false,
+  # -- Whether to create a `VaultSecret` for the `mppdb` secret. When false,
   # the secret is expected to have been created by hand, which is how the
   # initial smoke deployment works.
   useVaultSecret: false
@@ -172,7 +172,7 @@ ingress:
 
   # -- URL path the service is served under. The service itself serves at the
   # root, so the ingress rewrites this prefix away.
-  pathPrefix: "/shiny"
+  pathPrefix: "/mppdb"
 
   # -- Whether Gafaelfawr should replace the client's `Authorization` header
   # with the delegated internal token. Must stay false while

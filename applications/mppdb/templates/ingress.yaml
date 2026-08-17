@@ -1,9 +1,9 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "shiny"
+  name: "mppdb"
   labels:
-    {{- include "shiny.labels" . | nindent 4 }}
+    {{- include "mppdb.labels" . | nindent 4 }}
 config:
   # Basic auth challenges, as for every other TAP service in Phalanx, so that
   # VO clients that only speak HTTP basic can send a token as the password.
@@ -14,15 +14,15 @@ config:
   scopes:
     all:
       - {{ .Values.ingress.scope | quote }}
-  service: "shiny"
+  service: "mppdb"
   delegate:
     internal:
-      service: "shiny"
+      service: "mppdb"
       scopes: []
     useAuthorization: {{ .Values.ingress.useAuthorization }}
 template:
   metadata:
-    name: "shiny"
+    name: "mppdb"
     annotations:
       # The service serves at the root of its own URL space and has no path
       # prefix setting, so the prefix is rewritten away here, the same way
@@ -45,6 +45,6 @@ template:
               pathType: "ImplementationSpecific"
               backend:
                 service:
-                  name: "shiny"
+                  name: "mppdb"
                   port:
                     number: {{ .Values.config.port }}
