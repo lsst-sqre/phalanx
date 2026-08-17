@@ -61,6 +61,14 @@ spec:
               value: {{ .Values.config.dataDir | quote }}
             - name: "MPPDB_MANIFESTS_DIR"
               value: {{ .Values.config.manifestsDir | quote }}
+            # The pod must bind a routable address for the Service to reach it,
+            # and mppdb refuses a non-loopback bind without TLS unless told the
+            # topology is safe. Here it is, by construction: TLS terminates at
+            # the RSP ingress, and the NetworkPolicy admits no traffic except
+            # from the ingress controller, so the cleartext hop never leaves
+            # that path.
+            - name: "MPPDB_ALLOW_INSECURE_BIND"
+              value: "true"
             - name: "MPPDB_HOST"
               value: {{ .Values.config.host | quote }}
             - name: "MPPDB_PORT"
