@@ -31,6 +31,7 @@ TAP query front end for the mppdb catalogs
 | config.port | int | `8080` | Port the service listens on, supplied as `MPPDB_PORT` |
 | config.registryDir | string | `"/opt/mppdb/deploy/usdf"` | Directory **inside the image** holding the registry YAML files that the `[databases]` entries below refer to. **PLACEHOLDER**: confirm this against the published image at integration time; nothing in this chart can verify it. |
 | config.tmpDir | string | `"/data/tmp"` | Directory used for temporary spill files, supplied as `TMPDIR`. Kept on the persistent volume rather than in `/tmp`, which is a small in-memory emptyDir. |
+| config.tokenPageUrl | string | `""` | URL of the identity provider's token-creation page, supplied as `MPPDB_TOKEN_PAGE_URL`. Shown by the console's token guidance in `gafaelfawr` auth mode; empty hides the link and tells the user to ask the operator. |
 | config.useVaultSecret | bool | `false` | Whether to create a `VaultSecret` for the `shiny` secret. When false, the secret is expected to have been created by hand, which is how the initial smoke deployment works. |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |

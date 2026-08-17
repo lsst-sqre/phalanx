@@ -11,6 +11,7 @@ config:
   # Phase 3: Gafaelfawr authenticates at the ingress; mppdb JIT-provisions its
   # internal account on first sight of the username header.
   authProvider: "gafaelfawr"
+  tokenPageUrl: "https://usdf-rsp-dev.slac.stanford.edu/settings/tokens/new"
 
   # Behind the TLS-terminating RSP ingress: pin every generated URL to the
   # external https baseUrl so async job/result URLs are not minted as http://

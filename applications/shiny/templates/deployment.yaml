@@ -53,6 +53,10 @@ spec:
               value: {{ .Values.config.clickhouse.host | quote }}
             - name: "MPPDB_CLICKHOUSE_PORT"
               value: {{ .Values.config.clickhouse.port | quote }}
+            {{- with .Values.config.tokenPageUrl }}
+            - name: "MPPDB_TOKEN_PAGE_URL"
+              value: {{ . | quote }}
+            {{- end }}
             - name: "MPPDB_AUTH_PROVIDER"
               value: {{ .Values.config.authProvider | quote }}
             - name: "MPPDB_BASE_URL"
