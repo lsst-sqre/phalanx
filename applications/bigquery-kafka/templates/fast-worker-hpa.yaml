@@ -7,6 +7,8 @@ metadata:
     {{- include "bigquery-kafka.labels" . | nindent 4 }}
 spec:
   behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60
     scaleDown:
       stabilizationWindowSeconds: 900
   maxReplicas: {{ .Values.fastWorker.autoscaling.maxReplicas }}
