@@ -39,7 +39,7 @@ resources:
     cpu: "1"
     memory: "16.0Gi"
   requests:
-    cpu: "200m"  # 20% of a single core
+    cpu: "200m" # 20% of a single core
     memory: "4.0Gi"
 
 # -- Tolerations for the ppdb-replication deployment pod
@@ -123,4 +123,4 @@ config:
     user: ""
 
     # -- Database name to connect to
-    dbName: "ppdb-chunk-tracking"
+    dbName: "ppdb"

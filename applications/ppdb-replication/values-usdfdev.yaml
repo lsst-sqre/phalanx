@@ -11,7 +11,7 @@ config:
   # -- APDB config file resource
   apdbConfig: "/sdf/data/rubin/user/jeremym/ppdb-config/apdb_dev.yaml"
 
-    # -- CloudSQL Python Connector configuration
+  # -- CloudSQL Python Connector configuration
   cloudSql:
 
     # -- CloudSQL Connection Name
@@ -19,6 +19,9 @@ config:
 
     # -- Username in sa_name@project.iam format
     user: "usdf-replication@ppdb-dev-5c07.iam"
+
+    # -- Database name to connect to
+    dbName: "ppdb-chunk-tracking"
 
   # -- PPDB config file resource
   ppdbConfig: "gs://ppdb-dev-config/ppdb-dev-5c07_config.yaml"
