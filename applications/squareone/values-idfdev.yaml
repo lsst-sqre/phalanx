@@ -1,4 +1,8 @@
 image:
+  # Branch build of squareone for DM-55604 (lsst-sqre/squareone#609):
+  # handled-error Sentry capture and the pino->Sentry Logs bridge.
+  # Revert to the chart appVersion once that PR is merged and released.
+  tag: "tickets-DM-55604-pino-logs"
   pullPolicy: Always
 
 ingress:
