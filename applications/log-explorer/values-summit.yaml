@@ -1,0 +1,17 @@
+config:
+  # Summit: logs come from the yagan cluster and shutter-close truth
+  # from the ConsDB running alongside them on this same cluster. Reached at
+  # its Service address, so the request never passes through Gafaelfawr and
+  # no bearer token is needed.
+  site:
+    name: "summit"
+    cluster: "yagan"
+    namespace: "rapid-analysis"
+    lokiAddr: "https://loki-query.ls.lsst.org"
+    consdbUrl: "http://consdb-pq.consdb.svc.cluster.local:8080/consdb/query"
+
+image:
+  # pinned to the ticket branch while the deployment is being brought up; an
+  # image rebuilt on an unchanged tag needs the pod deleted to be picked up
+  pullPolicy: "Always"
+  tag: "tickets-DM-55728"

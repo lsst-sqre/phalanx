@@ -1,0 +1,75 @@
+suite: Ingress
+set:
+  global:
+    host: "base-lsp.lsst.codes"
+    vaultSecretsPath: "secret/phalanx/test"
+values:
+  - "../values-base.yaml"
+tests:
+  - it: "sends anonymous users to log in"
+    template: "ingress.yaml"
+    asserts:
+      # A browser app, not an API client: a 401 is something the user
+      # cannot act on. Scope matches rubintv on the same environments.
+      - equal:
+          path: "config.loginRedirect"
+          value: true
+      - equal:
+          path: "config.scopes.all[0]"
+          value: "read:image"
+
+  - it: "does not let nginx buffer the progress stream"
+    template: "ingress.yaml"
+    asserts:
+      # /api/fetch/<id>/progress is Server-Sent Events held open for the
+      # length of a fetch — minutes, for a night. With nginx's default
+      # response buffering the browser receives none of it until the fetch
+      # has already finished, so the progress display looks frozen exactly
+      # when the user most wants to know something is happening.
+      - equal:
+          path: "template.metadata.annotations['nginx.ingress.kubernetes.io/proxy-buffering']"
+          value: "off"
+
+  - it: "routes the same path the application is told to serve"
+    template: "ingress.yaml"
+    set:
+      ingress:
+        path: "/tools/logs"
+    asserts:
+      - equal:
+          path: "template.spec.rules[0].http.paths[0].path"
+          value: "/tools/logs"
+      - equal:
+          path: "template.spec.rules[0].http.paths[0].pathType"
+          value: "Prefix"
+
+  - it: "keeps caller annotations alongside the buffering one"
+    template: "ingress.yaml"
+    set:
+      ingress:
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    asserts:
+      - equal:
+          path: "template.metadata.annotations['nginx.ingress.kubernetes.io/proxy-read-timeout']"
+          value: "600"
+      - equal:
+          path: "template.metadata.annotations['nginx.ingress.kubernetes.io/proxy-buffering']"
+          value: "off"
+
+  - it: "points at the service port the container listens on"
+    template: "ingress.yaml"
+    asserts:
+      - equal:
+          path: "template.spec.rules[0].http.paths[0].backend.service.port.number"
+          value: 8080
+
+  - it: "only admits traffic that came through Gafaelfawr"
+    template: "networkpolicy.yaml"
+    asserts:
+      - equal:
+          path: "spec.ingress[0].from[0].podSelector.matchLabels['gafaelfawr.lsst.io/ingress']"
+          value: "true"
+      - equal:
+          path: "spec.ingress[0].ports[0].port"
+          value: 8080
