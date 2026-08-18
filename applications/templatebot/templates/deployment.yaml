@@ -86,6 +86,11 @@ spec:
                 secretKeyRef:
                   name: "templatebot"
                   key: "TEMPLATEBOT_LTD_PASSWORD"
+            - name: "TEMPLATEBOT_SLACK_ALERT_WEBHOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "templatebot"
+                  key: "TEMPLATEBOT_SLACK_ALERT_WEBHOOK"
           volumeMounts:
             - name: "kafka"
               mountPath: "/etc/kafkacluster/ca.crt"
