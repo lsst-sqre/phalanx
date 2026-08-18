@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: main
+  tag: fov-quicklook-local-submodule-tmux-sort-20260818-0318
 
 config:
   # -- URL path prefix
