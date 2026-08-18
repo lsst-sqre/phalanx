@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: main
+  tag: fov-quicklook-local-batch2-fix-20260818-0733
 
 config:
   # -- URL path prefix
