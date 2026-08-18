@@ -29,7 +29,7 @@ controller:
         - containerPath: "/home"
           volumeName: "home"
     images:
-      recommendedTag: "r30_0_10_rsp2991"
+      recommendedTag: "r30_0_11_rc1_rsp3029"
       source:
         type: "google"
         location: "us-central1"
