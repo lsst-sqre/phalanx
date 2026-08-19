@@ -90,7 +90,7 @@ Qserv Kafka bridge
 | slowWorker.autoscaling.enabled | bool | `true` | Enable autoscaling of qserv-kafka slow workers |
 | slowWorker.autoscaling.maxReplicas | int | `10` | Maximum number of qserv-kafka slow worker pods. Each replica will open database connections up to the configured pool size and overflow limits, so make sure the combined connections are under the connection limit. |
 | slowWorker.autoscaling.minReplicas | int | `1` | Minimum number of qserv-kafka slow worker pods |
-| slowWorker.autoscaling.targetCPUUtilizationPercentage | int | `30` | Target CPU utilization of qserv-kafka slow worker pods. |
+| slowWorker.autoscaling.targetCPUUtilizationPercentage | int | `75` | Target CPU utilization of qserv-kafka slow worker pods. |
 | slowWorker.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka worker pods |
 | slowWorker.podAnnotations | object | `{}` | Annotations for the qserv-kafka worker pods |
 | slowWorker.replicaCount | int | `1` | Number of slow worker pods to start if autoscaling is disabled |
