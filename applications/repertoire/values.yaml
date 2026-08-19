@@ -517,6 +517,13 @@ config:
         databaseUrl: "postgresql://ppdbtap@127.0.0.1:5432/ppdbtap"
         databasePasswordKey: "ppdbtap-database-password"
 
+      obsforgetap:
+        enabled: false
+        schemas:
+          - "ivoa_obscore"
+        databaseUrl: "postgresql://obsforgetap@127.0.0.1:5432/obsforgetap"
+        databasePasswordKey: "obsforgetap-database-password"
+
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on
   # Google Cloud
