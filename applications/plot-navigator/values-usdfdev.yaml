@@ -1,5 +1,6 @@
 image:
-  tag: DM-54730
+  tag: DM-55878
+
 environment:
   BASE_URL: "/plot-navigator"
   REPO_URLS: '{"main": "unused", "embargo": "unused", "dp2_prep": "unused", "/repo/dc2": "unused", "/repo/dp1": "unused", "/repo/main": "unused"}'
