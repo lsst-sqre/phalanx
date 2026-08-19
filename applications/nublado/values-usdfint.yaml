@@ -118,8 +118,8 @@ controller:
       initContainers:
         - name: "lscratch-perms"
           image:
-            repository: "ghcr.io/lsst-sqre/nublado"
-            tag: "15.1.0"
+            repository: "docker.io/library/busybox"
+            tag: "1.37.0"
           privileged: true
           command:
             - "/bin/sh"
