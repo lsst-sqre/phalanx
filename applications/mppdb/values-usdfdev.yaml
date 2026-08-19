@@ -6,6 +6,11 @@ config:
   # Phase 3: Gafaelfawr authenticates at the ingress; mppdb JIT-provisions its
   # internal account on first sight of the username header.
   authProvider: "gafaelfawr"
+
+  # Catalog comes from TAP_SCHEMA.registries (published 2026-08-19 by the
+  # backend; digests verified identical to the files this image bakes), so ssp
+  # schema changes no longer need an image rebuild.
+  registrySource: "clickhouse"
   tokenPageUrl: "https://usdf-rsp-dev.slac.stanford.edu/settings/tokens/new"
 
   # The console's PyVO/TOPCAT examples and the mppdb-public-url meta tag use
