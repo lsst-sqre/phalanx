@@ -11,4 +11,4 @@ grafana:
             storage: "11Gi"
   config:
     database:
-      host: "postgres.postgres"
+      host: "rsp-db-rw.postgres-db.svc.cluster.local"

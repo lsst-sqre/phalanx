@@ -5,7 +5,7 @@ image:
   pullPolicy: Always
 config:
   logLevel: "DEBUG"
-  databaseUrl: "postgresql://timessquare@postgres.postgres/timessquare"
+  databaseUrl: "postgresql://timessquare@rsp-db-rw.postgres-db/timessquare"
   githubAppId: "327289"
   enableGitHubApp: "True"
   sentryTracesSampleRate: 1
