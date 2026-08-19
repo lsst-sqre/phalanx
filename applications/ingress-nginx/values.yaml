@@ -78,9 +78,9 @@ ingress-nginx:
     image:
       registry: ghcr.io
       image: lsst-sqre/ingress-nginx-controller
-      tag: "v1.15.2-devsquare"
-      digest: "sha256:ad37060a7aca08908bff09308f26e31b5eb4d155a8b77df65c926a4618078039"
-      digestChroot: "sha256:2dfeb83efdbf162a325a2bccd729104ddaf13da117c68f71f977c1dc868beabd"
+      tag: "v1.15.6-lsstsqre-chainguard"
+      digest: "sha256:6c23471044041335807bcfb0cec22049ceb2d66f1cacf37033a42e3e75ad0f99"
+      digestChroot: "sha256:ab9e75bd5aa26b383c4382b27a6957220e060974073c90cd0e1f8ff93bfbbc94"
       pullPolicy: IfNotPresent
 
     metrics:
