@@ -84,8 +84,21 @@ spec:
             value: auxtel-acq-take-seq-verify
           - name: reportname
             value: at_acq_take_seq_verify.xml
-      - name: auxtel-acq-take-seq-test
+      - name: auxtel-acq-take-seq-reverify
         depends: auxtel-acq-take-seq-verify
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Acq_Take_Seq_REVERIFY.list"
+          - name: jobname
+            value: auxtel-acq-take-seq-reverify
+          - name: reportname
+            value: at_acq_take_seq_reverify.xml
+      - name: auxtel-acq-take-seq-test
+        depends: auxtel-acq-take-seq-reverify
         templateRef:
           name: integration-test-job-template
           template: inttest-template
