@@ -28,6 +28,8 @@ config:
       ppdbtap:
         enabled: true
         schemaVersion: "tickets/DM-54475"
+      obsforgetap:
+        enabled: true
   useSubdomains:
     - "nublado"
 
