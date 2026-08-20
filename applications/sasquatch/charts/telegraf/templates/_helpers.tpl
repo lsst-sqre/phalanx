@@ -37,6 +37,10 @@ data:
     {{- if hasKey .value "timestamp_field" }}
     {{- $timestampField = .value.timestamp_field }}
     {{- end }}
+    {{- $compressionCodec := 3 }}
+    {{- if hasKey .value "compression_codec" }}
+    {{- $compressionCodec = .value.compression_codec }}
+    {{- end }}
     {{- range .influxdbUrls }}
     [[outputs.influxdb]]
       namedrop = ["telegraf_*"]
@@ -85,7 +89,7 @@ data:
       max_processing_time = {{ default "1s" .value.max_processing_time | quote }}
       consumer_fetch_default = {{ default "1MB" .value.consumer_fetch_default | quote }}
       max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
-      compression_codec = {{ default 3 .value.compression_codec }}
+      compression_codec = {{ $compressionCodec }}
       kafka_version = {{ .kafkaVersion | quote }}
 
     {{- if .value.repair }}
@@ -117,7 +121,7 @@ data:
       max_processing_time = {{ default "1s" .value.max_processing_time | quote }}
       consumer_fetch_default = {{ default "1MB" .value.consumer_fetch_default | quote }}
       max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
-      compression_codec = {{ default 3 .value.compression_codec }}
+      compression_codec = {{ $compressionCodec }}
       kafka_version = {{ .kafkaVersion | quote }}
     {{- end }}
 
