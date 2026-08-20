@@ -39,6 +39,12 @@ scripts:
 ###
 ### AuxTel pods
 ###
+- name: LATISS/runAosWorker.py
+  replicas: 1
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
 - name: LATISS/runButlerWatcher.py
   mounts:
   - auxtel-data
