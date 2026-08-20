@@ -1,0 +1,20 @@
+{{- if .Values.hipsData.enabled }}
+{{- range .Values.hipsData.mounts }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .name | quote }}
+  labels:
+    {{- include "skyviewer.labels" $ | nindent 4 }}
+spec:
+  accessModes:
+    # the surveys are staged by other means and only read here, and several
+    # replicas may serve tiles from them at once
+    - "ReadOnlyMany"
+  resources:
+    requests:
+      storage: {{ .capacity | quote }}
+  storageClassName: {{ .storageClassName | quote }}
+{{- end }}
+{{- end }}
