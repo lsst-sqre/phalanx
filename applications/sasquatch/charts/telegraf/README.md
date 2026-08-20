@@ -19,6 +19,7 @@ Telegraf is an agent for collecting, processing, aggregating, and writing metric
 | kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
 | kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
 | kafkaConsumers.test.consumer_fetch_default | string | "1MB" | Maximum amount of data the server should return for a fetch request. |
+| kafkaConsumers.test.data_format | string | `"avro"` | Input data format. Supported values are `avro` and `json_v2`. |
 | kafkaConsumers.test.database | string | `""` | Name of the InfluxDB v1 database to write to (required) |
 | kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
 | kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
@@ -32,8 +33,8 @@ Telegraf is an agent for collecting, processing, aggregating, and writing metric
 | kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
 | kafkaConsumers.test.precision | string | "1us" | Data precision. |
 | kafkaConsumers.test.replicaCount | int | `1` | Number of Telegraf Kafka consumer replicas. Increase this value to increase the consumer throughput. |
-| kafkaConsumers.test.tags | list | `[]` | List of Avro fields to be recorded as InfluxDB tags.  The Avro fields specified as tags will be converted to strings before ingestion into InfluxDB. |
-| kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Avro field to be used as the InfluxDB timestamp (optional).  If unspecified or set to the empty string, Telegraf will use the time it received the measurement. |
+| kafkaConsumers.test.tags | list | `[]` | List of input fields to be recorded as InfluxDB tags.  The input fields specified as tags will be converted to strings before ingestion into InfluxDB. |
+| kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Input field to be used as the InfluxDB timestamp (optional).  If unspecified or set to the empty string, Telegraf will use the time it received the measurement. |
 | kafkaConsumers.test.timestamp_format | string | `"unix"` | Timestamp format. Possible values are `unix` (the default if unset) a timestamp in seconds since the Unix epoch, `unix_ms` (milliseconds), `unix_us` (microsseconds), or `unix_ns` (nanoseconds). |
 | kafkaConsumers.test.topicRegexps | list | `[".*Test"]` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |

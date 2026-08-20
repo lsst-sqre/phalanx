@@ -9,6 +9,10 @@
 
 {{/* Render a Telegraf Kafka consumer input. */}}
 {{- define "telegraf.kafkaConsumer" }}
+{{- $dataFormat := default "avro" .value.data_format }}
+{{- if and (ne $dataFormat "avro") (ne $dataFormat "json_v2") }}
+{{- fail (printf "unsupported data_format %q for %s; expected avro or json_v2" $dataFormat .consumerGroup) }}
+{{- end }}
     [[inputs.kafka_consumer]]
       brokers = [
         "sasquatch-kafka-brokers.sasquatch:9092"
@@ -17,7 +21,16 @@
       sasl_mechanism = "SCRAM-SHA-512"
       sasl_password = "$TELEGRAF_PASSWORD"
       sasl_username = "telegraf"
-      data_format = "avro"
+      data_format = {{ $dataFormat | quote }}
+      topic_regexps = {{ include "telegraf.toTomlArray" .value.topicRegexps }}
+      offset = {{ .offset | quote }}
+      precision = {{ default "1us" .value.precision | quote }}
+      max_processing_time = {{ default "1s" .value.max_processing_time | quote }}
+      consumer_fetch_default = {{ default "1MB" .value.consumer_fetch_default | quote }}
+      max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
+      compression_codec = {{ .compressionCodec }}
+      kafka_version = {{ .kafkaVersion | quote }}
+      {{- if eq $dataFormat "avro" }}
       avro_schema_registry = {{ default "http://sasquatch-schema-registry.sasquatch:8081" .registryUrl | quote }}
       {{- if .timestampField }}
       avro_timestamp = {{ .timestampField | quote }}
@@ -31,14 +44,15 @@
       {{- if .value.tags }}
       avro_tags = {{ include "telegraf.toTomlArray" .value.tags }}
       {{- end }}
-      topic_regexps = {{ include "telegraf.toTomlArray" .value.topicRegexps }}
-      offset = {{ .offset | quote }}
-      precision = {{ default "1us" .value.precision | quote }}
-      max_processing_time = {{ default "1s" .value.max_processing_time | quote }}
-      consumer_fetch_default = {{ default "1MB" .value.consumer_fetch_default | quote }}
-      max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
-      compression_codec = {{ .compressionCodec }}
-      kafka_version = {{ .kafkaVersion | quote }}
+      {{- else }}
+    [[inputs.kafka_consumer.json_v2]]
+      [[inputs.kafka_consumer.json_v2.object]]
+
+        path = "@this"
+        timestamp_key = {{ .timestampField | quote }}
+        timestamp_format = {{ default "unix" .value.timestamp_format | quote }}
+        tags = {{ include "telegraf.toTomlArray" .value.tags }}
+      {{- end }}
 {{ end -}}
 
 {{- define "configmap" -}}

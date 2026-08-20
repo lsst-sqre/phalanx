@@ -859,6 +859,7 @@ Rubin Observatory's telemetry service
 | telegraf.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
 | telegraf.kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
 | telegraf.kafkaConsumers.test.consumer_fetch_default | string | "1MB" | Maximum amount of data the server should return for a fetch request. |
+| telegraf.kafkaConsumers.test.data_format | string | `"avro"` | Input data format. Supported values are `avro` and `json_v2`. |
 | telegraf.kafkaConsumers.test.database | string | `""` | Name of the InfluxDB v1 database to write to (required) |
 | telegraf.kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
 | telegraf.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
@@ -872,8 +873,8 @@ Rubin Observatory's telemetry service
 | telegraf.kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
 | telegraf.kafkaConsumers.test.precision | string | "1us" | Data precision. |
 | telegraf.kafkaConsumers.test.replicaCount | int | `1` | Number of Telegraf Kafka consumer replicas. Increase this value to increase the consumer throughput. |
-| telegraf.kafkaConsumers.test.tags | list | `[]` | List of Avro fields to be recorded as InfluxDB tags.  The Avro fields specified as tags will be converted to strings before ingestion into InfluxDB. |
-| telegraf.kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Avro field to be used as the InfluxDB timestamp (optional).  If unspecified or set to the empty string, Telegraf will use the time it received the measurement. |
+| telegraf.kafkaConsumers.test.tags | list | `[]` | List of input fields to be recorded as InfluxDB tags.  The input fields specified as tags will be converted to strings before ingestion into InfluxDB. |
+| telegraf.kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Input field to be used as the InfluxDB timestamp (optional).  If unspecified or set to the empty string, Telegraf will use the time it received the measurement. |
 | telegraf.kafkaConsumers.test.timestamp_format | string | `"unix"` | Timestamp format. Possible values are `unix` (the default if unset) a timestamp in seconds since the Unix epoch, `unix_ms` (milliseconds), `unix_us` (microsseconds), or `unix_ns` (nanoseconds). |
 | telegraf.kafkaConsumers.test.topicRegexps | list | `[".*Test"]` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | telegraf.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
@@ -898,6 +899,7 @@ Rubin Observatory's telemetry service
 | telegraf-standby.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
 | telegraf-standby.kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
 | telegraf-standby.kafkaConsumers.test.consumer_fetch_default | string | "1MB" | Maximum amount of data the server should return for a fetch request. |
+| telegraf-standby.kafkaConsumers.test.data_format | string | `"avro"` | Input data format. Supported values are `avro` and `json_v2`. |
 | telegraf-standby.kafkaConsumers.test.database | string | `""` | Name of the InfluxDB v1 database to write to (required) |
 | telegraf-standby.kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
 | telegraf-standby.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
@@ -911,8 +913,8 @@ Rubin Observatory's telemetry service
 | telegraf-standby.kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
 | telegraf-standby.kafkaConsumers.test.precision | string | "1us" | Data precision. |
 | telegraf-standby.kafkaConsumers.test.replicaCount | int | `1` | Number of Telegraf Kafka consumer replicas. Increase this value to increase the consumer throughput. |
-| telegraf-standby.kafkaConsumers.test.tags | list | `[]` | List of Avro fields to be recorded as InfluxDB tags.  The Avro fields specified as tags will be converted to strings before ingestion into InfluxDB. |
-| telegraf-standby.kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Avro field to be used as the InfluxDB timestamp (optional).  If unspecified or set to the empty string, Telegraf will use the time it received the measurement. |
+| telegraf-standby.kafkaConsumers.test.tags | list | `[]` | List of input fields to be recorded as InfluxDB tags.  The input fields specified as tags will be converted to strings before ingestion into InfluxDB. |
+| telegraf-standby.kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Input field to be used as the InfluxDB timestamp (optional).  If unspecified or set to the empty string, Telegraf will use the time it received the measurement. |
 | telegraf-standby.kafkaConsumers.test.timestamp_format | string | `"unix"` | Timestamp format. Possible values are `unix` (the default if unset) a timestamp in seconds since the Unix epoch, `unix_ms` (milliseconds), `unix_us` (microsseconds), or `unix_ns` (nanoseconds). |
 | telegraf-standby.kafkaConsumers.test.topicRegexps | list | `[".*Test"]` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | telegraf-standby.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |

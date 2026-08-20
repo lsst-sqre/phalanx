@@ -97,12 +97,15 @@ kafkaConsumers:
     # @default -- false
     debug: false
 
+    # -- Input data format. Supported values are `avro` and `json_v2`.
+    data_format: "avro"
+
     # -- Timestamp format. Possible values are `unix` (the default if unset) a
     # timestamp in seconds since the Unix epoch, `unix_ms` (milliseconds),
     # `unix_us` (microsseconds), or `unix_ns` (nanoseconds).
     timestamp_format: "unix"
 
-    # -- Avro field to be used as the InfluxDB timestamp (optional).  If
+    # -- Input field to be used as the InfluxDB timestamp (optional).  If
     # unspecified or set to the empty string, Telegraf will use the time it
     # received the measurement.
     timestamp_field: "private_efdStamp"
@@ -150,7 +153,7 @@ kafkaConsumers:
     # InfluxDB field.
     fields: []
 
-    # -- List of Avro fields to be recorded as InfluxDB tags.  The Avro fields
+    # -- List of input fields to be recorded as InfluxDB tags.  The input fields
     # specified as tags will be converted to strings before ingestion into
     # InfluxDB.
     tags: []
