@@ -7,6 +7,40 @@
 [ {{ join ", " $items }} ]
 {{- end }}
 
+{{/* Render a Telegraf Kafka consumer input. */}}
+{{- define "telegraf.kafkaConsumer" }}
+    [[inputs.kafka_consumer]]
+      brokers = [
+        "sasquatch-kafka-brokers.sasquatch:9092"
+      ]
+      consumer_group = {{ .consumerGroup | quote }}
+      sasl_mechanism = "SCRAM-SHA-512"
+      sasl_password = "$TELEGRAF_PASSWORD"
+      sasl_username = "telegraf"
+      data_format = "avro"
+      avro_schema_registry = {{ default "http://sasquatch-schema-registry.sasquatch:8081" .registryUrl | quote }}
+      {{- if .timestampField }}
+      avro_timestamp = {{ .timestampField | quote }}
+      avro_timestamp_format = {{ default "unix" .value.timestamp_format | quote }}
+      {{- end }}
+      avro_union_mode = {{ default "nullable" .value.union_mode | quote }}
+      avro_field_separator = {{ default "" .value.union_field_separator | quote }}
+      {{- if .value.fields }}
+      avro_fields = {{ include "telegraf.toTomlArray" .value.fields }}
+      {{- end }}
+      {{- if .value.tags }}
+      avro_tags = {{ include "telegraf.toTomlArray" .value.tags }}
+      {{- end }}
+      topic_regexps = {{ include "telegraf.toTomlArray" .value.topicRegexps }}
+      offset = {{ .offset | quote }}
+      precision = {{ default "1us" .value.precision | quote }}
+      max_processing_time = {{ default "1s" .value.max_processing_time | quote }}
+      consumer_fetch_default = {{ default "1MB" .value.consumer_fetch_default | quote }}
+      max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
+      compression_codec = {{ .compressionCodec }}
+      kafka_version = {{ .kafkaVersion | quote }}
+{{ end -}}
+
 {{- define "configmap" -}}
 {{- if .value.enabled }}
 ---
@@ -61,68 +95,27 @@ data:
       password = "${INFLUXDB_PASSWORD}"
     {{ end }}
 
-    [[inputs.kafka_consumer]]
-      brokers = [
-        "sasquatch-kafka-brokers.sasquatch:9092"
-      ]
-      consumer_group = "telegraf-kafka-consumer-{{ .key }}"
-      sasl_mechanism = "SCRAM-SHA-512"
-      sasl_password = "$TELEGRAF_PASSWORD"
-      sasl_username = "telegraf"
-      data_format = "avro"
-      avro_schema_registry = {{ default "http://sasquatch-schema-registry.sasquatch:8081" .registryUrl | quote }}
-      {{- if $timestampField }}
-      avro_timestamp = {{ $timestampField | quote }}
-      avro_timestamp_format = {{ default "unix" .value.timestamp_format | quote }}
-      {{- end }}
-      avro_union_mode = {{ default "nullable" .value.union_mode | quote }}
-      avro_field_separator = {{ default "" .value.union_field_separator | quote }}
-      {{- if .value.fields }}
-      avro_fields = {{ include "telegraf.toTomlArray" .value.fields }}
-      {{- end }}
-      {{- if .value.tags }}
-      avro_tags = {{ include "telegraf.toTomlArray" .value.tags }}
-      {{- end }}
-      topic_regexps = {{ include "telegraf.toTomlArray" .value.topicRegexps }}
-      offset = {{ default "oldest" .value.offset | quote }}
-      precision = {{ default "1us" .value.precision | quote }}
-      max_processing_time = {{ default "1s" .value.max_processing_time | quote }}
-      consumer_fetch_default = {{ default "1MB" .value.consumer_fetch_default | quote }}
-      max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
-      compression_codec = {{ $compressionCodec }}
-      kafka_version = {{ .kafkaVersion | quote }}
-
+    {{- $config := . }}
+    {{- $consumers := list (dict
+      "consumerGroup" (printf "telegraf-kafka-consumer-%s" .key)
+      "offset" (default "oldest" .value.offset)
+    ) }}
     {{- if .value.repair }}
-    [[inputs.kafka_consumer]]
-      brokers = [
-        "sasquatch-kafka-brokers.sasquatch:9092"
-      ]
-      consumer_group = "telegraf-kafka-consumer-{{ .key }}-repairer"
-      sasl_mechanism = "SCRAM-SHA-512"
-      sasl_password = "$TELEGRAF_PASSWORD"
-      sasl_username = "telegraf"
-      data_format = "avro"
-      avro_schema_registry = {{ default "http://sasquatch-schema-registry.sasquatch:8081" .registryUrl | quote }}
-      {{- if $timestampField }}
-      avro_timestamp = {{ $timestampField | quote }}
-      avro_timestamp_format = {{ default "unix" .value.timestamp_format | quote }}
-      {{- end }}
-      avro_union_mode = {{ default "nullable" .value.union_mode | quote }}
-      avro_field_separator = {{ default "" .value.union_field_separator | quote }}
-      {{- if .value.fields }}
-      avro_fields = {{ include "telegraf.toTomlArray" .value.fields }}
-      {{- end }}
-      {{- if .value.tags }}
-      avro_tags = {{ include "telegraf.toTomlArray" .value.tags }}
-      {{- end }}
-      topic_regexps = {{ include "telegraf.toTomlArray" .value.topicRegexps }}
-      offset = "oldest"
-      precision = {{ default "1us" .value.precision | quote }}
-      max_processing_time = {{ default "1s" .value.max_processing_time | quote }}
-      consumer_fetch_default = {{ default "1MB" .value.consumer_fetch_default | quote }}
-      max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
-      compression_codec = {{ $compressionCodec }}
-      kafka_version = {{ .kafkaVersion | quote }}
+    {{- $consumers = append $consumers (dict
+      "consumerGroup" (printf "telegraf-kafka-consumer-%s-repairer" .key)
+      "offset" "oldest"
+    ) }}
+    {{- end }}
+    {{- range $consumer := $consumers }}
+{{ include "telegraf.kafkaConsumer" (dict
+  "value" $config.value
+  "registryUrl" $config.registryUrl
+  "kafkaVersion" $config.kafkaVersion
+  "timestampField" $timestampField
+  "compressionCodec" $compressionCodec
+  "consumerGroup" $consumer.consumerGroup
+  "offset" $consumer.offset
+) }}
     {{- end }}
 
     [[inputs.internal]]
