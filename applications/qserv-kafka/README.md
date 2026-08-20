@@ -11,7 +11,7 @@ Qserv Kafka bridge
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | config.arqFastMaxJobs | int | `50` | Maximum number of jobs each fast worker (used for I/O-intensive tasks) can process simultaneously |
-| config.arqSlowMaxJobs | int | `2` | Maximum number of jobs each slow worker (used for results processing) can process simultaneously |
+| config.arqSlowMaxJobs | int | `1` | Maximum number of jobs each slow worker (used for results processing) can process simultaneously |
 | config.backendApiTimeout | string | `"60s"` | Timeout for REST API calls in Safir `parse_timedelta` format. This includes time spent waiting for a connection if the maximum number of connections has been reached. |
 | config.consumerGroupId | string | `"qserv"` | Kafka consumer group ID |
 | config.jobCancelTopic | string | `"lsst.tap.job-delete"` | Kafka topic for query cancellation requests |
@@ -90,7 +90,7 @@ Qserv Kafka bridge
 | slowWorker.autoscaling.enabled | bool | `true` | Enable autoscaling of qserv-kafka slow workers |
 | slowWorker.autoscaling.maxReplicas | int | `10` | Maximum number of qserv-kafka slow worker pods. Each replica will open database connections up to the configured pool size and overflow limits, so make sure the combined connections are under the connection limit. |
 | slowWorker.autoscaling.minReplicas | int | `1` | Minimum number of qserv-kafka slow worker pods |
-| slowWorker.autoscaling.targetCPUUtilizationPercentage | int | `75` | Target CPU utilization of qserv-kafka slow worker pods. |
+| slowWorker.autoscaling.targetCPUUtilizationPercentage | int | `50` | Target CPU utilization of qserv-kafka slow worker pods. |
 | slowWorker.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka worker pods |
 | slowWorker.podAnnotations | object | `{}` | Annotations for the qserv-kafka worker pods |
 | slowWorker.replicaCount | int | `1` | Number of slow worker pods to start if autoscaling is disabled |
