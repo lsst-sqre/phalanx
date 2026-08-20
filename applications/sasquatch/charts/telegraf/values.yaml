@@ -157,8 +157,7 @@ kafkaConsumers:
 
     # -- List of regular expressions to specify the Kafka topics consumed by
     # this agent.
-    topicRegexps: |
-      [ ".*Test" ]
+    topicRegexps: [".*Test"]
 
     # -- Kafka consumer offset. Possible values are `oldest` and `newest`.
     offset: "oldest"

@@ -231,23 +231,20 @@ telegraf:
       database: "lsst.obsenv"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.obsenv" ]
+      topicRegexps: ["lsst.obsenv"]
     scimma:
       enabled: true
       database: "lsst.scimma"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.scimma" ]
+      topicRegexps: ["lsst.scimma"]
       offset: oldest
     cp:
       enabled: true
       database: "lsst.cp"
       timestamp_format: "unix"
       timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.cp" ]
+      topicRegexps: ["lsst.cp"]
       tags: ["dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "exposure", "patch", "visit", "run", "pipeline"]
     backpack:
       enabled: true
@@ -255,36 +252,30 @@ telegraf:
       database: "lsst.backpack"
       timestamp_format: "unix"
       timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.backpack" ]
+      topicRegexps: ["lsst.backpack"]
     # CSC connectors
     maintel:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
+      topicRegexps: ["lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg"]
     mtmount:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTMount" ]
+      topicRegexps: ["lsst.sal.MTMount"]
     comcam:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
+      topicRegexps: ["lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS"]
     envsys:
       enabled: true
       database: "efd"
-      topicRegexps: |
-         [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+      topicRegexps: ["lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast"]
     m1m3:
       enabled: true
       metric_batch_size: 1500
       max_undelivered_messages: 4000
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTM1M3([^T].*)" ]
+      topicRegexps: ["lsst.sal.MTM1M3([^T].*)"]
       resources:
         limits:
           cpu: "5"
@@ -297,13 +288,11 @@ telegraf:
       metric_batch_size: 1000
       max_undelivered_messages: 4000
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTM1M3TS" ]
+      topicRegexps: ["lsst.sal.MTM1M3TS"]
     m2:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
+      topicRegexps: ["lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator"]
       resources:
         limits:
           cpu: "5"
@@ -314,70 +303,57 @@ telegraf:
     obssys:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
+      topicRegexps: ["lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher"]
     ocps:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.OCPS" ]
+      topicRegexps: ["lsst.sal.OCPS"]
     pmd:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.PMD" ]
+      topicRegexps: ["lsst.sal.PMD"]
     calsys:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.MTReflector", "lsst.sal.TunableLaser" ]
+      topicRegexps: ["lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.MTReflector", "lsst.sal.TunableLaser"]
     mtaircompressor:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTAirCompressor" ]
+      topicRegexps: ["lsst.sal.MTAirCompressor"]
     genericcamera:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
+      topicRegexps: ["lsst.sal.GCHeaderService", "lsst.sal.GenericCamera"]
     gis:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.GIS" ]
+      topicRegexps: ["lsst.sal.GIS"]
     mtvms:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTVMS" ]
+      topicRegexps: ["lsst.sal.MTVMS"]
     lsstcam:
       enabled: true
       metric_batch_size: 250
       max_undelivered_messages: 5000
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS", "lsst.sal.WFOODS" ]
+      topicRegexps: ["lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS", "lsst.sal.WFOODS"]
     auxtel:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
+      topicRegexps: ["lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS"]
     latiss:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
+      topicRegexps: ["lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph"]
     test:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.Test" ]
+      topicRegexps: ["lsst.sal.Test"]
     lasertracker:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.LaserTracker" ]
+      topicRegexps: ["lsst.sal.LaserTracker"]
     # CCS connectors (experimental) data is being written on separate databases for now
     atcamera:
       enabled: true
@@ -385,24 +361,21 @@ telegraf:
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: ["Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source", "VersionType"]
-      topicRegexps: |
-        [ "lsst.ATCamera" ]
+      topicRegexps: ["lsst.ATCamera"]
     cccamera:
       enabled: true
       database: "lsst.CCCamera"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: ["Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source", "VersionType"]
-      topicRegexps: |
-        [ "lsst.CCCamera" ]
+      topicRegexps: ["lsst.CCCamera"]
     mtcamera:
       enabled: true
       database: "lsst.MTCamera"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: ["Agent", "Aspic", "Axis", "Bay", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck", "VersionType"]
-      topicRegexps: |
-        [ "lsst.MTCamera" ]
+      topicRegexps: ["lsst.MTCamera"]
 
 kafdrop:
   ingress:

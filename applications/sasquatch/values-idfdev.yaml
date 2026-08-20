@@ -100,16 +100,14 @@ telegraf:
       tags: ["band", "instrument"]
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.example" ]
+      topicRegexps: ["lsst.example"]
     backpack:
       enabled: true
       replicaCount: 1
       database: "lsst.backpack"
       timestamp_format: "unix"
       timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.backpack" ]
+      topicRegexps: ["lsst.backpack"]
 
 kafdrop:
   cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=true --topic.createEnabled=true"

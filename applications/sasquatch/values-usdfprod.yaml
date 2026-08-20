@@ -248,114 +248,98 @@ telegraf:
       enabled: true
       database: "lsst.backpack"
       timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "summit.lsst.backpack" ]
+      topicRegexps: ["summit.lsst.backpack"]
     # CSC connectors
     maintel:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTAOS", "summit.lsst.sal.MTDome", "summit.lsst.sal.MTDomeTrajectory", "summit.lsst.sal.MTPtg" ]
+      topicRegexps: ["summit.lsst.sal.MTAOS", "summit.lsst.sal.MTDome", "summit.lsst.sal.MTDomeTrajectory", "summit.lsst.sal.MTPtg"]
     mtmount:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTMount" ]
+      topicRegexps: ["summit.lsst.sal.MTMount"]
     comcam:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.CCCamera", "summit.lsst.sal.CCHeaderService", "summit.lsst.sal.CCOODS" ]
+      topicRegexps: ["summit.lsst.sal.CCCamera", "summit.lsst.sal.CCHeaderService", "summit.lsst.sal.CCOODS"]
     envsys:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.DIMM", "summit.lsst.sal.DREAM", "summit.lsst.sal.EAS", "summit.lsst.sal.ESS", "summit.lsst.sal.DSM", "summit.lsst.sal.EPM", "summit.lsst.sal.HVAC", "summit.lsst.sal.WeatherForecast" ]
+      topicRegexps: ["summit.lsst.sal.DIMM", "summit.lsst.sal.DREAM", "summit.lsst.sal.EAS", "summit.lsst.sal.ESS", "summit.lsst.sal.DSM", "summit.lsst.sal.EPM", "summit.lsst.sal.HVAC", "summit.lsst.sal.WeatherForecast"]
     m1m3:
       enabled: true
       metric_batch_size: 1500
       max_undelivered_messages: 4000
       database: "efd"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTM1M3([^T].*)" ]
+      topicRegexps: ["summit.lsst.sal.MTM1M3([^T].*)"]
     m1m3ts:
       enabled: true
       metric_batch_size: 1500
       max_undelivered_messages: 4000
       database: "efd"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTM1M3TS" ]
+      topicRegexps: ["summit.lsst.sal.MTM1M3TS"]
     m2:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTHexapod", "summit.lsst.sal.MTM2", "summit.lsst.sal.MTRotator" ]
+      topicRegexps: ["summit.lsst.sal.MTHexapod", "summit.lsst.sal.MTM2", "summit.lsst.sal.MTRotator"]
     obssys:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.Scheduler", "summit.lsst.sal.Script", "summit.lsst.sal.ScriptQueue", "summit.lsst.sal.Watcher" ]
+      topicRegexps: ["summit.lsst.sal.Scheduler", "summit.lsst.sal.Script", "summit.lsst.sal.ScriptQueue", "summit.lsst.sal.Watcher"]
     ocps:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.OCPS" ]
+      topicRegexps: ["summit.lsst.sal.OCPS"]
     pmd:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.PMD" ]
+      topicRegexps: ["summit.lsst.sal.PMD"]
     calsys:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.ATMonochromator", "summit.lsst.sal.ATWhiteLight", "summit.lsst.sal.CBP", "summit.lsst.sal.Electrometer", "summit.lsst.sal.FiberSpectrograph", "summit.lsst.sal.LEDProjector", "summit.lsst.sal.LinearStage", "summit.lsst.sal.MTReflector", "summit.lsst.sal.TunableLaser" ]
+      topicRegexps: ["summit.lsst.sal.ATMonochromator", "summit.lsst.sal.ATWhiteLight", "summit.lsst.sal.CBP", "summit.lsst.sal.Electrometer", "summit.lsst.sal.FiberSpectrograph", "summit.lsst.sal.LEDProjector", "summit.lsst.sal.LinearStage", "summit.lsst.sal.MTReflector", "summit.lsst.sal.TunableLaser"]
     mtaircompressor:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTAirCompressor" ]
+      topicRegexps: ["summit.lsst.sal.MTAirCompressor"]
     genericcamera:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.GCHeaderService", "summit.lsst.sal.GenericCamera" ]
+      topicRegexps: ["summit.lsst.sal.GCHeaderService", "summit.lsst.sal.GenericCamera"]
     gis:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.GIS" ]
+      topicRegexps: ["summit.lsst.sal.GIS"]
     mtvms:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTVMS" ]
+      topicRegexps: ["summit.lsst.sal.MTVMS"]
     lsstcam:
       enabled: true
       repair: false
@@ -363,36 +347,31 @@ telegraf:
       max_undelivered_messages: 5000
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTCamera", "summit.lsst.sal.MTHeaderService", "summit.lsst.sal.MTOODS" ]
+      topicRegexps: ["summit.lsst.sal.MTCamera", "summit.lsst.sal.MTHeaderService", "summit.lsst.sal.MTOODS"]
     auxtel:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.ATAOS", "summit.lsst.sal.ATBuilding", "summit.lsst.sal.ATDome", "summit.lsst.sal.ATDomeTrajectory", "summit.lsst.sal.ATHexapod", "summit.lsst.sal.ATPneumatics", "summit.lsst.sal.ATPtg", "summit.lsst.sal.ATMCS" ]
+      topicRegexps: ["summit.lsst.sal.ATAOS", "summit.lsst.sal.ATBuilding", "summit.lsst.sal.ATDome", "summit.lsst.sal.ATDomeTrajectory", "summit.lsst.sal.ATHexapod", "summit.lsst.sal.ATPneumatics", "summit.lsst.sal.ATPtg", "summit.lsst.sal.ATMCS"]
     latiss:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.ATCamera", "summit.lsst.sal.ATHeaderService", "summit.lsst.sal.ATOODS", "summit.lsst.sal.ATSpectrograph" ]
+      topicRegexps: ["summit.lsst.sal.ATCamera", "summit.lsst.sal.ATHeaderService", "summit.lsst.sal.ATOODS", "summit.lsst.sal.ATSpectrograph"]
     test:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.Test" ]
+      topicRegexps: ["summit.lsst.sal.Test"]
     lasertracker:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.LaserTracker" ]
+      topicRegexps: ["summit.lsst.sal.LaserTracker"]
     # CCS connectors (experimental) data is being written on separate databases for now
     atcamera:
       enabled: true
@@ -400,38 +379,33 @@ telegraf:
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: ["Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source", "VersionType"]
-      topicRegexps: |
-        [ "summit.lsst.ATCamera" ]
+      topicRegexps: ["summit.lsst.ATCamera"]
     cccamera:
       enabled: true
       database: "lsst.CCCamera"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: ["Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source", "VersionType"]
-      topicRegexps: |
-        [ "summit.lsst.CCCamera" ]
+      topicRegexps: ["summit.lsst.CCCamera"]
     mtcamera:
       enabled: true
       database: "lsst.MTCamera"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: ["Agent", "Aspic", "Axis", "Bay", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck", "VersionType"]
-      topicRegexps: |
-        [ "summit.lsst.MTCamera" ]
+      topicRegexps: ["summit.lsst.MTCamera"]
     obsenv:
       enabled: true
       database: "lsst.obsenv"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "summit.lsst.obsenv" ]
+      topicRegexps: ["summit.lsst.obsenv"]
     cp:
       enabled: true
       database: "lsst.cp"
       timestamp_format: "unix"
       timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "summit.lsst.cp" ]
+      topicRegexps: ["summit.lsst.cp"]
       tags: ["dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "exposure", "patch", "visit", "run", "pipeline"]
 
 telegraf-standby:
@@ -447,114 +421,98 @@ telegraf-standby:
       enabled: true
       database: "lsst.backpack"
       timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "summit.lsst.backpack" ]
+      topicRegexps: ["summit.lsst.backpack"]
     # CSC connectors
     standby-maintel:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTAOS", "summit.lsst.sal.MTDome", "summit.lsst.sal.MTDomeTrajectory", "summit.lsst.sal.MTPtg" ]
+      topicRegexps: ["summit.lsst.sal.MTAOS", "summit.lsst.sal.MTDome", "summit.lsst.sal.MTDomeTrajectory", "summit.lsst.sal.MTPtg"]
     standby-mtmount:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTMount" ]
+      topicRegexps: ["summit.lsst.sal.MTMount"]
     standby-comcam:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.CCCamera", "summit.lsst.sal.CCHeaderService", "summit.lsst.sal.CCOODS" ]
+      topicRegexps: ["summit.lsst.sal.CCCamera", "summit.lsst.sal.CCHeaderService", "summit.lsst.sal.CCOODS"]
     standby-envsys:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.DIMM", "summit.lsst.sal.DREAM", "summit.lsst.sal.EAS", "summit.lsst.sal.ESS", "summit.lsst.sal.DSM", "summit.lsst.sal.EPM", "summit.lsst.sal.HVAC", "summit.lsst.sal.WeatherForecast" ]
+      topicRegexps: ["summit.lsst.sal.DIMM", "summit.lsst.sal.DREAM", "summit.lsst.sal.EAS", "summit.lsst.sal.ESS", "summit.lsst.sal.DSM", "summit.lsst.sal.EPM", "summit.lsst.sal.HVAC", "summit.lsst.sal.WeatherForecast"]
     standby-m1m3:
       enabled: true
       metric_batch_size: 1500
       max_undelivered_messages: 4000
       database: "efd"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTM1M3([^T].*)" ]
+      topicRegexps: ["summit.lsst.sal.MTM1M3([^T].*)"]
     standby-m1m3ts:
       enabled: true
       metric_batch_size: 1500
       max_undelivered_messages: 4000
       database: "efd"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTM1M3TS" ]
+      topicRegexps: ["summit.lsst.sal.MTM1M3TS"]
     standby-m2:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTHexapod", "summit.lsst.sal.MTM2", "summit.lsst.sal.MTRotator" ]
+      topicRegexps: ["summit.lsst.sal.MTHexapod", "summit.lsst.sal.MTM2", "summit.lsst.sal.MTRotator"]
     standby-obssys:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.Scheduler", "summit.lsst.sal.Script", "summit.lsst.sal.ScriptQueue", "summit.lsst.sal.Watcher" ]
+      topicRegexps: ["summit.lsst.sal.Scheduler", "summit.lsst.sal.Script", "summit.lsst.sal.ScriptQueue", "summit.lsst.sal.Watcher"]
     standby-ocps:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.OCPS" ]
+      topicRegexps: ["summit.lsst.sal.OCPS"]
     standby-pmd:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.PMD" ]
+      topicRegexps: ["summit.lsst.sal.PMD"]
     standby-calsys:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.ATMonochromator", "summit.lsst.sal.ATWhiteLight", "summit.lsst.sal.CBP", "summit.lsst.sal.Electrometer", "summit.lsst.sal.FiberSpectrograph", "summit.lsst.sal.LEDProjector", "summit.lsst.sal.LinearStage", "summit.lsst.sal.MTReflector", "summit.lsst.sal.TunableLaser" ]
+      topicRegexps: ["summit.lsst.sal.ATMonochromator", "summit.lsst.sal.ATWhiteLight", "summit.lsst.sal.CBP", "summit.lsst.sal.Electrometer", "summit.lsst.sal.FiberSpectrograph", "summit.lsst.sal.LEDProjector", "summit.lsst.sal.LinearStage", "summit.lsst.sal.MTReflector", "summit.lsst.sal.TunableLaser"]
     standby-mtaircompressor:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTAirCompressor" ]
+      topicRegexps: ["summit.lsst.sal.MTAirCompressor"]
     standby-genericcamera:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.GCHeaderService", "summit.lsst.sal.GenericCamera" ]
+      topicRegexps: ["summit.lsst.sal.GCHeaderService", "summit.lsst.sal.GenericCamera"]
     standby-gis:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.GIS" ]
+      topicRegexps: ["summit.lsst.sal.GIS"]
     standby-mtvms:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTVMS" ]
+      topicRegexps: ["summit.lsst.sal.MTVMS"]
     standby-lsstcam:
       enabled: true
       repair: false
@@ -562,36 +520,31 @@ telegraf-standby:
       max_undelivered_messages: 5000
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.MTCamera", "summit.lsst.sal.MTHeaderService", "summit.lsst.sal.MTOODS" ]
+      topicRegexps: ["summit.lsst.sal.MTCamera", "summit.lsst.sal.MTHeaderService", "summit.lsst.sal.MTOODS"]
     standby-auxtel:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.ATAOS", "summit.lsst.sal.ATBuilding", "summit.lsst.sal.ATDome", "summit.lsst.sal.ATDomeTrajectory", "summit.lsst.sal.ATHexapod", "summit.lsst.sal.ATPneumatics", "summit.lsst.sal.ATPtg", "summit.lsst.sal.ATMCS" ]
+      topicRegexps: ["summit.lsst.sal.ATAOS", "summit.lsst.sal.ATBuilding", "summit.lsst.sal.ATDome", "summit.lsst.sal.ATDomeTrajectory", "summit.lsst.sal.ATHexapod", "summit.lsst.sal.ATPneumatics", "summit.lsst.sal.ATPtg", "summit.lsst.sal.ATMCS"]
     standby-latiss:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.ATCamera", "summit.lsst.sal.ATHeaderService", "summit.lsst.sal.ATOODS", "summit.lsst.sal.ATSpectrograph" ]
+      topicRegexps: ["summit.lsst.sal.ATCamera", "summit.lsst.sal.ATHeaderService", "summit.lsst.sal.ATOODS", "summit.lsst.sal.ATSpectrograph"]
     standby-test:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.Test" ]
+      topicRegexps: ["summit.lsst.sal.Test"]
     standby-lasertracker:
       enabled: true
       repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "summit.lsst.sal.LaserTracker" ]
+      topicRegexps: ["summit.lsst.sal.LaserTracker"]
     # CCS connectors (experimental) data is being written on separate databases for now
     standby-atcamera:
       enabled: true
@@ -599,38 +552,33 @@ telegraf-standby:
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: ["Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source"]
-      topicRegexps: |
-        [ "summit.lsst.ATCamera" ]
+      topicRegexps: ["summit.lsst.ATCamera"]
     standby-cccamera:
       enabled: true
       database: "lsst.CCCamera"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: ["Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source"]
-      topicRegexps: |
-        [ "summit.lsst.CCCamera" ]
+      topicRegexps: ["summit.lsst.CCCamera"]
     standby-mtcamera:
       enabled: true
       database: "lsst.MTCamera"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       tags: ["Agent", "Aspic", "Axis", "Bay", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck"]
-      topicRegexps: |
-        [ "summit.lsst.MTCamera" ]
+      topicRegexps: ["summit.lsst.MTCamera"]
     standby-obsenv:
       enabled: true
       database: "lsst.obsenv"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "summit.lsst.obsenv" ]
+      topicRegexps: ["summit.lsst.obsenv"]
     standby-cp:
       enabled: true
       database: "lsst.cp"
       timestamp_format: "unix"
       timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "summit.lsst.cp" ]
+      topicRegexps: ["summit.lsst.cp"]
       tags: ["dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "exposure", "patch", "visit", "run", "pipeline"]
 
 kafdrop:

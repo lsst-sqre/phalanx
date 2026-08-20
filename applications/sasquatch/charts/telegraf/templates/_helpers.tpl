@@ -73,7 +73,7 @@ data:
       {{- if .value.tags }}
       avro_tags = {{ include "telegraf.toTomlArray" .value.tags }}
       {{- end }}
-      topic_regexps = {{ .value.topicRegexps }}
+      topic_regexps = {{ include "telegraf.toTomlArray" .value.topicRegexps }}
       offset = {{ default "oldest" .value.offset | quote }}
       precision = {{ default "1us" .value.precision | quote }}
       max_processing_time = {{ default "1s" .value.max_processing_time | quote }}
@@ -103,7 +103,7 @@ data:
       {{- if .value.tags }}
       avro_tags = {{ include "telegraf.toTomlArray" .value.tags }}
       {{- end }}
-      topic_regexps = {{ .value.topicRegexps }}
+      topic_regexps = {{ include "telegraf.toTomlArray" .value.topicRegexps }}
       offset = "oldest"
       precision = {{ default "1us" .value.precision | quote }}
       max_processing_time = {{ default "1s" .value.max_processing_time | quote }}
