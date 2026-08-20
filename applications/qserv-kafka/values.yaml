@@ -9,7 +9,7 @@ config:
 
   # -- Maximum number of jobs each slow worker (used for results processing)
   # can process simultaneously
-  arqSlowMaxJobs: 2
+  arqSlowMaxJobs: 1
 
   # -- Timeout for REST API calls in Safir `parse_timedelta` format. This
   # includes time spent waiting for a connection if the maximum number of
@@ -272,7 +272,7 @@ slowWorker:
     maxReplicas: 10
 
     # -- Target CPU utilization of qserv-kafka slow worker pods.
-    targetCPUUtilizationPercentage: 75
+    targetCPUUtilizationPercentage: 50
 
   # -- Node selection rules for the qserv-kafka worker pods
   nodeSelector: {}
