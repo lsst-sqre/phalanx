@@ -17,6 +17,9 @@ spec:
   template:
     metadata:
       labels:
+        {{- with $.Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         app.kubernetes.io/name: sasquatch-telegraf
         app.kubernetes.io/instance: sasquatch-telegraf-{{ $key }}
       annotations:
