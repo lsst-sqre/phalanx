@@ -879,6 +879,16 @@ Rubin Observatory's telemetry service
 | telegraf.kafkaConsumers.test.topicRegexps | list | `[".*Test"]` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | telegraf.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
 | telegraf.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
+| telegraf.kafkaConsumers.test_json_v2.compression_codec | int | `3` |  |
+| telegraf.kafkaConsumers.test_json_v2.data_format | string | `"json_v2"` |  |
+| telegraf.kafkaConsumers.test_json_v2.database | string | `""` |  |
+| telegraf.kafkaConsumers.test_json_v2.enabled | bool | `false` |  |
+| telegraf.kafkaConsumers.test_json_v2.offset | string | `"oldest"` |  |
+| telegraf.kafkaConsumers.test_json_v2.replicaCount | int | `1` |  |
+| telegraf.kafkaConsumers.test_json_v2.tags[0] | string | `"tag"` |  |
+| telegraf.kafkaConsumers.test_json_v2.timestamp_field | string | `"timestamp"` |  |
+| telegraf.kafkaConsumers.test_json_v2.timestamp_format | string | `"unix"` |  |
+| telegraf.kafkaConsumers.test_json_v2.topicRegexps[0] | string | `".*JsonV2Test"` |  |
 | telegraf.kafkaVersion | string | `"4.0.0"` |  |
 | telegraf.nodeSelector | object | `{}` | Node labels for pod assignment |
 | telegraf.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
@@ -919,6 +929,16 @@ Rubin Observatory's telemetry service
 | telegraf-standby.kafkaConsumers.test.topicRegexps | list | `[".*Test"]` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | telegraf-standby.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
 | telegraf-standby.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
+| telegraf-standby.kafkaConsumers.test_json_v2.compression_codec | int | `3` |  |
+| telegraf-standby.kafkaConsumers.test_json_v2.data_format | string | `"json_v2"` |  |
+| telegraf-standby.kafkaConsumers.test_json_v2.database | string | `""` |  |
+| telegraf-standby.kafkaConsumers.test_json_v2.enabled | bool | `false` |  |
+| telegraf-standby.kafkaConsumers.test_json_v2.offset | string | `"oldest"` |  |
+| telegraf-standby.kafkaConsumers.test_json_v2.replicaCount | int | `1` |  |
+| telegraf-standby.kafkaConsumers.test_json_v2.tags[0] | string | `"tag"` |  |
+| telegraf-standby.kafkaConsumers.test_json_v2.timestamp_field | string | `"timestamp"` |  |
+| telegraf-standby.kafkaConsumers.test_json_v2.timestamp_format | string | `"unix"` |  |
+| telegraf-standby.kafkaConsumers.test_json_v2.topicRegexps[0] | string | `".*JsonV2Test"` |  |
 | telegraf-standby.kafkaVersion | string | `"4.0.0"` |  |
 | telegraf-standby.nodeSelector | object | `{}` | Node labels for pod assignment |
 | telegraf-standby.podAnnotations | object | `{}` | Annotations for the Telegraf pods |

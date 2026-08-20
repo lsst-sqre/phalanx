@@ -188,6 +188,21 @@ kafkaConsumers:
     # @default -- 3
     compression_codec: 3
 
+  # Example JSON v2 Kafka consumer. This consumer is disabled by default.
+  test_json_v2:
+    enabled: false
+    replicaCount: 1
+    database: ""
+    data_format: "json_v2"
+    timestamp_format: "unix"
+    timestamp_field: "timestamp"
+    tags:
+      - "tag"
+    topicRegexps:
+      - ".*JsonV2Test"
+    offset: "oldest"
+    compression_codec: 3
+
 
 # Must match the Kafka broker version used in Sasquatch.
 # @default -- the default Kafka version in Sasquatch (see strimzi-kafka subchart values.yaml)
