@@ -101,7 +101,8 @@ telegraf:
     test:
       enabled: true
       database: "efd"
-      topicRegexps: ["summit.lsst.sal.Test"]
+      topicRegexps:
+        - "summit.lsst.sal.Test"
       debug: true
 
 kafdrop:
