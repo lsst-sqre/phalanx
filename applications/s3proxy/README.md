@@ -11,6 +11,7 @@ Simple application to gateway S3 URLs to HTTPS
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the s3proxy deployment pod |
+| config.cacheMaxAge | int | `0` | Cache-Control max-age in seconds for image MIME types (0 disables) |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/s3proxy"` | URL path prefix |

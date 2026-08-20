@@ -1,3 +1,5 @@
+replicaCount: 8
+
 config:
   profiles:
     - name: embargo
@@ -5,11 +7,16 @@ config:
     - name: hips
       url: "https://sdfdatas3.slac.stanford.edu/"
   s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu/"
+  cacheMaxAge: 86400
+
+ingress:
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-buffering: "off"
 
 resources:
   limits:
-    cpu: 500m
+    cpu: 1000m
     memory: 1Gi
   requests:
-    cpu: 200m
-    memory: 100Mi
+    cpu: 500m
+    memory: 256Mi
