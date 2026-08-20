@@ -20,7 +20,7 @@ spec:
         app.kubernetes.io/name: sasquatch-telegraf
         app.kubernetes.io/instance: sasquatch-telegraf-{{ $key }}
       annotations:
-        checksum/config: {{ include "configmap" (dict "key" $key "value" $value "influxdbUrl" $.Values.influxdb.url ) | sha256sum }}
+        checksum/config: {{ include "configmap" (dict "key" $key "value" $value "influxdbUrls" $.Values.influxdb.urls "registryUrl" $.Values.registry.url "kafkaVersion" $.Values.kafkaVersion) | sha256sum }}
         {{- if $.Values.podAnnotations }}
         {{- toYaml $.Values.podAnnotations | nindent 8 }}
         {{- end }}
