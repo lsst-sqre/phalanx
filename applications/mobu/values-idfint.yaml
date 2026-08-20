@@ -21,6 +21,31 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
+    - name: "scale-test-qserv"
+      count: 50
+      user_spec:
+        username_prefix: "bot-mobu-scale-notebook"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      # start_batch_size: 50
+      # start_batch_wait: "1m"
+      business:
+        type: "NotebookRunnerInfinite"
+        restart: true
+        options:
+          repo_url: "https://github.com/lsst-sqre/scaletest"
+          repo_ref: "u/stvoutsin/dp2-query"
+          delete_lab: false
+          notebook_idle_time: 0
+          idle_time: 0
+          execution_idle_time: 0
+          collection_rules:
+            - type: "intersect_union_of"
+              patterns:
+                - "TAP_DP2.ipynb"
     - name: "phalanx-quotidian"
       count: 1
       users:
