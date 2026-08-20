@@ -33,6 +33,10 @@ data:
 
 
     {{- $database := .value.database }}
+    {{- $timestampField := "private_efdStamp" }}
+    {{- if hasKey .value "timestamp_field" }}
+    {{- $timestampField = .value.timestamp_field }}
+    {{- end }}
     {{- range .influxdbUrls }}
     [[outputs.influxdb]]
       namedrop = ["telegraf_*"]
@@ -63,8 +67,10 @@ data:
       sasl_username = "telegraf"
       data_format = "avro"
       avro_schema_registry = {{ default "http://sasquatch-schema-registry.sasquatch:8081" .registryUrl | quote }}
-      avro_timestamp = {{ default "private_efdStamp" .value.timestamp_field | quote }}
+      {{- if $timestampField }}
+      avro_timestamp = {{ $timestampField | quote }}
       avro_timestamp_format = {{ default "unix" .value.timestamp_format | quote }}
+      {{- end }}
       avro_union_mode = {{ default "nullable" .value.union_mode | quote }}
       avro_field_separator = {{ default "" .value.union_field_separator | quote }}
       {{- if .value.fields }}
@@ -93,8 +99,10 @@ data:
       sasl_username = "telegraf"
       data_format = "avro"
       avro_schema_registry = {{ default "http://sasquatch-schema-registry.sasquatch:8081" .registryUrl | quote }}
-      avro_timestamp = {{ default "private_efdStamp" .value.timestamp_field | quote }}
+      {{- if $timestampField }}
+      avro_timestamp = {{ $timestampField | quote }}
       avro_timestamp_format = {{ default "unix" .value.timestamp_format | quote }}
+      {{- end }}
       avro_union_mode = {{ default "nullable" .value.union_mode | quote }}
       avro_field_separator = {{ default "" .value.union_field_separator | quote }}
       {{- if .value.fields }}
