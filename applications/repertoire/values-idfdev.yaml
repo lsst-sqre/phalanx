@@ -25,6 +25,8 @@ config:
         enabled: true
       ssotap:
         enabled: true
+      obsforgetap:
+        enabled: true
   useSubdomains:
     - "nublado"
 
