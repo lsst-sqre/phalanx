@@ -1,3 +1,12 @@
+{{/* Convert a list to a TOML array of quoted string values. */}}
+{{- define "telegraf.toTomlArray" -}}
+{{- $items := list -}}
+{{- range . -}}
+{{- $items = (quote .) | append $items -}}
+{{- end -}}
+[ {{ join ", " $items }} ]
+{{- end }}
+
 {{- define "configmap" -}}
 {{- if .value.enabled }}
 ---
@@ -59,10 +68,10 @@ data:
       avro_union_mode = {{ default "nullable" .value.union_mode | quote }}
       avro_field_separator = {{ default "" .value.union_field_separator | quote }}
       {{- if .value.fields }}
-      avro_fields = {{ .value.fields }}
+      avro_fields = {{ include "telegraf.toTomlArray" .value.fields }}
       {{- end }}
       {{- if .value.tags }}
-      avro_tags = {{ .value.tags }}
+      avro_tags = {{ include "telegraf.toTomlArray" .value.tags }}
       {{- end }}
       topic_regexps = {{ .value.topicRegexps }}
       offset = {{ default "oldest" .value.offset | quote }}
@@ -89,10 +98,10 @@ data:
       avro_union_mode = {{ default "nullable" .value.union_mode | quote }}
       avro_field_separator = {{ default "" .value.union_field_separator | quote }}
       {{- if .value.fields }}
-      avro_fields = {{ .value.fields }}
+      avro_fields = {{ include "telegraf.toTomlArray" .value.fields }}
       {{- end }}
       {{- if .value.tags }}
-      avro_tags = {{ .value.tags }}
+      avro_tags = {{ include "telegraf.toTomlArray" .value.tags }}
       {{- end }}
       topic_regexps = {{ .value.topicRegexps }}
       offset = "oldest"

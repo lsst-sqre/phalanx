@@ -123,8 +123,7 @@ telegraf:
       topicRegexps: |
         [ "lsst.verify" ]
       timestamp_field: "timestamp"
-      tags: |
-        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch", "pipeline"]
+      tags: ["dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch", "pipeline"]
     prompt:
       enabled: true
       debug: true
@@ -132,8 +131,7 @@ telegraf:
       topicRegexps: |
         [ "lsst.prompt" ]
       timestamp_field: "timestamp"
-      tags: |
-        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch"]
+      tags: ["dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch"]
     dm:
       enabled: true
       debug: true
@@ -141,8 +139,7 @@ telegraf:
       topicRegexps: |
         [ "lsst.dm" ]
       timestamp_field: "timestamp"
-      tags: |
-        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch"]
+      tags: ["dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch"]
   resources:
     limits:
       cpu: "1"

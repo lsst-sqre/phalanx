@@ -54,8 +54,7 @@ telegraf:
       enabled: true
       replicaCount: 1
       database: "lsst.example"
-      tags: |
-        [ "band", "instrument" ]
+      tags: ["band", "instrument"]
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
       topicRegexps: |
