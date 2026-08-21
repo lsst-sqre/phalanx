@@ -25,6 +25,7 @@ data:
   {{- with .Values.config.linkcheck.userAgent }}
   OOK_LINKCHECK_USER_AGENT: {{ . | quote }}
   {{- end }}
+  OOK_OIDC_AUDIENCE: {{ printf "%s%s" (required "global.baseUrl must be set" .Values.global.baseUrl) .Values.ingress.path | quote }}
   OOK_INTERSPHINX_TTL: {{ .Values.config.intersphinx.ttl | quote }}
   OOK_INTERSPHINX_NEGATIVE_TTL: {{ .Values.config.intersphinx.negativeTtl | quote }}
   OOK_INTERSPHINX_ACTIVE_WINDOW: {{ .Values.config.intersphinx.activeWindow | quote }}

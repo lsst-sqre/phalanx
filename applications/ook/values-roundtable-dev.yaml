@@ -1,3 +1,9 @@
+# TEMPORARY branch-image override for testing the link-check contributions
+# API (lsst-sqre/ook#366, DM-55471). Revert both keys before merging.
+image:
+  tag: "tickets-DM-55471"
+  pullPolicy: "Always"
+
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://ook@localhost/ook"
