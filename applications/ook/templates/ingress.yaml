@@ -115,9 +115,12 @@ template:
 
 ---
 # The link-check submit-and-poll API requires the exec:linkcheck scope
-# (delegated to documentation CI via OOK_TOKEN). This covers POST
-# /ook/linkcheck/checks and GET /ook/linkcheck/checks/{id}; the submitting
-# client polls its own check with the same token. The other linkcheck read
+# (delegated to documentation CI via OOK_TOKEN). The Prefix path covers POST
+# /ook/linkcheck/checks, GET /ook/linkcheck/checks/{id}, and POST
+# /ook/linkcheck/checks/{id}/contributions; the submitting client polls its
+# own check and contributes results with the same token. The GitHub Actions
+# OIDC id-token a contribution carries attests provenance only — write
+# authorization is this scope. The other linkcheck read
 # endpoints (/ook/linkcheck/urls and /ook/linkcheck/projects/...) remain
 # anonymous via the catch-all ook ingress.
 apiVersion: gafaelfawr.lsst.io/v1alpha1
