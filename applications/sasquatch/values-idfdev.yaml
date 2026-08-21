@@ -104,6 +104,18 @@ telegraf:
       timestamp_field: "timestamp"
       topicRegexps:
         - "lsst.example"
+    examplejson:
+      enabled: true
+      replicaCount: 1
+      data_format: "json_v2"
+      database: "lsst.examplejson"
+      tags:
+        - "band"
+        - "instrument"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps:
+        - "lsst.examplejson"
     backpack:
       enabled: true
       replicaCount: 1
