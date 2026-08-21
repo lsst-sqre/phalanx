@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "nightlydigest-backend.name" . }}-alpha-service
+  labels:
+    {{- include "nightlydigest-backend-alpha.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "nightlydigest-backend-alpha.selectorLabels" . | nindent 4 }}

@@ -21,6 +21,14 @@ Nightlydigest logging and reporting service
 | global.controlSystem.topicName | string | Set by ArgoCD | Topic name tag for the control system deployment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| redis.config.maxMemory | string | `"2500mb"` |  |
+| redis.config.maxMemoryPolicy | string | `"allkeys-lru"` |  |
+| redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
+| redis.persistence.enabled | bool | `false` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset all tokens on every restart. Only use this for a test deployment. |
+| redis.persistence.size | string | `"1Gi"` | Amount of persistent storage to request |
+| redis.persistence.storageClass | string | `""` | Class of storage to request |
+| redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
+| redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
 | nightlydigest-backend.affinity | object | `{}` | Affinity rules applied to the pod. |
 | nightlydigest-backend.annotations | object | `{}` | This allows for the specification of pod annotations. |
 | nightlydigest-backend.env | list | `[]` | List of Kubernetes environment variable specifiers. |

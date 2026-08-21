@@ -49,3 +49,23 @@ Selector labels
 app.kubernetes.io/name: {{ include "nightlydigest-backend.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Common labels alpha
+*/}}
+{{- define "nightlydigest-backend-alpha.labels" -}}
+helm.sh/chart: {{ include "nightlydigest-backend.chart" . }}
+{{ include "nightlydigest-backend-alpha.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "nightlydigest-backend-alpha.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "nightlydigest-backend.name" . }}-alpha
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
