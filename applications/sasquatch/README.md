@@ -896,6 +896,56 @@ Rubin Observatory's telemetry service
 | telegraf.registry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema Registry URL |
 | telegraf.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | telegraf.tolerations | list | `[]` | Tolerations for pod assignment |
+| telegraf-local.affinity | object | `{}` | Affinity for pod assignment |
+| telegraf-local.args | list | `[]` | Arguments passed to the Telegraf agent on startup |
+| telegraf-local.enabled | bool | `false` | Wether Telegraf is enabled |
+| telegraf-local.env | list | See `values.yaml` | Telegraf agent environment variables |
+| telegraf-local.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
+| telegraf-local.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| telegraf-local.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
+| telegraf-local.image.tag | string | The appVersion of the chart | Telegraf image tag |
+| telegraf-local.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
+| telegraf-local.influxdb.urls | list | `["http://sasquatch-influxdb.sasquatch:8086"]` | URL of the InfluxDB v1 instance to write to |
+| telegraf-local.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
+| telegraf-local.kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
+| telegraf-local.kafkaConsumers.test.consumer_fetch_default | string | "1MB" | Maximum amount of data the server should return for a fetch request. |
+| telegraf-local.kafkaConsumers.test.data_format | string | `"avro"` | Input data format. Supported values are `avro` and `json_v2`. |
+| telegraf-local.kafkaConsumers.test.database | string | `""` | Name of the InfluxDB v1 database to write to (required) |
+| telegraf-local.kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
+| telegraf-local.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
+| telegraf-local.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
+| telegraf-local.kafkaConsumers.test.flush_interval | string | "10s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
+| telegraf-local.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
+| telegraf-local.kafkaConsumers.test.max_processing_time | string | "1s" | Maximum processing time for a single message. |
+| telegraf-local.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
+| telegraf-local.kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
+| telegraf-local.kafkaConsumers.test.metric_buffer_limit | int | 100000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
+| telegraf-local.kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
+| telegraf-local.kafkaConsumers.test.precision | string | "1us" | Data precision. |
+| telegraf-local.kafkaConsumers.test.replicaCount | int | `1` | Number of Telegraf Kafka consumer replicas. Increase this value to increase the consumer throughput. |
+| telegraf-local.kafkaConsumers.test.tags | list | `[]` | List of input fields to be recorded as InfluxDB tags.  The input fields specified as tags will be converted to strings before ingestion into InfluxDB. |
+| telegraf-local.kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Input field to be used as the InfluxDB timestamp (optional).  If unspecified or set to the empty string, Telegraf will use the time it received the measurement. |
+| telegraf-local.kafkaConsumers.test.timestamp_format | string | `"unix"` | Timestamp format. Possible values are `unix` (the default if unset) a timestamp in seconds since the Unix epoch, `unix_ms` (milliseconds), `unix_us` (microsseconds), or `unix_ns` (nanoseconds). |
+| telegraf-local.kafkaConsumers.test.topicRegexps | list | `[".*Test"]` | List of regular expressions to specify the Kafka topics consumed by this agent. |
+| telegraf-local.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
+| telegraf-local.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
+| telegraf-local.kafkaConsumers.test_json_v2.compression_codec | int | `3` |  |
+| telegraf-local.kafkaConsumers.test_json_v2.data_format | string | `"json_v2"` |  |
+| telegraf-local.kafkaConsumers.test_json_v2.database | string | `""` |  |
+| telegraf-local.kafkaConsumers.test_json_v2.enabled | bool | `false` |  |
+| telegraf-local.kafkaConsumers.test_json_v2.offset | string | `"oldest"` |  |
+| telegraf-local.kafkaConsumers.test_json_v2.replicaCount | int | `1` |  |
+| telegraf-local.kafkaConsumers.test_json_v2.tags[0] | string | `"tag"` |  |
+| telegraf-local.kafkaConsumers.test_json_v2.timestamp_field | string | `"timestamp"` |  |
+| telegraf-local.kafkaConsumers.test_json_v2.timestamp_format | string | `"unix"` |  |
+| telegraf-local.kafkaConsumers.test_json_v2.topicRegexps[0] | string | `".*JsonV2Test"` |  |
+| telegraf-local.kafkaVersion | string | `"4.0.0"` |  |
+| telegraf-local.nodeSelector | object | `{}` | Node labels for pod assignment |
+| telegraf-local.podAnnotations | object | `{}` | Annotations for the Telegraf pods |
+| telegraf-local.podLabels | object | `{}` | Labels for the Telegraf pods |
+| telegraf-local.registry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema Registry URL |
+| telegraf-local.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
+| telegraf-local.tolerations | list | `[]` | Tolerations for pod assignment |
 | telegraf-standby.affinity | object | `{}` | Affinity for pod assignment |
 | telegraf-standby.args | list | `[]` | Arguments passed to the Telegraf agent on startup |
 | telegraf-standby.enabled | bool | `false` | Wether Telegraf is enabled |

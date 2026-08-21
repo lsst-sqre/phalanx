@@ -110,6 +110,22 @@ customInfluxDBIngress:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
 
+telegraf-local:
+  enabled: true
+  kafkaConsumers:
+    survey:
+      enabled: true
+      data_format: "json_v2"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags:
+        - "telescope"
+        - "simulation_type"
+        - "instrument"
+      topicRegexps:
+        - "lsst.survey"
+      database: "lsst.survey"
+
 telegraf:
   enabled: true
   influxdb:
@@ -198,6 +214,8 @@ rest-proxy:
     enabled: true
     anonymous: true
   kafka:
+    topics:
+      - lsst.survey
     topicPrefixes:
       - test
       - lsst.dm
@@ -208,6 +226,7 @@ rest-proxy:
       - lsst.verify
       - lsst.lf
       - lsst.prompt
+      - lsst.survey
 chronograf:
   ingress:
     enabled: true

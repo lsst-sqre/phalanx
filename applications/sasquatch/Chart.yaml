@@ -62,6 +62,10 @@ dependencies:
     alias: telegraf-standby
     condition: telegraf-standby.enabled
     version: 1.0.0
+  - name: telegraf
+    alias: telegraf-local
+    condition: telegraf-local.enabled
+    version: 1.0.0
   - name: rest-proxy
     condition: rest-proxy.enabled
     version: 1.0.0
