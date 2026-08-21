@@ -5,9 +5,9 @@ config:
     enabled: true
   slack:
     enabled: true
-  qservDatabaseUrl: "mysql+asyncmy://qsmaster@134.79.23.229:4040/"
+  qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-prod.slac.stanford.edu:4040/"
   qservRestSendApiVersion: false
-  qservRestUrl: "https://134.79.23.229:4048/"
+  qservRestUrl: "https://qserv-prod.slac.stanford.edu:4048/"
   qservRestUsername: "qsmaster"
 slowWorker:
   autoscaling:

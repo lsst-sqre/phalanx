@@ -7,8 +7,8 @@ config:
     enabled: true
   slack:
     enabled: true
-  qservDatabaseUrl: "mysql+asyncmy://qsmaster@134.79.23.230:4040/"
+  qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-int.slac.stanford.edu:4040/"
   qservRestMaxConnections: 55
   qservRestSendApiVersion: false
-  qservRestUrl: "https://134.79.23.230:4048/"
+  qservRestUrl: "https://qserv-int.slac.stanford.edu:4048/"
   qservRestUsername: "qsmaster"
