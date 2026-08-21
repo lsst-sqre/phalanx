@@ -115,6 +115,21 @@ controller:
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
       standardInithome: false
+      # Make the per-user ZFS /lscratch PVC writable. The provisioner creates
+      # it as root:root 0755, and the lab runs as the user, so chown first.
+      initContainers:
+        - name: "lscratch-perms"
+          image:
+            repository: "docker.io/library/busybox"
+            tag: "1.37.0"
+          privileged: true
+          command:
+            - "/bin/sh"
+            - "-c"
+            - "chown \"${NUBLADO_UID}:${NUBLADO_GID}\" /lscratch && chmod 0700 /lscratch"
+          volumeMounts:
+            - containerPath: "/lscratch"
+              volumeName: "zfs-lscratch-storage"
       volumes:
         - name: "sdf-home"
           source:
@@ -152,6 +167,15 @@ controller:
             resources:
               requests:
                 storage: "1Gi"
+        - name: "zfs-lscratch-storage"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "zfs-lscratch-storage"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "10Gi"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "sdf-home"
@@ -164,6 +188,8 @@ controller:
           volumeName: "sdf-data-rubin"
         - containerPath: "/scratch"
           volumeName: "sdf-scratch"
+        - containerPath: "/lscratch"
+          volumeName: "zfs-lscratch-storage"
 
 proxy:
   ingress:
