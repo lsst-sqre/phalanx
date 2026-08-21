@@ -46,12 +46,14 @@
       {{- end }}
       {{- else }}
     [[inputs.kafka_consumer.json_v2]]
+      measurement_name_path = "measurement"
       [[inputs.kafka_consumer.json_v2.object]]
 
         path = "@this"
         timestamp_key = {{ .timestampField | quote }}
         timestamp_format = {{ default "unix" .value.timestamp_format | quote }}
         tags = {{ include "telegraf.toTomlArray" .value.tags }}
+        excluded_keys = ["measurement"]
       {{- end }}
 {{ end -}}
 
