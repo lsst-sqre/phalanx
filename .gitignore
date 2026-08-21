@@ -137,3 +137,8 @@ dmypy.json
 
 # JOE editor backup files
 *~
+
+
+# AI stuff
+.github/
+working-docs/
