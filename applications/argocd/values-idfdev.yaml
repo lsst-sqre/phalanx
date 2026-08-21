@@ -48,10 +48,11 @@ argo-cd:
         g, rra@lsst.cloud, role:admin
         g, svoutsin@lsst.cloud, role:admin
 
+        g, jeremym@lsst.cloud, role:admin
+
         g, dirving@lsst.cloud, role:developer
         g, fritzm@lsst.cloud, role:developer
         g, gpdf@lsst.cloud, role:developer
-        g, jeremym@lsst.cloud, role:developer
         g, loi@lsst.cloud, role:developer
         g, roby@lsst.cloud, role:developer
         g, salnikov@lsst.cloud, role:developer
