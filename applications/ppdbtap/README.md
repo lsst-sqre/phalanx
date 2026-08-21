@@ -16,6 +16,10 @@ TAP service for the ppdb BigQuery backend
 | cadc-tap.config.voParquet | bool | `true` | Advertise VOParquet as a supported output format |
 | cadc-tap.ingress.path | string | `"ppdbtap"` | Ingress path that should be routed to this service |
 | cadc-tap.serviceAccount.name | string | `"ppdbtap"` | Name of the Kubernetes `ServiceAccount`, used for CloudSQL access |
+| cadc-tap.tapSchema.database | string | `"ppdbtap"` | Database name |
+| cadc-tap.tapSchema.type | string | `"cloudsql"` | Database backend type: "containerized", "cloudsql", or "external" |
+| cadc-tap.tapSchema.useVaultPassword | bool | `true` | Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external) |
+| cadc-tap.tapSchema.username | string | `"ppdbtap"` | Database username |
 | cadc-tap.uws.database | string | `"ppdbtap"` | Database name |
 | cadc-tap.uws.type | string | `"cloudsql"` | Database backend type: "containerized", "cloudsql", or "external" |
 | cadc-tap.uws.useVaultPassword | bool | `true` | Whether the UWS database requires a password in Vault (true for cloudsql/external) |

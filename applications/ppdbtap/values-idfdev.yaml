@@ -1,10 +1,4 @@
 cadc-tap:
-  tapSchema:
-    type: "cloudsql"
-    database: "ppdbtap"
-    username: "ppdbtap"
-    useVaultPassword: true
-
   config:
     backend: "bigquery"
     kafka:

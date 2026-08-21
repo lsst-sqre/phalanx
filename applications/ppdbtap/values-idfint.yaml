@@ -1,10 +1,4 @@
 cadc-tap:
-  tapSchema:
-    image:
-      repository: "lsstsqre/tap-schema-idfint-ppdbtap"
-      tag: "main"
-      pullPolicy: "Always"
-
   config:
     backend: "bigquery"
     kafka:
