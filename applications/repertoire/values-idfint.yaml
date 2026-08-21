@@ -13,9 +13,11 @@ config:
   slackAlerts: true
   tap:
     servers:
-      tap:
+      ppdbtap:
         enabled: true
       ssotap:
+        enabled: true
+      tap:
         enabled: true
   useSubdomains:
     - "nublado"
