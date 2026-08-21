@@ -1,29 +1,13 @@
 replicaCount: 4
 
 config:
+  datasets:
+    - "dp02"
+    - "dp1"
+    - "dp2"
   metrics:
     enabled: true
 
-  # Data (Butler) Collections
-  butlerDataCollections:
-    - config: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp02.yaml"
-      label: "LSST.DP02"
-      name: "dp02"
-      butler_type: "REMOTE"
-      repository: "https://data.lsst.cloud/api/butler/repo/dp02/butler.yaml"
-      datalink_url: "https://data.lsst.cloud/api/datalink/links?ID=ivo%3A%2F%2Forg.rubinobs%2Flsst-dp02%3Frepo%3Ddp02%26id%3D{id}"
-    - config: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp1.yaml"
-      label: "LSST.DP1"
-      name: "dp1"
-      butler_type: "REMOTE"
-      repository: "https://data.lsst.cloud/api/butler/repo/dp1/butler.yaml"
-      datalink_url: "https://data.lsst.cloud/api/datalink/links?ID=ivo%3A%2F%2Forg.rubinobs%2Flsst-dp1%3Frepo%3Ddp1%26id%3D{id}"
-    - config: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/edp2.yaml"
-      label: "LSST.DP2"
-      name: "dp2"
-      butler_type: "REMOTE"
-      repository: "https://data.lsst.cloud/api/butler/repo/dp2/butler.yaml"
-      datalink_url: "https://data.lsst.cloud/api/datalink/links?ID=ivo%3A%2F%2Forg.rubinobs%2Flsst-dp2%3Frepo%3Ddp2%26id%3D{id}"
-
-  enableSentry: true
-  sentryTracesSampleRate: 0.1
+  sentry:
+    enabled: true
+    tracesSampleRate: 0.1
