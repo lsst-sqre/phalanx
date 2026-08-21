@@ -113,46 +113,74 @@ telegraf:
     auxtel:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
+      topicRegexps:
+        - "lsst.sal.ATAOS"
+        - "lsst.sal.ATBuilding"
+        - "lsst.sal.ATDome"
+        - "lsst.sal.ATDomeTrajectory"
+        - "lsst.sal.ATHexapod"
+        - "lsst.sal.ATPneumatics"
+        - "lsst.sal.ATPtg"
+        - "lsst.sal.ATMCS"
       debug: true
     maintel:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg", "lsst.sal.WFOODS" ]
+      topicRegexps:
+        - "lsst.sal.MTAOS"
+        - "lsst.sal.MTDome"
+        - "lsst.sal.MTDomeTrajectory"
+        - "lsst.sal.MTPtg"
+        - "lsst.sal.WFOODS"
       debug: true
     mtmount:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTMount" ]
+      topicRegexps:
+        - "lsst.sal.MTMount"
       debug: true
     envsys:
       enabled: true
       database: "efd"
       metric_batch_size: 100
       flush_interval: 20s
-      topicRegexps: |
-        [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+      topicRegexps:
+        - "lsst.sal.DIMM"
+        - "lsst.sal.DREAM"
+        - "lsst.sal.DSM"
+        - "lsst.sal.EAS"
+        - "lsst.sal.EPM"
+        - "lsst.sal.ESS"
+        - "lsst.sal.HVAC"
+        - "lsst.sal.WeatherForecast"
       debug: true
     latiss:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
+      topicRegexps:
+        - "lsst.sal.ATCamera"
+        - "lsst.sal.ATHeaderService"
+        - "lsst.sal.ATOODS"
+        - "lsst.sal.ATSpectrograph"
       debug: true
     m1m3:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTM1M3.ackcmd", "lsst.sal.MTM1M3.logevent*", "lsst.sal.MTM1M3.command*" ]
+      topicRegexps:
+        - "lsst.sal.MTM1M3.ackcmd"
+        - "lsst.sal.MTM1M3.logevent*"
+        - "lsst.sal.MTM1M3.command*"
       debug: true
     m1m3-tel1:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTM1M3.accelerometerData", "lsst.sal.MTM1M3.appliedCylinderForces", "lsst.sal.MTM1M3.appliedForces", "lsst.sal.MTM1M3.gyroData", "lsst.sal.MTM1M3.hardpointActuatorData", "lsst.sal.MTM1M3.hardpointMonitorData" ]
+      topicRegexps:
+        - "lsst.sal.MTM1M3.accelerometerData"
+        - "lsst.sal.MTM1M3.appliedCylinderForces"
+        - "lsst.sal.MTM1M3.appliedForces"
+        - "lsst.sal.MTM1M3.gyroData"
+        - "lsst.sal.MTM1M3.hardpointActuatorData"
+        - "lsst.sal.MTM1M3.hardpointMonitorData"
       debug: true
       resources:
         limits:
@@ -165,8 +193,12 @@ telegraf:
       enabled: true
       database: "efd"
       metric_batch_size: 750
-      topicRegexps: |
-        [ "lsst.sal.MTM1M3.forceActuatorData", "lsst.sal.MTM1M3.outerLoopData", "lsst.sal.MTM1M3.imsData", "lsst.sal.MTM1M3.inclinometerData", "lsst.sal.MTM1M3.powerSupplyData" ]
+      topicRegexps:
+        - "lsst.sal.MTM1M3.forceActuatorData"
+        - "lsst.sal.MTM1M3.outerLoopData"
+        - "lsst.sal.MTM1M3.imsData"
+        - "lsst.sal.MTM1M3.inclinometerData"
+        - "lsst.sal.MTM1M3.powerSupplyData"
       debug: true
       resources:
         limits:
@@ -178,8 +210,15 @@ telegraf:
     m1m3-tel3:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTM1M3.appliedAccelerationForces", "lsst.sal.MTM1M3.appliedAzimuthForces", "lsst.sal.MTM1M3.appliedBalanceForces", "lsst.sal.MTM1M3.appliedElevationForces", "lsst.sal.MTM1M3.appliedThermalForces", "lsst.sal.MTM1M3.appliedVelocityForces", "lsst.sal.MTM1M3.forceActuatorPressure", "lsst.sal.MTM1M3.pidData" ]
+      topicRegexps:
+        - "lsst.sal.MTM1M3.appliedAccelerationForces"
+        - "lsst.sal.MTM1M3.appliedAzimuthForces"
+        - "lsst.sal.MTM1M3.appliedBalanceForces"
+        - "lsst.sal.MTM1M3.appliedElevationForces"
+        - "lsst.sal.MTM1M3.appliedThermalForces"
+        - "lsst.sal.MTM1M3.appliedVelocityForces"
+        - "lsst.sal.MTM1M3.forceActuatorPressure"
+        - "lsst.sal.MTM1M3.pidData"
       debug: true
       resources:
         limits:
@@ -193,77 +232,91 @@ telegraf:
       metric_batch_size: 1500
       max_undelivered_messages: 4000
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTM1M3TS" ]
+      topicRegexps:
+        - "lsst.sal.MTM1M3TS"
       debug: true
     m2:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
+      topicRegexps:
+        - "lsst.sal.MTHexapod"
+        - "lsst.sal.MTM2"
+        - "lsst.sal.MTRotator"
       debug: true
     obssys:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
+      topicRegexps:
+        - "lsst.sal.Scheduler"
+        - "lsst.sal.Script"
+        - "lsst.sal.ScriptQueue"
+        - "lsst.sal.Watcher"
       debug: true
     ocps:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.OCPS" ]
+      topicRegexps:
+        - "lsst.sal.OCPS"
       debug: true
     calsys:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.MTReflector", "lsst.sal.TunableLaser" ]
+      topicRegexps:
+        - "lsst.sal.CBP"
+        - "lsst.sal.Electrometer"
+        - "lsst.sal.FiberSpectrograph"
+        - "lsst.sal.LEDProjector"
+        - "lsst.sal.LinearStage"
+        - "lsst.sal.MTReflector"
+        - "lsst.sal.TunableLaser"
       debug: true
     comcam:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
+      topicRegexps:
+        - "lsst.sal.CCCamera"
+        - "lsst.sal.CCHeaderService"
+        - "lsst.sal.CCOODS"
       debug: true
     test:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.Test" ]
+      topicRegexps:
+        - "lsst.sal.Test"
       debug: true
     mtaircompressor:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.MTAirCompressor" ]
+      topicRegexps:
+        - "lsst.sal.MTAirCompressor"
       debug: true
     lasertracker:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.LaserTracker" ]
+      topicRegexps:
+        - "lsst.sal.LaserTracker"
       debug: true
     genericcamera:
       enabled: true
       database: "efd"
-      topicRegexps: |
-        [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
+      topicRegexps:
+        - "lsst.sal.GCHeaderService"
+        - "lsst.sal.GenericCamera"
       debug: true
     mtvms:
       enabled: true
       database: "efd"
       timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "lsst.sal.MTVMS" ]
+      topicRegexps:
+        - "lsst.sal.MTVMS"
       debug: true
     obsenv:
       enabled: true
       database: "lsst.obsenv"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.obsenv" ]
+      topicRegexps:
+        - "lsst.obsenv"
       debug: true
   resources:
     limits:

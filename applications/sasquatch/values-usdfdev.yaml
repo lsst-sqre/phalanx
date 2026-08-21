@@ -120,29 +120,51 @@ telegraf:
       enabled: true
       debug: true
       database: "lsst.verify"
-      topicRegexps: |
-        [ "lsst.verify" ]
+      topicRegexps:
+        - "lsst.verify"
       timestamp_field: "timestamp"
-      tags: |
-        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch", "pipeline"]
+      tags:
+        - "dataset_tag"
+        - "band"
+        - "instrument"
+        - "skymap"
+        - "detector"
+        - "physical_filter"
+        - "tract"
+        - "patch"
+        - "pipeline"
     prompt:
       enabled: true
       debug: true
       database: "lsst.prompt"
-      topicRegexps: |
-        [ "lsst.prompt" ]
+      topicRegexps:
+        - "lsst.prompt"
       timestamp_field: "timestamp"
-      tags: |
-        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch"]
+      tags:
+        - "dataset_tag"
+        - "band"
+        - "instrument"
+        - "skymap"
+        - "detector"
+        - "physical_filter"
+        - "tract"
+        - "patch"
     dm:
       enabled: true
       debug: true
       database: "lsst.dm"
-      topicRegexps: |
-        [ "lsst.dm" ]
+      topicRegexps:
+        - "lsst.dm"
       timestamp_field: "timestamp"
-      tags: |
-        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "patch"]
+      tags:
+        - "dataset_tag"
+        - "band"
+        - "instrument"
+        - "skymap"
+        - "detector"
+        - "physical_filter"
+        - "tract"
+        - "patch"
   resources:
     limits:
       cpu: "1"
