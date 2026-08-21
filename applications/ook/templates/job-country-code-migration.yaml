@@ -5,7 +5,9 @@ metadata:
   name: "ook-country-code-migrate"
   annotations:
     helm.sh/hook: "pre-install,pre-upgrade"
-    helm.sh/hook-delete-policy: "hook-succeeded"
+    # before-hook-creation clears out a Job left behind by a previous failed
+    # sync, which would otherwise block the retry with a name collision.
+    helm.sh/hook-delete-policy: "hook-succeeded,before-hook-creation"
     helm.sh/hook-weight: "10" # Ensure this runs after schema update
   labels:
     {{- include "ook.labels" . | nindent 4 }}

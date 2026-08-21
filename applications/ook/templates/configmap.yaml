@@ -2,6 +2,16 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: "ook"
+  {{- if or .Values.config.updateSchema .Values.config.migrateCountryCodes }}
+  # The schema update and country code migration Jobs run as Helm pre-install
+  # and pre-upgrade hooks (Argo CD PreSync) and take their configuration from
+  # this ConfigMap, so it has to be created in the same phase at a lower hook
+  # weight. Otherwise those Jobs see the previous sync's configuration.
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation"
+    helm.sh/hook-weight: "0"
+  {{- end }}
   labels:
     {{- include "ook.labels" . | nindent 4 }}
 data:
@@ -25,6 +35,7 @@ data:
   {{- with .Values.config.linkcheck.userAgent }}
   OOK_LINKCHECK_USER_AGENT: {{ . | quote }}
   {{- end }}
+  OOK_OIDC_AUDIENCE: {{ printf "%s%s" (required "global.baseUrl must be set" .Values.global.baseUrl) .Values.ingress.path | quote }}
   OOK_INTERSPHINX_TTL: {{ .Values.config.intersphinx.ttl | quote }}
   OOK_INTERSPHINX_NEGATIVE_TTL: {{ .Values.config.intersphinx.negativeTtl | quote }}
   OOK_INTERSPHINX_ACTIVE_WINDOW: {{ .Values.config.intersphinx.activeWindow | quote }}
