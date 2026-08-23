@@ -57,8 +57,6 @@ spec:
             - name: "MPPDB_TOKEN_PAGE_URL"
               value: {{ . | quote }}
             {{- end }}
-            - name: "MPPDB_REGISTRY_SOURCE"
-              value: {{ .Values.config.registrySource | quote }}
             - name: "MPPDB_AUTH_PROVIDER"
               value: {{ .Values.config.authProvider | quote }}
             - name: "MPPDB_BASE_URL"
