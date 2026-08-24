@@ -29,6 +29,7 @@ applications:
   muster: true
   noteburst: true
   nublado: true
+  obsforgetap: true
   portal: true
   ppdbtap: true
   qserv-kafka: true
