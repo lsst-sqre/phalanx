@@ -1,0 +1,27 @@
+config:
+  # Spelled out rather than derived, so a bare `helm template` of this
+  # environment produces exactly the URL the service is reached at.
+  baseUrl: "https://usdf-rsp-dev.slac.stanford.edu/river"
+
+  # Phase 3: Gafaelfawr authenticates at the ingress; the service JIT-provisions its
+  # internal account on first sight of the username header.
+  authProvider: "gafaelfawr"
+  tokenPageUrl: "https://usdf-rsp-dev.slac.stanford.edu/settings/tokens/new"
+
+  # The console's PyVO/TOPCAT examples and the mppdb-public-url meta tag use
+  # branding.public_url; the code default is the PRIMARY deployment's URL
+  # (mppdb.juriclab.org), which must not leak into this deployment's examples.
+  branding:
+    public_url: "https://usdf-rsp-dev.slac.stanford.edu/river"
+
+  # Behind the TLS-terminating RSP ingress: pin every generated URL to the
+  # external https baseUrl so async job/result URLs are not minted as http://
+  # (which the https console blocks under connect-src 'self').
+  advertiseRequestBase: false
+
+image:
+  pullSecrets: ["river-pull"]
+  # sha- tag of the u/mjuric/mppdb merge that contains both the OCI build and
+  # the gafaelfawr provider (mppdb b439931); CI's in-image test gate passed.
+  tag: "sha-7570146"
+  pullPolicy: "Always"

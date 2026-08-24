@@ -32,4 +32,5 @@ Argo CD project: ``rubin``
    schedview-snapshot/index
    schedview-static-pages/index
    mppdb/index
+   river/index
    weatherbroadcaster/index
