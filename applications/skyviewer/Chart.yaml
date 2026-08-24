@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.1.0
+appVersion: "v2026.08.24"
 description: Sky imagery browser for private HiPS surveys
 name: skyviewer
 sources:

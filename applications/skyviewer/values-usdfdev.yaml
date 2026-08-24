@@ -12,10 +12,6 @@ config:
   # traffic otherwise re-reads networked disk on every request
   tileCacheBytes: "6442450944"
 
-image:
-  pullPolicy: "Always"
-  tag: "tickets-DM-55722"
-
 resources:
   requests:
     cpu: 1
