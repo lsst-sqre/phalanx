@@ -8,10 +8,22 @@ config:
   authProvider: "gafaelfawr"
   tokenPageUrl: "https://usdf-rsp-dev.slac.stanford.edu/settings/tokens/new"
 
-  # The console's PyVO/TOPCAT examples and the mppdb-public-url meta tag use
-  # branding.public_url; the code default is the PRIMARY deployment's URL
-  # (mppdb.juriclab.org), which must not leak into this deployment's examples.
+  # Display branding. Every key here needs setting, not just public_url: the
+  # code defaults describe the PRIMARY deployment, so an under-configured chart
+  # renders this service as "MPPDB @ juriclab" with that host's URL in the
+  # console's PyVO/TOPCAT examples. `wordmark` is pipe-delimited into the three
+  # separately-styled logo spans. None of this touches the schema identifier
+  # users type in ADQL -- `FROM dp2.DiaSource` is unaffected, and kernel_label
+  # exists precisely so the toolbar chip can be rebranded without renaming a
+  # schema.
   branding:
+    name: "River"
+    wordmark: "R|iv|er"
+    suffix: "@ USDF"
+    tagline: "A fast, evergreen SQL and TAP database of Rubin catalogs"
+    kernel_label: "River / TAP"
+    page_title: "River · notebooks"
+    favicon_glyph: "R"
     public_url: "https://usdf-rsp-dev.slac.stanford.edu/river"
 
   # Behind the TLS-terminating RSP ingress: pin every generated URL to the
