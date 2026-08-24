@@ -35,6 +35,12 @@ config:
     "admin:jupyterlab":
       - "k8s-yagan-admins"
       - "sqre"
+    "admin:oidc":
+      - "k8s-yagan-admins"
+      - "sqre"
+    "admin:token":
+      - "k8s-yagan-admins"
+      - "sqre"
     "admin:userinfo":
       - "k8s-yagan-admins"
       - "sqre"
@@ -59,12 +65,3 @@ config:
     "write:sasquatch":
       - "k8s-yagan-admins"
       - "sqre"
-
-  initialAdmins:
-    - "afausti"
-    - "athornton"
-    - "fajpunk"
-    - "frossie"
-    - "jonathansick"
-    - "rra"
-    - "stvoutsin"

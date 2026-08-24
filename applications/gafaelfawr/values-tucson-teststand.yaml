@@ -19,6 +19,14 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "square"
+    "admin:oidc":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "admin:token":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "admin:userinfo":
       - github:
           organization: "lsst-sqre"
@@ -122,12 +130,3 @@ config:
       - github:
           organization: "rubin-summit"
           team: "rsp-access"
-
-  initialAdmins:
-    - "afausti"
-    - "athornton"
-    - "fajpunk"
-    - "frossie"
-    - "jonathansick"
-    - "rra"
-    - "stvoutsin"

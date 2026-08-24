@@ -19,6 +19,14 @@ config:
 
 # Allow access by GitHub team.
   groupMapping:
+    "admin:oidc":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+    "admin:token":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
     "admin:userinfo":
       - github:
           organization: "lsp-uk"
@@ -51,8 +59,3 @@ config:
       - github:
           organization: "lsp-uk"
           team: "dev"
-
-  initialAdmins:
-    - "gpfrancis"
-    - "aibsen"
-    - "davedavemckay"

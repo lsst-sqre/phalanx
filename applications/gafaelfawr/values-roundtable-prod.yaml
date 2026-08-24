@@ -26,22 +26,30 @@ config:
     enabled: true
 
   knownScopes:
-    "write:git-lfs": >-
-      Can write objects to Git LFS storage bucket
-    "read:checkerboard": >-
-      Can query Checkerboard for user mappings
-    "exec:internal-tools": >-
-      Can use internal APIs
-    "write:turborepo": >-
-      Can read and write to the Turborepo remote cache
     "exec:docverse": >-
       Can access Docverse's as a user in an organization
+    "exec:internal-tools": >-
+      Can use internal APIs
     "exec:linkcheck": >-
       Can submit link-check requests to Ook
+    "read:checkerboard": >-
+      Can query Checkerboard for user mappings
+    "write:git-lfs": >-
+      Can write objects to Git LFS storage bucket
     "write:intersphinx": >-
       Can read and refresh Ook's cached intersphinx inventories
+    "write:turborepo": >-
+      Can read and write to the Turborepo remote cache
 
   groupMapping:
+    "admin:oidc":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "admin:token":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "admin:userinfo":
       - github:
           organization: "lsst-sqre"
@@ -50,6 +58,25 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "square"
+    "exec:docverse":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:internal-tools":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:linkcheck":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "read:checkerboard":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "write:git-lfs":
       - github:
           organization: "lsst"
@@ -60,21 +87,6 @@ config:
       - github:
           organization: "lsst"
           team: "cst"
-    "read:checkerboard":
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
-      - github:
-          organization: "lsst-sqre"
-          team: "friends"
-    "exec:internal-tools":
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
-    "exec:linkcheck":
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
     "write:intersphinx":
       - github:
           organization: "lsst-sqre"
@@ -83,19 +95,6 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "square"
-    "exec:docverse":
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
-
-  initialAdmins:
-    - "afausti"
-    - "athornton"
-    - "fajpunk"
-    - "frossie"
-    - "jonathansick"
-    - "rra"
-    - "stvoutsin"
 
   errorFooter: |
     To report problems or ask for help, contact #square-team on the Rubin

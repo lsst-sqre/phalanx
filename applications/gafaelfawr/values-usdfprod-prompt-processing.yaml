@@ -40,6 +40,9 @@ config:
     nameAttr: gecos
 
   groupMapping:
+    "admin:oidc":
+      - "rubinmgr"
+      - "unix-admin"
     "admin:token":
       - "rubinmgr"
       - "unix-admin"
@@ -220,17 +223,7 @@ config:
     "write:sasquatch":
       - "rubinmgr"
       - "unix-admin"
+
   knownScopes:
     "read:alertdb": >-
       Retrieve alert packets and schemas from the alert archive database
-
-  initialAdmins:
-    - "afausti"
-    - "athor"
-    - "dspeck"
-    - "frossie"
-    - "jonathansick"
-    - "pav"
-    - "ppascual"
-    - "rra"
-    - "ytl"

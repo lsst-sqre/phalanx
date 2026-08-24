@@ -36,6 +36,12 @@ config:
     "admin:jupyterlab":
       - "k8s-manke-admins"
       - "sqre"
+    "admin:oidc":
+      - "k8s-manke-admins"
+      - "sqre"
+    "admin:token":
+      - "k8s-manke-admins"
+      - "sqre"
     "admin:userinfo":
       - "k8s-manke-admins"
       - "sqre"
@@ -61,10 +67,3 @@ config:
     "write:sasquatch":
       - "k8s-manke-admins"
       - "sqre"
-
-  initialAdmins:
-    - "afausti"
-    - "athornton"
-    - "frossie"
-    - "jonathansick"
-    - "rra"

@@ -54,6 +54,33 @@ config:
       #- github:
       #    organization: "lsst-sqre"
       #    team: "tacc-spherex"
+    "admin:oidc":
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+    "admin:token":
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+    "admin:userinfo":
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
     "exec:admin":
       - "G-820288"
       - "TACC-ACI-CIC"
@@ -83,7 +110,7 @@ config:
       #- github:
       #    organization: "lsst-sqre"
       #    team: "tacc-spherex"
-    "read:image":
+    "exec:portal":
       - "G-827698"
       - "G-820288"
       - "TACC-ACI-CIC"
@@ -93,7 +120,7 @@ config:
       #- github:
       #    organization: "lsst-sqre"
       #    team: "tacc-spherex"
-    "exec:portal":
+    "read:image":
       - "G-827698"
       - "G-820288"
       - "TACC-ACI-CIC"
@@ -123,15 +150,3 @@ config:
       #- github:
       #    organization: "lsst-sqre"
       #    team: "tacc-spherex"
-
-  initialAdmins:
-    - "afausti"
-    - "athornton"
-    - "fajpunk"
-    - "frossie"
-    - "jonathansick"
-    - "rra"
-    - "stvoutsin"
-    - "mpackard"
-    - "kprice"
-    - "testuser2"

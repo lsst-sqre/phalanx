@@ -19,6 +19,7 @@ config:
   # @default -- None, must be set if neither `cloudsql.enabled` nor
   # `config.internalDatabase` are true
   databaseUrl: null
+
   # -- HTML footer to add to any login error page (will be enclosed in a <p>
   # tag).
   errorFooter: null
@@ -231,10 +232,6 @@ config:
       api:
         muster-quota: 1
 
-  # -- Usernames to add as administrators when initializing a new database.
-  # Used only if there are no administrators.
-  initialAdmins: []
-
   # -- Names and descriptions of all scopes in use. This is used to populate
   # the new token creation page. Only scopes listed here will be options when
   # creating a new token. See [DMTN-235](https://dmtn-235.lsst.io/).
@@ -244,6 +241,8 @@ config:
       Can create and destroy labs for any user
     "admin:notifications": >-
       Can send and view all user notifications
+    "admin:oidc": >-
+      Can create and manage OpenID Connect clients
     "admin:token": >-
       Can create and modify tokens for any user
     "admin:userinfo": >-

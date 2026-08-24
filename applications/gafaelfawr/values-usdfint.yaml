@@ -41,6 +41,9 @@ config:
     nameAttr: gecos
 
   groupMapping:
+    "admin:oidc":
+      - "rubinmgr"
+      - "unix-admin"
     "admin:token":
       - "rubinmgr"
       - "unix-admin"
@@ -254,12 +257,3 @@ config:
     "write:sasquatch":
       - "rubinmgr"
       - "unix-admin"
-
-  initialAdmins:
-    - "afausti"
-    - "athor"
-    - "frossie"
-    - "jonathansick"
-    - "rra"
-    - "ytl"
-    - "ppascual"

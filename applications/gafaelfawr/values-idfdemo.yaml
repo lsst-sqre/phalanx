@@ -40,6 +40,26 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "friends"
+    "admin:oidc":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+    "admin:token":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "admin:userinfo":
       - github:
           organization: "lsst-sqre"
@@ -130,15 +150,6 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "friends"
-
-  initialAdmins:
-    - "afausti"
-    - "athornton"
-    - "fajpunk"
-    - "frossie"
-    - "jonathansick"
-    - "rra"
-    - "stvoutsin"
 
 cloudsql:
   enabled: true
