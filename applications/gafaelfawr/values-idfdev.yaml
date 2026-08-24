@@ -8,6 +8,7 @@ config:
   logLevel: "DEBUG"
   slackAlerts: true
   tokenLifetime: "2d"
+  updateSchema: true
 
   sentry:
     enabled: true

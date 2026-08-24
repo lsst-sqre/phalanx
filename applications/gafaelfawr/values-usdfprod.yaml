@@ -17,6 +17,7 @@ config:
     enabled: true
 
   internalDatabase: true
+  updateSchema: true
 
   oidcServer:
     enabled: true

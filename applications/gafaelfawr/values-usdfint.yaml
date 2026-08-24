@@ -10,6 +10,7 @@ config:
     enabled: true
 
   databaseUrl: postgresql://gafaelfawr@rsp-db-rw.postgres-db:5432/gafaelfawr
+  updateSchema: true
 
   oidcServer:
     enabled: true

@@ -7,6 +7,7 @@ redis:
 
 config:
   databaseUrl: "postgresql://gafaelfawr@gf-db-rw.gafaelfawr-db.svc.cluster.local/gafaelfawr"
+  updateSchema: true
 
   sentry:
     enabled: true

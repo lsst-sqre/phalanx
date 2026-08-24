@@ -13,8 +13,8 @@ redis:
       memory: "50Mi"
 
 config:
-
   databaseUrl: postgresql://gafaelfawr@rsp-db-rw.postgres-db:5432/gafaelfawr
+  updateSchema: true
 
   sentry:
     enabled: true
