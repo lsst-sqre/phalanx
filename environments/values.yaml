@@ -138,6 +138,9 @@ applications:
   # many other Phalanx applications, all of which assume that it is running.
   repertoire: true
 
+  # -- Enable the river application
+  river: false
+
   # -- Enable the rubin-rag application
   rubin-rag: false
 
@@ -173,9 +176,6 @@ applications:
 
   # -- Enable the mobu application
   mobu: false
-
-  # -- Enable the mppdb application
-  mppdb: false
 
   # -- Enable the mpsky application
   mpsky: false

@@ -1,8 +1,0 @@
-apiVersion: v2
-appVersion: "0.1.0"
-description: TAP query front end for the mppdb catalogs
-name: mppdb
-sources:
-  - https://github.com/mjuric/mppdb
-type: application
-version: 1.0.0
