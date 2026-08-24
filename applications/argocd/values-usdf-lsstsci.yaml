@@ -1,0 +1,146 @@
+argo-cd:
+  global:
+    env:
+      - name: "HTTP_PROXY"
+        value: "http://squid.slac.stanford.edu:3128"
+      - name: "HTTPS_PROXY"
+        value: "http://squid.slac.stanford.edu:3128"
+      - name: "NO_PROXY"
+        value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server,.stanford.edu,.slac.stanford.edu,.sdf.slac.stanford.edu"
+
+  configs:
+    styles: |
+      .sidebar {
+        border: 10px solid;
+        border-top-style: none;
+        border-bottom-style: none;
+        border-left-style: none;
+        border-color: #77151d;
+      }
+
+
+      .application-details__status-panel {
+        border: 2px solid;
+        border-left-style: none;
+        border-right-style: none;
+        border-top-style: none;
+        border-color: #77151d;
+      }
+
+      .theme-dark .application-details__status-panel .row,
+      .theme-dark .application-details__tree,
+      .theme-dark .page__content-wrapper .flex-top-bar,
+      .theme-dark .flex-top-bar__actions,
+      .theme-dark .top-bar,
+      .theme-dark .flex-top-bar__tools,
+      .theme-dark .applications-list {
+        background: #190f0f;
+      }
+
+      .top-bar .row {
+        background: #77151d;
+      }
+
+
+      .top-bar__breadcrumbs a
+      .argo-dropdown div{
+        color: #FFFFFF;
+        background: #ffffff;
+      }
+
+      .theme-light .top-bar__breadcrumbs {
+        color: #FFFFFF;
+      }
+
+      .theme-light .top-bar__title {
+        color: #009dc4;
+      }
+
+      .ui-banner {
+        padding: 16px 0;
+      }
+
+
+      .ui-banner-text {
+        color: #DCE0DF;
+      }
+
+      .ui-banner,
+      .sidebar {
+        background:#282733;
+      }
+    cm:
+      url: "https://usdf-rsp-lsstsci.slac.stanford.edu/argo-cd"
+      oidc.config: |
+        name: SLAC
+        issuer: https://dex.slac.stanford.edu
+        clientID: usdf-lsstsci-argocd
+        clientSecret: $dex.clientSecret
+        # Optional set of OIDC scopes to request. If omitted, defaults to:
+        # ["openid", "profile", "email", "groups"]
+        requestedScopes: ["openid", "profile", "email", "groups"]
+        # Optional set of OIDC claims to request on the ID token.
+        requestedIDTokenClaims: {"groups": {"essential": true}}
+      ui.bannercontent: "usdf-lsstsci"
+    rbac:
+      policy.csv: |
+        p, role:developer, applications, *, */*, allow
+        p, role:developer, applications, get, infrastructure/*, allow
+        p, role:developer, applications, create, infrastructure/*, deny
+        p, role:developer, applications, update, infrastructure/*, deny
+        p, role:developer, applications, update/*, infrastructure/*, deny
+        p, role:developer, applications, delete, infrastructure/*, deny
+        p, role:developer, applications, delete/*, infrastructure/*, deny
+        p, role:developer, applications, sync, infrastructure/*, deny
+        p, role:developer, applications, override, infrastructure/*, deny
+        p, role:developer, applications, action/*, infrastructure/*, deny
+        p, role:developer, logs, get, */*, allow
+        p, role:developer, logs, get, infrastructure/*, allow
+
+        g, afausti@slac.stanford.edu, role:admin
+        g, atani@slac.stanford.edu, role:admin
+        g, athor@slac.stanford.edu, role:admin
+        g, danfuchs@slac.stanford.edu, role:admin
+        g, dspeck@slac.stanford.edu, role:admin
+        g, eiger@slac.stanford.edu, role:admin
+        g, frossie@slac.stanford.edu, role:admin
+        g, gpdf@slac.stanford.edu, role:admin
+        g, jsick@slac.stanford.edu, role:admin
+        g, mokun@slac.stanford.edu, role:admin
+        g, pav@slac.stanford.edu, role:admin
+        g, ppascual@slac.stanford.edu, role:admin
+        g, reinking@slac.stanford.edu, role:admin
+        g, rra@slac.stanford.edu, role:admin
+        g, ytl@slac.stanford.edu, role:admin
+        g, ktl@slac.stanford.edu, role:admin
+        g, cslater@slac.stanford.edu, role:admin
+        g, svoutsin@slac.stanford.edu, role:admin
+        g, ebellm@slac.stanford.edu, role:admin
+        g, sierrav@slac.stanford.edu, role:admin
+        g, amithm@slac.stanford.edu, role:admin
+
+        g, bbrond@slac.stanford.edu, role:developer
+        g, fritzm@slac.stanford.edu, role:developer
+        g, hchiang2@slac.stanford.edu, role:developer
+        g, jeremym@slac.stanford.edu, role:developer
+        g, koike@slac.stanford.edu, role:developer
+        g, mfl@slac.stanford.edu, role:developer
+        g, mreuter@slac.stanford.edu, role:developer
+        g, omullan@slac.stanford.edu, role:developer
+        g, rw264@slac.stanford.edu, role:developer
+        g, saranda@slac.stanford.edu, role:developer
+        g, smart@slac.stanford.edu, role:developer
+        g, spothi@slac.stanford.edu, role:developer
+        g, sullii@slac.stanford.edu, role:developer
+        g, vbecker@slac.stanford.edu, role:developer
+        g, robyww@slac.stanford.edu, role:developer
+        g, jaladh@slac.stanford.edu, role:developer
+        g, loi@slac.stanford.edu, role:developer
+        g, kpuri@slac.stanford.edu, role:developer
+        g, youtsumi@slac.stanford.edu, role:developer
+      scopes: "[email]"
+
+  server:
+    ingress:
+      hostname: "usdf-rsp-lsstsci.slac.stanford.edu"
+      tls: false

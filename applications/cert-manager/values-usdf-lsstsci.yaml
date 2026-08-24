@@ -1,0 +1,7 @@
+config:
+  route53:
+    awsAccessKeyId: AKIAQSJOS2SFL5I4TYND
+    hostedZone: Z0567328105IEHEMIXLCO
+
+global:
+  vaultSecretsPath: secret/rubin/usdf-lsstsci

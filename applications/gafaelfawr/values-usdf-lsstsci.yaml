@@ -1,0 +1,65 @@
+replicaCount: 2
+
+redis:
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "100m"
+      memory: "210Mi"
+  persistence:
+    storageClass: "wekafs--sdf-k8s01"
+
+config:
+  internalDatabase: true
+
+  oidcServer:
+    enabled: true
+
+  oidc:
+    clientId: "rubin-usdf-lsstsci"
+    audience: "rubin-usdf-lsstsci"
+    loginUrl: "https://dex.slac.stanford.edu/auth"
+    tokenUrl: "https://dex.slac.stanford.edu/token"
+    issuer: "https://dex.slac.stanford.edu"
+    scopes:
+      - "openid"
+      - "email"
+      - "groups"
+      - "profile"
+    usernameClaim: "name"
+
+  ldap:
+    url: "ldap://sdfldapsrv.sdf.slac.stanford.edu:389"
+    groupBaseDn: "ou=Group,dc=sdf,dc=slac,dc=stanford,dc=edu"
+    groupObjectClass: "posixGroup"
+    groupMemberAttr: "memberUid"
+    groupSearchByDn: false
+    userBaseDn: "ou=People,dc=sdf,dc=slac,dc=stanford,dc=edu"
+    userSearchAttr: "uid"
+    addUserGroup: false
+    uidAttr: "uidNumber"
+    gidAttr: "gidNumber"
+    nameAttr: "gecos"
+
+  groupMapping:
+    "admin:token":
+      - "rubinmgr"
+      - "unix-admin"
+    "admin:userinfo":
+      - "rubinmgr"
+      - "unix-admin"
+    "exec:admin":
+      - "rubinmgr"
+      - "unix-admin"
+
+  initialAdmins:
+    - "amithm"
+    - "afausti"
+    - "athor"
+    - "frossie"
+    - "jonathansick"
+    - "rra"
+    - "ytl"
+    - "ppascual"
