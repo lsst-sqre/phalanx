@@ -1,0 +1,115 @@
+# Default values for skyviewer.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the skyviewer deployment
+  repository: "ghcr.io/lsst-dm/skyviewer-client"
+
+  # -- Pull policy for the skyviewer image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+# -- Image pull secrets. Needed only while the GHCR package is private; a
+# public package pulls without credentials.
+# @default -- See `values.yaml`
+imagePullSecrets: []
+# Each entry is of the form: { name: pull-secret-name }
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+  # -- Path the app is served under. Must match the NEXT_PUBLIC_BASE_PATH the
+  # image was built with: Next.js compiles its base path into the client
+  # bundle, so the two cannot be changed independently.
+  path: "/skyviewer"
+
+config:
+  # -- Directory holding the HiPS surveys. Must resolve below one of
+  # `hipsData.mounts`, following symlinks. Required when `hipsData.enabled`
+  # is true.
+  hipsDataDir: ""
+
+  # -- Path below `hipsDataDir` of the single survey to display, e.g.
+  # `LSSTCam/hips/ltl2/color_gri`. The CMS advertises public datasets absent
+  # from this tree, so without this the viewer offers surveys whose every tile
+  # 404s.
+  hipsSurvey: ""
+
+  # -- Craft CMS GraphQL API, used for page content and tours. Required.
+  # Imagery comes from `hipsSurvey`, not from here.
+  apiUrl: ""
+
+  # -- Astro objects API, used by the search panel. Required.
+  astroApiUrl: ""
+
+  # -- PROD, INT or DEV. DEV additionally enables the GCS proxy route and the
+  # debug UI.
+  cloudEnv: "PROD"
+
+  # -- Byte cap for the in-memory FIFO cache of served tiles; "0" disables
+  # it. The pod serves all tile traffic itself, so without it every tile is
+  # re-read from networked disk on every request. Must fit inside the memory
+  # limit with room for the application itself.
+  tileCacheBytes: "0"
+
+# -- Volumes holding the HiPS surveys, mounted read-only. All of this is
+# specific to where the surveys are staged, so it is set per environment.
+# @default -- See `values.yaml`
+hipsData:
+  # -- Whether to mount the HiPS volumes. Without them the viewer has no
+  # imagery, so an environment that enables it must also set
+  # `config.hipsDataDir`, `mounts` and usually `supplementalGroups`.
+  enabled: false
+
+  # -- Supplemental group IDs the pod runs with. The exports holding the
+  # surveys are typically group-readable only, and without the right group
+  # every read is denied even with the volumes mounted.
+  supplementalGroups: []
+
+  # -- Claims to create and mount. Each entry needs `name`,
+  # `storageClassName`, `capacity` and `mountPath`. `config.hipsDataDir` must
+  # resolve below one of them, following symlinks.
+  mounts: []
+
+# -- Affinity rules for the skyviewer deployment pod
+affinity: {}
+
+# -- Node selection rules for the skyviewer deployment pod
+nodeSelector: {}
+
+# -- Annotations for the skyviewer deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the skyviewer deployment pod
+# @default -- See `values.yaml`
+resources:
+  requests:
+    cpu: 0.5
+    memory: "1Gi"
+  limits:
+    # tiles are served through the pod rather than straight from a CDN, so it
+    # carries all tile traffic for every viewer
+    cpu: 2
+    memory: "4Gi"
+
+# -- Tolerations for the skyviewer deployment pod
+tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

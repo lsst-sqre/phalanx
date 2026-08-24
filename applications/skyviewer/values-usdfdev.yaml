@@ -1,0 +1,43 @@
+config:
+  hipsDataDir: "/sdf/group/rubin/shared/hips_views"
+
+  # a private processing staged under /sdf/group/rubin/shared/hips_views;
+  # the CMS has no entry for it, so it is named explicitly here
+  hipsSurvey: "LSSTCam/hips/ltl2/color_gri"
+
+  apiUrl: "https://api.skyviewer.app/api"
+  astroApiUrl: "https://us-central1-edc-prod-eef0.cloudfunctions.net/astro-objects-api"
+
+  # 6 GiB of tiles held in memory, sized against the 10Gi limit below: tile
+  # traffic otherwise re-reads networked disk on every request
+  tileCacheBytes: "6442450944"
+
+resources:
+  requests:
+    cpu: 1
+    memory: "7Gi"
+  limits:
+    cpu: 4
+    # sized for the 6 GiB tile cache plus the application itself
+    memory: "10Gi"
+
+# both exports are needed: /sdf/group/rubin/shared is a symlink to
+# /sdf/data/rubin/shared, so the group mount alone leaves the surveys behind
+# a dangling symlink and the viewer finds no imagery
+hipsData:
+  enabled: true
+
+  # /sdf/data/rubin/shared is drwxr-s---, group 4085, so without this every
+  # read is denied even with the volumes mounted
+  supplementalGroups:
+    - 4085
+
+  mounts:
+    - name: "sdf-group-rubin"
+      storageClassName: "sdf-group-rubin"
+      capacity: "1Gi"
+      mountPath: "/sdf/group/rubin"
+    - name: "sdf-data-rubin"
+      storageClassName: "sdf-data-rubin"
+      capacity: "1Gi"
+      mountPath: "/sdf/data/rubin"
