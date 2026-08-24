@@ -91,9 +91,21 @@ config:
   registryDir: "/opt/mppdb/deploy/usdf"
 
   # -- Database that unqualified ADQL table names resolve to, written to
-  # `default_database` in the TOML configuration. Every other database must be
-  # addressed as `database.table`.
-  defaultDatabase: "mppdb"
+  # `default_database` in the TOML configuration. **Empty on purpose**: with no
+  # default, every table reference must be qualified as `database.table`, which
+  # is what we want now that the obsolete `mppdb` database is gone and no single
+  # database is the natural home for a bare name. Setting this omits the TOML
+  # key entirely; it must name one of the `databases` entries if set at all.
+  defaultDatabase: ""
+
+  # -- Database that Simple Cone Search resolves its table against. Independent
+  # of `defaultDatabase` -- SCS targets exactly one database, and with no
+  # default it would otherwise refuse every request. Must be a `databases` entry.
+  scsDatabase: "dp2"
+
+  # -- Bare table name SCS uses when the request omits one. Must exist in
+  # `scsDatabase`; note `dp2` has `DiaObject` and no `DiaObjectLast`.
+  scsDefaultTable: "DiaObject"
 
   # -- Databases to serve, rendered into the `[databases]` tables of the
   # generated `mppdb.toml`. This block is the authorization boundary: a database
@@ -104,14 +116,10 @@ config:
   # resolved against `config.registryDir`, but it is **ignored under
   # `MPPDB_ENGINE=clickhouse`**, which this deployment uses: the catalog comes
   # from `TAP_SCHEMA.registries` in the store. Do not set it here.
-  # @default -- `dp2`, `mppdb`, `ppdb`, and `ssp`; see `values.yaml`
+  # @default -- `dp2`, `ppdb`, and `ssp`; see `values.yaml`
   databases:
     dp2:
       chDatabase: "dp2"
-    mppdb:
-      chDatabase: "mppdb"
-      manifestsDir: "/data/manifests"
-      lakeDir: "/data/lake"
     ppdb:
       chDatabase: "ppdb"
     ssp:

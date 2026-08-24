@@ -61,6 +61,14 @@ spec:
               value: {{ .Values.config.authProvider | quote }}
             - name: "MPPDB_BASE_URL"
               value: {{ include "mppdb.baseUrl" . | quote }}
+            {{- with .Values.config.scsDatabase }}
+            - name: "MPPDB_SCS_DATABASE"
+              value: {{ . | quote }}
+            {{- end }}
+            {{- with .Values.config.scsDefaultTable }}
+            - name: "MPPDB_SCS_DEFAULT_TABLE"
+              value: {{ . | quote }}
+            {{- end }}
             - name: "MPPDB_DATA_DIR"
               value: {{ .Values.config.dataDir | quote }}
             - name: "MPPDB_MANIFESTS_DIR"
