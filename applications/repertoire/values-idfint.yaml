@@ -13,9 +13,12 @@ config:
   slackAlerts: true
   tap:
     servers:
-      tap:
+      ppdbtap:
         enabled: true
+        schemaVersion: "releases/w.2026.33"
       ssotap:
+        enabled: true
+      tap:
         enabled: true
   useSubdomains:
     - "nublado"

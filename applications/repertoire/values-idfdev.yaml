@@ -21,11 +21,11 @@ config:
   slackAlerts: true
   tap:
     servers:
-      tap:
+      ppdbtap:
         enabled: true
       ssotap:
         enabled: true
-      ppdbtap:
+      tap:
         enabled: true
         schemaVersion: "tickets/DM-54475"
       obsforgetap:
