@@ -27,6 +27,7 @@ Simple Image Access (SIA) IVOA Service using Butler
 | config.slackAlerts | bool | `false` | Whether to send alerts and status to Slack. |
 | global.environmentName | string | Set by Argo CD Application | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
+| global.repertoireUrl | string | Set by Argo CD | Base URL for Repertoire discovery API |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the sia image |
 | image.repository | string | `"ghcr.io/lsst-sqre/sia"` | Image to use in the sia deployment |

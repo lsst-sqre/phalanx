@@ -7,6 +7,7 @@ metadata:
 data:
   METRICS_ENABLED: {{ .Values.config.metrics.enabled | quote }}
   METRICS_APPLICATION: {{ .Values.config.metrics.application | quote }}
+  REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}
   SCHEMA_MANAGER_REGISTRY_URL: {{ .Values.config.metrics.schemaManager.registryUrl }}
   SIA_DATASETS: {{ .Values.config.datasets | toJson | quote }}
   SIA_IVOID_FORMAT: {{ .Values.config.ivoidFormat | quote }}
