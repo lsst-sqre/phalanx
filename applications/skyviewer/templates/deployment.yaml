@@ -42,12 +42,14 @@ spec:
               containerPort: 8080
               protocol: "TCP"
           env:
+            # read at runtime, which is what lets one image serve more than
+            # one RSP: the host is not compiled into the bundle
+            - name: "BASE_URL"
+              value: {{ printf "https://%s" .Values.global.host | quote }}
             # NEXT_PUBLIC_ values were compiled into the client bundle when
             # the image was built; setting them here cannot change what the
             # browser uses, but the server revalidates them at boot, so they
             # must be present and must match what the image was built with
-            - name: "NEXT_PUBLIC_BASE_URL"
-              value: {{ printf "https://%s" .Values.global.host | quote }}
             - name: "NEXT_PUBLIC_BASE_PATH"
               value: {{ .Values.ingress.path | quote }}
             - name: "NEXT_PUBLIC_API_URL"
