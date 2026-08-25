@@ -2,7 +2,7 @@ replicaCount:
   api: 2
   worker: 2
 config:
-  databaseUrl: "postgresql://timessquare@postgres.postgres/timessquare"
+  databaseUrl: "postgresql://timessquare@rsp-db-rw.postgres-db/timessquare"
   githubAppId: "1112177"
   enableGitHubApp: "True"
   sentryTracesSampleRate: 1
