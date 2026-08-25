@@ -17,6 +17,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| config.adminPageScopes | object | Squareone's built-in defaults, matching Gafaelfawr's admin scopes | Maps each admin page id (`notifications`, `serviceTokens`, `oidcClients`, `sentry`) to the Gafaelfawr scopes granting access to it. Holding any one of a page's scopes is sufficient; an empty list hides the page. Override only the pages that differ — the rest keep their defaults. Keep this consistent with `ingress.adminScopes`, which decides who gets past the /admin ingress at all. |
 | config.appLinks | list | `[{"href":"/argo-cd/","internal":false,"label":"Argo CD"}]` | App menu items |
 | config.coManageRegistryUrl | string | null disables the COmanage integration | URL to the COmanage registry, if the environment uses COmanage for identity. |
 | config.docsBaseUrl | string | `"https://rsp.lsst.io"` | Base URL for user documentation (excludes trailing slash) |
