@@ -7,7 +7,3 @@ cadc-tap:
 
   config:
     datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/w.2026.18/datalink-snippets.zip"
-
-    pg:
-      # Use dev db for testing
-      host: "usdf-summit-dev-db-svc.sdf.slac.stanford.edu"
