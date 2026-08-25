@@ -17,8 +17,7 @@ config:
     user: "usdf-replication@ppdb-int-6c62.iam"
 
   # -- PPDB config file resource
-  # TODO: Use a group rather than user path for these configurations
-  ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-53599/ppdb-config/ppdb_lsstcam.yaml"
+  ppdbConfig: "gs://ppdb-int-config/ppdb-int_config.yaml"
 
   # -- Volumes specific to the environment
   volumes:
