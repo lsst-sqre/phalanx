@@ -1,16 +1,8 @@
-# Use the CSI storage class so that we can use snapshots.
-redis:
-  persistence:
-    storageClass: "standard-rwo"
-
-cloudsql:
-  enabled: true
-  instanceConnectionName: "roundtable-dev-abe2:us-central1:roundtable-dev-572a252e"
-  serviceAccount: "gafaelfawr@roundtable-dev-abe2.iam.gserviceaccount.com"
-
 config:
   slackAlerts: false
-  updateSchema: true
+
+  metrics:
+    enabled: true
 
   sentry:
     enabled: true
@@ -20,10 +12,6 @@ config:
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
-    enabled: true
-
-  # Enable metrics reporting.
-  metrics:
     enabled: true
 
   knownScopes:
@@ -102,3 +90,13 @@ ingress:
   additionalHosts:
     - "git-lfs-dev.lsst.cloud"
     - "git-lfs-dev-rw.lsst.cloud"
+
+cloudsql:
+  enabled: true
+  instanceConnectionName: "roundtable-dev-abe2:us-central1:roundtable-dev-572a252e"
+  serviceAccount: "gafaelfawr@roundtable-dev-abe2.iam.gserviceaccount.com"
+
+# Use the CSI storage class so that we can use snapshots.
+redis:
+  persistence:
+    storageClass: "standard-rwo"
