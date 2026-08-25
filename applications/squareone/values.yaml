@@ -141,8 +141,11 @@ config:
   # page. Override only the pages that differ — the rest keep their defaults.
   # Keep this consistent with `ingress.adminScopes`, which decides who gets
   # past the /admin ingress at all.
-  # @default -- Squareone's built-in defaults, matching Gafaelfawr's admin scopes
-  adminPageScopes: {}
+  adminPageScopes:
+    notifications: ["admin:notifications"]
+    serviceTokens: ["admin:token"]
+    oidcClients: ["admin:oidc"]
+    sentry: ["exec:admin"]
 
   # -- Enable the App menu
   enableAppsMenu: false
