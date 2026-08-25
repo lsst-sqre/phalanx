@@ -20,9 +20,6 @@ config:
     # -- Username in sa_name@project.iam format
     user: "usdf-replication@ppdb-dev-5c07.iam"
 
-    # -- Database name to connect to
-    dbName: "ppdb-chunk-tracking"
-
   # -- PPDB config file resource
   ppdbConfig: "gs://ppdb-dev-config/ppdb-dev-5c07_config.yaml"
 
