@@ -54,6 +54,24 @@ config:
       #- github:
       #    organization: "lsst-sqre"
       #    team: "tacc-spherex"
+    "admin:oidc":
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- githu:
+      #    organization: "lsst-sqre"
+      #    team: "square"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
+    "admin:token":
+      - "G-820288"
+      - "TACC-ACI-CIC"
+      #- githu:
+      #    organization: "lsst-sqre"
+      #    team: "square"
+      #- github:
+      #    organization: "lsst-sqre"
+      #    team: "tacc-spherex"
     "admin:userinfo":
       - "G-820288"
       - "TACC-ACI-CIC"
@@ -141,15 +159,3 @@ config:
       #- github:
       #    organization: "lsst-sqre"
       #    team: "tacc-spherex"
-
-  initialAdmins:
-    - "afausti"
-    - "athornton"
-    - "fajpunk"
-    - "frossie"
-    - "jonathansick"
-    - "rra"
-    - "stvoutsin"
-    - "mpackard"
-    - "kprice"
-    - "testuser2"

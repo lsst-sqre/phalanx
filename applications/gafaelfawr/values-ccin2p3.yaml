@@ -6,6 +6,7 @@ redis:
 config:
   logLevel: "DEBUG"
   internalDatabase: true
+  updateSchema: true
 
   # Session length and token expiration (in minutes).
   #issuer:
@@ -70,11 +71,10 @@ config:
   oidcServer:
     enabled: true
 
-  # initialAdmins:
-  #   - "mainetti"
-
   groupMapping:
     "admin:jupyterlab":
+      - "ccin2p3"
+    "admin:oidc":
       - "ccin2p3"
     "admin:token":
       - "ccin2p3"

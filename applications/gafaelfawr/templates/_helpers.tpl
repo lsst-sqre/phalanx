@@ -119,6 +119,8 @@ Common environment variables
       name: "gafaelfawr"
       key: "oidc-server-secrets"
 {{- if (not .Values.config.oidcServer.issuer) }}
+- name: "GAFAELFAWR_OIDC_SERVER_CLIENT_SUFFIX"
+  value: ".clients.{{ .Values.global.host }}"
 - name: "GAFAELFAWR_OIDC_SERVER_ISSUER"
   value: {{ .Values.global.baseUrl | quote }}
 {{- end }}

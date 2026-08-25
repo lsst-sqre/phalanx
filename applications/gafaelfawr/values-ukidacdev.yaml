@@ -14,6 +14,14 @@ config:
     clientId: "c4a5727c5788cc2d346e"
 
   groupMapping:
+    "admin:oidc":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+    "admin:token":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
     "admin:userinfo":
       - github:
           organization: "lsp-uk"
@@ -46,8 +54,3 @@ config:
       - github:
           organization: "lsp-uk"
           team: "dev"
-
-  initialAdmins:
-    - "gpfrancis"
-    - "aibsen"
-    - "davedavemckay"

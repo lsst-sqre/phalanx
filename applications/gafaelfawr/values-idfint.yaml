@@ -8,6 +8,7 @@ redis:
 config:
   allowSubdomains: true
   slackAlerts: true
+  updateSchema: true
 
   sentry:
     enabled: true
@@ -62,6 +63,10 @@ config:
       - "g_admins"
     "admin:notifications":
       - "g_admins"
+    "admin:oidc":
+      - "g_admins"
+    "admin:token":
+      - "g_admins"
     "admin:userinfo":
       - "g_admins"
     "exec:admin":
@@ -85,15 +90,6 @@ config:
       - "g_admins"
     "write:obsforge":
       - "g_admins"
-
-  initialAdmins:
-    - "adam"
-    - "afausti"
-    - "danfuchs"
-    - "frossie"
-    - "jsick"
-    - "rra"
-    - "svoutsin"
 
 cloudsql:
   enabled: true

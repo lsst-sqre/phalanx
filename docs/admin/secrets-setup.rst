@@ -169,20 +169,6 @@ The keys under applications are the names of applications and should be the name
 The next-level key should be used as the key of a field in that entry.
 Fill in the value with the value of that secret.
 
-.. _admin-onepassword-oidc-clients:
-
-OIDC clients
-^^^^^^^^^^^^
-
-If the environment has OpenID Connect clients, create a 1Password item of type :menuselection:`Server` and title ``oidc-clients``.
-Delete all of the pre-defined sections.
-Then, for each OpenID Connect client, create a section with a title that explains to humans what that client is for.
-Every section should have three fields: ``id``, ``secret``, and ``return_uri``.
-The first is the client ID, the second is the password, and the third is the URI to which the user will be sent after authentication.
-The ``id`` and ``return_uri`` fields should have type text, and ``secret`` should have type password.
-
-See :doc:`/applications/gafaelfawr/add-oidc-client` for more information.
-
 .. _admin-onepassword-pull-secret:
 
 Pull secret
