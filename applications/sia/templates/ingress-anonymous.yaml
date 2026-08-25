@@ -1,7 +1,7 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: {{ template "sia.fullname" . }}-anonymous
+  name: "sia-anonymous"
   labels:
     {{- include "sia.labels" . | nindent 4 }}
 config:
@@ -9,7 +9,7 @@ config:
     anonymous: true
 template:
   metadata:
-    name: {{ template "sia.fullname" . }}-anonymous
+    name: "sia-anonymous"
     {{- with .Values.ingress.annotations }}
     annotations:
       nginx.ingress.kubernetes.io/use-regex: "true"
@@ -20,24 +20,24 @@ template:
       - host: {{ .Values.global.host | quote }}
         http:
           paths:
-            - path: "{{ .Values.ingress.path }}/openapi.json"
+            - path: "{{ .Values.config.pathPrefix }}/openapi.json"
               pathType: "Exact"
               backend:
                 service:
-                  name: {{ template "sia.fullname" . }}
+                  name: "sia"
                   port:
                     number: 8080
-            - path: "{{ .Values.ingress.path }}/.+/capabilities"
+            - path: "{{ .Values.config.pathPrefix }}/.+/capabilities"
               pathType: "ImplementationSpecific"
               backend:
                 service:
-                  name: {{ template "sia.fullname" . }}
+                  name: "sia"
                   port:
                     number: 8080
-            - path: "{{ .Values.ingress.path }}/.+/availability"
+            - path: "{{ .Values.config.pathPrefix }}/.+/availability"
               pathType: "ImplementationSpecific"
               backend:
                 service:
-                  name: {{ template "sia.fullname" . }}
+                  name: "sia"
                   port:
                     number: 8080
