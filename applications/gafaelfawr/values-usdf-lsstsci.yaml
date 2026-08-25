@@ -13,6 +13,7 @@ redis:
 
 config:
   internalDatabase: true
+  updateSchema: true
 
   oidcServer:
     enabled: true
