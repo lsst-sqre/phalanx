@@ -7,8 +7,8 @@ metadata:
 config:
   loginRedirect: true
   scopes:
-    all:
-      - {{ .Values.ingress.adminScope | quote }}
+    any:
+      {{- toYaml (required "ingress.adminScopes must be a non-empty list" .Values.ingress.adminScopes) | nindent 6 }}
   service: "squareone"
 template:
   metadata:

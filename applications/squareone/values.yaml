@@ -33,8 +33,14 @@ ingress:
   # -- Scope required for /times-square UI
   timesSquareScope: "exec:notebook"
 
-  # -- Scope required for the /admin UI
-  adminScope: "exec:admin"
+  # -- Scopes that grant access to the /admin UI. Holding any one of them is
+  # sufficient; which admin pages each scope reveals is decided by Squareone's
+  # own `adminPageScopes` configuration.
+  adminScopes:
+    - "exec:admin"
+    - "admin:notifications"
+    - "admin:token"
+    - "admin:oidc"
 
 # -- Resource requests and limits for Squareone pods
 # @default -- see `values.yaml`
