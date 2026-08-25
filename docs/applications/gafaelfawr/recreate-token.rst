@@ -16,7 +16,7 @@ To do that:
 #. Force a restart of the ``gafaelfawr-tokens`` deployment in the ``gafaelfawr`` application.
    This will recreate any token secrets that are not valid.
 
-#. Force a restart of the ``hub`` deployment in the ``nublado`` application.
+#. Force a restart of the ``hub`` deployment in the ``nublado`` application, and any other application that uses Gafaelfawr service tokens via a Kubernetes resource.
    This will restart the hub with the new, correct token.
 
 Be aware that when the Redis storage is wipoed, all user tokens will also be invalidated.

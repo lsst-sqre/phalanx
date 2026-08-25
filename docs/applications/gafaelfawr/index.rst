@@ -26,7 +26,6 @@ Guides
    quotas
    recreate-token
    add-scope
-   add-oidc-client
    github-organizations
    troubleshoot
    values

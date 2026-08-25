@@ -31,10 +31,9 @@ You will also need to assign scopes to users based on either their group members
 This is done with the ``config.groupMapping`` setting in ``values-<environment>.yaml``.
 
 See :dmtn:`235` for a list of scopes used by the Science Platform.
-You will need to assign all of them except ``admin:token`` and ``user:token``, which are handled internally by Gafaelfawr.
-
-For ``admin:token``, ensure that the list of usernames in ``config.initialAdmins`` is correct before you start Gafaelfawr for the first time.
-Otherwise, you will need to add admins later via the Gafaelfawr API.
+You will need to assign all of them except ``user:token``, which is handled internally by Gafaelfawr.
+The ``admin:token`` scope is the most powerful.
+It allows a user to create tokens for any username with any scope, and thus impersonate any user and access any protected service.
 
 Enable database schema initialization
 =====================================
