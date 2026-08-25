@@ -16,8 +16,8 @@ config:
   sentry:
     enabled: true
 
-  internalDatabase: true
   updateSchema: true
+  databaseUrl: postgresql://gafaelfawr@rsp-db-rw.postgres-db:5432/gafaelfawr
 
   oidcServer:
     enabled: true
