@@ -1,14 +1,11 @@
 replicaCount: 2
 
-# Use the CSI storage class so that we can use snapshots.
-redis:
-  persistence:
-    storageClass: "standard-rwo"
-
 config:
   allowSubdomains: true
   slackAlerts: true
-  updateSchema: true
+
+  metrics:
+    enabled: true
 
   sentry:
     enabled: true
@@ -42,10 +39,6 @@ config:
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
-    enabled: true
-
-  # Enable metrics reporting.
-  metrics:
     enabled: true
 
   # User quota settings for services.
@@ -95,3 +88,8 @@ cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
   serviceAccount: "gafaelfawr@science-platform-int-dc5d.iam.gserviceaccount.com"
+
+# Use the CSI storage class so that we can use snapshots.
+redis:
+  persistence:
+    storageClass: "standard-rwo"
