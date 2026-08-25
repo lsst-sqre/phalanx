@@ -7,9 +7,17 @@ config:
   # -- APDB config file resource
   apdbConfig: "s3://embargo@rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcam.yaml"
 
+  # -- CloudSQL Python Connector configuration
+  cloudSql:
+
+    # -- CloudSQL Connection Name
+    connectionName: "ppdb-int-6c62:us-central1:ppdb-int"
+
+    # -- Username in sa_name@project.iam format
+    user: "usdf-replication@ppdb-int-6c62.iam"
+
   # -- PPDB config file resource
-  # TODO: Use a group rather than user path for these configurations
-  ppdbConfig: "/sdf/data/rubin/user/jeremym/dev/DM-53599/ppdb-config/ppdb_lsstcam.yaml"
+  ppdbConfig: "gs://ppdb-int-config/ppdb-int_config.yaml"
 
   # -- Volumes specific to the environment
   volumes:

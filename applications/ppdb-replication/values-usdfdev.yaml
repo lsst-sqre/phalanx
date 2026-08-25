@@ -11,7 +11,7 @@ config:
   # -- APDB config file resource
   apdbConfig: "/sdf/data/rubin/user/jeremym/ppdb-config/apdb_dev.yaml"
 
-    # -- CloudSQL Python Connector configuration
+  # -- CloudSQL Python Connector configuration
   cloudSql:
 
     # -- CloudSQL Connection Name
@@ -21,7 +21,7 @@ config:
     user: "usdf-replication@ppdb-dev-5c07.iam"
 
   # -- PPDB config file resource
-  ppdbConfig: "gs://ppdb-dev-config/ppdb-dev-5c07_config.yaml"
+  ppdbConfig: "gs://ppdb-dev-config/ppdb-dev_config.yaml"
 
   # -- Time to wait before checking for new chunks, if no chunk appears
   checkInterval: 60
