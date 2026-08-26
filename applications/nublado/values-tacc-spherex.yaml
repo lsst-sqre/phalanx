@@ -53,11 +53,11 @@ controller:
             serverPath: "/data/scratch"
             server: "192.168.115.150"
             type: "nfs"
-        - name: "ast25011"
+        - name: "tacc-spherex-mount"
           source:
             type: "nfs"
             readOnly: true
-            serverPath: "/corral/main/projects/AST25011/prod-qr2"
+            serverPath: "/corral/main/projects/IPAC-SPHEREx" #"/corral/main/projects/AST25011/prod-qr2"
             server: "129.114.52.161"
       volumeMounts:
         - containerPath: "/home"
@@ -66,8 +66,8 @@ controller:
           volumeName: "project"
         - containerPath: "/scratch"
           volumeName: "scratch"
-        - containerPath: "/ast25011"
-          volumeName: "ast25011"
+        - containerPath: "/tacc-spherex-mount"
+          volumeName: "tacc-spherex-mount"
 jupyterhub:
   hub:
     baseUrl: "/nb"
