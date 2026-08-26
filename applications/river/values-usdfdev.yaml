@@ -24,6 +24,9 @@ config:
     kernel_label: "River / TAP"
     page_title: "River · notebooks"
     favicon_glyph: "R"
+    # Where the console's PyVO and TOPCAT recipes tell users to keep their token.
+    # Defaults to ~/.mppdb.token in the image; this deployment is River.
+    token_file: "~/.river.token"
     public_url: "https://usdf-rsp-dev.slac.stanford.edu/river"
 
   # Behind the TLS-terminating RSP ingress: pin every generated URL to the
