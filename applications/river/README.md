@@ -32,6 +32,7 @@ SQL and TAP database of Rubin catalog products
 | config.registryDir | string | `"/opt/mppdb/deploy/usdf"` | Directory **inside the image** holding the registry YAML files that the `[databases]` entries below refer to. **PLACEHOLDER**: confirm this against the published image at integration time; nothing in this chart can verify it. |
 | config.scsDatabase | string | `"dp2"` | Database that Simple Cone Search resolves its table against. Independent of `defaultDatabase` -- SCS targets exactly one database, and with no default it would otherwise refuse every request. Must be a `databases` entry. |
 | config.scsDefaultTable | string | `"DiaObject"` | Bare table name SCS uses when the request omits one. Must exist in `scsDatabase`; note `dp2` has `DiaObject` and no `DiaObjectLast`. |
+| config.spoolDir | string | `"/spool"` | Container path the spool claim is mounted at, supplied as `MPPDB_SPOOL_DIR`. Separate volume; see `persistence.spoolSize`. |
 | config.tmpDir | string | `"/data/tmp"` | Directory used for temporary spill files, supplied as `TMPDIR`. Kept on the persistent volume rather than in `/tmp`, which is a small in-memory emptyDir. |
 | config.tokenPageUrl | string | `""` | URL of the identity provider's token-creation page, supplied as `MPPDB_TOKEN_PAGE_URL`. Shown by the console's token guidance in `gafaelfawr` auth mode; empty hides the link and tells the user to ask the operator. |
 | config.useVaultSecret | bool | `false` | Whether to create a `VaultSecret` for the `river` secret. When false, the secret is expected to have been created by hand, which is how the initial smoke deployment works. |
@@ -50,6 +51,7 @@ SQL and TAP database of Rubin catalog products
 | ingress.useAuthorization | bool | `false` | Whether Gafaelfawr should replace the client's `Authorization` header with the delegated internal token. Must stay false while `config.authProvider` is `apikey`, because the service validates that header itself. |
 | nodeSelector | object | `{}` | Node selector rules for the pod |
 | persistence.size | string | `"20Gi"` | Size of the claim for `config.dataDir` |
+| persistence.spoolSize | string | `"2Ti"` | Size of the separate spool claim, which holds async query results. Sized far above the data claim because a single result can be tens of GiB and results are retained for 7 days; the per-user `spool_quota_bytes` only means anything if the volume is larger than the quota. |
 | persistence.storageClassName | string | `"wekafs--sdf-k8s01"` | Storage class backing the claim. `wekafs--sdf-k8s01` is the Weka-backed dynamic provisioner used by every other USDF application that needs a read-write-once volume. Omit to use the cluster default. |
 | podAnnotations | object | `{}` | Annotations for the pod |
 | podSecurityContext | object | `{"fsGroup":1000,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | Security context for the pod. `fsGroup` is what makes the persistent volume writable by the unprivileged service user, so it must match the uid and gid the image runs as. |

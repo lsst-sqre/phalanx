@@ -74,6 +74,10 @@ config:
   # beneath it, and it is where the PVC is mounted.
   dataDir: "/data"
 
+  # -- Container path the spool claim is mounted at, supplied as
+  # `MPPDB_SPOOL_DIR`. Separate volume; see `persistence.spoolSize`.
+  spoolDir: "/spool"
+
   # -- Directory holding the snapshot manifests, supplied as
   # `MPPDB_MANIFESTS_DIR`. Must be set explicitly: leaving it unset silently
   # yields an empty snapshot.
@@ -163,6 +167,12 @@ config:
 persistence:
   # -- Size of the claim for `config.dataDir`
   size: "20Gi"
+
+  # -- Size of the separate spool claim, which holds async query results. Sized
+  # far above the data claim because a single result can be tens of GiB and
+  # results are retained for 7 days; the per-user `spool_quota_bytes` only means
+  # anything if the volume is larger than the quota.
+  spoolSize: "2Ti"
 
   # -- Storage class backing the claim. `wekafs--sdf-k8s01` is the
   # Weka-backed dynamic provisioner used by every other USDF application that

@@ -69,6 +69,8 @@ spec:
             - name: "MPPDB_SCS_DEFAULT_TABLE"
               value: {{ . | quote }}
             {{- end }}
+            - name: "MPPDB_SPOOL_DIR"
+              value: {{ .Values.config.spoolDir | quote }}
             - name: "MPPDB_DATA_DIR"
               value: {{ .Values.config.dataDir | quote }}
             - name: "MPPDB_MANIFESTS_DIR"
@@ -141,6 +143,8 @@ spec:
           volumeMounts:
             - name: "data"
               mountPath: {{ .Values.config.dataDir | quote }}
+            - name: "spool"
+              mountPath: {{ .Values.config.spoolDir | quote }}
             - name: "config"
               mountPath: {{ .Values.config.configPath | quote }}
               subPath: "mppdb.toml"
@@ -163,6 +167,9 @@ spec:
         - name: "data"
           persistentVolumeClaim:
             claimName: "river-data"
+        - name: "spool"
+          persistentVolumeClaim:
+            claimName: "river-spool"
         - name: "config"
           configMap:
             name: "river"

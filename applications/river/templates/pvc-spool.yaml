@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "river-spool"
+  labels:
+    {{- include "river.labels" . | nindent 4 }}
+  annotations:
+    # Async query results. Separate from river-data on purpose: a single result
+    # can be tens of GiB, and while the spool shared a volume with the state
+    # database one runaway query filled it and took the service down. Nothing
+    # here is irreplaceable -- a lost result can be re-queried -- but the claim
+    # still carries the guards, because deleting it while jobs hold results
+    # would strand them.
+    argocd.argoproj.io/sync-options: Prune=false
+    helm.sh/resource-policy: keep
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: {{ .Values.persistence.spoolSize | quote }}
+  {{- with .Values.persistence.storageClassName }}
+  storageClassName: {{ . | quote }}
+  {{- end }}
