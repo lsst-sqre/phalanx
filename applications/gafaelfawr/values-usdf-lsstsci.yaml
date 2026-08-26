@@ -53,6 +53,9 @@ config:
     "exec:admin":
       - "rubinmgr"
       - "unix-admin"
+    "exec:notebook":
+      - "rubinmgr"
+      - "unix-admin"
 
   initialAdmins:
     - "amithm"

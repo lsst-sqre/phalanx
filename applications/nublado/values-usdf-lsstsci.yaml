@@ -1,0 +1,172 @@
+controller:
+  tolerations:
+    - key: edu.stanford.slac.sdf.project/rsp
+      effect: NoSchedule
+      operator: Equal
+      value: "true"
+  config:
+    dropdownMenu:
+      release:
+        cutoffVersion: "29.0.0"
+      weekly:
+        number: 78
+      daily:
+        number: 25
+      releaseCandidate:
+        cutoffVersion: "29.2.1"
+      experimental:
+        age: "3w"
+    logLevel: "DEBUG"
+    images:
+      source:
+        type: "docker"
+        registry: "ghcr.io"
+        repository: "lsst-sqre/sciplat-lab"
+      pin:
+        - "r29_2_0_rsp2697"
+    lab:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/c
+                    operator: NotIn
+                    values:
+                      - "true"
+      extraAnnotations:
+        edu.stanford.slac.sdf.project/rsp: "true"
+      env:
+        AWS_SHARED_CREDENTIALS_FILE: "/etc/nublado/secrets/aws-credentials.ini"
+        AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
+        DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
+        DAX_APDB_INDEX_URI: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
+        HOMEDIR_SCHEMA: "initialThenUsername"
+        HUB_ROUTE: "/nb/hub"
+        PGPASSFILE: "/etc/nublado/secrets/postgres-credentials.txt"
+        PGUSER: "rubin"
+        RSP_SITE_TYPE: "science"
+        S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
+        http_proxy: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+        https_proxy: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+        no_proxy: "hub.nublado,.sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
+        LSST_DISABLE_BUCKET_VALIDATION: "1"
+        LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
+      homedirSchema: "initialThenUsername"
+      homeVolumeName: "sdf-home"
+      nss:
+        baseGroup: |
+          root:x:0:
+          daemon:x:1:
+          bin:x:2:
+          sys:x:3:
+          adm:x:4:
+          tty:x:5:
+          disk:x:6:
+          lp:x:7:
+          mail:x:8:
+          news:x:9:
+          uucp:x:10:
+          man:x:12:
+          proxy:x:13:
+          kmem:x:15:
+          dialout:x:20:
+          fax:x:21:
+          voice:x:22:
+          cdrom:x:24:
+          floppy:x:25:
+          tape:x:26:
+          sudo:x:27:
+          audio:x:29:
+          dip:x:30:
+          www-data:x:33:
+          backup:x:34:
+          operator:x:37:
+          list:x:38:
+          irc:x:39:
+          src:x:40:
+          shadow:x:42:
+          utmp:x:43:
+          video:x:44:
+          sasl:x:45:
+          plugdev:x:46:
+          staff:x:50:
+          games:x:60:
+          users:x:100:
+          _ssh:x:101:
+          rubin_users:x:4085:
+          nogroup:x:65534:
+      pullSecret: "pull-secret"
+      secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "aws-credentials.ini"
+        - secretName: "nublado-lab-secret"
+          secretKey: "postgres-credentials.txt"
+      standardInithome: false
+      volumes:
+        - name: "sdf-home"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "sdf-home"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "1Gi"
+        - name: "sdf-group-rubin"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "sdf-group-rubin"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "1Gi"
+        - name: "sdf-data-rubin"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "sdf-data-rubin"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "1Gi"
+        - name: "sdf-scratch"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "sdf-scratch"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "1Gi"
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "sdf-home"
+        - containerPath: "/project"
+          subPath: "g"
+          volumeName: "sdf-group-rubin"
+        - containerPath: "/sdf/group/rubin"
+          volumeName: "sdf-group-rubin"
+        - containerPath: "/sdf/data/rubin"
+          volumeName: "sdf-data-rubin"
+        - containerPath: "/scratch"
+          volumeName: "sdf-scratch"
+
+proxy:
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+
+jupyterhub:
+  hub:
+    baseUrl: "/nb"
+    db:
+      url: "postgresql://nublado3@postgres.postgres/nublado3"
+      upgrade: true
+  cull:
+    timeout: 432000
+    maxAge: 691200
+
+hub:
+  internalDatabase: true

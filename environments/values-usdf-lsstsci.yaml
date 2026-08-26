@@ -11,4 +11,6 @@ applications:
   # despite that configuration not being officially supported by Phalanx.
   ingress-nginx: false
 
+  nublado: true
   postgres: true
+  squareone: true

@@ -142,3 +142,4 @@ dmypy.json
 # AI stuff
 .github/
 working-docs/
+.secrets/
