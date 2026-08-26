@@ -18,6 +18,7 @@ vaultPathPrefix: "secret/phalanx/idfint"
 applications:
   bigquery-kafka: true
   butler: true
+  conesearch: true
   datalinker: true
   ghostwriter: true
   gke: true

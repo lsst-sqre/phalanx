@@ -1,0 +1,13 @@
+apiVersion: v2
+type: application
+name: conesearch
+version: 1.0.0
+description: IVOA ConeSearch service for the Rubin Science Platform
+sources:
+  - "https://github.com/lsst-sqre/conesearch"
+appVersion: 0.1.0
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-116"
+      title: "ConeSearch service for the Rubin Science Platform"
+      url: "https://sqr-116.lsst.io"
