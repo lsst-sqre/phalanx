@@ -751,7 +751,7 @@ Rubin Observatory's telemetry service
 | scimma.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | square-events.cluster.name | string | `"sasquatch"` |  |
 | square-events.topics.slackViewSubmission.retentionMs | int | `1800000` | Retention period, in milliseconds, for the Slack `view_submission` interaction topic. These events drive project creation in templatebot, so retaining them well beyond the other Squarebot topics keeps the payload of a failed creation available for debugging and replay. |
-| strimzi-kafka.broker.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for broker pod assignment |
+| strimzi-kafka.broker.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"strimzi.io/pool-name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for broker pod assignment |
 | strimzi-kafka.broker.backup | bool | `false` | Whether to label the broker PVCs for backup by k8up, enabled on the summit and base environments |
 | strimzi-kafka.broker.enabled | bool | `false` | Enable node pool for the kafka brokers |
 | strimzi-kafka.broker.name | string | `"kafka"` | Node pool name |
@@ -783,7 +783,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.47.0-kafka-4.0.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
 | strimzi-kafka.connect.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafka Connect |
-| strimzi-kafka.controller.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for controller pod assignment |
+| strimzi-kafka.controller.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"strimzi.io/pool-name","operator":"In","values":["controller"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for controller pod assignment |
 | strimzi-kafka.controller.backup | bool | `false` | Whether to label the controller PVCs for backup by k8up, enabled on the summit and base environments |
 | strimzi-kafka.controller.enabled | bool | `false` | Enable node pool for the kafka controllers |
 | strimzi-kafka.controller.nodeIds | string | `"[3,4,5]"` | IDs to assign to the controllers |

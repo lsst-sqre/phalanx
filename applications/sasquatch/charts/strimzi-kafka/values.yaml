@@ -154,10 +154,10 @@ controller:
       requiredDuringSchedulingIgnoredDuringExecution:
         - labelSelector:
             matchExpressions:
-              - key: "app.kubernetes.io/name"
+              - key: "strimzi.io/pool-name"
                 operator: In
                 values:
-                  - kafka
+                  - controller
           topologyKey: "kubernetes.io/hostname"
 
   # -- Tolerations for controller pod assignment
@@ -205,7 +205,7 @@ broker:
       requiredDuringSchedulingIgnoredDuringExecution:
         - labelSelector:
             matchExpressions:
-              - key: "app.kubernetes.io/name"
+              - key: "strimzi.io/pool-name"
                 operator: In
                 values:
                   - kafka
