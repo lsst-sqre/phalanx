@@ -49,8 +49,6 @@ spec:
                 secretKeyRef:
                   name: "repertoire"
                   key: {{ $config.databasePasswordKey | quote }}
-            - name: "REPERTOIRE_DATABASE_USER"
-              value: {{ $config.databaseUser | quote }}
           image: "{{ $root.Values.image.repository }}:{{ $root.Values.image.tag | default $root.Chart.AppVersion }}"
           imagePullPolicy: {{ $root.Values.image.pullPolicy | quote }}
           {{- with $root.Values.schemaHook.resources }}
