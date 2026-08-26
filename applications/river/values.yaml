@@ -78,6 +78,19 @@ config:
   # `MPPDB_SPOOL_DIR`. Separate volume; see `persistence.spoolSize`.
   spoolDir: "/spool"
 
+  # -- Byte ceiling above which new async jobs are refused with 503 +
+  # Retry-After, written to `MPPDB_SPOOL_WATERMARK_BYTES`. The image default is
+  # 1 TiB, which on a 2 TiB spool would strand half the volume; but the
+  # watermark must also stay far enough below capacity that the results already
+  # in flight when it trips can still finish, or it fires only once the disk is
+  # already full — which is the ENOSPC this whole arrangement exists to prevent.
+  # Headroom is therefore sized from the worst case: `max_result_bytes` is 16 GiB
+  # and the heavy tier allows 16 concurrent jobs, so 256 GiB can legitimately be
+  # mid-write. 2 TiB - 256 GiB = 1.75 TiB, or 87.5% of the volume usable.
+  # Quoted: unquoted, YAML reads 13 digits as a float and Helm renders it as
+  # 1.924145348608e+12, which the service's integer parser rejects.
+  spoolWatermarkBytes: "1924145348608"
+
   # -- Directory holding the snapshot manifests, supplied as
   # `MPPDB_MANIFESTS_DIR`. Must be set explicitly: leaving it unset silently
   # yields an empty snapshot.
