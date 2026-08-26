@@ -41,7 +41,9 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: "{{ .Values.ingress.pathPrefix }}(/|$)(.*)"
+            # Must not match the bare prefix: river-ui owns that.
+            # Every real API path has a non-empty segment after the slash.
+            - path: "{{ .Values.ingress.pathPrefix }}(/)(.+)"
               pathType: "ImplementationSpecific"
               backend:
                 service:
