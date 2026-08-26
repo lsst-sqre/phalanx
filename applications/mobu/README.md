@@ -25,7 +25,7 @@ Continuous integration testing
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.pathPrefix | string | `"/mobu"` | Prefix for mobu's API routes. |
-| config.sentryEnvironment | string | `nil` | The environment to report to Sentry |
+| config.sentryEnvironment | string | Phalanx environment | The environment to report to Sentry |
 | config.sentryTracesSampleConfig | float | `0` | Sentry tracing config: a float to specify a percentage, or "errors" to send all transactions with errors. |
 | config.slackAlerts | bool | `true` | Whether to send alerts and status to Slack. |
 | global.environmentName | string | Set by Argo CD | Name of the Phalanx environment |
