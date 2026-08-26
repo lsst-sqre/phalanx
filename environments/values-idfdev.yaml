@@ -30,6 +30,7 @@ applications:
   muster: true
   noteburst: true
   nublado: true
+  obsforge: true
   obsforgetap: true
   portal: true
   ppdbtap: true
