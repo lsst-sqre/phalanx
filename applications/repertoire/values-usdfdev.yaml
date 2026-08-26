@@ -13,6 +13,10 @@ config:
     servers:
       tap:
         enabled: true
+        schemas:
+          - "dp1"
+          - "ivoa_obscore"
+          - "dp02_dc2"
         databaseUrl: "postgresql://tap_schema_admin_tap@rsp-db-rw.postgres-db:5432/tap"
         databasePasswordKey: "tap-schema-admin-password"
       ssotap:
