@@ -527,7 +527,17 @@ config:
       consdbtap:
         enabled: false
         schemas:
-          - "efd"
+          - "cdb_latiss"
+          - "cdb_lsstcam"
+          - "cdb_lsstcomcam"
+          - "cdb_lsstcomcamsim"
+          - "cdb_startrackerfast"
+          - "cdb_startrackernarrow"
+          - "cdb_startrackerwide"
+          - "efd_latiss"
+          - "efd_lsstcam"
+          - "efd_lsstcomcam"
+
         databaseUrl: "postgresql://consdbtap@127.0.0.1:5432/consdbtap"
         databasePasswordKey: "consdbtap-database-password"
 
