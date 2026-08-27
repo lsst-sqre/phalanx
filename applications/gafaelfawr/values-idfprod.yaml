@@ -64,6 +64,8 @@ config:
         sia: 70
         tap: 1000
         vo-cutouts: 35
+      disk:
+        "/home": 41943040000
       notebook:
         cpu: 4.0
         memory: 32
