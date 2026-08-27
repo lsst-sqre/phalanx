@@ -168,7 +168,7 @@ jobs:
       - uses: medyagh/setup-minikube@latest
         with:
           cpus: max
-          memory: 5500m  # Linux virtual machines have 7GB of RAM
+          memory: 13500m  # Linux virtual machines have 7GB of RAM
 
       - name: Test interaction with the cluster
         run: kubectl get nodes
