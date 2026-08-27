@@ -46,6 +46,8 @@ config:
     default:
       api:
         hips: 1000
+      disk:
+        "/home": 41943040000
       notebook:
         cpu: 15.0
         memory: 120
