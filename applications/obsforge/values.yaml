@@ -75,7 +75,13 @@ podAnnotations: {}
 
 # -- Resource limits and requests for the obsforge deployment pod
 # @default -- See `values.yaml`
-resources: {}
+resources:
+  limits:
+    cpu: "1"
+    memory: "512Mi"
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
 
 # -- Tolerations for the obsforge deployment pod
 tolerations: []
@@ -108,7 +114,13 @@ worker:
 
   # -- Resource limits and requests for the obsforge worker pods
   # @default -- See `values.yaml`
-  resources: {}
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
 
   # -- Tolerations for the obsforge worker pods
   tolerations: []
@@ -125,7 +137,13 @@ schemaUpdate:
 
   # -- Resource limits and requests for the schema update job
   # @default -- See `values.yaml`
-  resources: {}
+  resources:
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
 
   # -- Tolerations for the schema update job
   tolerations: []
@@ -158,7 +176,13 @@ redis:
 
   # -- Resource limits and requests for the Redis pod
   # @default -- See `values.yaml`
-  resources: {}
+  resources:
+    limits:
+      cpu: "1"
+      memory: "100Mi"
+    requests:
+      cpu: "100m"
+      memory: "20Mi"
 
   # -- Tolerations for the Redis pod
   tolerations: []
