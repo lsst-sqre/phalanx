@@ -181,7 +181,7 @@ jupyterhub:
       upgrade: true
   cull:
     timeout: 432000  # 5 days
-    maxAge: 691200  # 8 days
+    maxAge: 648000  # 7 days 12 hours
 
 hub:
   internalDatabase: true
