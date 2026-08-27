@@ -80,6 +80,7 @@ config:
       - "g_admins"
     "admin:oidc":
       - "g_admins"
+      - "g_oidc_managers"
     "admin:token":
       - "g_admins"
     "admin:userinfo":
