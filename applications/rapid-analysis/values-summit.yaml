@@ -411,6 +411,8 @@ resources:
     memory: 2.5G
 redis:
   enabled: true
+  image:
+    tag: "8.10.1"
   port: 6379
   env:
     MASTER: true
