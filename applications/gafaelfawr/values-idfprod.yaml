@@ -65,7 +65,7 @@ config:
         tap: 1000
         vo-cutouts: 35
       disk:
-        "/home": 41943040000
+        "/home": 52428800000
       notebook:
         cpu: 4.0
         memory: 32
