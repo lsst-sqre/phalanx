@@ -78,6 +78,13 @@ config:
   # `MPPDB_SPOOL_DIR`. Separate volume; see `persistence.spoolSize`.
   spoolDir: "/spool"
 
+  # -- Path the console's PyVO and TOPCAT recipes (and the .ipynb export) tell
+  # users to keep their token in, written to `MPPDB_TOKEN_FILE`. A top-level
+  # service setting, NOT branding: it is a path, not a display string. Must
+  # differ from other front-ends' — the accounts deployment keeps
+  # `~/.mppdb.token`, so a user of both does not have them collide in one file.
+  tokenFile: "~/.river.token"
+
   # -- Byte ceiling above which new async jobs are refused with 503 +
   # Retry-After, written to `MPPDB_SPOOL_WATERMARK_BYTES`. The image default is
   # 1 TiB, which on a 2 TiB spool would strand half the volume; but the
