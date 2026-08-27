@@ -173,7 +173,7 @@ proxy:
 jupyterhub:
   hub:
     db:
-      url: "postgresql://nublado3@postgres.postgres/nublado3"
+      url: "postgresql://nublado@rsp-db-rw.postgres-db/nublado"
       upgrade: true
   cull:
     timeout: 432000  # 5 days
