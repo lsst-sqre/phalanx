@@ -52,7 +52,8 @@ config:
   pathPrefix: "/mobu"
 
   # -- The environment to report to Sentry
-  sentryEnvironment: null
+  # @default -- Phalanx environment
+  sentryEnvironment: ""
 
   # -- Sentry tracing config: a float to specify a percentage, or "errors" to
   # send all transactions with errors.

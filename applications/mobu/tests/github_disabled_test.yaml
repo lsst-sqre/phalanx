@@ -1,6 +1,8 @@
 suite: Github Integration Disabled
 set:
   # GitHub integrations are disabled by default
+  config:
+    sentryEnvironment: "minikube"
   global:
     host: "example.com"
 tests:
@@ -28,7 +30,7 @@ tests:
                 registryUrl: http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081
                 suffix: ""
             pathPrefix: /mobu
-            sentryEnvironment: null
+            sentryEnvironment: minikube
             sentryTracesSampleConfig: 0
             slackAlerts: true
   - it: "Should not inject GitHub CI app secrets into the StatefulSet env"

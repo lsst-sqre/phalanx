@@ -5,6 +5,7 @@ set:
       acceptedGithubOrgs:
         - "org1"
         - "org2"
+    sentryEnvironment: "minikube"
   global:
     host: "example.com"
 tests:
@@ -53,6 +54,6 @@ tests:
                 registryUrl: http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081
                 suffix: ""
             pathPrefix: /mobu
-            sentryEnvironment: null
+            sentryEnvironment: minikube
             sentryTracesSampleConfig: 0
             slackAlerts: true
