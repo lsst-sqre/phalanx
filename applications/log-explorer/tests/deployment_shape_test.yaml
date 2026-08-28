@@ -1,0 +1,116 @@
+suite: Deployment shape
+# Each of these encodes a decision that is expensive to rediscover, and
+# that nothing else would flag if it were quietly reverted.
+set:
+  global:
+    host: "example.com"
+    vaultSecretsPath: "secret/phalanx/test"
+values:
+  - "../values-base.yaml"
+tests:
+  - it: "replaces the pod rather than rolling it"
+    template: "deployment.yaml"
+    asserts:
+      # At one replica RollingUpdate's maxUnavailable floors to zero, so a
+      # rollout whose new pod never passes readiness wedges with two unready
+      # pods that Argo CD cannot converge. Recreate also lets the old pod
+      # release the ReadWriteOnce cache volume before the new one claims it.
+      - equal:
+          path: "spec.strategy.type"
+          value: "Recreate"
+      - equal:
+          path: "spec.replicas"
+          value: 1
+
+  - it: "probes a route the application answers under its prefix"
+    template: "deployment.yaml"
+    asserts:
+      # The starter chart probes "/", which this app 404s when served under
+      # a prefix — the pod would never join the Service.
+      - equal:
+          path: "spec.template.spec.containers[0].readinessProbe.httpGet.path"
+          value: "/log-explorer/healthz"
+      # Headroom over the defaults: parsing a night of logs is CPU-bound
+      # pure Python contending with the fetch threads, so latency spikes
+      # exactly when dropping the only pod would be most destructive.
+      - equal:
+          path: "spec.template.spec.containers[0].readinessProbe.timeoutSeconds"
+          value: 5
+      - equal:
+          path: "spec.template.spec.containers[0].readinessProbe.failureThreshold"
+          value: 4
+
+  - it: "runs unprivileged on a read-only root filesystem"
+    template: "deployment.yaml"
+    asserts:
+      - equal:
+          path: "spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem"
+          value: true
+      - equal:
+          path: "spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation"
+          value: false
+      - equal:
+          path: "spec.template.spec.securityContext.runAsNonRoot"
+          value: true
+      # Must match the `explorer` user the image creates; fsGroup is what
+      # makes the cache volume writable to it.
+      - equal:
+          path: "spec.template.spec.securityContext.runAsUser"
+          value: 1000
+      - equal:
+          path: "spec.template.spec.securityContext.fsGroup"
+          value: 1000
+
+  - it: "mounts every path the application writes to"
+    template: "deployment.yaml"
+    asserts:
+      # With a read-only root, a missing mount is not a warning — it is the
+      # first write failing at runtime.
+      - contains:
+          path: "spec.template.spec.containers[0].volumeMounts"
+          content:
+            name: "cache"
+            mountPath: "/var/cache/ra-log-explorer"
+      - contains:
+          path: "spec.template.spec.containers[0].volumeMounts"
+          content:
+            name: "tmp"
+            mountPath: "/tmp"
+      - contains:
+          path: "spec.template.spec.containers[0].volumeMounts"
+          content:
+            name: "sites"
+            mountPath: "/etc/ra-log-explorer"
+            readOnly: true
+
+  - it: "rolls the pod when the site catalog changes"
+    template: "deployment.yaml"
+    asserts:
+      # The catalog is a mounted file rather than an env var, so without a
+      # checksum annotation a change to it would leave the running pod
+      # reading the old one indefinitely.
+      - isNotNullOrEmpty:
+          path: "spec.template.metadata.annotations['checksum/sites']"
+
+  - it: "keeps the cache on a volume that survives a restart"
+    template: "pvc.yaml"
+    asserts:
+      # Fetching a night out of Loki takes minutes. An emptyDir would throw
+      # that away on every restart — worst exactly when someone is
+      # restarting things in order to investigate.
+      - equal:
+          path: "spec.resources.requests.storage"
+          value: "50Gi"
+      - equal:
+          path: "spec.accessModes[0]"
+          value: "ReadWriteOnce"
+
+  - it: "sizes the claim from the same value as the cache ceiling"
+    template: "pvc.yaml"
+    set:
+      cache:
+        sizeGi: 10
+    asserts:
+      - equal:
+          path: "spec.resources.requests.storage"
+          value: "10Gi"

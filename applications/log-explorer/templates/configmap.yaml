@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "log-explorer-sites"
+  labels:
+    {{- include "log-explorer.labels" . | nindent 4 }}
+data:
+  # The application's site catalog, pointed at by RA_LOG_EXPLORER_SITES_FILE.
+  # It supports several entries — that is what lets a laptop look at either
+  # observatory — but a deployment declares exactly one, because which
+  # cluster's logs it serves is decided by where it runs. No
+  # `consdbTokenFile`: the in-cluster ConsDB Service address never passes
+  # through Gafaelfawr, so there is no bearer token to send.
+  sites.toml: |
+    default_site = {{ required "config.site.name is required" .Values.config.site.name | quote }}
+
+    [[site]]
+    name = {{ .Values.config.site.name | quote }}
+    cluster = {{ required "config.site.cluster is required" .Values.config.site.cluster | quote }}
+    namespace = {{ required "config.site.namespace is required" .Values.config.site.namespace | quote }}
+    lokiAddr = {{ required "config.site.lokiAddr is required" .Values.config.site.lokiAddr | quote }}
+    consdbUrl = {{ required "config.site.consdbUrl is required" .Values.config.site.consdbUrl | quote }}
+    {{- with .Values.config.site.consdbTokenFile }}
+    consdbTokenFile = {{ . | quote }}
+    {{- end }}
