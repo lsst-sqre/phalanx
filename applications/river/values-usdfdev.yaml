@@ -35,5 +35,5 @@ image:
   pullSecrets: ["river-pull"]
   # sha- tag of the u/mjuric/mppdb merge that contains both the OCI build and
   # the gafaelfawr provider (mppdb b439931); CI's in-image test gate passed.
-  tag: "sha-093c4ac"
+  tag: "sha-554f3be"
   pullPolicy: "Always"
