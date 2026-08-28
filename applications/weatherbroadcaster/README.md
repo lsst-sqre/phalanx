@@ -25,6 +25,7 @@ Publish weather station data for MeteoBlue.
 | image.repository | string | `"ghcr.io/lsst-ts/weatherbroadcaster"` | Image to use in the weatherbroadcaster deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
+| ingress.auth.enabled | bool | `true` | Whether to require Gafaelfawr authentication for access |
 | nodeSelector | object | `{}` | Node selection rules for the weatherbroadcaster deployment pod |
 | persistence | object | `{"enabled":false,"existingClaim":null,"mountPath":"/data","size":"10Mi","storageClassName":null,"subPath":null}` | Storage shared within each pod; set `enabled` to true to use a PersistentVolumeClaim |
 | persistence.enabled | bool | `false` | Whether to persist weather data across pod restarts |

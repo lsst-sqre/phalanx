@@ -5,10 +5,15 @@ metadata:
   labels:
     {{- include "weatherbroadcaster.labels" . | nindent 4 }}
 config:
+  {{- if .Values.ingress.auth.enabled }}
   scopes:
     all:
       - "read:image"
   service: "weatherbroadcaster"
+  {{- else }}
+  scopes:
+    anonymous: true
+  {{- end }}
 template:
   metadata:
     name: "weatherbroadcaster"
