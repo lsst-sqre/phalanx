@@ -119,6 +119,7 @@ argo-cd:
         g, sierrav@slac.stanford.edu, role:admin
 
         g, bbrond@slac.stanford.edu, role:developer
+        g, couger01@slac.stanford.edu, role:developer
         g, fritzm@slac.stanford.edu, role:developer
         g, hchiang2@slac.stanford.edu, role:developer
         g, jeremym@slac.stanford.edu, role:developer
