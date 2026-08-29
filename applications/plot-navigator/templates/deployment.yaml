@@ -20,6 +20,12 @@ spec:
         {{- with .Values.config.volumes }}
         {{- . | toYaml | nindent 8 }}
         {{- end }}
+        - name: "butler-secrets-raw"
+          secret:
+            secretName: {{ include "plot-navigator.fullname" . }}
+        - name: "butler-secrets"
+          emptyDir:
+            sizeLimit: 50Mi
       containers:
       - name: plot-navigator
         image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion}}
@@ -29,16 +35,25 @@ spec:
           - name: {{ $key | quote }}
             value: {{ $value | quote }}
 {{- end }}
-          - name: S3_KEY
+          - name: AWS_ACCESS_KEY_ID
             valueFrom:
               secretKeyRef:
                 name: {{ include "plot-navigator.fullname" . }}
                 key: S3_KEY
-          - name: S3_SECRET
+          - name: AWS_SECRET_ACCESS_KEY
             valueFrom:
               secretKeyRef:
                 name: {{ include "plot-navigator.fullname" . }}
                 key: S3_SECRET
+          - name: REDIS_HOST
+            value: "plot-navigator-redis"
+          - name: REDIS_PORT
+            value: "6379"
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: redis-secret
+                key: password
         resources:
           {{- toYaml .Values.resources | nindent 10 }}
         {{- if .Values.config.envFromSecretPath }}
@@ -50,8 +65,34 @@ spec:
           {{- with .Values.config.volume_mounts }}
           {{- . | toYaml | nindent 10 }}
           {{- end }}
+          - name: "butler-secrets"
+            mountPath: "/opt/lsst/butler/secrets"
         {{- end }}
+      initContainers:
+        # To deal with the Postgres file permission issues,
+        # copy the secrets from butler-secrets-raw to butler-secrets.
+        - name: fix-secret-permissions
+          image: "alpine:latest"
+          imagePullPolicy: IfNotPresent
+          command:
+            - "/bin/ash"
+            - "-c"
+            - |
+              cp -RL /secrets-raw/* /opt/lsst/butler/secrets/
+              chown 1000:4085 /opt/lsst/butler/secrets/*
+              chmod 0400 /opt/lsst/butler/secrets/*
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+          volumeMounts:
+            - name: "butler-secrets"
+              mountPath: "/opt/lsst/butler/secrets"
+            - name: "butler-secrets-raw"
+              mountPath: "/secrets-raw"
+              readOnly: true
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
+        runAsUser: 65532
         runAsGroup: 4085

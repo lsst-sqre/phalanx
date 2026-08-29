@@ -1,48 +1,23 @@
 environment:
   BASE_URL: "/plot-navigator"
   REPO_URLS: '{"main": "unused", "embargo": "unused", "dp2_prep": "unused", "/repo/dc2": "unused", "/repo/dp1": "unused", "/repo/main": "unused"}'
+  BUTLER_REPO_NAMES: "main,dp2_prep,embargo,/repo/dc2,/repo/dp1"
   BUCKET_NAME: "rubin-plot-navigator"
   BUCKET_URL: "https://s3dfrgw.slac.stanford.edu/"
+  S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
+  DAF_BUTLER_REPOSITORY_INDEX: "/sdf/group/rubin/shared/data-repos.yaml"
+  AWS_PROFILE: "rubin-plot-navigator"
+  PGPASSFILE: "/opt/lsst/butler/secrets/postgres-credentials.txt"
+  PGUSER: "rubin"
+  AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"
+  LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
+  LSST_DISABLE_BUCKET_VALIDATION: "1"
+  AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
+  AWS_RESPONSE_CHECKSUM_VALIDATION: "WHEN_REQUIRED"
+  APP_PREFIX: "/plot-navigator"
 
 config:
   separateSecrets: false
-  persistentVolumeClaims:
-    - name: sdf-group-rubin
-      storageClassName: sdf-group-rubin
-    - name: sdf-data-rubin
-      storageClassName: sdf-data-rubin
-  volumes:
-    - name: sdf-group-rubin
-      persistentVolumeClaim:
-        claimName: sdf-group-rubin
-    - name: sdf-data-rubin
-      persistentVolumeClaim:
-        claimName: sdf-data-rubin
-  volume_mounts:
-    - name: sdf-group-rubin
-      mountPath: /sdf/group/rubin
-      readOnly: true
-    - name: sdf-data-rubin
-      mountPath: /sdf/data/rubin
-      readOnly: true
-
-productionTools:
-  image:
-    repository: ghcr.io/lsst-dm/production_tools
-    tag: 0.5
-  env:
-    DAF_BUTLER_REPOSITORY_INDEX: "/sdf/group/rubin/shared/data-repos.yaml"
-    PGPASSFILE: "/opt/lsst/butler/secrets/postgres-credentials.txt"
-    PGUSER: "rubin"
-    AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"
-    S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
-    LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
-    LSST_DISABLE_BUCKET_VALIDATION: "1"
-    REDIS_HOST: "plot-navigator-redis"
-    REDIS_PORT: "6379"
-    BUTLER_REPO_NAMES: "embargo,main,/repo/dc2,/repo/dp1,dp2_prep,/repo/main"
-    AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
-    AWS_RESPONSE_CHECKSUM_VALIDATION: "WHEN_REQUIRED"
   persistentVolumeClaims:
     - name: sdf-group-rubin
       storageClassName: sdf-group-rubin
