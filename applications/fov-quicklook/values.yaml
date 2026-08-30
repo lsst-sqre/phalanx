@@ -12,7 +12,7 @@ image:
   pullPolicy: Always
 
   # -- Tag of image to use
-  tag: main
+  tag: fov-quicklook-local-cursor-radec-20260830-2206
 
 config:
   # -- URL path prefix
