@@ -10,6 +10,7 @@ data:
   NOTEBURST_REDIS_URL: "redis://{{ include "noteburst.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
   NOTEBURST_WORKER_LOCK_REDIS_URL: "redis://{{ include "noteburst.fullname" . }}-redis.{{ .Release.Namespace }}:6379/1"
   NOTEBURST_WORKER_JOB_TIMEOUT: {{ .Values.config.worker.jobTimeout | quote }}
+  NOTEBURST_WORKER_NBEXEC_JOB_TIMEOUT: {{ .Values.config.worker.nbexecJobTimeout | quote }}
   NOTEBURST_WORKER_TOKEN_LIFETIME: {{ .Values.config.worker.tokenLifetime | quote }}
   NOTEBURST_WORKER_IMAGE_SELECTOR: {{ .Values.config.worker.imageSelector | quote  }}
   NOTEBURST_WORKER_IMAGE_REFERENCE: {{ .Values.config.worker.imageReference | quote  }}

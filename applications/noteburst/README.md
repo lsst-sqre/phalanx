@@ -28,9 +28,10 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | config.worker.identities | list | `[]` | Science Platform user identities that workers can acquire. Each item is an object with username and uuid keys |
 | config.worker.imageReference | string | `""` | Nublado image reference, applicable when imageSelector is "reference" |
 | config.worker.imageSelector | string | `"recommended"` | Nublado image stream to select: "recommended", "weekly" or "reference" |
-| config.worker.jobTimeout | int | `300` | The maximum allowed notebook execution time, in seconds. |
+| config.worker.jobTimeout | int | `300` | The backstop timeout, in seconds, for the short worker tasks (`ping`, `run_python`, and the `keep_alive` cron). Notebook execution is bounded by `nbexecJobTimeout` instead. |
 | config.worker.keepAlive | string | `"hourly"` | Worker keep alive mode: "normal", "fast", "hourly", "daily", "disabled" |
 | config.worker.maxConcurrentJobs | int | `1` | Max number of concurrent notebook executions per worker |
+| config.worker.nbexecJobTimeout | int | `3660` | The absolute arq timeout, in seconds, for notebook execution (`nbexec`) jobs. The per-request notebook timeout is what normally ends an over-running notebook; the frontend rejects request timeouts that are not at least 60 seconds shorter than this backstop. |
 | config.worker.tokenLifetime | string | `"2419200"` | Worker token lifetime, in seconds. |
 | config.worker.tokenScopes | string | `"exec:notebook,read:image,read:tap,read:sasquatch"` | Nublado2 worker account's token scopes as a comma-separated list. |
 | config.worker.workerCount | int | `1` | Number of workers to run |
