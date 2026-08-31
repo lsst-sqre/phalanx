@@ -1,3 +1,14 @@
+x-topology-spread:
+  &topology-spread
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchExpressions:
+      - key: pod-template-hash
+        operator: Exists
+
 love-commander:
   image:
     repository: ts-dockerhub.lsst.org/love-commander
@@ -58,6 +69,7 @@ x-manager-producer:
     AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
     DB_PASS: db-pass
     REDIS_PASS: redis-pass
+  <<: *topology-spread
   resources:
     requests:
       cpu: 150m
@@ -399,6 +411,7 @@ love-producer:
   image:
     repository: ts-dockerhub.lsst.org/love-producer
     pullPolicy: Always
+  <<: *topology-spread
   resources:
     requests:
       cpu: 10m

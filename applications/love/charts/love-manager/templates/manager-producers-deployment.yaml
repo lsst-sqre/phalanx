@@ -49,14 +49,18 @@ spec:
         - name: pull-secret
       {{- with $manager_producer.nodeSelector }}
       nodeSelector:
-        {{- toYaml $ | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with $manager_producer.affinity }}
       affinity:
-        {{- toYaml $ | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with $manager_producer.tolerations }}
       tolerations:
-        {{- toYaml $ | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $manager_producer.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- toYaml . | nindent 8 }}
       {{- end }}
 {{- end }}

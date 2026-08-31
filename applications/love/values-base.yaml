@@ -1,15 +1,13 @@
-x-pod-antiaffinity:
-  &pod-antiaffinity
-  affinity:
-    podAntiAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 100
-        podAffinityTerm:
-          labelSelector:
-            matchExpressions:
-            - key: pod-template-hash
-              operator: Exists
-          topologyKey: kubernetes.io/hostname
+x-topology-spread:
+  &topology-spread
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchExpressions:
+      - key: pod-template-hash
+        operator: Exists
 
 love-commander:
   image:
@@ -71,7 +69,7 @@ x-manager-producer:
     AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
     DB_PASS: db-pass
     REDIS_PASS: redis-pass
-  <<: *pod-antiaffinity
+  <<: *topology-spread
   resources:
     requests:
       cpu: 150m
@@ -418,7 +416,6 @@ love-nginx:
 
 x-love-producer-envsys-resources:
   &love-producer-envsys-resources
-  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 50m
@@ -429,7 +426,6 @@ x-love-producer-envsys-resources:
 
 x-love-producer-scripqueue-resources:
   &love-producer-scripqueue-resources
-  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 50m
@@ -440,7 +436,6 @@ x-love-producer-scripqueue-resources:
 
 x-love-producer-vms-resources:
   &love-producer-vms-resources
-  <<: *pod-antiaffinity
   resources:
     requests:
       cpu: 50m
@@ -453,7 +448,7 @@ love-producer:
   image:
     repository: ts-dockerhub.lsst.org/love-producer
     pullPolicy: Always
-  <<: *pod-antiaffinity
+  <<: *topology-spread
   resources:
     requests:
       cpu: 15m

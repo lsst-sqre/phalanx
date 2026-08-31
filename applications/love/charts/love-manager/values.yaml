@@ -248,6 +248,8 @@ manager:
       tolerations: []
       # -- Affinity rules for the LOVE manager producers pods
       affinity: {}
+      # -- Topology spread constraints for the LOVE manager producers pods
+      topologySpreadConstraints: []
       # -- Configuration for the LOVE manager producers pods readiness probe
       readinessProbe: {}
   # -- Configuration for the producers ports.

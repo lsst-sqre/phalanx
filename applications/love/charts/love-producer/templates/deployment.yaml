@@ -94,4 +94,14 @@ spec:
       tolerations:
         {{- toYaml $tolerations | nindent 8 }}
       {{- end }}
+      {{- if or $.Values.topologySpreadConstraints $producer.topologySpreadConstraints }}
+      {{- $topologySpreadConstraints := "" }}
+      {{- if $producer.topologySpreadConstraints }}
+      {{- $topologySpreadConstraints = $producer.topologySpreadConstraints }}
+      {{- else }}
+      {{- $topologySpreadConstraints = $.Values.topologySpreadConstraints }}
+      {{- end }}
+      topologySpreadConstraints:
+        {{- toYaml $topologySpreadConstraints | nindent 8 }}
+      {{- end }}
 {{- end }}
