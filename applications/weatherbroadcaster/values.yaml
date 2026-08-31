@@ -34,6 +34,10 @@ config:
   weatherDataFilePath: "/data/weather.json"
 
 ingress:
+  auth:
+    # -- Whether to require Gafaelfawr authentication for access
+    enabled: true
+
   # -- Additional annotations for the ingress rule
   annotations: {}
 
