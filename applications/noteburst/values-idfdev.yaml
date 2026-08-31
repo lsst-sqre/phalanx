@@ -1,8 +1,5 @@
 image:
   pullPolicy: Always
-  # Temporary branch deployment for DM-55928; replace with the 0.27.1
-  # release image (and drop this override) once it is published.
-  tag: "tickets-DM-55928-timeout-reporting"
 
 config:
   logLevel: "DEBUG"
