@@ -101,6 +101,16 @@ nodeSelector: {}
 tolerations: []
 # -- This specifies the scheduling constraints of the pod
 affinity: {}
+# -- This specifies topology spread constraints for the pod. Defaults to
+# spreading all CSC pods in the namespace as evenly as possible across nodes.
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchExpressions:
+        - key: csc-name
+          operator: Exists
 # -- Enable observing environment sidecar?
 obsenv: false
 # -- This key allows specification of a json configuration file for the observing environment.

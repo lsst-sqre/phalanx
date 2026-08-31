@@ -33,3 +33,4 @@ A Helm chart for deploying the Control System CSCs.
 | service.type | string | `nil` | The Service type for the application. This is either ClusterIP (internal access) or LoadBalancer (external access) |
 | service.use | bool | `false` | This sets the use of a Service API for the application |
 | tolerations | list | `[]` | This specifies the tolerations of the pod for any system taints |
+| topologySpreadConstraints | list | `[{"labelSelector":{"matchExpressions":[{"key":"csc-name","operator":"Exists"}]},"maxSkew":1,"topologyKey":"kubernetes.io/hostname","whenUnsatisfiable":"ScheduleAnyway"}]` | This specifies topology spread constraints for the pod. Defaults to spreading all CSC pods in the namespace as evenly as possible across nodes. |
