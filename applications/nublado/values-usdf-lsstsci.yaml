@@ -1,9 +1,4 @@
 controller:
-  tolerations:
-    - key: edu.stanford.slac.sdf.project/rsp
-      effect: NoSchedule
-      operator: Equal
-      value: "true"
   config:
     dropdownMenu:
       release:
@@ -25,17 +20,8 @@ controller:
       pin:
         - "r29_2_0_rsp2697"
     lab:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: node-role.kubernetes.io/c
-                    operator: NotIn
-                    values:
-                      - "true"
       extraAnnotations:
-        edu.stanford.slac.sdf.project/rsp: "true"
+        edu.stanford.slac.sdf.project/lsstsci: "true"
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/etc/nublado/secrets/aws-credentials.ini"
         AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
@@ -54,6 +40,8 @@ controller:
         LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
       homedirSchema: "initialThenUsername"
       homeVolumeName: "sdf-home"
+      nodeSelector:
+        edu.stanford.slac.sdf.project/lsstsci: "true"
       nss:
         baseGroup: |
           root:x:0:
