@@ -21,6 +21,7 @@ envSecrets:
 # _nodeSelector_ (A node selector object specification)
 # _tolerations_ (A list of tolerations)
 # _affinity_ (An affinity object specification)
+# _topologySpreadConstraints_ (A topology spread constraints list specification)
 producers: []
 # -- This allows for the specification of pod annotations.
 annotations: {}
@@ -32,3 +33,5 @@ nodeSelector: {}
 tolerations: []
 # -- Affinity rules applied to all LOVE producer pods
 affinity: {}
+# -- Topology spread constraints applied to all LOVE producer pods
+topologySpreadConstraints: []
