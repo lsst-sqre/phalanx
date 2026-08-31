@@ -170,8 +170,16 @@ config:
     # -- Number of workers to run
     workerCount: 1
 
-    # -- The maximum allowed notebook execution time, in seconds.
+    # -- The backstop timeout, in seconds, for the short worker tasks
+    # (`ping`, `run_python`, and the `keep_alive` cron). Notebook execution
+    # is bounded by `nbexecJobTimeout` instead.
     jobTimeout: 300
+
+    # -- The absolute arq timeout, in seconds, for notebook execution
+    # (`nbexec`) jobs. The per-request notebook timeout is what normally
+    # ends an over-running notebook; the frontend rejects request timeouts
+    # that are not at least 60 seconds shorter than this backstop.
+    nbexecJobTimeout: 3660
 
     # -- Max number of concurrent notebook executions per worker
     maxConcurrentJobs: 1
