@@ -284,6 +284,9 @@ applications:
   # -- Enable the skyviewer application
   skyviewer: false
 
+  # -- Enable the so-evening-tailgate application
+  so-evening-tailgate: false
+
   # -- Enable the ssotap application
   ssotap: false
 
