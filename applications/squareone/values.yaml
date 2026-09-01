@@ -33,8 +33,14 @@ ingress:
   # -- Scope required for /times-square UI
   timesSquareScope: "exec:notebook"
 
-  # -- Scope required for the /admin UI
-  adminScope: "exec:admin"
+  # -- Scopes that grant access to the /admin UI. Holding any one of them is
+  # sufficient; which admin pages each scope reveals is decided by Squareone's
+  # own `adminPageScopes` configuration.
+  adminScopes:
+    - "exec:admin"
+    - "admin:notifications"
+    - "admin:token"
+    - "admin:oidc"
 
 # -- Resource requests and limits for Squareone pods
 # @default -- see `values.yaml`
@@ -128,6 +134,18 @@ config:
 
   # -- Sentry debug mode
   sentryDebug: false
+
+  # -- Maps each admin page id (`notifications`, `serviceTokens`,
+  # `oidcClients`, `sentry`) to the Gafaelfawr scopes granting access to it.
+  # Holding any one of a page's scopes is sufficient; an empty list hides the
+  # page. Override only the pages that differ — the rest keep their defaults.
+  # Keep this consistent with `ingress.adminScopes`, which decides who gets
+  # past the /admin ingress at all.
+  adminPageScopes:
+    notifications: ["admin:notifications"]
+    serviceTokens: ["admin:token"]
+    oidcClients: ["admin:oidc"]
+    sentry: ["exec:admin"]
 
   # -- Enable the App menu
   enableAppsMenu: false

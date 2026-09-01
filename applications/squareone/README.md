@@ -17,6 +17,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| config.adminPageScopes | object | `{"notifications":["admin:notifications"],"oidcClients":["admin:oidc"],"sentry":["exec:admin"],"serviceTokens":["admin:token"]}` | Maps each admin page id (`notifications`, `serviceTokens`, `oidcClients`, `sentry`) to the Gafaelfawr scopes granting access to it. Holding any one of a page's scopes is sufficient; an empty list hides the page. Override only the pages that differ — the rest keep their defaults. Keep this consistent with `ingress.adminScopes`, which decides who gets past the /admin ingress at all. |
 | config.appLinks | list | `[{"href":"/argo-cd/","internal":false,"label":"Argo CD"}]` | App menu items |
 | config.coManageRegistryUrl | string | null disables the COmanage integration | URL to the COmanage registry, if the environment uses COmanage for identity. |
 | config.docsBaseUrl | string | `"https://rsp.lsst.io"` | Base URL for user documentation (excludes trailing slash) |
@@ -51,7 +52,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy (tip: use Always for development) |
 | image.repository | string | `"ghcr.io/lsst-sqre/squareone"` | Squareone Docker image repository |
 | image.tag | string | Chart's appVersion | Overrides the image tag. |
-| ingress.adminScope | string | `"exec:admin"` | Scope required for the /admin UI |
+| ingress.adminScopes | list | `["exec:admin","admin:notifications","admin:token","admin:oidc"]` | Scopes that grant access to the /admin UI. Holding any one of them is sufficient; which admin pages each scope reveals is decided by Squareone's own `adminPageScopes` configuration. |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | ingress.enabled | bool | `true` | Enable ingress |
 | ingress.timesSquareScope | string | `"exec:notebook"` | Scope required for /times-square UI |

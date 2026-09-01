@@ -1,4 +1,8 @@
 image:
+  # Branch build of squareone for DM-55929 (lsst-sqre/squareone#678):
+  # the /admin/oidc-clients pages and configurable adminPageScopes.
+  # Revert to the chart appVersion once that PR is merged and released.
+  tag: "tickets-DM-55929"
   pullPolicy: Always
 
 ingress:
