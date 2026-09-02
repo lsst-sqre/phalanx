@@ -47,15 +47,19 @@ config:
     "admin:token":
       - "rubinmgr"
       - "unix-admin"
+      - "sdf-admin"
     "admin:userinfo":
       - "rubinmgr"
       - "unix-admin"
+      - "sdf-admin"
     "exec:admin":
       - "rubinmgr"
       - "unix-admin"
+      - "sdf-admin"
     "exec:notebook":
       - "rubinmgr"
       - "unix-admin"
+      - "sdf-admin"
 
   initialAdmins:
     - "amithm"
