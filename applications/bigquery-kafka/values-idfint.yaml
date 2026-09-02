@@ -2,7 +2,7 @@ vaultSecretsEnabled: false
 
 config:
   logLevel: "DEBUG"
-  bigqueryProject: "ppdb-prod"
+  bigqueryProject: "ppdb-int-6c62"
   bigqueryLocation: "US"
   gcpServiceAccount: "bigquery-kafka@science-platform-int-dc5d.iam.gserviceaccount.com"
   metrics:
