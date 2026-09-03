@@ -36,6 +36,7 @@ applications:
   s3proxy: true
   sasquatch: true
   semaphore: true
+  skyviewer: true
   squareone: true
   ssotap: true
   strimzi-access-operator: true

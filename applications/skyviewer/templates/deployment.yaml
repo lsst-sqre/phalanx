@@ -6,10 +6,9 @@ metadata:
     {{- include "skyviewer.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
-  # a single replica requesting several GiB for its tile cache: rolling would
-  # surge a second pod and briefly ask the cluster for twice that. A few
-  # seconds of downtime on upgrade is fine for a staff tool; reserving double
-  # the memory to avoid it is not
+  # Recreate rather than RollingUpdate: a rolling update would briefly run
+  # two pods, doubling the memory requested for the tile cache. A few seconds
+  # of downtime on upgrade is acceptable for this tool.
   strategy:
     type: "Recreate"
   selector:
@@ -42,12 +41,11 @@ spec:
               containerPort: 8080
               protocol: "TCP"
           env:
-            # NEXT_PUBLIC_ values were compiled into the client bundle when
-            # the image was built; setting them here cannot change what the
-            # browser uses, but the server revalidates them at boot, so they
-            # must be present and must match what the image was built with
-            - name: "NEXT_PUBLIC_BASE_URL"
+            - name: "BASE_URL"
               value: {{ printf "https://%s" .Values.global.host | quote }}
+            # NEXT_PUBLIC_ values are compiled into the client bundle at image
+            # build time. The server checks them at startup, so they must be
+            # set here and must match the values the image was built with.
             - name: "NEXT_PUBLIC_BASE_PATH"
               value: {{ .Values.ingress.path | quote }}
             - name: "NEXT_PUBLIC_API_URL"
@@ -68,8 +66,8 @@ spec:
             - name: "HIPS_TILE_CACHE_BYTES"
               value: {{ .Values.config.tileCacheBytes | quote }}
             {{- end }}
-            # only gate the CMS preview and revalidate routes, which this
-            # deployment does not use, but the schema requires them to be set
+            # These tokens gate the CMS preview and revalidate routes, which
+            # are unused here, but the app requires them to be set.
             - name: "CRAFT_SECRET_TOKEN"
               valueFrom:
                 secretKeyRef:
@@ -82,14 +80,12 @@ spec:
                   key: "craft-revalidate-secret-token"
           readinessProbe:
             httpGet:
-              # the app's health route (it answers under its base path).
-              # Probing a page path renders the whole home page against the
-              # CMS, which intermittently overran the default one-second
-              # timeout and yanked the only pod out of the Service
+              # Use the health route rather than a page path: rendering a
+              # page hits the CMS and can exceed the probe timeout, taking
+              # the only pod out of the Service. The 5s timeout is headroom
+              # over the 1s default for the same reason.
               path: {{ printf "%s/api/health" .Values.ingress.path | quote }}
               port: "http"
-            # headroom over the default 1s for when the server is genuinely
-            # busy; the health route itself answers without rendering
             timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -100,8 +96,6 @@ spec:
                 - "all"
             readOnlyRootFilesystem: true
           volumeMounts:
-            # Next.js writes its image and data caches at runtime, which the
-            # read-only root filesystem otherwise refuses
             - name: "cache"
               mountPath: "/app/.next/cache"
             - name: "tmp"
@@ -136,12 +130,10 @@ spec:
       {{- end }}
       securityContext:
         runAsNonRoot: true
-        # matches the nextjs user the image builds and chowns its files to
+        # The nextjs user created by the image.
         runAsUser: 1001
         runAsGroup: 1001
         {{- with .Values.hipsData.supplementalGroups }}
-        # group access to the HiPS exports: /sdf/data/rubin/shared is
-        # drwxr-s--- root-of-tree, readable only by its group
         supplementalGroups:
           {{- toYaml . | nindent 10 }}
         {{- end }}
