@@ -66,6 +66,19 @@ tests:
       - isNotNullOrEmpty:
           path: spec.template.metadata.annotations["checksum/config"]
 
+  - it: selects the backend PluginFactory but tolerates an image without one
+    template: "tap-deployment.yaml"
+    set:
+      config: {backend: "pg", pg: {host: "h", database: "d", username: "u"}}
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.initContainers[0].command[2]
+          pattern: 'PluginFactory-pg\.properties'
+      # older images ship only PluginFactory.properties -- fall back, do not exit 1
+      - matchRegex:
+          path: spec.template.spec.initContainers[0].command[2]
+          pattern: "using the image's default PluginFactory.properties"
+
   - it: fails when cloudsql is enabled but instanceConnectionName is unset
     template: "tap-deployment.yaml"
     set:

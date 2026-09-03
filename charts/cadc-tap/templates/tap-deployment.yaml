@@ -71,8 +71,10 @@ spec:
                 if [ -f "$src" ]; then
                   cp "$src" "${dir}WEB-INF/classes/PluginFactory.properties"
                   echo "Using {{ .Values.config.backend }} PluginFactory.properties in $dir"
+                elif [ -f "${dir}WEB-INF/classes/PluginFactory.properties" ]; then
+                  echo "WARNING: $src not found, using the image's default PluginFactory.properties in $dir" >&2
                 else
-                  echo "ERROR: $src not found in $dir" >&2
+                  echo "ERROR: neither $src nor a default PluginFactory.properties found in $dir" >&2
                   exit 1
                 fi
               done
