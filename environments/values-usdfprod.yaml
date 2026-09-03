@@ -29,7 +29,6 @@ applications:
   obsloctap: true
   plot-navigator: true
   portal: true
-  postgres: true
   ppdb-replication: true
   qserv-kafka: true
   rubintv: true
