@@ -82,10 +82,10 @@ spec:
             httpGet:
               # Use the health route rather than a page path: rendering a
               # page hits the CMS and can exceed the probe timeout, taking
-              # the only pod out of the Service.
+              # the only pod out of the Service. The 5s timeout is headroom
+              # over the 1s default for the same reason.
               path: {{ printf "%s/api/health" .Values.ingress.path | quote }}
               port: "http"
-            # Extra headroom over the default 1s for when the server is busy.
             timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -96,8 +96,6 @@ spec:
                 - "all"
             readOnlyRootFilesystem: true
           volumeMounts:
-            # Next.js writes its image and data caches at runtime; these must
-            # be writable despite the read-only root filesystem.
             - name: "cache"
               mountPath: "/app/.next/cache"
             - name: "tmp"
@@ -136,8 +134,6 @@ spec:
         runAsUser: 1001
         runAsGroup: 1001
         {{- with .Values.hipsData.supplementalGroups }}
-        # Group access to the HiPS exports under /sdf/data/rubin/shared,
-        # which is readable only by its group.
         supplementalGroups:
           {{- toYaml . | nindent 10 }}
         {{- end }}

@@ -18,7 +18,6 @@ resources:
     memory: "7Gi"
   limits:
     cpu: 4
-    # sized for the 6 GiB tile cache plus the application itself
     memory: "10Gi"
 
 # both exports are needed: /sdf/group/rubin/shared is a symlink to
