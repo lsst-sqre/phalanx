@@ -8,7 +8,7 @@ config:
   hips:
     datasets: {}
   tap:
-    schemaVersion: "w.2026.28"
+    schemaVersion: "w.2026.36"
     schemaSourceTemplate: "https://github.com/lsst/sdm_schemas/archive/refs/tags/{version}.tar.gz"
     servers:
       tap:
