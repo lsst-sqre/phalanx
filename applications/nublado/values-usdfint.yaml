@@ -150,6 +150,13 @@ controller:
             resources:
               requests:
                 storage: "1Gi"
+        # Node-local scratch on the kubelet disk (world-writable emptyDir).
+        # Soft size limit; wiped when the lab pod exits.
+        - name: "lscratch"
+          source:
+            type: "emptyDir"
+            medium: "disk"
+            size: "10Gi"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "sdf-home"
@@ -162,6 +169,8 @@ controller:
           volumeName: "sdf-data-rubin"
         - containerPath: "/scratch"
           volumeName: "sdf-scratch"
+        - containerPath: "/lscratch"
+          volumeName: "lscratch"
 
 proxy:
   ingress:
