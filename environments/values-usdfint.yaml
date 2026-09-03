@@ -20,7 +20,6 @@ applications:
   nublado: true
   plot-navigator: true
   portal: true
-  postgres: true
   ppdb-replication: true
   qserv-kafka: true
   sasquatch: true
