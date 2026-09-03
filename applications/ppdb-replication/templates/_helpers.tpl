@@ -42,3 +42,18 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 {{- end }}
 {{- end }}
+
+{{/*
+Sentry (https://sentry.io) error reporting config
+*/}}
+{{- define "ppdb-replication.sentryEnvVars" -}}
+{{- if .Values.config.sentry.enabled }}
+- name: "SENTRY_DSN"
+  valueFrom:
+    secretKeyRef:
+      name: "ppdb-replication"
+      key: "sentry-dsn"
+- name: "SENTRY_ENVIRONMENT"
+  value: {{ .Values.global.environmentName | quote }}
+{{- end }}
+{{- end }}
