@@ -3,6 +3,10 @@
 # Override strimzi-kafka subchart configuration.
 strimzi-kafka: {}
 
+gafaelfawrServiceToken:
+  # -- Whether to create a Gafaelfawr service token for Sasquatch
+  enabled: false
+
 alert-brokers:
   # -- Whether to enable the alert-brokers subchart
   enabled: false

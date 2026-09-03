@@ -1,0 +1,13 @@
+{{- if .Values.gafaelfawrServiceToken.enabled }}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: "sasquatch-gafaelfawr-token"
+  labels:
+    app.kubernetes.io/name: "sasquatch"
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  service: "bot-sasquatch"
+  scopes:
+    - "write:sasquatch"
+{{- end }}

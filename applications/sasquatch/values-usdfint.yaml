@@ -1,3 +1,6 @@
+gafaelfawrServiceToken:
+  enabled: true
+
 strimzi-kafka:
   kafka:
     listeners:

@@ -45,6 +45,7 @@ Rubin Observatory's telemetry service
 | customInfluxDBIngress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
 | customInfluxDBIngress.path | string | `"/influxdb(/\|$)(.*)"` | Path for the ingress |
 | data-transfer-monitoring.enabled | bool | `false` | Whether to enable the data-transfer-monitoring subchart |
+| gafaelfawrServiceToken.enabled | bool | `false` | Whether to create a Gafaelfawr service token for Sasquatch |
 | grafana.enabled | bool | `false` | Whether to enable the grafana subchart |
 | influxdb-enterprise-active.enabled | bool | `false` | Whether to enable influxdb-enterprise-active |
 | influxdb-enterprise-standby.enabled | bool | `false` | Whether to enable influxdb-enterprise-standby |
