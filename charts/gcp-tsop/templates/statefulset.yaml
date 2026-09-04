@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: gcp-tsop
+  labels:
+    {{- include "gcp-tsop.labels" . | nindent 4 }}
+spec:
+  serviceName: gcp-tsop-headless
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "gcp-tsop.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "gcp-tsop.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: KUBE_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /tmp/gcp-secret/gcp-key.json
+            - name: AWS_ENDPOINT_URL
+              value: {{ .Values.s3.endpointUrl }}
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "gcp-tsop.fullname" . }}-secret
+                  key: aws-access-key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "gcp-tsop.fullname" . }}-secret
+                  key: aws-secret-key
+            - name: AWS_EC2_METADATA_DISABLED
+              value: {{ .Values.s3.metadataDisabled }}
+          args:
+            - --project-id={{ .Values.gcp.projectId }}
+            - --creds-file=/tmp/gcp-secret/gcp-key.json
+            - --hostname=$(KUBE_POD_NAME)
+          volumeMounts:
+            - name: gcp-credentials-file
+              mountPath: /tmp/gcp-secret/
+              readOnly: true
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      - name: gcp-credentials-file
+        secret:
+          secretName: gcp-tsop
+          items:
+            - key: gcp-credentials-file
+              path: gcp-key.json
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
