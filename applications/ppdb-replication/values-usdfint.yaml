@@ -19,6 +19,10 @@ config:
   # -- PPDB config file resource
   ppdbConfig: "gs://ppdb-int-config/ppdb-int_config.yaml"
 
+  # -- Artificially throttle chunk uploads to every 8 minutes to avoid hitting
+  # -- BigQuery rate limits when testing. This is not a production setting.
+  uploadInterval: 480
+
   # -- Volumes specific to the environment
   volumes:
     - name: sdf-group-rubin

@@ -100,7 +100,7 @@ config:
   # -- Time to wait between uploader file scans
   waitInterval: 300
 
-  # -- Time to wait between uploader file uploads
+  # -- Time to wait between uploading the files for one chunk
   uploadInterval: 0
 
   # -- Disable bucket validation in LSST S3 tools
