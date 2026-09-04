@@ -85,6 +85,7 @@ spec:
               value: {{ .Values.config.cloudSql.user | quote }}
             - name: CLOUDSQL_DB_NAME
               value: {{ .Values.config.cloudSql.dbName | quote }}
+            {{- include "ppdb-replication.sentryEnvVars" . | nindent 12 }}
           volumeMounts:
             - name: "ppdb-replication-secrets"
               mountPath: "/app/secrets"

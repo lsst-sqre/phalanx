@@ -48,6 +48,10 @@ tolerations: []
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD
+  environmentName: null
+
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: null
@@ -67,6 +71,10 @@ config:
 
   # -- URL path prefix
   pathPrefix: "/ppdb-replication"
+
+  sentry:
+    # -- Whether to enable Sentry error reporting
+    enabled: true
 
   # -- APDB config file resource
   apdbConfig: null
