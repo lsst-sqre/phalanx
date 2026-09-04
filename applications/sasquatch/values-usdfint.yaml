@@ -14,19 +14,27 @@ strimzi-kafka:
       tls:
         enabled: true
       bootstrap:
+        host: sasquatch-usdf-int-kafka-bootstrap.lsst.cloud
         annotations:
           metallb.io/address-pool: sdf-rubin-ingest
+          metallb.io/loadBalancerIPs: 172.24.10.24
         allocateLoadBalancerNodePorts: false
       brokers:
         - broker: 0
+          host: sasquatch-usdf-int-kafka-0.lsst.cloud
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.25
         - broker: 1
+          host: sasquatch-usdf-int-kafka-1.lsst.cloud
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.26
         - broker: 2
+          host: sasquatch-usdf-int-kafka-2.lsst.cloud
           annotations:
             metallb.io/address-pool: sdf-rubin-ingest
+            metallb.io/loadBalancerIPs: 172.24.10.27
   mirrormaker2:
     enabled: true
     source:
