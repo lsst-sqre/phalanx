@@ -32,7 +32,7 @@ Replicates data from the APDB to the PPDB
 | config.ppdbConfig | string | `nil` | PPDB config file resource |
 | config.s3EndpointUrl | string | `"https://s3dfrgw.slac.stanford.edu"` | S3 endpoint URL |
 | config.sentry.enabled | bool | `true` | Whether to enable Sentry error reporting |
-| config.uploadInterval | int | `0` | Time to wait between uploader file uploads |
+| config.uploadInterval | int | `0` | Time to wait between uploading the files for one chunk |
 | config.waitInterval | int | `300` | Time to wait between uploader file scans |
 | global.environmentName | string | Set by Argo CD | Name of the Phalanx environment |
 | global.host | string | Set by Argo CD | Host name for ingress |

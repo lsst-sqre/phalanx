@@ -98,8 +98,8 @@ spec:
           args:
             - "--log-level={{ .Values.config.logLevel }}"
             - "upload-chunks"
-            - "--wait-interval=60"
-            - "--upload-interval=0"
+            - "--wait-interval={{ .Values.config.waitInterval }}"
+            - "--upload-interval={{ .Values.config.uploadInterval }}"
             - {{ .Values.config.ppdbConfig | quote }}
       securityContext:
         runAsNonRoot: true
