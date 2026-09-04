@@ -74,6 +74,8 @@ nightlydigest-nginx:
 
 nightlydigest-backend:
   replicas: 4
+  uid: 73006
+  gid: 4085
   image:
     repository: ts-dockerhub.lsst.org/nightlydigest-backend
     tag: c0045.000
