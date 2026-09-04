@@ -16,7 +16,7 @@ spec:
         {{- include "gcp-tsop.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ include "gcp-tsop.fullname" . | trimSuffix "-gcp-tsop" }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           env:
             - name: PYTHONUNBUFFERED
@@ -32,15 +32,15 @@ spec:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "gcp-tsop.fullname" . }}-secret
+                  name: {{ .Release.Name }}
                   key: aws-access-key
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "gcp-tsop.fullname" . }}-secret
+                  name: {{ .Release.Name }}
                   key: aws-secret-key
             - name: AWS_EC2_METADATA_DISABLED
-              value: {{ .Values.s3.metadataDisabled }}
+              value: {{ .Values.s3.metadataDisabled | quote }}
           args:
             - --project-id={{ .Values.gcp.projectId }}
             - --creds-file=/tmp/gcp-secret/gcp-key.json
@@ -54,7 +54,7 @@ spec:
       volumes:
       - name: gcp-credentials-file
         secret:
-          secretName: gcp-tsop
+          secretName: {{ .Release.Name }}
           items:
             - key: gcp-credentials-file
               path: gcp-key.json
