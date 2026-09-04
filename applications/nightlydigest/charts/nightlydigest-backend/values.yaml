@@ -1,5 +1,11 @@
 # -- The overall namespace for the application.
 namespace: nightlydigest
+# -- The number of replicas for the backend deployment.
+replicas: 1
+# -- The user ID to run the backend container as. Match runAsUser and fsGroup in securityContext for mounted volumes.
+uid: 73006
+# -- The group ID to run the backend container as. Match runAsGroup in securityContext for mounted volumes.
+gid: 73006
 image:
   # -- The Nightlydigest backend image to use.
   repository: lsstts/nightlydigest-backend

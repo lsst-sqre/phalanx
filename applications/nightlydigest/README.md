@@ -33,13 +33,16 @@ Nightlydigest logging and reporting service
 | nightlydigest-backend.annotations | object | `{}` | This allows for the specification of pod annotations. |
 | nightlydigest-backend.env | list | `[]` | List of Kubernetes environment variable specifiers. |
 | nightlydigest-backend.envSecrets | list | `[]` | List of environment variables that should come from secrets. |
+| nightlydigest-backend.gid | int | `73006` | The group ID to run the backend container as. Match runAsGroup in securityContext for mounted volumes. |
 | nightlydigest-backend.image.pullPolicy | string | `"IfNotPresent"` | The pull policy on the Nightlydigest backend image. |
 | nightlydigest-backend.image.repository | string | `"lsstts/nightlydigest-backend"` | The Nightlydigest backend image to use. |
 | nightlydigest-backend.image.tag | int | `nil` | The cycle revision to add to the image tag. |
 | nightlydigest-backend.namespace | string | `"nightlydigest"` | The overall namespace for the application. |
 | nightlydigest-backend.nodeSelector | object | `{}` | Node selection rules applied to the pod. |
+| nightlydigest-backend.replicas | int | `1` | The number of replicas for the backend deployment. |
 | nightlydigest-backend.resources | object | `{}` | Resource specifications applied to the pod. |
 | nightlydigest-backend.tolerations | list | `[]` | Toleration specifications applied to the pod. |
+| nightlydigest-backend.uid | int | `73006` | The user ID to run the backend container as. Match runAsUser and fsGroup in securityContext for mounted volumes. |
 | nightlydigest-nginx.affinity | object | `{}` | Affinity rules for the NGINX pod |
 | nightlydigest-nginx.image.pullPolicy | string | `"IfNotPresent"` | The pull policy on the NGINX image |
 | nightlydigest-nginx.image.repository | string | `"nginx"` | The NGINX image to use |
