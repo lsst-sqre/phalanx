@@ -272,6 +272,35 @@ intersphinxRefresh:
   # -- Affinity rules for Ook intersphinx-refresh pods
   affinity: {}
 
+intersphinxIngest:
+  # -- Enable the intersphinx-ingest job, which pulls every enabled
+  # documentation source registered at /ook/intersphinx/sources through the
+  # inventory cache and rebuilds the Python link domain from their
+  # inventories. Independent of the intersphinx-refresh job: ingest
+  # revalidates the inventories it parses itself
+  enabled: false
+
+  # -- Cron schedule string for the ook intersphinx-ingest job (UTC)
+  schedule: "30 5 * * *"
+
+  # -- Time (second) to keep a finished job before cleaning up
+  ttlSecondsAfterFinished: 86400
+
+  # -- Resource limits and requests for Ook intersphinx-ingest pods
+  resources: {}
+
+  # -- Annotations for Ook intersphinx-ingest pods
+  podAnnotations: {}
+
+  # -- Node selection rules for Ook intersphinx-ingest pods
+  nodeSelector: {}
+
+  # -- Tolerations for Ook intersphinx-ingest pods
+  tolerations: []
+
+  # -- Affinity rules for Ook intersphinx-ingest pods
+  affinity: {}
+
 ingestLsstTexmf:
   # -- Enable the ingest-lsst-texmf job
   enabled: false
