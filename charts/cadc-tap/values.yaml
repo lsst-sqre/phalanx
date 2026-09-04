@@ -70,13 +70,13 @@ config:
 
     image:
       # -- TAP image to use
-      repository: "ghcr.io/lsst-sqre/tap-postgres-service"
+      repository: "ghcr.io/lsst-sqre/lsst-tap-service"
 
       # -- Pull policy for the TAP image
       pullPolicy: "IfNotPresent"
 
-      # -- Tag of TAP image to use
-      tag: "1.26.1"
+      # -- Tag of TAP image to use.
+      tag: "3.25.0"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -107,7 +107,8 @@ config:
       # -- Tag of TAP image to use
       tag: "3.25.0"
 
-    # -- Whether the Qserv database is password protected
+    # -- Whether the Qserv database is password protected. Only used for
+    # direct-to-Qserv execution (`config.kafka.enabled: false`).
     # @default -- false
     passwordEnabled: false
 
@@ -191,7 +192,9 @@ config:
     # @default -- "tap"
     consumerGroupId: "tap"
 
-    # -- Whether kafka is enabled
+    # -- Whether kafka is enabled. For the `qserv` backend this also selects the
+    # execution mode: `true` dispatches queries to qserv-kafka, `false` runs the
+    # legacy direct-to-Qserv mode.
     enabled: false
 
   # -- Output limit value for TAP queries advertised in capabilities.
@@ -300,7 +303,12 @@ tapSchema:
     # -- Maximum active connections (maxIdle will be set to this value)
     maxActive: 2
 
-  # -- Connection pool configuration for jdbc/tapuser (query planning and tap_upload)
+  # -- Connection pool configuration for jdbc/tapschemauser
+  tapschemauser:
+    # -- Maximum active connections (maxIdle will be set to this value)
+    maxActive: 3
+
+  # -- Connection pool configuration for jdbc/tapuser
   tapuser:
     # -- Maximum active connections (maxIdle will be set to this value)
     maxActive: 3
