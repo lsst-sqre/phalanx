@@ -78,6 +78,14 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | ingestUpdated.window | string | `"2d"` | Time window to look for updated documents (e.g. 1h, 2d, 3w). This must be set to a value greater than the cron schedule for the ingest-updated job. |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | ingress.path | string | `"/ook"` | Path prefix where Squarebot is hosted |
+| intersphinxIngest.affinity | object | `{}` | Affinity rules for Ook intersphinx-ingest pods |
+| intersphinxIngest.enabled | bool | `false` | Enable the intersphinx-ingest job, which pulls every enabled documentation source registered at /ook/intersphinx/sources through the inventory cache and rebuilds the Python link domain from their inventories. Independent of the intersphinx-refresh job: ingest revalidates the inventories it parses itself |
+| intersphinxIngest.nodeSelector | object | `{}` | Node selection rules for Ook intersphinx-ingest pods |
+| intersphinxIngest.podAnnotations | object | `{}` | Annotations for Ook intersphinx-ingest pods |
+| intersphinxIngest.resources | object | `{}` | Resource limits and requests for Ook intersphinx-ingest pods |
+| intersphinxIngest.schedule | string | `"30 5 * * *"` | Cron schedule string for the ook intersphinx-ingest job (UTC) |
+| intersphinxIngest.tolerations | list | `[]` | Tolerations for Ook intersphinx-ingest pods |
+| intersphinxIngest.ttlSecondsAfterFinished | int | `86400` | Time (second) to keep a finished job before cleaning up |
 | intersphinxRefresh.affinity | object | `{}` | Affinity rules for Ook intersphinx-refresh pods |
 | intersphinxRefresh.enabled | bool | `false` | Enable the intersphinx-refresh job |
 | intersphinxRefresh.nodeSelector | object | `{}` | Node selection rules for Ook intersphinx-refresh pods |
