@@ -33,6 +33,21 @@ config:
   # -- Whether to run Alembic schema migrations on install/upgrade
   updateSchema: false
 
+  # -- Kafka bootstrap server addresses for stream workers
+  # @default -- None, must be set when stream workers are enabled
+  kafkaBrokerAddress: null
+
+  # -- Kafka security protocol for stream workers
+  kafkaSecurityProtocol: "sasl_ssl"
+
+  # -- Kafka username for stream workers
+  # @default -- None, must be set when stream workers are enabled
+  kafkaUsername: null
+
+  # -- URL of the schema registry used by stream workers
+  # @default -- None, must be set when stream workers are enabled
+  schemaRegistryUrl: null
+
   # -- Butler repository label used by worker enrichment
   butlerLabel: "prompt"
 
@@ -124,6 +139,16 @@ worker:
 
   # -- Tolerations for the obsforge worker pods
   tolerations: []
+
+streamWorkers:
+  # -- Whether to deploy ObsForge stream workers
+  enabled: false
+
+  # -- Stream worker configurations keyed by a DNS-safe pipeline name. Each
+  # entry must set configPath, replicaCount, resources, podAnnotations,
+  # affinity, nodeSelector, and tolerations.
+  # @default -- {}
+  pipelines: {}
 
 schemaUpdate:
   # -- Affinity rules for the schema update job
