@@ -15,9 +15,11 @@ context_menu_templates:
     template: |
       from lsst.daf.butler import Butler
       butler = Butler('embargo')
-      dataId = {'exposure': %(exposure), 'detector': %(detector)}
-      data = butler.get('%(dataType)', dataId)
+      ref = butler.get_dataset("%(uuid)")
+      if ref is None:
+          raise LookupError("Dataset was not found")
+      data = butler.get(ref)
     is_url: false
   - name: "LSSTCam/Calexp mosaic"
-    template: "https://usdf-rsp.slac.stanford.edu/rubintv/summit-usdf/lsstcam/event?key=lsstcam/%(day_obs|iso8601)/calexp_mosaic/%(exposure|sequence|zeropadding(6))/lsstcam_calexp_mosaic_%(day_obs|iso8601)_%(exposure|sequence|zeropadding(6)).jpg"
+    template: "https://usdf-rsp.slac.stanford.edu/rubintv/summit-usdf/lsstcam/event?channel_name=calexp_mosaic&date_str=%(day_obs|iso8601)&seq_num=%(exposure|sequence)"
     is_url: true
