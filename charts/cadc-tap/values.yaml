@@ -76,7 +76,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use.
-      tag: "3.25.0"
+      tag: "3.26.0"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -105,7 +105,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.25.0"
+      tag: "3.26.0"
 
     # -- Whether the Qserv database is password protected. Only used for
     # direct-to-Qserv execution (`config.kafka.enabled: false`).
@@ -132,7 +132,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.25.0"
+      tag: "3.26.0"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
@@ -396,7 +396,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "3.25.0"
+    tag: "3.26.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
