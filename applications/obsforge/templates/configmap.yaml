@@ -13,9 +13,17 @@ data:
   OBSFORGE_BUTLER_REPOSITORY: {{ .Values.config.butlerRepository | quote }}
   OBSFORGE_DATABASE_URL: {{ .Values.config.databaseUrl | quote }}
   OBSFORGE_ENRICHMENT_MAX_TRIES: {{ .Values.config.enrichmentMaxTries | quote }}
+  {{- if .Values.streamWorkers.enabled }}
+  OBSFORGE_KAFKA_BROKER_ADDRESS: {{ required "config.kafkaBrokerAddress must be set when stream workers are enabled" .Values.config.kafkaBrokerAddress | quote }}
+  OBSFORGE_KAFKA_SECURITY_PROTOCOL: {{ .Values.config.kafkaSecurityProtocol | quote }}
+  OBSFORGE_KAFKA_USERNAME: {{ required "config.kafkaUsername must be set when stream workers are enabled" .Values.config.kafkaUsername | quote }}
+  {{- end }}
   OBSFORGE_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
   OBSFORGE_LOG_PROFILE: {{ .Values.config.logProfile | quote }}
   OBSFORGE_OBSCORE_CONFIG: {{ .Values.config.obscoreConfig | quote }}
   OBSFORGE_OBSCORE_DATASET_TYPE: {{ .Values.config.obscoreDatasetType | quote }}
   OBSFORGE_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  {{- if .Values.streamWorkers.enabled }}
+  OBSFORGE_SCHEMA_REGISTRY_URL: {{ required "config.schemaRegistryUrl must be set when stream workers are enabled" .Values.config.schemaRegistryUrl | quote }}
+  {{- end }}
   REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}
