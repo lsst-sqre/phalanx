@@ -19,7 +19,7 @@ Kafka Cluster to receive S3 File Notifications
 | kafdrop.host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
 | kafdrop.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | kafdrop.image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository |
-| kafdrop.image.tag | string | `"4.2.0"` | Kafdrop image version |
+| kafdrop.image.tag | string | `"4.3.0"` | Kafdrop image version |
 | kafdrop.ingress.annotations | object | `{}` | Additional ingress annotations |
 | kafdrop.ingress.enabled | bool | `false` | Whether to enable the ingress |
 | kafdrop.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
