@@ -576,7 +576,7 @@ Rubin Observatory's telemetry service
 | kafdrop.host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
 | kafdrop.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | kafdrop.image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository |
-| kafdrop.image.tag | string | `"4.2.0"` | Kafdrop image version |
+| kafdrop.image.tag | string | `"4.3.0"` | Kafdrop image version |
 | kafdrop.ingress.annotations | object | `{}` | Additional ingress annotations |
 | kafdrop.ingress.enabled | bool | `false` | Whether to enable the ingress |
 | kafdrop.ingress.path | string | `"/kafdrop"` | Ingress path |
@@ -607,7 +607,7 @@ Rubin Observatory's telemetry service
 | kafdrop-remote.host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
 | kafdrop-remote.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | kafdrop-remote.image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository |
-| kafdrop-remote.image.tag | string | `"4.2.0"` | Kafdrop image version |
+| kafdrop-remote.image.tag | string | `"4.3.0"` | Kafdrop image version |
 | kafdrop-remote.ingress.annotations | object | `{}` | Additional ingress annotations |
 | kafdrop-remote.ingress.enabled | bool | `false` | Whether to enable the ingress |
 | kafdrop-remote.ingress.path | string | `"/kafdrop"` | Ingress path |
