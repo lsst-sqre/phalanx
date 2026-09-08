@@ -1,5 +1,8 @@
 image:
   pullPolicy: Always
+  # Temporary: test the DM-56029 author-lookup feedback branch
+  # (lsst-sqre/templatebot#130). Remove once 0.7.0 is released.
+  tag: "tickets-DM-56029"
 
 config:
   logLevel: "DEBUG"
