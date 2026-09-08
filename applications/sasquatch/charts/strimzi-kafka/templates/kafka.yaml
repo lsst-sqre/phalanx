@@ -253,7 +253,7 @@ spec:
             sasl.enabled.mechanisms: PLAIN
             plain.sasl.jaas.config: |
               org.apache.kafka.common.security.plain.PlainLoginModule required
-              user_ceph-rgw="${file:/mnt/ceph-notifier-secret/kafka-ceph-notifier-password}";
+              user_ceph-rgw="${file:/mnt/ceph-notifier-secret/kafka-ceph-notifier-password:kafka-ceph-notifier-password}";
           template:
             pod:
               volumes:
