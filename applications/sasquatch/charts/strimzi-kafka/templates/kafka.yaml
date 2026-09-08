@@ -251,9 +251,7 @@ spec:
           sasl: true
           listenerConfig:
             sasl.enabled.mechanisms: PLAIN
-            plain.sasl.jaas.config: |
-              org.apache.kafka.common.security.plain.PlainLoginModule required
-              user_ceph-rgw="${strimzisecrets:sasquatch/sasquatch:kafka-ceph-notifier-password}";
+            plain.sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required user_ceph-rgw="${strimzisecrets:sasquatch/sasquatch:kafka-ceph-notifier-password}";
         networkPolicyPeers:
           - namespaceSelector:
               matchLabels:
