@@ -238,6 +238,40 @@ spec:
             key: tls.key
           {{- end }}
     {{- end }}
+        {{- if .Values.kafka.listeners.cephplain.enabled }}
+      # internal listener with PLAIN authentication
+      # temporary workaround for a librdkafka/SCRAM incompatibility between
+      # Ceph RGW bucket-notification and Kafka 4.x
+      - name: cephplain
+        port: 9096
+        type: internal
+        tls: true
+        authentication:
+          type: custom
+          sasl: true
+          listenerConfig:
+            sasl.enabled.mechanisms: PLAIN
+            plain.sasl.jaas.config: |
+              org.apache.kafka.common.security.plain.PlainLoginModule required
+              user_ceph-rgw="${file:/mnt/ceph-notifier-secret/kafka-ceph-notifier-password}";
+          template:
+            pod:
+              volumes:
+                - name: ceph-notifier-secret
+                  secret:
+                    secretName: {{ .Values.kafka.listeners.cephplain.secretName }}
+                    items:
+                      - key: kafka-ceph-notifier-password
+                        path: kafka-ceph-notifier-password
+              kafkaContainer:
+                volumeMounts:
+                  - name: ceph-notifier-secret
+                    mountPath: /mnt/ceph-notifier-secret
+        networkPolicyPeers:
+          - namespaceSelector:
+              matchLabels:
+                kubernetes.io/metadata.name: {{ .Values.kafka.listeners.cephplain.cephNamespace | default "rook-ceph" }}
+    {{- end }}
     authorization:
       type: simple
       {{- if .Values.superusers }}

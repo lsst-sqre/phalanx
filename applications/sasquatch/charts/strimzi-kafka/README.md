@@ -63,6 +63,9 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.externalListener.brokers | list | `[]` | Brokers configuration. _host_ is used in the brokers' advertised.brokers configuration and for TLS hostname verification.  The format is a list of maps. |
 | kafka.externalListener.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker |
 | kafka.externalListener.tls.enabled | bool | `false` | Whether TLS encryption is enabled |
+| kafka.listeners.cephplain.cephNamespace | string | `"rook-ceph"` |  |
+| kafka.listeners.cephplain.enabled | bool | `false` | Whether internal plaintext listener for RWG is enabled |
+| kafka.listeners.cephplain.secretName | string | `""` |  |
 | kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled |
 | kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled |
 | kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled |

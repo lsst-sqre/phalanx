@@ -66,6 +66,12 @@ kafka:
       # -- Whether external listener is enabled
       enabled: false
 
+    cephplain:
+      # -- Whether internal plaintext listener for RWG is enabled
+      enabled: false
+      secretName: ""
+      cephNamespace: rook-ceph
+
   externalListener:
     tls:
       # -- Whether TLS encryption is enabled
