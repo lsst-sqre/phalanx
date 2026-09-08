@@ -13,6 +13,8 @@ strimzi-kafka:
       log.message.timestamp.type: LogAppendTime
       log.retention.hours: 30
       log.retention.ms: 108000000
+      config.providers: file
+      config.providers.file.class: org.apache.kafka.common.config.provider.FileConfigProvider
     listeners:
       tls:
         enabled: true

@@ -238,7 +238,7 @@ spec:
             key: tls.key
           {{- end }}
     {{- end }}
-        {{- if .Values.kafka.listeners.cephplain.enabled }}
+    {{- if .Values.kafka.listeners.cephplain.enabled }}
       # internal listener with PLAIN authentication
       # temporary workaround for a librdkafka/SCRAM incompatibility between
       # Ceph RGW bucket-notification and Kafka 4.x
