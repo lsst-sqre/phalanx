@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: gcp-tsop
+  name: {{ include "gcp-tsop.fullname" . | trimSuffix "-gcp-tsop" }}
   labels:
     {{- include "gcp-tsop.labels" . | nindent 4 }}
 spec:

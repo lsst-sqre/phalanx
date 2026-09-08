@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: gcp-tsop-headless
+  name: {{ include "gcp-tsop.fullname" . | trimSuffix "-gcp-tsop" }}
 spec:
   clusterIP: None
   selector:
