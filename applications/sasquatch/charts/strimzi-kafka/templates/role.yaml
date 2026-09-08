@@ -1,0 +1,11 @@
+{{- if .Values.kafka.listeners.cephplain.enabled }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ .Values.cluster.name }}-cephplain-secret-reader
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: [{{ .Values.kafka.listeners.cephplain.secretName | quote }}]
+    verbs: ["get"]
+{{- end }}
