@@ -1,0 +1,91 @@
+{{- if .Values.streamWorkers.enabled }}
+{{- range $name, $worker := .Values.streamWorkers.pipelines }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "obsforge-stream-%s" $name | quote }}
+  labels:
+    {{- include "obsforge.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: "stream-worker"
+    obsforge.lsst.io/stream: {{ $name | quote }}
+spec:
+  replicas: {{ $worker.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "obsforge.selectorLabels" $ | nindent 6 }}
+      app.kubernetes.io/component: "stream-worker"
+      obsforge.lsst.io/stream: {{ $name | quote }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
+        {{- with $worker.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "obsforge.selectorLabels" $ | nindent 8 }}
+        app.kubernetes.io/component: "stream-worker"
+        obsforge.lsst.io/stream: {{ $name | quote }}
+    spec:
+      {{- with $worker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ printf "obsforge-stream-%s" $name | quote }}
+          command:
+            - "obsforge"
+            - "process-stream"
+            - "--stream-config-path"
+            - {{ required (printf "streamWorkers.pipelines.%s.configPath must be set" $name) $worker.configPath | quote }}
+          env:
+            - name: "OBSFORGE_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "obsforge"
+                  key: "database-password"
+            - name: "OBSFORGE_KAFKA_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "obsforge"
+                  key: "kafka-password"
+            - name: "OBSFORGE_SCHEMA_REGISTRY_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "obsforge"
+                  key: "schema-registry-token"
+          envFrom:
+            - configMapRef:
+                name: "obsforge"
+          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}"
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          resources:
+            {{- toYaml $worker.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "state"
+              mountPath: "/app/state"
+      {{- with $worker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with $worker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: "state"
+          emptyDir: {}
+{{- end }}
+{{- end }}
