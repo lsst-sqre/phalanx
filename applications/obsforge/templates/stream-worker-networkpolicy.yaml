@@ -1,0 +1,15 @@
+{{- if .Values.streamWorkers.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "obsforge-stream-workers"
+  labels:
+    {{- include "obsforge.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "obsforge.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "stream-worker"
+  policyTypes:
+    - "Ingress"
+{{- end }}
