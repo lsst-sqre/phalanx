@@ -25,7 +25,7 @@ config:
   # -- Format string for the IVOID used for self-identification. This must
   # contain a `dataset` variable that will be replaced with the label of the
   # dataset.
-  ivoidFormat: "ivo://org.rubinobs/{dataset}/sia"
+  ivoidFormat: "ivo://org.rubinobs/lsst-{dataset}/sia"
 
   metrics:
     # -- Whether to enable sending metrics
