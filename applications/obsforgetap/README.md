@@ -23,8 +23,8 @@ ObsForge TAP service
 | cadc-tap.tapSchema.database | string | `"obsforgetap"` | Database name |
 | cadc-tap.tapSchema.tapadm | object | `{"maxActive":2}` | Connection pool configuration for jdbc/tapadm |
 | cadc-tap.tapSchema.tapadm.maxActive | int | `2` | Maximum active connections (maxIdle will be set to this value) |
-| cadc-tap.tapSchema.tapuser | object | `{"maxActive":5}` | Connection pool configuration for jdbc/tapuser (query planning and tap_upload) |
-| cadc-tap.tapSchema.tapuser.maxActive | int | `5` | Maximum active connections (maxIdle will be set to this value) |
+| cadc-tap.tapSchema.tapschemauser | object | `{"maxActive":5}` | Connection pool configuration for jdbc/tapschemauser (tap_schema reads) |
+| cadc-tap.tapSchema.tapschemauser.maxActive | int | `5` | Maximum active connections (maxIdle will be set to this value) |
 | cadc-tap.tapSchema.type | string | "cloudsql" | Database backend type: "containerized", "cloudsql", or "external" |
 | cadc-tap.tapSchema.useVaultPassword | bool | `true` | Whether the TAP_SCHEMA database requires a password in Vault (true for cloudsql/external) |
 | cadc-tap.tapSchema.username | string | `"obsforgetap"` | Database username |

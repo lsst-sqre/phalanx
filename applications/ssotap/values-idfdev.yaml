@@ -9,6 +9,10 @@ cadc-tap:
 
   config:
     jvmMaxHeapSize: 7G
+    pg:
+      image:
+        pullPolicy: "Always"
+        tag: "tickets-DM-54118"
 
   cloudsql:
     enabled: true
