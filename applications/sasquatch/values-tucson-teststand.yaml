@@ -23,7 +23,7 @@ strimzi-kafka:
       external:
         enabled: true
       cephplain:
-        enabled: true
+        enabled: false
         secretName: sasquatch
     externalListener:
       tls:
