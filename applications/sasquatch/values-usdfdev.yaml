@@ -280,8 +280,8 @@ backup:
 prompt-processing:
   enabled: true
   topics:
-    - test.next-visit
-    - test.next-visit-job
+    - lsst.prompt.next-visit
+    - lsst.prompt.next-visit-job
 
 obsloctap:
   enabled: true
