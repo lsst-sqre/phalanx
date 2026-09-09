@@ -220,8 +220,8 @@ fastWorker:
     # limit.
     maxReplicas: 10
 
-    # -- Target CPU utilization of qserv-kafka fast worker pods.
-    targetCPUUtilizationPercentage: 75
+    # -- Target absolute CPU usage value of qserv-kafka fast worker pods.
+    targetCPUQuantity: 750m
 
   # -- Node selection rules for the qserv-kafka fast worker pods
   nodeSelector: {}
@@ -236,10 +236,10 @@ fastWorker:
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "250m"
+      cpu: "1"
       memory: "300Mi"
     requests:
-      cpu: "50m"
+      cpu: "1"
       memory: "145Mi"
 
   # -- Tolerations for the qserv-kafka fast worker pods
@@ -271,8 +271,8 @@ slowWorker:
     # limit.
     maxReplicas: 10
 
-    # -- Target CPU utilization of qserv-kafka slow worker pods.
-    targetCPUUtilizationPercentage: 50
+    # -- Target absolute CPU usage value of qserv-kafka slow worker pods.
+    targetCPUQuantity: 500m
 
   # -- Node selection rules for the qserv-kafka worker pods
   nodeSelector: {}
