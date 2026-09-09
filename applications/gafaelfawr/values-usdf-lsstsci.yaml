@@ -58,7 +58,23 @@ config:
       - "sdf-admin"
     "exec:notebook":
       - "rubinmgr"
-      - "unix-admin"
+      - "rg"
+      - "sdf-admin"
+    "exec:portal":
+      - "rubinmgr"
+      - "rg"
+      - "sdf-admin"
+    "exec:portal-admin":
+      - "rubinmgr"
+      - "rg"
+      - "sdf-admin"
+    "read:tap":
+      - "rubinmgr"
+      - "rg"
+      - "sdf-admin"
+    "read:image":
+      - "rubinmgr"
+      - "rg"
       - "sdf-admin"
 
   initialAdmins:
