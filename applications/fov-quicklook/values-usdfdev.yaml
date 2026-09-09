@@ -24,5 +24,5 @@ context_menu_templates:
       data = butler.get(ref)
     is_url: false
   - name: 'LSSTCam/Calexp mosaic'
-    template: 'https://usdf-rsp-dev.slac.stanford.edu/rubintv/summit-usdf/lsstcam/event?channel_name=calexp_mosaic&date_str=%(day_obs|iso8601)&seq_num=%(exposure|sequence)'
+    template: 'https://usdf-rsp-dev.slac.stanford.edu/rubintv/summit-usdf/lsstcam/event?channel_name=focal_plane_mosaic&date_str=%(day_obs|iso8601)&seq_num=%(exposure|sequence)'
     is_url: true
