@@ -17,7 +17,7 @@ context_menu_templates:
   - name: 'Butler Snippet'
     template: |
       from lsst.daf.butler import Butler
-      butler = Butler('embargo')
+      butler = Butler('%(repository_name)')
       ref = butler.get_dataset("%(uuid)")
       if ref is None:
           raise LookupError("Dataset was not found")
