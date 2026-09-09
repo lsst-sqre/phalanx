@@ -1,9 +1,19 @@
 cadc-tap:
   tapSchema:
-    image:
-      repository: "lsstsqre/tap-schema-usdf-dev-cdb"
-      tag: "tickets-OSW-1617"
-      pullPolicy: "Always"
+    type: "external"
+    database: "consdbtap"
+    username: "tap_schema_consdbtap"
+    useVaultPassword: true
+    external:
+      host: "rsp-db-ro.postgres-db"
+
+  uws:
+    type: "external"
+    database: "consdbtap"
+    username: "uws_consdbtap"
+    useVaultPassword: true
+    external:
+      host: "rsp-db-rw.postgres-db"
 
   config:
     datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/w.2026.18/datalink-snippets.zip"
