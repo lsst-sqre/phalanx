@@ -228,7 +228,6 @@ rest-proxy:
     topics:
       - lsst.survey
     topicPrefixes:
-      - test
       - lsst.dm
       - lsst.debug
       - lsst.example
