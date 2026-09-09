@@ -160,6 +160,7 @@ app-metrics:
   enabled: true
   apps:
     - bigquerykafka
+    - conesearch
     - datalinker
     - gafaelfawr
     - herald

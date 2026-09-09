@@ -11,6 +11,12 @@ globalAppConfig:
     influxTags:
       - "username"
       - "queue"
+  conesearch:
+    influxTags:
+      - "username"
+  datalinker:
+    influxTags:
+      - "username"
   docverse:
     influxTags:
       - "organization"
@@ -23,9 +29,6 @@ globalAppConfig:
       - "ci_platform"
       - "success"
       - "github_repository"
-  datalinker:
-    influxTags:
-      - "username"
   gafaelfawr:
     influxTags:
       - "service"
