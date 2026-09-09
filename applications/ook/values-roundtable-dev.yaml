@@ -1,9 +1,3 @@
-# Branch build of ook PR #392 (tickets/DM-55388) for testing on
-# roundtable-dev. Revert to the chart's appVersion once ook releases.
-image:
-  tag: "tickets-DM-55388"
-  pullPolicy: "Always"
-
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://ook@localhost/ook"
