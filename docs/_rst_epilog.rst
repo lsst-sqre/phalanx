@@ -22,14 +22,18 @@
 .. _Google Documentation Style Guide: https://developers.google.com/style/
 .. _Google Filestore: https://cloud.google.com/filestore
 .. _Google Kubernetes Engine: https://cloud.google.com/kubernetes-engine
+.. _Gunicorn: https://gunicorn.org/
 .. _Helm: https://helm.sh
 .. _helm-docs: https://github.com/norwoodj/helm-docs
+.. _HorizontalPodAutoscaler: https://kubespec.dev/kubernetes/autoscaling/v2/HorizontalPodAutoscaler
+.. _horizontal pod autoscaling: https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/
 .. _Ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/
 .. _InfluxDB: https://www.influxdata.com/
 .. _IVOA: https://ivoa.net/documents/
 .. _Kubernetes: https://kubernetes.io/
 .. _LSST Vault Utilites: https://github.com/lsst-sqre/lsstvaultutils/
 .. _Mend Renovate: https://www.mend.io/renovate/
+.. _multiprocessing: https://docs.python.org/3/library/multiprocessing.html
 .. _Namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 .. _ObsTAP: https://www.ivoa.net/documents/ObsCore/
 .. _persistent volume: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
@@ -53,8 +57,10 @@
 .. _tox: https://tox.wiki/en/latest/
 .. _uv: https://docs.astral.sh/uv/
 .. _UWS: https://www.ivoa.net/documents/UWS/
+.. _Uvicorn: https://uvicorn.dev/
 .. _Vault: https://developer.hashicorp.com/vault
 .. _Vault Secrets Operator: https://github.com/ricoberger/vault-secrets-operator
 .. _venv: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment
+.. _vertical pod autoscaling: https://kubernetes.io/docs/concepts/workloads/autoscaling/vertical-pod-autoscale/
 .. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
 .. _workload identity: https://docs.cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
