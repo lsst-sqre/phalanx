@@ -36,6 +36,7 @@ data:
   {{- end }}
   QSERV_KAFKA_QSERV_RETRY_COUNT: {{ .Values.config.qservRetryCount | quote }}
   QSERV_KAFKA_QSERV_RETRY_DELAY: {{ .Values.config.qservRetryDelay | quote }}
+  QSERV_KAFKA_QSERV_UPLOAD_DELETE_TIMEOUT: {{ .Values.config.qservUploadDeleteTimeout | quote }}
   QSERV_KAFKA_QSERV_UPLOAD_TIMEOUT: {{ .Values.config.qservUploadTimeout | quote }}
   QSERV_KAFKA_REDIS_MAX_CONNECTIONS: {{ .Values.config.redisMaxConnections | quote }}
   QSERV_KAFKA_REDIS_URL: "redis://qserv-kafka-redis.{{ .Release.Namespace }}:6379/0"

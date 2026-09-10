@@ -14,7 +14,7 @@ config:
   # -- Timeout for REST API calls in Safir `parse_timedelta` format. This
   # includes time spent waiting for a connection if the maximum number of
   # connections has been reached.
-  backendApiTimeout: "60s"
+  backendApiTimeout: "30s"
 
   # -- Kafka consumer group ID
   consumerGroupId: "qserv"
@@ -118,16 +118,20 @@ config:
   # password.
   qservRestUsername: null
 
-  # -- How long to allow for user table upload before timing out in Safir
-  # `parse_timedelta` format.
-  qservUploadTimeout: "30m"
-
   # -- How many times to retry after a Qserv API network failure
   qservRetryCount: 3
 
   # -- How long to wait between retries after a Qserv API network failure in
   # Safir `parse_timedelta` format
   qservRetryDelay: "1s"
+
+  # -- How long to allow for temporary user table deletion before timing out
+  # in Safir `parse_timedelta` format.
+  qservUploadDeleteTimeout: "5m"
+
+  # -- How long to allow for user table upload before timing out in Safir
+  # `parse_timedelta` format.
+  qservUploadTimeout: "30m"
 
   # -- Size of the Redis connection pool. This should be set to
   # `jobRunBatchSize` plus some extra connections for the monitor, cancel
