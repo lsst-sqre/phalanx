@@ -43,7 +43,7 @@ IVOA TAP service
 | config.kafka.topics.jobRun | string | `"lsst.tap.job-run"` | Job Run topic |
 | config.kafka.topics.jobStatus | string | `"lsst.tap.job-status"` | Job Status topic |
 | config.maxDestruction | string | `""` | Maximum UWS job destruction time in seconds. Leave empty to use the default (604800, 1 week). |
-| config.maxExecutionDuration | string | `""` | Maximum execution duration for TAP queries in seconds. Also used for sizing the signed result upload URL's expiration Leave empty to use the default (14400, 4 hours). |
+| config.maxExecutionDuration | string | `"43200"` | Maximum execution duration for TAP queries in seconds. Also used for sizing the signed result upload URL's expiration Leave empty to use the default (14400, 4 hours). |
 | config.maxQuote | string | `""` | Maximum UWS job quote in seconds. Leave empty to use the default (86400, 24 hours). |
 | config.maxRec | string | `""` | Maximum row limit (MAXREC) enforced server-side. Leave empty to use the default (100000000). |
 | config.outputLimit | string | `""` | Output limit value for TAP queries advertised in capabilities. Leave empty to use the default (100000000). |
