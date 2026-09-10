@@ -22,10 +22,15 @@ data:
   DOCVERSE_GITHUB_APP_ID: {{ .Values.config.githubAppId | quote }}
   {{- end }}
   DOCVERSE_GIT_REF_AUDIT_ENABLED: {{ .Values.config.maintenance.gitRefAuditEnabled | quote }}
+  DOCVERSE_PURGATORY_CLEANUP_ENABLED: {{ .Values.config.maintenance.purgatoryCleanupEnabled | quote }}
+  DOCVERSE_PURGATORY_CLEANUP_MAX_BUILDS_PER_JOB: {{ .Values.config.maintenance.purgatoryCleanupMaxBuildsPerJob | quote }}
+  DOCVERSE_PURGATORY_CLEANUP_CRON_HOUR: {{ .Values.config.maintenance.purgatoryCleanupCronHour | quote }}
+  DOCVERSE_PURGATORY_CLEANUP_CRON_MINUTE: {{ .Values.config.maintenance.purgatoryCleanupCronMinute | quote }}
   DOCVERSE_MAINTENANCE_JOB_TIMEOUT_SECONDS: {{ .Values.config.maintenance.jobTimeoutSeconds | quote }}
   DOCVERSE_KEEPER_SYNC_JOB_TIMEOUT_SECONDS: {{ .Values.config.keeperSync.jobTimeoutSeconds | quote }}
   DOCVERSE_KEEPER_SYNC_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.keeperSyncSeconds | quote }}
   DOCVERSE_LIFECYCLE_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.lifecycleSeconds | quote }}
+  DOCVERSE_PURGATORY_CLEANUP_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.purgatoryCleanupSeconds | quote }}
   DOCVERSE_DASHBOARD_BUILD_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.dashboardBuildSeconds | quote }}
   DOCVERSE_PUBLISH_EDITION_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.publishEditionSeconds | quote }}
   DOCVERSE_BUILD_PROCESSING_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.buildProcessingSeconds | quote }}

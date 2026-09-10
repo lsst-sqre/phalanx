@@ -28,7 +28,11 @@ Publish versioned docs
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.maintenance.enabled | bool | `false` | Enable the maintenance worker that consumes the `docverse:maintenance-queue` arq queue. Requires the docverse image to provide `docverse.worker.main.MaintenanceWorkerSettings`. |
 | config.maintenance.gitRefAuditEnabled | bool | `false` | Whether to enable auditing the git ref lifecycle rule. Enabling this will cause docverse to make GitHub API calls to determine if the git ref associated with an edition still exists. |
-| config.maintenance.jobTimeoutSeconds | int | `3600` | Per-job timeout, in seconds, for maintenance-pool jobs (lifecycle evaluation and git ref audits). |
+| config.maintenance.jobTimeoutSeconds | int | `3600` | Per-job timeout, in seconds, for maintenance-pool jobs (lifecycle evaluation, git ref audits, and purgatory cleanup). |
+| config.maintenance.purgatoryCleanupCronHour | int | `3` | UTC hour at which the daily purgatory_cleanup dispatcher cron runs. |
+| config.maintenance.purgatoryCleanupCronMinute | int | `23` | UTC minute of `purgatoryCleanupCronHour` at which the daily purgatory_cleanup dispatcher cron runs. |
+| config.maintenance.purgatoryCleanupEnabled | bool | `true` | Whether to run the daily purgatory_cleanup sweep that permanently deletes the object-store content (unpacked tree and staging tarball) of soft-deleted builds once the organization's purgatory retention has elapsed and stamps `date_purged` on the row. The cron is registered either way, so flipping this does not require a worker restart. |
+| config.maintenance.purgatoryCleanupMaxBuildsPerJob | int | `500` | Cap on the builds a single per-org purgatory_cleanup job reclaims per daily tick, oldest deletion first; anything past the cap is picked up by the next tick. |
 | config.metrics.application | string | `"docverse"` | Name under which to log metrics. Generally there is no reason to change this. |
 | config.metrics.enabled | bool | `false` | Whether to enable sending application metrics events to Sasquatch over Kafka. When disabled, Docverse uses a no-op metrics manager. |
 | config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
@@ -40,6 +44,7 @@ Publish versioned docs
 | config.reaperThresholds.keeperSyncSeconds | int | `21600` | Stuck-run reaper threshold, in seconds, for keeper-sync jobs. |
 | config.reaperThresholds.lifecycleSeconds | int | `21600` | Stuck-run reaper threshold, in seconds, for lifecycle_eval and git_ref_audit jobs (maintenance pool). |
 | config.reaperThresholds.publishEditionSeconds | int | `14400` | Stuck-run reaper threshold, in seconds, for publish_edition jobs. |
+| config.reaperThresholds.purgatoryCleanupSeconds | int | `21600` | Stuck-run reaper threshold, in seconds, for purgatory_cleanup jobs (maintenance pool). |
 | config.sentry.enabled | bool | `false` | Whether to send error reports and tracing data to Sentry. Requires the sentry-dsn secret to be set in Vault. |
 | config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1. |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |

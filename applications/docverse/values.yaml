@@ -101,13 +101,32 @@ config:
     enabled: false
 
     # -- Per-job timeout, in seconds, for maintenance-pool jobs (lifecycle
-    # evaluation and git ref audits).
+    # evaluation, git ref audits, and purgatory cleanup).
     jobTimeoutSeconds: 3600
 
     # -- Whether to enable auditing the git ref lifecycle rule.
     # Enabling this will cause docverse to make GitHub API calls to determine
     # if the git ref associated with an edition still exists.
     gitRefAuditEnabled: false
+
+    # -- Whether to run the daily purgatory_cleanup sweep that permanently
+    # deletes the object-store content (unpacked tree and staging tarball) of
+    # soft-deleted builds once the organization's purgatory retention has
+    # elapsed and stamps `date_purged` on the row. The cron is registered
+    # either way, so flipping this does not require a worker restart.
+    purgatoryCleanupEnabled: true
+
+    # -- Cap on the builds a single per-org purgatory_cleanup job reclaims per
+    # daily tick, oldest deletion first; anything past the cap is picked up by
+    # the next tick.
+    purgatoryCleanupMaxBuildsPerJob: 500
+
+    # -- UTC hour at which the daily purgatory_cleanup dispatcher cron runs.
+    purgatoryCleanupCronHour: 3
+
+    # -- UTC minute of `purgatoryCleanupCronHour` at which the daily
+    # purgatory_cleanup dispatcher cron runs.
+    purgatoryCleanupCronMinute: 23
 
   # -- Set true during a credential-encryption (Fernet) key rotation to deliver
   # the retired key (DOCVERSE_CREDENTIAL_ENCRYPTION_KEY_RETIRED) to all pods so
@@ -121,6 +140,9 @@ config:
     # -- Stuck-run reaper threshold, in seconds, for lifecycle_eval and
     # git_ref_audit jobs (maintenance pool).
     lifecycleSeconds: 21600
+    # -- Stuck-run reaper threshold, in seconds, for purgatory_cleanup jobs
+    # (maintenance pool).
+    purgatoryCleanupSeconds: 21600
     # -- Stuck-run reaper threshold, in seconds, for dashboard_build jobs.
     dashboardBuildSeconds: 1800
     # -- Stuck-run reaper threshold, in seconds, for publish_edition jobs.
