@@ -20,6 +20,15 @@ controller:
       pin:
         - "r29_2_0_rsp2697"
     lab:
+      sizes:
+        - size: "small"
+          resources:
+            requests:
+              cpu: 0.25
+              memory: "0.75Gi"
+            limits:
+              cpu: 1
+              memory: "4Gi"
       extraAnnotations:
         edu.stanford.slac.sdf.project/lsstsci: "true"
       env:
