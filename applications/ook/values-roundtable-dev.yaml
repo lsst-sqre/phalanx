@@ -22,6 +22,10 @@ intersphinxRefresh:
   enabled: true
   schedule: "15 * * * *"
 
+intersphinxIngest:
+  enabled: true
+  schedule: "30 5 * * *"
+
 ingestLsstTexmf:
   enabled: true
 
