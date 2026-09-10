@@ -280,7 +280,6 @@ prompt-processing:
   enabled: true
   topics:
     - lsst.prompt.next-visit
-    - lsst.prompt.next-visit-job
 
 obsloctap:
   enabled: true
