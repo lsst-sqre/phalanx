@@ -20,6 +20,7 @@ controller:
       pin:
         - "r29_2_0_rsp2697"
     lab:
+      defaultSize: "small"
       sizes:
         - size: "small"
           resources:
