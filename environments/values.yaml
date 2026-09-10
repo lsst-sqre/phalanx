@@ -38,6 +38,9 @@ vaultPathPrefix: ""
 defaultComputeClass: null
 
 applications:
+  # -- Enable the apdb-backups-gcp application
+  apdb-backups-gcp: false
+
   # -- Enable the argo-workflows application
   argo-workflows: false
 

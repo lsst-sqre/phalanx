@@ -1,0 +1,47 @@
+# Default values for the gcp-tsop scaled job.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+gcp-tsop:
+  image:
+    # -- Image to use in the gcp-tsop deployment
+    repository: gcr.io/cloud-ingest/tsop-agent
+    # -- Pull policy for the gcp-tsop image
+    # @default -- `IfNotPresent` in prod, `Always` in dev.  Set to `IfNotPresent` for scale testing in dev.
+    pullPolicy: IfNotPresent
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: public-image-v1
+
+  gcp:
+    # -- GCP Project ID to run the agent
+    projectId: ""
+
+  s3:
+    # -- S3 Endpoint URL
+    endpointURL: "https://s3dfrgw.slac.stanford.edu"
+
+    # S3 Metadata lookup.  Set to true for Ceph.
+    metadataDisabled: "true"
+
+  # -- Kubernetes resource requests and limits
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      cpu: 4
+      memory: 8Gi
+    limits:
+      cpu: 8
+      memory: 8Gi
+
+  # -- Kubernetes YAML configs for extra container volume(s).
+  # Any volumes required by other config options are automatically handled by the Helm chart.
+  additionalVolumeMounts: []
+
+  # -- Affinity rules for the gcp-tsop Pod
+  affinity: {}
+
+  # -- Node selection rules for the gcp-tsop pod
+  nodeSelector: {}
+
+  # -- Tolerations for the gcp-tsop pod
+  tolerations: []

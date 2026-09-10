@@ -5,6 +5,7 @@ vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-prompt-processing
 
 applications:
+  apdb-backups-gcp: true
   butler-writer-service: true
   cert-manager: false
   gafaelfawr: true

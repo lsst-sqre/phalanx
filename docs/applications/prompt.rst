@@ -9,6 +9,7 @@ Argo CD project: ``prompt``
 .. toctree::
    :maxdepth: 1
 
+   apdb-backups-gcp/index
    butler-writer-service/index
    next-visit-fan-out/index
    prompt-keda-hsc/index

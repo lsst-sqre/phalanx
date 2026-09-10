@@ -1,0 +1,10 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Copies APDB Backups to Google Cloud.
+name: apdb-backups-gcp
+type: application
+version: 1.0.0
+dependencies:
+  - name: gcp-tsop
+    version: 1.0.0
+    repository: "file://../../charts/gcp-tsop"
