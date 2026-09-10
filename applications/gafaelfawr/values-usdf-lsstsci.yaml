@@ -48,14 +48,17 @@ config:
       - "rubinmgr"
       - "unix-admin"
       - "sdf-admin"
+      - "rg"
     "admin:userinfo":
       - "rubinmgr"
       - "unix-admin"
       - "sdf-admin"
+      - "rg"
     "exec:admin":
       - "rubinmgr"
       - "unix-admin"
       - "sdf-admin"
+      - "rg"
     "exec:notebook":
       - "rubinmgr"
       - "rg"
