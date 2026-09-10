@@ -228,7 +228,6 @@ rest-proxy:
     topics:
       - lsst.survey
     topicPrefixes:
-      - test
       - lsst.dm
       - lsst.debug
       - lsst.example
@@ -280,8 +279,7 @@ backup:
 prompt-processing:
   enabled: true
   topics:
-    - test.next-visit
-    - test.next-visit-job
+    - lsst.prompt.next-visit
 
 obsloctap:
   enabled: true
