@@ -209,7 +209,7 @@ config:
   # -- Maximum execution duration for TAP queries in seconds.
   # Also used for sizing the signed result upload URL's expiration
   # Leave empty to use the default (14400, 4 hours).
-  maxExecutionDuration: ""
+  maxExecutionDuration: "43200"
 
   # -- Maximum UWS job destruction time in seconds.
   # Leave empty to use the default (604800, 1 week).
