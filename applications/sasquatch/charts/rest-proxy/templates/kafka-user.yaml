@@ -20,7 +20,16 @@ spec:
           name: "*"
           patternType: literal
         operations:
-          - All
+          - Read
+      - resource:
+          type: topic
+          name: registry-schemas
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - Read
+          - Write
       {{- range $prefix := .Values.kafka.topicPrefixes }}
       - resource:
           type: topic
@@ -29,5 +38,6 @@ spec:
         type: allow
         host: "*"
         operations:
-          - All
+          - Read
+          - Write
       {{- end }}
