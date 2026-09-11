@@ -19,7 +19,7 @@ rubintv:
     - name: RAPID_ANALYSIS_LOCATION
       value: "USDF"
     - name: DDV_DEPLOY_BRANCH
-      value: &dbE "deploy-slac"
+      value: &dbE "main"
     - name: DDV_BASE_HREF
       value: "/rubintv/ddv/"
     - name: DDV_CLIENT_WS_ADDRESS
