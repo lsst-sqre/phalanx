@@ -11,9 +11,9 @@ BigQuery Kafka bridge
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | config.arqFastMaxJobs | int | `50` | Maximum number of jobs each fast worker (used for I/O-intensive tasks) can process simultaneously |
-| config.arqSlowMaxJobs | int | `2` | Maximum number of jobs each slow worker (used for results processing) can process simultaneously |
+| config.arqSlowMaxJobs | int | `1` | Maximum number of jobs each slow worker (used for results processing) can process simultaneously |
 | config.backend | string | `"BigQuery"` | Database backend to use (Qserv or BigQuery) |
-| config.backendApiTimeout | string | `"30s"` | Timeout for backend API calls `parse_timedelta` format. Used for both QServ REST API and BigQuery API. |
+| config.backendApiTimeout | string | `"30s"` | Timeout for backend API calls in `parse_timedelta` format. |
 | config.backendPollInterval | string | `"1s"` | Interval at which the backend is polled for query status in Safir `parse_timedelta` format |
 | config.backendRetryCount | int | `3` | How many times to retry after a backend API network failure |
 | config.backendRetryDelay | string | `"1s"` | How long to wait between retries after a backend API network failure in Safir `parse_timedelta` format |
@@ -23,8 +23,8 @@ BigQuery Kafka bridge
 | config.consumerGroupId | string | `"bigquery"` | Kafka consumer group ID |
 | config.gcpServiceAccount | string | None, must be set | GCP service account email for Workload Identity. Format: {name}@{project-id}.iam.gserviceaccount.com |
 | config.jobCancelTopic | string | `"lsst.ppdbtap.job-delete"` | Kafka topic for query cancellation requests |
-| config.jobRunBatchSize | int | `10` | Maximum batch size for query execution requests. This should generally be the same as `redisMaxConnections` minus a few for overhead. |
-| config.jobRunMaxBytes | int | 10MiB | Maximum size of a batch read from Kafka in bytes. Wide queries can be up to 500KiB in size, so this should be at least 500KiB * 10. |
+| config.jobRunBatchSize | int | `50` | Maximum batch size for query execution requests. This should generally be the same as `redisMaxConnections` minus a few for overhead. |
+| config.jobRunMaxBytes | int | 25MiB | Maximum size of a batch read from Kafka in bytes. Wide queries can be up to 500KiB in size, so this should be at least 500KiB * 10. |
 | config.jobRunTopic | string | `"lsst.ppdbtap.job-run"` | Kafka topic for query execution requests |
 | config.jobStatusTopic | string | `"lsst.ppdbtap.job-status"` | Kafka topic for query status |
 | config.logLevel | string | `"INFO"` | Logging level |
@@ -35,7 +35,7 @@ BigQuery Kafka bridge
 | config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
-| config.redisMaxConnections | int | `15` | Size of the Redis connection pool. This should be set to `jobRunBatchSize` plus some extra connections for the monitor, cancel jobs. |
+| config.redisMaxConnections | int | `55` | Size of the Redis connection pool. This should be set to `jobRunBatchSize` plus some extra connections for the monitor, cancel jobs. |
 | config.resultTimeout | int | 3600 (1 hour) | How long to wait for result processing (retrieval and upload) before timing out, in seconds. This doubles as the timeout forcibly terminating result worker pods. |
 | config.sentry.enabled | bool | `false` | Set to true to enable the Sentry integration. |
 | config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1 |
@@ -87,7 +87,7 @@ BigQuery Kafka bridge
 | slowWorker.autoscaling.enabled | bool | `true` | Enable autoscaling of bigquery-kafka slow workers |
 | slowWorker.autoscaling.maxReplicas | int | `10` | Maximum number of bigquery-kafka slow worker pods. Each replica will open database connections up to the configured pool size and overflow limits, so make sure the combined connections are under the postgres connection limit. |
 | slowWorker.autoscaling.minReplicas | int | `1` | Minimum number of bigquery-kafka slow worker pods |
-| slowWorker.autoscaling.targetCPUQuantity | string | `"750m"` | Target absolute CPU usage value of bigquery-kafka slow worker pods. |
+| slowWorker.autoscaling.targetCPUQuantity | string | `"500m"` | Target absolute CPU usage value of bigquery-kafka slow worker pods. |
 | slowWorker.nodeSelector | object | `{}` | Node selection rules for the bigquery-kafka slow worker pods |
 | slowWorker.podAnnotations | object | `{}` | Annotations for the bigquery-kafka slow worker pods |
 | slowWorker.replicaCount | int | `1` | Number of slow worker pods to start if autoscaling is disabled |

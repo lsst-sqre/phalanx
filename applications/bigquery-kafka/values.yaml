@@ -9,13 +9,12 @@ config:
 
   # -- Maximum number of jobs each slow worker (used for results processing)
   # can process simultaneously
-  arqSlowMaxJobs: 2
+  arqSlowMaxJobs: 1
 
   # -- Database backend to use (Qserv or BigQuery)
   backend: "BigQuery"
 
-  # -- Timeout for backend API calls
-  # `parse_timedelta` format. Used for both QServ REST API and BigQuery API.
+  # -- Timeout for backend API calls in `parse_timedelta` format.
   backendApiTimeout: "30s"
 
   # -- Interval at which the backend is polled for query status in Safir
@@ -54,12 +53,12 @@ config:
 
   # -- Maximum batch size for query execution requests. This should generally
   # be the same as `redisMaxConnections` minus a few for overhead.
-  jobRunBatchSize: 10
+  jobRunBatchSize: 50
 
   # -- Maximum size of a batch read from Kafka in bytes. Wide queries can be
   # up to 500KiB in size, so this should be at least 500KiB * 10.
-  # @default -- 10MiB
-  jobRunMaxBytes: 10485760
+  # @default -- 25MiB
+  jobRunMaxBytes: 26214400
 
   # -- Kafka topic for query execution requests
   jobRunTopic: "lsst.ppdbtap.job-run"
@@ -104,7 +103,7 @@ config:
   # -- Size of the Redis connection pool. This should be set to
   # `jobRunBatchSize` plus some extra connections for the monitor, cancel
   # jobs.
-  redisMaxConnections: 15
+  redisMaxConnections: 55
 
   # -- How long to wait for result processing (retrieval and upload) before
   # timing out, in seconds. This doubles as the timeout forcibly terminating
@@ -174,7 +173,7 @@ frontend:
       memory: "1Gi"
     requests:
       cpu: "100m"
-      memory: "145Mi"
+      memory: "300Mi"
 
   # -- Tolerations for the bigquery-kafka frontend pod
   # @default -- Tolerate GKE arm64 taint
@@ -206,7 +205,7 @@ fastWorker:
     maxReplicas: 10
 
     # -- Target absolute CPU usage value of bigquery-kafka fast worker pods.
-    targetCPUQuantity: 750m
+    targetCPUQuantity: "750m"
 
   # -- Node selection rules for the bigquery-kafka fast worker pods
   nodeSelector: {}
@@ -222,10 +221,10 @@ fastWorker:
   resources:
     limits:
       cpu: "1"
-      memory: "300Mi"
+      memory: "500Mi"
     requests:
       cpu: "1"
-      memory: "145Mi"
+      memory: "270Mi"
 
   # -- Tolerations for the bigquery-kafka fast worker pods
   # @default -- Tolerate GKE arm64 taint
@@ -257,7 +256,7 @@ slowWorker:
     maxReplicas: 10
 
     # -- Target absolute CPU usage value of bigquery-kafka slow worker pods.
-    targetCPUQuantity: 750m
+    targetCPUQuantity: "500m"
 
   # -- Node selection rules for the bigquery-kafka slow worker pods
   nodeSelector: {}
@@ -276,7 +275,7 @@ slowWorker:
       memory: "1Gi"
     requests:
       cpu: "1"
-      memory: "145Mi"
+      memory: "160Mi"
 
   # -- Tolerations for the bigquery-kafka slow worker pods
   # @default -- Tolerate GKE arm64 taint
@@ -319,10 +318,10 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "100Mi"
+      memory: "200Mi"
     requests:
       cpu: "10m"
-      memory: "20Mi"
+      memory: "50Mi"
 
   # -- Tolerations for the bigquery-kafka Redis pod
   # @default -- Tolerate GKE arm64 taint
