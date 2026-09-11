@@ -115,6 +115,7 @@ controller:
           source:
             type: "persistentVolumeClaim"
             storageClassName: "sdf-group-rubin"
+            readOnly: true
             accessModes:
               - "ReadWriteMany"
             resources:
@@ -124,6 +125,16 @@ controller:
           source:
             type: "persistentVolumeClaim"
             storageClassName: "sdf-data-rubin"
+            readOnly: true
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "1Gi"
+        - name: "sdf-data-lsstsci"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "sdf-data-lsstsci"
             accessModes:
               - "ReadWriteMany"
             resources:
@@ -144,10 +155,15 @@ controller:
         - containerPath: "/project"
           subPath: "g"
           volumeName: "sdf-group-rubin"
+          readOnly: true
         - containerPath: "/sdf/group/rubin"
           volumeName: "sdf-group-rubin"
+          readOnly: true
         - containerPath: "/sdf/data/rubin"
           volumeName: "sdf-data-rubin"
+          readOnly: true
+        - containerPath: "/sdf/data/lsstsci"
+          volumeName: "sdf-data-lsstsci"
         - containerPath: "/scratch"
           volumeName: "sdf-scratch"
 
