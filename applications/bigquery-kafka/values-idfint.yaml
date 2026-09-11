@@ -1,3 +1,7 @@
+image:
+  tag: "tickets-DM-56076"
+  pullPolicy: "Always"
+
 vaultSecretsEnabled: false
 
 config:
