@@ -81,7 +81,7 @@ Qserv Kafka bridge
 | redis.config.secretName | string | `"qserv-kafka"` | Name of secret containing Redis password |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
 | redis.persistence.enabled | bool | `true` | Whether to persist Redis storage. Setting this to false will use `emptyDir` and lose track of all queries on restart. Only use this for a test deployment. |
-| redis.persistence.size | string | `"100Mi"` | Amount of persistent storage to request |
+| redis.persistence.size | string | `"1Gi"` | Amount of persistent storage to request |
 | redis.persistence.storageClass | string | `nil` | Class of storage to request |
 | redis.persistence.volumeClaimName | string | `nil` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |

@@ -324,7 +324,7 @@ redis:
     accessMode: "ReadWriteOnce"
 
     # -- Amount of persistent storage to request
-    size: "100Mi"
+    size: "1Gi"
 
     # -- Class of storage to request
     storageClass: null
@@ -338,10 +338,10 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "200Mi"
+      memory: "500Mi"
     requests:
       cpu: "10m"
-      memory: "50Mi"
+      memory: "100Mi"
 
   # -- Tolerations for the qserv-kafka Redis pod
   # @default -- Tolerate GKE arm64 taint
