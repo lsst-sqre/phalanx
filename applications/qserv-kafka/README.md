@@ -32,7 +32,7 @@ Qserv Kafka bridge
 | config.qservDeleteQueries | bool | `true` | Whether to delete queries after they complete. If this is set to false, rely on Qserv's internal garbage collection of old queries. |
 | config.qservPollInterval | string | `"1s"` | Interval at which Qserv is polled for query status in Safir `parse_timedelta` format |
 | config.qservRestMaxConnections | int | `55` | Maximum simultaneous connections to open to the REST API. This should be set to `jobRunBatchSize` plus some extra connections for the monitor and cancel jobs. |
-| config.qservRestSendApiVersion | bool | `true` | Whether to send the expected API version in REST API calls to Qserv |
+| config.qservRestSendApiVersion | bool | `false` | Whether to send the expected API version in REST API calls to Qserv |
 | config.qservRestUrl | string | None, must be set | URL to the Qserv REST API |
 | config.qservRestUsername | string | `nil` | Username for HTTP Basic Authentication for the Qserv REST API. If not null, the password will be assumed to be the same as the database password. |
 | config.qservRetryCount | int | `3` | How many times to retry after a Qserv API network failure |

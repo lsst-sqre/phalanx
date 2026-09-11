@@ -107,7 +107,7 @@ config:
   qservRestMaxConnections: 55
 
   # -- Whether to send the expected API version in REST API calls to Qserv
-  qservRestSendApiVersion: true
+  qservRestSendApiVersion: false
 
   # -- URL to the Qserv REST API
   # @default -- None, must be set

@@ -1,12 +1,4 @@
 config:
-  logLevel: "DEBUG"
   qservDatabaseUrl: "mysql+asyncmy://qsmaster@sdfqserv009.sdf.slac.stanford.edu:4090/"
-  qservRestSendApiVersion: false
   qservRestUrl: "https://sdfqserv009.sdf.slac.stanford.edu:4098/"
   qservRestUsername: "qsmaster"
-frontend:
-  allowRootDebug: true
-resultWorker:
-  allowRootDebug: true
-  autoscaling:
-    maxReplicas: 50
