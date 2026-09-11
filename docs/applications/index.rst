@@ -15,6 +15,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 .. toctree::
    :maxdepth: 2
 
+   drp
    infrastructure
    rsp
    rubin
