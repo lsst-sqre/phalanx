@@ -8,5 +8,5 @@ type: application
 version: 1.0.0
 dependencies:
 - name: opensearch-operator
-  version: "3.0.2"
+  version: "3.3.0"
   repository: https://opensearch-project.github.io/opensearch-k8s-operator/
