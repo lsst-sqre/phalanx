@@ -6,25 +6,9 @@ config:
   slack:
     enabled: true
   qservDatabaseUrl: "mysql+asyncmy://qsmaster@qserv-prod.slac.stanford.edu:4040/"
-  qservRestSendApiVersion: false
   qservRestUrl: "https://qserv-prod.slac.stanford.edu:4048/"
   qservRestUsername: "qsmaster"
 slowWorker:
   autoscaling:
     minReplicas: 4
     maxReplicas: 50
-  resources:
-    limits:
-      cpu: "1"
-      memory: "1000Mi"
-    requests:
-      cpu: "1"
-      memory: "290Mi"
-redis:
-  resources:
-    limits:
-      cpu: "1"
-      memory: "500Mi"
-    requests:
-      cpu: "10m"
-      memory: "200Mi"

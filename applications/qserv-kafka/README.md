@@ -12,11 +12,11 @@ Qserv Kafka bridge
 |-----|------|---------|-------------|
 | config.arqFastMaxJobs | int | `50` | Maximum number of jobs each fast worker (used for I/O-intensive tasks) can process simultaneously |
 | config.arqSlowMaxJobs | int | `1` | Maximum number of jobs each slow worker (used for results processing) can process simultaneously |
-| config.backendApiTimeout | string | `"60s"` | Timeout for REST API calls in Safir `parse_timedelta` format. This includes time spent waiting for a connection if the maximum number of connections has been reached. |
+| config.backendApiTimeout | string | `"30s"` | Timeout for REST API calls in Safir `parse_timedelta` format. This includes time spent waiting for a connection if the maximum number of connections has been reached. |
 | config.consumerGroupId | string | `"qserv"` | Kafka consumer group ID |
 | config.jobCancelTopic | string | `"lsst.tap.job-delete"` | Kafka topic for query cancellation requests |
-| config.jobRunBatchSize | int | `10` | Maximum batch size for query execution requests. This should generally be the same as `qservRestMaxConnections`. |
-| config.jobRunMaxBytes | int | 10MiB | Maximum size of a batch read from Kafka in bytes. Wide queries can be up to 500KiB in size, so this should be at least 500KiB * 10. |
+| config.jobRunBatchSize | int | `50` | Maximum batch size for query execution requests. This should generally be the same as `qservRestMaxConnections`. |
+| config.jobRunMaxBytes | int | 25MiB | Maximum size of a batch read from Kafka in bytes. Wide queries can be up to 500KiB in size, so this should be at least 500KiB * 10. |
 | config.jobRunTopic | string | `"lsst.tap.job-run"` | Kafka topic for query execution requests |
 | config.jobStatusTopic | string | `"lsst.tap.job-status"` | Kafka topic for query status |
 | config.logLevel | string | `"INFO"` | Logging level |
@@ -31,12 +31,13 @@ Qserv Kafka bridge
 | config.qservDatabaseUrl | string | None, must be set | URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`) |
 | config.qservDeleteQueries | bool | `true` | Whether to delete queries after they complete. If this is set to false, rely on Qserv's internal garbage collection of old queries. |
 | config.qservPollInterval | string | `"1s"` | Interval at which Qserv is polled for query status in Safir `parse_timedelta` format |
-| config.qservRestMaxConnections | int | `15` | Maximum simultaneous connections to open to the REST API. This should be set to `jobRunBatchSize` plus some extra connections for the monitor and cancel jobs. |
-| config.qservRestSendApiVersion | bool | `true` | Whether to send the expected API version in REST API calls to Qserv |
+| config.qservRestMaxConnections | int | `55` | Maximum simultaneous connections to open to the REST API. This should be set to `jobRunBatchSize` plus some extra connections for the monitor and cancel jobs. |
+| config.qservRestSendApiVersion | bool | `false` | Whether to send the expected API version in REST API calls to Qserv |
 | config.qservRestUrl | string | None, must be set | URL to the Qserv REST API |
 | config.qservRestUsername | string | `nil` | Username for HTTP Basic Authentication for the Qserv REST API. If not null, the password will be assumed to be the same as the database password. |
 | config.qservRetryCount | int | `3` | How many times to retry after a Qserv API network failure |
 | config.qservRetryDelay | string | `"1s"` | How long to wait between retries after a Qserv API network failure in Safir `parse_timedelta` format |
+| config.qservUploadDeleteTimeout | string | `"5m"` | How long to allow for temporary user table deletion before timing out in Safir `parse_timedelta` format. |
 | config.qservUploadTimeout | string | `"30m"` | How long to allow for user table upload before timing out in Safir `parse_timedelta` format. |
 | config.redisMaxConnections | int | `15` | Size of the Redis connection pool. This should be set to `jobRunBatchSize` plus some extra connections for the monitor, cancel jobs. |
 | config.resultTimeout | int | 3600 (1 hour) | How long to wait for result processing (retrieval and upload) before timing out, in seconds. This doubles as the timeout forcibly terminating result worker pods. |
@@ -80,7 +81,7 @@ Qserv Kafka bridge
 | redis.config.secretName | string | `"qserv-kafka"` | Name of secret containing Redis password |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
 | redis.persistence.enabled | bool | `true` | Whether to persist Redis storage. Setting this to false will use `emptyDir` and lose track of all queries on restart. Only use this for a test deployment. |
-| redis.persistence.size | string | `"100Mi"` | Amount of persistent storage to request |
+| redis.persistence.size | string | `"1Gi"` | Amount of persistent storage to request |
 | redis.persistence.storageClass | string | `nil` | Class of storage to request |
 | redis.persistence.volumeClaimName | string | `nil` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
@@ -90,7 +91,7 @@ Qserv Kafka bridge
 | slowWorker.autoscaling.enabled | bool | `true` | Enable autoscaling of qserv-kafka slow workers |
 | slowWorker.autoscaling.maxReplicas | int | `10` | Maximum number of qserv-kafka slow worker pods. Each replica will open database connections up to the configured pool size and overflow limits, so make sure the combined connections are under the connection limit. |
 | slowWorker.autoscaling.minReplicas | int | `1` | Minimum number of qserv-kafka slow worker pods |
-| slowWorker.autoscaling.targetCPUQuantity | string | `"500m"` | Target absolute CPU usage value of qserv-kafka slow worker pods. |
+| slowWorker.autoscaling.targetCPUQuantity | string | `"750m"` | Target absolute CPU usage value of qserv-kafka slow worker pods. |
 | slowWorker.nodeSelector | object | `{}` | Node selection rules for the qserv-kafka worker pods |
 | slowWorker.podAnnotations | object | `{}` | Annotations for the qserv-kafka worker pods |
 | slowWorker.replicaCount | int | `1` | Number of slow worker pods to start if autoscaling is disabled |

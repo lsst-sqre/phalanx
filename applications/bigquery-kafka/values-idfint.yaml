@@ -1,5 +1,3 @@
-vaultSecretsEnabled: false
-
 config:
   logLevel: "DEBUG"
   bigqueryProject: "ppdb-int-6c62"
@@ -12,6 +10,3 @@ config:
   slack:
     enabled: false
   bigqueryMaxBytesBilled: 1000000000000
-redis:
-  persistence:
-    enabled: true
