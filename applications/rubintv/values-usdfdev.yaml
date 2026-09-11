@@ -7,6 +7,7 @@ rubintv:
   frontend:
     debug: true
     image:
+      repository: ghcr.io/lsst-ts/rubintv-v3
       tag: deploy
       pullPolicy: Always
     env:
