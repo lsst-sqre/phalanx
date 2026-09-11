@@ -170,7 +170,7 @@ frontend:
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "2"
+      cpu: "1"
       memory: "1Gi"
     requests:
       cpu: "100m"
@@ -205,8 +205,8 @@ fastWorker:
     # limit.
     maxReplicas: 10
 
-    # -- Target CPU utilization of bigquery-kafka fast worker pods.
-    targetCPUUtilizationPercentage: 75
+    # -- Target absolute CPU usage value of bigquery-kafka fast worker pods.
+    targetCPUQuantity: 750m
 
   # -- Node selection rules for the bigquery-kafka fast worker pods
   nodeSelector: {}
@@ -221,10 +221,10 @@ fastWorker:
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "250m"
+      cpu: "1"
       memory: "300Mi"
     requests:
-      cpu: "50m"
+      cpu: "1"
       memory: "145Mi"
 
   # -- Tolerations for the bigquery-kafka fast worker pods
@@ -256,8 +256,8 @@ slowWorker:
     # connection limit.
     maxReplicas: 10
 
-    # -- Target CPU utilization of bigquery-kafka slow worker pods.
-    targetCPUUtilizationPercentage: 75
+    # -- Target absolute CPU usage value of bigquery-kafka slow worker pods.
+    targetCPUQuantity: 750m
 
   # -- Node selection rules for the bigquery-kafka slow worker pods
   nodeSelector: {}
@@ -272,7 +272,7 @@ slowWorker:
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "2"
+      cpu: "1"
       memory: "1Gi"
     requests:
       cpu: "1"
