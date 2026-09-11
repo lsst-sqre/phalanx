@@ -21,6 +21,30 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
+    - name: "scale-test-ppdb"
+      count: 50
+      user_spec:
+        username_prefix: "bot-mobu-scale-notebook"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      # start_batch_wait: "1m"
+      business:
+        type: "NotebookRunnerInfinite"
+        restart: true
+        options:
+          repo_url: "https://github.com/lsst-sqre/scaletest"
+          repo_ref: "u/stvoutsin/ppdb"
+          delete_lab: false
+          notebook_idle_time: 0
+          idle_time: 0
+          execution_idle_time: 0
+          collection_rules:
+            - type: "intersect_union_of"
+              patterns:
+                - "ppdbtap.ipynb"
     - name: "phalanx-quotidian"
       count: 1
       users:
