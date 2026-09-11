@@ -46,7 +46,7 @@ BigQuery Kafka bridge
 | fastWorker.autoscaling.enabled | bool | `true` | Enable autoscaling of bigquery-kafka fast workers |
 | fastWorker.autoscaling.maxReplicas | int | `10` | Maximum number of bigquery-kafka fast worker pods. Each replica will open database connections up to the configured pool size and overflow limits, so make sure the combined connections are under the connection limit. |
 | fastWorker.autoscaling.minReplicas | int | `1` | Minimum number of bigquery-kafka fast worker pods |
-| fastWorker.autoscaling.targetCPUUtilizationPercentage | int | `75` | Target CPU utilization of bigquery-kafka fast worker pods. |
+| fastWorker.autoscaling.targetCPUQuantity | string | `"750m"` | Target CPU utilization of bigquery-kafka fast worker pods. |
 | fastWorker.nodeSelector | object | `{}` | Node selection rules for the bigquery-kafka fast worker pods |
 | fastWorker.podAnnotations | object | `{}` | Annotations for the bigquery-kafka fast worker pods |
 | fastWorker.replicaCount | int | `1` | Number of fast worker pods to start |
@@ -87,7 +87,7 @@ BigQuery Kafka bridge
 | slowWorker.autoscaling.enabled | bool | `true` | Enable autoscaling of bigquery-kafka slow workers |
 | slowWorker.autoscaling.maxReplicas | int | `10` | Maximum number of bigquery-kafka slow worker pods. Each replica will open database connections up to the configured pool size and overflow limits, so make sure the combined connections are under the postgres connection limit. |
 | slowWorker.autoscaling.minReplicas | int | `1` | Minimum number of bigquery-kafka slow worker pods |
-| slowWorker.autoscaling.targetCPUUtilizationPercentage | int | `75` | Target CPU utilization of bigquery-kafka slow worker pods. |
+| slowWorker.autoscaling.targetCPUQuantity | string | `"750m"` | Target CPU utilization of bigquery-kafka slow worker pods. |
 | slowWorker.nodeSelector | object | `{}` | Node selection rules for the bigquery-kafka slow worker pods |
 | slowWorker.podAnnotations | object | `{}` | Annotations for the bigquery-kafka slow worker pods |
 | slowWorker.replicaCount | int | `1` | Number of slow worker pods to start if autoscaling is disabled |
