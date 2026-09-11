@@ -276,7 +276,7 @@ slowWorker:
     maxReplicas: 10
 
     # -- Target absolute CPU usage value of qserv-kafka slow worker pods.
-    targetCPUQuantity: "500m"
+    targetCPUQuantity: "750m"
 
   # -- Node selection rules for the qserv-kafka worker pods
   nodeSelector: {}
