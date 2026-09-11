@@ -57,6 +57,7 @@
 | applications.obssys | bool | `false` | Enable the obssys control system application |
 | applications.onepassword-connect | bool | `false` | Enable the onepassword-connect application |
 | applications.ook | bool | `false` | Enable the ook application |
+| applications.opensearch-operator | bool | `false` | Enable the opensearch-operator application |
 | applications.plot-navigator | bool | `false` | Enable the plot-navigator application |
 | applications.portal | bool | `false` | Enable the portal application |
 | applications.postgres | bool | `false` | Enable the in-cluster PostgreSQL server. Use of this server is discouraged in favor of using infrastructure SQL, but will remain supported for use cases such as minikube test deployments. |
