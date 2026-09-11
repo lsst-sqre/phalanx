@@ -15,8 +15,8 @@ Qserv Kafka bridge
 | config.backendApiTimeout | string | `"30s"` | Timeout for REST API calls in Safir `parse_timedelta` format. This includes time spent waiting for a connection if the maximum number of connections has been reached. |
 | config.consumerGroupId | string | `"qserv"` | Kafka consumer group ID |
 | config.jobCancelTopic | string | `"lsst.tap.job-delete"` | Kafka topic for query cancellation requests |
-| config.jobRunBatchSize | int | `10` | Maximum batch size for query execution requests. This should generally be the same as `qservRestMaxConnections`. |
-| config.jobRunMaxBytes | int | 10MiB | Maximum size of a batch read from Kafka in bytes. Wide queries can be up to 500KiB in size, so this should be at least 500KiB * 10. |
+| config.jobRunBatchSize | int | `50` | Maximum batch size for query execution requests. This should generally be the same as `qservRestMaxConnections`. |
+| config.jobRunMaxBytes | int | 25MiB | Maximum size of a batch read from Kafka in bytes. Wide queries can be up to 500KiB in size, so this should be at least 500KiB * 10. |
 | config.jobRunTopic | string | `"lsst.tap.job-run"` | Kafka topic for query execution requests |
 | config.jobStatusTopic | string | `"lsst.tap.job-status"` | Kafka topic for query status |
 | config.logLevel | string | `"INFO"` | Logging level |
@@ -31,7 +31,7 @@ Qserv Kafka bridge
 | config.qservDatabaseUrl | string | None, must be set | URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`) |
 | config.qservDeleteQueries | bool | `true` | Whether to delete queries after they complete. If this is set to false, rely on Qserv's internal garbage collection of old queries. |
 | config.qservPollInterval | string | `"1s"` | Interval at which Qserv is polled for query status in Safir `parse_timedelta` format |
-| config.qservRestMaxConnections | int | `15` | Maximum simultaneous connections to open to the REST API. This should be set to `jobRunBatchSize` plus some extra connections for the monitor and cancel jobs. |
+| config.qservRestMaxConnections | int | `55` | Maximum simultaneous connections to open to the REST API. This should be set to `jobRunBatchSize` plus some extra connections for the monitor and cancel jobs. |
 | config.qservRestSendApiVersion | bool | `true` | Whether to send the expected API version in REST API calls to Qserv |
 | config.qservRestUrl | string | None, must be set | URL to the Qserv REST API |
 | config.qservRestUsername | string | `nil` | Username for HTTP Basic Authentication for the Qserv REST API. If not null, the password will be assumed to be the same as the database password. |

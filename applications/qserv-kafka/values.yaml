@@ -24,12 +24,12 @@ config:
 
   # -- Maximum batch size for query execution requests. This should generally
   # be the same as `qservRestMaxConnections`.
-  jobRunBatchSize: 10
+  jobRunBatchSize: 50
 
   # -- Maximum size of a batch read from Kafka in bytes. Wide queries can be
   # up to 500KiB in size, so this should be at least 500KiB * 10.
-  # @default -- 10MiB
-  jobRunMaxBytes: 10485760
+  # @default -- 25MiB
+  jobRunMaxBytes: 26214400
 
   # -- Kafka topic for query execution requests
   jobRunTopic: "lsst.tap.job-run"
@@ -104,7 +104,7 @@ config:
   # -- Maximum simultaneous connections to open to the REST API. This should
   # be set to `jobRunBatchSize` plus some extra connections for the monitor
   # and cancel jobs.
-  qservRestMaxConnections: 15
+  qservRestMaxConnections: 55
 
   # -- Whether to send the expected API version in REST API calls to Qserv
   qservRestSendApiVersion: true
@@ -193,7 +193,7 @@ frontend:
       memory: "450Mi"
     requests:
       cpu: "100m"
-      memory: "145Mi"
+      memory: "200Mi"
 
   # -- Tolerations for the qserv-kafka frontend pod
   # @default -- Tolerate GKE arm64 taint
@@ -225,7 +225,7 @@ fastWorker:
     maxReplicas: 10
 
     # -- Target absolute CPU usage value of qserv-kafka fast worker pods.
-    targetCPUQuantity: 750m
+    targetCPUQuantity: "750m"
 
   # -- Node selection rules for the qserv-kafka fast worker pods
   nodeSelector: {}
@@ -241,10 +241,10 @@ fastWorker:
   resources:
     limits:
       cpu: "1"
-      memory: "300Mi"
+      memory: "400Mi"
     requests:
       cpu: "1"
-      memory: "145Mi"
+      memory: "200Mi"
 
   # -- Tolerations for the qserv-kafka fast worker pods
   # @default -- Tolerate GKE arm64 taint
@@ -276,7 +276,7 @@ slowWorker:
     maxReplicas: 10
 
     # -- Target absolute CPU usage value of qserv-kafka slow worker pods.
-    targetCPUQuantity: 500m
+    targetCPUQuantity: "500m"
 
   # -- Node selection rules for the qserv-kafka worker pods
   nodeSelector: {}
@@ -295,7 +295,7 @@ slowWorker:
       memory: "500Mi"
     requests:
       cpu: "1"
-      memory: "145Mi"
+      memory: "200Mi"
 
   # -- Tolerations for the qserv-kafka slow worker pods
   # @default -- Tolerate GKE arm64 taint
@@ -338,10 +338,10 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "100Mi"
+      memory: "200Mi"
     requests:
       cpu: "10m"
-      memory: "20Mi"
+      memory: "50Mi"
 
   # -- Tolerations for the qserv-kafka Redis pod
   # @default -- Tolerate GKE arm64 taint
