@@ -41,6 +41,7 @@ class DocLink(BaseModel):
 class Project(Enum):
     """Valid choices for the Argo CD project of an application."""
 
+    drp = "drp"
     infrastructure = "infrastructure"
     rsp = "rsp"
     rubin = "rubin"
