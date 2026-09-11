@@ -1,0 +1,34 @@
+# Default values for opensearch-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+manager:
+  # Log level of the operator. Possible values: debug, info, warn, error
+  loglevel: info
+
+  # If specified, the operator will be restricted to watch objects only in the desired namespace. The default is to watch all namespaces.
+  # To watch multiple namespaces, either separate their names using commas or define them as a list.
+  # Examples:
+  # watchNamespaces: 'ns1,ns2'
+  # watchNamespace: [ns1, ns2]
+  watchNamespace:
+
+  # Configure extra environment variables for the operator. You can also pull them from secrets or ConfigMaps.
+  extraEnv: []
+  #  - name: MY_ENV
+  #    value: somevalue
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base URL for Repertoire discovery API
+  # @default -- Set by Argo CD
+  repertoireUrl: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
