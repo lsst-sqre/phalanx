@@ -20,7 +20,7 @@ rubintv:
     - name: RAPID_ANALYSIS_LOCATION
       value: "USDF"
     - name: DDV_DEPLOY_BRANCH
-      value: &dbE "main"
+      value: "main"
     - name: DDV_BASE_HREF
       value: "/rubintv/ddv/"
     - name: DDV_CLIENT_WS_ADDRESS
@@ -59,7 +59,7 @@ rubintv:
     - name: PGUSER
       value: "rubin"
     - name: DEPLOY_BRANCH
-      value: *dbE
+      value: "deploy-slac"
     - name: RA_PULL_DIRECTORIES
       value: "rubintv_analysis_service"
     pvcMountpoint:
