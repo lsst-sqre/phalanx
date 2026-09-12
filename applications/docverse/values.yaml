@@ -109,6 +109,16 @@ config:
     # if the git ref associated with an edition still exists.
     gitRefAuditEnabled: false
 
+    # -- Enable the edition reconcile loop that re-drives editions whose
+    # recorded publish state has drifted from what the CDN serves. The cron
+    # stays registered either way; disabling only makes each tick a no-op.
+    editionReconcileEnabled: true
+
+    # -- Maximum number of republish plus unpublish actions one per-org
+    # `edition_reconcile` job applies per tick; the remainder is reported as
+    # capped and picked up on the next tick.
+    editionReconcileMaxActionsPerJob: 100
+
     # -- Whether to run the daily purgatory_cleanup sweep that permanently
     # deletes the object-store content (unpacked tree and staging tarball) of
     # soft-deleted builds once the organization's purgatory retention has
@@ -151,6 +161,13 @@ config:
     buildProcessingSeconds: 28800
     # -- Stuck-run reaper threshold, in seconds, for dashboard_sync jobs.
     dashboardSyncSeconds: 21600
+    # -- Stuck-run reaper threshold, in seconds, for edition_reconcile jobs.
+    # Leave unset to let the server derive it as
+    # `config.maintenance.jobTimeoutSeconds` plus a 1800 s margin; an explicit
+    # value must be strictly greater than that timeout or the server refuses
+    # to start.
+    # @default -- Derived by the server (`jobTimeoutSeconds` + 1800)
+    editionReconcileSeconds: null
 
 ingress:
   # -- Additional annotations for the ingress rule
