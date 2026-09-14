@@ -9,11 +9,11 @@ appVersion: 16.0.1
 
 dependencies:
   - name: "redis"
-    version: 1.2.0
+    version: 1.2.1
     repository: "https://lsst-sqre.github.io/charts/"
   - name: "redis"
     alias: "redis-ephemeral"
-    version: 1.2.0
+    version: 1.2.1
     repository: "https://lsst-sqre.github.io/charts/"
 
 annotations:
