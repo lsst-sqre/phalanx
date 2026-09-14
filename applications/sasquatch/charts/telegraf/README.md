@@ -36,6 +36,10 @@ Telegraf is an agent for collecting, processing, aggregating, and writing metric
 | kafkaConsumers.test.tags | list | `[]` | List of input fields to be recorded as InfluxDB tags.  The input fields specified as tags will be converted to strings before ingestion into InfluxDB. |
 | kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Input field to be used as the InfluxDB timestamp (optional).  If unspecified or set to the empty string, Telegraf will use the time it received the measurement. |
 | kafkaConsumers.test.timestamp_format | string | `"unix"` | Timestamp format. Possible values are `unix` (the default if unset) a timestamp in seconds since the Unix epoch, `unix_ms` (milliseconds), `unix_us` (microsseconds), or `unix_ns` (nanoseconds). |
+| kafkaConsumers.test.topicDiscovery.enabled | bool | `false` | Discover Kafka topics dynamically for this consumer. When enabled, topicRegexps is ignored. |
+| kafkaConsumers.test.topicDiscovery.excludePrefixes | list | `[]` | Case-sensitive literal topic prefixes to exclude. Exclusions take precedence over inclusions. |
+| kafkaConsumers.test.topicDiscovery.includePrefixes | list | `[]` | Case-sensitive literal topic prefixes to include. A topic matching any prefix is included. |
+| kafkaConsumers.test.topicDiscovery.refreshInterval | string | `"30s"` | How often to refresh the discovered Kafka topic list. This must be a positive number followed by `s`, `m`, or `h`. |
 | kafkaConsumers.test.topicRegexps | list | `[".*Test"]` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
 | kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
@@ -56,3 +60,7 @@ Telegraf is an agent for collecting, processing, aggregating, and writing metric
 | registry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema Registry URL |
 | resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | tolerations | list | `[]` | Tolerations for pod assignment |
+| topicDiscovery.image.pullPolicy | string | `"IfNotPresent"` | Kafka topic discovery sidecar image pull policy |
+| topicDiscovery.image.repo | string | `"ghcr.io/lsst-sqre/sasquatch"` | Kafka topic discovery sidecar image repository |
+| topicDiscovery.image.tag | string | `"1.5.0"` | Kafka topic discovery sidecar image tag |
+| topicDiscovery.resources | object | See `values.yaml` | Kubernetes resources requests and limits for topic discovery sidecars |
