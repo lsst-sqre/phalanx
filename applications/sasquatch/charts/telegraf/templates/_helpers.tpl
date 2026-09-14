@@ -7,6 +7,31 @@
 [ {{ join ", " $items }} ]
 {{- end }}
 
+{{/* Validate Kafka topic discovery configuration. */}}
+{{- define "telegraf.validateTopicDiscovery" -}}
+{{- $topicDiscovery := default dict .value.topicDiscovery -}}
+{{- if (default false $topicDiscovery.enabled) -}}
+  {{- $includePrefixes := default list $topicDiscovery.includePrefixes -}}
+  {{- if eq (len $includePrefixes) 0 -}}
+    {{- fail (printf "kafkaConsumers.%s.topicDiscovery.includePrefixes must contain at least one prefix" .key) -}}
+  {{- end -}}
+  {{- range $name, $prefixes := dict "includePrefixes" $includePrefixes "excludePrefixes" (default list $topicDiscovery.excludePrefixes) -}}
+    {{- range $index, $prefix := $prefixes -}}
+      {{- if not (kindIs "string" $prefix) -}}
+        {{- fail (printf "kafkaConsumers.%s.topicDiscovery.%s[%d] must be a string" $.key $name $index) -}}
+      {{- end -}}
+      {{- if or (eq (trim $prefix) "") (ne $prefix (trim $prefix)) (contains "\n" $prefix) (contains "\r" $prefix) -}}
+        {{- fail (printf "kafkaConsumers.%s.topicDiscovery.%s[%d] must be a non-empty prefix without surrounding whitespace or newlines" $.key $name $index) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $refreshInterval := default "30s" $topicDiscovery.refreshInterval -}}
+  {{- if not (regexMatch "^[1-9][0-9]*[smh]$" $refreshInterval) -}}
+    {{- fail (printf "kafkaConsumers.%s.topicDiscovery.refreshInterval must be a positive duration ending in s, m, or h" .key) -}}
+  {{- end -}}
+{{- end -}}
+{{- end }}
+
 {{/* Render a Telegraf Kafka consumer input. */}}
 {{- define "telegraf.kafkaConsumer" }}
 {{- $dataFormat := default "avro" .value.data_format }}
@@ -22,7 +47,11 @@
       sasl_password = "$TELEGRAF_PASSWORD"
       sasl_username = "telegraf"
       data_format = {{ $dataFormat | quote }}
+      {{- if .useTopics }}
+      topics = __DISCOVERED_TOPICS__
+      {{- else }}
       topic_regexps = {{ include "telegraf.toTomlArray" .value.topicRegexps }}
+      {{- end }}
       offset = {{ .offset | quote }}
       precision = {{ default "1us" .value.precision | quote }}
       max_processing_time = {{ default "1s" .value.max_processing_time | quote }}
@@ -59,6 +88,9 @@
 
 {{- define "configmap" -}}
 {{- if .value.enabled }}
+{{- include "telegraf.validateTopicDiscovery" . }}
+{{- $topicDiscovery := default dict .value.topicDiscovery }}
+{{- $discoveryEnabled := default false $topicDiscovery.enabled }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -122,6 +154,7 @@ data:
       "offset" "oldest"
     ) }}
     {{- end }}
+    {{- if not $discoveryEnabled }}
     {{- range $consumer := $consumers }}
 {{ include "telegraf.kafkaConsumer" (dict
   "value" $config.value
@@ -131,12 +164,37 @@ data:
   "compressionCodec" $compressionCodec
   "consumerGroup" $consumer.consumerGroup
   "offset" $consumer.offset
+  "useTopics" false
 ) }}
+    {{- end }}
     {{- end }}
 
     [[inputs.internal]]
       name_prefix = "telegraf_"
       collect_memstats = true
       tags = { instance = "{{ .key }}" }
+  {{- if $discoveryEnabled }}
+  kafka-consumer.conf.tmpl: |+
+    {{- range $consumer := $consumers }}
+{{ include "telegraf.kafkaConsumer" (dict
+  "value" $config.value
+  "registryUrl" $config.registryUrl
+  "kafkaVersion" $config.kafkaVersion
+  "timestampField" $timestampField
+  "compressionCodec" $compressionCodec
+  "consumerGroup" $consumer.consumerGroup
+  "offset" $consumer.offset
+  "useTopics" true
+) }}
+    {{- end }}
+  include-prefixes.txt: |-
+    {{- range $prefix := $topicDiscovery.includePrefixes }}
+    {{ $prefix }}
+    {{- end }}
+  exclude-prefixes.txt: |-
+    {{- range $prefix := (default list $topicDiscovery.excludePrefixes) }}
+    {{ $prefix }}
+    {{- end }}
+  {{- end }}
 {{- end }}
 {{- end }}
