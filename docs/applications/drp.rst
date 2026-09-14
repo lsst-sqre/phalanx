@@ -9,4 +9,5 @@ Argo CD project: ``drp``
 .. toctree::
    :maxdepth: 1
 
+   opensearch-cluster/index
    opensearch-operator/index

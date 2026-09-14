@@ -1,0 +1,23 @@
+{{- range $role := $.Values.roles }}
+---
+apiVersion: opensearch.org/v1
+kind: OpensearchRole
+metadata:
+  name: {{ $role.rolename }}
+spec:
+  opensearchCluster:
+    name: {{ $.Values.clusterName | quote }}
+  clusterPermissions:
+    {{- range $clusterPermission := $role.clusterPermissions }}
+    - {{ $clusterPermission | quote }}
+    {{- end }}
+  indexPermissions:
+    - indexPatterns:
+      {{- range $indexPattern := $role.indexPatterns}}
+      - {{ $indexPattern | quote }}
+      {{- end }}
+      allowedActions:
+        {{- range $allowedAction := $role.allowedActions}}
+        - {{ $allowedAction | quote }}
+        {{- end }}
+{{- end }}

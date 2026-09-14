@@ -1,0 +1,18 @@
+{{- range $roleBinding := $.Values.roleBindings }}
+---
+apiVersion: opensearch.org/v1
+kind: OpensearchUserRoleBinding
+metadata:
+  name: {{ $roleBinding.name }}
+spec:
+  opensearchCluster:
+    name: {{ $.Values.clusterName }}
+  users:
+    {{- range $user := $roleBinding.users }}
+    - {{ $user | quote }}
+    {{- end }}
+  roles:
+    {{- range $role := $roleBinding.roles }}
+     - {{ $role | quote }}
+    {{- end }}
+{{- end }}
