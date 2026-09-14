@@ -1,0 +1,11 @@
+masters:
+
+  persistence:
+    pvc:
+      storageClass: "wekafs--sdf-k8s01"
+
+nodes:
+
+  persistence:
+    pvc:
+      storageClass: "wekafs--sdf-k8s01"

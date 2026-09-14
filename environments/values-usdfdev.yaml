@@ -30,6 +30,7 @@ applications:
   noteburst: true
   nublado: true
   obsloctap: true
+  opensearch-cluster: true
   opensearch-operator: true
   plot-navigator: true
   portal: true
