@@ -1,0 +1,116 @@
+# Default values for opensearch-cluster.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+clusterName: "rubinobs-opensearch"
+
+version: "3.8.0"
+
+dashboards:
+  # -- Enable dashboards
+  enable: true
+
+masters:
+  # -- Disk size of masters
+  diskSize: "10Gi"
+
+  persistence:
+    pvc:
+      # -- Storage class for PVC.
+      storageClass: ""
+
+  # -- Number of masters pods to start
+  replicaCount: 3
+
+  # -- Resource limits and requests for the opensearch-cluster deployment pod
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "4Gi"
+      ephemeral-storage: "3Gi"
+    limits:
+      cpu: "1"
+      memory: "8Gi"
+      ephemeral-storage: "6Gi"
+
+  # -- Java virtual machine settings. Set JVM memory to half of resource memory limit.
+  jvm: "-Xms4g -Xmx4g"
+
+nodes:
+  # -- Disk size of masters
+  diskSize: "30Gi"
+
+  persistence:
+    pvc:
+      # -- Storage class for PVC.
+      storageClass: ""
+
+  # -- Number of masters pods to start
+  replicaCount: 3
+
+  # -- Resource limits and requests for the opensearch-cluster deployment pod
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      cpu: "1"
+      memory: "8Gi"
+      ephemeral-storage: "50Gi"
+    limits:
+      cpu: "2"
+      memory: "16Gi"
+      ephemeral-storage: "75Gi"
+
+  # -- Java virtual machine settings. Set JVM memory to half of resource memory limit.
+  jvm: "-Xms8g -Xmx8g"
+
+security:
+  tls:
+    http:
+      # -- Certificate validity duration
+      certificateDuration: "8760h"
+
+      # -- Enable TLS for HTTP
+      enabled: true
+
+      # -- Operator generate TLS
+      generateEnabled: true
+
+      # -- Days before to rotate certificate
+      rotateDaysBeforeExpiry: "30"
+
+    transport:
+      # -- Certificate validity duration
+      certificateDuration: "8760h"
+
+      # -- Enable TLS for Trasnport
+      enabled: true
+
+      # -- Operator generate TLS
+      generateEnabled: true
+
+      # -- Seperate certificate per node
+      perNode: true
+
+      # -- Days before to rotate certificate
+      rotateDaysBeforeExpiry: "30"
+
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base URL for Repertoire discovery API
+  # @default -- Set by Argo CD
+  repertoireUrl: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

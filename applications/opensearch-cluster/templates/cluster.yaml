@@ -1,0 +1,43 @@
+apiVersion: opensearch.org/v1
+kind: OpenSearchCluster
+metadata:
+  name: {{ .Values.clusterName }}
+spec:
+  general:
+    serviceName: {{ .Values.clusterName }}
+    version: {{ .Values.version }}
+  dashboards:
+    enable: {{ .Values.dashboards.enable }}
+    version: {{ .Values.version }}
+    additionalConfig:
+      server.basePath: "/opensearch-admin"
+  nodePools:
+    - component: masters
+      replicas: {{ .Values.masters.replicaCount }}
+      diskSize: {{ .Values.masters.diskSize }}
+      resources:
+        {{- toYaml .Values.masters.resources | nindent 8 }}
+      jvm: {{ .Values.masters.jvm }}
+      roles:
+        - "cluster_manager"
+    - component: data
+      replicas: {{ .Values.nodes.replicaCount }}
+      diskSize: {{ .Values.nodes.diskSize }}
+      resources:
+        {{- toYaml .Values.nodes.resources | nindent 8 }}
+      jvm: {{ .Values.nodes.jvm }}
+      roles:
+        - "data"
+  security:
+    tls:
+      http:
+        enabled: {{ .Values.security.tls.http.enabled }}
+        generate: {{ .Values.security.tls.http.generateEnabled }}
+        duration: {{ .Values.security.tls.http.certificateDuration }}
+        rotateDaysBeforeExpiry: {{ .Values.security.tls.http.rotateDaysBeforeExpiry }}
+      transport:
+        enabled: {{ .Values.security.tls.transport.enabled }}
+        generate: {{ .Values.security.tls.transport.generateEnabled }}
+        perNode: {{ .Values.security.tls.transport.perNodeEnabled }}
+        duration: {{ .Values.security.tls.transport.certificateDuration }}
+        rotateDaysBeforeExpiry: {{ .Values.security.tls.transport.rotateDaysBeforeExpiry }}
