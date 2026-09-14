@@ -88,6 +88,10 @@ influxdb-enterprise:
 
 telegraf:
   enabled: true
+  topicDiscovery:
+    image:
+      tag: tickets-DM-56077
+      pullPolicy: Always
   influxdb:
     urls:
       - "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
@@ -102,8 +106,13 @@ telegraf:
         - "instrument"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
-      topicRegexps:
-        - "lsst.example"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.example"
+        excludePrefixes:
+          - "lsst.examplejson"
+        refreshInterval: "30s"
     examplejson:
       enabled: true
       replicaCount: 1
