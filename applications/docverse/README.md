@@ -26,6 +26,8 @@ Publish versioned docs
 | config.keeperSync.jobTimeoutSeconds | int | `3600` | Per-job timeout, in seconds, for keeper-sync arq jobs. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
+| config.maintenance.editionReconcileEnabled | bool | `true` | Enable the edition reconcile loop that re-drives editions whose recorded publish state has drifted from what the CDN serves. The cron stays registered either way; disabling only makes each tick a no-op. |
+| config.maintenance.editionReconcileMaxActionsPerJob | int | `100` | Maximum number of republish plus unpublish actions one per-org `edition_reconcile` job applies per tick; the remainder is reported as capped and picked up on the next tick. |
 | config.maintenance.enabled | bool | `false` | Enable the maintenance worker that consumes the `docverse:maintenance-queue` arq queue. Requires the docverse image to provide `docverse.worker.main.MaintenanceWorkerSettings`. |
 | config.maintenance.gitRefAuditEnabled | bool | `false` | Whether to enable auditing the git ref lifecycle rule. Enabling this will cause docverse to make GitHub API calls to determine if the git ref associated with an edition still exists. |
 | config.maintenance.jobTimeoutSeconds | int | `3600` | Per-job timeout, in seconds, for maintenance-pool jobs (lifecycle evaluation, git ref audits, and purgatory cleanup). |
@@ -41,6 +43,7 @@ Publish versioned docs
 | config.reaperThresholds.buildProcessingSeconds | int | `28800` | Stuck-run reaper threshold, in seconds, for build_processing jobs. |
 | config.reaperThresholds.dashboardBuildSeconds | int | `1800` | Stuck-run reaper threshold, in seconds, for dashboard_build jobs. |
 | config.reaperThresholds.dashboardSyncSeconds | int | `21600` | Stuck-run reaper threshold, in seconds, for dashboard_sync jobs. |
+| config.reaperThresholds.editionReconcileSeconds | string | Derived by the server (`jobTimeoutSeconds` + 1800) | Stuck-run reaper threshold, in seconds, for edition_reconcile jobs. Leave unset to let the server derive it as `config.maintenance.jobTimeoutSeconds` plus a 1800 s margin; an explicit value must be strictly greater than that timeout or the server refuses to start. |
 | config.reaperThresholds.keeperSyncSeconds | int | `21600` | Stuck-run reaper threshold, in seconds, for keeper-sync jobs. |
 | config.reaperThresholds.lifecycleSeconds | int | `21600` | Stuck-run reaper threshold, in seconds, for lifecycle_eval and git_ref_audit jobs (maintenance pool). |
 | config.reaperThresholds.publishEditionSeconds | int | `14400` | Stuck-run reaper threshold, in seconds, for publish_edition jobs. |

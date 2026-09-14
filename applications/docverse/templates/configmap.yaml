@@ -27,6 +27,8 @@ data:
   DOCVERSE_PURGATORY_CLEANUP_CRON_HOUR: {{ .Values.config.maintenance.purgatoryCleanupCronHour | quote }}
   DOCVERSE_PURGATORY_CLEANUP_CRON_MINUTE: {{ .Values.config.maintenance.purgatoryCleanupCronMinute | quote }}
   DOCVERSE_MAINTENANCE_JOB_TIMEOUT_SECONDS: {{ .Values.config.maintenance.jobTimeoutSeconds | quote }}
+  DOCVERSE_EDITION_RECONCILE_ENABLED: {{ .Values.config.maintenance.editionReconcileEnabled | quote }}
+  DOCVERSE_EDITION_RECONCILE_MAX_ACTIONS_PER_JOB: {{ .Values.config.maintenance.editionReconcileMaxActionsPerJob | quote }}
   DOCVERSE_KEEPER_SYNC_JOB_TIMEOUT_SECONDS: {{ .Values.config.keeperSync.jobTimeoutSeconds | quote }}
   DOCVERSE_KEEPER_SYNC_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.keeperSyncSeconds | quote }}
   DOCVERSE_LIFECYCLE_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.lifecycleSeconds | quote }}
@@ -35,6 +37,9 @@ data:
   DOCVERSE_PUBLISH_EDITION_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.publishEditionSeconds | quote }}
   DOCVERSE_BUILD_PROCESSING_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.buildProcessingSeconds | quote }}
   DOCVERSE_DASHBOARD_SYNC_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.dashboardSyncSeconds | quote }}
+  {{- if .Values.config.reaperThresholds.editionReconcileSeconds }}
+  DOCVERSE_EDITION_RECONCILE_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.editionReconcileSeconds | quote }}
+  {{- end }}
   {{- if .Values.config.metrics.enabled }}
   METRICS_ENABLED: "true"
   METRICS_APPLICATION: {{ .Values.config.metrics.application | quote }}
