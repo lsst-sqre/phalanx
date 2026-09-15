@@ -69,9 +69,10 @@ config:
     dp2:
       description: >-
         Data Preview 2 (Early) contains catalog products and coadded images
-        from the Rubin Science Pipelines v30 processing of early observations obtained
-        with LSSTCam from April 2025 to January 2026.  Coadded images and catalogs
-        cover ~3000 square degrees; single-epoch catalogs cover ~15,000 square degrees.
+        from the Rubin Science Pipelines v30 processing of early observations
+        obtained with LSSTCam from April 2025 to January 2026. Coadded images
+        and catalogs cover ~3000 square degrees; single-epoch catalogs cover
+        ~15,000 square degrees.
       docsUrl: "https://dp2.lsst.io/"
     efd:
       description: "Engineering Field Database."
@@ -202,7 +203,8 @@ config:
     schemaManager:
       # -- URL of the Confluent-compatible schema registry server
       # @default -- Sasquatch in the local cluster
-      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
+      registryUrl: >-
+        http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081
 
       # -- Suffix to add to all registered subjects. This is sometimes useful
       # for experimentation during development.
@@ -433,9 +435,8 @@ config:
           title: "Rubin TAP Service"
           created: "2026-05-20T00:00:00"
           description: >-
-            Table Access Protocol service providing access to
-            catalog data from Rubin Observatory data
-            releases.
+            Table Access Protocol service providing access to catalog data
+            from Rubin Observatory data releases.
           adqlVersion: "2.0"
           uploadSupported: true
           additionalOutputFormats:
@@ -447,7 +448,8 @@ config:
               ivoid: "ivo://org.rubinobs/lsst-dp1/catalogs"
               title: "Rubin TAP (DP1)"
               created: "2026-05-20T00:00:00"
-              description: "DP1 catalog data accessible via the Rubin TAP service."
+              description: >-
+                DP1 catalog data accessible via the Rubin TAP service.
               instruments:
                 - "LSSTComCam"
     times-square:
@@ -482,8 +484,8 @@ config:
           title: "Rubin Image Cutout Service"
           created: "2026-05-20T00:00:00"
           description: >-
-            Image cutout service (SODA) for Rubin,
-            supporting both synchronous and asynchronous image cutout requests.
+            Image cutout service (SODA) for Rubin, supporting both synchronous
+            and asynchronous image cutout requests.
     wobbly:
       - type: "internal"
         name: "wobbly"
@@ -527,7 +529,8 @@ config:
 
     # -- Template for schema artifact URLs (use {version} placeholder)
     # @default -- GCS rubin-sdm-schemas-artifacts bucket
-    schemaSourceTemplate: "gs://rubin-sdm-schemas-artifacts/{version}/schemas.tar.gz"
+    schemaSourceTemplate: >-
+      gs://rubin-sdm-schemas-artifacts/{version}/schemas.tar.gz
 
     # -- TAP Server configuration by application name. Configuration is used
     # to populate & update the TAP_SCHEMA database for each enabled TAP
