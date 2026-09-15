@@ -1,0 +1,101 @@
+suite: Telegraf configuration
+templates:
+  - templates/configmap.yaml
+tests:
+  - it: renders topic regular expressions for a legacy consumer
+    set:
+      kafkaConsumers.test.enabled: true
+    asserts:
+      - matchRegex:
+          path: data["telegraf.conf"]
+          pattern: 'topic_regexps = \[ ".*Test" \]'
+      - isNull:
+          path: data["kafka-consumer.conf.tmpl"]
+
+  - it: renders a dynamic Kafka input template and literal prefix files
+    set:
+      kafkaConsumers.test.enabled: true
+      kafkaConsumers.test.topicDiscovery.enabled: true
+      kafkaConsumers.test.topicDiscovery.includePrefixes:
+        - lsst.prompt
+        - lsst.verify
+      kafkaConsumers.test.topicDiscovery.excludePrefixes:
+        - lsst.prompt.next-visit
+    asserts:
+      - notMatchRegex:
+          path: data["telegraf.conf"]
+          pattern: 'inputs.kafka_consumer'
+      - matchRegex:
+          path: data["kafka-consumer.conf.tmpl"]
+          pattern: 'topics = __DISCOVERED_TOPICS__'
+      - notMatchRegex:
+          path: data["kafka-consumer.conf.tmpl"]
+          pattern: 'topic_regexps'
+      - equal:
+          path: data["include-prefixes.txt"]
+          value: |-
+            lsst.prompt
+            lsst.verify
+      - equal:
+          path: data["exclude-prefixes.txt"]
+          value: lsst.prompt.next-visit
+
+  - it: renders normal and repair consumers into the dynamic template
+    set:
+      kafkaConsumers.test.enabled: true
+      kafkaConsumers.test.repair: true
+      kafkaConsumers.test.topicDiscovery.enabled: true
+      kafkaConsumers.test.topicDiscovery.includePrefixes:
+        - lsst.prompt
+    asserts:
+      - matchRegex:
+          path: data["kafka-consumer.conf.tmpl"]
+          pattern: 'consumer_group = "telegraf-kafka-consumer-test"'
+      - matchRegex:
+          path: data["kafka-consumer.conf.tmpl"]
+          pattern: 'consumer_group = "telegraf-kafka-consumer-test-repairer"'
+
+  - it: rejects discovery without an include prefix
+    set:
+      kafkaConsumers.test.enabled: true
+      kafkaConsumers.test.topicDiscovery.enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            kafkaConsumers.test.topicDiscovery.includePrefixes must contain at least one prefix
+
+  - it: rejects an empty include prefix
+    set:
+      kafkaConsumers.test.enabled: true
+      kafkaConsumers.test.topicDiscovery.enabled: true
+      kafkaConsumers.test.topicDiscovery.includePrefixes:
+        - ""
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            kafkaConsumers.test.topicDiscovery.includePrefixes[0] must be a non-empty prefix without surrounding whitespace or newlines
+
+  - it: rejects an empty exclude prefix
+    set:
+      kafkaConsumers.test.enabled: true
+      kafkaConsumers.test.topicDiscovery.enabled: true
+      kafkaConsumers.test.topicDiscovery.includePrefixes:
+        - lsst.prompt
+      kafkaConsumers.test.topicDiscovery.excludePrefixes:
+        - ""
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            kafkaConsumers.test.topicDiscovery.excludePrefixes[0] must be a non-empty prefix without surrounding whitespace or newlines
+
+  - it: rejects an invalid refresh interval
+    set:
+      kafkaConsumers.test.enabled: true
+      kafkaConsumers.test.topicDiscovery.enabled: true
+      kafkaConsumers.test.topicDiscovery.includePrefixes:
+        - lsst.prompt
+      kafkaConsumers.test.topicDiscovery.refreshInterval: immediately
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            kafkaConsumers.test.topicDiscovery.refreshInterval must be a positive duration ending in s, m, or h
