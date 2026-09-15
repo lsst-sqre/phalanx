@@ -537,45 +537,6 @@ config:
     # application
     # @default -- See `values.yaml`
     servers:
-      tap:
-        enabled: false
-        schemas:
-          - "dp2"
-          - "dp1"
-          - "ivoa_obscore"
-          - "dp02_dc2"
-        databaseUrl: "postgresql://tap@127.0.0.1:5432/tap"
-        databasePasswordKey: "tap-database-password"
-
-      ssotap:
-        enabled: false
-        schemas:
-          - "dp03_10yr"
-          - "dp03_1yr"
-        databaseUrl: "postgresql://ssotap@127.0.0.1:5432/ssotap"
-        databasePasswordKey: "ssotap-database-password"
-
-      livetap:
-        enabled: false
-        schemas:
-          - "oga_live_obscore"
-        databaseUrl: "postgresql://livetap@127.0.0.1:5432/livetap"
-        databasePasswordKey: "livetap-database-password"
-
-      ppdbtap:
-        enabled: false
-        schemas:
-          - ppdb
-        databaseUrl: "postgresql://ppdbtap@127.0.0.1:5432/ppdbtap"
-        databasePasswordKey: "ppdbtap-database-password"
-
-      obsforgetap:
-        enabled: false
-        schemas:
-          - "ivoa_obscore"
-        databaseUrl: "postgresql://obsforgetap@127.0.0.1:5432/obsforgetap"
-        databasePasswordKey: "obsforgetap-database-password"
-
       consdbtap:
         enabled: false
         schemas:
@@ -589,9 +550,42 @@ config:
           - "efd_latiss"
           - "efd_lsstcam"
           - "efd_lsstcomcam"
-
         databaseUrl: "postgresql://consdbtap@127.0.0.1:5432/consdbtap"
         databasePasswordKey: "consdbtap-database-password"
+      livetap:
+        enabled: false
+        schemas:
+          - "oga_live_obscore"
+        databaseUrl: "postgresql://livetap@127.0.0.1:5432/livetap"
+        databasePasswordKey: "livetap-database-password"
+      obsforgetap:
+        enabled: false
+        schemas:
+          - "ivoa_obscore"
+        databaseUrl: "postgresql://obsforgetap@127.0.0.1:5432/obsforgetap"
+        databasePasswordKey: "obsforgetap-database-password"
+      ppdbtap:
+        enabled: false
+        schemas:
+          - ppdb
+        databaseUrl: "postgresql://ppdbtap@127.0.0.1:5432/ppdbtap"
+        databasePasswordKey: "ppdbtap-database-password"
+      ssotap:
+        enabled: false
+        schemas:
+          - "dp03_10yr"
+          - "dp03_1yr"
+        databaseUrl: "postgresql://ssotap@127.0.0.1:5432/ssotap"
+        databasePasswordKey: "ssotap-database-password"
+      tap:
+        enabled: false
+        schemas:
+          - "dp2"
+          - "dp1"
+          - "ivoa_obscore"
+          - "dp02_dc2"
+        databaseUrl: "postgresql://tap@127.0.0.1:5432/tap"
+        databasePasswordKey: "tap-database-password"
 
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on
