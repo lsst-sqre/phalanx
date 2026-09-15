@@ -28,6 +28,7 @@ kafka:
   # @default -- ["lsst"]
   topicPrefixes:
     - "lsst"
+    - "registry-schemas"
 
 
 jvm:
