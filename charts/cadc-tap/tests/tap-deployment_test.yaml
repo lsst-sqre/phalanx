@@ -1,195 +1,21 @@
 suite: TAP deployment
+# configmap.yaml is listed so the deployment's checksum/config `include` resolves
 templates:
   - tap-deployment.yaml
+  - configmap.yaml
+
+set:
+  global:
+    host: "example.com"
+    baseUrl: "https://example.com"
+  config:
+    backend: "qserv"
+    serviceName: "tap"
 
 tests:
-  - it: Should configure environment variables correctly for PostgreSQL backend
+  - it: passes the tap_schema password through CATALINA_OPTS for shell expansion
+    template: "tap-deployment.yaml"
     set:
-      global:
-        host: "example.com"
-      uws:
-        type: "cloudsql"
-        username: "mydb"
-        database: "mydb"
-        useVaultPassword: true
-      cloudsql:
-        enabled: true
-        instanceConnectionName: "science-platform--xyz:test"
-        serviceAccount: "sa@xyz"
-      serviceAccount:
-        create: true
-        name: "sa"
-      config:
-        pg:
-          username: "postgres"
-          host: "postgres-server"
-          database: "tapdb"
-          image:
-            repository: "postgres"
-            tag: "latest"
-            pullPolicy: "IfNotPresent"
-    asserts:
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Duws.username=mydb"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Duws.url=jdbc:postgresql://localhost:5432/mydb"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Duws.password=\\$UWS_DB_PASSWORD"
-
-  - it: Should setup TAP_SCHEMA database configuration with external address
-    set:
-      global:
-        host: "example.com"
-      tapSchema:
-        type: "external"
-        username: "TAP_SCHEMA"
-        database: "tap_schema"
-        useVaultPassword: true
-        external:
-          host: "tap-schema-address"
-          port: 5432
-    asserts:
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Dtapschemauser.url=jdbc:postgresql://tap-schema-address:5432/tap_schema"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Dtapschemauser.driverClassName=org.postgresql.Driver"
-
-  - it: Should setup TAP_SCHEMA database configuration with containerized
-    set:
-      global:
-        host: "example.com"
-      tapSchema:
-        type: "containerized"
-        username: "TAP_SCHEMA"
-        password: "TAP_SCHEMA"
-        useVaultPassword: false
-    asserts:
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Dtapschemauser.url=jdbc:mysql://cadc-tap-schema-db:3306/"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Dtapschemauser.driverClassName=com.mysql.cj.jdbc.Driver"
-
-  - it: Create GCS bucket configuration with QServ and CloudSQL UWS database
-    set:
-      cloudsql:
-        enabled: true
-        instanceConnectionName: "science-platform--xyz:test"
-        serviceAccount: "sa@xyz"
-      uws:
-        type: "cloudsql"
-        username: "mydb"
-        database: "mydb"
-        useVaultPassword: true
-      serviceAccount:
-        create: true
-        name: "sa"
-      global:
-        host: "example.com"
-      config:
-        backend: "qserv"
-        qserv:
-          host: "qserv:30040"
-        gcsBucket: "async-results.lsst.codes"
-        gcsBucketUrl: "https://async-results.codes:8080"
-        gcsBucketType: "S3"
-    asserts:
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Duws.username=mydb"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Duws.url=jdbc:postgresql://localhost:5432/mydb"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Duws.password=\\$UWS_DB_PASSWORD"
-      - equal:
-          path: spec.template.spec.serviceAccountName
-          value: "sa"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Dqservuser.username=qsmaster"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Dqservuser.url=jdbc:mysql://qserv:30040/"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Dgcs_bucket=async-results.lsst.codes"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Dgcs_bucket_url=https://async-results.codes:8080"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Dgcs_bucket_type=S3"
-
-  - it: Test that deployment build fails when cloudsql is enabled but no instanceConnectionName
-    set:
-      cloudsql:
-        enabled: true
-        serviceAccount: "sa@xyz"
-        database: "mydb"
-      global:
-        host: "example.com"
-    asserts:
-      - failedTemplate:
-          errorMessage: cloudsql.instanceConnectionName must be specified
-
-  - it: Test that we configure UWS with CloudSQL database
-    set:
-      global:
-        host: "example.com"
-      uws:
-        type: "cloudsql"
-        username: "uwsuser"
-        database: "uwsdb"
-      cloudsql:
-        enabled: true
-        instanceConnectionName: "project:region:instance"
-        serviceAccount: "sa@project.iam.gserviceaccount.com"
-      serviceAccount:
-        create: true
-        name: "sa"
-    asserts:
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Duws.username=uwsuser"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Duws.url=jdbc:postgresql://localhost:5432/uwsdb"
-
-  - it: Test that we configure TAP_SCHEMA with CloudSQL database
-    set:
-      global:
-        host: "example.com"
-      tapSchema:
-        type: "cloudsql"
-        username: "schemauser"
-        database: "schemadb"
-      cloudsql:
-        enabled: true
-        instanceConnectionName: "project:region:instance"
-        serviceAccount: "sa@project.iam.gserviceaccount.com"
-      serviceAccount:
-        create: true
-        name: "sa"
-    asserts:
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Dtapschemauser.username=schemauser"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Dtapschemauser.url=jdbc:postgresql://localhost:5432/schemadb"
-
-  - it: Test that TAP_SCHEMA uses inline password for containerized
-    set:
-      global:
-        host: "example.com"
       tapSchema:
         type: "containerized"
         username: "TAP_SCHEMA"
@@ -199,14 +25,14 @@ tests:
       - matchRegex:
           path: spec.template.spec.containers[0].env[0].value
           pattern: "-Dtapschemauser.password=\\$TAP_SCHEMA_PASSWORD"
-      - matchRegex:
+      # datasource URLs/drivers now live in the ConfigMap, not CATALINA_OPTS
+      - notMatchRegex:
           path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Dtapschemauser.url=jdbc:mysql://cadc-tap-schema-db:3306/"
+          pattern: "-Dtapschemauser.url="
 
-  - it: Test that we set UWS_DB_PASSWORD from secret for CloudSQL
+  - it: passes UWS_DB_PASSWORD from the secret for a CloudSQL UWS database
+    template: "tap-deployment.yaml"
     set:
-      global:
-        host: "example.com"
       uws:
         type: "cloudsql"
         username: "uwsuser"
@@ -216,36 +42,55 @@ tests:
         enabled: true
         instanceConnectionName: "project:region:instance"
         serviceAccount: "sa@project.iam.gserviceaccount.com"
-      serviceAccount:
-        create: true
-        name: "sa"
+      serviceAccount: {create: true, name: "sa"}
     asserts:
       - matchRegex:
           path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Duws.url=jdbc:postgresql://localhost:5432/uwsdb"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
           pattern: "-Duws.password=\\$UWS_DB_PASSWORD"
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: "sa"
 
-  - it: Test that we configure UWS with external database
+  - it: omits the UWS password for a containerized UWS database
+    template: "tap-deployment.yaml"
     set:
-      global:
-        host: "example.com"
-      uws:
-        type: "external"
-        username: "externaluser"
-        database: "externaldb"
-        useVaultPassword: true
-        external:
-          host: "external-db.example.com"
-          port: 5432
+      uws: {type: "containerized", username: "postgres", database: "postgres"}
+    asserts:
+      - notMatchRegex:
+          path: spec.template.spec.containers[0].env[0].value
+          pattern: "-Duws.password"
+
+  - it: rolls the pods when the config changes (checksum annotation)
+    template: "tap-deployment.yaml"
+    asserts:
+      - isNotNullOrEmpty:
+          path: spec.template.metadata.annotations["checksum/config"]
+
+  - it: selects the backend PluginFactory but tolerates an image without one
+    template: "tap-deployment.yaml"
+    set:
+      config: {backend: "pg", pg: {host: "h", database: "d", username: "u"}}
     asserts:
       - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Duws.username=externaluser"
+          path: spec.template.spec.initContainers[0].command[2]
+          pattern: 'PluginFactory-pg\.properties'
+      # older images ship only PluginFactory.properties -- fall back, do not exit 1
       - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Duws.url=jdbc:postgresql://external-db.example.com:5432/externaldb"
-      - matchRegex:
-          path: spec.template.spec.containers[0].env[0].value
-          pattern: "-Duws.password=\\$UWS_DB_PASSWORD"
+          path: spec.template.spec.initContainers[0].command[2]
+          pattern: "using the image's default PluginFactory.properties"
+
+  - it: fails when cloudsql is enabled but instanceConnectionName is unset
+    template: "tap-deployment.yaml"
+    set:
+      cloudsql: {enabled: true, serviceAccount: "sa@xyz", database: "mydb"}
+    asserts:
+      - failedTemplate:
+          errorMessage: cloudsql.instanceConnectionName must be specified
+
+  - it: fails on an invalid config.backend
+    template: "tap-deployment.yaml"
+    set:
+      config: {backend: "mysql"}
+    asserts:
+      - failedTemplate:
+          errorPattern: "config.backend must be set to one of: pg, qserv, bigquery"

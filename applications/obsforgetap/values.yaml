@@ -50,8 +50,8 @@ cadc-tap:
       # -- Maximum active connections (maxIdle will be set to this value)
       maxActive: 2
 
-    # -- Connection pool configuration for jdbc/tapuser (query planning and tap_upload)
-    tapuser:
+    # -- Connection pool configuration for jdbc/tapschemauser (tap_schema reads)
+    tapschemauser:
       # -- Maximum active connections (maxIdle will be set to this value)
       maxActive: 5
 

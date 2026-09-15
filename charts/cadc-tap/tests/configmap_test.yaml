@@ -1,0 +1,141 @@
+suite: catalina.properties datasource configuration
+templates:
+  - configmap.yaml
+
+set:
+  global:
+    host: "example.com"
+    baseUrl: "https://example.com"
+
+tests:
+  - it: tap_schema external -> postgresql url + driver
+    set:
+      tapSchema:
+        type: "external"
+        username: "TAP_SCHEMA"
+        database: "tap_schema"
+        external: {host: "tap-schema-address", port: 5432}
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tapschemauser.url=jdbc:postgresql://tap-schema-address:5432/tap_schema"
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tapschemauser.driverClassName=org.postgresql.Driver"
+
+  - it: tap_schema containerized -> mysql url + driver
+    set:
+      tapSchema: {type: "containerized", username: "TAP_SCHEMA"}
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tapschemauser.url=jdbc:mysql://cadc-tap-schema-db:3306/"
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tapschemauser.driverClassName=com.mysql.cj.jdbc.Driver"
+
+  - it: tap_schema cloudsql -> localhost:5432
+    set:
+      tapSchema: {type: "cloudsql", username: "schemauser", database: "schemadb"}
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tapschemauser.username=schemauser"
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tapschemauser.url=jdbc:postgresql://localhost:5432/schemadb"
+
+  - it: uws cloudsql -> localhost:5432
+    set:
+      uws: {type: "cloudsql", username: "uwsuser", database: "uwsdb"}
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "uws.username=uwsuser"
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "uws.url=jdbc:postgresql://localhost:5432/uwsdb"
+
+  - it: uws external -> host:port/db
+    set:
+      uws:
+        type: "external"
+        username: "externaluser"
+        database: "externaldb"
+        external: {host: "external-db.example.com", port: 5432}
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "uws.url=jdbc:postgresql://external-db.example.com:5432/externaldb"
+
+  - it: pg backend -> jdbc/tapuser points at the data database
+    set:
+      config:
+        backend: "pg"
+        pg: {username: "postgres", host: "postgres-server", database: "tapdb"}
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tap.url=jdbc:postgresql://postgres-server/tapdb"
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tap.maxActive=100"
+
+  - it: qserv + kafka -> no qservuser, jdbc/tapuser = tap_schema
+    set:
+      tapSchema: {type: "containerized", username: "TAP_SCHEMA"}
+      config:
+        backend: "qserv"
+        qserv: {host: "qserv:30040"}
+        kafka: {enabled: true}
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tap.url=jdbc:mysql://cadc-tap-schema-db:3306/"
+      - notMatchRegex:
+          path: data["catalina.properties"]
+          pattern: "qservuser"
+
+  - it: qserv direct (no kafka) -> jdbc/qservuser configured
+    set:
+      config:
+        backend: "qserv"
+        qserv: {host: "qserv:30040"}
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "qservuser.username=qsmaster"
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "qservuser.url=jdbc:mysql://qserv:30040/"
+
+  - it: bigquery -> project/dataset set
+    set:
+      config:
+        backend: "bigquery"
+        kafka: {enabled: true}
+        bigquery: {project: "my-project", dataset: "my-dataset"}
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tap.bigquery.project=my-project"
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tap.bigquery.dataset=my-dataset"
+
+  - it: GCS / S3 result bucket configuration
+    set:
+      config:
+        gcsBucket: "async-results.lsst.codes"
+        gcsBucketUrl: "https://async-results.codes:8080"
+        gcsBucketType: "S3"
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "gcs_bucket=async-results.lsst.codes"
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "gcs_bucket_url=https://async-results.codes:8080"
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "gcs_bucket_type=S3"
