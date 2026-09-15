@@ -222,11 +222,13 @@ config:
     argocd:
       - type: "ui"
         name: "argocd"
+        title: "Argo CD"
         template: "https://{{base_hostname}}/argo-cd"
         docsUrl: "https://argo-cd.readthedocs.io/en/stable/"
     consdbtap:
       - type: "data"
         name: "tap"
+        title: "Table access protocol (TAP)"
         datasets:
           - "efd"
         template: "https://{{base_hostname}}/api/consdbtap"
@@ -238,6 +240,7 @@ config:
     datalinker:
       - type: "data"
         name: "datalink"
+        title: "DataLink"
         datasets:
           - "dp02"
           - "dp1"
@@ -251,6 +254,7 @@ config:
         openapi: "https://{{base_hostname}}/api/datalink/openapi.json"
       - type: "internal"
         name: "datalink"
+        title: "DataLink"
         template: "https://{{base_hostname}}/api/datalink"
         versions:
           datalink-links-1.1:
@@ -264,6 +268,7 @@ config:
     gafaelfawr:
       - type: "data"
         name: "gms"
+        title: "Group membership service (GMS)"
         template: "https://{{base_hostname}}/auth/gms"
         docsUrl: "https://www.ivoa.net/documents/GMS/"
         versions:
@@ -286,13 +291,16 @@ config:
         openapi: "https://{{base_hostname}}/auth/openapi.json"
       - type: "internal"
         name: "login"
+        title: "User login"
         template: "https://{{base_hostname}}/login"
       - type: "ui"
         name: "logout"
+        title: "User logout"
         template: "https://{{base_hostname}}/logout"
     herald:
       - type: "data"
         name: "alerts"
+        title: "Alert retrieval"
         datasets:
           - "prompt"
         template: "https://{{base_hostname}}/api/alerts"
@@ -301,6 +309,7 @@ config:
     livetap:
       - type: "data"
         name: "tap"
+        title: "Table access protocol (TAP)"
         datasets:
           - "live"
         template: "https://{{base_hostname}}/api/livetap"
@@ -335,18 +344,22 @@ config:
         template: "https://{{base_hostname}}/nublado"
       - type: "ui"
         name: "nublado"
+        title: "Notebook aspect"
         template: "https://{{base_hostname}}/nb"
         docsUrl: "https://nublado.lsst.io/"
       - type: "ui"
         name: "webdav"
+        title: "WebDAV server"
         template: "https://{{base_hostname}}/files"
     portal:
       - type: "ui"
         name: "portal"
+        title: "Portal aspect"
         template: "https://{{base_hostname}}/portal/app/"
     ppdbtap:
       - type: "data"
         name: "tap"
+        title: "Table access protocol (TAP)"
         datasets:
           - "prompt"
         template: "https://{{base_hostname}}/api/ppdbtap"
@@ -369,13 +382,16 @@ config:
     sasquatch:
       - type: "ui"
         name: "chronograf"
+        title: "Chronograf metrics viewer"
         template: "https://{{base_hostname}}/chronograf"
       - type: "ui"
         name: "kafdrop"
+        title: "Kafdrop Kafka viewer"
         template: "https://{{base_hostname}}/kafdrop"
     sia:
       - type: "data"
         name: "sia"
+        title: "Simple image access (SIA)"
         datasets:
           - "dp02"
           - "dp1"
@@ -400,14 +416,17 @@ config:
     squareone:
       - type: "ui"
         name: "settings"
+        title: "User settings"
         template: "https://{{base_hostname}}/settings"
       - type: "ui"
         name: "squareone"
+        title: "Home page"
         template: "https://{{base_hostname}}/"
         docsUrl: "https://squareone.lsst.io/"
     ssotap:
       - type: "data"
         name: "tap"
+        title: "Table access protocol (TAP)"
         datasets:
           - "dp03"
         template: "https://{{base_hostname}}/api/ssotap"
@@ -419,6 +438,7 @@ config:
     tap:
       - type: "data"
         name: "tap"
+        title: "Table access protocol (TAP)"
         datasets:
           - "dp02"
           - "dp1"
@@ -464,6 +484,7 @@ config:
     vo-cutouts:
       - type: "data"
         name: "cutout"
+        title: "SODA image cutouts"
         datasets:
           - "dp02"
           - "dp1"
@@ -511,10 +532,12 @@ config:
         template: "https://{{base_hostname}}/nublado"
       - type: "ui"
         name: "nublado"
+        title: "Notebook aspect"
         template: "https://nb.{{base_hostname}}/nb"
         docsUrl: "https://nublado.lsst.io/"
       - type: "ui"
         name: "webdav"
+        title: "WebDAV server"
         template: "https://{{base_hostname}}/files"
 
   # -- List of services that use subdomains instead of the main hostname. See
