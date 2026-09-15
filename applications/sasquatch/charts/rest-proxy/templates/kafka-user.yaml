@@ -20,7 +20,7 @@ spec:
           name: "*"
           patternType: literal
         operations:
-          - All
+          - Read
       {{- range $prefix := .Values.kafka.topicPrefixes }}
       - resource:
           type: topic
@@ -29,5 +29,7 @@ spec:
         type: allow
         host: "*"
         operations:
-          - All
+          - Read
+          - Write
+          - Create
       {{- end }}
