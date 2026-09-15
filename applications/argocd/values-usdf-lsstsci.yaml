@@ -107,7 +107,6 @@ argo-cd:
         g, gpdf@slac.stanford.edu, role:admin
         g, jsick@slac.stanford.edu, role:admin
         g, mokun@slac.stanford.edu, role:admin
-        g, pav@slac.stanford.edu, role:admin
         g, ppascual@slac.stanford.edu, role:admin
         g, reinking@slac.stanford.edu, role:admin
         g, rra@slac.stanford.edu, role:admin
@@ -118,26 +117,6 @@ argo-cd:
         g, ebellm@slac.stanford.edu, role:admin
         g, sierrav@slac.stanford.edu, role:admin
         g, amithm@slac.stanford.edu, role:admin
-
-        g, bbrond@slac.stanford.edu, role:developer
-        g, fritzm@slac.stanford.edu, role:developer
-        g, hchiang2@slac.stanford.edu, role:developer
-        g, jeremym@slac.stanford.edu, role:developer
-        g, koike@slac.stanford.edu, role:developer
-        g, mfl@slac.stanford.edu, role:developer
-        g, mreuter@slac.stanford.edu, role:developer
-        g, omullan@slac.stanford.edu, role:developer
-        g, rw264@slac.stanford.edu, role:developer
-        g, saranda@slac.stanford.edu, role:developer
-        g, smart@slac.stanford.edu, role:developer
-        g, spothi@slac.stanford.edu, role:developer
-        g, sullii@slac.stanford.edu, role:developer
-        g, vbecker@slac.stanford.edu, role:developer
-        g, robyww@slac.stanford.edu, role:developer
-        g, jaladh@slac.stanford.edu, role:developer
-        g, loi@slac.stanford.edu, role:developer
-        g, kpuri@slac.stanford.edu, role:developer
-        g, youtsumi@slac.stanford.edu, role:developer
       scopes: "[email]"
 
   server:
