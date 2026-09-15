@@ -124,6 +124,9 @@ config:
           - "color_z"
           - "color_y"
 
+    # -- URL to additional information about the HiPS service.
+    docsUrl: "https://www.ivoa.net/documents/HiPS/"
+
     legacy:
       # -- If set, specifies the dataset that should be shown at the legacy
       # HiPS list route that does not include the dataset name. If not set, no
@@ -218,12 +221,14 @@ config:
       - type: "ui"
         name: "argocd"
         template: "https://{{base_hostname}}/argo-cd"
+        docsUrl: "https://argo-cd.readthedocs.io/en/stable/"
     consdbtap:
       - type: "data"
         name: "tap"
         datasets:
           - "efd"
         template: "https://{{base_hostname}}/api/consdbtap"
+        docsUrl: "https://www.ivoa.net/documents/TAP/"
         versions:
           tables:
             template: "https://{{base_hostname}}/api/consdbtap/tables"
@@ -236,6 +241,7 @@ config:
           - "dp1"
           - "dp2"
         template: "https://{{base_hostname}}/api/datalink"
+        docsUrl: "https://www.ivoa.net/documents/DataLink/"
         versions:
           datalink-links-1.1:
             template: "https://{{base_hostname}}/api/datalink/links"
@@ -257,6 +263,7 @@ config:
       - type: "data"
         name: "gms"
         template: "https://{{base_hostname}}/auth/gms"
+        docsUrl: "https://www.ivoa.net/documents/GMS/"
         versions:
           gms-search-1.0:
             template: "https://{{base_hostname}}/auth/gms"
@@ -270,6 +277,7 @@ config:
       - type: "internal"
         name: "gafaelfawr"
         template: "https://{{base_hostname}}/auth"
+        docsUrl: "https://gafaelfawr.lsst.io/"
         versions:
           v1:
             template: "https://{{base_hostname}}/auth/api/v1"
@@ -287,12 +295,14 @@ config:
           - "prompt"
         template: "https://{{base_hostname}}/api/alerts"
         openapi: "https://{{base_hostname}}/api/alerts/openapi.json"
+        docsUrl: "https://sqr-114.lsst.io/"
     livetap:
       - type: "data"
         name: "tap"
         datasets:
           - "live"
         template: "https://{{base_hostname}}/api/livetap"
+        docsUrl: "https://www.ivoa.net/documents/TAP/"
         versions:
           tables:
             template: "https://{{base_hostname}}/api/livetap/tables"
@@ -302,6 +312,7 @@ config:
         name: "mobu"
         template: "https://{{base_hostname}}/mobu"
         openapi: "https://{{base_hostname}}/mobu/openapi.json"
+        docsUrl: "https://mobu.lsst.io/"
     muster:
       - type: "internal"
         name: "muster"
@@ -311,10 +322,11 @@ config:
       - type: "internal"
         name: "noteburst"
         template: "https://{{base_hostname}}/noteburst"
+        openapi: "https://{{base_hostname}}/noteburst/openapi.json"
+        docsUrl: "https://noteburst.lsst.io/"
         versions:
           v1:
             template: "https://{{base_hostname}}/noteburst/v1"
-        openapi: "https://{{base_hostname}}/noteburst/openapi.json"
     nublado:
       - type: "internal"
         name: "nublado-controller"
@@ -322,6 +334,7 @@ config:
       - type: "ui"
         name: "nublado"
         template: "https://{{base_hostname}}/nb"
+        docsUrl: "https://nublado.lsst.io/"
       - type: "ui"
         name: "webdav"
         template: "https://{{base_hostname}}/files"
@@ -335,19 +348,22 @@ config:
         datasets:
           - "prompt"
         template: "https://{{base_hostname}}/api/ppdbtap"
+        docsUrl: "https://www.ivoa.net/documents/TAP/"
     repertoire:
       - type: "internal"
         name: "repertoire"
         template: "https://{{base_hostname}}/repertoire"
         openapi: "https://{{base_hostname}}/repertoire/openapi.json"
+        docsUrl: "https://repertoire.lsst.io/"
     semaphore:
       - type: "internal"
         name: "semaphore"
         template: "https://{{base_hostname}}/semaphore"
+        openapi: "https://{{base_hostname}}/semaphore/openapi.json"
+        docsUrl: "https://semaphore.lsst.io/"
         versions:
           v1:
             template: "https://{{base_hostname}}/semaphore/v1"
-        openapi: "https://{{base_hostname}}/semaphore/openapi.json"
     sasquatch:
       - type: "ui"
         name: "chronograf"
@@ -368,6 +384,7 @@ config:
             template: "https://{{base_hostname}}/api/sia/{{dataset}}/query"
             ivoaStandardId: "ivo://ivoa.net/std/SIA#query-2.0"
         openapi: "https://{{base_hostname}}/api/sia/openapi.json"
+        docsUrl: "https://www.ivoa.net/documents/SIA/"
         ivoaRegistry:
           ivoaServiceType: "sia"
           records:
@@ -385,12 +402,14 @@ config:
       - type: "ui"
         name: "squareone"
         template: "https://{{base_hostname}}/"
+        docsUrl: "https://squareone.lsst.io/"
     ssotap:
       - type: "data"
         name: "tap"
         datasets:
           - "dp03"
         template: "https://{{base_hostname}}/api/ssotap"
+        docsUrl: "https://www.ivoa.net/documents/TAP/"
         versions:
           tables:
             template: "https://{{base_hostname}}/api/ssotap/tables"
@@ -403,6 +422,7 @@ config:
           - "dp1"
           - "dp2"
         template: "https://{{base_hostname}}/api/tap"
+        docsUrl: "https://www.ivoa.net/documents/TAP/"
         versions:
           tables:
             template: "https://{{base_hostname}}/api/tap/tables"
@@ -435,6 +455,7 @@ config:
         name: "times-square"
         template: "https://{{base_hostname}}/times-square/api"
         openapi: "https://{{base_hostname}}/times-square/api/openapi.json"
+        docsUrl: "https://times-square.lsst.io/"
         versions:
           v1:
             template: "https://{{base_hostname}}/times-square/api/v1"
@@ -454,6 +475,7 @@ config:
             template: "https://{{base_hostname}}/api/cutout/sync"
             ivoaStandardId: "ivo://ivoa.net/std/SODA#sync-1.0"
         openapi: "https://{{base_hostname}}/api/cutout/openapi.json"
+        docsUrl: "https://www.ivoa.net/documents/SODA/"
         ivoaRegistry:
           ivoaServiceType: "soda"
           ivoid: "ivo://org.rubinobs/cutout"
@@ -467,6 +489,7 @@ config:
         name: "wobbly"
         template: "https://{{base_hostname}}/wobbly"
         openapi: "https://{{base_hostname}}/wobbly/openapi.json"
+        docsUrl: "https://sqr-096.lsst.io/"
 
   sentry:
     # -- Whether to enable the Sentry integration
@@ -487,6 +510,7 @@ config:
       - type: "ui"
         name: "nublado"
         template: "https://nb.{{base_hostname}}/nb"
+        docsUrl: "https://nublado.lsst.io/"
       - type: "ui"
         name: "webdav"
         template: "https://{{base_hostname}}/files"
