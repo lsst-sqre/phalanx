@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "so-evening-tailgate"
+  labels:
+    {{- include "so-evening-tailgate.labels" . | nindent 4 }}
+data:
+  SO_EVENING_TAILGATE_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  SO_EVENING_TAILGATE_LOG_PROFILE: {{ .Values.config.logProfile | quote }}
+  SO_EVENING_TAILGATE_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}

@@ -36,6 +36,7 @@ applications:
   rubin-too-producer: true
   sasquatch: true
   simonyitel: true
+  so-evening-tailgate: true
   squareone: true
   strimzi: true
   strimzi-access-operator: true
