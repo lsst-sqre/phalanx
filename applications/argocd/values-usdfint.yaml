@@ -37,6 +37,9 @@ argo-cd:
         p, role:developer, logs, get, */*, allow
         p, role:developer, logs, get, infrastructure/*, allow
 
+        p, role:drp, applications, *, drp/*, allow
+        p, role:drp, logs, get, drp/*, allow
+
         g, afausti@slac.stanford.edu, role:admin
         g, atani@slac.stanford.edu, role:admin
         g, athor@slac.stanford.edu, role:admin
