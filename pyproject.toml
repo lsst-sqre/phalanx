@@ -161,3 +161,6 @@ extend = "ruff-shared.toml"
 known-first-party = ["phalanx", "tests"]
 
 [tool.setuptools_scm]
+
+[tool.uv.sources]
+rubin-repertoire = { git = "https://github.com/lsst-sqre/repertoire", subdirectory = "client" }
