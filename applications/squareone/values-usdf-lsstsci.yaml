@@ -1,0 +1,11 @@
+replicaCount: 1
+
+config:
+  siteName: "RSP @ USDF LSST Science"
+  showPreview: true
+  enableSentry: false
+  enableAppsMenu: true
+  appLinks:
+    - label: "Notebook Aspect"
+      href: "/nb/"
+      internal: true

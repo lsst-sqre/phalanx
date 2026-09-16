@@ -1,0 +1,16 @@
+fqdn: "usdf-rsp-lsstsci.slac.stanford.edu"
+name: "usdf-lsstsci"
+appOfAppsName: "science-platform"
+butlerServerRepositories: {}
+vaultUrl: "https://vault.slac.stanford.edu"
+vaultPathPrefix: "secret/rubin/usdf-lsstsci"
+
+applications:
+  # This environment uses an ingress managed in a separate Kubernetes cluster,
+  # despite that configuration not being officially supported by Phalanx.
+  ingress-nginx: false
+
+  nublado: true
+  postgres: true
+  squareone: true
+  portal: true
