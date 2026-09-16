@@ -1,8 +1,15 @@
 config:
   databaseUrl: "postgresql://docverse@localhost/docverse"
+  updateSchema: true
   superadminUsers:
     - "jonathansick"
+  keeperSync:
+    enabled: true
+  maintenance:
+    enabled: true
   sentry:
+    enabled: true
+  metrics:
     enabled: true
 
 cloudsql:
