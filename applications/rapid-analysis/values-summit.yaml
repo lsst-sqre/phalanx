@@ -70,6 +70,19 @@ scripts:
     limits:
       cpu: 1.0
       memory: 12G
+- name: LATISS/runAosWorker.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+  replicas: 3
+  resources:
+    requests:
+      cpu: 1.2
+      memory: 4G
+    limits:
+      cpu: 1.5
+      memory: 8G
 ###
 ### Misc pods
 ###
