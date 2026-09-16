@@ -140,6 +140,10 @@ config:
     # -- Path prefix at which the HiPS lists should be served
     pathPrefix: "/api/hips/v2"
 
+    # -- Scopes required for HiPS access.
+    requiredScopes:
+      - "read:image"
+
     # -- Jinja template to construct the base URLs of the underlying HiPS
     # surveys, used to construct the HiPS list.
     # @default -- See `values.yaml`
@@ -231,6 +235,8 @@ config:
         title: "Table access protocol (TAP)"
         datasets:
           - "efd"
+        requiredScopes:
+          - "read:tap"
         template: "https://{{base_hostname}}/api/consdbtap"
         docsUrl: "https://www.ivoa.net/documents/TAP/"
         versions:
@@ -245,6 +251,8 @@ config:
           - "dp02"
           - "dp1"
           - "dp2"
+        requiredScopes:
+          - "read:image"
         template: "https://{{base_hostname}}/api/datalink"
         docsUrl: "https://www.ivoa.net/documents/DataLink/"
         versions:
@@ -255,6 +263,8 @@ config:
       - type: "internal"
         name: "datalink"
         title: "DataLink"
+        requiredScopes:
+          - "read:image"
         template: "https://{{base_hostname}}/api/datalink"
         versions:
           datalink-links-1.1:
@@ -263,6 +273,8 @@ config:
     docverse:
       - type: "internal"
         name: "docverse"
+        requiredScopes:
+          - "exec:docverse"
         template: "https://{{base_hostname}}/docverse/api"
         openapi: "https://{{base_hostname}}/docverse/api/openapi.json"
     gafaelfawr:
@@ -303,6 +315,8 @@ config:
         title: "Alert retrieval"
         datasets:
           - "prompt"
+        requiredScopes:
+          - "read:image"
         template: "https://{{base_hostname}}/api/alerts"
         openapi: "https://{{base_hostname}}/api/alerts/openapi.json"
         docsUrl: "https://sqr-114.lsst.io/"
@@ -312,6 +326,8 @@ config:
         title: "Table access protocol (TAP)"
         datasets:
           - "live"
+        requiredScopes:
+          - "read:tap"
         template: "https://{{base_hostname}}/api/livetap"
         docsUrl: "https://www.ivoa.net/documents/TAP/"
         versions:
@@ -321,6 +337,8 @@ config:
     mobu:
       - type: "internal"
         name: "mobu"
+        requiredScopes:
+          - "exec:admin"
         template: "https://{{base_hostname}}/mobu"
         openapi: "https://{{base_hostname}}/mobu/openapi.json"
         docsUrl: "https://mobu.lsst.io/"
@@ -332,6 +350,8 @@ config:
     noteburst:
       - type: "internal"
         name: "noteburst"
+        requiredScopes:
+          - "exec:notebook"
         template: "https://{{base_hostname}}/noteburst"
         openapi: "https://{{base_hostname}}/noteburst/openapi.json"
         docsUrl: "https://noteburst.lsst.io/"
@@ -341,20 +361,28 @@ config:
     nublado:
       - type: "internal"
         name: "nublado-controller"
+        requiredScopes:
+          - "admin:jupyterlab"
         template: "https://{{base_hostname}}/nublado"
       - type: "ui"
         name: "nublado"
         title: "Notebook aspect"
+        requiredScopes:
+          - "exec:notebook"
         template: "https://{{base_hostname}}/nb"
         docsUrl: "https://nublado.lsst.io/"
       - type: "ui"
         name: "webdav"
         title: "WebDAV server"
+        requiredScopes:
+          - "write:files"
         template: "https://{{base_hostname}}/files"
     portal:
       - type: "ui"
         name: "portal"
         title: "Portal aspect"
+        requiredScopes:
+          - "exec:portal"
         template: "https://{{base_hostname}}/portal/app/"
     ppdbtap:
       - type: "data"
@@ -362,6 +390,8 @@ config:
         title: "Table access protocol (TAP)"
         datasets:
           - "prompt"
+        requiredScopes:
+          - "read:tap"
         template: "https://{{base_hostname}}/api/ppdbtap"
         docsUrl: "https://www.ivoa.net/documents/TAP/"
     repertoire:
@@ -387,6 +417,8 @@ config:
       - type: "ui"
         name: "kafdrop"
         title: "Kafdrop Kafka viewer"
+        requiredScopes:
+          - "exec:internal-tools"
         template: "https://{{base_hostname}}/kafdrop"
     sia:
       - type: "data"
@@ -396,6 +428,8 @@ config:
           - "dp02"
           - "dp1"
           - "dp2"
+        requiredScopes:
+          - "read:image"
         template: "https://{{base_hostname}}/api/sia/{{dataset}}"
         versions:
           sia-query-2.0:
@@ -429,6 +463,8 @@ config:
         title: "Table access protocol (TAP)"
         datasets:
           - "dp03"
+        requiredScopes:
+          - "read:tap"
         template: "https://{{base_hostname}}/api/ssotap"
         docsUrl: "https://www.ivoa.net/documents/TAP/"
         versions:
@@ -443,6 +479,8 @@ config:
           - "dp02"
           - "dp1"
           - "dp2"
+        requiredScopes:
+          - "read:tap"
         template: "https://{{base_hostname}}/api/tap"
         docsUrl: "https://www.ivoa.net/documents/TAP/"
         versions:
@@ -475,6 +513,8 @@ config:
     times-square:
       - type: "internal"
         name: "times-square"
+        requiredScopes:
+          - "exec:notebook"
         template: "https://{{base_hostname}}/times-square/api"
         openapi: "https://{{base_hostname}}/times-square/api/openapi.json"
         docsUrl: "https://times-square.lsst.io/"
@@ -489,6 +529,8 @@ config:
           - "dp02"
           - "dp1"
           - "dp2"
+        requiredScopes:
+          - "read:image"
         template: "https://{{base_hostname}}/api/cutout"
         versions:
           soda-async-1.0:
