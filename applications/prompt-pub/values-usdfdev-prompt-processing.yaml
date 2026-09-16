@@ -1,0 +1,49 @@
+replicaCount: 1
+
+image:
+  repository: "ghcr.io/lsst-dm/prompt_publication_service"
+  tag: "1.0.1"
+
+publication:
+  stateDB: "postgresql+asyncpg://promptpub@usdf-butler-promptpub-dev-db-tx.sdf.slac.stanford.edu:5432/promptpub"
+  repos:
+    embargo: "s3://prompt-processing-dev@rubin-pp-dev-users/central_repo_2/butler.yaml"
+    main: "/sdf/data/rubin/repo/dev/main/butler.yaml"
+    promptPrep: "/sdf/data/rubin/repo/dev/prompt_prep/butler.yaml"
+  butlerWriterKafka:
+    address: "prompt-kafka-kafka-bootstrap.prompt-kafka:9092"
+    topic: "butler-writer-ingestion-events"
+    groupId: "prompt-publication"
+    username: "prompt-publication-consumer"
+  embargoBatchFileDir: "s3://prompt-processing-dev@rubin-pp-dev-users/central_repo_2/publication/prompt_processing/"
+
+middleware:
+  lsstResources:
+    numWorkers: 4
+    s3ProfileEmbargo: "https://s3dfrgw.slac.stanford.edu"
+
+resources:
+  requests:
+    cpu: '4'
+    memory: 32Gi
+  limits:
+    cpu: '12'
+    memory: 32Gi
+
+alloyDbProxy:
+  image:
+    tag: "1.14.2"
+
+  config:
+    instanceUri: "projects/science-platform-dev-7696/locations/us-central1/clusters/butler-prompt-dev/instances/butler-prompt-dev-primary"
+
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: "1"
+    limits:
+      memory: "1Gi"
+      cpu: "1"
+
+scaleReplica:
+  enabled: true
