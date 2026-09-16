@@ -1,5 +1,11 @@
 name: "idfprod"
 fqdn: "data.lsst.cloud"
+title: "US Rubin Science Platform"
+description: >-
+  The primary US Rubin Science Platform, hosted on Google Cloud Platform. This
+  environment serves as the public Rubin Science Platform for the Data
+  Previews.
+
 appOfAppsName: "science-platform"
 butlerServerRepositories:
   dp02: "https://data.lsst.cloud/api/butler/repo/dp02/butler.yaml"

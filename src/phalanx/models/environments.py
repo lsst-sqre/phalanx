@@ -182,6 +182,29 @@ class EnvironmentBaseConfig(BaseModel):
         ),
     )
 
+    title: str | None = Field(
+        None,
+        title="Short description",
+        description=(
+            "Short description of the environment if different from fqdn"
+        ),
+    )
+
+    title_long: str | None = Field(
+        None,
+        title="Longer one-line description",
+        description=(
+            "A longer one-line description if the title is not fully"
+            " descriptive"
+        ),
+    )
+
+    description: str | None = Field(
+        None,
+        title="Description",
+        description="Full description of this Phalanx environment",
+    )
+
     app_of_apps_name: str | None = Field(
         None,
         title="Argo CD app-of-apps name",

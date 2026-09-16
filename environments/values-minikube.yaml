@@ -1,5 +1,12 @@
 name: "minikube"
 fqdn: "minikube.lsst.codes"
+title: "GitHub Actions CI"
+titleLong: "GitHub Actions CI test environment"
+description: >-
+  The GitHub Actions continuous integration test environment for the Rubin
+  Science Platform. This environment is set up in a GitHub Actions CI runner
+  to test pull requests for Phalanx.
+
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP minikube.lsst.codes"

@@ -1,5 +1,12 @@
 name: "idfint"
 fqdn: "data-int.lsst.cloud"
+title: "RSP integration"
+titleLong: "Integration testing for the Rubin Science Platform"
+description: >-
+  A development and integration environment for the Rubin Science Platform on
+  Google Cloud Platform. Its primary use is for Rubin operations teams to
+  integrate and test applications, features, software, and data releases.
+
 appOfAppsName: "science-platform"
 butlerServerRepositories:
   dp02: "https://data-int.lsst.cloud/api/butler/repo/dp02/butler.yaml"

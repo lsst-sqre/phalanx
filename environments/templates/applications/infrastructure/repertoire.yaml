@@ -42,5 +42,17 @@ spec:
           baseHostname: {{ .Values.fqdn | quote }}
           butlerConfigs:
             {{ toYaml .Values.butlerServerRepositories | nindent 12 }}
-          environmentName: {{ .Values.fqdn | quote }}
+          environment:
+            docsUrl: "https://phalanx.lsst.io/environments/{{ .Values.name }}/"
+            label: {{ .Values.name | quote }}
+            name: {{ .Values.fqdn | quote }}
+            {{- if .Values.title }}
+            title: {{ .Values.title | quote }}
+            {{- end }}
+            {{- if .Values.titleLong }}
+            titleLong: {{ .Values.titleLong | quote }}
+            {{- end }}
+            {{- if .Values.description }}
+            description: {{ .Values.description | quote }}
+            {{- end }}
 {{- end -}}

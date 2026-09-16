@@ -1,5 +1,13 @@
 fqdn: "usdf-cm.slac.stanford.edu"
 name: "usdf-cm"
+title: "Production CM for USDF"
+titleLong: "Rubin Campaign Management at USDF"
+description: >-
+  The production environment for the Rubin Campaign Management service
+  software at the United States Data Facility (USDF) hosted at SLAC. This
+  software monitors and mediates the LSST data reduction pipelines at the
+  USDF.
+
 appOfAppsName: "science-platform"
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: "secret/rubin/usdf-cm"
@@ -8,7 +16,6 @@ applications:
   # This environment uses an ingress managed in a separate Kubernetes cluster,
   # despite that configuration not being officially supported by Phalanx.
   cert-manager: false
-  gafaelfawr: true
   ingress-nginx: false
 
   cm-service: true
