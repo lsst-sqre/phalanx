@@ -1,13 +1,16 @@
 name: "tucson-teststand"
 fqdn: "tucson-teststand.lsst.codes"
+title: "Tucson Teststand"
+titleLong: "Tucson Teststand at NOIRLab"
+description: >-
+  The development and integration environment for the Telescope and Site team,
+  hosted out of NOIRLab in Tucson, Arizona.
+
 appOfAppsName: "science-platform"
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP tucson-teststand.lsst.codes"
 vaultPathPrefix: "secret/phalanx/tucson-teststand"
-namespaceLabels:
-  sasquatch:
-    lsst.io/discover: 'true'
 
 applications:
   argo-workflows: true
@@ -34,10 +37,14 @@ applications:
   strimzi-registry-operator: true
   uws: true
 
+namespaceLabels:
+  sasquatch:
+    lsst.io/discover: "true"
+
 controlSystem:
   imageTag: "c0044"
   siteTag: "tucson"
   s3EndpointUrl: "https://s3.tu.lsst.org"
 
 revisions:
-  strimzi: strimzi-0.49.0
+  strimzi: "strimzi-0.49.0"

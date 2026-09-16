@@ -114,11 +114,14 @@
 | controlSystem.siteTag | string | None, must be set | Site tag for the control system deployment |
 | controlSystem.topicName | string | `"sal"` | Topic name tag for the control system deployment |
 | defaultComputeClass | string | `nil` | Whether to deploy workloads using Autopilot or Standard mode. If this is null, the workloads will use the compute class that corresponds to the cluster type. Here's an [example of setting an Autopilot compute class](https://cloud.google.com/kubernetes-engine/docs/how-to/autopilot-classes-standard-clusters#built-in-class) |
+| description | string | `nil` | Description of the environment |
 | fqdn | string | None, must be set | Fully-qualified domain name where the environment is running |
 | name | string | None, must be set | Name of the environment |
 | namespaceLabels | object | `{}` | Add labels for application namespaces |
 | repoUrl | string | `"https://github.com/lsst-sqre/phalanx.git"` | URL of the repository for all applications |
 | revisions | object | `{}` | Mapping of applications to branches to run some applications from revisions other than main |
 | targetRevision | string | `"main"` | Revision of repository to use for all applications unless overridden by branches below |
+| title | string | Value of `name` | Short human-readable title for the environment |
+| titleLong | string | Value of `title` | Longer one-line human-readable title for the environment |
 | vaultPathPrefix | string | None, must be set | Prefix for Vault secrets for this environment |
 | vaultUrl | string | `"https://vault.lsst.cloud/"` | URL of Vault server for this environment |

@@ -1,5 +1,8 @@
 name: ccin2p3
 fqdn: data-dev.lsst.eu
+title: "CC-IN2P3 data facility"
+description: "The Rubin Science Platform at the CC-IN2P3."
+
 vaultPathPrefix: secret/phalanx/ccin2p3
 
 applications:

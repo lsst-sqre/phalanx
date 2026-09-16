@@ -1,13 +1,21 @@
 name: "ukidacdev"
 fqdn: "rsp-test.lsst.ac.uk"
+title: "UK IDAC development"
+description: >-
+  The development environment for the Rubin Science Platform at the United
+  Kingdom Independent Data Access Center (UKIDAC) hosted on Somerville Cloud,
+  University of Edinburgh. Its primary use is as a test environment for the
+  UKIDAC RSP team.
+
 appOfAppsName: "science-platform"
 vaultUrl: "https://vault-rsp.lsst.ac.uk"
 vaultPathPrefix: "secret/phalanx/ukidacdev"
+
 applications:
   mobu: true
   nublado: true
   portal: true
   postgres: true
   squareone: true
-  tap: true
   ssotap: true
+  tap: true
