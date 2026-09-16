@@ -50,6 +50,14 @@ def build_discovery(srcdir: str) -> None:
                 k: str(v)
                 for k, v in environment.butler_server_repositories.items()
             }
+        config["environment"] = {
+            "docsUrl": f"https://phalanx.lsst.io/environments/{env_name}/",
+            "label": env_name,
+            "name": environment.fqdn,
+            "title": environment.title,
+            "titleLong": environment.title_long,
+            "description": environment.description,
+        }
         config["environmentName"] = env_name
         base_url = f"https://{environment.fqdn}/"
         repertoire_base_url = urljoin(base_url, config["pathPrefix"])
