@@ -22,7 +22,8 @@ To create a new Phalanx environment, take the following steps:
 #. Create a new :file:`values-{environment}.yaml` file in `environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__.
 
    Start with a template copied from an existing environment that's similar to the new environment.
-   Edit it so that ``name``, ``fqdn``, ``vaultUrl``, and ``vaultPathPrefix`` at the top match your new environment.
+   Edit it so that ``name``, ``fqdn``, ``title``, ``description``, ``vaultUrl``, and ``vaultPathPrefix`` at the top match your new environment.
+   If you had to abbreviate the short description for ``title``, add a longer (but still one-line) description in ``titleLong``.
    You may omit ``vaultUrl`` for SQuaRE-managed environments.
    See :doc:`secrets-setup` for more information about the latter two settings and additional settings you may need.
 
@@ -41,7 +42,9 @@ To create a new Phalanx environment, take the following steps:
    Whatever storage you choose, you will need to configure appropriate mount points in :px-app:`nublado` when you configure each application in the next step.
 
 #. Enable the applications this environment should include in :file:`environments/values-{environment}.yaml`.
-   For each enabled application, create a corresponding :file:`values-{environment}.yaml` file in the relevant directory under `applications <https://github.com/lsst-sqre/phalanx/tree/main/applications/>`__.
+   :px-app:`argocd`, :px-app:`cert-manager`, :px-app:`gafaelfawr`, :px-app:`repertoire`, :px-app:`ingress-nginx`, and :px-app:`vault-secrets-operator` will be enabled by default and do not have to be mentioned in the file.
+
+#. For each enabled application, create a corresponding :file:`values-{environment}.yaml` file in the relevant directory under `applications <https://github.com/lsst-sqre/phalanx/tree/main/applications/>`__.
    Customization will vary from application to application.
    The following applications have special bootstrapping considerations:
 
@@ -52,6 +55,9 @@ To create a new Phalanx environment, take the following steps:
 
 #. Add the URL of your new environment to :file:`docs/documenteer.toml` under ``sphinx.linkcheck.ignore``.
    The Argo CD URL of your environment will be unreachable, so you need to tell Sphinx valid link checking to ignore it.
+
+#. Add a directory for your environment under :file:`docs/environments` and populate it with a :file:`index.rst` similar to the ones for existing environments.
+   Add that page to :file:`docs/environments/index.rst` (alphabetically by Phalanx environment name).
 
 Next steps
 ==========
