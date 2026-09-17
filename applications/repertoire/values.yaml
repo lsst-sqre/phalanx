@@ -149,6 +149,9 @@ config:
     # @default -- See `values.yaml`
     sourceTemplate: "https://{{base_hostname}}/api/hips/v2/{{dataset}}"
 
+    # -- Short description for HiPS service
+    title: "HiPS (Hierarchical Progressive Survey)"
+
   # -- Dictionary of InfluxDB database names to connection information for
   # that database, with keys `url`, `database`, `username`, `passwordKey`, and
   # `schemaRegistry`. `passwordKey` must match an entry in `secrets.yaml`.
