@@ -12,6 +12,10 @@ spec:
       {{- include "prompt-pub.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
         {{- include "prompt-pub.selectorLabels" . | nindent 8 }}
     spec:
@@ -74,13 +78,13 @@ spec:
           startupProbe:
             httpGet:
               path: /readiness
-              port: 9040
+              port: 8000
             failureThreshold: 20
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /readiness
-              port: 9040
+              port: 8000
             initialDelaySeconds: 2
             periodSeconds: 5
             timeoutSeconds: 3
@@ -105,9 +109,10 @@ spec:
             - "--port=5432"
             - "--health-check"
             - "--http-address=$(POD_IP)"
-            - "--http-port=9040"
+            - "--http-port=8000"
             - "--credentials-file"
             - "/opt/lsst/secrets/alloy-db/key.json"
+            - "--prometheus"
             - {{ .Values.alloyDbProxy.config.instanceUri | quote }}
           env:
             - name: POD_IP
@@ -117,20 +122,20 @@ spec:
           startupProbe:
             httpGet:
               path: /readiness
-              port: 9040
+              port: 8000
             failureThreshold: 20
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /readiness
-              port: 9040
+              port: 8000
             periodSeconds: 10
             timeoutSeconds: 3
             failureThreshold: 3
           livenessProbe:
             httpGet:
               path: /liveness
-              port: 9040
+              port: 8000
             periodSeconds: 20
             timeoutSeconds: 5
             failureThreshold: 3
