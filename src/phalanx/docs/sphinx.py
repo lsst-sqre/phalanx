@@ -1,11 +1,11 @@
 """Generate service discovery JSON dumps for every environment."""
 
 import json
+from collections import defaultdict
 from pathlib import Path
 from urllib.parse import urljoin
 
-from pydantic.alias_generators import to_camel
-from rubin.repertoire import RepertoireBuilder, RepertoireSettings
+from rubin.repertoire import RepertoireBuilder
 
 from ..factory import Factory
 
@@ -33,46 +33,17 @@ def build_discovery(srcdir: str) -> None:
     root_path.mkdir(parents=True, exist_ok=True)
 
     # Process each environment.
+    mapping: defaultdict[str, dict[str, str]] = defaultdict(dict)
     for env_name in config_storage.list_environments():
         environment = config_storage.load_environment(env_name)
-        repertoire = environment.applications.get("repertoire")
-        if not repertoire or not repertoire.values.get("config"):
+        settings = environment.build_repertoire_settings()
+        if not settings:
             continue
+        config = environment.applications["repertoire"].values["config"]
 
-        # Flesh out the Repertoire coniguration with settings that would be
-        # injected by Argo CD, and calculate the base URLs for service
-        # discovery.
-        config = repertoire.values["config"]
-        config["applications"] = list(environment.applications.keys())
-        config["baseHostname"] = environment.fqdn
-        if environment.butler_server_repositories:
-            config["butlerConfigs"] = {
-                k: str(v)
-                for k, v in environment.butler_server_repositories.items()
-            }
-        config["environment"] = {
-            "docsUrl": f"https://phalanx.lsst.io/environments/{env_name}/",
-            "label": env_name,
-            "name": environment.fqdn,
-            "title": environment.title,
-            "titleLong": environment.title_long,
-            "description": environment.description,
-        }
-        config["environmentName"] = env_name
+        # Generate service discovery information for that environment.
         base_url = f"https://{environment.fqdn}/"
         repertoire_base_url = urljoin(base_url, config["pathPrefix"])
-
-        # RepertoireSettings uses extra="forbid", but the merged configuration
-        # is for the Repertoire service and has extra fields. Delete the
-        # fields that aren't part of the Repertoire settings.
-        known_fields = {to_camel(k) for k in RepertoireSettings.model_fields}
-        to_remove = set(config.keys()) - known_fields
-        for field_name in to_remove:
-            del config[field_name]
-
-        # Now, load the Repertoire configuration and generate service
-        # discovery information for that environment.
-        settings = RepertoireSettings.model_validate(config)
         builder = RepertoireBuilder(settings)
         discovery = builder.build_discovery(repertoire_base_url, base_url)
 
@@ -82,3 +53,12 @@ def build_discovery(srcdir: str) -> None:
                 mode="json", exclude_defaults=True
             )
             json.dump(discovery_json, fh, indent=2, sort_keys=True)
+
+        # Add this environment to the index.
+        mapping[env_name]["url"] = (
+            f"https://phalanx.lsst.io/discovery/environments/{env_name}.json"
+        )
+
+    # Write out the index file.
+    with (root_path / "index.json").open("w") as fh:
+        json.dump(mapping, fh, indent=2, sort_keys=True)
