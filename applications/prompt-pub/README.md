@@ -25,7 +25,7 @@ Manages the lifecycle of Butler Prompt Data Products as they move from the embar
 | middleware.lsstResources.numWorkers | int | `4` | Sets the number of concurrent Butler file transfers per process.  Setting it explicitly here because this value is nondeterministic if you don’t assign something, but the exact value isn’t that critical. |
 | middleware.lsstResources.s3ProfileEmbargo | string | `"https://sdfembs3.sdf.slac.stanford.edu"` | S3 Profile for Embargo |
 | nodeSelector | object | `{}` | Node selection rules for the prompt-pub statefulset pod |
-| podAnnotations | object | `{}` | Annotations for the prompt-pub statefulset pod |
+| podAnnotations | object | `{"prometheus.io/port":"8000","prometheus.io/scrape":"true"}` | Annotations for the prompt-pub statefulset pod |
 | publication.butlerWriterKafka.address | string | `""` | Address to Butler Writer Kafka |
 | publication.butlerWriterKafka.groupId | string | `"prompt-publication"` | Kafka Consumer Group ID |
 | publication.butlerWriterKafka.topic | string | `"butler-writer-ingestion-events"` | Butler Writer Kafka Topic.  Equal to kafka.outputTopic from the butler-writer-service app |

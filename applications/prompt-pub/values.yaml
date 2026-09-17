@@ -94,7 +94,9 @@ affinity: {}
 nodeSelector: {}
 
 # -- Annotations for the prompt-pub statefulset pod
-podAnnotations: {}
+podAnnotations:
+  prometheus.io/scrape: 'true'
+  prometheus.io/port: '8000'
 
 # -- Resource limits and requests for the prompt-pub statefulset pod
 # @default -- See `values.yaml`
