@@ -17,7 +17,8 @@ title: null
 titleLong: null
 
 # -- Description of the environment
-description: null
+# @default -- None, must be set
+description: ""
 
 # -- Name of the parent Argo CD app-of-apps that manages all the applications
 # enabled for this environment
