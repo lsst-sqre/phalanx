@@ -72,6 +72,7 @@ app-metrics:
   enabled: true
   apps:
     - gafaelfawr
+    - docverse
 
 squareEvents:
   enabled: true
