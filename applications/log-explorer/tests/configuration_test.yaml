@@ -47,6 +47,16 @@ tests:
       - contains:
           path: "spec.template.spec.containers[0].env"
           content:
+            name: "RA_LOG_EXPLORER_LIVE_POLL_S"
+            value: "300"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "RA_LOG_EXPLORER_LIVE_LAG_S"
+            value: "60"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
             name: "LOKI_USERNAME"
             value: "omega"
 
@@ -111,6 +121,21 @@ tests:
           content:
             name: "RA_LOG_EXPLORER_WINDOW_AFTER_S"
             value: "900"
+
+  - it: "lets an environment turn live mode off"
+    template: "deployment.yaml"
+    set:
+      config:
+        livePollS: 0
+    asserts:
+      # 0 is the documented way back to purely on-demand fetching, so it
+      # has to reach the application rather than be dropped as an empty
+      # value the way `with` would drop it.
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "RA_LOG_EXPLORER_LIVE_POLL_S"
+            value: "0"
 
   - it: "does not bake a config directory the application no longer uses"
     template: "deployment.yaml"
