@@ -81,9 +81,6 @@ spec:
             # all, so this is the only way it can authenticate: there is no
             # credentials panel to fall back on.
             - name: "LOKI_PASSWORD"
-              {{- if .Values.config.lokiPassword }}
-              value: {{ .Values.config.lokiPassword | quote }}
-              {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: "log-explorer"
@@ -97,7 +94,6 @@ spec:
                   # says so in the UI, so a missing secret surfaces as a
                   # legible error on the first fetch instead of wrong results.
                   optional: true
-              {{- end }}
           readinessProbe:
             httpGet:
               # answered under the base path, and deliberately touches no
