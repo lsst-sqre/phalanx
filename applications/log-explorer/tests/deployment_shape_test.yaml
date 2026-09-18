@@ -11,10 +11,10 @@ tests:
   - it: "replaces the pod rather than rolling it"
     template: "deployment.yaml"
     asserts:
-      # At one replica RollingUpdate's maxUnavailable floors to zero, so a
-      # rollout whose new pod never passes readiness wedges with two unready
-      # pods that Argo CD cannot converge. Recreate also lets the old pod
-      # release the ReadWriteOnce cache volume before the new one claims it.
+      # The cache is a ReadWriteOnce volume, so a rolling update stalls: the
+      # new pod cannot attach it until the old one has let go, and the old
+      # one is kept until the new one is ready. Recreate takes the brief
+      # downtime deliberately instead.
       - equal:
           path: "spec.strategy.type"
           value: "Recreate"
