@@ -28,6 +28,7 @@ IVOA TAP service
 | config.bigquery.image.tag | string | `"3.26.0"` | Tag of TAP image to use |
 | config.bigquery.project | string | None, must be set if backend is `bigquery` | BigQuery project ID |
 | config.bigquery.schema | string | `""` | Schema name for table mappings (optional) |
+| config.bigquery.tableMappings | list | `[]` | Table name mappings for query rewriting (as visible:backend pairs). There is no built-in default mapping for any table, so every table queryable through this schema must have an entry here. Example: ["ppdb.mpc_orbits:`ppdb-dev-5c07.ppdb_public.mpc_orbits`"] |
 | config.database | string | `"dp2"` | Data Database name |
 | config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/w.2026.01/datalink-snippets.zip"` | Datalink payload URL |
 | config.gcsBucket | string | `"async-results.lsst.codes"` | Name of GCS bucket in which to store results |

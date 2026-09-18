@@ -90,8 +90,10 @@ data:
     {{- with .Values.config.qserv.schemaMappings }}
     tap.schema.mappings={{ . }}
     {{- end }}
-    {{- if .Values.config.qserv.tableMappings }}
-    tap.table.mappings={{ .Values.config.qserv.tableMappings | join "," }}
+    {{- $tableMappingsByBackend := dict "qserv" .Values.config.qserv.tableMappings "bigquery" .Values.config.bigquery.tableMappings }}
+    {{- $tableMappings := get $tableMappingsByBackend .Values.config.backend }}
+    {{- if $tableMappings }}
+    tap.table.mappings={{ $tableMappings | join "," }}
     {{- end }}
 
     # service configuration
