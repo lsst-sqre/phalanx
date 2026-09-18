@@ -6,11 +6,10 @@ metadata:
     {{- include "log-explorer.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
-  # at one replica, RollingUpdate's maxUnavailable floors to zero, so the old
-  # pod is kept until the new one passes readiness — and a rollout whose new
-  # pod never comes up wedges with two unready pods that Argo CD cannot
-  # converge. Recreate also lets the old pod release the ReadWriteOnce cache
-  # volume before the new one claims it
+  # the cache is a ReadWriteOnce volume, so a rolling update stalls: the new
+  # pod cannot attach it until the old one has let go, and the old one is
+  # kept until the new one is ready. At one replica a rollout is brief
+  # downtime either way, so take it deliberately rather than by deadlock
   strategy:
     type: "Recreate"
   selector:
