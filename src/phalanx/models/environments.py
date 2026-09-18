@@ -201,8 +201,8 @@ class EnvironmentBaseConfig(BaseModel):
         ),
     )
 
-    description: str | None = Field(
-        None,
+    description: str = Field(
+        ...,
         title="Description",
         description="Full description of this Phalanx environment",
     )

@@ -206,17 +206,9 @@
       "title": "Longer one-line description"
     },
     "description": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
       "description": "Full description of this Phalanx environment",
-      "title": "Description"
+      "title": "Description",
+      "type": "string"
     },
     "appOfAppsName": {
       "anyOf": [
@@ -385,6 +377,7 @@
   "required": [
     "name",
     "fqdn",
+    "description",
     "vaultPathPrefix",
     "applications"
   ],
