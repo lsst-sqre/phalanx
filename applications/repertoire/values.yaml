@@ -140,6 +140,12 @@ config:
     # -- Path prefix at which the HiPS lists should be served
     pathPrefix: "/api/hips/v2"
 
+    # -- Quota labels for the HiPS service
+    # @default -- See `values.yaml`
+    quotaLabels:
+      hips:
+        title: "HiPS requests"
+
     # -- Scopes required for HiPS access.
     requiredScopes:
       - "read:image"
@@ -256,6 +262,9 @@ config:
             - "dp2"
           requiredScopes:
             - "read:image"
+          quotaLabels:
+            datalinker:
+              title: "DataLink {links} requests"
           template: "https://{{base_hostname}}/api/datalink"
           docsUrl: "https://www.ivoa.net/documents/DataLink/"
           versions:
@@ -268,6 +277,9 @@ config:
           title: "DataLink"
           requiredScopes:
             - "read:image"
+          quotaLabels:
+            datalinker:
+              title: "DataLink {links} requests"
           template: "https://{{base_hostname}}/api/datalink"
           versions:
             datalink-links-1.1:
@@ -319,6 +331,9 @@ config:
             - "prompt"
           requiredScopes:
             - "read:image"
+          quotaLabels:
+            herald:
+              title: "Alert requests"
           template: "https://{{base_hostname}}/api/alerts"
           openapi: "https://{{base_hostname}}/api/alerts/openapi.json"
           docsUrl: "https://sqr-114.lsst.io/"
@@ -347,6 +362,10 @@ config:
     muster:
       internal:
         muster:
+          quotaLabels:
+            muster-quota:
+              title: "Quota testing"
+              internal: true
           template: "https://{{base_hostname}}/muster"
           openapi: "https://{{base_hostname}}/muster/openapi.json"
     noteburst:
@@ -430,6 +449,9 @@ config:
             - "dp2"
           requiredScopes:
             - "read:image"
+          quotaLabels:
+            sia:
+              title: "Image requests"
           template: "https://{{base_hostname}}/api/sia/{{dataset}}"
           versions:
             sia-query-2.0:
@@ -480,6 +502,9 @@ config:
             - "dp2"
           requiredScopes:
             - "read:tap"
+          quotaLabels:
+            tap:
+              title: "TAP API calls"
           template: "https://{{base_hostname}}/api/tap"
           docsUrl: "https://www.ivoa.net/documents/TAP/"
           versions:
@@ -528,6 +553,9 @@ config:
             - "dp02"
             - "dp1"
             - "dp2"
+          quotaLabels:
+            vo-cutouts:
+              title: "SODA API calls"
           requiredScopes:
             - "read:image"
           template: "https://{{base_hostname}}/api/cutout"

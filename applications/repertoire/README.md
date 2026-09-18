@@ -31,6 +31,7 @@ Service discovery
 | config.hips.legacy.dataset | string | `nil` | If set, specifies the dataset that should be shown at the legacy HiPS list route that does not include the dataset name. If not set, no legacy HiPS list will be created. |
 | config.hips.legacy.pathPrefix | string | `"/api/hips"` | Path prefix at which the legacy HiPS list should be served |
 | config.hips.pathPrefix | string | `"/api/hips/v2"` | Path prefix at which the HiPS lists should be served |
+| config.hips.quotaLabels | object | See `values.yaml` | Quota labels for the HiPS service |
 | config.hips.requiredScopes | list | `["read:image"]` | Scopes required for HiPS access. |
 | config.hips.sourceTemplate | string | See `values.yaml` | Jinja template to construct the base URLs of the underlying HiPS surveys, used to construct the HiPS list. |
 | config.hips.title | string | `"HiPS (Hierarchical Progressive Survey)"` | Short description for HiPS service |
