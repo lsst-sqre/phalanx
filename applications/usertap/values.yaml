@@ -18,7 +18,7 @@ image:
   repository: "images.opencadc.org/core/youcat"
 
   # -- Tag for YouCat image
-  tag: "0.9.6"
+  tag: "0.10.0"
 
   # -- Pull policy YouCat image
   pullPolicy: "IfNotPresent"
