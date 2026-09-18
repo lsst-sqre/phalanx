@@ -19,6 +19,11 @@ cadc-tap:
       dataset: "ppdb_public"
       schema: "ppdb"
 
+      tableMappings:
+        - "ppdb.DiaObject:`ppdb-int-6c62.ppdb_public.DiaObject`"
+        - "ppdb.DiaSource:`ppdb-int-6c62.ppdb_public.DiaSource`"
+        - "ppdb.DiaForcedSource:`ppdb-int-6c62.ppdb_public.DiaForcedSource`"
+
   cloudsql:
     enabled: true
     instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"

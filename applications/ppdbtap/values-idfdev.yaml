@@ -19,6 +19,16 @@ cadc-tap:
       dataset: "ppdb_public"
       schema: "ppdb"
 
+      tableMappings:
+        - "ppdb.DiaObject:`ppdb-dev-5c07.ppdb_public.DiaObject`"
+        - "ppdb.DiaSource:`ppdb-dev-5c07.ppdb_public.DiaSource`"
+        - "ppdb.DiaForcedSource:`ppdb-dev-5c07.ppdb_public.DiaForcedSource`"
+        - "ppdb.SSObject:`ppdb-dev-5c07.ppdb_public.SSObject`"
+        - "ppdb.SSSource:`ppdb-dev-5c07.ppdb_public.SSSource`"
+        - "ppdb.current_identifications:`ppdb-dev-5c07.ppdb_public.current_identifications`"
+        - "ppdb.mpc_orbits:`ppdb-dev-5c07.ppdb_public.mpc_orbits`"
+        - "ppdb.numbered_identifications:`ppdb-dev-5c07.ppdb_public.numbered_identifications`"
+
   cloudsql:
     enabled: true
     instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
