@@ -15,9 +15,18 @@ cadc-tap:
       rules: "ivoa.ObsCore:access_url"
 
     bigquery:
+      image:
+        pullPolicy: "Always"
+        tag: "tickets-DM-56142"
+
       project: "ppdb-int-6c62"
       dataset: "ppdb_public"
       schema: "ppdb"
+
+      tableMappings:
+        - "ppdb.DiaObject:`ppdb-int-6c62.ppdb_public.DiaObject`"
+        - "ppdb.DiaSource:`ppdb-int-6c62.ppdb_public.DiaSource`"
+        - "ppdb.DiaForcedSource:`ppdb-int-6c62.ppdb_public.DiaForcedSource`"
 
   cloudsql:
     enabled: true
