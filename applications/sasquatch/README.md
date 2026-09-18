@@ -727,6 +727,7 @@ Rubin Observatory's telemetry service
 | rest-proxy.tolerations | list | `[]` | Tolerations configuration |
 | schema-registry.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster used by the Schema Registry. |
 | schema-registry.compatibilityLevel | string | `"none"` | Compatibility level for the Schema Registry. Options are: none, backward, backward_transitive, forward, forward_transitive, full, and full_transitive. |
+| schema-registry.groupId | string | The chart fullname | Kafka consumer group ID used by this Schema Registry cluster. Defaults to the chart fullname so that multiple Registry clusters can share Kafka. |
 | schema-registry.image.repository | string | `"confluentinc/cp-schema-registry"` | Docker image for the Confluent Schema Registry. |
 | schema-registry.image.tag | string | `"8.3.1"` | Docker image tag for the Confluent Schema Registry. |
 | schema-registry.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |
@@ -739,6 +740,7 @@ Rubin Observatory's telemetry service
 | schema-registry.topic.name | string | `"registry-schemas"` | Name of the Kafka topic used by the Schema Registry to store schemas. |
 | schema-registry-remote.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster used by the Schema Registry. |
 | schema-registry-remote.compatibilityLevel | string | `"none"` | Compatibility level for the Schema Registry. Options are: none, backward, backward_transitive, forward, forward_transitive, full, and full_transitive. |
+| schema-registry-remote.groupId | string | The chart fullname | Kafka consumer group ID used by this Schema Registry cluster. Defaults to the chart fullname so that multiple Registry clusters can share Kafka. |
 | schema-registry-remote.image.repository | string | `"confluentinc/cp-schema-registry"` | Docker image for the Confluent Schema Registry. |
 | schema-registry-remote.image.tag | string | `"8.3.1"` | Docker image tag for the Confluent Schema Registry. |
 | schema-registry-remote.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Annotations that will be added to the Ingress resource |

@@ -1,0 +1,59 @@
+suite: Schema Registry group ID
+templates:
+  - templates/strimzi-schema-registry.yaml
+  - templates/kafka-user.yaml
+release:
+  name: sasquatch
+tests:
+  - it: defaults the custom resource group ID to the chart fullname
+    template: templates/strimzi-schema-registry.yaml
+    asserts:
+      - equal:
+          path: spec.groupId
+          value: sasquatch-schema-registry
+
+  - it: uses the default group ID for the literal Kafka ACL
+    template: templates/kafka-user.yaml
+    asserts:
+      - equal:
+          path: spec.authorization.acls[1].resource.name
+          value: sasquatch-schema-registry
+      - equal:
+          path: spec.authorization.acls[1].resource.patternType
+          value: literal
+      - equal:
+          path: spec.authorization.acls[2].resource.name
+          value: schema-registry
+      - equal:
+          path: spec.authorization.acls[2].resource.patternType
+          value: prefix
+
+  - it: honors a group ID override in the custom resource
+    template: templates/strimzi-schema-registry.yaml
+    set:
+      groupId: custom-registry-group
+    asserts:
+      - equal:
+          path: spec.groupId
+          value: custom-registry-group
+
+  - it: honors a group ID override in the Kafka ACL
+    template: templates/kafka-user.yaml
+    set:
+      groupId: custom-registry-group
+    asserts:
+      - equal:
+          path: spec.authorization.acls[1].resource.name
+          value: custom-registry-group
+      - equal:
+          path: spec.authorization.acls[1].resource.patternType
+          value: literal
+
+  - it: derives a distinct group ID for the remote chart alias
+    template: templates/strimzi-schema-registry.yaml
+    set:
+      nameOverride: schema-registry-remote
+    asserts:
+      - equal:
+          path: spec.groupId
+          value: sasquatch-schema-registry-remote

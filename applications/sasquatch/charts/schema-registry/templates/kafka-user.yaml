@@ -37,7 +37,16 @@ spec:
         operations:
           - DescribeConfigs
         type: allow
-      # Allow all operations on the schema-registry* group
+      # Allow all operations on this Schema Registry cluster's group
+      - resource:
+          type: group
+          name: {{ include "schema-registry.groupId" . | quote }}
+          patternType: literal
+        operations:
+          - All
+        type: allow
+      # Keep the legacy prefix ACL during the group ID migration. Remove this
+      # ACL after all Schema Registry deployments use their literal group ID.
       - resource:
           type: group
           name: schema-registry

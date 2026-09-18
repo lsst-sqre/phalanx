@@ -9,6 +9,7 @@ spec:
   listener: tls
   securityProtocol: SSL
   compatibilityLevel: {{ .Values.compatibilityLevel | quote }}
+  groupId: {{ include "schema-registry.groupId" . | quote }}
   registryImage: {{ .Values.image.repository | quote }}
   registryImageTag: {{ .Values.image.tag | quote }}
   registryTopic: {{ .Values.topic.name | quote }}
