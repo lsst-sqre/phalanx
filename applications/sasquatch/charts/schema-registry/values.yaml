@@ -15,6 +15,11 @@ cluster:
 # forward_transitive, full, and full_transitive.
 compatibilityLevel: none
 
+# -- Kafka consumer group ID used by this Schema Registry cluster. Defaults
+# to the chart fullname so that multiple Registry clusters can share Kafka.
+# @default -- The chart fullname
+groupId: ""
+
 topic:
   # -- Name of the Kafka topic used by the Schema Registry to store schemas.
   name: registry-schemas

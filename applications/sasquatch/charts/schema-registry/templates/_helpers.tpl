@@ -25,6 +25,13 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{/*
+Return the Schema Registry consumer group ID.
+*/}}
+{{- define "schema-registry.groupId" -}}
+{{- default (include "chart.fullname" .) .Values.groupId -}}
+{{- end -}}
+
+{{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "chart.chart" -}}
@@ -50,5 +57,4 @@ Selector labels
 app.kubernetes.io/name: {{ include "chart.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
-
 
