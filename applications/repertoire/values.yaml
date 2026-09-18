@@ -223,6 +223,14 @@ config:
       # for experimentation during development.
       suffix: ""
 
+  # -- ObsCore exporter configurations by dataset
+  # @default -- See `values.yaml`
+  obscoreConfigs:
+    dp02: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp02.yaml"
+    dp1: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp1.yaml"
+    dp2: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/edp2.yaml"
+    prompt: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/prompt.yaml"
+
   # -- URL path prefix
   pathPrefix: "/repertoire"
 

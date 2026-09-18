@@ -10,6 +10,8 @@ config:
       dataset: "dp1"
   metrics:
     enabled: true
+  obscoreConfigs:
+    dp2: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp2.yaml"
   rules:
     gafaelfawr:
       ui:
