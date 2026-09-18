@@ -11,6 +11,11 @@ config:
   metrics:
     enabled: true
   rules:
+    gafaelfawr:
+      ui:
+        comanage:
+          title: "Account settings"
+          template: "https://id.lsst.cloud/"
     times-square:
       internal:
         times-square:
