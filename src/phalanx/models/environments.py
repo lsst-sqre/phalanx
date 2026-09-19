@@ -1,6 +1,7 @@
 """Pydantic models for Phalanx environments."""
 
 from collections import defaultdict
+from copy import deepcopy
 from enum import Enum
 from typing import Self, override
 
@@ -16,6 +17,7 @@ from pydantic import (
 from pydantic.alias_generators import to_camel
 from pydantic.json_schema import JsonSchemaValue
 from pydantic_core import CoreSchema
+from rubin.repertoire import RepertoireSettings
 
 from .applications import Application, ApplicationInstance
 from .secrets import Secret
@@ -180,6 +182,29 @@ class EnvironmentBaseConfig(BaseModel):
         description=(
             "Fully-qualified domain name on which the environment listens"
         ),
+    )
+
+    title: str | None = Field(
+        None,
+        title="Short description",
+        description=(
+            "Short description of the environment if different from fqdn"
+        ),
+    )
+
+    title_long: str | None = Field(
+        None,
+        title="Longer one-line description",
+        description=(
+            "A longer one-line description if the title is not fully"
+            " descriptive"
+        ),
+    )
+
+    description: str = Field(
+        ...,
+        title="Description",
+        description="Full description of this Phalanx environment",
     )
 
     app_of_apps_name: str | None = Field(
@@ -426,6 +451,55 @@ class Environment(EnvironmentBaseConfig):
                 continue
             secrets.extend(application.secrets.values())
         return secrets
+
+    def build_repertoire_settings(self) -> RepertoireSettings | None:
+        """Construct the Repertoire settings for this environment.
+
+        Used to generate static service discovery JSON files that are
+        published with the documentation and can be used by other
+        documentation sites that require static knowledge of service and
+        environment information.
+
+        Returns
+        -------
+        rubin.repertoire.RepertoireSettings or None
+            Repertoire configuration settings, or `None` if Repertoire is not
+            configured for this environment.
+        """
+        repertoire = self.applications.get("repertoire")
+        if not repertoire or not repertoire.values.get("config"):
+            return None
+
+        # Flesh out the Repertoire coniguration with settings that would be
+        # injected by Argo CD, and calculate the base URLs for service
+        # discovery.
+        config = deepcopy(repertoire.values["config"])
+        config["applications"] = list(self.applications.keys())
+        config["baseHostname"] = self.fqdn
+        if self.butler_server_repositories:
+            config["butlerConfigs"] = {
+                k: str(v) for k, v in self.butler_server_repositories.items()
+            }
+        config["environment"] = {
+            "docsUrl": f"https://phalanx.lsst.io/environments/{self.name}/",
+            "label": self.name,
+            "name": self.fqdn,
+            "title": self.title,
+            "titleLong": self.title_long,
+            "description": self.description,
+        }
+        config["environmentName"] = self.name
+
+        # RepertoireSettings uses extra="forbid", but the merged configuration
+        # is for the Repertoire service and has extra fields. Delete the
+        # fields that aren't part of the Repertoire settings.
+        known_fields = {to_camel(k) for k in RepertoireSettings.model_fields}
+        to_remove = set(config.keys()) - known_fields
+        for field_name in to_remove:
+            del config[field_name]
+
+        # Now, build the Repertoire configuration.
+        return RepertoireSettings.model_validate(config)
 
 
 class ArgoCDRBAC(BaseModel):

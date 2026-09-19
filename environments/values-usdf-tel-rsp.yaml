@@ -1,5 +1,11 @@
 name: usdf-tel-rsp
 fqdn: usdf-tel-rsp.slac.stanford.edu
+title: "Telescope & Site UDF development"
+titleLong: "Telescope and Site development at USDF"
+description: >-
+  A development and integration environment for the Telescope and Site team at
+  the United States Data Facility (USDF) hosted at SLAC.
+
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-tel-rsp
 

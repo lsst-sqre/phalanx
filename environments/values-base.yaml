@@ -1,16 +1,16 @@
 name: "base"
 fqdn: "base-lsp.lsst.codes"
+title: "Rubin Base"
+titleLong: "Rubin Base data facility in La Serena"
+description: >-
+  The Rubin Base facility in La Serena. Used primarily as a test environment
+  for the Rubin Summit facility.
+
 appOfAppsName: "science-platform"
 onepassword:
   connectUrl: "https://roundtable.lsst.cloud/1password"
   vaultTitle: "RSP base-lsp.lsst.codes"
 vaultPathPrefix: "secret/phalanx/base"
-namespaceLabels:
-  sasquatch:
-    lsst.io/discover: 'true'
-    k8up-enabled: 'true'
-  gafaelfawr:
-    k8up-enabled: 'true'
 
 applications:
   argo-workflows: true
@@ -42,10 +42,17 @@ applications:
   strimzi-registry-operator: true
   uws: true
 
+namespaceLabels:
+  sasquatch:
+    lsst.io/discover: "true"
+    k8up-enabled: "true"
+  gafaelfawr:
+    k8up-enabled: "true"
+
 controlSystem:
   imageTag: "c0044"
   siteTag: "base"
   s3EndpointUrl: "https://s3.ls.lsst.org"
 
 revisions:
-  strimzi: strimzi-0.47.0
+  strimzi: "strimzi-0.47.0"

@@ -1,1 +1,4 @@
+image:
+  tag: "t-DM-56085"
+  pullPolicy: "Always"
 resources: {}

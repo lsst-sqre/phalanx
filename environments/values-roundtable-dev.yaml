@@ -1,6 +1,12 @@
 name: "roundtable-dev"
 fqdn: "roundtable-dev.lsst.cloud"
+title: "SQuaRE service development"
+description: >-
+  The development environment for Roundtable, a common platform for SQuaRE
+  services that do not integrate with Rubin datasets.
+
 appOfAppsName: "roundtable"
+defaultComputeClass: "single-zone-autopilot-us-central1-b"
 gcp:
   projectId: "roundtable-dev-abe2"
   region: "us-central1"
@@ -9,10 +15,8 @@ onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP roundtable-dev.lsst.cloud"
 vaultPathPrefix: "secret/phalanx/roundtable-dev"
-defaultComputeClass: "single-zone-autopilot-us-central1-b"
 
 applications:
-  atlantis: false
   docverse: true
   eups-distributor: true
   giftless: true

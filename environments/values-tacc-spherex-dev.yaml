@@ -1,9 +1,15 @@
 fqdn: "tacc-spherex-dev.lsst.cloud"
 name: "tacc-spherex-dev"
+title: "SPHEREx at TACC development"
+description: >-
+  The development environment for the SPHEREx mission's internal Science
+  Platform, hosted at the Texas Advanced Computing Center (TACC).
+
 appOfAppsName: "science-platform"
 vaultUrl: "http://192.168.114.73:8200"
 vaultPathPrefix: "secret/phalanx/tacc"
+
 applications:
-  squareone: true
   nublado: true
   portal: true
+  squareone: true

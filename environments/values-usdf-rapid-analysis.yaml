@@ -1,5 +1,12 @@
 fqdn: "usdf-rapid-analysis.slac.stanford.edu"
 name: "usdf-rapid-analysis"
+title: "Rapid analysis"
+titleLong: "Rapid analysis for USDF"
+description: >-
+  The production environment for the Rubin Rapid Analysis service software at
+  the United States Data Facility (USDF) hosted at SLAC. This software does
+  real-time processing of incoming data at the USDF.
+
 appOfAppsName: "science-platform"
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: "secret/rubin/usdf-rapid-analysis"
@@ -10,4 +17,5 @@ applications:
   cert-manager: false
   gafaelfawr: false
   ingress-nginx: false
+
   rapid-analysis: true

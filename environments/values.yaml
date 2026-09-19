@@ -1,4 +1,4 @@
-# These four settings should be set in each environment values-*.yaml file.
+# Settings for each environment.
 
 # -- Name of the environment
 # @default -- None, must be set
@@ -7,6 +7,18 @@ name: ""
 # -- Fully-qualified domain name where the environment is running
 # @default -- None, must be set
 fqdn: ""
+
+# -- Short human-readable title for the environment
+# @default -- Value of `name`
+title: null
+
+# -- Longer one-line human-readable title for the environment
+# @default -- Value of `title`
+titleLong: null
+
+# -- Description of the environment
+# @default -- None, must be set
+description: ""
 
 # -- Name of the parent Argo CD app-of-apps that manages all the applications
 # enabled for this environment
@@ -17,8 +29,14 @@ appOfAppsName: "app-of-apps"
 # @default -- None, must be set
 butlerServerRepositories: {}
 
+# -- Whether to deploy workloads using Autopilot or Standard mode. If this is
+# null, the workloads will use the compute class that corresponds to the
+# cluster type. Here's an [example of setting an Autopilot compute
+# class](https://cloud.google.com/kubernetes-engine/docs/how-to/autopilot-classes-standard-clusters#built-in-class)
+defaultComputeClass: null
+
 # -- URL of the repository for all applications
-repoUrl: https://github.com/lsst-sqre/phalanx.git
+repoUrl: "https://github.com/lsst-sqre/phalanx.git"
 
 # -- Revision of repository to use for all applications unless overridden by
 # branches below
@@ -30,12 +48,6 @@ vaultUrl: "https://vault.lsst.cloud/"
 # -- Prefix for Vault secrets for this environment
 # @default -- None, must be set
 vaultPathPrefix: ""
-
-# -- Whether to deploy workloads using Autopilot or Standard mode. If this is
-# null, the workloads will use the compute class that corresponds to the
-# cluster type. Here's an [example of setting an Autopilot compute
-# class](https://cloud.google.com/kubernetes-engine/docs/how-to/autopilot-classes-standard-clusters#built-in-class)
-defaultComputeClass: null
 
 applications:
   # -- Enable the apdb-backups-gcp application

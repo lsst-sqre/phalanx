@@ -69,9 +69,10 @@ config:
     dp2:
       description: >-
         Data Preview 2 (Early) contains catalog products and coadded images
-        from the Rubin Science Pipelines v30 processing of early observations obtained
-        with LSSTCam from April 2025 to January 2026.  Coadded images and catalogs
-        cover ~3000 square degrees; single-epoch catalogs cover ~15,000 square degrees.
+        from the Rubin Science Pipelines v30 processing of early observations
+        obtained with LSSTCam from April 2025 to January 2026. Coadded images
+        and catalogs cover ~3000 square degrees; single-epoch catalogs cover
+        ~15,000 square degrees.
       docsUrl: "https://dp2.lsst.io/"
     efd:
       description: "Engineering Field Database."
@@ -124,6 +125,9 @@ config:
           - "color_z"
           - "color_y"
 
+    # -- URL to additional information about the HiPS service.
+    docsUrl: "https://www.ivoa.net/documents/HiPS/"
+
     legacy:
       # -- If set, specifies the dataset that should be shown at the legacy
       # HiPS list route that does not include the dataset name. If not set, no
@@ -136,10 +140,23 @@ config:
     # -- Path prefix at which the HiPS lists should be served
     pathPrefix: "/api/hips/v2"
 
+    # -- Quota labels for the HiPS service
+    # @default -- See `values.yaml`
+    quotaLabels:
+      hips:
+        title: "HiPS requests"
+
+    # -- Scopes required for HiPS access.
+    requiredScopes:
+      - "read:image"
+
     # -- Jinja template to construct the base URLs of the underlying HiPS
     # surveys, used to construct the HiPS list.
     # @default -- See `values.yaml`
     sourceTemplate: "https://{{base_hostname}}/api/hips/v2/{{dataset}}"
+
+    # -- Short description for HiPS service
+    title: "HiPS (Hierarchical Progressive Survey)"
 
   # -- Dictionary of InfluxDB database names to connection information for
   # that database, with keys `url`, `database`, `username`, `passwordKey`, and
@@ -199,11 +216,20 @@ config:
     schemaManager:
       # -- URL of the Confluent-compatible schema registry server
       # @default -- Sasquatch in the local cluster
-      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
+      registryUrl: >-
+        http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081
 
       # -- Suffix to add to all registered subjects. This is sometimes useful
       # for experimentation during development.
       suffix: ""
+
+  # -- ObsCore exporter configurations by dataset
+  # @default -- See `values.yaml`
+  obscoreConfigs:
+    dp02: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp02.yaml"
+    dp1: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp1.yaml"
+    dp2: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/edp2.yaml"
+    prompt: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/prompt.yaml"
 
   # -- URL path prefix
   pathPrefix: "/repertoire"
@@ -215,258 +241,355 @@ config:
   # @default -- See `values.yaml`
   rules:
     argocd:
-      - type: "ui"
-        name: "argocd"
-        template: "https://{{base_hostname}}/argo-cd"
+      ui:
+        argocd:
+          title: "Argo CD"
+          template: "https://{{base_hostname}}/argo-cd"
+          docsUrl: "https://argo-cd.readthedocs.io/en/stable/"
     consdbtap:
-      - type: "data"
-        name: "tap"
-        datasets:
-          - "efd"
-        template: "https://{{base_hostname}}/api/consdbtap"
-        versions:
-          tables:
-            template: "https://{{base_hostname}}/api/consdbtap/tables"
-            ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
-    datalinker:
-      - type: "data"
-        name: "datalink"
-        datasets:
-          - "dp02"
-          - "dp1"
-          - "dp2"
-        template: "https://{{base_hostname}}/api/datalink"
-        versions:
-          datalink-links-1.1:
-            template: "https://{{base_hostname}}/api/datalink/links"
-            ivoaStandardId: "ivo://ivoa.net/std/DataLink#links-1.1"
-        openapi: "https://{{base_hostname}}/api/datalink/openapi.json"
-      - type: "internal"
-        name: "datalink"
-        template: "https://{{base_hostname}}/api/datalink"
-        versions:
-          datalink-links-1.1:
-            template: "https://{{base_hostname}}/api/datalink/links"
-        openapi: "https://{{base_hostname}}/api/datalink/openapi.json"
-    docverse:
-      - type: "internal"
-        name: "docverse"
-        template: "https://{{base_hostname}}/docverse/api"
-        openapi: "https://{{base_hostname}}/docverse/api/openapi.json"
-    gafaelfawr:
-      - type: "data"
-        name: "gms"
-        template: "https://{{base_hostname}}/auth/gms"
-        versions:
-          gms-search-1.0:
-            template: "https://{{base_hostname}}/auth/gms"
-            ivoaStandardId: "ivo://ivoa.net/std/gms#search-1.0"
-        ivoaRegistry:
-          ivoaServiceType: "gms"
-          ivoid: "ivo://org.rubinobs/groups"
-          title: "Rubin Observatory GMS"
-          created: '2026-06-04T00:00:00'
-          description: "Group Membership Service for Rubin Observatory."
-      - type: "internal"
-        name: "gafaelfawr"
-        template: "https://{{base_hostname}}/auth"
-        versions:
-          v1:
-            template: "https://{{base_hostname}}/auth/api/v1"
-        openapi: "https://{{base_hostname}}/auth/openapi.json"
-      - type: "internal"
-        name: "login"
-        template: "https://{{base_hostname}}/login"
-      - type: "ui"
-        name: "logout"
-        template: "https://{{base_hostname}}/logout"
-    herald:
-      - type: "data"
-        name: "alerts"
-        datasets:
-          - "prompt"
-        template: "https://{{base_hostname}}/api/alerts"
-        openapi: "https://{{base_hostname}}/api/alerts/openapi.json"
-    livetap:
-      - type: "data"
-        name: "tap"
-        datasets:
-          - "live"
-        template: "https://{{base_hostname}}/api/livetap"
-        versions:
-          tables:
-            template: "https://{{base_hostname}}/api/livetap/tables"
-            ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
-    mobu:
-      - type: "internal"
-        name: "mobu"
-        template: "https://{{base_hostname}}/mobu"
-        openapi: "https://{{base_hostname}}/mobu/openapi.json"
-    muster:
-      - type: "internal"
-        name: "muster"
-        template: "https://{{base_hostname}}/muster"
-        openapi: "https://{{base_hostname}}/muster/openapi.json"
-    noteburst:
-      - type: "internal"
-        name: "noteburst"
-        template: "https://{{base_hostname}}/noteburst"
-        versions:
-          v1:
-            template: "https://{{base_hostname}}/noteburst/v1"
-        openapi: "https://{{base_hostname}}/noteburst/openapi.json"
-    nublado:
-      - type: "internal"
-        name: "nublado-controller"
-        template: "https://{{base_hostname}}/nublado"
-      - type: "ui"
-        name: "nublado"
-        template: "https://{{base_hostname}}/nb"
-      - type: "ui"
-        name: "webdav"
-        template: "https://{{base_hostname}}/files"
-    portal:
-      - type: "ui"
-        name: "portal"
-        template: "https://{{base_hostname}}/portal/app/"
-    ppdbtap:
-      - type: "data"
-        name: "tap"
-        datasets:
-          - "prompt"
-        template: "https://{{base_hostname}}/api/ppdbtap"
-    repertoire:
-      - type: "internal"
-        name: "repertoire"
-        template: "https://{{base_hostname}}/repertoire"
-        openapi: "https://{{base_hostname}}/repertoire/openapi.json"
-    semaphore:
-      - type: "internal"
-        name: "semaphore"
-        template: "https://{{base_hostname}}/semaphore"
-        versions:
-          v1:
-            template: "https://{{base_hostname}}/semaphore/v1"
-        openapi: "https://{{base_hostname}}/semaphore/openapi.json"
-    sasquatch:
-      - type: "ui"
-        name: "chronograf"
-        template: "https://{{base_hostname}}/chronograf"
-      - type: "ui"
-        name: "kafdrop"
-        template: "https://{{base_hostname}}/kafdrop"
-    sia:
-      - type: "data"
-        name: "sia"
-        datasets:
-          - "dp02"
-          - "dp1"
-          - "dp2"
-        template: "https://{{base_hostname}}/api/sia/{{dataset}}"
-        versions:
-          sia-query-2.0:
-            template: "https://{{base_hostname}}/api/sia/{{dataset}}/query"
-            ivoaStandardId: "ivo://ivoa.net/std/SIA#query-2.0"
-        openapi: "https://{{base_hostname}}/api/sia/openapi.json"
-        ivoaRegistry:
-          ivoaServiceType: "sia"
-          records:
-            dp1:
-              ivoid: "ivo://org.rubinobs/lsst-dp1/sia"
-              title: "Rubin SIA Service (DP1)"
-              created: "2026-05-20T00:00:00"
-              description: >-
-                Simple Image Access v2 service for Data Preview 1, providing
-                image access to commissioning data from Rubin Observatory.
-    squareone:
-      - type: "ui"
-        name: "settings"
-        template: "https://{{base_hostname}}/settings"
-      - type: "ui"
-        name: "squareone"
-        template: "https://{{base_hostname}}/"
-    ssotap:
-      - type: "data"
-        name: "tap"
-        datasets:
-          - "dp03"
-        template: "https://{{base_hostname}}/api/ssotap"
-        versions:
-          tables:
-            template: "https://{{base_hostname}}/api/ssotap/tables"
-            ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
-    tap:
-      - type: "data"
-        name: "tap"
-        datasets:
-          - "dp02"
-          - "dp1"
-          - "dp2"
-        template: "https://{{base_hostname}}/api/tap"
-        versions:
-          tables:
-            template: "https://{{base_hostname}}/api/tap/tables"
-            ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
-        ivoaRegistry:
-          ivoaServiceType: "tap"
-          ivoid: "ivo://org.rubinobs/qserv-tap"
-          title: "Rubin TAP Service"
-          created: "2026-05-20T00:00:00"
-          description: >-
-            Table Access Protocol service providing access to
-            catalog data from Rubin Observatory data
-            releases.
-          adqlVersion: "2.0"
-          uploadSupported: true
-          additionalOutputFormats:
-            - mime: "application/vnd.apache.parquet"
-              alias:
-                - "parquet"
+      data:
+        tap:
+          title: "Table access protocol (TAP)"
           datasets:
-            dp1:
-              ivoid: "ivo://org.rubinobs/lsst-dp1/catalogs"
-              title: "Rubin TAP (DP1)"
-              created: "2026-05-20T00:00:00"
-              description: "DP1 catalog data accessible via the Rubin TAP service."
-              instruments:
-                - "LSSTComCam"
+            - "efd"
+          requiredScopes:
+            - "read:tap"
+          template: "https://{{base_hostname}}/api/consdbtap"
+          docsUrl: "https://www.ivoa.net/documents/TAP/"
+          versions:
+            tables:
+              template: "https://{{base_hostname}}/api/consdbtap/tables"
+              ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
+    datalinker:
+      data:
+        datalink:
+          title: "DataLink"
+          datasets:
+            - "dp02"
+            - "dp1"
+            - "dp2"
+          requiredScopes:
+            - "read:image"
+          quotaLabels:
+            datalinker:
+              title: "DataLink {links} requests"
+          template: "https://{{base_hostname}}/api/datalink"
+          docsUrl: "https://www.ivoa.net/documents/DataLink/"
+          versions:
+            datalink-links-1.1:
+              template: "https://{{base_hostname}}/api/datalink/links"
+              ivoaStandardId: "ivo://ivoa.net/std/DataLink#links-1.1"
+          openapi: "https://{{base_hostname}}/api/datalink/openapi.json"
+      internal:
+        datalink:
+          title: "DataLink"
+          requiredScopes:
+            - "read:image"
+          quotaLabels:
+            datalinker:
+              title: "DataLink {links} requests"
+          template: "https://{{base_hostname}}/api/datalink"
+          versions:
+            datalink-links-1.1:
+              template: "https://{{base_hostname}}/api/datalink/links"
+          openapi: "https://{{base_hostname}}/api/datalink/openapi.json"
+    docverse:
+      internal:
+        docverse:
+          requiredScopes:
+            - "exec:docverse"
+          template: "https://{{base_hostname}}/docverse/api"
+          openapi: "https://{{base_hostname}}/docverse/api/openapi.json"
+    gafaelfawr:
+      data:
+        gms:
+          title: "Group membership service (GMS)"
+          template: "https://{{base_hostname}}/auth/gms"
+          docsUrl: "https://www.ivoa.net/documents/GMS/"
+          versions:
+            gms-search-1.0:
+              template: "https://{{base_hostname}}/auth/gms"
+              ivoaStandardId: "ivo://ivoa.net/std/gms#search-1.0"
+          ivoaRegistry:
+            ivoaServiceType: "gms"
+            ivoid: "ivo://org.rubinobs/groups"
+            title: "Rubin Observatory GMS"
+            created: '2026-06-04T00:00:00'
+            description: "Group Membership Service for Rubin Observatory."
+      internal:
+        gafaelfawr:
+          template: "https://{{base_hostname}}/auth"
+          docsUrl: "https://gafaelfawr.lsst.io/"
+          versions:
+            v1:
+              template: "https://{{base_hostname}}/auth/api/v1"
+          openapi: "https://{{base_hostname}}/auth/openapi.json"
+        login:
+          title: "User login"
+          template: "https://{{base_hostname}}/login"
+      ui:
+        logout:
+          title: "User logout"
+          template: "https://{{base_hostname}}/logout"
+    herald:
+      data:
+        alerts:
+          title: "Alert retrieval"
+          datasets:
+            - "prompt"
+          requiredScopes:
+            - "read:image"
+          quotaLabels:
+            herald:
+              title: "Alert requests"
+          template: "https://{{base_hostname}}/api/alerts"
+          openapi: "https://{{base_hostname}}/api/alerts/openapi.json"
+          docsUrl: "https://sqr-114.lsst.io/"
+    livetap:
+      data:
+        tap:
+          title: "Table access protocol (TAP)"
+          datasets:
+            - "live"
+          requiredScopes:
+            - "read:tap"
+          template: "https://{{base_hostname}}/api/livetap"
+          docsUrl: "https://www.ivoa.net/documents/TAP/"
+          versions:
+            tables:
+              template: "https://{{base_hostname}}/api/livetap/tables"
+              ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
+    mobu:
+      internal:
+        mobu:
+          requiredScopes:
+            - "exec:admin"
+          template: "https://{{base_hostname}}/mobu"
+          openapi: "https://{{base_hostname}}/mobu/openapi.json"
+          docsUrl: "https://mobu.lsst.io/"
+    muster:
+      internal:
+        muster:
+          quotaLabels:
+            muster-quota:
+              title: "Quota testing"
+              internal: true
+          template: "https://{{base_hostname}}/muster"
+          openapi: "https://{{base_hostname}}/muster/openapi.json"
+    noteburst:
+      internal:
+        noteburst:
+          requiredScopes:
+            - "exec:notebook"
+          template: "https://{{base_hostname}}/noteburst"
+          openapi: "https://{{base_hostname}}/noteburst/openapi.json"
+          docsUrl: "https://noteburst.lsst.io/"
+          versions:
+            v1:
+              template: "https://{{base_hostname}}/noteburst/v1"
+    nublado:
+      internal:
+        nublado-controller:
+          requiredScopes:
+            - "admin:jupyterlab"
+          template: "https://{{base_hostname}}/nublado"
+      ui:
+        nublado:
+          title: "Notebook aspect"
+          requiredScopes:
+            - "exec:notebook"
+          template: "https://{{base_hostname}}/nb"
+          docsUrl: "https://nublado.lsst.io/"
+        webdav:
+          title: "WebDAV server"
+          requiredScopes:
+            - "write:files"
+          template: "https://{{base_hostname}}/files"
+    portal:
+      ui:
+        portal:
+          title: "Portal aspect"
+          requiredScopes:
+            - "exec:portal"
+          template: "https://{{base_hostname}}/portal/app/"
+    ppdbtap:
+      data:
+        tap:
+          title: "Table access protocol (TAP)"
+          datasets:
+            - "prompt"
+          requiredScopes:
+            - "read:tap"
+          template: "https://{{base_hostname}}/api/ppdbtap"
+          docsUrl: "https://www.ivoa.net/documents/TAP/"
+    repertoire:
+      internal:
+        repertoire:
+          template: "https://{{base_hostname}}/repertoire"
+          openapi: "https://{{base_hostname}}/repertoire/openapi.json"
+          docsUrl: "https://repertoire.lsst.io/"
+    semaphore:
+      internal:
+        semaphore:
+          template: "https://{{base_hostname}}/semaphore"
+          openapi: "https://{{base_hostname}}/semaphore/openapi.json"
+          docsUrl: "https://semaphore.lsst.io/"
+          versions:
+            v1:
+              template: "https://{{base_hostname}}/semaphore/v1"
+    sasquatch:
+      ui:
+        chronograf:
+          title: "Chronograf metrics viewer"
+          template: "https://{{base_hostname}}/chronograf"
+        kafdrop:
+          title: "Kafdrop Kafka viewer"
+          requiredScopes:
+            - "exec:internal-tools"
+          template: "https://{{base_hostname}}/kafdrop"
+    sia:
+      data:
+        sia:
+          title: "Simple image access (SIA)"
+          datasets:
+            - "dp02"
+            - "dp1"
+            - "dp2"
+          requiredScopes:
+            - "read:image"
+          quotaLabels:
+            sia:
+              title: "Image requests"
+          template: "https://{{base_hostname}}/api/sia/{{dataset}}"
+          versions:
+            sia-query-2.0:
+              template: "https://{{base_hostname}}/api/sia/{{dataset}}/query"
+              ivoaStandardId: "ivo://ivoa.net/std/SIA#query-2.0"
+          openapi: "https://{{base_hostname}}/api/sia/openapi.json"
+          docsUrl: "https://www.ivoa.net/documents/SIA/"
+          ivoaRegistry:
+            ivoaServiceType: "sia"
+            records:
+              dp1:
+                ivoid: "ivo://org.rubinobs/lsst-dp1/sia"
+                title: "Rubin SIA Service (DP1)"
+                created: "2026-05-20T00:00:00"
+                description: >-
+                  Simple Image Access v2 service for Data Preview 1, providing
+                  image access to commissioning data from Rubin Observatory.
+    squareone:
+      ui:
+        settings:
+          title: "User settings"
+          template: "https://{{base_hostname}}/settings"
+        squareone:
+          title: "Home page"
+          template: "https://{{base_hostname}}/"
+          docsUrl: "https://squareone.lsst.io/"
+    ssotap:
+      data:
+        tap:
+          title: "Table access protocol (TAP)"
+          datasets:
+            - "dp03"
+          requiredScopes:
+            - "read:tap"
+          template: "https://{{base_hostname}}/api/ssotap"
+          docsUrl: "https://www.ivoa.net/documents/TAP/"
+          versions:
+            tables:
+              template: "https://{{base_hostname}}/api/ssotap/tables"
+              ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
+    tap:
+      data:
+        tap:
+          title: "Table access protocol (TAP)"
+          datasets:
+            - "dp02"
+            - "dp1"
+            - "dp2"
+          requiredScopes:
+            - "read:tap"
+          quotaLabels:
+            tap:
+              title: "TAP API calls"
+          template: "https://{{base_hostname}}/api/tap"
+          docsUrl: "https://www.ivoa.net/documents/TAP/"
+          versions:
+            tables:
+              template: "https://{{base_hostname}}/api/tap/tables"
+              ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
+          ivoaRegistry:
+            ivoaServiceType: "tap"
+            ivoid: "ivo://org.rubinobs/qserv-tap"
+            title: "Rubin TAP Service"
+            created: "2026-05-20T00:00:00"
+            description: >-
+              Table Access Protocol service providing access to catalog data
+              from Rubin Observatory data releases.
+            adqlVersion: "2.0"
+            uploadSupported: true
+            additionalOutputFormats:
+              - mime: "application/vnd.apache.parquet"
+                alias:
+                  - "parquet"
+            datasets:
+              dp1:
+                ivoid: "ivo://org.rubinobs/lsst-dp1/catalogs"
+                title: "Rubin TAP (DP1)"
+                created: "2026-05-20T00:00:00"
+                description: >-
+                  DP1 catalog data accessible via the Rubin TAP service.
+                instruments:
+                  - "LSSTComCam"
     times-square:
-      - type: "internal"
-        name: "times-square"
-        template: "https://{{base_hostname}}/times-square/api"
-        openapi: "https://{{base_hostname}}/times-square/api/openapi.json"
-        versions:
-          v1:
-            template: "https://{{base_hostname}}/times-square/api/v1"
+      internal:
+        times-square:
+          requiredScopes:
+            - "exec:notebook"
+          template: "https://{{base_hostname}}/times-square/api"
+          openapi: "https://{{base_hostname}}/times-square/api/openapi.json"
+          docsUrl: "https://times-square.lsst.io/"
+          versions:
+            v1:
+              template: "https://{{base_hostname}}/times-square/api/v1"
     vo-cutouts:
-      - type: "data"
-        name: "cutout"
-        datasets:
-          - "dp02"
-          - "dp1"
-          - "dp2"
-        template: "https://{{base_hostname}}/api/cutout"
-        versions:
-          soda-async-1.0:
-            template: "https://{{base_hostname}}/api/cutout/jobs"
-            ivoaStandardId: "ivo://ivoa.net/std/SODA#async-1.0"
-          soda-sync-1.0:
-            template: "https://{{base_hostname}}/api/cutout/sync"
-            ivoaStandardId: "ivo://ivoa.net/std/SODA#sync-1.0"
-        openapi: "https://{{base_hostname}}/api/cutout/openapi.json"
-        ivoaRegistry:
-          ivoaServiceType: "soda"
-          ivoid: "ivo://org.rubinobs/cutout"
-          title: "Rubin Image Cutout Service"
-          created: "2026-05-20T00:00:00"
-          description: >-
-            Image cutout service (SODA) for Rubin,
-            supporting both synchronous and asynchronous image cutout requests.
+      data:
+        cutout:
+          title: "SODA image cutouts"
+          datasets:
+            - "dp02"
+            - "dp1"
+            - "dp2"
+          quotaLabels:
+            vo-cutouts:
+              title: "SODA API calls"
+          requiredScopes:
+            - "read:image"
+          template: "https://{{base_hostname}}/api/cutout"
+          versions:
+            soda-async-1.0:
+              template: "https://{{base_hostname}}/api/cutout/jobs"
+              ivoaStandardId: "ivo://ivoa.net/std/SODA#async-1.0"
+            soda-sync-1.0:
+              template: "https://{{base_hostname}}/api/cutout/sync"
+              ivoaStandardId: "ivo://ivoa.net/std/SODA#sync-1.0"
+          openapi: "https://{{base_hostname}}/api/cutout/openapi.json"
+          docsUrl: "https://www.ivoa.net/documents/SODA/"
+          ivoaRegistry:
+            ivoaServiceType: "soda"
+            ivoid: "ivo://org.rubinobs/cutout"
+            title: "Rubin Image Cutout Service"
+            created: "2026-05-20T00:00:00"
+            description: >-
+              Image cutout service (SODA) for Rubin, supporting both
+              synchronous and asynchronous image cutout requests.
     wobbly:
-      - type: "internal"
-        name: "wobbly"
-        template: "https://{{base_hostname}}/wobbly"
-        openapi: "https://{{base_hostname}}/wobbly/openapi.json"
+      internal:
+        wobbly:
+          template: "https://{{base_hostname}}/wobbly"
+          openapi: "https://{{base_hostname}}/wobbly/openapi.json"
+          docsUrl: "https://sqr-096.lsst.io/"
 
   sentry:
     # -- Whether to enable the Sentry integration
@@ -481,15 +604,23 @@ config:
   # @default -- See `values.yaml`
   subdomainRules:
     nublado:
-      - type: "internal"
-        name: "nublado-controller"
-        template: "https://{{base_hostname}}/nublado"
-      - type: "ui"
-        name: "nublado"
-        template: "https://nb.{{base_hostname}}/nb"
-      - type: "ui"
-        name: "webdav"
-        template: "https://{{base_hostname}}/files"
+      internal:
+        nublado-controller:
+          requiredScopes:
+            - "admin:jupyterlab"
+          template: "https://{{base_hostname}}/nublado"
+      ui:
+        nublado:
+          title: "Notebook aspect"
+          requiredScopes:
+            - "exec:notebook"
+          template: "https://nb.{{base_hostname}}/nb"
+          docsUrl: "https://nublado.lsst.io/"
+        webdav:
+          title: "WebDAV server"
+          requiredScopes:
+            - "write:files"
+          template: "https://{{base_hostname}}/files"
 
   # -- List of services that use subdomains instead of the main hostname. See
   # the [Repertoire documentation](https://repertoire.lsst.io/) for more
@@ -503,52 +634,14 @@ config:
 
     # -- Template for schema artifact URLs (use {version} placeholder)
     # @default -- GCS rubin-sdm-schemas-artifacts bucket
-    schemaSourceTemplate: "gs://rubin-sdm-schemas-artifacts/{version}/schemas.tar.gz"
+    schemaSourceTemplate: >-
+      gs://rubin-sdm-schemas-artifacts/{version}/schemas.tar.gz
 
     # -- TAP Server configuration by application name. Configuration is used
     # to populate & update the TAP_SCHEMA database for each enabled TAP
     # application
     # @default -- See `values.yaml`
     servers:
-      tap:
-        enabled: false
-        schemas:
-          - "dp2"
-          - "dp1"
-          - "ivoa_obscore"
-          - "dp02_dc2"
-        databaseUrl: "postgresql://tap@127.0.0.1:5432/tap"
-        databasePasswordKey: "tap-database-password"
-
-      ssotap:
-        enabled: false
-        schemas:
-          - "dp03_10yr"
-          - "dp03_1yr"
-        databaseUrl: "postgresql://ssotap@127.0.0.1:5432/ssotap"
-        databasePasswordKey: "ssotap-database-password"
-
-      livetap:
-        enabled: false
-        schemas:
-          - "oga_live_obscore"
-        databaseUrl: "postgresql://livetap@127.0.0.1:5432/livetap"
-        databasePasswordKey: "livetap-database-password"
-
-      ppdbtap:
-        enabled: false
-        schemas:
-          - ppdb
-        databaseUrl: "postgresql://ppdbtap@127.0.0.1:5432/ppdbtap"
-        databasePasswordKey: "ppdbtap-database-password"
-
-      obsforgetap:
-        enabled: false
-        schemas:
-          - "ivoa_obscore"
-        databaseUrl: "postgresql://obsforgetap@127.0.0.1:5432/obsforgetap"
-        databasePasswordKey: "obsforgetap-database-password"
-
       consdbtap:
         enabled: false
         schemas:
@@ -562,9 +655,42 @@ config:
           - "efd_latiss"
           - "efd_lsstcam"
           - "efd_lsstcomcam"
-
         databaseUrl: "postgresql://consdbtap@127.0.0.1:5432/consdbtap"
         databasePasswordKey: "consdbtap-database-password"
+      livetap:
+        enabled: false
+        schemas:
+          - "oga_live_obscore"
+        databaseUrl: "postgresql://livetap@127.0.0.1:5432/livetap"
+        databasePasswordKey: "livetap-database-password"
+      obsforgetap:
+        enabled: false
+        schemas:
+          - "ivoa_obscore"
+        databaseUrl: "postgresql://obsforgetap@127.0.0.1:5432/obsforgetap"
+        databasePasswordKey: "obsforgetap-database-password"
+      ppdbtap:
+        enabled: false
+        schemas:
+          - ppdb
+        databaseUrl: "postgresql://ppdbtap@127.0.0.1:5432/ppdbtap"
+        databasePasswordKey: "ppdbtap-database-password"
+      ssotap:
+        enabled: false
+        schemas:
+          - "dp03_10yr"
+          - "dp03_1yr"
+        databaseUrl: "postgresql://ssotap@127.0.0.1:5432/ssotap"
+        databasePasswordKey: "ssotap-database-password"
+      tap:
+        enabled: false
+        schemas:
+          - "dp2"
+          - "dp1"
+          - "ivoa_obscore"
+          - "dp02_dc2"
+        databaseUrl: "postgresql://tap@127.0.0.1:5432/tap"
+        databasePasswordKey: "tap-database-password"
 
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on

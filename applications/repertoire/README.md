@@ -27,10 +27,14 @@ Service discovery
 | config.datasets | object | See `values.yaml` | Known datasets. Each member of the list is a dictionary with key `description`. Datasets are only shown if also listed in `availableDatasets`. |
 | config.environmentName | string | Set by Argo CD | Human-readable name of the environment for reporting purposes |
 | config.hips.datasets | object | See `values.yaml` | Known HiPS datasets. Each should be a mapping of a label to an object containing the key `paths`, whose values are paths to the roots of HiPS surveys relative to the result of processing `sourceTemplate`. |
+| config.hips.docsUrl | string | `"https://www.ivoa.net/documents/HiPS/"` | URL to additional information about the HiPS service. |
 | config.hips.legacy.dataset | string | `nil` | If set, specifies the dataset that should be shown at the legacy HiPS list route that does not include the dataset name. If not set, no legacy HiPS list will be created. |
 | config.hips.legacy.pathPrefix | string | `"/api/hips"` | Path prefix at which the legacy HiPS list should be served |
 | config.hips.pathPrefix | string | `"/api/hips/v2"` | Path prefix at which the HiPS lists should be served |
+| config.hips.quotaLabels | object | See `values.yaml` | Quota labels for the HiPS service |
+| config.hips.requiredScopes | list | `["read:image"]` | Scopes required for HiPS access. |
 | config.hips.sourceTemplate | string | See `values.yaml` | Jinja template to construct the base URLs of the underlying HiPS surveys, used to construct the HiPS list. |
+| config.hips.title | string | `"HiPS (Hierarchical Progressive Survey)"` | Short description for HiPS service |
 | config.influxdbDatabases | object | `{}` | Dictionary of InfluxDB database names to connection information for that database, with keys `url`, `database`, `username`, `passwordKey`, and `schemaRegistry`. `passwordKey` must match an entry in `secrets.yaml`. |
 | config.ivoaRegistry | object | See `values.yaml` | IVOA publishing registry configuration. |
 | config.logLevel | string | `"INFO"` | Logging level |
@@ -40,6 +44,7 @@ Service discovery
 | config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
+| config.obscoreConfigs | object | See `values.yaml` | ObsCore exporter configurations by dataset |
 | config.pathPrefix | string | `"/repertoire"` | URL path prefix |
 | config.rules | object | See `values.yaml` | Rules for determining the expected URLs of deployed services that use the main hostname. See the [Repertoire documentation](https://phalanx.lsst.io/applications/repertoire/add-service.html) for more information. |
 | config.sentry.enabled | bool | `false` | Whether to enable the Sentry integration |

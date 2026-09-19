@@ -179,6 +179,37 @@
       "title": "Domain name",
       "type": "string"
     },
+    "title": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Short description of the environment if different from fqdn",
+      "title": "Short description"
+    },
+    "titleLong": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "A longer one-line description if the title is not fully descriptive",
+      "title": "Longer one-line description"
+    },
+    "description": {
+      "description": "Full description of this Phalanx environment",
+      "title": "Description",
+      "type": "string"
+    },
     "appOfAppsName": {
       "anyOf": [
         {
@@ -346,6 +377,7 @@
   "required": [
     "name",
     "fqdn",
+    "description",
     "vaultPathPrefix",
     "applications"
   ],

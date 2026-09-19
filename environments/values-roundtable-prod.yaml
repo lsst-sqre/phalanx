@@ -1,5 +1,10 @@
 name: "roundtable-prod"
 fqdn: "roundtable.lsst.cloud"
+title: "SQuaRE services"
+description: >-
+  The production environment for Roundtable, a common platform for SQuaRE
+  services that do not integrate with Rubin datasets.
+
 appOfAppsName: "roundtable"
 gcp:
   projectId: "roundtable-prod-f6fd"

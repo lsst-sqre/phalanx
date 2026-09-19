@@ -1,5 +1,13 @@
-fqdn: "usdf-rsp-int.slac.stanford.edu"
 name: "usdfint"
+fqdn: "usdf-rsp-int.slac.stanford.edu"
+title: "USDF RSP integration"
+titleLong: "Rubin US Data Facility RSP integration"
+description: >-
+  The integration environment for the Rubin Science Platform at the United
+  States Data Facility (USDF) hosted at SLAC. Its primary use is for Rubin
+  operations teams to integrate applications into the Rubin Science Platform
+  that need to run at the USDF.
+
 appOfAppsName: "science-platform"
 butlerServerRepositories:
   embargo: "https://usdf-rsp-int.slac.stanford.edu/api/butler/repo/embargo/butler.yaml"
@@ -12,8 +20,8 @@ applications:
   ingress-nginx: false
 
   butler: true
-  consdb: true
   consdbtap: true
+  consdb: true
   datalinker: true
   livetap: true
   mobu: true
@@ -26,7 +34,6 @@ applications:
   schedview-snapshot: true
   schedview-static-pages: true
   semaphore: true
-  sia: false
   squareone: true
   ssotap: true
   strimzi-access-operator: true

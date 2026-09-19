@@ -1,5 +1,10 @@
 name: "idfdev"
 fqdn: "data-dev.lsst.cloud"
+title: "SQuaRE RSP development"
+description: >-
+  A development environment for the Rubin Science Platform on Google Cloud
+  Platform. Its primary use is application development by the SQuaRE team.
+
 appOfAppsName: "science-platform"
 butlerServerRepositories:
   dp02: "https://data-dev.lsst.cloud/api/butler/repo/dp02/butler.yaml"
