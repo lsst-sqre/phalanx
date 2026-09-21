@@ -65,12 +65,12 @@ spec:
                 secretKeyRef:
                   key: lsst_db_auth_credentials
                   name: prompt-pub
-            - name: LSST_RESOURCES_S3_PROFILE_embargo
+            - name: {{ printf "LSST_RESOURCES_S3_PROFILE_%s" .Values.middleware.lsstResources.awsProfile }}
               value: {{ .Values.middleware.lsstResources.s3ProfileEmbargo }}
             - name: AWS_SHARED_CREDENTIALS_FILE
               value: /opt/lsst/secrets/s3-credentials/credentials
             - name: AWS_PROFILE
-              value: embargo
+              value: {{ .Values.middleware.lsstResources.awsProfile }}
             - name: LSST_DISABLE_BUCKET_VALIDATION
               value: "0"
             - name: AWS_REQUEST_CHECKSUM_CALCULATION

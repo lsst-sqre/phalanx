@@ -22,6 +22,7 @@ Manages the lifecycle of Butler Prompt Data Products as they move from the embar
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the prompt-pub image |
 | image.repository | string | `"ghcr.io/lsst-dm/prompt_publication_service"` | Image to use in the prompt-pub deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
+| middleware.lsstResources.awsProfile | string | `"embargo"` | AWS profile name to use for the embargo S3 endpoint |
 | middleware.lsstResources.numWorkers | int | `4` | Sets the number of concurrent Butler file transfers per process.  Setting it explicitly here because this value is nondeterministic if you don’t assign something, but the exact value isn’t that critical. |
 | middleware.lsstResources.s3ProfileEmbargo | string | `"https://sdfembs3.sdf.slac.stanford.edu"` | S3 Profile for Embargo |
 | nodeSelector | object | `{}` | Node selection rules for the prompt-pub statefulset pod |
