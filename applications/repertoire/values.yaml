@@ -393,6 +393,7 @@ config:
           requiredScopes:
             - "admin:jupyterlab"
           template: "https://{{base_hostname}}/nublado"
+          openapi: "https://{{base_hostname}}/nublado/openapi.json"
       ui:
         nublado:
           title: "Notebook aspect"
@@ -598,29 +599,15 @@ config:
   # -- Whether to send Slack alerts for unexpected failures
   slackAlerts: false
 
-  # -- Rules for determining the expected URLs of deployed services that use a
-  # subdomain. See the [Repertoire documentation](https://repertoire.lsst.io/)
-  # for more information.
+  # -- Overrides for determining the expected URLs of deployed services that
+  # use a subdomain. See the [Repertoire
+  # documentation](https://repertoire.lsst.io/) for more information.
   # @default -- See `values.yaml`
-  subdomainRules:
+  subdomainOverrides:
     nublado:
-      internal:
-        nublado-controller:
-          requiredScopes:
-            - "admin:jupyterlab"
-          template: "https://{{base_hostname}}/nublado"
       ui:
         nublado:
-          title: "Notebook aspect"
-          requiredScopes:
-            - "exec:notebook"
           template: "https://nb.{{base_hostname}}/nb"
-          docsUrl: "https://nublado.lsst.io/"
-        webdav:
-          title: "WebDAV server"
-          requiredScopes:
-            - "write:files"
-          template: "https://{{base_hostname}}/files"
 
   # -- List of services that use subdomains instead of the main hostname. See
   # the [Repertoire documentation](https://repertoire.lsst.io/) for more

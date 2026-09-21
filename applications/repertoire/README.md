@@ -49,7 +49,7 @@ Service discovery
 | config.rules | object | See `values.yaml` | Rules for determining the expected URLs of deployed services that use the main hostname. See the [Repertoire documentation](https://phalanx.lsst.io/applications/repertoire/add-service.html) for more information. |
 | config.sentry.enabled | bool | `false` | Whether to enable the Sentry integration |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
-| config.subdomainRules | object | See `values.yaml` | Rules for determining the expected URLs of deployed services that use a subdomain. See the [Repertoire documentation](https://repertoire.lsst.io/) for more information. |
+| config.subdomainOverrides | object | See `values.yaml` | Overrides for determining the expected URLs of deployed services that use a subdomain. See the [Repertoire documentation](https://repertoire.lsst.io/) for more information. |
 | config.tap.schemaSourceTemplate | string | GCS rubin-sdm-schemas-artifacts bucket | Template for schema artifact URLs (use {version} placeholder) |
 | config.tap.schemaVersion | string | `"releases/EDP2-deploy-v3b"` | Default schema version for all TAP services (can be overridden per-app) |
 | config.tap.servers | object | See `values.yaml` | TAP Server configuration by application name. Configuration is used to populate & update the TAP_SCHEMA database for each enabled TAP application |
