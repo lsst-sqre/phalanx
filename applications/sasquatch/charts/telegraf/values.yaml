@@ -14,6 +14,28 @@ image:
   # -- Image pull policy
   pullPolicy: "IfNotPresent"
 
+# Settings for Kafka topic discovery sidecars.
+topicDiscovery:
+  image:
+    # -- Kafka topic discovery sidecar image repository
+    repo: "ghcr.io/lsst-sqre/sasquatch"
+
+    # -- Kafka topic discovery sidecar image tag
+    tag: "1.5.0"
+
+    # -- Kafka topic discovery sidecar image pull policy
+    pullPolicy: "IfNotPresent"
+
+  # -- Kubernetes resources requests and limits for topic discovery sidecars
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      cpu: "10m"
+      memory: "64Mi"
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+
 # -- Annotations for the Telegraf pods
 podAnnotations: {}
 
@@ -162,6 +184,25 @@ kafkaConsumers:
     # this agent.
     topicRegexps:
       - ".*Test"
+
+    # Kafka topic discovery configuration. When enabled, the discovered topic
+    # list takes precedence over topicRegexps.
+    topicDiscovery:
+      # -- Discover Kafka topics dynamically for this consumer. When enabled,
+      # topicRegexps is ignored.
+      enabled: false
+
+      # -- Case-sensitive literal topic prefixes to include. A topic matching
+      # any prefix is included.
+      includePrefixes: []
+
+      # -- Case-sensitive literal topic prefixes to exclude. Exclusions take
+      # precedence over inclusions.
+      excludePrefixes: []
+
+      # -- How often to refresh the discovered Kafka topic list. This must be a
+      # positive number followed by `s`, `m`, or `h`.
+      refreshInterval: "30s"
 
     # -- Kafka consumer offset. Possible values are `oldest` and `newest`.
     offset: "oldest"

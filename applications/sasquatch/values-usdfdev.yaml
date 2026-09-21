@@ -147,8 +147,12 @@ telegraf:
       enabled: true
       debug: true
       database: "lsst.verify"
-      topicRegexps:
-        - "lsst.verify"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.verify"
+        excludePrefixes: []
+        refreshInterval: "30s"
       timestamp_field: "timestamp"
       tags:
         - "dataset_tag"
@@ -164,8 +168,13 @@ telegraf:
       enabled: true
       debug: true
       database: "lsst.prompt"
-      topicRegexps:
-        - "lsst.prompt"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.prompt"
+        excludePrefixes:
+          - "lsst.prompt.next-visit"
+        refreshInterval: "30s"
       timestamp_field: "timestamp"
       tags:
         - "dataset_tag"
@@ -180,8 +189,12 @@ telegraf:
       enabled: true
       debug: true
       database: "lsst.dm"
-      topicRegexps:
-        - "lsst.dm"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.dm"
+        excludePrefixes: []
+        refreshInterval: "30s"
       timestamp_field: "timestamp"
       tags:
         - "dataset_tag"
@@ -197,8 +210,12 @@ telegraf:
       debug: true
       database: "lsst.cp"
       timestamp_field: "timestamp"
-      topicRegexps:
-        - "lsst.cp"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.cp"
+        excludePrefixes: []
+        refreshInterval: "30s"
       tags:
         - "dataset_tag"
         - "band"

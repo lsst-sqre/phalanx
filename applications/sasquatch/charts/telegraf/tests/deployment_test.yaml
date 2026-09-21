@@ -1,0 +1,140 @@
+suite: Telegraf deployment
+templates:
+  - templates/deployment.yaml
+tests:
+  - it: does not add discovery resources to a legacy consumer
+    set:
+      kafkaConsumers.test.enabled: true
+    asserts:
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 1
+      - equal:
+          path: spec.template.spec.containers[0].volumeMounts[0].mountPath
+          value: /etc/telegraf
+      - lengthEqual:
+          path: spec.template.spec.volumes
+          count: 1
+
+  - it: adds a discovery sidecar and watched configuration directory
+    set:
+      kafkaConsumers.test.enabled: true
+      kafkaConsumers.test.topicDiscovery.enabled: true
+      kafkaConsumers.test.topicDiscovery.includePrefixes:
+        - lsst.prompt
+      kafkaConsumers.test.topicDiscovery.excludePrefixes:
+        - lsst.prompt.next-visit
+      kafkaConsumers.test.topicDiscovery.refreshInterval: 45s
+    asserts:
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 2
+      - equal:
+          path: spec.template.spec.containers[0].args
+          value:
+            - --config
+            - /etc/telegraf-static/telegraf.conf
+            - --config-directory
+            - /etc/telegraf-dynamic
+            - --watch-config
+            - notify
+            - --watch-debounce-interval
+            - 1s
+      - equal:
+          path: spec.template.spec.containers[1].name
+          value: topic-discovery
+      - equal:
+          path: spec.template.spec.containers[1].image
+          value: ghcr.io/lsst-sqre/sasquatch:1.5.0
+      - equal:
+          path: spec.template.spec.containers[1].command
+          value:
+            - sasquatch
+            - telegraf
+            - update-topic-config
+      - equal:
+          path: spec.template.spec.containers[1].args
+          value:
+            - --watch
+            - --bootstrap-server
+            - sasquatch-kafka-brokers.sasquatch:9092
+            - --include-prefixes-file
+            - /etc/telegraf-static/include-prefixes.txt
+            - --exclude-prefixes-file
+            - /etc/telegraf-static/exclude-prefixes.txt
+            - --input-template
+            - /etc/telegraf-static/kafka-consumer.conf.tmpl
+            - --output-config
+            - /etc/telegraf-dynamic/kafka-consumer.conf
+            - --ready-file
+            - /var/run/topic-discovery/ready
+            - --refresh-interval
+            - 45s
+      - equal:
+          path: spec.template.spec.containers[1].readinessProbe.exec.command
+          value:
+            - test
+            - -f
+            - /var/run/topic-discovery/ready
+      - lengthEqual:
+          path: spec.template.spec.containers[1].env
+          count: 1
+      - equal:
+          path: spec.template.spec.containers[1].env[0].name
+          value: TELEGRAF_PASSWORD
+      - isNull:
+          path: spec.template.spec.containers[1].envFrom
+      - equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 1000
+      - lengthEqual:
+          path: spec.template.spec.volumes
+          count: 3
+
+  - it: supports an explicit discovery image override
+    set:
+      kafkaConsumers.test.enabled: true
+      kafkaConsumers.test.topicDiscovery.enabled: true
+      kafkaConsumers.test.topicDiscovery.includePrefixes:
+        - lsst.prompt
+      topicDiscovery.image.repo: registry.example/sasquatch
+      topicDiscovery.image.tag: custom
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[1].image
+          value: registry.example/sasquatch:custom
+
+  - it: sources only TELEGRAF_PASSWORD from an environment secret
+    set:
+      env: []
+      envFromSecret: telegraf-environment
+      kafkaConsumers.test.enabled: true
+      kafkaConsumers.test.topicDiscovery.enabled: true
+      kafkaConsumers.test.topicDiscovery.includePrefixes:
+        - lsst.prompt
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[1].env
+          value:
+            - name: TELEGRAF_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: TELEGRAF_PASSWORD
+                  name: telegraf-environment
+      - isNull:
+          path: spec.template.spec.containers[1].envFrom
+
+  - it: renders independent sidecars for different consumers
+    set:
+      kafkaConsumers.test.enabled: true
+      kafkaConsumers.test.topicDiscovery.enabled: true
+      kafkaConsumers.test.topicDiscovery.includePrefixes:
+        - lsst.prompt
+      kafkaConsumers.second.enabled: true
+      kafkaConsumers.second.database: second
+      kafkaConsumers.second.topicDiscovery.enabled: true
+      kafkaConsumers.second.topicDiscovery.includePrefixes:
+        - lsst.verify
+    asserts:
+      - hasDocuments:
+          count: 2
