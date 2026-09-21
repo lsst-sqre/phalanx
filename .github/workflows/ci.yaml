@@ -11,7 +11,7 @@ env:
   HELM_DOCS_VERSION: "1.14.2"
 
   # Version of the Helm unittest plugin for Helm tests.
-  HELM_UNITTEST_VERSION: "v1.0.2"
+  HELM_UNITTEST_VERSION: "1.1.2"
 
   # Version of Vault client to use for the installer.
   VAULT_VERSION: "1.19.5"
@@ -81,7 +81,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install helm-unittest plugin
-        run: helm plugin install https://github.com/helm-unittest/helm-unittest --version ${{ env.HELM_UNITTEST_VERSION }}
+        run: helm plugin install oci://ghcr.io/helm-unittest/helm-unittest/unittest:${{ env.HELM_UNITTEST_VERSION }}
 
       - name: Run helm unittest
         run: helm unittest {applications,charts}/*/tests/..
