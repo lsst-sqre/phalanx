@@ -1,16 +1,8 @@
 replicaCount: 4
 
 config:
-  datasets:
-    - "dp02"
-    - "dp1"
-    - "dp2"
-    - "prompt"
   metrics:
     enabled: true
-
-  obscoreConfig:
-    dp2: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp2.yaml"
 
   sentry:
     enabled: true
