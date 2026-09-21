@@ -8,7 +8,6 @@ redis:
 config:
   allowSubdomains: true
   slackAlerts: true
-  updateSchema: true
 
   sentry:
     enabled: true
