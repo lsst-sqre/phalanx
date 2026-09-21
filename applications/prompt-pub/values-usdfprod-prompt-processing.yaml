@@ -15,7 +15,7 @@ publication:
 middleware:
   lsstResources:
     numWorkers: 4
-    s3ProfileEmbargo: "https://sdfembs3.sdf.slac.stanford.edu"
+    s3EndpointEmbargo: "https://sdfembs3.sdf.slac.stanford.edu"
 
 resources:
   requests:

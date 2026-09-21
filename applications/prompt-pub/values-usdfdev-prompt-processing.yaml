@@ -15,7 +15,7 @@ publication:
 middleware:
   lsstResources:
     numWorkers: 4
-    s3ProfileEmbargo: "https://s3dfrgw.slac.stanford.edu"
+    s3EndpointEmbargo: "https://s3dfrgw.slac.stanford.edu"
     awsProfile: "prompt-processing-dev"
 
 resources:

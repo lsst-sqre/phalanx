@@ -53,8 +53,8 @@ middleware:
     # -- Sets the number of concurrent Butler file transfers per process.  Setting it explicitly here because this value is nondeterministic if you don’t assign something, but the exact value isn’t that critical.
     numWorkers: 4
 
-    # -- S3 Profile for Embargo
-    s3ProfileEmbargo: "https://sdfembs3.sdf.slac.stanford.edu"
+    # -- S3 endpoint URL for Embargo
+    s3EndpointEmbargo: "https://sdfembs3.sdf.slac.stanford.edu"
 
     # -- AWS profile name to use for the embargo S3 endpoint
     awsProfile: "embargo"
