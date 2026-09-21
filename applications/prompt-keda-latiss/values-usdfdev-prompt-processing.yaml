@@ -3,7 +3,7 @@ prompt-keda:
   image:
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: latest
+    tag: build2-w_2026_37
 
   instrument:
     pipelines:
@@ -70,7 +70,7 @@ prompt-keda:
     topic: alert-stream-test
 
   sasquatch:
-    endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
+    endpointUrl: https://usdf-rsp.slac.stanford.edu/sasquatch-rest-proxy
 
   keda:
     redisStreams:
