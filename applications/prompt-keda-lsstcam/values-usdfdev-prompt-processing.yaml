@@ -5,8 +5,8 @@ prompt-keda:
     # Overrides the image tag whose default is the chart appVersion.
     tag: tickets-DM-56144
 
-    worker:
-      timeout: 10800
+  worker:
+    timeout: 10800
 
   instrument:
     pipelines:
