@@ -11,8 +11,6 @@ env:
   RAPID_ANALYSIS_DO_RAISE: True
   BUTLER_ROLLOUT_PAUSE: 1.0
   RA_PULL_DIRECTORIES: ""
-  TARTS_DATA_DIR: /project/rubintv/aos_data/TARTS
-  AI_DONUT_DATA_DIR: /project/rubintv/aos_data/AI_DONUT
   # These threading env vars are the ones set in
   # lsst.utils.disable_implicit_threading() They are being set here as well for
   # extra safety as there is a possibility that code could init before that's
