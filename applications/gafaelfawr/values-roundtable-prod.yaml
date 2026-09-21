@@ -10,7 +10,6 @@ cloudsql:
 
 config:
   slackAlerts: false
-  updateSchema: true
 
   sentry:
     enabled: true
