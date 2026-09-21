@@ -13,7 +13,7 @@ image:
   pullPolicy: "IfNotPresent"
 
   # -- Tag of image to use
-  tag: "1.31.5"
+  tag: "1.31.6"
 
 ingress:
   # -- Additional annotations for the ingress rule
