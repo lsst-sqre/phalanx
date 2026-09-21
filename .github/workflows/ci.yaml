@@ -81,7 +81,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install helm-unittest plugin
-        run: helm plugin install oci://ghcr.io/helm-unittest/helm-unittest/unittest:${{ env.HELM_UNITTEST_VERSION }}
+        run: helm plugin install oci://ghcr.io/helm-unittest/helm-unittest/unittest:${{ env.HELM_UNITTEST_VERSION }} --verify=false
 
       - name: Run helm unittest
         run: helm unittest {applications,charts}/*/tests/..
