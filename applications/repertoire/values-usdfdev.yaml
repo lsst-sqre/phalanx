@@ -29,6 +29,7 @@ config:
         databasePasswordKey: "livetap-schema-admin-password"
       consdbtap:
         enabled: true
+        schemaVersion: "w.2026.36"
         databaseUrl: "postgresql://tap_schema_admin_consdbtap@rsp-db-rw.postgres-db:5432/consdbtap"
         databasePasswordKey: "consdbtap-schema-admin-password"
   influxdbDatabases:
