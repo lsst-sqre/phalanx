@@ -10,6 +10,17 @@ config:
       dataset: "dp1"
   metrics:
     enabled: true
+  rules:
+    gafaelfawr:
+      ui:
+        comanage:
+          title: "Account settings"
+          template: "https://id.lsst.cloud/"
+    times-square:
+      internal:
+        times-square:
+          requiredScopes:
+            - "exec:admin"
   slackAlerts: true
   tap:
     servers:

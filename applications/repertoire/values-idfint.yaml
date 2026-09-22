@@ -10,6 +10,19 @@ config:
       dataset: "dp1"
   metrics:
     enabled: true
+  obscoreConfigs:
+    dp2: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp2.yaml"
+  rules:
+    gafaelfawr:
+      ui:
+        comanage:
+          title: "Account settings"
+          template: "https://id-int.lsst.cloud/"
+    times-square:
+      internal:
+        times-square:
+          requiredScopes:
+            - "exec:admin"
   slackAlerts: true
   tap:
     servers:

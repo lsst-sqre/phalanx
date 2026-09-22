@@ -1,16 +1,17 @@
 name: "summit"
 fqdn: "summit-lsp.lsst.codes"
+title: "Rubin Summit"
+titleLong: "Rubin Summit data facility on Cerro Pachón"
+description: >-
+  The environment for the Rubin Science Platform at the Vera C. Rubin
+  Observatory site on Cerro Pachón. It is used for observatory operations at
+  the summit site.
+
 appOfAppsName: "science-platform"
 onepassword:
   connectUrl: "https://roundtable.lsst.cloud/1password"
   vaultTitle: "RSP summit-lsp.lsst.codes"
 vaultPathPrefix: "secret/phalanx/summit"
-namespaceLabels:
-  sasquatch:
-    lsst.io/discover: 'true'
-    k8up-enabled: 'true'
-  gafaelfawr:
-    k8up-enabled: 'true'
 
 applications:
   auxtel: true
@@ -42,10 +43,17 @@ applications:
   strimzi-registry-operator: true
   uws: true
 
+namespaceLabels:
+  sasquatch:
+    lsst.io/discover: "true"
+    k8up-enabled: "true"
+  gafaelfawr:
+    k8up-enabled: "true"
+
 controlSystem:
   imageTag: "c0044"
   siteTag: "summit"
   s3EndpointUrl: "https://s3.cp.lsst.org"
 
 revisions:
-  strimzi: strimzi-0.47.0
+  strimzi: "strimzi-0.47.0"

@@ -1,5 +1,9 @@
 name: usdfdev-prompt-processing
 fqdn: usdf-prompt-processing-dev.slac.stanford.edu
+description: >-
+  A development environment for Prompt Processing at the United States Data
+  Facility (USDF) hosted at SLAC. This environment is used for testing and
+  development of the Prompt Processing software.
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-prompt-processing-dev
 

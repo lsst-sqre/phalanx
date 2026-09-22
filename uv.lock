@@ -761,11 +761,11 @@ wheels = [
 
 [[package]]
 name = "filelock"
-version = "3.32.7"
+version = "4.0.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/0f/59/e19834834cb01a32febfbb0f8a23a9088088f5d45991824ff2bc3b5e8acb/filelock-3.32.7.tar.gz", hash = "sha256:37b8a3d9811b0f9aef7e5ec5c71bb320de52df51e6ca9bcd6f5ad81187660da7", size = 225154, upload-time = "2026-09-16T00:24:20.907Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/6f/38/88cd6eda96c40594a1e3da7d8b40f04bc40ace5a6aef9ac5cb407540f173/filelock-4.0.1.tar.gz", hash = "sha256:fdefc3f3e87716d855ae2b732c1cfd521dd99799ef2b4d00e8c0d4dcdc7cc94b", size = 238888, upload-time = "2026-09-19T01:08:15.958Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/15/df/31098c5aeb4d966b553641472bd55fcf5fdfac953549894b8a765ba44e91/filelock-3.32.7-py3-none-any.whl", hash = "sha256:65ff0d0190ea42038b32bda4b77834fb05be2cad4c5b9b01aa4dfb3614536e52", size = 100157, upload-time = "2026-09-16T00:24:19.543Z" },
+    { url = "https://files.pythonhosted.org/packages/29/33/af0635ab07fe83b1788a1dbe370ff3e226062495a998335cb18a1cac81aa/filelock-4.0.1-py3-none-any.whl", hash = "sha256:481a321a27bef441e23c53371c6abc8d7d16e26b97090074ba44f7538a3fd55a", size = 106219, upload-time = "2026-09-19T01:08:14.49Z" },
 ]
 
 [[package]]
@@ -1619,11 +1619,11 @@ wheels = [
 
 [[package]]
 name = "nest-asyncio2"
-version = "1.7.2"
+version = "1.7.3"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b4/73/731debf26e27e0a0323d7bda270dc2f634b398e38f040a09da1f4351d0aa/nest_asyncio2-1.7.2.tar.gz", hash = "sha256:1921d70b92cc4612c374928d081552efb59b83d91b2b789d935c665fa01729a8", size = 14743, upload-time = "2026-02-13T00:34:04.386Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5e/a6/a2775b388a14b5ea0c894bbe513c0d3e04e65e8ae583e60f5357722b8e03/nest_asyncio2-1.7.3.tar.gz", hash = "sha256:2e9a84d5d1efe6d020c72988d21aec569bac42d98af2ff6b9de24640c5d22a34", size = 15642, upload-time = "2026-09-22T17:15:06.709Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c5/3c/3179b85b0e1c3659f0369940200cd6d0fa900e6cefcc7ea0bc6dd0e29ffb/nest_asyncio2-1.7.2-py3-none-any.whl", hash = "sha256:f5dfa702f3f81f6a03857e9a19e2ba578c0946a4ad417b4c50a24d7ba641fe01", size = 7843, upload-time = "2026-02-13T00:34:02.691Z" },
+    { url = "https://files.pythonhosted.org/packages/29/dd/a8bebc78975a7466932077a0973cbab4361a32368b1d28d40683ec19333c/nest_asyncio2-1.7.3-py3-none-any.whl", hash = "sha256:2bc87bdca654e719425145f5e84eaeb0080b013fdd47d65729a7d66243f4987c", size = 8364, upload-time = "2026-09-22T17:15:05.492Z" },
 ]
 
 [[package]]
@@ -1753,7 +1753,7 @@ typing = [
 [package.metadata]
 requires-dist = [
     { name = "bcrypt" },
-    { name = "click", specifier = "!=8.2.0" },
+    { name = "click", specifier = ">8.2.0" },
     { name = "cryptography" },
     { name = "gitpython" },
     { name = "google-cloud-compute-v1beta", specifier = "<1" },
@@ -1765,7 +1765,7 @@ requires-dist = [
     { name = "pydantic", specifier = ">2" },
     { name = "pyyaml" },
     { name = "rubin-gafaelfawr" },
-    { name = "rubin-repertoire" },
+    { name = "rubin-repertoire", specifier = ">=3" },
     { name = "safir", specifier = ">=14.3" },
 ]
 
@@ -1800,11 +1800,11 @@ typing = [
 
 [[package]]
 name = "platformdirs"
-version = "4.11.11"
+version = "4.11.12"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/f8/13/f870dd0b42690138e4e37a76b5138e5690ed4365a77071bb092d59037da0/platformdirs-4.11.11.tar.gz", hash = "sha256:b0befe8a90759e4a9a8b9820d434ae226a6549063210b596da0038a7a05aede4", size = 39949, upload-time = "2026-09-19T01:18:47.259Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ea/dd/65804b0c2925a1c821a05502ea57517b69a073ff400d25ab9faa3a2cf012/platformdirs-4.11.12.tar.gz", hash = "sha256:e8dc1cb58f1153fd7f61db1374317770baababec2480b37b8f01c6cc25b45267", size = 40016, upload-time = "2026-09-22T01:02:36.973Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/39/be/3ae887e84c38c4dd1c549cd5825adc93f48069a94fe1cb8ac52a9da16f15/platformdirs-4.11.11-py3-none-any.whl", hash = "sha256:972ea6b2b387155a536226a0750e46923d731d459a387c4a255c583ed2f64547", size = 24992, upload-time = "2026-09-19T01:18:45.825Z" },
+    { url = "https://files.pythonhosted.org/packages/ec/2b/69de6317fbf48865bb12aa56c9cfcfff46b3add0cd45250725d96146dce0/platformdirs-4.11.12-py3-none-any.whl", hash = "sha256:b1ba966ac76153d9985a0787ffab951e7c18416189873d4e4ddb2c8a04a0a254", size = 24976, upload-time = "2026-09-22T01:02:35.742Z" },
 ]
 
 [[package]]
@@ -2419,7 +2419,7 @@ wheels = [
 
 [[package]]
 name = "rubin-gafaelfawr"
-version = "16.0.1"
+version = "16.0.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cachetools" },
@@ -2431,14 +2431,14 @@ dependencies = [
     { name = "safir" },
     { name = "structlog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5c/8e/fc8a4049a642f21e59c0eada95d6108013dac3df42e9235d378bf5b825c3/rubin_gafaelfawr-16.0.1.tar.gz", hash = "sha256:ce98509ecbaef6d5be41bc92706cf6abafe73f18e322aa084869e6fee3b96d02", size = 80141, upload-time = "2026-08-26T22:28:50.41Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7e/7b/e8836b6e70c92432bbb1407a9fb11410a1871ea1d52081cdc045962b1541/rubin_gafaelfawr-16.0.2.tar.gz", hash = "sha256:eb794d8662079507204b5307d8897bf522ce8736cbc0d8cf2205b689d2a7e0dc", size = 80148, upload-time = "2026-09-22T22:27:49.071Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ac/7d/d6465e8cfa868d3933e70138c8f9bf544d82c6d525e91ebbbf8657a8f37f/rubin_gafaelfawr-16.0.1-py3-none-any.whl", hash = "sha256:532960d4a81c8cd34292538a91f6d6b143d5d8bcd006da1f022fc75b4adb8638", size = 14504, upload-time = "2026-08-26T22:28:49.363Z" },
+    { url = "https://files.pythonhosted.org/packages/08/23/a23ab064e9a4165051c172f7fa2a75d494ece9fa3106a74ddb46d793c46d/rubin_gafaelfawr-16.0.2-py3-none-any.whl", hash = "sha256:7fd689b80d20362b310d886a3aa951f9698b3f199de4b7f158fc84c99de40698", size = 14508, upload-time = "2026-09-22T22:27:47.82Z" },
 ]
 
 [[package]]
 name = "rubin-repertoire"
-version = "2.1.0"
+version = "3.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "fastapi" },
@@ -2450,9 +2450,9 @@ dependencies = [
     { name = "safir" },
     { name = "structlog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f4/9f/b29bdfda3ce68d1b5b26b693452c8570d115b23eaa66534bc97fc620af78/rubin_repertoire-2.1.0.tar.gz", hash = "sha256:69b6da3d7789c15c296145ee5e77e92eb5272f1f72db029619f11f95e13d5b0b", size = 20248, upload-time = "2026-07-17T23:17:11.138Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9d/fe/ac4535bcc8dc3aa2a0a530fb01daed68b8097bc2788a0a145ca9873aa81c/rubin_repertoire-3.0.0.tar.gz", hash = "sha256:254a8f26d09429cd0c8b5df6d5aae4866762a30bfd49524a55c542598271b0a7", size = 22879, upload-time = "2026-09-22T20:32:28.933Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/20/11/7958c72c03a648c1b3b7f3b252bb118e2c98934d082310b2008bc56c29e8/rubin_repertoire-2.1.0-py3-none-any.whl", hash = "sha256:c5eb537b08ec8031323d434a5abbc78b832bd127bc64e3986194979c9074f75c", size = 23782, upload-time = "2026-07-17T23:17:10.161Z" },
+    { url = "https://files.pythonhosted.org/packages/a9/e0/b0d7ac6cbc3f45bcc276b81af06fc0b0a9301347563e0fa8d5ef57903f05/rubin_repertoire-3.0.0-py3-none-any.whl", hash = "sha256:9c50d8cf3a62ccccc97cdb58252e5e10b4916f982d7ac44882ceae25220dcaf1", size = 25695, upload-time = "2026-09-22T20:32:27.945Z" },
 ]
 
 [[package]]
@@ -2517,15 +2517,15 @@ wheels = [
 
 [[package]]
 name = "sentry-sdk"
-version = "2.69.2"
+version = "2.70.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "certifi" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/cc/08/1211e4652384195ef754f8ed570566088dc848f8eda7d005abf13f05f17f/sentry_sdk-2.69.2.tar.gz", hash = "sha256:b4d8915a526e626b0b14a2925907554b722d3b8e3e3781570fc35791712af323", size = 1043564, upload-time = "2026-09-15T15:25:09.018Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/52/0a/e37553f3106d0f7f0d4b8ad2c7b92410d131929786ffd116833d3b8164df/sentry_sdk-2.70.0.tar.gz", hash = "sha256:27e4b512f47be93136645dbe8f02d430473ee73a389ce430b2b7104baa66cf75", size = 1047234, upload-time = "2026-09-22T09:40:11.721Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ee/78/5d8b79fd60330234317aa827a1f5e445980a6f4e0ea6ed4e1187acb70a0f/sentry_sdk-2.69.2-py3-none-any.whl", hash = "sha256:25bc0a6c55bba0b83398212a7247f4f9f3190f189a1909b68e4807ef4b785895", size = 528765, upload-time = "2026-09-15T15:25:07.362Z" },
+    { url = "https://files.pythonhosted.org/packages/eb/ff/b1e56f009bfb9b8023910b533d5ebf4ec5650da49891f2b8c7f3d4815401/sentry_sdk-2.70.0-py3-none-any.whl", hash = "sha256:89600e8bb5fc5239cad5c4434217f453204f2207ad29399ea58947460b37a62e", size = 531752, upload-time = "2026-09-22T09:40:10.063Z" },
 ]
 
 [[package]]
@@ -3110,7 +3110,7 @@ wheels = [
 
 [[package]]
 name = "virtualenv"
-version = "21.9.0"
+version = "21.10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "distlib" },
@@ -3118,9 +3118,9 @@ dependencies = [
     { name = "platformdirs" },
     { name = "python-discovery" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2f/5d/42254e91a9203a13d95ab4f5211f4cdda52b82fc3546340f7fb33a642173/virtualenv-21.9.0.tar.gz", hash = "sha256:fa0f2a26fcb6f32b376fc8b2c705b6057366763d5b9e5242d1ab10ecc3279fd3", size = 5372770, upload-time = "2026-09-20T00:29:19.843Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/cd/ea/0221ff416c626986b0f6784d001818540ce645795606f3ff6b6758f033eb/virtualenv-21.10.0.tar.gz", hash = "sha256:7416cbc176d8a06b0c71e2bf65745b00822a5c204df9a2473b91d8fd06e4f6fd", size = 5380422, upload-time = "2026-09-22T16:19:40.929Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9d/e5/9446b7a2a3d73de5f9fcf8f825efe78b071b111729e89f4ac07649b9448b/virtualenv-21.9.0-py3-none-any.whl", hash = "sha256:8c7cde05f630fbedf61758258014a92e6d6d5b4b9c6e6be7279d233f89e09aac", size = 5477625, upload-time = "2026-09-20T00:29:18.065Z" },
+    { url = "https://files.pythonhosted.org/packages/03/69/e61d427327d01b3310ee2d87ee603bbabceb56eb6e5b3e0ba73306c290e9/virtualenv-21.10.0-py3-none-any.whl", hash = "sha256:55ab699da97bcdb28e0d2ae6f61610238bdb08f407d19c0f89151303062c428c", size = 5486130, upload-time = "2026-09-22T16:19:39.12Z" },
 ]
 
 [[package]]

@@ -1,5 +1,6 @@
 name: minikube
 fqdn: minikube.lsst.cloud
+description: "Test environment"
 onepassword:
   connectUrl: https://roundtable-dev.lsst.cloud/1password/minikube/
   vaultTitle: "RSP minikube.lsst.codes"

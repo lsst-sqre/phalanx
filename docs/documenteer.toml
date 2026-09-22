@@ -46,13 +46,14 @@ rst_epilog_file = "_rst_epilog.rst"
 
 [sphinx.intersphinx.projects]
 click = "https://click.palletsprojects.com/en/stable"
+google-cloud-compute-v1beta = "https://googleapis.dev/python/google-cloud-compute-v1beta/latest"
+google-cloud-container = "https://googleapis.dev/python/container/latest"
+google-cloud-gke-backup = "https://googleapis.dev/python/gkebackup/latest"
 hvac = "https://hvac.readthedocs.io/en/stable"
 python = "https://docs.python.org/3"
+rubin-repertoire = "https://repertoire.lsst.io"
 safir = "https://safir.lsst.io"
 sphinx = "https://www.sphinx-doc.org/en/master"
-google-cloud-container = "https://googleapis.dev/python/container/latest"
-google-cloud-compute-v1beta = "https://googleapis.dev/python/google-cloud-compute-v1beta/latest"
-google-cloud-gke-backup = "https://googleapis.dev/python/gkebackup/latest"
 
 [sphinx.linkcheck]
 ignore = [

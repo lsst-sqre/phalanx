@@ -1,5 +1,6 @@
 name: idfdev
 fqdn: data-dev.lsst.cloud
+description: "Test environment"
 appOfAppsName: science-platform
 gcp:
   projectId: science-platform-dev-7696

@@ -1,9 +1,15 @@
 fqdn: "tacc-spherex.lsst.cloud"
 name: "tacc-spherex"
+title: "SPHEREx at TACC"
+description: >-
+  The internal Science Platform for the SPHEREx mission, hosted at the Texas
+  Advanced Computing Center (TACC).
+
 appOfAppsName: "science-platform"
 vaultUrl: "http://192.168.115.195:8200"
 vaultPathPrefix: "secret/phalanx/tacc"
+
 applications:
-  squareone: true
   nublado: true
   portal: true
+  squareone: true

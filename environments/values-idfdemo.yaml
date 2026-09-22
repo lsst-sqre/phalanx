@@ -1,5 +1,12 @@
 name: "idfdemo"
 fqdn: "demo.lsst.cloud"
+title: "SQuaRE demo in GCP"
+description: >-
+  An ephemeral environment for demonstrating Phalanx on Google Cloud Platform
+  including, but not necessarily limited to, the Rubin Science Platform. This
+  environment is used as a playground or scratchpad environment for bootcamps,
+  conferences, experiments, and other temporary deployments.
+
 appOfAppsName: "science-platform"
 butlerServerRepositories:
   dp02: "https://demo.lsst.cloud/api/butler/repo/dp02/butler.yaml"

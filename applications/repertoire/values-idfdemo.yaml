@@ -1,4 +1,10 @@
 config:
+  rules:
+    times-square:
+      internal:
+        times-square:
+          requiredScopes:
+            - "exec:admin"
   slackAlerts: true
 nodeSelector:
   node_pool: arm-core-pool

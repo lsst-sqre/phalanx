@@ -1,5 +1,12 @@
-fqdn: "usdf-rsp-dev.slac.stanford.edu"
 name: "usdfdev"
+fqdn: "usdf-rsp-dev.slac.stanford.edu"
+title: "USDF RSP development"
+titleLong: "Rubin US Data Facility RSP development"
+description: >-
+  A development environment for the Rubin Science Platform at the United
+  States Data Facility (USDF) hosted at SLAC. It is used for development and
+  testing of the USDF environment.
+
 appOfAppsName: "science-platform"
 butlerServerRepositories:
   embargo: "https://usdf-rsp-dev.slac.stanford.edu/api/butler/repo/embargo/butler.yaml"

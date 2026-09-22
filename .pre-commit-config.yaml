@@ -15,7 +15,7 @@ repos:
           - -c=.yamllint.yml
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.38.0
+    rev: 0.38.1
     hooks:
       - id: check-jsonschema
         files: ^applications/.*/secrets(-[^./-]+)?\.yaml

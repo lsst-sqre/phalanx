@@ -1,13 +1,20 @@
 name: "ukidacprod"
 fqdn: "rsp.lsst.ac.uk"
+title: "UK IDAC"
+description: >-
+  The production environment for the Rubin Science Platform at the United
+  Kingdom Independent Data Access Center (UKIDAC) hosted on Somerville Cloud,
+  University of Edinburgh.
+
 appOfAppsName: "science-platform"
 vaultUrl: "https://vault-rsp.lsst.ac.uk"
 vaultPathPrefix: "secret/phalanx/ukidacprod"
+
 applications:
   mobu: true
   nublado: true
   portal: true
   postgres: true
   squareone: true
-  tap: true
   ssotap: true
+  tap: true
