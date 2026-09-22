@@ -41,4 +41,5 @@ Manages the lifecycle of Butler Prompt Data Products as they move from the embar
 | scaleReplica.downSchedule | string | `"30 21 * * *"` | Time in Cron format to scale down replica in UTC |
 | scaleReplica.enabled | bool | `false` | Enable scale up and down of prompt pub statefulset on a schedule |
 | scaleReplica.upSchedule | string | `"0 12 * * *"` | Time to Cron format scale up replica in UTC |
+| securityContext.runAsUser | int | `48045` | UID the prompt-pub container runs as (rubinppb in prod) |
 | tolerations | list | `[]` | Tolerations for the prompt-pub deployment pod |

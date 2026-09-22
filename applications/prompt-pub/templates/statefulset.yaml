@@ -21,7 +21,7 @@ spec:
     spec:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 48045 # rubinppb
+        runAsUser: {{ .Values.securityContext.runAsUser }}
         runAsGroup: 4085 # rubin-users
         fsGroup: 4085
       containers:

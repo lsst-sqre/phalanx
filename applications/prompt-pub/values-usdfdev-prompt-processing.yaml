@@ -44,3 +44,7 @@ alloyDbProxy:
 scaleReplica:
   enabled: true
   downSchedule: "30 1 * * *"
+
+securityContext:
+  # rubinppd
+  runAsUser: 48401
