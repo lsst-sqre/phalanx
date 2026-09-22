@@ -490,14 +490,6 @@ class Environment(EnvironmentBaseConfig):
         }
         config["environmentName"] = self.name
 
-        # RepertoireSettings uses extra="forbid", but the merged configuration
-        # is for the Repertoire service and has extra fields. Delete the
-        # fields that aren't part of the Repertoire settings.
-        known_fields = {to_camel(k) for k in RepertoireSettings.model_fields}
-        to_remove = set(config.keys()) - known_fields
-        for field_name in to_remove:
-            del config[field_name]
-
         # Now, build the Repertoire configuration.
         return RepertoireSettings.model_validate(config)
 
