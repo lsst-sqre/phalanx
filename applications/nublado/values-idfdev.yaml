@@ -1,3 +1,6 @@
+image:
+  tag: "t-DM-56193"
+  pullPolicy: Always
 sentry:
   enabled: true
 controller:
@@ -91,6 +94,8 @@ jupyterhub:
     db:
       upgrade: true
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
+    image:
+      tag: "t-DM-56193"
 
 cloudsql:
   enabled: true
