@@ -1,10 +1,6 @@
 replicaCount: 4
 
 config:
-  datasets:
-    - "dp02"
-    - "dp1"
-    - "dp2"
   metrics:
     enabled: true
 

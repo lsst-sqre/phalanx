@@ -11,7 +11,6 @@ Simple Image Access (SIA) IVOA Service using Butler
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the sia deployment pod |
-| config.datasets | list | `["dp02","dp1"]` | List of datasets enabled in this environment. |
 | config.ivoidFormat | string | `"ivo://org.rubinobs/lsst-{dataset}/sia"` | Format string for the IVOID used for self-identification. This must contain a `dataset` variable that will be replaced with the label of the dataset. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
@@ -20,7 +19,6 @@ Simple Image Access (SIA) IVOA Service using Butler
 | config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
-| config.obscoreConfig | object | See `values.yaml` | ObsCore exporter configurations by dataset |
 | config.pathPrefix | string | `"/api/sia"` | URL path prefix |
 | config.sentry.enabled | bool | `false` | Set to true to enable the Sentry integration. |
 | config.sentry.tracesSampleRate | float | `0` | The percentage of requests that should be traced. This should be a float between 0 and 1. |

@@ -5,7 +5,7 @@ type: application
 description: "Simple Image Access (SIA) IVOA Service using Butler"
 sources:
   - "https://github.com/lsst-sqre/sia"
-appVersion: 2.0.0
+appVersion: 3.0.0
 
 annotations:
   phalanx.lsst.io/docs: |
