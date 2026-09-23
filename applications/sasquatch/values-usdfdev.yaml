@@ -136,6 +136,27 @@ telegraf-local:
       topicRegexps:
         - "lsst.survey"
       database: "lsst.survey"
+    cp:
+      enabled: true
+      debug: true
+      database: "lsst.cp"
+      timestamp_field: "timestamp"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.cp"
+        excludePrefixes: []
+        refreshInterval: "30s"
+      tags:
+        - "dataset_tag"
+        - "band"
+        - "instrument"
+        - "skymap"
+        - "detector"
+        - "physical_filter"
+        - "tract"
+        - "patch"
+        - "pipeline"
 
 telegraf:
   enabled: true
@@ -205,27 +226,7 @@ telegraf:
         - "physical_filter"
         - "tract"
         - "patch"
-    cp:
-      enabled: true
-      debug: true
-      database: "lsst.cp"
-      timestamp_field: "timestamp"
-      topicDiscovery:
-        enabled: true
-        includePrefixes:
-          - "lsst.cp"
-        excludePrefixes: []
-        refreshInterval: "30s"
-      tags:
-        - "dataset_tag"
-        - "band"
-        - "instrument"
-        - "skymap"
-        - "detector"
-        - "physical_filter"
-        - "tract"
-        - "patch"
-        - "pipeline"
+
   resources:
     limits:
       cpu: "1"
