@@ -1,3 +1,6 @@
+influxdb-migration:
+  enabled: true
+
 strimzi-kafka:
   kafka:
     listeners:
