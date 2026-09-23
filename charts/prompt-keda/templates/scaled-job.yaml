@@ -52,6 +52,8 @@ spec:
                   {{- .Values.instrument.pipelines.main | nindent 18 }}
               - name: LSST_CONFIG_NO_CALLSTACK
                 value: "1"
+              - name: MALLOC_ARENA_MAX
+                value: "2"
               - name: SKYMAP
                 value: {{ .Values.instrument.skymap }}
               - name: MESSAGE_EXPIRATION
