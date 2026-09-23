@@ -13,6 +13,9 @@ env:
   # Version of the Helm unittest plugin for Helm tests.
   HELM_UNITTEST_VERSION: "1.1.2"
 
+  # Version of kube-linter to use for linting rendered resources.
+  KUBE_LINTER_VERSION: "0.8.3"
+
   # Version of Vault client to use for the installer.
   VAULT_VERSION: "1.19.5"
 
@@ -88,6 +91,12 @@ jobs:
 
       - name: Run helm unittest for sub-charts
         run: helm unittest applications/*/charts/*/tests/..
+
+      - name: Install kube-linter
+        run: >
+          curl -sSL
+          https://github.com/stackrox/kube-linter/releases/download/v${{ env.KUBE_LINTER_VERSION }}/kube-linter-linux.tar.gz
+          | sudo tar -xz -C /usr/local/bin kube-linter
 
       - uses: astral-sh/setup-uv@v10.2.0
 

@@ -16,6 +16,7 @@ from .storage.argocd import ArgoCDStorage
 from .storage.config import ConfigStorage
 from .storage.google_cloud_api import GoogleCloudAPIStorage
 from .storage.helm import HelmStorage
+from .storage.kube_linter import KubeLinterStorage
 from .storage.kubernetes import KubernetesStorage
 from .storage.onepassword import OnepasswordStorage
 from .storage.vault import VaultStorage
@@ -45,7 +46,12 @@ class Factory:
         """
         config_storage = self.create_config_storage()
         helm_storage = HelmStorage(config_storage)
-        return ApplicationService(self._path, config_storage, helm_storage)
+        kube_linter_storage = KubeLinterStorage(
+            config_storage.get_kube_linter_config_path()
+        )
+        return ApplicationService(
+            self._path, config_storage, helm_storage, kube_linter_storage
+        )
 
     def create_config_storage(self) -> ConfigStorage:
         """Create storage layer for the Phalanx configuration.

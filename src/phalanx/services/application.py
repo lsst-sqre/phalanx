@@ -14,6 +14,7 @@ from ..models.environments import Environment
 from ..models.helm import HelmStarter
 from ..storage.config import ConfigStorage
 from ..storage.helm import HelmStorage
+from ..storage.kube_linter import KubeLinterStorage
 
 __all__ = ["ApplicationService"]
 
@@ -36,10 +37,12 @@ class ApplicationService:
         path: Path,
         config_storage: ConfigStorage,
         helm_storage: HelmStorage,
+        kube_linter_storage: KubeLinterStorage,
     ) -> None:
         self._path = path
         self._config = config_storage
         self._helm = helm_storage
+        self._kube_linter = kube_linter_storage
         self._templates = jinja2.Environment(
             loader=jinja2.PackageLoader("phalanx", "data"),
             undefined=jinja2.StrictUndefined,
@@ -123,12 +126,19 @@ class ApplicationService:
         # Add the documentation.
         self._create_application_docs(name, description, project)
 
-    def lint(self, app_names: list[str], env_name: str | None) -> bool:
+    def lint(
+        self,
+        app_names: list[str],
+        env_name: str | None,
+        *,
+        kube_linter: bool = False,
+    ) -> bool:
         """Lint an application with Helm.
 
         Registers any required Helm repositories, refreshes them, downloads
         dependencies, and runs :command:`helm lint` on the application chart,
-        configured for the given environment.
+        configured for the given environment. Optionally, also expands the
+        chart and checks the resulting resources with :command:`kube-linter`.
 
         Parameters
         ----------
@@ -137,6 +147,9 @@ class ApplicationService:
         env_name
             Name of the environment. If not given, lint all environments for
             which this application has a configuration.
+        kube_linter
+            If `True`, also run :command:`kube-linter` on the Kubernetes
+            resources produced by :command:`helm template`.
 
         Returns
         -------
@@ -160,18 +173,30 @@ class ApplicationService:
                     environments[env] = self._config.load_environment(env)
                 environment = environments[env]
                 values = self._build_injected_values(app_name, environment)
-                success &= self._helm.lint_application(app_name, env, values)
+                success &= self._lint_application(
+                    app_name, env, values, kube_linter=kube_linter
+                )
         return success
 
-    def lint_all(self, *, only_changes_from_branch: str | None = None) -> bool:
+    def lint_all(
+        self,
+        *,
+        only_changes_from_branch: str | None = None,
+        kube_linter: bool = False,
+    ) -> bool:
         """Lint all applications with Helm.
 
         Registers any required Helm repositories, refreshes them, downloads
         dependencies, and runs :command:`helm lint` on every combination of
-        application chart and configured environment.
+        application chart and configured environment. Optionally, also
+        expands each chart and checks the resulting resources with
+        :command:`kube-linter`.
 
         Parameters
         ----------
+        kube_linter
+            If `True`, also run :command:`kube-linter` on the Kubernetes
+            resources produced by :command:`helm template`.
         only_changes_from_branch
             If given, only lint application and environment pairs that may
             have been affected by Git changes relative to the given branch.
@@ -204,8 +229,8 @@ class ApplicationService:
                     environment = self._config.load_environment(env_name)
                     environments[env_name] = environment
                 values = self._build_injected_values(app_name, environment)
-                success &= self._helm.lint_application(
-                    app_name, env_name, values
+                success &= self._lint_application(
+                    app_name, env_name, values, kube_linter=kube_linter
                 )
         return success
 
@@ -406,6 +431,42 @@ class ApplicationService:
             line += 1
         index.insert(line, new_line)
         index_path.write_text("\n".join(index))
+
+    def _lint_application(
+        self,
+        app_name: str,
+        env_name: str,
+        values: dict[str, str],
+        *,
+        kube_linter: bool,
+    ) -> bool:
+        """Lint one application chart for one environment.
+
+        Parameters
+        ----------
+        app_name
+            Name of the application.
+        env_name
+            Name of the environment.
+        values
+            Extra values to set, reflecting the settings injected by Argo CD.
+        kube_linter
+            Whether to also run :command:`kube-linter` on the rendered
+            Kubernetes resources if :command:`helm lint` passes.
+
+        Returns
+        -------
+        bool
+            Whether linting passed.
+        """
+        if not self._helm.lint_application(app_name, env_name, values):
+            return False
+        if not kube_linter:
+            return True
+        resources = self._helm.template_application(app_name, env_name, values)
+        return self._kube_linter.lint_application(
+            app_name, env_name, resources
+        )
 
 
 def _json_and_base64_encode(obj: Any) -> str:

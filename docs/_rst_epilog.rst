@@ -30,6 +30,7 @@
 .. _Ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/
 .. _InfluxDB: https://www.influxdata.com/
 .. _IVOA: https://ivoa.net/documents/
+.. _kube-linter: https://github.com/stackrox/kube-linter
 .. _Kubernetes: https://kubernetes.io/
 .. _LSST Vault Utilites: https://github.com/lsst-sqre/lsstvaultutils/
 .. _Mend Renovate: https://www.mend.io/renovate/

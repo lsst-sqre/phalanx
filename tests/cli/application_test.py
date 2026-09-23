@@ -3,16 +3,19 @@
 import shutil
 import subprocess
 from pathlib import Path
+from unittest.mock import ANY, call
 
 import pytest
 import yaml
 from git.repo import Repo
 from git.util import Actor
 
+from phalanx.exceptions import CommandFailedError
 from phalanx.factory import Factory
 from phalanx.models.applications import Project
 
 from ..support.cli import run_cli
+from ..support.command import MockCommand
 from ..support.data import PhalanxData
 from ..support.helm import MockHelmCommand
 
@@ -300,6 +303,67 @@ def test_lint(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
     assert result.output == (
         "Some error\n"
         "Error: Application gafaelfawr in environment idfdev has errors\n"
+    )
+    assert result.exit_code == 1
+
+
+def test_lint_kube_linter(
+    data: PhalanxData,
+    mock_helm: MockHelmCommand,
+    mock_kube_linter: MockCommand,
+) -> None:
+    def callback(*command: str) -> subprocess.CompletedProcess:
+        output = None
+        if command[0] == "lint":
+            output = "==> Linting .\n\n1 chart(s) linted, 0 chart(s) failed\n"
+        elif command[0] == "template":
+            output = "this is some template\n"
+        return subprocess.CompletedProcess(
+            returncode=0, args=command, stdout=output, stderr=None
+        )
+
+    # With --kube-linter, the chart is also expanded with helm template and
+    # the result is fed to kube-linter. A passing check adds no output.
+    mock_helm.set_capture_callback(callback)
+    kube_linter_args = ("lint", "--config", ANY, "-")
+    mock_kube_linter.expect_capture(
+        args=kube_linter_args, response="No lint errors found!\n"
+    )
+    result = run_cli(
+        "application", "lint", "gafaelfawr", "-e", "idfdev", "--kube-linter"
+    )
+    assert result.output == "==> Linting gafaelfawr (environment idfdev)\n"
+    assert result.exit_code == 0
+    data.assert_json_matches(
+        mock_helm.call_args_list, "application/lint-gafaelfawr-kube-linter"
+    )
+    assert mock_kube_linter.mock.capture.call_args_list == [
+        call(*kube_linter_args, stdin="this is some template\n")
+    ]
+
+    # A failing check reports the kube-linter output and fails the lint.
+    mock_helm.reset_mock()
+    mock_kube_linter.mock.capture.reset_mock()
+    failed_args = ("lint", "--config", ".kube-linter.yaml", "-")
+    exc = subprocess.CalledProcessError(
+        returncode=1,
+        cmd=["kube-linter", *failed_args],
+        output='Duplicate environment variable FOO in container "bar"\n',
+        stderr="Error: found 1 lint errors\n",
+    )
+    mock_kube_linter.expect_capture(
+        args=kube_linter_args,
+        response=CommandFailedError("kube-linter", failed_args, exc),
+    )
+    result = run_cli(
+        "application", "lint", "gafaelfawr", "-e", "idfdev", "--kube-linter"
+    )
+    assert result.output == (
+        "==> Linting gafaelfawr (environment idfdev)\n"
+        'Duplicate environment variable FOO in container "bar"\n'
+        "Error: found 1 lint errors\n"
+        "Error: Application gafaelfawr in environment idfdev has"
+        " kube-linter errors\n"
     )
     assert result.exit_code == 1
 

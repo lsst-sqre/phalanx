@@ -35,7 +35,7 @@ class Command:
         self._common_args = common_args or []
 
     def capture(
-        self, *args: str, cwd: Path | None = None
+        self, *args: str, cwd: Path | None = None, stdin: str | None = None
     ) -> subprocess.CompletedProcess:
         """Run the command, checking for errors and capturing the output.
 
@@ -49,6 +49,8 @@ class Command:
         cwd
             If provided, change working directories to this path before
             running the command.
+        stdin
+            If provided, input to send to the command on standard input.
 
         Returns
         -------
@@ -70,6 +72,7 @@ class Command:
                 capture_output=True,
                 check=True,
                 cwd=cwd,
+                input=stdin,
                 text=True,
             )
         except subprocess.CalledProcessError as e:

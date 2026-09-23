@@ -155,7 +155,7 @@ class MockCommand:
             to its capture method.
         """
 
-        def capture_side_effect(*args: Any) -> CompletedProcess:
+        def capture_side_effect(*args: Any, **kwargs: Any) -> CompletedProcess:
             """Return fake data from calls to capture."""
             try:
                 expected = self._capture_calls.pop(0)

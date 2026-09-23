@@ -108,6 +108,16 @@ If you don't want to (or don't have access to) install helm globally on your sys
    The Python PyPI package ``helm`` is something entirely different and is not what Phalanx uses.
    Don't try to install Helm from PyPI; follow the above instructions instead.
 
+.. _about-kube-linter:
+
+Install kube-linter
+===================
+
+:command:`phalanx application lint --kube-linter` checks the rendered Kubernetes resources of a chart with kube-linter_, and GitHub Actions runs the lint check with this flag.
+To run the same check locally, download the binary for your platform from the `kube-linter releases page <https://github.com/stackrox/kube-linter/releases>`__ and put it on your PATH (or in the :file:`bin` directory of your virtual environment, as with helm-docs).
+To see what version is used by GitHub Actions, look for ``KUBE_LINTER_VERSION`` in :file:`.github/workflows/ci.yaml`.
+The checks that are run are configured in :file:`.kube-linter.yaml` at the top level of the Phalanx repository.
+
 Next steps
 ==========
 

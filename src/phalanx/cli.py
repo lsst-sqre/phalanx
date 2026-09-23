@@ -300,12 +300,18 @@ def application_create(
     default=None,
     help="Only lint this environment.",
 )
+@click.option(
+    "--kube-linter",
+    is_flag=True,
+    help="Also check the rendered Kubernetes resources with kube-linter.",
+)
 @_report_usage_errors
 def application_lint(
     applications: list[str],
     *,
     environment: str | None = None,
     config: Path | None,
+    kube_linter: bool = False,
 ) -> None:
     """Lint the Helm charts for applications.
 
@@ -315,11 +321,15 @@ def application_lint(
     configuration.
     """
     _require_command("helm")
+    if kube_linter:
+        _require_command("kube-linter")
     if not config:
         config = _find_config()
     factory = Factory(config)
     application_service = factory.create_application_service()
-    if not application_service.lint(applications, environment):
+    if not application_service.lint(
+        applications, environment, kube_linter=kube_linter
+    ):
         sys.exit(1)
 
 
@@ -346,9 +356,18 @@ def application_lint(
     envvar="GITHUB_BASE_REF",
     help="Base Git branch against which to compare.",
 )
+@click.option(
+    "--kube-linter",
+    is_flag=True,
+    help="Also check the rendered Kubernetes resources with kube-linter.",
+)
 @_report_usage_errors
 def application_lint_all(
-    *, config: Path | None, git: bool = False, git_branch: str
+    *,
+    config: Path | None,
+    git: bool = False,
+    git_branch: str,
+    kube_linter: bool = False,
 ) -> None:
     """Lint the Helm charts for every application and environment.
 
@@ -356,12 +375,16 @@ def application_lint_all(
     Helm charts for each application and environment combination.
     """
     _require_command("helm")
+    if kube_linter:
+        _require_command("kube-linter")
     if not config:
         config = _find_config()
     factory = Factory(config)
     application_service = factory.create_application_service()
     branch = git_branch if git else None
-    if not application_service.lint_all(only_changes_from_branch=branch):
+    if not application_service.lint_all(
+        only_changes_from_branch=branch, kube_linter=kube_linter
+    ):
         sys.exit(1)
 
 
