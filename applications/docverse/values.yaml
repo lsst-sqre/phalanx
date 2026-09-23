@@ -94,6 +94,26 @@ config:
     # -- Per-job timeout, in seconds, for keeper-sync arq jobs.
     jobTimeoutSeconds: 3600
 
+    # -- Attempts, including the first, that the keeper-sync worker spends
+    # on one presigned upload of a copied object before failing the build
+    # copy. Transport failures and retryable statuses (429, 5xx) share the
+    # budget; backoff starts at 0.5 s and doubles. At the default of 6 an
+    # object rides out an R2 connect outage of roughly 65 s.
+    uploadMaxAttempts: 6
+
+    # -- Ceiling, in seconds, on any single wait between attempts of a
+    # keeper-sync presigned upload, including a server-requested
+    # `Retry-After`. At the default attempt count the exponential backoff
+    # peaks at 8 s, so this only bites for a longer `Retry-After`.
+    uploadMaxBackoffSeconds: 30.0
+
+    # -- Seconds the keeper-sync worker waits before re-running a build
+    # copy that failed on a transport error at either end (an R2 outage
+    # that outlasted the per-object budget, or an LTD S3 timeout during a
+    # download). The copy is re-run exactly once; any other failure fails
+    # the edition as before.
+    copyRetryDelaySeconds: 30.0
+
   maintenance:
     # -- Enable the maintenance worker that consumes the
     # `docverse:maintenance-queue` arq queue. Requires the docverse image to
@@ -137,6 +157,15 @@ config:
     # -- UTC minute of `purgatoryCleanupCronHour` at which the daily
     # purgatory_cleanup dispatcher cron runs.
     purgatoryCleanupCronMinute: 23
+
+  # -- Whether a long-profile edition publish is followed by a purge of the
+  # project's hostname from the Cloudflare edge cache. Leave this off until
+  # the Docverse Worker edge-caches edition responses: today a purge
+  # invalidates nothing while still spending calls against Cloudflare's
+  # per-account purge rate limit (5 per minute on the Free plan), which a
+  # keeper-sync backfill across many hostnames exceeds within seconds.
+  # Re-enabling is tracked in lsst-sqre/docverse#683.
+  cdnPurgeEnabled: false
 
   # -- Set true during a credential-encryption (Fernet) key rotation to deliver
   # the retired key (DOCVERSE_CREDENTIAL_ENCRYPTION_KEY_RETIRED) to all pods so

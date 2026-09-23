@@ -29,7 +29,11 @@ data:
   DOCVERSE_MAINTENANCE_JOB_TIMEOUT_SECONDS: {{ .Values.config.maintenance.jobTimeoutSeconds | quote }}
   DOCVERSE_EDITION_RECONCILE_ENABLED: {{ .Values.config.maintenance.editionReconcileEnabled | quote }}
   DOCVERSE_EDITION_RECONCILE_MAX_ACTIONS_PER_JOB: {{ .Values.config.maintenance.editionReconcileMaxActionsPerJob | quote }}
+  DOCVERSE_CDN_PURGE_ENABLED: {{ .Values.config.cdnPurgeEnabled | quote }}
   DOCVERSE_KEEPER_SYNC_JOB_TIMEOUT_SECONDS: {{ .Values.config.keeperSync.jobTimeoutSeconds | quote }}
+  DOCVERSE_KEEPER_SYNC_UPLOAD_MAX_ATTEMPTS: {{ .Values.config.keeperSync.uploadMaxAttempts | quote }}
+  DOCVERSE_KEEPER_SYNC_UPLOAD_MAX_BACKOFF_SECONDS: {{ .Values.config.keeperSync.uploadMaxBackoffSeconds | quote }}
+  DOCVERSE_KEEPER_SYNC_COPY_RETRY_DELAY_SECONDS: {{ .Values.config.keeperSync.copyRetryDelaySeconds | quote }}
   DOCVERSE_KEEPER_SYNC_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.keeperSyncSeconds | quote }}
   DOCVERSE_LIFECYCLE_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.lifecycleSeconds | quote }}
   DOCVERSE_PURGATORY_CLEANUP_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.purgatoryCleanupSeconds | quote }}
