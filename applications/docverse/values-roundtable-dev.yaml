@@ -1,3 +1,9 @@
+image:
+  # Temporary override to test lsst-sqre/docverse#684 before its server
+  # release; revert to the chart appVersion once that PR ships.
+  tag: "tickets-DM-56095-disable-cdn-purge"
+  pullPolicy: "Always"
+
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://docverse@localhost/docverse"

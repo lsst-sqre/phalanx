@@ -138,6 +138,15 @@ config:
     # purgatory_cleanup dispatcher cron runs.
     purgatoryCleanupCronMinute: 23
 
+  # -- Whether a long-profile edition publish is followed by a purge of the
+  # project's hostname from the Cloudflare edge cache. Leave this off until
+  # the Docverse Worker edge-caches edition responses: today a purge
+  # invalidates nothing while still spending calls against Cloudflare's
+  # per-account purge rate limit (5 per minute on the Free plan), which a
+  # keeper-sync backfill across many hostnames exceeds within seconds.
+  # Re-enabling is tracked in lsst-sqre/docverse#683.
+  cdnPurgeEnabled: false
+
   # -- Set true during a credential-encryption (Fernet) key rotation to deliver
   # the retired key (DOCVERSE_CREDENTIAL_ENCRYPTION_KEY_RETIRED) to all pods so
   # existing credentials can still be decrypted. Set back to false and remove the

@@ -19,6 +19,7 @@ Publish versioned docs
 | cloudsql.resources | object | See `values.yaml` | Resource requests and limits for Cloud SQL Auth Proxy |
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `docverse` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.arqRedisUrl | string | Points to embedded Redis | URL for Redis arq queue database |
+| config.cdnPurgeEnabled | bool | `false` | Whether a long-profile edition publish is followed by a purge of the project's hostname from the Cloudflare edge cache. Leave this off until the Docverse Worker edge-caches edition responses: today a purge invalidates nothing while still spending calls against Cloudflare's per-account purge rate limit (5 per minute on the Free plan), which a keeper-sync backfill across many hostnames exceeds within seconds. Re-enabling is tracked in lsst-sqre/docverse#683. |
 | config.credentialKeyRotation | bool | `false` | Set true during a credential-encryption (Fernet) key rotation to deliver the retired key (DOCVERSE_CREDENTIAL_ENCRYPTION_KEY_RETIRED) to all pods so existing credentials can still be decrypted. Set back to false and remove the Vault key once all credentials have been re-encrypted. |
 | config.databaseUrl | string | `""` | Database URL for PostgreSQL |
 | config.githubAppId | string | `nil` | GitHub App ID for Docverse to use when accessing GitHub repositories. If not set, Docverse will operate in a limited mode without GitHub integration. |
