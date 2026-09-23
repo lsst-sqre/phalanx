@@ -234,6 +234,8 @@ Rubin Observatory's telemetry service
 | backup.schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
 | backup.tolerations | list | `[]` | Tolerations for the backups deployment pod |
 | consdb.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
+| control-system.cephNotifier.enabled | bool | `false` | Enable the ceph-rgw user (authenticates via SASL PLAIN on the cephplain listener) |
+| control-system.cephNotifier.topics | list | `[]` | Topics that Ceph RGW bucket notifications are allowed to write to |
 | control-system.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | control-system.topics | list | `[]` | Create lsst.s3.* related topics for the ts-salkafka user. |
 | data-transfer-monitoring.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |

@@ -7,3 +7,11 @@ cluster:
 
 # -- Create lsst.s3.* related topics for the ts-salkafka user.
 topics: []
+
+cephNotifier:
+  # -- Enable the ceph-rgw user (authenticates via SASL PLAIN on the
+  # cephplain listener)
+  enabled: false
+
+  # -- Topics that Ceph RGW bucket notifications are allowed to write to
+  topics: []

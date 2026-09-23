@@ -96,3 +96,29 @@ spec:
         operations:
           - Describe
           - DescribeConfigs
+{{- if .Values.cephNotifier.enabled }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: ceph-rgw
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  # No authentication block: ceph-rgw authenticates via SASL PLAIN on the
+  # cephplain listener (JAAS config). This KafkaUser only manages its ACLs.
+  authorization:
+    type: simple
+    acls:
+    {{- range .Values.cephNotifier.topics }}
+      - resource:
+          type: topic
+          name: {{ . | quote }}
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - Write
+          - Describe
+    {{- end }}
+{{- end }}
