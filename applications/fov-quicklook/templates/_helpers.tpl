@@ -11,11 +11,6 @@
     secretKeyRef:
       name: fov-quicklook
       key: s3_repository_secret_key
-- name: QUICKLOOK_s3_tile__secret_key
-  valueFrom:
-    secretKeyRef:
-      name: fov-quicklook
-      key: s3_repository_secret_key
 - name: QUICKLOOK_s3_tile_key_prefix
   value: {{ .Values.config.s3_tile_path_prefix | quote }}
 - name: QUICKLOOK_max_object_storage_usage
