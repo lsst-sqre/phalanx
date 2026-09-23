@@ -1,7 +1,8 @@
 image:
-  # Temporary override to test lsst-sqre/docverse#684 before its server
-  # release; revert to the chart appVersion once that PR ships.
-  tag: "tickets-DM-56095-disable-cdn-purge"
+  # Temporary override to test the lsst-sqre/docverse#684 -> #686 -> #693
+  # PR stack before its server release; revert to the chart appVersion
+  # once that stack ships.
+  tag: "tickets-DM-56095-upload-resilience"
   pullPolicy: "Always"
 
 config:
