@@ -3,7 +3,7 @@ replicaCount: 4
 config:
   metrics:
     enabled: true
-
   sentry:
     enabled: true
     tracesSampleRate: 1
+  slackAlerts: true
