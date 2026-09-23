@@ -67,11 +67,6 @@ spec:
                 secretKeyRef:
                   name: {{ template "times-square.fullname" . }}-secret
                   key: "TS_GITHUB_WEBHOOK_SECRET"
-            - name: "TS_GITHUB_WEBHOOK_SECRET"
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "times-square.fullname" . }}-secret
-                  key: "TS_GITHUB_WEBHOOK_SECRET"
             - name: "TS_GITHUB_APP_PRIVATE_KEY"
               valueFrom:
                 secretKeyRef:
