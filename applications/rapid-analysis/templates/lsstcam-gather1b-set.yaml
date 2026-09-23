@@ -54,8 +54,8 @@ spec:
                   fieldPath: metadata.labels['statefulset.kubernetes.io/pod-name']
             - name: RAPID_ANALYSIS_LOCATION
               value: {{ $.Values.location | upper | quote }}
-          {{- if or $.Values.env $.Values.envSecrets }}
-          {{- range $env_var, $env_value := $.Values.env }}
+          {{- if $script.env }}
+          {{- range $env_var, $env_value := $script.env }}
             - name: {{ $env_var }}
               value: {{ $env_value | quote }}
           {{- end }}
