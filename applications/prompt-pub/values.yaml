@@ -33,7 +33,7 @@ publication:
 
   butlerWriterKafka:
     # -- Address to Butler Writer Kafka
-    address: ""
+    address: "prompt-kafka-kafka-bootstrap.prompt-kafka:9092"
 
     # -- Butler Writer Kafka Topic.  Equal to kafka.outputTopic from the butler-writer-service app
     topic: "butler-writer-ingestion-events"

@@ -10,8 +10,6 @@ publication:
     embargo: "s3://embargo@rubin-summit-users/butler.yaml"
     main: "/sdf/data/rubin/repo/main/butler.yaml"
     promptPrep: "/sdf/data/rubin/repo/prompt_prep/butler.yaml"
-  butlerWriterKafka:
-    address: "prompt-kafka-kafka-bootstrap.prompt-kafka:9092"
   embargoBatchFileDir: "s3://embargo@rubin-summit-users/publication/prompt_processing/"
 
 middleware:
