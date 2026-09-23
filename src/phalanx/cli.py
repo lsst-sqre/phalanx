@@ -309,12 +309,13 @@ def application_lint(
 ) -> None:
     """Lint the Helm charts for applications.
 
-    Update and download any third-party dependency charts and then lint the
-    Helm chart for the given applications. If no environment is specified,
-    each chart is linted for all environments for which it has a
-    configuration.
+    Update and download any third-party dependency charts, lint the Helm
+    chart for the given applications, and check the resulting Kubernetes
+    resources with kube-linter. If no environment is specified, each chart
+    is linted for all environments for which it has a configuration.
     """
     _require_command("helm")
+    _require_command("kube-linter")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -348,14 +349,19 @@ def application_lint(
 )
 @_report_usage_errors
 def application_lint_all(
-    *, config: Path | None, git: bool = False, git_branch: str
+    *,
+    config: Path | None,
+    git: bool = False,
+    git_branch: str,
 ) -> None:
     """Lint the Helm charts for every application and environment.
 
-    Update and download any third-party dependency charts and then lint the
-    Helm charts for each application and environment combination.
+    Update and download any third-party dependency charts, lint the Helm
+    chart for each application and environment combination, and check the
+    resulting Kubernetes resources with kube-linter.
     """
     _require_command("helm")
+    _require_command("kube-linter")
     if not config:
         config = _find_config()
     factory = Factory(config)

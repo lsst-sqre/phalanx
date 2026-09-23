@@ -373,6 +373,17 @@ class ConfigStorage:
         )
         raise GitRemoteError(msg)
 
+    def get_kube_linter_config_path(self) -> Path:
+        """Determine the path to the kube-linter configuration file.
+
+        Returns
+        -------
+        pathlib.Path
+            Path to the :file:`.kube-linter.yaml` file at the root of the
+            Phalanx repository.
+        """
+        return self._path / ".kube-linter.yaml"
+
     def get_modified_applications(self, branch: str) -> dict[str, list[str]]:
         """Get all modified application and environment pairs.
 

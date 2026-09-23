@@ -3,18 +3,32 @@
 import shutil
 import subprocess
 from pathlib import Path
+from unittest.mock import ANY, call
 
 import pytest
 import yaml
 from git.repo import Repo
 from git.util import Actor
 
+from phalanx.exceptions import CommandFailedError
 from phalanx.factory import Factory
 from phalanx.models.applications import Project
 
 from ..support.cli import run_cli
+from ..support.command import MockCommand
 from ..support.data import PhalanxData
 from ..support.helm import MockHelmCommand
+
+KUBE_LINTER_ARGS = ("lint", "--config", ANY, "-")
+"""Expected arguments of each kube-linter invocation."""
+
+
+def expect_kube_linter(mock_kube_linter: MockCommand, count: int) -> None:
+    """Expect a given number of passing kube-linter runs."""
+    for _ in range(count):
+        mock_kube_linter.expect_capture(
+            args=KUBE_LINTER_ARGS, response="No lint errors found!\n"
+        )
 
 
 @pytest.fixture
@@ -243,7 +257,11 @@ def test_create_prompt(data: PhalanxData, config_path: Path) -> None:
     assert chart["description"] == "Some application"
 
 
-def test_lint(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
+def test_lint(
+    data: PhalanxData,
+    mock_helm: MockHelmCommand,
+    mock_kube_linter: MockCommand,
+) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "lint":
@@ -253,6 +271,8 @@ def test_lint(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
                 "\n"
                 "1 chart(s) linted, 0 chart(s) failed\n"
             )
+        elif command[0] == "template":
+            output = "this is some template\n"
         return subprocess.CompletedProcess(
             returncode=0,
             args=command,
@@ -261,8 +281,10 @@ def test_lint(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
         )
 
     # Lint a single application that will succeed, and check that the icon
-    # line is filtered out of the output.
+    # line is filtered out of the output. The chart is then expanded and the
+    # result fed to kube-linter, which adds no output when it passes.
     mock_helm.set_capture_callback(callback)
+    expect_kube_linter(mock_kube_linter, 1)
     result = run_cli("application", "lint", "gafaelfawr", "-e", "idfdev")
     expected = "==> Linting gafaelfawr (environment idfdev)\n"
     assert result.output == expected
@@ -270,11 +292,16 @@ def test_lint(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
     data.assert_json_matches(
         mock_helm.call_args_list, "application/lint-gafaelfawr"
     )
+    assert mock_kube_linter.mock.capture.call_args_list == [
+        call(*KUBE_LINTER_ARGS, stdin="this is some template\n")
+    ]
 
     # Lint both gafaelfawr and portal for all configured environmments. We
     # won't bother to check the --set flag again. The important part is that
     # we call helm lint twice, but all of the setup is only called once.
     mock_helm.reset_mock()
+    mock_kube_linter.mock.capture.reset_mock()
+    expect_kube_linter(mock_kube_linter, 3)
     result = run_cli("application", "lint", "gafaelfawr", "portal")
     expected += (
         "==> Linting gafaelfawr (environment minikube)\n"
@@ -294,6 +321,7 @@ def test_lint(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
             stderr="Some error\n",
         )
 
+    # kube-linter is not run when helm lint fails.
     mock_helm.reset_mock()
     mock_helm.set_capture_callback(callback_error)
     result = run_cli("application", "lint", "gafaelfawr", "--env", "idfdev")
@@ -302,9 +330,51 @@ def test_lint(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
         "Error: Application gafaelfawr in environment idfdev has errors\n"
     )
     assert result.exit_code == 1
+    assert mock_kube_linter.mock.capture.call_count == 3
 
 
-def test_lint_no_repos(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
+def test_lint_kube_linter_error(
+    mock_helm: MockHelmCommand, mock_kube_linter: MockCommand
+) -> None:
+    def callback(*command: str) -> subprocess.CompletedProcess:
+        output = None
+        if command[0] == "lint":
+            output = "==> Linting .\n\n1 chart(s) linted, 0 chart(s) failed\n"
+        elif command[0] == "template":
+            output = "this is some template\n"
+        return subprocess.CompletedProcess(
+            returncode=0, args=command, stdout=output, stderr=None
+        )
+
+    # A failing kube-linter check reports its output and fails the lint.
+    mock_helm.set_capture_callback(callback)
+    failed_args = ("lint", "--config", ".kube-linter.yaml", "-")
+    exc = subprocess.CalledProcessError(
+        returncode=1,
+        cmd=["kube-linter", *failed_args],
+        output='Duplicate environment variable FOO in container "bar"\n',
+        stderr="Error: found 1 lint errors\n",
+    )
+    mock_kube_linter.expect_capture(
+        args=KUBE_LINTER_ARGS,
+        response=CommandFailedError("kube-linter", failed_args, exc),
+    )
+    result = run_cli("application", "lint", "gafaelfawr", "-e", "idfdev")
+    assert result.output == (
+        "==> Linting gafaelfawr (environment idfdev)\n"
+        'Duplicate environment variable FOO in container "bar"\n'
+        "Error: found 1 lint errors\n"
+        "Error: Application gafaelfawr in environment idfdev has"
+        " kube-linter errors\n"
+    )
+    assert result.exit_code == 1
+
+
+def test_lint_no_repos(
+    data: PhalanxData,
+    mock_helm: MockHelmCommand,
+    mock_kube_linter: MockCommand,
+) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "lint":
@@ -319,6 +389,7 @@ def test_lint_no_repos(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
     # Lint a single application that has no dependency charts, and make sure
     # we don't try to run repo update, which may fail.
     mock_helm.set_capture_callback(callback)
+    expect_kube_linter(mock_kube_linter, 1)
     result = run_cli("application", "lint", "postgres", "-e", "idfdev")
     expected = "==> Linting postgres (environment idfdev)\n"
     assert result.output == expected
@@ -328,7 +399,12 @@ def test_lint_no_repos(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
     )
 
 
-def test_lint_all(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
+def test_lint_all(
+    data: PhalanxData,
+    mock_helm: MockHelmCommand,
+    mock_kube_linter: MockCommand,
+) -> None:
+    expect_kube_linter(mock_kube_linter, 9)
     result = run_cli("application", "lint-all")
     assert result.output == ""
     assert result.exit_code == 0
@@ -336,7 +412,10 @@ def test_lint_all(data: PhalanxData, mock_helm: MockHelmCommand) -> None:
 
 
 def test_lint_all_git(
-    data: PhalanxData, tmp_path: Path, mock_helm: MockHelmCommand
+    data: PhalanxData,
+    tmp_path: Path,
+    mock_helm: MockHelmCommand,
+    mock_kube_linter: MockCommand,
 ) -> None:
     upstream_path = tmp_path / "upstream"
     shutil.copytree(str(data.path("input")), str(upstream_path))
@@ -370,6 +449,7 @@ def test_lint_all_git(
 
     # Okay, now we can run the lint and check the helm commands that were run
     # against the expected output.
+    expect_kube_linter(mock_kube_linter, 4)
     result = run_cli(
         "application",
         "lint-all",

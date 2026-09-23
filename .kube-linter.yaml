@@ -1,0 +1,14 @@
+# Configuration for kube-linter, which "phalanx application lint" (and
+# therefore GitHub Actions) runs on the rendered Kubernetes resources of
+# each application and environment being linted.
+#
+# Only the checks listed under include are run. kube-linter's default checks
+# are deliberately disabled because most of them are style opinions that
+# Phalanx charts do not follow. Add a check here to enable it for every
+# application. See https://docs.kubelinter.io/#/generated/checks for the list.
+checks:
+  doNotAutoAddDefaults: true
+  include:
+    # Two env vars with the same name in one container. helm lint and
+    # Kubernetes both accept this, but Argo CD refuses to sync the resource.
+    - duplicate-env-var

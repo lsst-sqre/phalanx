@@ -3,6 +3,7 @@
 import shutil
 from collections.abc import Iterator
 from pathlib import Path
+from unittest.mock import patch
 
 import jinja2
 import pytest
@@ -10,7 +11,7 @@ from git import Repo
 from pytest_mock.plugin import MockerFixture
 
 from phalanx.factory import Factory
-from phalanx.storage import argocd, kubernetes
+from phalanx.storage import argocd, kube_linter, kubernetes
 
 from .support.command import MockCommand
 from .support.data import PhalanxData
@@ -73,6 +74,26 @@ def factory(data: PhalanxData) -> Factory:
 def mock_helm() -> Iterator[MockHelmCommand]:
     """Mock out Helm commands."""
     yield from patch_helm()
+
+
+@pytest.fixture
+def mock_kube_linter() -> Iterator[MockCommand]:
+    """Mock the kube-linter Command in the kube_linter storage.
+
+    Also pretend that kube-linter is on the PATH so that the CLI check for
+    its presence passes. Any other command lookups are passed through.
+    """
+    mock_command = MockCommand()
+    which = shutil.which
+
+    def mock_which(command: str) -> str | None:
+        if command == "kube-linter":
+            return "/usr/local/bin/kube-linter"
+        else:
+            return which(command)
+
+    with patch.object(shutil, "which", side_effect=mock_which):
+        yield from mock_command.patch_command_class(kube_linter)
 
 
 @pytest.fixture
