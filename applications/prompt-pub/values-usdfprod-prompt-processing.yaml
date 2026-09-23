@@ -12,9 +12,6 @@ publication:
     promptPrep: "/sdf/data/rubin/repo/prompt_prep/butler.yaml"
   butlerWriterKafka:
     address: "prompt-kafka-kafka-bootstrap.prompt-kafka:9092"
-    topic: "butler-writer-ingestion-events"
-    groupId: "prompt-publication"
-    username: "prompt-publication-consumer"
   embargoBatchFileDir: "s3://embargo@rubin-summit-users/publication/prompt_processing/"
 
 middleware:
