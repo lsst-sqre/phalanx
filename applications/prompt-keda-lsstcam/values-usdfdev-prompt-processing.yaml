@@ -5,6 +5,9 @@ prompt-keda:
     # Overrides the image tag whose default is the chart appVersion.
     tag: latest
 
+  worker:
+    timeout: 10800
+
   instrument:
     pipelines:
       # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
@@ -56,6 +59,9 @@ prompt-keda:
     redisStreams:
       # Dev processes very old images, set to ~20 years
       expiration: 600_000_000.0
+    minReplicaCount: 1
+    maxReplicaCount: 1
+
 
   butler_writer:
     enabled: true
