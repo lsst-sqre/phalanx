@@ -1,6 +1,6 @@
-# Configuration for kube-linter, which "phalanx application lint
-# --kube-linter" (and therefore GitHub Actions) runs on the rendered
-# Kubernetes resources of each application and environment being linted.
+# Configuration for kube-linter, which "phalanx application lint" (and
+# therefore GitHub Actions) runs on the rendered Kubernetes resources of
+# each application and environment being linted.
 #
 # Only the checks listed under include are run. kube-linter's default checks
 # are deliberately disabled because most of them are style opinions that

@@ -34,6 +34,18 @@
     "global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.repertoireUrl=https://data-dev.lsst.cloud/repertoire,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
   ],
   [
+    "template",
+    "argocd",
+    "<ANY>",
+    "--include-crds",
+    "--values",
+    "argocd/values.yaml",
+    "--values",
+    "argocd/values-idfdev.yaml",
+    "--set",
+    "global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.repertoireUrl=https://data-dev.lsst.cloud/repertoire,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
+  ],
+  [
     "dependency",
     "update",
     "--skip-refresh"
@@ -42,6 +54,18 @@
     "lint",
     "gafaelfawr",
     "--strict",
+    "--values",
+    "gafaelfawr/values.yaml",
+    "--values",
+    "gafaelfawr/values-idfdev.yaml",
+    "--set",
+    "global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.repertoireUrl=https://data-dev.lsst.cloud/repertoire,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
+  ],
+  [
+    "template",
+    "gafaelfawr",
+    "<ANY>",
+    "--include-crds",
     "--values",
     "gafaelfawr/values.yaml",
     "--values",
@@ -61,6 +85,18 @@
     "global.host=minikube.lsst.cloud,global.baseUrl=https://minikube.lsst.cloud,global.environmentName=minikube,global.repertoireUrl=https://minikube.lsst.cloud/repertoire,global.vaultSecretsPath=secret/phalanx/minikube"
   ],
   [
+    "template",
+    "gafaelfawr",
+    "<ANY>",
+    "--include-crds",
+    "--values",
+    "gafaelfawr/values.yaml",
+    "--values",
+    "gafaelfawr/values-minikube.yaml",
+    "--set",
+    "global.host=minikube.lsst.cloud,global.baseUrl=https://minikube.lsst.cloud,global.environmentName=minikube,global.repertoireUrl=https://minikube.lsst.cloud/repertoire,global.vaultSecretsPath=secret/phalanx/minikube"
+  ],
+  [
     "dependency",
     "update",
     "--skip-refresh"
@@ -69,6 +105,18 @@
     "lint",
     "portal",
     "--strict",
+    "--values",
+    "portal/values.yaml",
+    "--values",
+    "portal/values-idfdev.yaml",
+    "--set",
+    "global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.environmentName=idfdev,global.repertoireUrl=https://data-dev.lsst.cloud/repertoire,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
+  ],
+  [
+    "template",
+    "portal",
+    "<ANY>",
+    "--include-crds",
     "--values",
     "portal/values.yaml",
     "--values",

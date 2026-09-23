@@ -101,7 +101,7 @@ jobs:
       - uses: astral-sh/setup-uv@v10.2.0
 
       - name: Run Phalanx Helm linter
-        run: uv run --only-group=tox tox run -e phalanx-lint-change
+        run: uv run --only-group=tox tox run -e phalanx-lint
 
   changes:
     runs-on: ubuntu-latest

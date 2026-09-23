@@ -113,8 +113,8 @@ If you don't want to (or don't have access to) install helm globally on your sys
 Install kube-linter
 ===================
 
-:command:`phalanx application lint --kube-linter` checks the rendered Kubernetes resources of a chart with kube-linter_, and GitHub Actions runs the lint check with this flag.
-To run the same check locally, download the binary for your platform from the `kube-linter releases page <https://github.com/stackrox/kube-linter/releases>`__ and put it on your PATH (or in the :file:`bin` directory of your virtual environment, as with helm-docs).
+:command:`phalanx application lint` checks the rendered Kubernetes resources of a chart with kube-linter_ as well as running :command:`helm lint`, so kube-linter must be available on your PATH.
+Download the binary for your platform from the `kube-linter releases page <https://github.com/stackrox/kube-linter/releases>`__ and put it on your PATH (or in the :file:`bin` directory of your virtual environment, as with helm-docs).
 To see what version is used by GitHub Actions, look for ``KUBE_LINTER_VERSION`` in :file:`.github/workflows/ci.yaml`.
 The checks that are run are configured in :file:`.kube-linter.yaml` at the top level of the Phalanx repository.
 
