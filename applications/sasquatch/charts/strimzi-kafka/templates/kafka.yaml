@@ -252,6 +252,11 @@ spec:
           listenerConfig:
             sasl.enabled.mechanisms: PLAIN
             plain.sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required user_ceph-rgw="${strimzisecrets:sasquatch/sasquatch:kafka-ceph-notifier-password}";
+        configuration:
+          brokerCertChainAndKey:
+            secretName: {{ .Values.cluster.name }}-external-tls
+            certificate: tls.crt
+            key: tls.key
         networkPolicyPeers:
           - namespaceSelector:
               matchLabels:
