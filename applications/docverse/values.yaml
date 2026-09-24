@@ -107,6 +107,17 @@ config:
     # peaks at 8 s, so this only bites for a longer `Retry-After`.
     uploadMaxBackoffSeconds: 30.0
 
+    # -- Process-wide cap on concurrent presigned uploads across every
+    # running keeper-sync job in the sync worker. Each concurrent upload
+    # holds one outbound connection, and the copy client keeps that many
+    # (plus 10 of headroom) connections alive, so this bounds the NAT
+    # source ports one sync-worker pod consumes. 32 fits the default 64
+    # static Cloud NAT ports per GKE node; raise it toward
+    # `DOCVERSE_KEEPER_SYNC_MAX_JOBS` x `DOCVERSE_KEEPER_SYNC_COPY_CONCURRENCY` (80 at the defaults) once the Cloud NAT
+    # allocation is raised and the NAT drop logs stay at zero through a
+    # full backfill.
+    uploadConcurrency: 32
+
     # -- Seconds the keeper-sync worker waits before re-running a build
     # copy that failed on a transport error at either end (an R2 outage
     # that outlasted the per-object budget, or an LTD S3 timeout during a
