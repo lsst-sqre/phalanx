@@ -92,8 +92,9 @@ Publish versioned docs
 | syncWorker.podAnnotations | object | `{}` | Annotations for the Keeper-sync worker pod |
 | syncWorker.replicaCount | int | `1` | Number of Keeper-sync worker pods to start |
 | syncWorker.resources | object | See `values.yaml` | Resource limits and requests for the Keeper-sync worker pod |
-| syncWorker.resources.limits.memory | string | `"1Gi"` | Higher than the other workers because keeper-sync buffers whole LTD objects in memory while copying builds, across several concurrent jobs. Measured worst-case RSS is about 200Mi. |
+| syncWorker.resources.limits.memory | string | `"2Gi"` | Higher than the other workers because keeper-sync buffers whole LTD objects in memory while copying builds, across several concurrent jobs. Measured idle RSS after a 477-project backfill is about 840Mi (roundtable-prod, 2026-09-23), so the previous 1Gi limit left almost no room for the next wave. |
 | syncWorker.tolerations | list | `[]` | Tolerations for the Keeper-sync worker pod |
 | tolerations | list | `[]` | Tolerations for the docverse deployment pod |
 | workerResources | object | See `values.yaml` | Resource limits and requests for the docverse worker pod |
+| workerResources.limits.memory | string | `"1Gi"` | The worker idles at roughly 480Mi after a keeper-sync backfill and was OOM-killed at 512Mi while running ten concurrent publish_edition and dashboard_build jobs (roundtable-prod, 2026-09-23). A killed worker strands in-flight publishes until the 4 h reaper runs, so leave headroom for a full burst. |
 | workerResources.requests.cpu | string | `"50m"` | GKE Autopilot requires a minimum CPU request of 50m |
