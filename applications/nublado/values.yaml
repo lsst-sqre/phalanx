@@ -554,8 +554,10 @@ jupyterhub:
     # -- Whether to log out the user (from JupyterHub) when culling their lab
     users: false
 
-    # -- Whether to remove named servers when culling their lab
-    removeNamedServers: true
+    # -- Whether to remove named servers when culling their lab. This should
+    # be true, but Zero to JupyterHub doesn't handle the flag correctly and we
+    # don't use named servers anyway
+    removeNamedServers: false
 
     # -- Maximum age of a lab regardless of activity
     # @default -- 864000 (10 days)

@@ -141,7 +141,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.cull.enabled | bool | `true` | Enable the lab culler. |
 | jupyterhub.cull.every | int | 3600 (1 hour) | How frequently to check for idle labs in seconds |
 | jupyterhub.cull.maxAge | int | 864000 (10 days) | Maximum age of a lab regardless of activity |
-| jupyterhub.cull.removeNamedServers | bool | `true` | Whether to remove named servers when culling their lab |
+| jupyterhub.cull.removeNamedServers | bool | `false` | Whether to remove named servers when culling their lab. This should be true, but Zero to JupyterHub doesn't handle the flag correctly and we don't use named servers anyway |
 | jupyterhub.cull.timeout | int | 432000 (5 days) | Default idle timeout before the lab is automatically deleted in seconds |
 | jupyterhub.cull.users | bool | `false` | Whether to log out the user (from JupyterHub) when culling their lab |
 | jupyterhub.hub.authenticatePrometheus | bool | `false` | Whether to require metrics requests to be authenticated |
