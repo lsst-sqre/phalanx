@@ -67,7 +67,7 @@ alert-brokers:
       groups:
         - "snaps-usdf"
 
-  serviceAccounts:
+  serviceAccountsReadWrite:
 
     - username: "prompt-alert"
       topics: *communityReadonlyTopics
