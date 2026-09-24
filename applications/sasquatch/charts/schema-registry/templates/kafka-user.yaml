@@ -37,11 +37,11 @@ spec:
         operations:
           - DescribeConfigs
         type: allow
-      # Allow all operations on the schema-registry* group
+      # Allow all operations on this Schema Registry cluster's group
       - resource:
           type: group
-          name: schema-registry
-          patternType: prefix
+          name: {{ include "schema-registry.groupId" . | quote }}
+          patternType: literal
         operations:
           - All
         type: allow
