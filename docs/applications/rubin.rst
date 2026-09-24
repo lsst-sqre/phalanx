@@ -33,4 +33,5 @@ Argo CD project: ``rubin``
    schedview-snapshot/index
    schedview-static-pages/index
    skyviewer/index
+   so-evening-tailgate/index
    weatherbroadcaster/index

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "so-evening-tailgate"
+  labels:
+    {{- include "so-evening-tailgate.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: 8080
+      targetPort: "http"
+      protocol: "TCP"
+      name: "http"
+  selector:
+    {{- include "so-evening-tailgate.selectorLabels" . | nindent 4 }}

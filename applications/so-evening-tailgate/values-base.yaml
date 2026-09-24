@@ -1,0 +1,17 @@
+image:
+  tag: latest
+  pullPolicy: Always
+metadata:
+  name: so-evening-tailgate
+  namespace: so-evening-tailgate
+  labels:
+    app.kubernetes.io/name: so-evening-tailgate
+env:
+  TAILGATE_CHANNEL_ID: C07QJMQH50S
+  DAY_OBS_USERGROUP_ID: S09NHMEN65Q
+  SCI_SUP_SHIFT_USERGROUP_ID: S09F0KPLC3G
+  TAILGATE_MEETING_LINK: "https://ls.st/summit-control-room-zoom"
+  TAILGATE_TIMEZONE: "America/Santiago"
+  TAILGATE_REMINDER_TIME: "14:00"
+  TAILGATE_CUTOFF_TIME: "15:55"
+  TAILGATE_MEETING_TIME_LABEL: "16:30"

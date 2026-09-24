@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Slack bot to post daily reminders of the evening tailgate.
+name: so-evening-tailgate
+sources:
+- https://github.com/lsst-sqre/so-evening-tailgate
+type: application
+version: 1.0.0

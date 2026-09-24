@@ -1,0 +1,30 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "so-evening-tailgate"
+  labels:
+    {{- include "so-evening-tailgate.labels" . | nindent 4 }}
+config:
+  scopes:
+    all:
+      - "read:image"
+  service: "so-evening-tailgate"
+template:
+  metadata:
+    name: "so-evening-tailgate"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.config.pathPrefix | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "so-evening-tailgate"
+                  port:
+                    number: 8080
