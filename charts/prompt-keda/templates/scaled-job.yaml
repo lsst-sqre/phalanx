@@ -25,6 +25,9 @@ spec:
           - name: {{ include "prompt-keda.fullname" . | trimPrefix "prompt-keda-" }}
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
             imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+            securityContext:
+              capabilities:
+                add: ["SYS_PTRACE"]
             env:
               - name: PLATFORM
                 value: keda
@@ -166,6 +169,8 @@ spec:
               - name: FANNED_OUT_MSG_LISTEN_TIMEOUT
                 value: {{ .Values.keda.redisStreams.msgListenTimeout | toString | quote }}
             volumeMounts:
+              - name: profiles
+                mountPath: /profiles
               - mountPath: /tmp-butler
                 name: ephemeral
               {{- include "prompt-keda.credentials-volumeMounts" . | nindent 14 }}
@@ -188,6 +193,10 @@ spec:
               {{- toYaml . | nindent 14 }}
             {{- end }}
         volumes:
+          - name: profiles
+            persistentVolumeClaim:
+              claimName: memray-profiles
+            storageClass: wekafs--sdf-k8s01
           - name: ephemeral
             emptyDir:
               sizeLimit: {{ .Values.keda.ephemeralStorageLimit }}
