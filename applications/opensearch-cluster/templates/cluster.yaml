@@ -6,6 +6,7 @@ spec:
   general:
     serviceName: {{ .Values.clusterName }}
     version: {{ .Values.version }}
+    setVMMaxMapCount: true
   dashboards:
     enable: {{ .Values.dashboards.enable }}
     version: {{ .Values.version }}
@@ -20,6 +21,7 @@ spec:
       jvm: {{ .Values.masters.jvm }}
       roles:
         - "cluster_manager"
+      terminationGracePeriodSeconds:  {{ .Values.masters.terminationGracePeriodSeconds }}
     - component: data
       replicas: {{ .Values.nodes.replicaCount }}
       diskSize: {{ .Values.nodes.diskSize }}
@@ -28,6 +30,7 @@ spec:
       jvm: {{ .Values.nodes.jvm }}
       roles:
         - "data"
+      terminationGracePeriodSeconds:  {{ .Values.nodes.terminationGracePeriodSeconds }}
   security:
     tls:
       http:
