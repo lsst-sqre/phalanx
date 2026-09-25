@@ -4,9 +4,10 @@ metadata:
   name: {{ .Values.clusterName }}
 spec:
   general:
+    pluginsList:  {{. Values.pluginsList}}
     serviceName: {{ .Values.clusterName }}
-    version: {{ .Values.version }}
     setVMMaxMapCount: true
+    version: {{ .Values.version }}
   dashboards:
     enable: {{ .Values.dashboards.enable }}
     version: {{ .Values.version }}

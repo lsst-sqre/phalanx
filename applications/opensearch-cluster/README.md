@@ -28,6 +28,7 @@ OpenSearch Cluster
 | nodes.replicaCount | int | `3` | Number of masters pods to start |
 | nodes.resources | object | See `values.yaml` | Resource limits and requests for the opensearch-cluster deployment pod |
 | nodes.terminationGracePeriodSeconds | string | `"120"` |  |
+| pluginsList[0] | string | `"repository-s3"` |  |
 | security.tls.http.certificateDuration | string | `"8760h"` | Certificate validity duration |
 | security.tls.http.enabled | bool | `true` | Enable TLS for HTTP |
 | security.tls.http.generateEnabled | bool | `true` | Operator generate TLS |

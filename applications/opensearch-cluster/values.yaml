@@ -68,6 +68,9 @@ nodes:
 
   terminationGracePeriodSeconds: "120"
 
+pluginsList:
+  - "repository-s3"
+
 security:
   tls:
     http:
