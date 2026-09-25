@@ -1,11 +1,12 @@
 image:
   pullPolicy: Always
+  tag: "tickets-DM-56206-scope-aware-nav"
 
 ingress:
   timesSquareScope: "exec:admin"
 
 config:
-  siteName: "Rubin Science Platform @ data-dev"
+  useDiscoveryDefaults: true
   docsBaseUrl: "https://rsp.lsst.io/v/idfdev"
   semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
   enableUserNotifications: true
