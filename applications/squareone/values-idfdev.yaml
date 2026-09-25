@@ -1,6 +1,6 @@
 image:
   pullPolicy: Always
-  tag: "tickets-DM-56206-config-defaults"
+  tag: "tickets-DM-56206-scope-aware-nav"
 
 ingress:
   timesSquareScope: "exec:admin"
