@@ -78,7 +78,15 @@ affinity: {}
 # Squareone app configuration
 config:
   # -- Name of the site, used in the title and meta tags.
-  siteName: "Rubin Science Platform"
+  # @default -- The environment title from Repertoire service discovery, else "Rubin Science Platform"
+  siteName: null
+
+  # -- Omit `baseUrl` and `environmentName` (otherwise taken from
+  # `global.baseUrl` and `global.environmentName`) from the Squareone
+  # configuration so that Squareone derives them from Repertoire service
+  # discovery (the `squareone` UI service URL and `environment.label`).
+  # Requires Repertoire 3.0 or later.
+  useDiscoveryDefaults: false
 
   # -- Site description, used in meta tags
   # @default -- See `values.yaml`
