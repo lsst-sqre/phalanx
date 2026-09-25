@@ -41,6 +41,7 @@ data:
     tomcat.connector.proxyPort=80
     ca.nrc.cadc.auth.IdentityManager=org.opencadc.auth.StandardIdentityManager
     ca.nrc.cadc.util.PropertiesReader.dir=/config/
+    ca.nrc.cadc.util.Log4jInit.messageOnly=true
 
     # tap_schema database: jdbc/tapschemauser and
     # jdbc/tapadm are the same connection, different pools.
