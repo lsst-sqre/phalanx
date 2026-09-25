@@ -6,6 +6,8 @@ masters:
 
 nodes:
 
+  diskSize: "1Ti"
+
   persistence:
     pvc:
       storageClass: "wekafs--sdf-k8s01"
