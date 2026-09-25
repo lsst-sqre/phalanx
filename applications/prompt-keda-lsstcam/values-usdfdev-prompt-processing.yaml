@@ -68,3 +68,13 @@ prompt-keda:
     kafka_cluster: prompt-kafka-kafka-bootstrap.prompt-kafka:9092
     kafka_username: butler-writer
     kafka_topic: butler-writer
+
+  resources:
+    requests:
+      cpu: '1'
+      ephemeral-storage: 5Gi
+      memory: 8Gi
+    limits:
+      cpu: '1'
+      ephemeral-storage: 5Gi
+      memory: 8Gi
