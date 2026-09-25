@@ -73,8 +73,8 @@ prompt-keda:
     requests:
       cpu: '1'
       ephemeral-storage: 5Gi
-      memory: 8Gi
+      memory: 32Gi
     limits:
       cpu: '1'
       ephemeral-storage: 5Gi
-      memory: 8Gi
+      memory: 32Gi
