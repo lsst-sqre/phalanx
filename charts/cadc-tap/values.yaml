@@ -124,6 +124,12 @@ config:
     # -- Schema name for table mappings (optional)
     schema: ""
 
+    # -- Table name mappings for query rewriting (as visible:backend pairs).
+    # There is no built-in default mapping for any table, so
+    # every table queryable through this schema must have an entry here.
+    # Example: ["ppdb.mpc_orbits:`ppdb-dev-5c07.ppdb_public.mpc_orbits`"]
+    tableMappings: []
+
     image:
       # -- TAP image to use
       repository: "ghcr.io/lsst-sqre/lsst-tap-service"
