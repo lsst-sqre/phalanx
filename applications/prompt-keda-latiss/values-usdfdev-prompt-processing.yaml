@@ -24,7 +24,7 @@ prompt-keda:
     repoWait: 5
     localRepoConfig: s3://rubin-pp-dev-users/central_repo_2/config/compression.yaml
     exportTypes: |-
-      - ".*_(config|metadata|log)"
+      - ".*_(config|metadata|log|metrics)"
       - "packages"
       - "regionTimeInfo"
       - "template_detector"
