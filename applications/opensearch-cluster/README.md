@@ -21,11 +21,13 @@ OpenSearch Cluster
 | masters.persistence.pvc.storageClass | string | `""` | Storage class for PVC. |
 | masters.replicaCount | int | `3` | Number of masters pods to start |
 | masters.resources | object | See `values.yaml` | Resource limits and requests for the opensearch-cluster deployment pod |
-| nodes.diskSize | string | `"30Gi"` | Disk size of masters |
+| masters.terminationGracePeriodSeconds | string | `"120"` |  |
+| nodes.diskSize | string | `"100Gi"` | Disk size of masters |
 | nodes.jvm | string | `"-Xms8g -Xmx8g"` | Java virtual machine settings. Set JVM memory to half of resource memory limit. |
 | nodes.persistence.pvc.storageClass | string | `""` | Storage class for PVC. |
 | nodes.replicaCount | int | `3` | Number of masters pods to start |
 | nodes.resources | object | See `values.yaml` | Resource limits and requests for the opensearch-cluster deployment pod |
+| nodes.terminationGracePeriodSeconds | string | `"120"` |  |
 | security.tls.http.certificateDuration | string | `"8760h"` | Certificate validity duration |
 | security.tls.http.enabled | bool | `true` | Enable TLS for HTTP |
 | security.tls.http.generateEnabled | bool | `true` | Operator generate TLS |

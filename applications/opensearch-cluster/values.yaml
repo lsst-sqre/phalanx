@@ -37,9 +37,11 @@ masters:
   # -- Java virtual machine settings. Set JVM memory to half of resource memory limit.
   jvm: "-Xms4g -Xmx4g"
 
+  terminationGracePeriodSeconds: "120"
+
 nodes:
   # -- Disk size of masters
-  diskSize: "30Gi"
+  diskSize: "100Gi"
 
   persistence:
     pvc:
@@ -63,6 +65,8 @@ nodes:
 
   # -- Java virtual machine settings. Set JVM memory to half of resource memory limit.
   jvm: "-Xms8g -Xmx8g"
+
+  terminationGracePeriodSeconds: "120"
 
 security:
   tls:
