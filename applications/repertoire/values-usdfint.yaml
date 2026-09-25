@@ -9,7 +9,7 @@ config:
     datasets: {}
   tap:
     schemaVersion: "w.2026.36"
-    schemaSourceTemplate: "https://github.com/lsst/sdm_schemas/archive/refs/tags/{version}.tar.gz"
+    schemaSourceTemplate: "https://github.com/lsst/sdm_schemas/archive/{version}.tar.gz"
     servers:
       tap:
         enabled: true
