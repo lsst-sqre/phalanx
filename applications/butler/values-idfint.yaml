@@ -6,6 +6,8 @@ config:
   dp2PostgresUri: postgresql://butler@alloydb-dp.rsp-sql-int.internal:5432/dp2
   dp2PostgresSchema: dp2_dm_56064
   promptPostgresUri: postgresql://butler@alloydb-butler-prompt.rsp-sql-int.internal:5432/prompt
+  promptDatastoreRoot: "s3://slac@rubin-prompt/"
+  promptDatastoreRaw: "s3://slac@rubin-lsstcam-raw/"
   s3EndpointUrl: "https://storage.googleapis.com"
   repositories:
     dp02:
