@@ -6,9 +6,13 @@ metadata:
     {{- include "squareone.labels" . | nindent 4 }}
 data:
   squareone.config.yaml: |
-    siteName: {{ .Values.config.siteName | quote }}
+    {{- with .Values.config.siteName }}
+    siteName: {{ . | quote }}
+    {{- end }}
+    {{- if not .Values.config.useDiscoveryDefaults }}
     baseUrl: {{ .Values.global.baseUrl | quote }}
     environmentName: {{ .Values.global.environmentName | quote }}
+    {{- end }}
     siteDescription: {{ .Values.config.siteDescription | quote }}
     docsBaseUrl: {{ .Values.config.docsBaseUrl | quote }}
     showPreview: {{ .Values.config.showPreview }}

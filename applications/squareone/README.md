@@ -40,8 +40,9 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | config.sentryTracesSampleRate | int | `0` | Sentry traces sample rate |
 | config.showPreview | bool | `true` | Show a "preview" badge in the homepage |
 | config.siteDescription | string | See `values.yaml` | Site description, used in meta tags |
-| config.siteName | string | `"Rubin Science Platform"` | Name of the site, used in the title and meta tags. |
+| config.siteName | string | The environment title from Repertoire service discovery, else "Rubin Science Platform" | Name of the site, used in the title and meta tags. |
 | config.timesSquareUrl | string | null disables the Times Square integration | URL to the Times Square (parameterized notebooks) API service. |
+| config.useDiscoveryDefaults | bool | `false` | Omit `baseUrl` and `environmentName` (otherwise taken from `global.baseUrl` and `global.environmentName`) from the Squareone configuration so that Squareone derives them from Repertoire service discovery (the `squareone` UI service URL and `environment.label`). Requires Repertoire 3.0 or later. |
 | config.userNotificationsPollIntervalSeconds | int | `300` | Background polling cadence, in seconds, for the unread notification count in the header user menu. Only relevant when enableUserNotifications is true. |
 | fullnameOverride | string | `""` | Overrides the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD Application | Base URL for the environment |
