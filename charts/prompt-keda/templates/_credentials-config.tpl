@@ -6,15 +6,15 @@
 */}}
 {{- define "prompt-keda.dbauth-initcontainer" -}}
 - name: init-db-auth
-  # Make a copy of the read-only secret that's owned by the lsstsvc1 user
-  # lsstsvc1 account is created by main image with id 17951
+  # Make a copy of the read-only secret that's owned by the rubinpp user
+  # rubinpp account is created by main image with id 48047
   image: busybox
   imagePullPolicy: IfNotPresent
   command:
     [
     "sh",
     "-c",
-    "cp -L /app/db-auth-mount/db-auth.yaml /app/dbauth/ && chown 17951:4085 /app/dbauth/db-auth.yaml && chmod u=r,go-rwx /app/dbauth/db-auth.yaml",
+    "cp -L /app/db-auth-mount/db-auth.yaml /app/dbauth/ && chown 48047:4085 /app/dbauth/db-auth.yaml && chmod u=r,go-rwx /app/dbauth/db-auth.yaml",
     ]
   volumeMounts:
     - mountPath: /app/db-auth-mount
