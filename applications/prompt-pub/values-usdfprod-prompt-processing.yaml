@@ -10,17 +10,12 @@ publication:
     embargo: "s3://embargo@rubin-summit-users/butler.yaml"
     main: "/sdf/data/rubin/repo/main/butler.yaml"
     promptPrep: "/sdf/data/rubin/repo/prompt_prep/butler.yaml"
-  butlerWriterKafka:
-    address: "prompt-kafka-kafka-bootstrap.prompt-kafka:9092"
-    topic: "butler-writer-ingestion-events"
-    groupId: "prompt-publication"
-    username: "prompt-publication-consumer"
   embargoBatchFileDir: "s3://embargo@rubin-summit-users/publication/prompt_processing/"
 
 middleware:
   lsstResources:
     numWorkers: 4
-    s3ProfileEmbargo: "https://sdfembs3.sdf.slac.stanford.edu"
+    s3EndpointEmbargo: "https://sdfembs3.sdf.slac.stanford.edu"
 
 resources:
   requests:

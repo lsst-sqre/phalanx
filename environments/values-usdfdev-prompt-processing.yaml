@@ -25,6 +25,7 @@ applications:
   prompt-keda-hsc: true
   prompt-keda-latiss: true
   prompt-keda-lsstcam: true
+  prompt-pub: true
   prompt-redis: true
   sasquatch: true
   s3-file-notifications: true
