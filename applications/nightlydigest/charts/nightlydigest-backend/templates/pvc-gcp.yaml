@@ -1,0 +1,15 @@
+{{- if .Values.producer.enabled }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: backend-producer-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: wekafs--sdf-k8s01
+{{- end }}
+
