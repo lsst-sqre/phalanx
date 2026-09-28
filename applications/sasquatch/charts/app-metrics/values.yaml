@@ -29,6 +29,12 @@ globalAppConfig:
       - "ci_platform"
       - "success"
       - "github_repository"
+      - "method"
+      - "route"
+      - "status_class"
+      - "authenticated"
+      - "event_type"
+      - "outcome"
   gafaelfawr:
     influxTags:
       - "service"
