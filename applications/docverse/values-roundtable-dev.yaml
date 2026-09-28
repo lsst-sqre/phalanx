@@ -1,3 +1,10 @@
+image:
+  # Temporary override to test lsst-sqre/docverse#729 (observability
+  # metrics: api_request and github_webhook_received events) before its
+  # server release; revert to the chart appVersion once that PR ships.
+  tag: "tickets-DM-56095-observability-metrics"
+  pullPolicy: "Always"
+
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://docverse@localhost/docverse"
