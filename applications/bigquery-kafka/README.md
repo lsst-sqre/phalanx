@@ -12,7 +12,6 @@ BigQuery Kafka bridge
 |-----|------|---------|-------------|
 | config.arqFastMaxJobs | int | `50` | Maximum number of jobs each fast worker (used for I/O-intensive tasks) can process simultaneously |
 | config.arqSlowMaxJobs | int | `1` | Maximum number of jobs each slow worker (used for results processing) can process simultaneously |
-| config.backend | string | `"BigQuery"` | Database backend to use (Qserv or BigQuery) |
 | config.backendApiTimeout | string | `"30s"` | Timeout for backend API calls in `parse_timedelta` format. |
 | config.backendPollInterval | string | `"1s"` | Interval at which the backend is polled for query status in Safir `parse_timedelta` format |
 | config.backendRetryCount | int | `3` | How many times to retry after a backend API network failure |
@@ -35,6 +34,8 @@ BigQuery Kafka bridge
 | config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
+| config.parquetBatchCells | int | `250000` | Target number of cells (rows times columns) to accumulate before converting to an Arrow record batch when encoding Parquet. The per-result batch size in rows is this value divided by the column count. |
+| config.parquetRowGroupCells | int | `5000000` | Target number of cells (rows times columns) per Parquet row group. The per-result row group size in rows is this value divided by the column count, and never smaller than the batch size. |
 | config.redisMaxConnections | int | `55` | Size of the Redis connection pool. This should be set to `jobRunBatchSize` plus some extra connections for the monitor, cancel jobs. |
 | config.resultTimeout | int | 3600 (1 hour) | How long to wait for result processing (retrieval and upload) before timing out, in seconds. This doubles as the timeout forcibly terminating result worker pods. |
 | config.sentry.enabled | bool | `false` | Set to true to enable the Sentry integration. |

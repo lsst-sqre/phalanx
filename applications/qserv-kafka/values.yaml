@@ -16,6 +16,17 @@ config:
   # connections has been reached.
   backendApiTimeout: "30s"
 
+  # -- How frequently to poll the backend for changes in query staatus in
+  # Safir `parse_timedelta` format.
+  backendPollInterval: "1s"
+
+  # -- How many times to retry after a backend network failure
+  backendRetryCount: 3
+
+  # -- How long to wait between retries after a backend network failure, in
+  # Safir `parse_timedelta` format
+  backendRetryDelay: "1s"
+
   # -- Kafka consumer group ID
   consumerGroupId: "qserv"
 
@@ -44,6 +55,10 @@ config:
   # human-friendly)
   logProfile: "production"
 
+  # -- Maximum bytes that can be returned for a single query. Results
+  # exceeding this will be truncated and returned with an overflow marker.
+  maxResultBytes: null
+
   metrics:
     # -- Whether to enable sending metrics
     enabled: false
@@ -66,6 +81,16 @@ config:
       # for experimentation during development.
       suffix: ""
 
+  # -- Target number of cells (rows times columns) to accumulate before
+  # converting to an Arrow record batch when encoding Parquet. The per-result
+  # batch size in rows is this value divided by the column count.
+  parquetBatchCells: 250000
+
+  # -- Target number of cells (rows times columns) per Parquet row group. The
+  # per-result row group size in rows is this value divided by the column
+  # count, and never smaller than the batch size.
+  parquetRowGroupCells: 5000000
+
   sentry:
     # -- Set to true to enable the Sentry integration.
     enabled: false
@@ -78,6 +103,12 @@ config:
     # -- Set to true to enable the Slack integration. If true, the
     # slack-webhook secret must be provided.
     enabled: false
+
+  # -- Timeout for connecting to the Qserv MySQL database in seconds
+  qservDatabaseConnectTimeout: 10
+
+  # -- Timeout for reading from the Qserv MySQL database in seconds
+  qservDatabaseReadTimeout: 60
 
   # -- Extra database connections that may be opened in excess of the pool
   # size to handle surges in load. This is used primarily by the frontend for
@@ -97,10 +128,6 @@ config:
   # rely on Qserv's internal garbage collection of old queries.
   qservDeleteQueries: true
 
-  # -- Interval at which Qserv is polled for query status in Safir
-  # `parse_timedelta` format
-  qservPollInterval: "1s"
-
   # -- Maximum simultaneous connections to open to the REST API. This should
   # be set to `jobRunBatchSize` plus some extra connections for the monitor
   # and cancel jobs.
@@ -117,13 +144,6 @@ config:
   # null, the password will be assumed to be the same as the database
   # password.
   qservRestUsername: null
-
-  # -- How many times to retry after a Qserv API network failure
-  qservRetryCount: 3
-
-  # -- How long to wait between retries after a Qserv API network failure in
-  # Safir `parse_timedelta` format
-  qservRetryDelay: "1s"
 
   # -- How long to allow for temporary user table deletion before timing out
   # in Safir `parse_timedelta` format.
