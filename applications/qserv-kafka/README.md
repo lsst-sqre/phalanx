@@ -13,6 +13,9 @@ Qserv Kafka bridge
 | config.arqFastMaxJobs | int | `50` | Maximum number of jobs each fast worker (used for I/O-intensive tasks) can process simultaneously |
 | config.arqSlowMaxJobs | int | `1` | Maximum number of jobs each slow worker (used for results processing) can process simultaneously |
 | config.backendApiTimeout | string | `"30s"` | Timeout for REST API calls in Safir `parse_timedelta` format. This includes time spent waiting for a connection if the maximum number of connections has been reached. |
+| config.backendPollInterval | string | `"1s"` | How frequently to poll the backend for changes in query staatus in Safir `parse_timedelta` format. |
+| config.backendRetryCount | int | `3` | How many times to retry after a backend network failure |
+| config.backendRetryDelay | string | `"1s"` | How long to wait between retries after a backend network failure, in Safir `parse_timedelta` format |
 | config.consumerGroupId | string | `"qserv"` | Kafka consumer group ID |
 | config.jobCancelTopic | string | `"lsst.tap.job-delete"` | Kafka topic for query cancellation requests |
 | config.jobRunBatchSize | int | `50` | Maximum batch size for query execution requests. This should generally be the same as `qservRestMaxConnections`. |
@@ -21,22 +24,24 @@ Qserv Kafka bridge
 | config.jobStatusTopic | string | `"lsst.tap.job-status"` | Kafka topic for query status |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
+| config.maxResultBytes | string | `nil` | Maximum bytes that can be returned for a single query. Results exceeding this will be truncated and returned with an overflow marker. |
 | config.metrics.application | string | `"qservkafka"` | Name under which to log metrics. Generally there is no reason to change this. |
 | config.metrics.enabled | bool | `false` | Whether to enable sending metrics |
 | config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
+| config.parquetBatchCells | int | `250000` | Target number of cells (rows times columns) to accumulate before converting to an Arrow record batch when encoding Parquet. The per-result batch size in rows is this value divided by the column count. |
+| config.parquetRowGroupCells | int | `5000000` | Target number of cells (rows times columns) per Parquet row group. The per-result row group size in rows is this value divided by the column count, and never smaller than the batch size. |
+| config.qservDatabaseConnectTimeout | int | `10` | Timeout for connecting to the Qserv MySQL database in seconds |
 | config.qservDatabaseOverflow | int | `20` | Extra database connections that may be opened in excess of the pool size to handle surges in load. This is used primarily by the frontend for jobs that complete immediately. |
 | config.qservDatabasePoolSize | int | `10` | Database pool size. This is the number of MySQL connections that will be held open regardless of load. This should generally be set to the same as `maxWorkerJobs`. |
+| config.qservDatabaseReadTimeout | int | `60` | Timeout for reading from the Qserv MySQL database in seconds |
 | config.qservDatabaseUrl | string | None, must be set | URL to the Qserv MySQL interface (must use a scheme of `mysql+asyncmy`) |
 | config.qservDeleteQueries | bool | `true` | Whether to delete queries after they complete. If this is set to false, rely on Qserv's internal garbage collection of old queries. |
-| config.qservPollInterval | string | `"1s"` | Interval at which Qserv is polled for query status in Safir `parse_timedelta` format |
 | config.qservRestMaxConnections | int | `55` | Maximum simultaneous connections to open to the REST API. This should be set to `jobRunBatchSize` plus some extra connections for the monitor and cancel jobs. |
 | config.qservRestSendApiVersion | bool | `false` | Whether to send the expected API version in REST API calls to Qserv |
 | config.qservRestUrl | string | None, must be set | URL to the Qserv REST API |
 | config.qservRestUsername | string | `nil` | Username for HTTP Basic Authentication for the Qserv REST API. If not null, the password will be assumed to be the same as the database password. |
-| config.qservRetryCount | int | `3` | How many times to retry after a Qserv API network failure |
-| config.qservRetryDelay | string | `"1s"` | How long to wait between retries after a Qserv API network failure in Safir `parse_timedelta` format |
 | config.qservUploadDeleteTimeout | string | `"5m"` | How long to allow for temporary user table deletion before timing out in Safir `parse_timedelta` format. |
 | config.qservUploadTimeout | string | `"30m"` | How long to allow for user table upload before timing out in Safir `parse_timedelta` format. |
 | config.redisMaxConnections | int | `15` | Size of the Redis connection pool. This should be set to `jobRunBatchSize` plus some extra connections for the monitor, cancel jobs. |
