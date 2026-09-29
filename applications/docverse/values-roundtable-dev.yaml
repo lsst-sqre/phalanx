@@ -1,8 +1,9 @@
 image:
-  # Temporary override to test lsst-sqre/docverse#729 (observability
-  # metrics: api_request and github_webhook_received events) before its
-  # server release; revert to the chart appVersion once that PR ships.
-  tag: "tickets-DM-56095-observability-metrics"
+  # Temporary override to test lsst-sqre/docverse#730 (__main follows the
+  # repository default branch across renames), which is stacked on #729
+  # (observability metrics) and #728 (sync dates), before its server
+  # release; revert to the chart appVersion once that stack ships.
+  tag: "tickets-DM-56241"
   pullPolicy: "Always"
 
 config:
