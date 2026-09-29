@@ -79,8 +79,6 @@ config:
     embargo:
       description: >-
         Embarboged data at the United States Data Facility hosted by SLAC.
-    live:
-      description: "Live internal data from the telescope."
     prompt:
       description: "Prompt products."
 
@@ -349,20 +347,6 @@ config:
           template: "https://{{base_hostname}}/api/alerts"
           openapi: "https://{{base_hostname}}/api/alerts/openapi.json"
           docsUrl: "https://sqr-114.lsst.io/"
-    livetap:
-      data:
-        tap:
-          title: "Table access protocol (TAP)"
-          datasets:
-            - "live"
-          requiredScopes:
-            - "read:tap"
-          template: "https://{{base_hostname}}/api/livetap"
-          docsUrl: "https://www.ivoa.net/documents/TAP/"
-          versions:
-            tables:
-              template: "https://{{base_hostname}}/api/livetap/tables"
-              ivoaStandardId: "ivo://ivoa.net/std/VOSI#tables"
     mobu:
       internal:
         mobu:
@@ -648,12 +632,6 @@ config:
           - "efd_lsstcomcam"
         databaseUrl: "postgresql://consdbtap@127.0.0.1:5432/consdbtap"
         databasePasswordKey: "consdbtap-database-password"
-      livetap:
-        enabled: false
-        schemas:
-          - "oga_live_obscore"
-        databaseUrl: "postgresql://livetap@127.0.0.1:5432/livetap"
-        databasePasswordKey: "livetap-database-password"
       obsforgetap:
         enabled: false
         schemas:

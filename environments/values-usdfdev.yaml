@@ -28,7 +28,6 @@ applications:
   fov-quicklook: true
   grafana: true
   jira-data-proxy: true
-  livetap: true
   mobu: true
   mpsky: true
   narrativelog: true
