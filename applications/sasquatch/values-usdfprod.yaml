@@ -928,6 +928,9 @@ consdb:
 data-transfer-monitoring:
   enabled: true
 
+obsforge:
+  enabled: true
+
 obsloctap:
   enabled: true
 

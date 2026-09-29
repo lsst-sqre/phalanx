@@ -104,6 +104,7 @@ Rubin Observatory's telemetry service
 | kapacitor.squadcast | object | False. If set to true, you need to create the URL as a secret | Enable Squadcast alerts |
 | kapacitor.strategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
 | obsenv.enabled | bool | `false` | Whether to enable the obsenv subchart |
+| obsforge.enabled | bool | `false` | Whether to enable the obsforge subchart |
 | obsloctap.enabled | bool | `false` | Whether to enable the obsloctap subchart |
 | ppdbtap.enabled | bool | `false` | Whether to enable the ppdbtap subchart |
 | prompt-processing.enabled | bool | `false` | Whether to enable the prompt-processing subchart |
@@ -700,6 +701,7 @@ Rubin Observatory's telemetry service
 | kapacitor.sidecar | object | See kapacitor `values.yaml` | Sidecars to collect the configmaps with specified label and mount their data into specified folders |
 | kapacitor.tolerations | list | None, must be set if you want tolerations | Tolerations for pod assignment |
 | obsenv.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
+| obsforge.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | obsloctap.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | ppdbtap.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | prompt-processing.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
