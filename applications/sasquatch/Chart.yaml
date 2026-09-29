@@ -99,6 +99,9 @@ dependencies:
   - name: control-system
     condition: control-system.enabled
     version: 1.0.0
+  - name: obsforge
+    condition: obsforge.enabled
+    version: 1.0.0
   - name: obsloctap
     condition: obsloctap.enabled
     version: 1.0.0

@@ -374,6 +374,10 @@ control-system:
   # -- Whether to enable the control-system subchart
   enabled: false
 
+obsforge:
+  # -- Whether to enable the obsforge subchart
+  enabled: false
+
 obsloctap:
   # -- Whether to enable the obsloctap subchart
   enabled: false
