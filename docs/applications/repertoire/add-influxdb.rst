@@ -12,12 +12,12 @@ Currently, InfluxDB database discovery only supports authentication with usernam
 If the user does not already exist, create a suitable user in InfluxDB with a password.
 
 Normally, this user should be read-only.
-Although Repertoire will happily return read/write credentials, this is riskier since they will be accessible to any user with appropriate Gafaelfawr scopes.
+Although Repertoire will happily return read/write credentials, this is riskier since they will be accessible to any user with the appropriate Gafaelfawr scope (``read:sasquatch``).
 
 2. Store the password in a secret
 =================================
 
-Then, add an entry to :file:`applications/repertoire/secrets-{environment}.yaml` for the environment where this InfluxDB connection information will be available.
+Add an entry to :file:`applications/repertoire/secrets-{environment}.yaml` for the environment where this InfluxDB connection information will be available.
 The entry should look something like this:
 
 .. code-block:: yaml
@@ -30,7 +30,7 @@ The entry should look something like this:
 
 The top-level key should be the name of the InfluxDB database label (the label the user will specify when retrieving connection information for that database), followed by ``-password``.
 
-Then, :doc:`update the Repertoire secret </admin/update-a-secret>`.
+Then, :doc:`update the Repertoire secret </admin/update-a-secret>` to add that key with the password chosen in step one.
 
 3. Add the database metadata
 ============================
@@ -50,13 +50,12 @@ For each database, add a stanza like the following to :file:`values-{environment
      passwordKey: "idfdev_efd-password"
      schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
 
+See the `Repertoire documentation <https://repertoire.lsst.io/operations/influxdb.html>`__ for more details about the available configuration options.
+
 The ``url`` should be the URL to the InfluxDB service.
 It does not include the database, but may vary depending on whether clients should use the primary or standby instance, whether InfluxDB Enterprise is in use, and so forth.
 
-The ``database`` is the name of the InfluxDB database to use in queries.
-``schemaRegistry`` is the URL to the Confluent Kafka Schema Registry that defines the schema for data in this database.
-
-``username`` and ``passwordKey`` should be set to the username and the secret key set up in step 2.
+``username`` and ``passwordKey`` should be set to the username and the secret key set up in step two.
 
 4. Update the Repertoire application
 ====================================
