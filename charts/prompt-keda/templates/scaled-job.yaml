@@ -32,7 +32,6 @@ spec:
                 && setup lsst_distrib \
                 && exec python3 -m memray run \
                      --native \
-                     --trace-python-allocators \
                      -o /profiles/driver-${HOSTNAME}.bin \
                      -m activator.driver_keda
             env:
