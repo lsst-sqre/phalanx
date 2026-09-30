@@ -1,10 +1,11 @@
 image:
-  # Temporary override for dev run 1 of lsst-sqre/docverse#753 (locating
-  # the sync-worker memory growth from lsst-sqre/docverse#751): the
-  # tickets/DM-56095-memory-leak branch (PR #762) carries the memory
-  # sampler but not the shared-session fix. Revert to the chart
-  # appVersion once the server release carrying that work ships.
-  tag: "tickets-DM-56095-memory-leak"
+  # Temporary override for dev run 2 of lsst-sqre/docverse#753 (proving
+  # the fix for the sync-worker memory growth from lsst-sqre/docverse#751):
+  # the tickets/DM-56095-shared-botocore-session branch (PR #763, stacked
+  # on #762) carries the memory sampler plus the shared aiobotocore
+  # session. Revert to the chart appVersion once the server release
+  # carrying that work ships.
+  tag: "tickets-DM-56095-shared-botocore-session"
   pullPolicy: "Always"
 
 config:
