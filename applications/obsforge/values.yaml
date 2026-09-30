@@ -1,6 +1,9 @@
 # Default values for obsforge.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+#
+# The API, arq worker, and stream workers can be deployed independently. API
+# and arq-worker deployments require Redis.
 
 api:
   # -- Whether to deploy the ObsForge API
@@ -148,7 +151,8 @@ worker:
   tolerations: []
 
 streamWorkers:
-  # -- Whether to deploy ObsForge stream workers
+  # -- Whether to deploy ObsForge stream workers. For a stream-only deployment,
+  # set api.enabled, worker.enabled, and redis.enabled to false.
   enabled: false
 
   # -- Stream worker configurations keyed by a DNS-safe pipeline name. Each
