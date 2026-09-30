@@ -24,6 +24,10 @@ rubintv:
       value: "/rubintv/ddv/"
     - name: DDV_CLIENT_WS_ADDRESS
       value: "rubintv/ws/ddv"
+    - name: RUBINTV_CONSDB_URL
+      value: "http://consdb-pq.consdb:8080/consdb/query"
+    - name: RUBINTV_GUIDE_INSTRUMENTS
+      value: '["lsstcam","latiss"]'
     - name: RA_REDIS_HOST
       value: "redis-service.rapid-analysis.svc.cluster.local"
     envSecrets:
