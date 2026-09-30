@@ -1,0 +1,36 @@
+suite: Worker components
+templates:
+  - configmap.yaml
+  - worker-deployment.yaml
+  - worker-hpa.yaml
+  - worker-networkpolicy.yaml
+tests:
+  - it: Renders the worker Deployment by default
+    template: worker-deployment.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+
+  - it: Omits the worker Deployment when the worker is disabled
+    template: worker-deployment.yaml
+    set:
+      worker.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Omits the worker HPA when the worker is disabled
+    template: worker-hpa.yaml
+    set:
+      worker.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Omits the worker NetworkPolicy when the worker is disabled
+    template: worker-networkpolicy.yaml
+    set:
+      worker.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
