@@ -36,7 +36,7 @@ spec:
             - "arq"
             - "obsforge.worker.main.WorkerSettings"
           env:
-            {{- include "obsforge.envVars" . | nindent 12 }}
+            {{- include "obsforge.workerEnvVars" . | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: "obsforge"

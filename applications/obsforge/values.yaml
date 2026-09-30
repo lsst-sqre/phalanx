@@ -181,6 +181,10 @@ schemaUpdate:
   tolerations: []
 
 redis:
+  # -- Whether to deploy Redis for the API and arq worker. This must be true
+  # when either api.enabled or worker.enabled is true.
+  enabled: true
+
   config:
     # -- Name of secret containing Redis password
     secretName: "obsforge"

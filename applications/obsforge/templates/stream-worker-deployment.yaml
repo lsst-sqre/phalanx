@@ -41,21 +41,7 @@ spec:
             - "--stream-config-path"
             - {{ required (printf "streamWorkers.pipelines.%s.configPath must be set" $name) $worker.configPath | quote }}
           env:
-            - name: "OBSFORGE_DATABASE_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "obsforge"
-                  key: "database-password"
-            - name: "OBSFORGE_KAFKA_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "obsforge"
-                  key: "kafka-password"
-            - name: "OBSFORGE_SCHEMA_REGISTRY_TOKEN"
-              valueFrom:
-                secretKeyRef:
-                  name: "obsforge"
-                  key: "schema-registry-token"
+            {{- include "obsforge.streamEnvVars" $ | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: "obsforge"
