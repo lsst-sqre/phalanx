@@ -1,6 +1,6 @@
 image:
   pullPolicy: Always
-  tag: "tickets-DM-56206-auth-hydration"
+  tag: "tickets-DM-56447"
 
 ingress:
   timesSquareScope: "exec:admin"
