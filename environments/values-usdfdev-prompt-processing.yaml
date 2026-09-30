@@ -20,6 +20,7 @@ applications:
   apdb-backups-gcp: true
   butler-writer-service: true
   keda: true
+  mpsky: true
   next-visit-fan-out: true
   prompt-kafka: true
   prompt-keda-hsc: true
