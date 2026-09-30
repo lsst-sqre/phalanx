@@ -114,9 +114,6 @@ After thorough testing and coordination with the rest of the project on a releas
    Ensure that either the new TAP schemas are in the currently configured default schema release or override the ``schemaVersion`` setting for the relevant TAP server to point to a release that contains these schemas.
    Making a new sdm_schemas release and bumping the default version is highly recommended.
 
-If the new schemas are not in the current default version of the TAP schema, override the TAP schema version for this TAP server in the relevant environments by setting ``schemaVersion`` in the relevant stanza under ``config.tap.servers`` in :file:`applications/repertoire/values-{environment}.yaml`.
-   This will need to be done until the default schema version for Repertoire can be bumped to a release containing the new schema.
-
 #. Tag the new Nublado image for the new data release, if any, as recommended.
 
 #. Merge the new tutorial notebooks for the new data release into ``main``.

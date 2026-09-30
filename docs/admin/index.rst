@@ -23,7 +23,7 @@ Administrators operate infrastructure, manage secrets, and are involved in the d
 
 .. toctree::
    :caption: Procedures
-   :maxdepth: 2
+   :maxdepth: 1
 
    upgrade-windows
    sync-argo-cd
