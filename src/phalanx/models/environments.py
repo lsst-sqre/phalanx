@@ -488,7 +488,6 @@ class Environment(EnvironmentBaseConfig):
             "titleLong": self.title_long,
             "description": self.description,
         }
-        config["environmentName"] = self.name
 
         # Now, build the Repertoire configuration.
         return RepertoireSettings.model_validate(config)
