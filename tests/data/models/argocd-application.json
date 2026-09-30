@@ -5,7 +5,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -312,7 +312,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -579,7 +579,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -636,7 +636,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -758,7 +758,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -830,7 +830,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -877,7 +877,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -954,7 +954,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1001,7 +1001,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1053,7 +1053,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1095,7 +1095,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1167,7 +1167,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1219,7 +1219,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1411,7 +1411,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1468,7 +1468,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1520,7 +1520,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1687,7 +1687,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1729,7 +1729,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1771,7 +1771,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1818,7 +1818,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1885,7 +1885,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -1952,7 +1952,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
@@ -2029,7 +2029,7 @@
     },
     "spec": {
       "source": {
-        "target_revision": "main"
+        "targetRevision": "main"
       }
     },
     "status": {
