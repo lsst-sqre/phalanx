@@ -11,6 +11,7 @@ A metadata enrichment service for Rubin Observatory observations
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the obsforge deployment pod |
+| api.enabled | bool | `true` | Whether to deploy the ObsForge API |
 | config.arqMode | string | `"production"` | Mode for the arq queue dependency |
 | config.arqQueueName | string | `"arq:queue"` | Name of the arq queue used by ObsForge |
 | config.butlerLabel | string | `"prompt"` | Butler repository label used by worker enrichment |
@@ -39,6 +40,7 @@ A metadata enrichment service for Rubin Observatory observations
 | podAnnotations | object | `{}` | Annotations for the obsforge deployment pod |
 | redis.config.secretKey | string | `"redis-password"` | Key inside secret from which to get the Redis password |
 | redis.config.secretName | string | `"obsforge"` | Name of secret containing Redis password |
+| redis.enabled | bool | `true` | Whether to deploy Redis for the API and arq worker. This must be true when either api.enabled or worker.enabled is true. |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
 | redis.persistence.enabled | bool | `true` | Whether to persist Redis storage. Redis is arq transport state; keeping persistence enabled preserves queued and in-flight jobs across restarts. |
 | redis.persistence.size | string | `"100Mi"` | Amount of persistent storage to request |
@@ -53,7 +55,7 @@ A metadata enrichment service for Rubin Observatory observations
 | schemaUpdate.podAnnotations | object | `{}` | Annotations for the schema update job pod |
 | schemaUpdate.resources | object | See `values.yaml` | Resource limits and requests for the schema update job |
 | schemaUpdate.tolerations | list | `[]` | Tolerations for the schema update job |
-| streamWorkers.enabled | bool | `false` | Whether to deploy ObsForge stream workers |
+| streamWorkers.enabled | bool | `false` | Whether to deploy ObsForge stream workers. For a stream-only deployment, set api.enabled, worker.enabled, and redis.enabled to false. |
 | streamWorkers.pipelines | object | {} | Stream worker configurations keyed by a DNS-safe pipeline name. Each entry must set configPath, replicaCount, resources, podAnnotations, affinity, nodeSelector, and tolerations. |
 | tolerations | list | `[]` | Tolerations for the obsforge deployment pod |
 | worker.affinity | object | `{}` | Affinity rules for the obsforge worker pods |
@@ -61,6 +63,7 @@ A metadata enrichment service for Rubin Observatory observations
 | worker.autoscaling.maxReplicas | int | `10` | Maximum number of obsforge worker pods |
 | worker.autoscaling.minReplicas | int | `1` | Minimum number of obsforge worker pods |
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `75` | Target CPU utilization of obsforge worker pods |
+| worker.enabled | bool | `true` | Whether to deploy the ObsForge arq worker |
 | worker.nodeSelector | object | `{}` | Node selection rules for the obsforge worker pods |
 | worker.podAnnotations | object | `{}` | Annotations for the obsforge worker pods |
 | worker.replicaCount | int | `1` | Number of worker pods to start if autoscaling is disabled |
