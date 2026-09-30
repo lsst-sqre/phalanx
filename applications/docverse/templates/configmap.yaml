@@ -30,6 +30,11 @@ data:
   DOCVERSE_EDITION_RECONCILE_ENABLED: {{ .Values.config.maintenance.editionReconcileEnabled | quote }}
   DOCVERSE_EDITION_RECONCILE_MAX_ACTIONS_PER_JOB: {{ .Values.config.maintenance.editionReconcileMaxActionsPerJob | quote }}
   DOCVERSE_CDN_PURGE_ENABLED: {{ .Values.config.cdnPurgeEnabled | quote }}
+  DOCVERSE_MEMORY_DIAGNOSTICS_ENABLED: {{ .Values.config.memoryDiagnostics.enabled | quote }}
+  DOCVERSE_MEMORY_DIAGNOSTICS_INTERVAL_SECONDS: {{ .Values.config.memoryDiagnostics.intervalSeconds | quote }}
+  DOCVERSE_MEMORY_DIAGNOSTICS_TRACEMALLOC_ENABLED: {{ .Values.config.memoryDiagnostics.tracemallocEnabled | quote }}
+  DOCVERSE_MEMORY_DIAGNOSTICS_TRACEMALLOC_FRAMES: {{ .Values.config.memoryDiagnostics.tracemallocFrames | quote }}
+  DOCVERSE_MEMORY_DIAGNOSTICS_TOP_N: {{ .Values.config.memoryDiagnostics.topN | quote }}
   DOCVERSE_KEEPER_SYNC_JOB_TIMEOUT_SECONDS: {{ .Values.config.keeperSync.jobTimeoutSeconds | quote }}
   DOCVERSE_KEEPER_SYNC_UPLOAD_MAX_ATTEMPTS: {{ .Values.config.keeperSync.uploadMaxAttempts | quote }}
   DOCVERSE_KEEPER_SYNC_UPLOAD_MAX_BACKOFF_SECONDS: {{ .Values.config.keeperSync.uploadMaxBackoffSeconds | quote }}
