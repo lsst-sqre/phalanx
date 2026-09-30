@@ -31,6 +31,9 @@ Follow them with caution and please update them after using them for a data rele
    Do not do this in :file:`applications/repertoire/values.yaml` because that would expose the new schema to general users prematurely in the production environment.
    Instead, override only that key in the environment-specific values file.
 
+#. If the new schemas are not in the current default version of the TAP schema, override the TAP schema version for this TAP server in the relevant environments by setting ``schemaVersion`` in the relevant stanza under ``config.tap.servers`` in :file:`applications/repertoire/values-{environment}.yaml`.
+   This will need to be done until the default schema version for Repertoire can be bumped to a release containing the new schema.
+
 3. Add data release to service discovery
 ========================================
 
@@ -106,6 +109,13 @@ After thorough testing and coordination with the rest of the project on a releas
    Add the new data release label to ``config.availableDatasets`` in :file:`applications/repertoire/values-{environment}.yaml` for the production environment.
 
 #. Add the bucket configuration for the new data release to :file:`applications/hips/values-{environment}.yaml` for the production environment.
+
+#. Move the new TAP schemas into the default ``config.tap.servers`` configuration in :file:`applications/repertoire/values.yaml`.
+   Ensure that either the new TAP schemas are in the currently configured default schema release or override the ``schemaVersion`` setting for the relevant TAP server to point to a release that contains these schemas.
+   Making a new sdm_schemas release and bumping the default version is highly recommended.
+
+If the new schemas are not in the current default version of the TAP schema, override the TAP schema version for this TAP server in the relevant environments by setting ``schemaVersion`` in the relevant stanza under ``config.tap.servers`` in :file:`applications/repertoire/values-{environment}.yaml`.
+   This will need to be done until the default schema version for Repertoire can be bumped to a release containing the new schema.
 
 #. Tag the new Nublado image for the new data release, if any, as recommended.
 
