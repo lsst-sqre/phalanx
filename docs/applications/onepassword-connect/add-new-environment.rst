@@ -72,5 +72,5 @@ Next steps
 
 You have now confirmed that 1Password is set up for your environment.
 
-- If you are migrating from the old secrets management system, perform the other steps now: :doc:`/admin/migrating-secrets`
-- If you are setting up a new environment, start populating the 1Password vault with static secrets for the applications running in that environment: :doc:`/admin/add-new-secret`
+- If you are migrating from the old secrets management system, perform the other steps now: :doc:`/admin/secrets/migrating-secrets`
+- If you are setting up a new environment, start populating the 1Password vault with static secrets for the applications running in that environment: :doc:`/admin/secrets/add-new-secret`

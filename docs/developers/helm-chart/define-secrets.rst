@@ -187,9 +187,9 @@ Adding secrets for a new application must be done by the environment administrat
 Once you have defined the secrets for your new application, contact the administrator of that environment and provide the values of any static secrets that you are using.
 They will then use one or more of the following processes:
 
-- :doc:`/admin/add-new-secret`
-- :doc:`/admin/update-a-secret`
-- :doc:`/admin/sync-secrets`
+- :doc:`/admin/secrets/add-new-secret`
+- :doc:`/admin/secrets/update-a-secret`
+- :doc:`/admin/secrets/sync-secrets`
 
 Next steps
 ==========

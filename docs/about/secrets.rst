@@ -34,5 +34,5 @@ There are several ways that static secrets can be managed (see :ref:`admin-stati
 SQuaRE uses 1Password for the static secrets for most environments that we manage.
 For more details on this secrets management approach, see :ref:`admin-secrets-onepassword`.
 
-For a step-by-step guide on adding a 1Password-based secret, see :doc:`/admin/add-new-secret`.
-For updating an existing 1Password-based secret, see :doc:`/admin/update-a-secret`.
+For a step-by-step guide on adding a 1Password-based secret, see :doc:`/admin/secrets/add-new-secret`.
+For updating an existing 1Password-based secret, see :doc:`/admin/secrets/update-a-secret`.

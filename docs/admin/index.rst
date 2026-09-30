@@ -23,19 +23,13 @@ Administrators operate infrastructure, manage secrets, and are involved in the d
 
 .. toctree::
    :caption: Procedures
-   :maxdepth: 1
+   :maxdepth: 2
 
    upgrade-windows
    sync-argo-cd
-   add-new-secret
-   update-a-secret
-   sync-secrets
-   audit-secrets
-   update-pull-secret
-   migrating-secrets
+   secrets/index
    application-branch
    set-quotas
-   op-run-phalanx-cli
 
 .. toctree::
    :caption: Troubleshooting

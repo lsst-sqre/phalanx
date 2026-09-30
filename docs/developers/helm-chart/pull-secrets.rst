@@ -50,4 +50,4 @@ If you already have another ``VaultSecret`` resource, put a line containing only
 (This is the standard YAML syntax for putting mutiple objects in the same file.)
 
 The pull secret itself is managed globally for the environment, usually by the environment administrator.
-See :doc:`/admin/update-pull-secret` for details on how to modify the pul secret if necessary.
+See :doc:`/admin/secrets/update-pull-secret` for details on how to modify the pul secret if necessary.

@@ -86,9 +86,9 @@ In the following steps, you'll deploy the new 1Password Connect server.
 
 #. If you are following this process, you are presumably using 1Password to manage your static secrets.
    Go to the 1Password vault for the environment where the 1Password Connect server will be running.
-   Create a new application secret item for the application ``onepassword-connect`` (see :doc:`/admin/add-new-secret` for more details), and add a key named ``op-session`` whose value is the base64-encoded 1Password credentials.
+   Create a new application secret item for the application ``onepassword-connect`` (see :doc:`/admin/secrets/add-new-secret` for more details), and add a key named ``op-session`` whose value is the base64-encoded 1Password credentials.
 
-#. Synchronize secrets for that environment following the instructions in :doc:`/admin/sync-secrets`.
+#. Synchronize secrets for that environment following the instructions in :doc:`/admin/secrets/sync-secrets`.
 
 .. note::
 
