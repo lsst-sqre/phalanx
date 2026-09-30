@@ -30,7 +30,7 @@ The entry should look something like this:
 
 The top-level key should be the name of the InfluxDB database label (the label the user will specify when retrieving connection information for that database), followed by ``-password``.
 
-Then, :doc:`update the Repertoire secret </admin/update-a-secret>` to add that key with the password chosen in step one.
+Then, :doc:`update the Repertoire secret </admin/secrets/update-a-secret>` to add that key with the password chosen in step one.
 
 3. Add the database metadata
 ============================

@@ -70,7 +70,7 @@ For example:
 
 If any other applications also need to use the same database, add a similar entry to their :file:`secrets.yaml` files with a ``copy`` directive.
 
-Generate the new secret and update the Vault secrets to include it by following the :doc:`standard secrets sync process </admin/sync-secrets>`.
+Generate the new secret and update the Vault secrets to include it by following the :doc:`standard secrets sync process </admin/secrets/sync-secrets>`.
 
 Finally, edit the ``postgres`` :file:`values-{environment}.yaml` files for the environments that need this database and add a section for your new database with appropriate ``user`` and ``db`` entries:
 

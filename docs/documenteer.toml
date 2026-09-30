@@ -95,3 +95,12 @@ ignore = [
     # StackOverflow doesn't seem to like link checkers.
     "^https://stackoverflow.com/questions/",
 ]
+
+[sphinx.redirects]
+"admin/add-new-secret.rst" = "admin/secrets/add-new-secret.rst"
+"admin/audit-secrets.rst" = "admin/secrets/audit-secrets.rst"
+"admin/migrating-secrets.rst" = "admin/secrets/migrating-secrets.rst"
+"admin/op-run-phalanx-cli.rst" = "admin/secrets/op-run-phalanx-cli.rst"
+"admin/sync-secrets.rst" = "admin/secrets/sync-secrets.rst"
+"admin/update-a-secret.rst" = "admin/secrets/update-a-secret.rst"
+"admin/update-pull-secret.rst" = "admin/secrets/update-pull-secret.rst"

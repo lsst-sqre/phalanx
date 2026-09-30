@@ -18,5 +18,5 @@ Provide them with the new static secret values and ask them to create or update 
 
 The environment administrator will then follow the instructions in either:
 
-- :doc:`/admin/add-new-secret`
-- :doc:`/admin/update-a-secret`
+- :doc:`/admin/secrets/add-new-secret`
+- :doc:`/admin/secrets/update-a-secret`

@@ -20,6 +20,6 @@ The recommended process of bootstrapping this type of environment is:
 
 #. Now that you have a running 1Password Connect server, take the secrets from your static secrets YAML file and :ref:`populate your 1Password vault with those secrets <admin-secrets-onepassword>`.
 
-#. Set the ``OP_CONNECT_TOKEN`` environment variable to the token for this environment and :doc:`sync secrets again </admin/sync-secrets>` using 1Password.
+#. Set the ``OP_CONNECT_TOKEN`` environment variable to the token for this environment and :doc:`sync secrets again </admin/secrets/sync-secrets>` using 1Password.
 
 #. Now, enable the rest of the applications you want to run in this environment and finish :doc:`secrets setup </admin/secrets-setup>` and :doc:`installation </admin/installation>`.

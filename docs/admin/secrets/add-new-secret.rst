@@ -13,7 +13,7 @@ Static secrets in a YAML file
 If the environment stores static secrets in a secure YAML file, the environment administrator should update that file with the newly-required static secrets.
 It may be helpful to regenerate the template for that file (see :ref:`admin-secrets-yaml`) and then use :command:`diff` to see what changed.
 
-Then, sync the secrets into Vault following the instructions in :doc:`/admin/sync-secrets`.
+Then, sync the secrets into Vault following the instructions in :doc:`sync-secrets`.
 This must be done using a Phalanx configuration that includes your new application and the secret configuration for it that you created above.
 
 Static secrets stored directly in Vault
@@ -35,7 +35,7 @@ When we manually create such a secret, we store it in 1Password.
 .. note::
 
    This document only covers creating a 1Password-backed secret for the first time for an application.
-   If you want to update a secret, either by adding new 1Password secrets or by changing their secret values, you should follow the instructions in :doc:`/admin/update-a-secret`.
+   If you want to update a secret, either by adding new 1Password secrets or by changing their secret values, you should follow the instructions in :doc:`update-a-secret`.
 
 1. Open the 1Password vault
 ---------------------------
@@ -85,5 +85,5 @@ This will generate a base64-encoded version of the secret on one line, suitable 
 3. Sync 1Password items into Vault
 ----------------------------------
 
-To sync the new 1Password items into Vault, follow the instructions in :doc:`/admin/sync-secrets`.
+To sync the new 1Password items into Vault, follow the instructions in :doc:`sync-secrets`.
 This must be done using a Phalanx configuration that includes your new application and the secret configuration for it that you created above.
