@@ -30,6 +30,7 @@ Administrators operate infrastructure, manage secrets, and are involved in the d
    secrets/index
    application-branch
    set-quotas
+   data-release
 
 .. toctree::
    :caption: Troubleshooting

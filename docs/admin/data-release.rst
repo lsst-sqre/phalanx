@@ -1,0 +1,100 @@
+#########################
+Adding a new data release
+#########################
+
+Below are a very partial set of instructions on how to make a new data release available in Phalanx.
+These instructions have not yet been tested by following them through a data release and therefore have omissions and probably have inaccuracies.
+Follow them with caution and please update them after using them for a data release.
+
+1. Add data release to Butler
+=============================
+
+#. Determine what label to use for the new data release.
+   The label should be all lowercase.
+   Past examples: ``dp1``, ``dp2``
+
+#. Configure :px-app:`butler` to serve the new data release.
+   Normally, this is done only in :px-env:`idfdev` and :px-env:`idfint` to avoid prematurely releasing data to the public.
+
+#. Add the new Butler configuration to ``butlerServerRepositories`` in :file:`environments/values-{environment}.yaml` for the relevant Phalanx environments.
+   This injects the new Butler configuration into service discovery, and into any older applications that still use the Butler configuration directly (currently, only the cutout service).
+
+2. Add data release to TAP
+==========================
+
+#. Ingest the catalog data for the new data release into Qserv, or whatever TAP backend is being used for this data release.
+
+#. Add the new data release label to the ``datasets`` key for the relevant TAP service (probably :px-app:`tap`) in service discovery.
+   Also add a new stanza to the ``ivoaRegistry.datasets`` configuration for the TAP service.
+
+#. Add the additional schemas for the new data release to the ``schemas`` key under the relevant ``config.tap.servers`` key in :file:`applications/repertoire/values-{environment}.yaml`.
+   Do not do this in :file:`applications/repertoire/values.yaml` because that would expose the new schema to general users prematurely in the production environment.
+   Instead, override only that key in the environment-specific values file.
+
+3. Add data release to service discovery
+========================================
+
+#. Add a stanza for the new data release to :file:`applications/repertoire/values.yaml` under ``config.datasets``.
+   This will require a description and an IVOA registry entry, which in turn requires assigning an IVOID to the new dataset.
+   ``docsUrl`` can be left unset to start with, but the new data release will eventually need a documentation website that can be referenced by service discovery.
+
+#. Go through all of the data service rules in ``config.rules`` in :file:`applications/repertoire/values.yaml` and add the new data release label to any relevant ``datasets`` lists.
+   Skip the TAP server for now; that will be added in a later step.
+   :px-app:`datalinker`, :px-app:`sia`, and :px-app:`vo-cutouts` are the most likely affected.
+
+#. Add the URL to the ObsCore exporter configuration for the new data release to :file:`applications/repertoire/values.yaml` under ``config.obscoreConfigs``.
+   This will be used by services that need to generate ObsCore rows from Butler results, such as :px-app:`sia`.
+
+#. Sync service discovery on the environment where the new data release is being tested.
+   This will require syncing the app of apps first to pick up the new Butler configuration, and then syncing :px-app:`repertoire`.
+   This will also update the ``TAP_SCHEMA`` database to expose the new data release tables.
+   Other services should then pick up the change automatically, but :px-app:`vo-cutouts` will require a separate sync and all Nublado notebooks will have to be restarted to see the new service discovery information.
+
+4. Test API services
+====================
+
+#. Write test notebooks for the new data release.
+   This can either use a branch of the https://github.com/lsst/tutorial-notebooks repository, a branch of the https://github.com/lsst-sqre/phalanx-test repository, or (hopefully not) a brand new repository.
+
+#. Test all data services to ensure that they work with the new data release.
+   :px-app:`vo-cutouts` and any other services that use the pipelines software on the backend may require special attention.
+
+#. Configure a :px-app:`mobu` flock to run those test notebooks against the new data release continuously on the environment on which the data release is being tested (probably :px-env:`idfint`) to catch any regressions.
+   Additional test notebooks can of course be added during the testing period.
+
+5. Configure Portal for new data release
+========================================
+
+.. admonition:: Not yet written
+
+   This section should be added by someone familiar with the details of the Portal configuration.
+
+6. Release to users
+===================
+
+After thorough testing and coordination with the rest of the project on a release date, release the new data to the public.
+
+#. Set up an outage notification for the day of the release.
+   All users will be kicked off the system during the release process.
+
+#. Block users from accessing the system and terminate all user notebook pods.
+   Use a Gafaelfawr quota override to do this by setting the API quota of every relevant service to 0 and blocking notebook spawns as documented in :doc:`/applications/nublado/block-spawns`, but setting the staff group as the bypass group.
+   This allows staff to access the cluster but not other users.
+   See `the Gafaelfawr documentation <https://gafaelfawr.lsst.io/user-guide/quotas.html>`__ for more details.
+
+#. Configure Butler for the new data release on the production environment and sync Butler.
+
+#. Add the Butler configuration URL to to ``butlerServerRepositories`` in :file:`environments/values-{environment}.yaml` for the production Phalanx environment.
+   Move any service discovery information added to :file:`applications/repertoire/values-{environment}.yaml`, such as overrides for the TAP schema, to the main :file:`values.yaml` file.
+   Add the new data release label to ``config.availableDatasets`` in :file:`applications/repertoire/values-{environment}.yaml` for the production environment.
+
+#. Tag the new Nublado image for the new data release, if any, as recommended.
+
+#. Merge the new tutorial notebooks for the new data release into ``main``.
+
+#. Sync all Phalanx applications with changes.
+   Remember to sync the app of apps first to pick up the changes to the Butler configuration.
+
+#. Test all of the services and the tutorial notebooks.
+
+#. Remove the quota override in Gafaelfawr to allow user access to the production environment again.
