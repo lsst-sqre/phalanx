@@ -35,6 +35,7 @@ applications:
   nightreport: true
   noteburst: true
   nublado: true
+  obsforge: true
   obsloctap: true
   opensearch-cluster: true
   opensearch-operator: true
