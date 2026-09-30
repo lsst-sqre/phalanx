@@ -125,6 +125,37 @@ config:
     # the edition as before.
     copyRetryDelaySeconds: 30.0
 
+  memoryDiagnostics:
+    # -- Enable the in-process memory sampler in every Docverse process
+    # (API, worker, Keeper-sync worker, maintenance worker). When on, each
+    # process logs one `Memory sample` line per interval carrying its
+    # resident size, resident high-water mark, and garbage-collector
+    # counts, so a pod's memory growth can be read from its logs without
+    # attaching a profiler (the pods run on a read-only root filesystem
+    # with every capability dropped, so nothing can be attached).
+    enabled: false
+
+    # -- Seconds between memory samples.
+    intervalSeconds: 60
+
+    # -- Also trace Python allocations with `tracemalloc` and add the
+    # traced heap size, its peak, the live object count, and the top
+    # allocation sites by growth since the previous sample to each
+    # `Memory sample` line. Roughly doubles the heap a process needs, so
+    # leave it off in production and enable it on a development
+    # environment while chasing a leak. Has no effect unless `enabled` is
+    # also set.
+    tracemallocEnabled: false
+
+    # -- Stack depth `tracemalloc` records per allocation. Deeper traces
+    # attribute growth to the calling code rather than to the library
+    # that allocated, at more overhead per allocation.
+    tracemallocFrames: 5
+
+    # -- Number of allocation sites, ranked by growth since the previous
+    # sample, included in each sample when `tracemallocEnabled` is on.
+    topN: 10
+
   maintenance:
     # -- Enable the maintenance worker that consumes the
     # `docverse:maintenance-queue` arq queue. Requires the docverse image to
@@ -252,6 +283,14 @@ workerResources:
 syncWorker:
   # -- Number of Keeper-sync worker pods to start
   replicaCount: 1
+
+  # -- Additional environment variables for the Keeper-sync worker
+  # container, as a list of `name`/`value` pairs. Meant for runtime
+  # experiments that need no chart change, such as `MALLOC_ARENA_MAX`
+  # set to `"2"` to cap glibc malloc arenas when the memory sampler
+  # shows resident size far above the traced Python heap
+  # (lsst-sqre/docverse#753).
+  extraEnv: []
 
   # -- Resource limits and requests for the Keeper-sync worker pod
   # @default -- See `values.yaml`
