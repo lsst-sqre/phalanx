@@ -76,7 +76,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use.
-      tag: "3.27.0"
+      tag: "3.28.0"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -105,7 +105,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.27.0"
+      tag: "3.28.0"
 
     # -- Whether the Qserv database is password protected. Only used for
     # direct-to-Qserv execution (`config.kafka.enabled: false`).
@@ -124,6 +124,12 @@ config:
     # -- Schema name for table mappings (optional)
     schema: ""
 
+    # -- Table name mappings for query rewriting (as visible:backend pairs).
+    # There is no built-in default mapping for any table, so
+    # every table queryable through this schema must have an entry here.
+    # Example: ["ppdb.mpc_orbits:`ppdb-dev-5c07.ppdb_public.mpc_orbits`"]
+    tableMappings: []
+
     image:
       # -- TAP image to use
       repository: "ghcr.io/lsst-sqre/lsst-tap-service"
@@ -132,7 +138,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "3.27.0"
+      tag: "3.28.0"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"

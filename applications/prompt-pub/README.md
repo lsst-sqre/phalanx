@@ -22,11 +22,12 @@ Manages the lifecycle of Butler Prompt Data Products as they move from the embar
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the prompt-pub image |
 | image.repository | string | `"ghcr.io/lsst-dm/prompt_publication_service"` | Image to use in the prompt-pub deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
+| middleware.lsstResources.awsProfile | string | `"embargo"` | AWS profile name to use for the embargo S3 endpoint |
 | middleware.lsstResources.numWorkers | int | `4` | Sets the number of concurrent Butler file transfers per process.  Setting it explicitly here because this value is nondeterministic if you don’t assign something, but the exact value isn’t that critical. |
-| middleware.lsstResources.s3ProfileEmbargo | string | `"https://sdfembs3.sdf.slac.stanford.edu"` | S3 Profile for Embargo |
+| middleware.lsstResources.s3EndpointEmbargo | string | `"https://sdfembs3.sdf.slac.stanford.edu"` | S3 endpoint URL for Embargo |
 | nodeSelector | object | `{}` | Node selection rules for the prompt-pub statefulset pod |
 | podAnnotations | object | `{"prometheus.io/port":"8000","prometheus.io/scrape":"true"}` | Annotations for the prompt-pub statefulset pod |
-| publication.butlerWriterKafka.address | string | `""` | Address to Butler Writer Kafka |
+| publication.butlerWriterKafka.address | string | `"prompt-kafka-kafka-bootstrap.prompt-kafka:9092"` | Address to Butler Writer Kafka |
 | publication.butlerWriterKafka.groupId | string | `"prompt-publication"` | Kafka Consumer Group ID |
 | publication.butlerWriterKafka.topic | string | `"butler-writer-ingestion-events"` | Butler Writer Kafka Topic.  Equal to kafka.outputTopic from the butler-writer-service app |
 | publication.butlerWriterKafka.username | string | `"prompt-publication-consumer"` | Kafka Consumer User Name |
@@ -40,4 +41,5 @@ Manages the lifecycle of Butler Prompt Data Products as they move from the embar
 | scaleReplica.downSchedule | string | `"30 21 * * *"` | Time in Cron format to scale down replica in UTC |
 | scaleReplica.enabled | bool | `false` | Enable scale up and down of prompt pub statefulset on a schedule |
 | scaleReplica.upSchedule | string | `"0 12 * * *"` | Time to Cron format scale up replica in UTC |
+| securityContext.runAsUser | int | `48045` | UID the prompt-pub container runs as (rubinppb in prod) |
 | tolerations | list | `[]` | Tolerations for the prompt-pub deployment pod |

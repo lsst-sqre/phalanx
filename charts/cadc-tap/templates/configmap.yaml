@@ -41,6 +41,7 @@ data:
     tomcat.connector.proxyPort=80
     ca.nrc.cadc.auth.IdentityManager=org.opencadc.auth.StandardIdentityManager
     ca.nrc.cadc.util.PropertiesReader.dir=/config/
+    ca.nrc.cadc.util.Log4jInit.messageOnly=true
 
     # tap_schema database: jdbc/tapschemauser and
     # jdbc/tapadm are the same connection, different pools.
@@ -90,8 +91,10 @@ data:
     {{- with .Values.config.qserv.schemaMappings }}
     tap.schema.mappings={{ . }}
     {{- end }}
-    {{- if .Values.config.qserv.tableMappings }}
-    tap.table.mappings={{ .Values.config.qserv.tableMappings | join "," }}
+    {{- $tableMappingsByBackend := dict "qserv" .Values.config.qserv.tableMappings "bigquery" .Values.config.bigquery.tableMappings }}
+    {{- $tableMappings := get $tableMappingsByBackend .Values.config.backend }}
+    {{- if $tableMappings }}
+    tap.table.mappings={{ $tableMappings | join "," }}
     {{- end }}
 
     # service configuration

@@ -23,7 +23,6 @@ applications:
   consdbtap: true
   consdb: true
   datalinker: true
-  livetap: true
   mobu: true
   nublado: true
   plot-navigator: true

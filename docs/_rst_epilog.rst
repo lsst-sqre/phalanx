@@ -53,6 +53,7 @@
 .. _SODA: https://ivoa.net/documents/SODA/
 .. _Sphinx: https://www.sphinx-doc.org/en/master/
 .. _SQuaRE Bot: https://squarebot.lsst.io/
+.. _Squareone: https://squareone.lsst.io/
 .. _TAP: https://www.ivoa.net/documents/TAP/
 .. _Telegraf: https://www.influxdata.com/time-series-platform/telegraf/
 .. _tox: https://tox.wiki/en/latest/

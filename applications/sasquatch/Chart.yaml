@@ -99,6 +99,9 @@ dependencies:
   - name: control-system
     condition: control-system.enabled
     version: 1.0.0
+  - name: obsforge
+    condition: obsforge.enabled
+    version: 1.0.0
   - name: obsloctap
     condition: obsloctap.enabled
     version: 1.0.0
@@ -116,7 +119,7 @@ dependencies:
     version: 1.0.0
   - name: trickster
     condition: trickster.enabled
-    version: 2.0.0
+    version: 2.1.0
     repository: oci://ghcr.io/trickstercache/charts
   - name: redis
     condition: redis.enabled

@@ -24,6 +24,10 @@ rubintv:
       value: "/rubintv/ddv/"
     - name: DDV_CLIENT_WS_ADDRESS
       value: "rubintv/ws/ddv"
+    - name: RUBINTV_CONSDB_URL
+      value: "http://consdb-pq.consdb:8080/consdb/query"
+    - name: RUBINTV_GUIDE_INSTRUMENTS
+      value: '["lsstcam","latiss"]'
     - name: RUBINTV_ZEPHYR_TOKEN_FILE
       value: /etc/secrets/zephyr-token
     - name: RA_REDIS_HOST

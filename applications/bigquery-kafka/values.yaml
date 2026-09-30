@@ -11,9 +11,6 @@ config:
   # can process simultaneously
   arqSlowMaxJobs: 1
 
-  # -- Database backend to use (Qserv or BigQuery)
-  backend: "BigQuery"
-
   # -- Timeout for backend API calls in `parse_timedelta` format.
   backendApiTimeout: "30s"
 
@@ -21,24 +18,24 @@ config:
   # `parse_timedelta` format
   backendPollInterval: "1s"
 
+  # -- How many times to retry after a backend API network failure
+  backendRetryCount: 3
+
   # -- How long to wait between retries after a backend API network failure in
   # Safir `parse_timedelta` format
   backendRetryDelay: "1s"
 
-  # -- How many times to retry after a backend API network failure
-  backendRetryCount: 3
-
   # -- BigQuery processing location
   bigqueryLocation: "US"
-
-  # -- GCP project ID containing the BigQuery datasets to query
-  # @default -- None, must be set
-  bigqueryProject: null
 
   # -- Maximum bytes that can be billed for a single BigQuery query. Queries
   # exceeding this will fail. Set to null for no limit.
   # @default -- 1 GB
   bigqueryMaxBytesBilled: 1000000000
+
+  # -- GCP project ID containing the BigQuery datasets to query
+  # @default -- None, must be set
+  bigqueryProject: null
 
   # -- Kafka consumer group ID
   consumerGroupId: "bigquery"
@@ -99,6 +96,16 @@ config:
       # -- Suffix to add to all registered subjects. This is sometimes useful
       # for experimentation during development.
       suffix: ""
+
+  # -- Target number of cells (rows times columns) to accumulate before
+  # converting to an Arrow record batch when encoding Parquet. The per-result
+  # batch size in rows is this value divided by the column count.
+  parquetBatchCells: 250000
+
+  # -- Target number of cells (rows times columns) per Parquet row group. The
+  # per-result row group size in rows is this value divided by the column
+  # count, and never smaller than the batch size.
+  parquetRowGroupCells: 5000000
 
   # -- Size of the Redis connection pool. This should be set to
   # `jobRunBatchSize` plus some extra connections for the monitor, cancel
