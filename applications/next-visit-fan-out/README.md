@@ -28,8 +28,6 @@ Poll next visit events from Kafka, duplicate them, and send them to all applicat
 | keda.redisRetryInitialDelay | int | `1` | Initial delay for first Redis retry in seconds. |
 | keda.redisStreams | object | See `values.yaml`. | A mapping of instrument to that instrument's Keda Scaled Job. |
 | knative.maxMessages | string | None, must be set. | The maximum number of messages that can be forwarded to all Knative instances combined. |
-| knative.retryRequests | bool | `true` | Whether or not to retry requests that returned a suitable response. |
-| knative.urls | object | See `values.yaml`. | A mapping of instrument to that instrument's Knative service. |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` | Node selection rules for the next-visit-fan-out deployment pod |
 | platform | string | `"keda"` | Platform to submit events to. Only keda supported at present. |
