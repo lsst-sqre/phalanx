@@ -334,6 +334,9 @@ prompt-processing:
   topics:
     - lsst.prompt.next-visit
 
+obsforge:
+  enabled: true
+
 obsloctap:
   enabled: true
 
