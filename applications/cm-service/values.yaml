@@ -155,13 +155,16 @@ config:
     # -- Secret key for PanDA refresh-token value
     refreshTokenSecretKey: "panda-refresh-token"
 
-  slack:
+  notifications:
 
-    # -- Name of Secret with Slack secrets
+    # -- Name of Secret with Notification secrets
     secretName: "cm-service"
 
-    # -- Secret key for Slack webhook URL
+    # -- Secret key for Default Slack webhook URL
     webhookUrlSecretKey: "slack-webhook-url"
+
+    # -- Key used to decrypt Notification secrets
+    fernetSecretKey: "notifications-fernet-key"
 
 image:
   # -- Image to use for frontend containers
@@ -242,10 +245,10 @@ daemon:
   resources:
     limits:
       cpu: "1"
-      memory: "1Gi"
+      memory: "8Gi"
     requests:
       cpu: "0.1"
-      memory: "550Mi"
+      memory: "4Gi"
 
   # -- Affinity rules for the daemon pods
   affinity: {}
@@ -265,6 +268,13 @@ web:
 
   # -- ASGI Root path for application
   rootPath: "/gui"
+
+  grafana:
+    # -- Grafana base url
+    url: "http://grafana:3000"
+
+    # -- Campaign History Dashboard path
+    campaignHistoryDashboard: "d/abcdef/campaign-history"
 
   security:
     # -- Effective UID for nonroot user

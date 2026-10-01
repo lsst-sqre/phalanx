@@ -1,0 +1,10 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: "cm-agent-token"
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+spec:
+  service: "bot-cm-agent"
+  scopes:
+    - "exec:internal-tools"

@@ -219,3 +219,6 @@ config:
     "write:sasquatch":
       - "rubinmgr"
       - "unix-admin"
+
+image:
+  tag: 14.1.0
