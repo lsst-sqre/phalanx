@@ -215,10 +215,10 @@ chronograf:
 
   image:
     # -- Docker image to use for Chronograf
-    repository: "quay.io/influxdb/chronograf"
+    repository: "docker.io/library/chronograf"
 
     # -- Docker tag to use for Chronograf
-    tag: 1.10.9
+    tag: 1.11.5
 
   updateStrategy:
     # -- Deployment strategy, use recreate with persistence enabled
