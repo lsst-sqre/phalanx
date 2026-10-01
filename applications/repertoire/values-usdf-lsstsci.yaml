@@ -1,0 +1,5 @@
+config:
+  availableDatasets: []
+  hips:
+    datasets: {}
+  influxdbDatabases: {}
