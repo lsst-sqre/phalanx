@@ -5,8 +5,6 @@ metadata:
   name: instrument-map
 data:
   instruments: |
-    knative-urls:
-      {{- .Values.knative.urls | toYaml | nindent 6 }}
     redis-streams:
       {{- .Values.keda.redisStreams | toYaml | nindent 6 }}
     detectors:

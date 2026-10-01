@@ -2,17 +2,11 @@
 platform: keda
 
 knative:
-  # -- A mapping of instrument to that instrument's Knative service.
-  # @default -- See `values.yaml`.
-  urls:
-    HSC: http://prompt-proto-service-hsc.prompt-proto-service-hsc/next-visit
-    LATISS: http://prompt-proto-service-latiss.prompt-proto-service-latiss/next-visit
-    LSSTCam: http://prompt-proto-service-lsstcam.prompt-proto-service-lsstcam/next-visit
+
   # -- The maximum number of messages that can be forwarded to all Knative instances combined.
   # @default -- None, must be set.
   maxMessages: ""
-  # -- Whether or not to retry requests that returned a suitable response.
-  retryRequests: true
+
 
 keda:
   # -- Redis cluster host.
