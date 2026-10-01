@@ -11,17 +11,22 @@ A metadata enrichment service for Rubin Observatory observations
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the obsforge deployment pod |
+| api.enabled | bool | `true` | Whether to deploy the ObsForge API |
 | config.arqMode | string | `"production"` | Mode for the arq queue dependency |
 | config.arqQueueName | string | `"arq:queue"` | Name of the arq queue used by ObsForge |
 | config.butlerLabel | string | `"prompt"` | Butler repository label used by worker enrichment |
 | config.butlerRepository | string | None, must be set | Prompt Butler repository path or URL for worker enrichment |
 | config.databaseUrl | string | None, must be set | PostgreSQL DSN for ObsForge durable state |
 | config.enrichmentMaxTries | int | `5` | Maximum arq attempts for an enrichment job |
+| config.kafkaBrokerAddress | string | None, must be set when stream workers are enabled | Kafka bootstrap server addresses for stream workers |
+| config.kafkaSecurityProtocol | string | `"sasl_ssl"` | Kafka security protocol for stream workers |
+| config.kafkaUsername | string | None, must be set when stream workers are enabled | Kafka username for stream workers |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.obscoreConfig | string | None, must be set | Path or URL to the lsst.dax.obscore prompt.yaml config |
 | config.obscoreDatasetType | string | `"preliminary_visit_image"` | Dataset type selected from the ObsCore exporter config |
 | config.pathPrefix | string | `"/obsforge"` | URL path prefix |
+| config.schemaRegistryUrl | string | None, must be set when stream workers are enabled | URL of the schema registry used by stream workers |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
 | config.updateSchema | bool | `false` | Whether to run Alembic schema migrations on install/upgrade |
 | global.host | string | Set by Argo CD | Host name for ingress |
@@ -35,6 +40,7 @@ A metadata enrichment service for Rubin Observatory observations
 | podAnnotations | object | `{}` | Annotations for the obsforge deployment pod |
 | redis.config.secretKey | string | `"redis-password"` | Key inside secret from which to get the Redis password |
 | redis.config.secretName | string | `"obsforge"` | Name of secret containing Redis password |
+| redis.enabled | bool | `true` | Whether to deploy Redis for the API and arq worker. This must be true when either api.enabled or worker.enabled is true. |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
 | redis.persistence.enabled | bool | `true` | Whether to persist Redis storage. Redis is arq transport state; keeping persistence enabled preserves queued and in-flight jobs across restarts. |
 | redis.persistence.size | string | `"100Mi"` | Amount of persistent storage to request |
@@ -49,12 +55,15 @@ A metadata enrichment service for Rubin Observatory observations
 | schemaUpdate.podAnnotations | object | `{}` | Annotations for the schema update job pod |
 | schemaUpdate.resources | object | See `values.yaml` | Resource limits and requests for the schema update job |
 | schemaUpdate.tolerations | list | `[]` | Tolerations for the schema update job |
+| streamWorkers.enabled | bool | `false` | Whether to deploy ObsForge stream workers. For a stream-only deployment, set api.enabled, worker.enabled, and redis.enabled to false. |
+| streamWorkers.pipelines | object | {} | Stream worker configurations keyed by a DNS-safe pipeline name. Each entry must set configPath, replicaCount, resources, podAnnotations, affinity, nodeSelector, and tolerations. |
 | tolerations | list | `[]` | Tolerations for the obsforge deployment pod |
 | worker.affinity | object | `{}` | Affinity rules for the obsforge worker pods |
 | worker.autoscaling.enabled | bool | `true` | Enable autoscaling of obsforge worker pods |
 | worker.autoscaling.maxReplicas | int | `10` | Maximum number of obsforge worker pods |
 | worker.autoscaling.minReplicas | int | `1` | Minimum number of obsforge worker pods |
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `75` | Target CPU utilization of obsforge worker pods |
+| worker.enabled | bool | `true` | Whether to deploy the ObsForge arq worker |
 | worker.nodeSelector | object | `{}` | Node selection rules for the obsforge worker pods |
 | worker.podAnnotations | object | `{}` | Annotations for the obsforge worker pods |
 | worker.replicaCount | int | `1` | Number of worker pods to start if autoscaling is disabled |

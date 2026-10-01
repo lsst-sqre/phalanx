@@ -1,6 +1,13 @@
 # Default values for obsforge.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+#
+# The API, arq worker, and stream workers can be deployed independently. API
+# and arq-worker deployments require Redis.
+
+api:
+  # -- Whether to deploy the ObsForge API
+  enabled: true
 
 # -- Number of web deployment pods to start
 replicaCount: 1
@@ -32,6 +39,21 @@ config:
 
   # -- Whether to run Alembic schema migrations on install/upgrade
   updateSchema: false
+
+  # -- Kafka bootstrap server addresses for stream workers
+  # @default -- None, must be set when stream workers are enabled
+  kafkaBrokerAddress: null
+
+  # -- Kafka security protocol for stream workers
+  kafkaSecurityProtocol: "sasl_ssl"
+
+  # -- Kafka username for stream workers
+  # @default -- None, must be set when stream workers are enabled
+  kafkaUsername: null
+
+  # -- URL of the schema registry used by stream workers
+  # @default -- None, must be set when stream workers are enabled
+  schemaRegistryUrl: null
 
   # -- Butler repository label used by worker enrichment
   butlerLabel: "prompt"
@@ -87,6 +109,9 @@ resources:
 tolerations: []
 
 worker:
+  # -- Whether to deploy the ObsForge arq worker
+  enabled: true
+
   # -- Affinity rules for the obsforge worker pods
   affinity: {}
 
@@ -125,6 +150,17 @@ worker:
   # -- Tolerations for the obsforge worker pods
   tolerations: []
 
+streamWorkers:
+  # -- Whether to deploy ObsForge stream workers. For a stream-only deployment,
+  # set api.enabled, worker.enabled, and redis.enabled to false.
+  enabled: false
+
+  # -- Stream worker configurations keyed by a DNS-safe pipeline name. Each
+  # entry must set configPath, replicaCount, resources, podAnnotations,
+  # affinity, nodeSelector, and tolerations.
+  # @default -- {}
+  pipelines: {}
+
 schemaUpdate:
   # -- Affinity rules for the schema update job
   affinity: {}
@@ -149,6 +185,10 @@ schemaUpdate:
   tolerations: []
 
 redis:
+  # -- Whether to deploy Redis for the API and arq worker. This must be true
+  # when either api.enabled or worker.enabled is true.
+  enabled: true
+
   config:
     # -- Name of secret containing Redis password
     secretName: "obsforge"

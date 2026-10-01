@@ -1,3 +1,4 @@
+{{- if .Values.api.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,7 +31,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-            {{- include "obsforge.envVars" . | nindent 12 }}
+            {{- include "obsforge.apiEnvVars" . | nindent 12 }}
             # Uvicorn keepalive timeout, in seconds. This should be longer
             # than any keepalive timeouts on any downstream proxies. The
             # keepalive timeout for ingress-nginx connections is 60s.
@@ -86,3 +87,4 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
+{{- end }}
