@@ -1,0 +1,99 @@
+nodePools:
+
+  masters:
+
+    persistence:
+      pvc:
+        storageClass: "wekafs--sdf-k8s01"
+
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: "kubernetes.io/hostname"
+            labelSelector:
+              matchLabels:
+                opster.io/opensearch-cluster: rubinobs-opensearch
+                opster.io/opensearch-nodepool: masters
+
+  data:
+
+    diskSize: "1Ti"
+
+    persistence:
+      pvc:
+        storageClass: "wekafs--sdf-k8s01"
+
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: "kubernetes.io/hostname"
+            labelSelector:
+              matchLabels:
+                opster.io/opensearch-cluster: rubinobs-opensearch
+                opster.io/opensearch-nodepool: data
+
+s3:
+  enabled: true
+
+roles:
+  - rolename: conda
+    clusterPermissions:
+      - "read"
+      - "cluster:monitor/nodes/stats"
+      - "cluster:monitor/task/get"
+    indexPatterns:
+      - "- conda-*"
+    allowedActions:
+      - "read"
+      - "write"
+      - "delete"
+  - rolename: panda
+    clusterPermissions:
+      - "read"
+      - "cluster:monitor/nodes/stats"
+      - "cluster:monitor/task/get"
+    indexPatterns:
+      - "- panda-*"
+    allowedActions:
+      - "read"
+      - "write"
+      - "delete"
+  - rolename: rucio
+    clusterPermissions:
+      - "read"
+      - "cluster:monitor/nodes/stats"
+      - "cluster:monitor/task/get"
+    indexPatterns:
+      - "- rucio-*"
+    allowedActions:
+      - "read"
+      - "write"
+      - "delete"
+
+users:
+  - username: condor
+    roles:
+      - condor
+  - username: panda
+    roles:
+      - panda
+  - username: rucio
+    roles:
+      - rucio
+
+roleBindings:
+  - name: conda
+    users:
+      - conda
+    roles:
+      - conda
+  - name: panda
+    users:
+      - panda
+    roles:
+      - panda
+  - name: rucio
+    users:
+      - rucio
+    roles:
+      - rucio

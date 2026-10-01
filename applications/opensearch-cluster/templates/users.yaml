@@ -1,0 +1,17 @@
+{{- range $user := $.Values.users }}
+---
+apiVersion: opensearch.org/v1
+kind: OpensearchUser
+metadata:
+  name: {{ $user.username }}
+spec:
+  opensearchCluster:
+    name: {{ $.Values.clusterName | quote }}
+  passwordFrom:
+    name: {{ $.Values.clusterName | quote }}
+    key: {{ $user.username }}-password
+  backendRoles:
+    {{- range $backendRole := $user.backendRoles }}
+    - {{ $backendRole | quote }}
+    {{- end }}
+{{- end }}
