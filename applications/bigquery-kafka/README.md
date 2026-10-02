@@ -11,7 +11,7 @@ BigQuery Kafka bridge
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | config.arqFastMaxJobs | int | `50` | Maximum number of jobs each fast worker (used for I/O-intensive tasks) can process simultaneously |
-| config.arqSlowMaxJobs | int | `1` | Maximum number of jobs each slow worker (used for results processing) can process simultaneously |
+| config.arqSlowMaxJobs | int | `2` | Maximum number of jobs each slow worker (used for results processing) can process simultaneously |
 | config.backendApiTimeout | string | `"30s"` | Timeout for backend API calls in `parse_timedelta` format. |
 | config.backendPollInterval | string | `"1s"` | Interval at which the backend is polled for query status in Safir `parse_timedelta` format |
 | config.backendRetryCount | int | `3` | How many times to retry after a backend API network failure |
