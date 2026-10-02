@@ -6,6 +6,13 @@ metadata:
   namespace: so-evening-tailgate
   labels:
     app.kubernetes.io/name: so-evening-tailgate
+resources:
+  limits:
+    cpu: 100m
+    memory: 300Mi
+  requests:
+    cpu: 10m
+    memory: 300Mi
 env:
   TAILGATE_CHANNEL_ID: C07QJMQH50S
   DAY_OBS_USERGROUP_ID: S09NHMEN65Q
