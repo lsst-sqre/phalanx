@@ -314,7 +314,7 @@ ocsscheduler:
 
 watcher:
   image:
-    revision: 9
+    revision: 13
     repository: ts-dockerhub.lsst.org/watcher
   envSecrets:
   - name: ESCALATION_KEY
