@@ -61,6 +61,8 @@ spec:
                   name: {{ $env.secretName }}
                   key: {{ $env.secretKey }}
             {{- end }}
+            - name: REDIS_HOST
+              value: nightlydigest-redis
           volumeMounts:
           - name: nightlydigest-backend-secrets
             mountPath: "/etc/secrets"
