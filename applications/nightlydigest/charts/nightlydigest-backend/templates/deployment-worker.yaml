@@ -17,6 +17,7 @@ spec:
       {{- end }}
       labels:
         {{- include "nightlydigest-backend.selectorLabels" . | nindent 8 }}
+        nightlydigest-redis-client: 'true'
     spec:
       imagePullSecrets:
         - name: "pull-secret"
