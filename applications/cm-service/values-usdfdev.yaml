@@ -72,6 +72,9 @@ image:
   tag: "0.9.0-rc1"
   pullPolicy: Always
 
+ingress:
+  docsPath: "/cm-docs"
+
 daemon:
   security:
     uid: 17951
@@ -95,3 +98,4 @@ web:
   image:
     tag: "0.9.0-rc1"
     pullPolicy: Always
+  rootPath: "/cm"
