@@ -39,6 +39,12 @@ Nightlydigest logging and reporting service
 | nightlydigest-backend.image.tag | int | `nil` | The cycle revision to add to the image tag. |
 | nightlydigest-backend.namespace | string | `"nightlydigest"` | The overall namespace for the application. |
 | nightlydigest-backend.nodeSelector | object | `{}` | Node selection rules applied to the pod. |
+| nightlydigest-backend.producer | object | `{"enabled":false,"gcpBucketName":"default","gcpProjectId":"default","restartPolicy":"Never","schedule":"0 * * * *"}` | Configuration for the Nightly Digest Producer component. |
+| nightlydigest-backend.producer.enabled | bool | `false` | If the Nightly Digest Producer component should be enabled. |
+| nightlydigest-backend.producer.gcpBucketName | string | `"default"` | GCP bucket name for the Nightly Digest Producer component. |
+| nightlydigest-backend.producer.gcpProjectId | string | `"default"` | GCP project ID for the Nightly Digest Producer component. |
+| nightlydigest-backend.producer.restartPolicy | string | `"Never"` | The cron job restart policy type |
+| nightlydigest-backend.producer.schedule | string | `"0 * * * *"` | The cron job schedule in cron format |
 | nightlydigest-backend.replicas | int | `1` | The number of replicas for the backend deployment. |
 | nightlydigest-backend.resources | object | `{}` | Resource specifications applied to the pod. |
 | nightlydigest-backend.tolerations | list | `[]` | Toleration specifications applied to the pod. |

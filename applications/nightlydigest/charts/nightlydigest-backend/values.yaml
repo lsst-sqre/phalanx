@@ -13,6 +13,18 @@ image:
   tag:
   # -- The pull policy on the Nightlydigest backend image.
   pullPolicy: IfNotPresent
+# -- Configuration for the Nightly Digest Producer component.
+producer:
+  # -- If the Nightly Digest Producer component should be enabled.
+  enabled: false
+  # -- The cron job schedule in cron format
+  schedule: "0 * * * *"
+  # -- The cron job restart policy type
+  restartPolicy: Never
+  # -- GCP project ID for the Nightly Digest Producer component.
+  gcpProjectId: default
+  # -- GCP bucket name for the Nightly Digest Producer component.
+  gcpBucketName: default
 # -- List of Kubernetes environment variable specifiers.
 env: []
 # -- List of environment variables that should come from secrets.

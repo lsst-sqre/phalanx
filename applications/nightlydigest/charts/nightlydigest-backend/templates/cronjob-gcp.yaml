@@ -1,0 +1,88 @@
+{{- if .Values.producer.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "nightlydigest-backend.name" . }}-producer
+  labels:
+    {{- include "nightlydigest-backend.labels" . | nindent 4 }}
+spec:
+  concurrencyPolicy: Forbid
+  schedule: {{ .Values.producer.schedule | quote }}
+  jobTemplate:
+    metadata:
+      labels:
+        {{- include "nightlydigest-backend.labels" . | nindent 8 }}
+    spec:
+      completions: 1
+      {{- if .Values.producer.ttlSecondsAfterFinished }}
+      ttlSecondsAfterFinished: {{ .Values.producer.ttlSecondsAfterFinished }}
+      {{- end }}
+      template:
+        metadata:
+          labels:
+            {{- include "nightlydigest-backend.labels" . | nindent 12 }}
+        spec:
+          initContainers:
+            - name: {{ include "nightlydigest-backend.name" . }}-producer
+              image: rubincr.lsst.org/nightlydigest-backend:develop
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  source /home/saluser/.setup_sal_env.sh
+                  python scripts/generate_static_files.py --backend-url http://{{ include "nightlydigest-backend.name" . }}-service:8080/nightlydigest/api --output-dir /tmp/static_output
+              volumeMounts:
+                - name: backend-producer-pvc
+                  mountPath: /tmp/static_output
+          containers:
+            - name: {{ include "nightlydigest-backend.name" . }}-producer-gcp
+              image: gcr.io/google.com/cloudsdktool/google-cloud-cli:latest
+              imagePullPolicy: IfNotPresent
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
+                  gcloud config set project {{ .Values.producer.gcpProjectId }} --quiet
+                  gcloud storage rsync /tmp/static_output gs://{{ .Values.producer.gcpBucketName }}/api --recursive --content-type="application/json"
+              env:
+                {{- with .Values.producer.env }}
+                {{- toYaml . | nindent 16 }}
+                {{- end }}
+                - name: GOOGLE_APPLICATION_CREDENTIALS
+                  value: "/etc/secrets/gcp-credentials.json"
+              volumeMounts:
+                - name: backend-producer-pvc
+                  mountPath: /tmp/static_output
+                - name: nightlydigest-secrets
+                  mountPath: "/etc/secrets"
+                  readOnly: true
+              {{- with $.Values.resources }}
+              resources:
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
+          volumes:
+            - name: backend-producer-pvc
+              persistentVolumeClaim:
+                claimName: backend-producer-pvc
+            - name: nightlydigest-secrets
+              secret:
+                defaultMode: 256
+                secretName: nightlydigest
+          restartPolicy: {{ .Values.producer.restartPolicy }}
+          imagePullSecrets:
+            - name: pull-secret
+          {{- with $.Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml $ | nindent 12 }}
+          {{- end }}
+          {{- with $.Values.affinity }}
+          affinity:
+            {{- toYaml $ | nindent 12 }}
+          {{- end }}
+          {{- with $.Values.tolerations }}
+          tolerations:
+            {{- toYaml $ | nindent 12 }}
+          {{- end }}
+{{- end }}
