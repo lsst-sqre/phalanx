@@ -168,7 +168,7 @@ spec:
               {{- range .Values.secretFixup.filenames }}
               cp /secrets-raw/{{ . }} /secrets
               {{- end }}
-              find /secrets -type f -mindepth 1 -maxdepth 1 -exec chown 73006:73006 {} \; -exec chmod 0600 {} \;
+              find /secrets -mindepth 1 -maxdepth 1 -type f -exec chown 73006:73006 {} \; -exec chmod 0600 {} \;
               {{- if .Values.secretFixup.specialInstructions }}
               {{- toYaml .Values.secretFixup.specialInstructions | nindent 14 }}
               {{- end }}
