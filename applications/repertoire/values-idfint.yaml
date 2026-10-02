@@ -28,7 +28,10 @@ config:
     servers:
       ppdbtap:
         enabled: true
-        schemaVersion: "releases/w.2026.35"
+        schemaVersion: "releases/w.2026.38"
+        schemas:
+          - "ppdb"
+          - "dp2"
       ssotap:
         enabled: true
       tap:
