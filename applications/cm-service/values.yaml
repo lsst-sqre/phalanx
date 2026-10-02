@@ -181,6 +181,9 @@ ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
 
+  # -- Path for docs page
+  docsPath: "/docs"
+
 frontend:
   # -- Number of frontend pods to start
   replicaCount: 1
