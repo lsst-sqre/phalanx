@@ -13,7 +13,7 @@ config:
         endpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
   logLevel: "DEBUG"
   logProfile: "development"
-  rootPath: ""
+  rootPath: "/cm-service"
   # deprecated, should use rootPath instead with a rewriting ingress
   docsPrefix: "/docs"
   routePrefix: "/cm-service"
