@@ -109,6 +109,10 @@ spec:
             - name: PGUSER
               value: {{ .Values.butlerSecret.dbUser | quote }}
           {{- end }}
+          {{- if .Values.efdCredentials }}
+            - name: EFDAUTH
+              value: "{{ .Values.efdCredentials.containerPath }}/{{ .Values.efdCredentials.secretFilename }}"
+          {{- end }}
           {{- $volumeTest := or .Values.entrypoint (or .Values.configfile (or .Values.secretFixup (or .Values.pvcMountpoint .Values.nfsMountpoint (or .Values.obsenv)))) }}
           {{- if $volumeTest }}
           volumeMounts:
@@ -182,7 +186,7 @@ spec:
         runAsGroup: {{ .Values.securityContext.group }}
         {{- if .Values.securityContext.fsGroup }}
         fsGroup: {{ .Values.securityContext.fsGroup }}
-        {{- end}}
+        {{- end }}
       {{- end }}
       {{- if $volumeTest }}
       volumes:
