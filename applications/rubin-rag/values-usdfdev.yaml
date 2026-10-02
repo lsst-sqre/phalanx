@@ -1,3 +1,10 @@
 weaviate:
+  service:
+    type: ClusterIP
+  grpcService:
+    type: ClusterIP
   storage:
     size: 500Gi
+image:
+  tag: "tickets-DM-55351"
+  pullPolicy: Always
