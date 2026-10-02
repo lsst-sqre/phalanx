@@ -29,7 +29,7 @@ template:
                   name: "{{ .Chart.Name }}"
                   port:
                     name: http
-            - path: "/docs"
+            - path: "{{ .Values.ingress.docsPath }}"
               pathType: Prefix
               backend:
                 service:
