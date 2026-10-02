@@ -1,0 +1,25 @@
+suite: Stream worker NetworkPolicy
+templates:
+  - stream-worker-networkpolicy.yaml
+tests:
+  - it: Does not render a policy when streaming is disabled
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Denies ingress to stream workers when streaming is enabled
+    set:
+      streamWorkers:
+        enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.podSelector.matchLabels["app.kubernetes.io/component"]
+          value: stream-worker
+      - equal:
+          path: spec.policyTypes
+          value:
+            - Ingress
+      - isNull:
+          path: spec.ingress

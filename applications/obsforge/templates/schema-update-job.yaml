@@ -19,7 +19,6 @@ spec:
       labels:
         {{- include "obsforge.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "schema-update"
-        obsforge-redis-client: "true"
     spec:
       {{- with .Values.schemaUpdate.affinity }}
       affinity:
@@ -32,7 +31,7 @@ spec:
             - "obsforge"
             - "update-schema"
           env:
-            {{- include "obsforge.envVars" . | nindent 12 }}
+            {{- include "obsforge.schemaEnvVars" . | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: "obsforge"
