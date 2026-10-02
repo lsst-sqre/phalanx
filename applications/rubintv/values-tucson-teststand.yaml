@@ -24,6 +24,8 @@ rubintv:
       value: "http://consdb-pq.consdb:8080/consdb/query"
     - name: RUBINTV_GUIDE_INSTRUMENTS
       value: '["lsstcam","latiss"]'
+    - name: RUBINTV_ZEPHYR_TOKEN_FILE
+      value: /etc/secrets/zephyr-token
     - name: RA_REDIS_HOST
       value: "redis-service.rapid-analysis.svc.cluster.local"
     envSecrets:
