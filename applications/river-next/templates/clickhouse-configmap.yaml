@@ -1,0 +1,148 @@
+{{- $limits := .Values.clickhouse.resources.limits -}}
+{{- $requests := .Values.clickhouse.resources.requests -}}
+{{- if or (ne (toString $limits.cpu) (toString $requests.cpu)) (ne (toString $limits.memory) (toString $requests.memory)) -}}
+{{- fail "clickhouse.resources.requests must equal clickhouse.resources.limits" -}}
+{{- end -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "river-next-clickhouse"
+  labels:
+    {{- include "river-next.clickhouse.labels" . | nindent 4 }}
+data:
+  # Server configuration, mounted as /etc/clickhouse-server/config.d/ and
+  # merged over the image's stock config.xml. Replaces the image's own
+  # config.d, whose only file sets listen_host.
+  config.d-paths.xml: |
+    <clickhouse>
+      <!-- The stock config.xml listens on ::1 and 127.0.0.1. Merging may
+           leave 127.0.0.1 in place, which the dual-stack :: already covers,
+           so binding it would fail; listen_try lets the server start
+           regardless. -->
+      <listen_host>::</listen_host>
+      <listen_try>1</listen_try>
+      <path>/var/lib/clickhouse/</path>
+      <tmp_path>/var/lib/clickhouse/tmp/</tmp_path>
+      <user_files_path>/var/lib/clickhouse-user-files/</user_files_path>
+      <format_schema_path>/var/lib/clickhouse/format_schemas/</format_schema_path>
+      <user_directories>
+        <local_directory>
+          <path>/var/lib/clickhouse/access/</path>
+        </local_directory>
+      </user_directories>
+    </clickhouse>
+  config.d-ports.xml: |
+    <clickhouse>
+      <http_port>8123</http_port>
+      <tcp_port>9000</tcp_port>
+      <mysql_port remove="remove"/>
+      <postgresql_port remove="remove"/>
+    </clickhouse>
+  config.d-resources.xml: |
+    <clickhouse>
+      <!-- {{ .Values.clickhouse.maxServerMemoryUsageRatio }} of the {{ .Values.clickhouse.resources.limits.memory }} memory limit -->
+      <max_server_memory_usage>{{ include "river-next.clickhouse.maxServerMemoryUsage" . }}</max_server_memory_usage>
+      <background_pool_size>{{ int .Values.clickhouse.backgroundPoolSize }}</background_pool_size>
+      <uncompressed_cache_size>{{ int64 .Values.clickhouse.uncompressedCacheSize }}</uncompressed_cache_size>
+      <mark_cache_size>{{ int64 .Values.clickhouse.markCacheSize }}</mark_cache_size>
+      <async_load_databases>true</async_load_databases>
+    </clickhouse>
+  config.d-logger.xml: |
+    <clickhouse>
+      <!-- Files on the data volume; stderr carries warnings and errors only. -->
+      <logger replace="replace">
+        <level>information</level>
+        <log>/var/lib/clickhouse/logs/clickhouse-server.log</log>
+        <errorlog>/var/lib/clickhouse/logs/clickhouse-server.err.log</errorlog>
+        <size>1000M</size>
+        <count>10</count>
+        <console>1</console>
+        <console_log_level>warning</console_log_level>
+      </logger>
+    </clickhouse>
+  # User configuration, mounted as /etc/clickhouse-server/users.d/ and merged
+  # over the image's stock users.xml. Password hashes are never written here:
+  # from_env reads them from environment variables set from the
+  # river-next-clickhouse secret.
+  users.d-profile.xml: |
+    <clickhouse>
+      <profiles>
+        <default>
+          <max_threads>{{ include "river-next.clickhouse.maxThreads" . }}</max_threads>
+        </default>
+      </profiles>
+    </clickhouse>
+  users.d-default.xml: |
+    <clickhouse>
+      <users>
+        <!-- No password, so reachable from inside the pod only. Dictionaries
+             whose source names no user load as this user. With no <grants>
+             element ClickHouse gives a users.xml user ALL ON *.* WITH GRANT
+             OPTION, as on the previous server. -->
+        <default>
+          <networks replace="replace">
+            <ip>127.0.0.1</ip>
+            <ip>::1</ip>
+          </networks>
+        </default>
+      </users>
+    </clickhouse>
+  users.d-admin.xml: |
+    <clickhouse>
+      <users>
+        <!-- With no <grants> element: ALL ON *.* WITH GRANT OPTION, plus
+             user and named-collection management from the two flags. This
+             is the previous server's admin definition. -->
+        <admin>
+          <password_sha256_hex from_env="ADMIN_SHA256"/>
+          <networks>
+            <ip>::/0</ip>
+          </networks>
+          <profile>default</profile>
+          <quota>default</quota>
+          <access_management>1</access_management>
+          <named_collection_control>1</named_collection_control>
+        </admin>
+      </users>
+    </clickhouse>
+  users.d-mppdb_ro.xml: |
+    <clickhouse>
+      <users>
+        <mppdb_ro>
+          <password_sha256_hex from_env="MPPDB_RO_SHA256"/>
+          <networks>
+            <ip>::/0</ip>
+          </networks>
+          <profile>default</profile>
+          <quota>default</quota>
+          <grants>
+            <query>GRANT SELECT ON TAP_SCHEMA.*</query>
+            <query>GRANT SELECT ON dp2.*</query>
+            <query>GRANT SELECT ON ppdb.*</query>
+            <query>GRANT SELECT ON ssp.*</query>
+            <query>GRANT dictGet ON ssp.visit_exposure_dict</query>
+            <query>GRANT SELECT ON system.one</query>
+            <query>GRANT SELECT ON system.parts</query>
+          </grants>
+        </mppdb_ro>
+      </users>
+    </clickhouse>
+  users.d-ssp_xmatch.xml: |
+    <clickhouse>
+      <users>
+        <ssp_xmatch>
+          <password_sha256_hex from_env="SSP_XMATCH_SHA256"/>
+          <networks>
+            <ip>::/0</ip>
+          </networks>
+          <profile>default</profile>
+          <quota>default</quota>
+          <grants>
+            <query>GRANT CREATE TEMPORARY TABLE ON *.*</query>
+            <query>GRANT SELECT ON ppdb.DiaSource</query>
+            <query>GRANT SELECT ON ssp.*</query>
+            <query>GRANT dictGet ON ssp.visit_exposure_dict</query>
+          </grants>
+        </ssp_xmatch>
+      </users>
+    </clickhouse>

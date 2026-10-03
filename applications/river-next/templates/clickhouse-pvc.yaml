@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "river-next-sdf-data-rubin"
+  labels:
+    {{- include "river-next.clickhouse.labels" . | nindent 4 }}
+  annotations:
+    # This storage class provisions PVs whose source path is the whole
+    # /sdf/data/rubin filesystem, with reclaimPolicy Delete. The bound PV must
+    # be patched to Retain before the claim may be deleted, so neither Argo
+    # CD's pruning nor a Helm uninstall is allowed to delete it.
+    argocd.argoproj.io/sync-options: Prune=false
+    helm.sh/resource-policy: keep
+spec:
+  storageClassName: {{ .Values.clickhouse.storageClassName | quote }}
+  accessModes:
+    - "ReadWriteMany"
+  resources:
+    requests:
+      # Nominal: the volume is a hostPath, and the pod sees only the subPaths
+      # it mounts.
+      storage: "1Gi"

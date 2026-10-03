@@ -74,3 +74,83 @@ registry = {{ printf "%s/%s" (trimSuffix "/" $.Values.config.registryDir) . | qu
 {{- end }}
 {{- end }}
 {{- end }}
+
+{{/*
+ClickHouse: common labels. The chart's shared labels plus a component label.
+*/}}
+{{- define "river-next.clickhouse.labels" -}}
+{{ include "river.labels" . }}
+app.kubernetes.io/component: "clickhouse"
+{{- end }}
+
+{{/*
+ClickHouse: selector labels. The chart's shared selector labels match every
+pod in the chart, so ClickHouse selectors always add the component label.
+*/}}
+{{- define "river-next.clickhouse.selectorLabels" -}}
+{{ include "river.selectorLabels" . }}
+app.kubernetes.io/component: "clickhouse"
+{{- end }}
+
+{{/*
+ClickHouse: the memory limit in bytes. Accepts a plain number of bytes or a
+Kubernetes quantity with a K, M, G, T, Ki, Mi, Gi or Ti suffix, and fails
+rendering on anything else.
+*/}}
+{{- define "river-next.clickhouse.memoryLimitBytes" -}}
+{{- $raw := required "clickhouse.resources.limits.memory must be set" .Values.clickhouse.resources.limits.memory -}}
+{{- $num := 0.0 -}}
+{{- $suffix := "" -}}
+{{- if or (kindIs "float64" $raw) (kindIs "int" $raw) (kindIs "int64" $raw) -}}
+{{- $num = float64 $raw -}}
+{{- else -}}
+{{- $s := toString $raw -}}
+{{- if not (regexMatch "^[0-9]+(\\.[0-9]+)?(Ki|Mi|Gi|Ti|K|M|G|T)?$" $s) -}}
+{{- fail (printf "clickhouse.resources.limits.memory %q cannot be parsed: use a number of bytes, or a number with a K, M, G, T, Ki, Mi, Gi or Ti suffix" $s) -}}
+{{- end -}}
+{{- $digits := regexFind "^[0-9]+(\\.[0-9]+)?" $s -}}
+{{- $num = float64 $digits -}}
+{{- $suffix = trimPrefix $digits $s -}}
+{{- end -}}
+{{- $multipliers := dict "" 1.0 "K" 1e3 "M" 1e6 "G" 1e9 "T" 1e12 "Ki" 1024.0 "Mi" 1048576.0 "Gi" 1073741824.0 "Ti" 1099511627776.0 -}}
+{{- printf "%.0f" (mulf $num (index $multipliers $suffix) | floor) -}}
+{{- end }}
+
+{{/*
+ClickHouse: max_server_memory_usage in bytes, the configured ratio of the
+memory limit.
+*/}}
+{{- define "river-next.clickhouse.maxServerMemoryUsage" -}}
+{{- $ratio := float64 .Values.clickhouse.maxServerMemoryUsageRatio -}}
+{{- if or (le $ratio 0.0) (gt $ratio 1.0) -}}
+{{- fail (printf "clickhouse.maxServerMemoryUsageRatio must be greater than 0 and at most 1, not %v" .Values.clickhouse.maxServerMemoryUsageRatio) -}}
+{{- end -}}
+{{- $bytes := float64 (include "river-next.clickhouse.memoryLimitBytes" .) -}}
+{{- printf "%.0f" (mulf $bytes $ratio | floor) -}}
+{{- end }}
+
+{{/*
+ClickHouse: max_threads. clickhouse.maxThreads if set, otherwise the integer
+part of the CPU limit (which may be given in cores or millicores).
+*/}}
+{{- define "river-next.clickhouse.maxThreads" -}}
+{{- if .Values.clickhouse.maxThreads -}}
+{{- int .Values.clickhouse.maxThreads -}}
+{{- else -}}
+{{- $raw := required "clickhouse.resources.limits.cpu must be set" .Values.clickhouse.resources.limits.cpu -}}
+{{- $cores := 0.0 -}}
+{{- if or (kindIs "float64" $raw) (kindIs "int" $raw) (kindIs "int64" $raw) -}}
+{{- $cores = float64 $raw -}}
+{{- else -}}
+{{- $s := toString $raw -}}
+{{- if regexMatch "^[0-9]+(\\.[0-9]+)?$" $s -}}
+{{- $cores = float64 $s -}}
+{{- else if regexMatch "^[0-9]+m$" $s -}}
+{{- $cores = divf (float64 (trimSuffix "m" $s)) 1000.0 -}}
+{{- else -}}
+{{- fail (printf "clickhouse.resources.limits.cpu %q cannot be parsed: use a number of cores or of millicores (such as 64 or 64000m)" $s) -}}
+{{- end -}}
+{{- end -}}
+{{- max 1 (int (floor $cores)) -}}
+{{- end -}}
+{{- end }}

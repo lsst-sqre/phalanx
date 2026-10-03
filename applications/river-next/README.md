@@ -1,4 +1,4 @@
-# river
+# river-next
 
 SQL and TAP database of Rubin catalog products
 
@@ -11,6 +11,34 @@ SQL and TAP database of Rubin catalog products
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the pod |
+| clickhouse.affinity | object | Preferred anti-affinity against ephemcache pods | Affinity rules for the ClickHouse pod. The default prefers nodes not running ephemcache's large batch pods. |
+| clickhouse.backgroundPoolSize | int | `16` | `background_pool_size` (threads for merges and mutations) |
+| clickhouse.dataSubPath | string | `"repo/dp2_prep/u/mjuric/river-next/clickhouse"` | Path within the storage class's filesystem mounted at `/var/lib/clickhouse` (the server's data directory) |
+| clickhouse.image.digest | string | `"sha256:bca86231e6f8e8969f442135843e44105d54fa61babd84b71f6f7c146f207a8e"` | Digest the tag is pinned to, so the image cannot change under the tag |
+| clickhouse.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the ClickHouse image |
+| clickhouse.image.repository | string | `"clickhouse/clickhouse-server"` | ClickHouse server image |
+| clickhouse.image.tag | string | `"26.8.16.41"` | Tag of the ClickHouse image. 26.8 is an LTS line. Once this server has written data, moving to an older release is not possible. |
+| clickhouse.livenessProbe.check | string | `"data"` | What the liveness probe checks: `ping` (HTTP `GET /ping`) or `data` (reads the `status` file ClickHouse writes in its data directory at startup, and pings), so a lost data mount fails the probe |
+| clickhouse.livenessProbe.enabled | bool | `true` | Whether the ClickHouse container has a liveness probe at all |
+| clickhouse.livenessProbe.failureThreshold | int | `5` | Consecutive liveness failures before the container is restarted |
+| clickhouse.livenessProbe.periodSeconds | int | `30` | Seconds between liveness probes |
+| clickhouse.livenessProbe.timeoutSeconds | int | `10` | Seconds before a liveness probe counts as failed |
+| clickhouse.loadBalancerIP | string | `""` | IP address to pin the LoadBalancer service to, from the `sdf-rubin-ingest` MetalLB pool. Leave empty for the first deployment, then set it to the address MetalLB assigned so it survives the service being recreated. |
+| clickhouse.markCacheSize | int | `5368709120` | `mark_cache_size`, in bytes (5 GiB) |
+| clickhouse.maxServerMemoryUsageRatio | float | `0.9` | Fraction of the memory limit ClickHouse may use, rendered in bytes as `max_server_memory_usage` |
+| clickhouse.maxThreads | int | The integer part of `clickhouse.resources.limits.cpu` | `max_threads` for the default settings profile. Must be set explicitly rather than left to ClickHouse, because the container sees every host core while its cgroup allows far fewer. |
+| clickhouse.nodeSelector | object | `{"edu.stanford.slac.sdf.project/rsp":"true"}` | Node selector rules for the ClickHouse pod |
+| clickhouse.pdb.enabled | bool | `true` | Whether to create a PodDisruptionBudget (`minAvailable: 1`) for the ClickHouse pod, which blocks voluntary evictions such as node drains |
+| clickhouse.podAnnotations | object | `{}` | Annotations for the ClickHouse pod |
+| clickhouse.podSecurityContext | object | `{"runAsGroup":1126,"runAsNonRoot":true,"runAsUser":18728}` | Pod security context. The pod runs as the uid and gid that own the data directory on the host filesystem. Never add `fsGroup`: the volume is a hostPath holding existing data, which must not be chowned. |
+| clickhouse.resources | object | `{"limits":{"cpu":"64","memory":"384Gi"},"requests":{"cpu":"64","memory":"384Gi"}}` | Resource requests and limits for the ClickHouse pod. Requests must equal limits (rendering fails otherwise). `max_server_memory_usage` and the default `max_threads` are derived from the limits. |
+| clickhouse.startupProbe.failureThreshold | int | `180` | Startup probe failures allowed before the container is restarted. With the default period this allows 30 minutes for metadata loading. |
+| clickhouse.startupProbe.periodSeconds | int | `10` | Seconds between startup probes |
+| clickhouse.storageClassName | string | `"sdf-data-rubin"` | Storage class of the claim holding the data and staging directories. Its volumes are a hostPath on the whole `/sdf/data/rubin` filesystem with a `Delete` reclaim policy: patch the bound PV to `Retain` before anything may delete the claim. |
+| clickhouse.terminationGracePeriodSeconds | int | `300` | Seconds the server is given to shut down cleanly before it is killed |
+| clickhouse.tolerations | list | `[{"effect":"NoSchedule","key":"edu.stanford.slac.sdf.project/rsp","operator":"Equal","value":"true"}]` | Tolerations for the ClickHouse pod |
+| clickhouse.uncompressedCacheSize | int | `8589934592` | `uncompressed_cache_size`, in bytes (8 GiB) |
+| clickhouse.userFilesSubPath | string | `"repo/dp2_prep/u/mjuric/river-next/user-files"` | Path within the storage class's filesystem mounted at `/var/lib/clickhouse-user-files` (`user_files_path`, where ingest stages files for `file()`) |
 | command | list | `["mppdb","up"]` | Command to run in the container. `mppdb up` starts and supervises the service stack, which is what the container image's start script does. |
 | config.advertiseRequestBase | bool | `true` | Whether the service advertises the URL a client actually reached it on (True) or pins the configured `baseUrl` for every generated URL (False). Behind a TLS-terminating proxy the pod sees plain http, so leaving this True mints `http://` job/redirect URLs the https console then blocks; set it False so async job and result URLs are pinned to the external https `baseUrl`. TOML-only (no env var), so it is rendered into the mppdb.toml ConfigMap. |
 | config.authProvider | string | `"apikey"` | Identity provider, supplied as `MPPDB_AUTH_PROVIDER`. `apikey` validates the service's own API keys and is what the initial smoke deployment uses; this flips to `gafaelfawr` once the service can consume the identity headers injected by the ingress. |
