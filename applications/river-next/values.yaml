@@ -1,4 +1,4 @@
-# Default values for river.
+# Default values for river-next.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -18,8 +18,9 @@ image:
   # -- Names of image pull secrets in the app's namespace, for a private
   # registry. `ghcr.io/mjuric/mppdb` is private (the image bakes the source of a
   # private repository), so pulling it requires one; at usdfdev this is the
-  # hand-created `river-pull` docker-registry secret (a `read:packages` GitHub
-  # PAT), managed the same way as the `river` secret until Vault access exists.
+  # hand-created `river-next-pull` docker-registry secret (a `read:packages`
+  # GitHub PAT), managed the same way as the `river-next` secret until Vault
+  # access exists.
   pullSecrets: []
 
 # -- Command to run in the container. `mppdb up` starts and supervises the
@@ -35,9 +36,9 @@ config:
 
   clickhouse:
     # -- Host name of the ClickHouse server, supplied as
-    # `MPPDB_CLICKHOUSE_HOST`. This is **outside** the Kubernetes cluster, so
-    # egress from the pod to it must be permitted.
-    host: "sdfiana035.sdf.slac.stanford.edu"
+    # `MPPDB_CLICKHOUSE_HOST`. The chart runs its own ClickHouse server, so this
+    # is that server's in-cluster Service name.
+    host: "river-next-clickhouse.river-next.svc.cluster.local"
 
     # -- HTTP port of the ClickHouse server, supplied as
     # `MPPDB_CLICKHOUSE_PORT`
@@ -50,7 +51,7 @@ config:
   authProvider: "apikey"
 
   # -- Public base URL the service advertises in generated URLs, supplied as
-  # `MPPDB_BASE_URL`.
+  # `MPPDB_BASE_URL`. Leave empty so it follows `ingress.pathPrefix`.
   # @default -- `global.baseUrl` plus `ingress.pathPrefix`
   baseUrl: ""
 
@@ -151,7 +152,9 @@ config:
 
   # -- Display branding, rendered into the `[branding]` table of the generated
   # `mppdb.toml` as string keys. Empty omits the table, leaving the image's
-  # built-in branding.
+  # built-in branding. If the table is non-empty and has no `public_url`, the
+  # chart adds one equal to the service's base URL, so it follows
+  # `ingress.pathPrefix`.
   branding: {}
 
   # -- Container path the generated `mppdb.toml` is mounted at, supplied as
@@ -176,10 +179,10 @@ config:
 
   # -- Additional environment variables for the container, as a mapping of name
   # to value. Use this for `MPPDB_*` settings that have no dedicated value
-  # above. Never put credentials here; they come from the `river` secret.
+  # above. Never put credentials here; they come from the `river-next` secret.
   extraEnv: {}
 
-  # -- Whether to create a `VaultSecret` for the `river` secret. When false,
+  # -- Whether to create a `VaultSecret` for the `river-next` secret. When false,
   # the secret is expected to have been created by hand, which is how the
   # initial smoke deployment works.
   useVaultSecret: false
@@ -213,8 +216,11 @@ ingress:
   scope: "read:tap"
 
   # -- URL path the service is served under. The service itself serves at the
-  # root, so the ingress rewrites this prefix away.
-  pathPrefix: "/river"
+  # root, so the ingress rewrites this prefix away. `/river-next` while this
+  # deployment is being validated; it becomes `/river` at cutover. This is the
+  # only place the path is set: the ingresses, the advertised base URL and the
+  # branding's public URL are all derived from it.
+  pathPrefix: "/river-next"
 
   # -- Whether Gafaelfawr should replace the client's `Authorization` header
   # with the delegated internal token. Must stay false while

@@ -1,9 +1,9 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "river-anonymous"
+  name: "river-next-anonymous"
   labels:
-    {{- include "river.labels" . | nindent 4 }}
+    {{- include "river-next.labels" . | nindent 4 }}
 config:
   # The service treats these as anonymous itself (ANON_ALLOWLIST plus the /dl/
   # prefix), so requiring a credential at the ingress only breaks them:
@@ -21,7 +21,7 @@ config:
     anonymous: true
 template:
   metadata:
-    name: "river-anonymous"
+    name: "river-next-anonymous"
     annotations:
       nginx.ingress.kubernetes.io/use-regex: "true"
       nginx.ingress.kubernetes.io/rewrite-target: "/$2"
@@ -38,13 +38,13 @@ template:
               pathType: "ImplementationSpecific"
               backend:
                 service:
-                  name: "river"
+                  name: "river-next"
                   port:
                     number: {{ .Values.config.port }}
             - path: "{{ .Values.ingress.pathPrefix }}(/)(dl/.*)"
               pathType: "ImplementationSpecific"
               backend:
                 service:
-                  name: "river"
+                  name: "river-next"
                   port:
                     number: {{ .Values.config.port }}

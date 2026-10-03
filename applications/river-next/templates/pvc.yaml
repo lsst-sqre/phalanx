@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: "river-data"
+  name: "river-next-data"
   labels:
-    {{- include "river.labels" . | nindent 4 }}
+    {{- include "river-next.labels" . | nindent 4 }}
   annotations:
     # This volume holds the only copy of the service's state: the SQLite state
     # database, the result spool, and the snapshot manifests. Deleting the claim

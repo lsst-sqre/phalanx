@@ -1,7 +1,6 @@
 config:
-  # Spelled out rather than derived, so a bare `helm template` of this
-  # environment produces exactly the URL the service is reached at.
-  baseUrl: "https://usdf-rsp-dev.slac.stanford.edu/river"
+  # baseUrl is deliberately not set: it is derived from global.baseUrl and
+  # ingress.pathPrefix, so moving the path at cutover is a one-line change.
 
   # Phase 3: Gafaelfawr authenticates at the ingress; the service JIT-provisions its
   # internal account on first sight of the username header.
@@ -19,12 +18,13 @@ config:
   branding:
     name: "River"
     wordmark: "R|iv|er"
-    suffix: "@ USDF"
+    # "(next)" marks the validation deployment; drop it at cutover.
+    suffix: "@ USDF (next)"
     tagline: "A fast, evergreen SQL and TAP database of Rubin catalogs"
     kernel_label: "River / TAP"
     page_title: "River · notebooks"
     favicon_glyph: "R"
-    public_url: "https://usdf-rsp-dev.slac.stanford.edu/river"
+    # public_url is not set here: the chart derives it from the base URL.
 
   # Behind the TLS-terminating RSP ingress: pin every generated URL to the
   # external https baseUrl so async job/result URLs are not minted as http://
@@ -32,7 +32,7 @@ config:
   advertiseRequestBase: false
 
 image:
-  pullSecrets: ["river-pull"]
+  pullSecrets: ["river-next-pull"]
   # sha- tag of the u/mjuric/mppdb merge that contains both the OCI build and
   # the gafaelfawr provider (mppdb b439931); CI's in-image test gate passed.
   tag: "sha-f0d957e"

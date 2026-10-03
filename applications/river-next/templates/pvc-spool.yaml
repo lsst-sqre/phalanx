@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: "river-spool"
+  name: "river-next-spool"
   labels:
-    {{- include "river.labels" . | nindent 4 }}
+    {{- include "river-next.labels" . | nindent 4 }}
   annotations:
-    # Async query results. Separate from river-data on purpose: a single result
+    # Async query results. Separate from river-next-data on purpose: a single result
     # can be tens of GiB, and while the spool shared a volume with the state
     # database one runaway query filled it and took the service down. Nothing
     # here is irreplaceable -- a lost result can be re-queried -- but the claim

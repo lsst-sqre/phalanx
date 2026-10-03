@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "river"
+  name: "river-next"
   labels:
-    {{- include "river.labels" . | nindent 4 }}
+    {{- include "river-next.labels" . | nindent 4 }}
 spec:
   # NOT configurable, deliberately. The service keeps its state in a SQLite
   # database on a ReadWriteOnce volume and is a single writer: a second replica
@@ -15,7 +15,7 @@ spec:
     type: "Recreate"
   selector:
     matchLabels:
-      {{- include "river.selectorLabels" . | nindent 6 }}
+      {{- include "river-next.frontend.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -24,7 +24,7 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "river.selectorLabels" . | nindent 8 }}
+        {{- include "river-next.frontend.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.affinity }}
       affinity:
@@ -44,7 +44,7 @@ spec:
           env:
             # Non-secret configuration only. The ClickHouse credentials
             # (MPPDB_CLICKHOUSE_USER, MPPDB_CLICKHOUSE_PASSWORD) come from the
-            # "river" secret via envFrom below, and are never named here.
+            # "river-next" secret via envFrom below, and are never named here.
             - name: "MPPDB_CONFIG"
               value: {{ .Values.config.configPath | quote }}
             - name: "MPPDB_ENGINE"
@@ -60,7 +60,7 @@ spec:
             - name: "MPPDB_AUTH_PROVIDER"
               value: {{ .Values.config.authProvider | quote }}
             - name: "MPPDB_BASE_URL"
-              value: {{ include "river.baseUrl" . | quote }}
+              value: {{ include "river-next.baseUrl" . | quote }}
             {{- with .Values.config.scsDatabase }}
             - name: "MPPDB_SCS_DATABASE"
               value: {{ . | quote }}
@@ -107,7 +107,7 @@ spec:
             # either created by hand or, when config.useVaultSecret is set,
             # materialised from Vault by vaultsecret.yaml.
             - secretRef:
-                name: "river"
+                name: "river-next"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
@@ -170,13 +170,13 @@ spec:
       volumes:
         - name: "data"
           persistentVolumeClaim:
-            claimName: "river-data"
+            claimName: "river-next-data"
         - name: "spool"
           persistentVolumeClaim:
-            claimName: "river-spool"
+            claimName: "river-next-spool"
         - name: "config"
           configMap:
-            name: "river"
+            name: "river-next"
         - name: "tmp"
           emptyDir:
             medium: "Memory"
