@@ -42,6 +42,7 @@ applications:
   portal: true
   ppdb-replication: true
   qserv-kafka: true
+  river: true
   rubin-rag: true
   rubintv: true
   s3proxy: true

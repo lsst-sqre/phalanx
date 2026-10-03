@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: "0.1.0"
+description: SQL and TAP database of Rubin catalog products
+name: river
+sources:
+  - https://github.com/mjuric/mppdb
+type: application
+version: 1.0.0

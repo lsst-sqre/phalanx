@@ -74,6 +74,7 @@
 | applications.prompt-redis | bool | `false` | Enable the prompt-redis application |
 | applications.qserv-kafka | bool | `false` | Enable the qserv-kafka application |
 | applications.repertoire | bool | `true` | Enable the Repertoire application. This provides service discovery for many other Phalanx applications, all of which assume that it is running. |
+| applications.river | bool | `false` | Enable the river application |
 | applications.rubin-rag | bool | `false` | Enable the rubin-rag application |
 | applications.rubin-too-producer | bool | `false` | Enable the rubin-too-producer application |
 | applications.rubintv | bool | `false` | Enable the rubintv application |
