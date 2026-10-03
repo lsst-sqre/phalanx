@@ -1,9 +1,9 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "river"
+  name: "river-next"
   labels:
-    {{- include "river.labels" . | nindent 4 }}
+    {{- include "river-next.labels" . | nindent 4 }}
 config:
   # Basic auth challenges, as for every other TAP service in Phalanx, so that
   # VO clients that only speak HTTP basic can send a token as the password.
@@ -14,15 +14,15 @@ config:
   scopes:
     all:
       - {{ .Values.ingress.scope | quote }}
-  service: "river"
+  service: "river-next"
   delegate:
     internal:
-      service: "river"
+      service: "river-next"
       scopes: []
     useAuthorization: {{ .Values.ingress.useAuthorization }}
 template:
   metadata:
-    name: "river"
+    name: "river-next"
     annotations:
       # The service serves at the root of its own URL space and has no path
       # prefix setting, so the prefix is rewritten away here, the same way
@@ -41,12 +41,12 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            # Must not match the bare prefix: river-ui owns that.
+            # Must not match the bare prefix: river-next-ui owns that.
             # Every real API path has a non-empty segment after the slash.
             - path: "{{ .Values.ingress.pathPrefix }}(/)(.+)"
               pathType: "ImplementationSpecific"
               backend:
                 service:
-                  name: "river"
+                  name: "river-next"
                   port:
                     number: {{ .Values.config.port }}

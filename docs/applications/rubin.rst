@@ -28,6 +28,7 @@ Argo CD project: ``rubin``
    production-tools/index
    rapid-analysis/index
    river/index
+   river-next/index
    rubintv/index
    rubintv-dev/index
    s3proxy/index

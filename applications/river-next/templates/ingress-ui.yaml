@@ -1,9 +1,9 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "river-ui"
+  name: "river-next-ui"
   labels:
-    {{- include "river.labels" . | nindent 4 }}
+    {{- include "river-next.labels" . | nindent 4 }}
 config:
   # The browser surface. NO authType here, deliberately: authType "basic" makes
   # Gafaelfawr answer an unauthenticated request with
@@ -14,15 +14,15 @@ config:
   scopes:
     all:
       - {{ .Values.ingress.scope | quote }}
-  service: "river"
+  service: "river-next"
   delegate:
     internal:
-      service: "river"
+      service: "river-next"
       scopes: []
     useAuthorization: {{ .Values.ingress.useAuthorization }}
 template:
   metadata:
-    name: "river-ui"
+    name: "river-next-ui"
     annotations:
       nginx.ingress.kubernetes.io/use-regex: "true"
       nginx.ingress.kubernetes.io/rewrite-target: "/$2"
@@ -44,13 +44,13 @@ template:
               pathType: "ImplementationSpecific"
               backend:
                 service:
-                  name: "river"
+                  name: "river-next"
                   port:
                     number: {{ .Values.config.port }}
             - path: "{{ .Values.ingress.pathPrefix }}(/?)()$"
               pathType: "ImplementationSpecific"
               backend:
                 service:
-                  name: "river"
+                  name: "river-next"
                   port:
                     number: {{ .Values.config.port }}

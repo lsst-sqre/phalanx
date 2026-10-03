@@ -1,6 +1,6 @@
 apiVersion: v2
 appVersion: "0.1.0"
-description: SQL and TAP database of Rubin catalog products
+description: SQL and TAP database of Rubin catalog products, with its own ClickHouse server
 name: river-next
 sources:
   - https://github.com/mjuric/mppdb
