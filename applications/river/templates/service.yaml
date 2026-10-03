@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "river"
+  labels:
+    {{- include "river.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: {{ .Values.config.port }}
+      targetPort: "http"
+      protocol: "TCP"
+      name: "http"
+    # Operational metrics, scraped in-cluster. Deliberately a separate port from
+    # the data app, and not routed by the ingress.
+    - port: {{ .Values.config.metricsPort }}
+      targetPort: "metrics"
+      protocol: "TCP"
+      name: "metrics"
+  selector:
+    {{- include "river.selectorLabels" . | nindent 4 }}

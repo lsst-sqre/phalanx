@@ -171,6 +171,9 @@ applications:
   # many other Phalanx applications, all of which assume that it is running.
   repertoire: true
 
+  # -- Enable the river application
+  river: false
+
   # -- Enable the rubin-rag application
   rubin-rag: false
 
@@ -292,6 +295,7 @@ applications:
 
   # -- Enable the schedview-static-pages application
   schedview-static-pages: false
+
 
   # -- Enable the sia over butler application
   sia: false
