@@ -308,7 +308,8 @@ clickhouse:
 
   # -- (int) `max_threads` for the default settings profile. Must be set explicitly
   # rather than left to ClickHouse, because the container sees every host core
-  # while its cgroup allows far fewer.
+  # while its cgroup allows far fewer. If set, a positive integer; unset or 0
+  # uses the default.
   # @default -- The integer part of `clickhouse.resources.limits.cpu`
   maxThreads: null
 
@@ -338,7 +339,9 @@ clickhouse:
 
   # -- Pod security context. The pod runs as the uid and gid that own the data
   # directory on the host filesystem. Never add `fsGroup`: the volume is a
-  # hostPath holding existing data, which must not be chowned.
+  # hostPath holding existing data, which must not be chowned (rendering fails
+  # on `fsGroup` or `fsGroupChangePolicy`). `runAsUser` and `runAsNonRoot:
+  # true` are required.
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 18728
