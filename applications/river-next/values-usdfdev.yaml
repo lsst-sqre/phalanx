@@ -41,4 +41,4 @@ image:
 clickhouse:
   # Empty for the first deployment; then set to the address MetalLB assigned
   # from the sdf-rubin-ingest pool, so it survives the service being recreated.
-  loadBalancerIP: ""
+  loadBalancerIP: "172.24.10.116"
