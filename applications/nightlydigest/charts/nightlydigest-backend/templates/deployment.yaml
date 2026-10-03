@@ -17,6 +17,7 @@ spec:
       {{- end }}
       labels:
         {{- include "nightlydigest-backend.selectorLabels" . | nindent 8 }}
+        nightlydigest-redis-client: 'true'
     spec:
       imagePullSecrets:
         - name: "pull-secret"
@@ -61,6 +62,8 @@ spec:
                   name: {{ $env.secretName }}
                   key: {{ $env.secretKey }}
             {{- end }}
+            - name: REDIS_HOST
+              value: nightlydigest-redis
           volumeMounts:
           - name: nightlydigest-backend-secrets
             mountPath: "/etc/secrets"
