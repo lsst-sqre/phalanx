@@ -108,7 +108,7 @@ app.kubernetes.io/component: "clickhouse"
 
 {{/*
 ClickHouse: the memory limit in bytes. Accepts a plain number of bytes or a
-Kubernetes quantity with a K, M, G, T, Ki, Mi, Gi or Ti suffix, and fails
+Kubernetes quantity with a k, M, G, T, Ki, Mi, Gi or Ti suffix, and fails
 rendering on anything else.
 */}}
 {{- define "river-next.clickhouse.memoryLimitBytes" -}}
@@ -119,14 +119,14 @@ rendering on anything else.
 {{- $num = float64 $raw -}}
 {{- else -}}
 {{- $s := toString $raw -}}
-{{- if not (regexMatch "^[0-9]+(\\.[0-9]+)?(Ki|Mi|Gi|Ti|K|M|G|T)?$" $s) -}}
-{{- fail (printf "clickhouse.resources.limits.memory %q cannot be parsed: use a number of bytes, or a number with a K, M, G, T, Ki, Mi, Gi or Ti suffix" $s) -}}
+{{- if not (regexMatch "^[0-9]+(\\.[0-9]+)?(Ki|Mi|Gi|Ti|k|M|G|T)?$" $s) -}}
+{{- fail (printf "clickhouse.resources.limits.memory %q cannot be parsed: use a number of bytes, or a number with a k, M, G, T, Ki, Mi, Gi or Ti suffix" $s) -}}
 {{- end -}}
 {{- $digits := regexFind "^[0-9]+(\\.[0-9]+)?" $s -}}
 {{- $num = float64 $digits -}}
 {{- $suffix = trimPrefix $digits $s -}}
 {{- end -}}
-{{- $multipliers := dict "" 1.0 "K" 1e3 "M" 1e6 "G" 1e9 "T" 1e12 "Ki" 1024.0 "Mi" 1048576.0 "Gi" 1073741824.0 "Ti" 1099511627776.0 -}}
+{{- $multipliers := dict "" 1.0 "k" 1e3 "M" 1e6 "G" 1e9 "T" 1e12 "Ki" 1024.0 "Mi" 1048576.0 "Gi" 1073741824.0 "Ti" 1099511627776.0 -}}
 {{- printf "%.0f" (mulf $num (index $multipliers $suffix) | floor) -}}
 {{- end }}
 
@@ -144,12 +144,15 @@ memory limit.
 {{- end }}
 
 {{/*
-ClickHouse: max_threads. clickhouse.maxThreads if set, otherwise the integer
-part of the CPU limit (which may be given in cores or millicores).
+ClickHouse: max_threads. clickhouse.maxThreads if set, which must then be a
+positive integer; otherwise (unset, null or 0) the integer part of the CPU
+limit, which may be given in cores or millicores. Never 0, which ClickHouse
+would read as "auto" and size to every host core.
 */}}
 {{- define "river-next.clickhouse.maxThreads" -}}
-{{- if .Values.clickhouse.maxThreads -}}
-{{- int .Values.clickhouse.maxThreads -}}
+{{- $set := .Values.clickhouse.maxThreads -}}
+{{- if and (not (kindIs "invalid" $set)) (not (and (or (kindIs "float64" $set) (kindIs "int" $set) (kindIs "int64" $set)) (eq (float64 $set) 0.0))) -}}
+{{- include "river-next.clickhouse.positiveInteger" (list "clickhouse.maxThreads" $set) -}}
 {{- else -}}
 {{- $raw := required "clickhouse.resources.limits.cpu must be set" .Values.clickhouse.resources.limits.cpu -}}
 {{- $cores := 0.0 -}}
@@ -167,4 +170,24 @@ part of the CPU limit (which may be given in cores or millicores).
 {{- end -}}
 {{- max 1 (int (floor $cores)) -}}
 {{- end -}}
+{{- end }}
+
+{{/*
+ClickHouse: a value that must be a positive integer, printed in decimal.
+Called with (list "<value name>" <value>); fails rendering on anything else,
+including strings, fractions, zero and negative numbers.
+*/}}
+{{- define "river-next.clickhouse.positiveInteger" -}}
+{{- $name := index . 0 -}}
+{{- $v := index . 1 -}}
+{{- $ok := false -}}
+{{- if or (kindIs "int" $v) (kindIs "int64" $v) -}}
+{{- $ok = gt (int64 $v) 0 -}}
+{{- else if kindIs "float64" $v -}}
+{{- $ok = and (gt $v 0.0) (eq $v (floor $v)) -}}
+{{- end -}}
+{{- if not $ok -}}
+{{- fail (printf "%s must be a positive integer, not %#v" $name $v) -}}
+{{- end -}}
+{{- printf "%.0f" (float64 $v) -}}
 {{- end }}

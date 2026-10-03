@@ -1,4 +1,19 @@
 {{- $probe := .Values.clickhouse.livenessProbe -}}
+{{- if not (kindIs "bool" $probe.enabled) -}}
+{{- fail (printf "clickhouse.livenessProbe.enabled must be true or false, not %#v" $probe.enabled) -}}
+{{- end -}}
+{{- $psc := .Values.clickhouse.podSecurityContext | default dict -}}
+{{- range $key := list "fsGroup" "fsGroupChangePolicy" -}}
+{{- if hasKey $psc $key -}}
+{{- fail (printf "clickhouse.podSecurityContext must not set %s: the volume is a hostPath of existing data that must never be chowned" $key) -}}
+{{- end -}}
+{{- end -}}
+{{- if not (and (kindIs "bool" $psc.runAsNonRoot) $psc.runAsNonRoot) -}}
+{{- fail "clickhouse.podSecurityContext.runAsNonRoot must be true" -}}
+{{- end -}}
+{{- if not $psc.runAsUser -}}
+{{- fail "clickhouse.podSecurityContext.runAsUser must be set to the uid that owns the data directory" -}}
+{{- end -}}
 {{- if not (has $probe.check (list "ping" "data")) -}}
 {{- fail (printf "clickhouse.livenessProbe.check must be \"ping\" or \"data\", not %q" (toString $probe.check)) -}}
 {{- end -}}
@@ -38,7 +53,9 @@ spec:
           env:
             # Password hashes for the users in users.d, which reads them with
             # from_env. Referenced by name only; the values are never in the
-            # chart or the ConfigMap.
+            # chart or the ConfigMap. Environment variables are read when the
+            # container starts, so after changing a hash in the secret,
+            # restart the pod (kubectl rollout restart).
             - name: "ADMIN_SHA256"
               valueFrom:
                 secretKeyRef:
@@ -129,13 +146,8 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.clickhouse.podSecurityContext }}
       securityContext:
-        {{- if hasKey . "fsGroup" }}
-        {{- fail "clickhouse.podSecurityContext must not set fsGroup: the volume is a hostPath of existing data that must never be chowned" }}
-        {{- end }}
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- toYaml $psc | nindent 8 }}
       terminationGracePeriodSeconds: {{ .Values.clickhouse.terminationGracePeriodSeconds }}
       {{- with .Values.clickhouse.tolerations }}
       tolerations:

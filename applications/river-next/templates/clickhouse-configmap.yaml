@@ -15,11 +15,13 @@ data:
   # config.d, whose only file sets listen_host.
   config.d-paths.xml: |
     <clickhouse>
-      <!-- The stock config.xml listens on ::1 and 127.0.0.1. Merging may
-           leave 127.0.0.1 in place, which the dual-stack :: already covers,
-           so binding it would fail; listen_try lets the server start
-           regardless. -->
+      <!-- Both wildcards, as the image's own docker_related_config.xml does:
+           with IPv6 the dual-stack :: also covers IPv4, so binding 0.0.0.0
+           fails and listen_try skips it; without IPv6, :: fails and 0.0.0.0
+           is used. The stock config.xml's own listen_host lines are
+           commented out. -->
       <listen_host>::</listen_host>
+      <listen_host>0.0.0.0</listen_host>
       <listen_try>1</listen_try>
       <path>/var/lib/clickhouse/</path>
       <tmp_path>/var/lib/clickhouse/tmp/</tmp_path>
@@ -37,14 +39,16 @@ data:
       <tcp_port>9000</tcp_port>
       <mysql_port remove="remove"/>
       <postgresql_port remove="remove"/>
+      <!-- No replicated tables, so no interserver traffic. -->
+      <interserver_http_port remove="remove"/>
     </clickhouse>
   config.d-resources.xml: |
     <clickhouse>
       <!-- {{ .Values.clickhouse.maxServerMemoryUsageRatio }} of the {{ .Values.clickhouse.resources.limits.memory }} memory limit -->
       <max_server_memory_usage>{{ include "river-next.clickhouse.maxServerMemoryUsage" . }}</max_server_memory_usage>
-      <background_pool_size>{{ int .Values.clickhouse.backgroundPoolSize }}</background_pool_size>
-      <uncompressed_cache_size>{{ int64 .Values.clickhouse.uncompressedCacheSize }}</uncompressed_cache_size>
-      <mark_cache_size>{{ int64 .Values.clickhouse.markCacheSize }}</mark_cache_size>
+      <background_pool_size>{{ include "river-next.clickhouse.positiveInteger" (list "clickhouse.backgroundPoolSize" .Values.clickhouse.backgroundPoolSize) }}</background_pool_size>
+      <uncompressed_cache_size>{{ include "river-next.clickhouse.positiveInteger" (list "clickhouse.uncompressedCacheSize" .Values.clickhouse.uncompressedCacheSize) }}</uncompressed_cache_size>
+      <mark_cache_size>{{ include "river-next.clickhouse.positiveInteger" (list "clickhouse.markCacheSize" .Values.clickhouse.markCacheSize) }}</mark_cache_size>
       <async_load_databases>true</async_load_databases>
     </clickhouse>
   config.d-logger.xml: |
