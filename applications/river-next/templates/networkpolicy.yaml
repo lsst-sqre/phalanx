@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "river"
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "river.selectorLabels" . | nindent 6 }}
+  policyTypes:
+    - "Ingress"
+  ingress:
+    # LOAD-BEARING, not hygiene. Access control for this service is enforced at
+    # the ingress by Gafaelfawr, which requires the read:tap scope and then hands
+    # the pod a request it is expected to trust. A pod that could be reached
+    # directly — from anywhere else in the cluster, bypassing the ingress —
+    # would therefore be reachable with no authentication at all. This policy is
+    # what makes the ingress the only path in, so do not widen it.
+    #
+    # Allow inbound access from pods (in any namespace) labeled
+    # gafaelfawr.lsst.io/ingress: true, which is how ingress-nginx pods are
+    # labeled.
+    - from:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              gafaelfawr.lsst.io/ingress: "true"
+      ports:
+        - protocol: "TCP"
+          port: {{ .Values.config.port }}
+    # Note that the metrics port is deliberately NOT admitted here. It is
+    # published on the Service so that a scraper can be pointed at it, but until
+    # one exists there is no rule to write, and guessing at a selector would
+    # only look like protection that isn't there.
