@@ -1,0 +1,13 @@
+{{- if .Values.clickhouse.pdb.enabled -}}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: "river-next-clickhouse"
+  labels:
+    {{- include "river-next.clickhouse.labels" . | nindent 4 }}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      {{- include "river-next.clickhouse.selectorLabels" . | nindent 6 }}
+{{- end }}

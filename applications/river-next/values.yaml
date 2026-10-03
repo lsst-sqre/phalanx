@@ -278,3 +278,144 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: null
+
+# ClickHouse server run by this application: a single-replica StatefulSet that
+# the front end queries in-cluster, and that ingest and direct clients on SDF
+# hosts reach through a MetalLB LoadBalancer.
+clickhouse:
+  image:
+    # -- ClickHouse server image
+    repository: "clickhouse/clickhouse-server"
+
+    # -- Tag of the ClickHouse image. 26.8 is an LTS line. Once this server has
+    # written data, moving to an older release is not possible.
+    tag: "26.8.16.41"
+
+    # -- Digest the tag is pinned to, so the image cannot change under the tag
+    digest: "sha256:bca86231e6f8e8969f442135843e44105d54fa61babd84b71f6f7c146f207a8e"
+
+    # -- Pull policy for the ClickHouse image
+    pullPolicy: "IfNotPresent"
+
+  # -- Resource requests and limits for the ClickHouse pod. Requests must equal
+  # limits (rendering fails otherwise). `max_server_memory_usage` and the
+  # default `max_threads` are derived from the limits.
+  resources:
+    requests:
+      cpu: "64"
+      memory: "384Gi"
+    limits:
+      cpu: "64"
+      memory: "384Gi"
+
+  # -- Fraction of the memory limit ClickHouse may use, rendered in bytes as
+  # `max_server_memory_usage`
+  maxServerMemoryUsageRatio: 0.9
+
+  # -- (int) `max_threads` for the default settings profile. Must be set explicitly
+  # rather than left to ClickHouse, because the container sees every host core
+  # while its cgroup allows far fewer.
+  # @default -- The integer part of `clickhouse.resources.limits.cpu`
+  maxThreads: null
+
+  # -- `background_pool_size` (threads for merges and mutations)
+  backgroundPoolSize: 16
+
+  # -- `uncompressed_cache_size`, in bytes (8 GiB)
+  uncompressedCacheSize: 8589934592
+
+  # -- `mark_cache_size`, in bytes (5 GiB)
+  markCacheSize: 5368709120
+
+  # -- Storage class of the claim holding the data and staging directories.
+  # Its volumes are a hostPath on the whole `/sdf/data/rubin` filesystem with a
+  # `Delete` reclaim policy: patch the bound PV to `Retain` before anything may
+  # delete the claim.
+  storageClassName: "sdf-data-rubin"
+
+  # -- Path within the storage class's filesystem mounted at
+  # `/var/lib/clickhouse` (the server's data directory)
+  dataSubPath: "repo/dp2_prep/u/mjuric/river-next/clickhouse"
+
+  # -- Path within the storage class's filesystem mounted at
+  # `/var/lib/clickhouse-user-files` (`user_files_path`, where ingest stages
+  # files for `file()`)
+  userFilesSubPath: "repo/dp2_prep/u/mjuric/river-next/user-files"
+
+  # -- Pod security context. The pod runs as the uid and gid that own the data
+  # directory on the host filesystem. Never add `fsGroup`: the volume is a
+  # hostPath holding existing data, which must not be chowned.
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 18728
+    runAsGroup: 1126
+
+  # -- Node selector rules for the ClickHouse pod
+  nodeSelector:
+    edu.stanford.slac.sdf.project/rsp: "true"
+
+  # -- Tolerations for the ClickHouse pod
+  tolerations:
+    - key: "edu.stanford.slac.sdf.project/rsp"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+
+  # -- Affinity rules for the ClickHouse pod. The default prefers nodes not
+  # running ephemcache's large batch pods.
+  # @default -- Preferred anti-affinity against ephemcache pods
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            topologyKey: "kubernetes.io/hostname"
+            namespaceSelector:
+              matchLabels:
+                kubernetes.io/metadata.name: "ephemcache"
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: "ephemcache"
+
+  # -- Annotations for the ClickHouse pod
+  podAnnotations: {}
+
+  # -- Seconds the server is given to shut down cleanly before it is killed
+  terminationGracePeriodSeconds: 300
+
+  pdb:
+    # -- Whether to create a PodDisruptionBudget (`minAvailable: 1`) for the
+    # ClickHouse pod, which blocks voluntary evictions such as node drains
+    enabled: true
+
+  # -- IP address to pin the LoadBalancer service to, from the
+  # `sdf-rubin-ingest` MetalLB pool. Leave empty for the first deployment, then
+  # set it to the address MetalLB assigned so it survives the service being
+  # recreated.
+  loadBalancerIP: ""
+
+  livenessProbe:
+    # -- Whether the ClickHouse container has a liveness probe at all
+    enabled: true
+
+    # -- What the liveness probe checks: `ping` (HTTP `GET /ping`) or `data`
+    # (reads the `status` file ClickHouse writes in its data directory at
+    # startup, and pings), so a lost data mount fails the probe
+    check: "data"
+
+    # -- Seconds between liveness probes
+    periodSeconds: 30
+
+    # -- Consecutive liveness failures before the container is restarted
+    failureThreshold: 5
+
+    # -- Seconds before a liveness probe counts as failed
+    timeoutSeconds: 10
+
+  startupProbe:
+    # -- Seconds between startup probes
+    periodSeconds: 10
+
+    # -- Startup probe failures allowed before the container is restarted.
+    # With the default period this allows 30 minutes for metadata loading.
+    failureThreshold: 180

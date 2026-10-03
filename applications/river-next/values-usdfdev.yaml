@@ -37,3 +37,8 @@ image:
   # the gafaelfawr provider (mppdb b439931); CI's in-image test gate passed.
   tag: "sha-f0d957e"
   pullPolicy: "Always"
+
+clickhouse:
+  # Empty for the first deployment; then set to the address MetalLB assigned
+  # from the sdf-rubin-ingest pool, so it survives the service being recreated.
+  loadBalancerIP: ""
