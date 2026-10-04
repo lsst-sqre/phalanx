@@ -18,8 +18,7 @@ config:
   branding:
     name: "River"
     wordmark: "R|iv|er"
-    # "(next)" marks the validation deployment; drop it at cutover.
-    suffix: "@ USDF (next)"
+    suffix: "@ USDF"
     tagline: "A fast, evergreen SQL and TAP database of Rubin catalogs"
     kernel_label: "River / TAP"
     page_title: "River · notebooks"
@@ -42,3 +41,8 @@ clickhouse:
   # Empty for the first deployment; then set to the address MetalLB assigned
   # from the sdf-rubin-ingest pool, so it survives the service being recreated.
   loadBalancerIP: "172.24.10.116"
+
+ingress:
+  # Cutover: river-next took over River's path. The chart default stays
+  # /river-next so another environment doesn't collide with an existing River.
+  pathPrefix: "/river"
