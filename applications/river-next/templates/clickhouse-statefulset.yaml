@@ -1,0 +1,187 @@
+{{- $probe := .Values.clickhouse.livenessProbe -}}
+{{- if not (kindIs "bool" $probe.enabled) -}}
+{{- fail (printf "clickhouse.livenessProbe.enabled must be true or false, not %#v" $probe.enabled) -}}
+{{- end -}}
+{{- $psc := .Values.clickhouse.podSecurityContext | default dict -}}
+{{- range $key := list "fsGroup" "fsGroupChangePolicy" -}}
+{{- if hasKey $psc $key -}}
+{{- fail (printf "clickhouse.podSecurityContext must not set %s: the volume is a hostPath of existing data that must never be chowned" $key) -}}
+{{- end -}}
+{{- end -}}
+{{- if not (and (kindIs "bool" $psc.runAsNonRoot) $psc.runAsNonRoot) -}}
+{{- fail "clickhouse.podSecurityContext.runAsNonRoot must be true" -}}
+{{- end -}}
+{{- if not $psc.runAsUser -}}
+{{- fail "clickhouse.podSecurityContext.runAsUser must be set to the uid that owns the data directory" -}}
+{{- end -}}
+{{- if not (has $probe.check (list "ping" "data")) -}}
+{{- fail (printf "clickhouse.livenessProbe.check must be \"ping\" or \"data\", not %q" (toString $probe.check)) -}}
+{{- end -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: "river-next-clickhouse"
+  labels:
+    {{- include "river-next.clickhouse.labels" . | nindent 4 }}
+spec:
+  # One server, deliberately not configurable: this is a single-node
+  # ClickHouse that owns its data directory.
+  replicas: 1
+  serviceName: "river-next-clickhouse"
+  selector:
+    matchLabels:
+      {{- include "river-next.clickhouse.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/clickhouse-configmap.yaml") . | sha256sum }}
+        {{- with .Values.clickhouse.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "river-next.clickhouse.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.clickhouse.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: "clickhouse"
+          image: "{{ .Values.clickhouse.image.repository }}:{{ .Values.clickhouse.image.tag }}@{{ .Values.clickhouse.image.digest }}"
+          imagePullPolicy: {{ .Values.clickhouse.image.pullPolicy | quote }}
+          env:
+            # Password hashes for the users in users.d, which reads them with
+            # from_env. Referenced by name only; the values are never in the
+            # chart or the ConfigMap. Environment variables are read when the
+            # container starts, so after changing a hash in the secret,
+            # restart the pod (kubectl rollout restart).
+            - name: "ADMIN_SHA256"
+              valueFrom:
+                secretKeyRef:
+                  name: "river-next-clickhouse"
+                  key: "ADMIN_SHA256"
+            - name: "MPPDB_RO_SHA256"
+              valueFrom:
+                secretKeyRef:
+                  name: "river-next-clickhouse"
+                  key: "MPPDB_RO_SHA256"
+            - name: "SSP_XMATCH_SHA256"
+              valueFrom:
+                secretKeyRef:
+                  name: "river-next-clickhouse"
+                  key: "SSP_XMATCH_SHA256"
+            # Users are fully defined in users.d; stop the image's entrypoint
+            # from writing its own default-user.xml there.
+            - name: "CLICKHOUSE_SKIP_USER_SETUP"
+              value: "1"
+          ports:
+            - name: "http"
+              containerPort: 8123
+              protocol: "TCP"
+            - name: "native"
+              containerPort: 9000
+              protocol: "TCP"
+          startupProbe:
+            httpGet:
+              path: "/ping"
+              port: "http"
+            periodSeconds: {{ .Values.clickhouse.startupProbe.periodSeconds }}
+            failureThreshold: {{ .Values.clickhouse.startupProbe.failureThreshold }}
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: "/ping"
+              port: "http"
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          {{- if $probe.enabled }}
+          livenessProbe:
+            {{- if eq $probe.check "ping" }}
+            httpGet:
+              path: "/ping"
+              port: "http"
+            {{- else }}
+            # Reads the status file ClickHouse writes into its data directory
+            # at startup, so a lost or hung data mount fails the probe even
+            # when no table is being read, and then pings the server.
+            exec:
+              command:
+                - "/bin/sh"
+                - "-c"
+                - >-
+                  grep -q '^PID:' /var/lib/clickhouse/status
+                  && wget --quiet --tries=1 --timeout=5 --output-document=/dev/null
+                  http://127.0.0.1:8123/ping
+            {{- end }}
+            periodSeconds: {{ $probe.periodSeconds }}
+            failureThreshold: {{ $probe.failureThreshold }}
+            timeoutSeconds: {{ $probe.timeoutSeconds }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.clickhouse.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "sdf-data-rubin"
+              mountPath: "/var/lib/clickhouse"
+              subPath: {{ .Values.clickhouse.dataSubPath | quote }}
+            - name: "sdf-data-rubin"
+              mountPath: "/var/lib/clickhouse-user-files"
+              subPath: {{ .Values.clickhouse.userFilesSubPath | quote }}
+            - name: "config-d"
+              mountPath: "/etc/clickhouse-server/config.d"
+              readOnly: true
+            - name: "users-d"
+              mountPath: "/etc/clickhouse-server/users.d"
+              readOnly: true
+            - name: "tmp"
+              mountPath: "/tmp"
+      {{- with .Values.clickhouse.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml $psc | nindent 8 }}
+      terminationGracePeriodSeconds: {{ .Values.clickhouse.terminationGracePeriodSeconds }}
+      {{- with .Values.clickhouse.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: "sdf-data-rubin"
+          persistentVolumeClaim:
+            claimName: "river-next-sdf-data-rubin"
+        - name: "config-d"
+          configMap:
+            name: "river-next-clickhouse"
+            items:
+              - key: "config.d-paths.xml"
+                path: "paths.xml"
+              - key: "config.d-ports.xml"
+                path: "ports.xml"
+              - key: "config.d-resources.xml"
+                path: "resources.xml"
+              - key: "config.d-logger.xml"
+                path: "logger.xml"
+        - name: "users-d"
+          configMap:
+            name: "river-next-clickhouse"
+            items:
+              - key: "users.d-profile.xml"
+                path: "profile.xml"
+              - key: "users.d-default.xml"
+                path: "default.xml"
+              - key: "users.d-admin.xml"
+                path: "admin.xml"
+              - key: "users.d-mppdb_ro.xml"
+                path: "mppdb_ro.xml"
+              - key: "users.d-ssp_xmatch.xml"
+                path: "ssp_xmatch.xml"
+        - name: "tmp"
+          emptyDir: {}

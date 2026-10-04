@@ -1,0 +1,48 @@
+config:
+  # baseUrl is deliberately not set: it is derived from global.baseUrl and
+  # ingress.pathPrefix, so moving the path at cutover is a one-line change.
+
+  # Phase 3: Gafaelfawr authenticates at the ingress; the service JIT-provisions its
+  # internal account on first sight of the username header.
+  authProvider: "gafaelfawr"
+  tokenPageUrl: "https://usdf-rsp-dev.slac.stanford.edu/settings/tokens/new"
+
+  # Display branding. Every key here needs setting, not just public_url: the
+  # code defaults describe the PRIMARY deployment, so an under-configured chart
+  # renders this service as "MPPDB @ juriclab" with that host's URL in the
+  # console's PyVO/TOPCAT examples. `wordmark` is pipe-delimited into the three
+  # separately-styled logo spans. None of this touches the schema identifier
+  # users type in ADQL -- `FROM dp2.DiaSource` is unaffected, and kernel_label
+  # exists precisely so the toolbar chip can be rebranded without renaming a
+  # schema.
+  branding:
+    name: "River"
+    wordmark: "R|iv|er"
+    suffix: "@ USDF"
+    tagline: "A fast, evergreen SQL and TAP database of Rubin catalogs"
+    kernel_label: "River / TAP"
+    page_title: "River · notebooks"
+    favicon_glyph: "R"
+    # public_url is not set here: the chart derives it from the base URL.
+
+  # Behind the TLS-terminating RSP ingress: pin every generated URL to the
+  # external https baseUrl so async job/result URLs are not minted as http://
+  # (which the https console blocks under connect-src 'self').
+  advertiseRequestBase: false
+
+image:
+  pullSecrets: ["river-next-pull"]
+  # sha- tag of the u/mjuric/mppdb merge that contains both the OCI build and
+  # the gafaelfawr provider (mppdb b439931); CI's in-image test gate passed.
+  tag: "sha-f0d957e"
+  pullPolicy: "Always"
+
+clickhouse:
+  # Empty for the first deployment; then set to the address MetalLB assigned
+  # from the sdf-rubin-ingest pool, so it survives the service being recreated.
+  loadBalancerIP: "172.24.10.116"
+
+ingress:
+  # Cutover: river-next took over River's path. The chart default stays
+  # /river-next so another environment doesn't collide with an existing River.
+  pathPrefix: "/river"

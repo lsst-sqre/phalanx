@@ -43,6 +43,7 @@ applications:
   ppdb-replication: true
   qserv-kafka: true
   river: true
+  river-next: true
   rubin-rag: true
   rubintv: true
   s3proxy: true
