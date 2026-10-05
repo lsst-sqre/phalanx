@@ -314,7 +314,7 @@ ocsscheduler:
 
 watcher:
   image:
-    revision: 9
+    revision: 13
     repository: ts-dockerhub.lsst.org/watcher
   envSecrets:
   - name: ESCALATION_KEY
@@ -325,3 +325,9 @@ watcher:
     requests:
       cpu: 1000m
       memory: 1500Mi
+  nfsMountpoint:
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obs-env.cp.lsst.org
+    serverPath: /obs-env
