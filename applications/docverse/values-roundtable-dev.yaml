@@ -1,3 +1,13 @@
+image:
+  # Temporary override for the dev QA of lsst-sqre/docverse#765 (keeper-sync
+  # slice budget and cancellation, lsst-sqre/docverse#774) and the remaining
+  # memory runs of lsst-sqre/docverse#753: the tickets/DM-56095-sync-slices
+  # branch (PR #775, stacked on #763 and #762) carries the slice chain, the
+  # memory sampler, and the shared aiobotocore session. Revert to the chart
+  # appVersion once the server release carrying that work ships.
+  tag: "tickets-DM-56095-sync-slices"
+  pullPolicy: "Always"
+
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://docverse@localhost/docverse"
@@ -7,6 +17,11 @@ config:
     - "jonathansick"
   keeperSync:
     enabled: true
+    # Short slice budget for the lsst-sqre/docverse#765 dev QA so a
+    # mid-size project refresh runs as a chain of several continuation
+    # jobs. Remove once lsst-sqre/docverse#774 is done so dev derives the
+    # budget like prod.
+    sliceBudgetSeconds: 300
   maintenance:
     enabled: true
     gitRefAuditEnabled: true
@@ -14,6 +29,11 @@ config:
     enabled: true
   metrics:
     enabled: true
+  memoryDiagnostics:
+    # Both on for the lsst-sqre/docverse#753 dev investigation; turn
+    # tracemalloc back off once the runs are recorded.
+    enabled: true
+    tracemallocEnabled: true
 
 cloudsql:
   enabled: true

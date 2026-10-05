@@ -91,8 +91,27 @@ config:
     # provide `docverse.worker.main.KeeperSyncWorkerSettings`.
     enabled: false
 
-    # -- Per-job timeout, in seconds, for keeper-sync arq jobs.
+    # -- Per-job timeout, in seconds, for keeper-sync arq jobs. The
+    # server derives its two neighbours from this value: the slice budget
+    # (`sliceBudgetSeconds`) to this less 600 s and the stuck-run reaper
+    # threshold (`config.reaperThresholds.keeperSyncSeconds`) to this plus
+    # 1800 s, so the three read as one ladder, budget < timeout < reaper.
+    # Raising it is also the escape hatch for an edition too large to copy
+    # inside one slice, since the budget follows it up.
     jobTimeoutSeconds: 3600
+
+    # -- How long, in seconds, one `keeper_sync_project` job keeps starting
+    # editions before it completes its row and hands the rest of the
+    # project to a continuation job, so a project of any size converges
+    # across a chain of jobs that each finish inside `jobTimeoutSeconds`.
+    # Checked before each edition, never mid-copy. Leave unset to let the
+    # server derive it as `jobTimeoutSeconds` less a 600 s margin (3000 s
+    # at the default timeout); an explicit value must be greater than 0 and
+    # less than `jobTimeoutSeconds` or the server refuses to start. Set it
+    # low (for example 300) on a development environment to exercise the
+    # continuation chain on a mid-size project.
+    # @default -- Derived by the server (`jobTimeoutSeconds` - 600)
+    sliceBudgetSeconds: null
 
     # -- Attempts, including the first, that the keeper-sync worker spends
     # on one presigned upload of a copied object before failing the build
@@ -124,6 +143,37 @@ config:
     # download). The copy is re-run exactly once; any other failure fails
     # the edition as before.
     copyRetryDelaySeconds: 30.0
+
+  memoryDiagnostics:
+    # -- Enable the in-process memory sampler in every Docverse process
+    # (API, worker, Keeper-sync worker, maintenance worker). When on, each
+    # process logs one `Memory sample` line per interval carrying its
+    # resident size, resident high-water mark, and garbage-collector
+    # counts, so a pod's memory growth can be read from its logs without
+    # attaching a profiler (the pods run on a read-only root filesystem
+    # with every capability dropped, so nothing can be attached).
+    enabled: false
+
+    # -- Seconds between memory samples.
+    intervalSeconds: 60
+
+    # -- Also trace Python allocations with `tracemalloc` and add the
+    # traced heap size, its peak, the live object count, and the top
+    # allocation sites by growth since the previous sample to each
+    # `Memory sample` line. Roughly doubles the heap a process needs, so
+    # leave it off in production and enable it on a development
+    # environment while chasing a leak. Has no effect unless `enabled` is
+    # also set.
+    tracemallocEnabled: false
+
+    # -- Stack depth `tracemalloc` records per allocation. Deeper traces
+    # attribute growth to the calling code rather than to the library
+    # that allocated, at more overhead per allocation.
+    tracemallocFrames: 5
+
+    # -- Number of allocation sites, ranked by growth since the previous
+    # sample, included in each sample when `tracemallocEnabled` is on.
+    topN: 10
 
   maintenance:
     # -- Enable the maintenance worker that consumes the
@@ -185,8 +235,17 @@ config:
   credentialKeyRotation: false
 
   reaperThresholds:
-    # -- Stuck-run reaper threshold, in seconds, for keeper-sync jobs.
-    keeperSyncSeconds: 21600
+    # -- Stuck-run reaper threshold, in seconds, for keeper-sync jobs. Leave
+    # unset to let the server derive it as `config.keeperSync.jobTimeoutSeconds`
+    # plus a 1800 s margin (5400 s at the default timeout). The keeper-sync
+    # functions run with a single attempt, so arq has already cancelled any
+    # job that reached its timeout and a row still in progress past that
+    # point is dead; the old flat 21600 s pin only kept the project parked
+    # behind the active-job index for hours. An explicit value only lowers
+    # the threshold: anything above timeout + 1800 is capped there and the
+    # sync worker logs a warning at startup naming both values.
+    # @default -- Derived by the server (`config.keeperSync.jobTimeoutSeconds` + 1800)
+    keeperSyncSeconds: null
     # -- Stuck-run reaper threshold, in seconds, for lifecycle_eval and
     # git_ref_audit jobs (maintenance pool).
     lifecycleSeconds: 21600
@@ -252,6 +311,14 @@ workerResources:
 syncWorker:
   # -- Number of Keeper-sync worker pods to start
   replicaCount: 1
+
+  # -- Additional environment variables for the Keeper-sync worker
+  # container, as a list of `name`/`value` pairs. Meant for runtime
+  # experiments that need no chart change, such as `MALLOC_ARENA_MAX`
+  # set to `"2"` to cap glibc malloc arenas when the memory sampler
+  # shows resident size far above the traced Python heap
+  # (lsst-sqre/docverse#753).
+  extraEnv: []
 
   # -- Resource limits and requests for the Keeper-sync worker pod
   # @default -- See `values.yaml`

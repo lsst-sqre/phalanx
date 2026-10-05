@@ -43,6 +43,9 @@ spec:
           env:
             {{- include "docverse.envVars" . | nindent 12 }}
             {{- include "docverse.kafkaEnvVars" . | nindent 12 }}
+            {{- with .Values.syncWorker.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           envFrom:
             - configMapRef:
                 name: "docverse"
