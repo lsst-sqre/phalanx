@@ -263,6 +263,35 @@ reset; guard --replace - "pod first 2026-10-05T00:00:00Z"
 expect "--replace -: writes when the file is missing" owner_is "pod first"
 expect "claim: side-qualified temp names leave nothing behind" no_tmp
 
+# Stopped between writing holder.tmp and renaming it to holder (an mv shim
+# fails that one rename, or signals the guard there): the guard's own lock
+# directory must not survive, holder-less, with the temp file inside.
+mkdir -p "$WORK/mvshim"
+cat >"$WORK/mvshim/mv" <<'SHIM'
+#!/bin/sh
+for last; do :; done
+case "$last" in
+    */.owner.lock/holder)
+        [ "${SHIM_MODE-}" = term ] && kill -TERM "$PPID"
+        exit 1
+        ;;
+esac
+exec /bin/mv "$@"
+SHIM
+chmod +x "$WORK/mvshim/mv"
+for mode in fail term; do
+    set_pod; reset
+    PATH="$WORK/mvshim:$PATH" SHIM_MODE="$mode" sh "$GUARD" >"$WORK/out" 2>"$WORK/err"
+    rc=$?
+    expect "holder rename interrupted ($mode): the guard does not proceed (rc=$rc)" test "$rc" != 0
+    expect "holder rename interrupted ($mode): no lock left behind" no_lock
+    expect "holder rename interrupted ($mode): nothing written" test ! -e "$D/.owner"
+done
+set_pod; reset; mkdir "$D/.owner.lock"; echo "pod someone 2026-10-05T00:00:00Z 1" >"$D/.owner.lock/holder"
+guard --check-only
+expect "--check-only never acquires: another holder's lock survives it" test -s "$D/.owner.lock/holder"
+rm -rf "$D/.owner.lock"
+
 # The review's lock race: guard A (pod) holds the lock and has passed rules
 # 1-2 when it stalls in its ping (SIGSTOP stands in for an NFS hang); the lock
 # goes stale (backdated, instead of waiting 120 s); then B tries.
@@ -343,7 +372,7 @@ expect "guard signalled during verify: a same-side previous line is put back ver
 
 # Concurrent claims: both sides at once on a released directory; exactly one
 # may win, every time.
-iters=12
+iters=40
 wins_ok=0
 i=0
 while [ "$i" -lt "$iters" ]; do

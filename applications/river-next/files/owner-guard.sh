@@ -116,8 +116,11 @@ runbook="remove .owner.lock only after confirming the other side is gone (runboo
 # call created. That fails closed: the lock then looks held (by nobody, or by
 # an unreadable holder) and the guard waits and refuses; it never proceeds
 # without the lock.
-my_holder="$side $ident $(utc_now)"
-made_lock=0       # set just before mkdir, so a signal cannot slip between
+# The fourth field, this process's PID, keeps two guards of one side with the
+# same ident in the same second apart; readers use only the first three.
+my_holder="$side $ident $(utc_now) $$"
+made_lock=0       # our mkdir succeeded
+acquired=0        # ... and our holder file is in place: the lock is ours
 holder_is_mine() {
     _h=""
     { IFS= read -r _h <"$holder_file"; } 2>/dev/null
@@ -131,7 +134,7 @@ holder_is_mine() {
 claim=""
 prev_line=""
 on_signal() {
-    if [ -n "$claim" ] && [ -n "$prev_line" ] && holder_is_mine; then
+    if [ -n "$claim" ] && [ -n "$prev_line" ] && [ "$acquired" = 1 ] && holder_is_mine; then
         _cur=""
         { IFS= read -r _cur <"$owner_file"; } 2>/dev/null
         if [ "$_cur" = "$claim" ] \
@@ -143,14 +146,16 @@ on_signal() {
 }
 
 release_lock() {
-    if holder_is_mine; then
+    # Our holder temp file first: left inside, it would keep the rmdir below
+    # from removing our own empty lock, leaving a lock with no holder.
+    rm -f "$tmp" "$holder_file.tmp.$side.$$"
+    if [ "$acquired" = 1 ] && holder_is_mine; then
         rm -rf "$lock_dir"
-    elif [ "$made_lock" = 1 ] && [ ! -e "$holder_file" ]; then
-        # Interrupted between our mkdir and writing the holder: the empty
-        # directory is ours. rmdir removes it only if it is still empty.
+    elif [ "$made_lock" = 1 ] && [ "$acquired" = 0 ] && [ ! -e "$holder_file" ]; then
+        # Stopped between our mkdir and the holder rename: the directory is
+        # ours. rmdir removes it only if it is still empty.
         rmdir "$lock_dir" 2>/dev/null
     fi
-    rm -f "$tmp" "$holder_file.tmp.$side.$$"
 }
 trap 'release_lock' EXIT
 trap 'on_signal 143' TERM
@@ -159,16 +164,22 @@ trap 'on_signal 130' INT
 take_lock() {
     deadline=$(($(date +%s) + lock_wait))
     while :; do
-        made_lock=1
         if mkdir "$lock_dir" 2>/dev/null; then
+            made_lock=1
             if ! printf '%s\n' "$my_holder" >"$holder_file.tmp.$side.$$" \
                 || ! mv -f -T "$holder_file.tmp.$side.$$" "$holder_file"; then
                 refuse "lock: cannot write $holder_file"
             fi
+            acquired=1
             return 0
         fi
-        made_lock=0
-        [ -d "$lock_dir" ] || refuse "lock: cannot create $lock_dir"
+        if [ ! -d "$lock_dir" ]; then
+            # Either it was released between our mkdir and this check (retry),
+            # or we cannot create it at all.
+            [ -w "$data_dir" ] || refuse "lock: cannot create $lock_dir"
+            [ "$(date +%s)" -lt "$deadline" ] || refuse "lock: could not take $lock_dir within ${lock_wait}s"
+            continue
+        fi
         holder=""
         { IFS= read -r holder <"$holder_file"; } 2>/dev/null
         lmtime="$(stat -c %Y "$lock_dir" 2>/dev/null)"
