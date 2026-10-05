@@ -51,6 +51,7 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise-standby.enabled | bool | `false` | Whether to enable influxdb-enterprise-standby |
 | influxdb-enterprise.enabled | bool | `false` | Whether to enable influxdb-enterprise |
 | influxdb-migration.enabled | bool | `false` | Whether to enable the influxdb-migration subchart |
+| influxdb-users.enabled | bool | `false` | Whether to enable management of additional InfluxDB users |
 | influxdb.config.continuous_queries.enabled | bool | `false` | Whether continuous queries are enabled |
 | influxdb.config.coordinator.log-queries-after | string | `"15s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
 | influxdb.config.coordinator.max-concurrent-queries | int | `500` | Maximum number of running queries allowed on the instance (0 is unlimited) |
@@ -544,6 +545,17 @@ Rubin Observatory's telemetry service
 | influxdb-migration.podAnnotations | object | `{}` | Annotations for the influxdb-migration deployment pod |
 | influxdb-migration.resources | object | `{}` | Resource limits and requests for the influxdb-migration deployment pod |
 | influxdb-migration.tolerations | list | `[]` | Tolerations for the influxdb-migration deployment pod |
+| influxdb-users.activeDeadlineSeconds | int | `300` | Maximum number of seconds a user-management Job may run |
+| influxdb-users.backoffLimit | int | `10` | Number of times Kubernetes retries a failed user-management Job |
+| influxdb-users.enabled | bool | `false` | Whether to manage the configured InfluxDB users |
+| influxdb-users.fullnameOverride | string | `""` | Override the full name for resources |
+| influxdb-users.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the InfluxDB image |
+| influxdb-users.image.repository | string | `"influxdb"` | Docker repository for the InfluxDB Enterprise image |
+| influxdb-users.image.tag | string | `appVersion` from `Chart.yaml` | InfluxDB image tag, without the `-data` suffix |
+| influxdb-users.imagePullSecrets | list | `[]` | List of pull secrets needed for the InfluxDB image |
+| influxdb-users.nameOverride | string | `""` | Override the base name for resources |
+| influxdb-users.resources | object | `{"limits":{"cpu":"100m","memory":"50Mi"},"requests":{"cpu":"100m","memory":"50Mi"}}` | Kubernetes resource requests and limits for user-management containers |
+| influxdb-users.targets | list | `[]` | InfluxDB targets and users to manage. Passwords must not contain single quotes or backslashes. |
 | kafbat.affinity | object | `{}` | Affinity configuration |
 | kafbat.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | kafbat.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
