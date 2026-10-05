@@ -38,6 +38,11 @@ image:
   pullPolicy: "Always"
 
 clickhouse:
+  # Failover switch: "pod" (the StatefulSet) or "external" (the same server and
+  # data directory run on clickhouse.external.host; see mppdb
+  # deploy/k8s/failover/RUNBOOK.md).
+  backend: "external"
+
   # Empty for the first deployment; then set to the address MetalLB assigned
   # from the sdf-rubin-ingest pool, so it survives the service being recreated.
   loadBalancerIP: "172.24.10.116"
