@@ -6,4 +6,4 @@ image:
 
 serviceAnnotations:
   metallb.io/address-pool: sdf-rubin-ingest
-  metallb.io/loadBalancerIPs: 172.24.10.115
+  metallb.io/loadBalancerIPs: 172.24.10.117
