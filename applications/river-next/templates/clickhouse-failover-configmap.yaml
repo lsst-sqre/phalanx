@@ -1,0 +1,18 @@
+{{- $_ := include "river-next.clickhouse.backend" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "river-next-clickhouse-failover"
+  labels:
+    {{- include "river-next.clickhouse.labels" . | nindent 4 }}
+data:
+  # The failover ownership protocol: the owner guard (the init container, and
+  # again from the wrapper) and the server wrapper (the ClickHouse container's
+  # command). The failover host runs these same two files, exported from this
+  # render, so they must stay POSIX sh using only tools in the ClickHouse
+  # image. Rendered in both backends, so the export does not depend on which
+  # one is current.
+  owner-guard.sh: |
+    {{- .Files.Get "files/owner-guard.sh" | nindent 4 }}
+  server-wrapper.sh: |
+    {{- .Files.Get "files/server-wrapper.sh" | nindent 4 }}

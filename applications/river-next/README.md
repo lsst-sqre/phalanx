@@ -12,8 +12,10 @@ SQL and TAP database of Rubin catalog products, with its own ClickHouse server
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the pod |
 | clickhouse.affinity | object | Preferred anti-affinity against ephemcache pods | Affinity rules for the ClickHouse pod. The default prefers nodes not running ephemcache's large batch pods. |
+| clickhouse.backend | string | `"pod"` | Where the front end's ClickHouse server runs: `pod` (this chart's StatefulSet) or `external` (the same server and data directory run on the failover host, `clickhouse.external.host`). `external` scales the StatefulSet to zero replicas, without deleting it or its claim, and points the front end at the failover host. In `pod` mode the server runs under an owner guard and wrapper (the `river-next-clickhouse-failover` ConfigMap) that refuse to start while the failover host owns the data directory. Any other value fails rendering. |
 | clickhouse.backgroundPoolSize | int | `16` | `background_pool_size` (threads for merges and mutations) |
 | clickhouse.dataSubPath | string | `"repo/dp2_prep/u/mjuric/river-next/clickhouse"` | Path within the storage class's filesystem mounted at `/var/lib/clickhouse` (the server's data directory) |
+| clickhouse.external.host | string | `"sdfiana032.sdf.slac.stanford.edu"` | Fully qualified name of the failover host. In `external` mode the front end connects to it on port 8123; in `pod` mode the owner guard refuses to start while it answers `/ping`. Its first label is the name the owner file and heartbeat use for that side. Required. |
 | clickhouse.image.digest | string | `"sha256:bca86231e6f8e8969f442135843e44105d54fa61babd84b71f6f7c146f207a8e"` | Digest the tag is pinned to, so the image cannot change under the tag |
 | clickhouse.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the ClickHouse image |
 | clickhouse.image.repository | string | `"clickhouse/clickhouse-server"` | ClickHouse server image |
