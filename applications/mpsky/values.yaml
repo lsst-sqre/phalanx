@@ -7,12 +7,10 @@ replicaCount: 1
 
 image:
   # -- Image to use in the mpsky deployment
-#  repository: "ghcr.io/lsst-sqre/mpsky"
-  repository: "ghcr.io/mjuric/mpsky-daily"
+  repository: "ghcr.io/lsst-dm/mpsky"
 
   # -- Pull policy for the mpsky image
-#  pullPolicy: "IfNotPresent"
-  pullPolicy: "Always"
+  pullPolicy: "IfNotPresent"
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
