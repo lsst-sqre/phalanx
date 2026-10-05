@@ -12,6 +12,7 @@ A Helm chart for deploying the Rapid Analysis services.
 | env | object | `{"AWS_REQUEST_CHECKSUM_CALCULATION":"WHEN_REQUIRED","AWS_RESPONSE_CHECKSUM_VALIDATION":"WHEN_REQUIRED"}` | This section holds a set of key, value pairs for environmental variables (ENV_VAR: value). NOTE: RUN_ARG is taken care of by the chart using _script_. |
 | envSecrets | list | `[]` | This section holds specifications for secret injection. If this section is used, each object listed must have the following attributes defined: _name_ (The label for the secret), _secretName_ (The name of the vault store reference. Uses the _namespace_ attribute to construct the full name), _secretKey_ (The key in the vault store containing the necessary secret) |
 | fullnameOverride | string | `""` | Specify the deployed application name specifically. Overrides all other names. |
+| gafaelfawrToken.enabled | bool | `false` | Whether to create a Gafaelfawr service token for `bot-rapid-analysis` in the `rapid-analysis-gafaelfawr-token` secret, used to authenticate writes to ConsDB. Requires Gafaelfawr in the environment. Expose it to the pods by adding an `envSecrets` entry for it. |
 | gather2aSet | object | `{}` | This configures a StatefulSet used for visit-level gather processing. |
 | gatherRollupSet | object | `{}` | This configures a StatefulSet used for night-summary rollup. |
 | image.pullPolicy | string | `"IfNotPresent"` | The policy to apply when pulling an image for deployment. |

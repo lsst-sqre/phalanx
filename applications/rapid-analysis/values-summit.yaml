@@ -30,6 +30,8 @@ envSecrets:
 - name: SENTRY_DSN
   secretName: rapid-analysis-secrets
   secretKey: sentry.dsn
+gafaelfawrToken:
+  enabled: false
 securityContext:
   uid: 73006
   gid: 73006
