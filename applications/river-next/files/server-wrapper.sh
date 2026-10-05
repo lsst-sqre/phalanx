@@ -3,21 +3,26 @@
 # ownership protocol.
 #
 # The same script runs on both sides of the failover: as the ClickHouse
-# container's command in the Kubernetes pod, and as the Apptainer instance's
-# process on the failover host. It must stay POSIX sh, and use only tools
-# present in the pinned clickhouse/clickhouse-server image.
+# container's command in the Kubernetes pod (where it is PID 1), and as the
+# Apptainer instance's process on the failover host. It must stay POSIX sh,
+# and use only tools present in the pinned clickhouse/clickhouse-server image.
 #
+#   0. Install the SIGTERM/SIGINT traps first, so that a signal during the
+#      guard is not lost (PID 1 ignores signals it has no handler for).
 #   1. Run owner-guard.sh (next to this script), which applies the start rules
-#      and writes the owner line "<side> <ident>". Exit with its status if it
-#      refuses, without starting the server.
+#      under the claim lock and writes the owner line "<side> <ident>". Exit
+#      with its status if it refuses, without starting the server. If a signal
+#      arrived meanwhile, don't start the server either: put back the
+#      "released" line the claim replaced, if it replaced one, and exit 143.
 #   2. Start clickhouse-server --config-file=/etc/clickhouse-server/config.xml
 #      (plus any arguments given to this script) as a child process, and a
-#      heartbeat loop beside it that touches .heartbeat-<side> every
+#      heartbeat loop beside it that writes .heartbeat-<side> every
 #      RNF_HEARTBEAT_SECONDS for as long as the server is alive.
 #   3. Forward SIGTERM and SIGINT to the server, and wait for it to exit.
 #   4. On exit 0, write "released <side>/<ident>"; on any other exit, leave the
 #      owner line alone so this side may restart. Remove the heartbeat either
-#      way.
+#      way. Owner writes go through owner-guard.sh --replace, under the lock,
+#      and only if the line is still the one this wrapper claimed.
 #   5. Exit with the server's exit status.
 #
 # What the image's /entrypoint.sh does that matters for a non-root user with
@@ -49,22 +54,51 @@ case "$heartbeat" in
         ;;
 esac
 
-here="$(dirname "$0")"
+here="$(cd "$(dirname "$0")" && pwd)"
+guard="$here/owner-guard.sh"
 
-# 1. Start rules and the owner line. The guard reads the same environment; the
-# identity is fixed here so that the owner line and the released line agree.
-RNF_IDENT="$ident" sh "$here/owner-guard.sh" || exit $?
-
-write_atomic() {
-    # write_atomic <file> <content>: temp file in the same directory, then
-    # rename.
-    _tmp="$1.tmp.$$"
-    if printf '%s\n' "$2" >"$_tmp" && mv -f "$_tmp" "$1"; then
-        return 0
+# 0. Traps first. Until the server exists a signal is only recorded.
+server_pid=""
+pending=""
+got_signal=0
+forward() {
+    got_signal=1
+    if [ -n "$server_pid" ]; then
+        echo "$me: received SIG$1, forwarding it to clickhouse-server (pid $server_pid)" >&2
+        kill -s "$1" "$server_pid" 2>/dev/null
+    else
+        echo "$me: received SIG$1 before the server started; it will not be started" >&2
+        pending="$1"
     fi
-    rm -f "$_tmp"
-    return 1
 }
+trap 'forward TERM' TERM
+trap 'forward INT' INT
+
+# 1. Start rules and the owner line. The identity is fixed here so that the
+# owner line and the released line agree. The guard's output names the exact
+# line it wrote and the line it replaced.
+guard_out="$(RNF_IDENT="$ident" sh "$guard")"
+guard_rc=$?
+[ -n "$guard_out" ] && printf '%s\n' "$guard_out"
+[ "$guard_rc" = 0 ] || exit "$guard_rc"
+claim="$(printf '%s\n' "$guard_out" | sed -n 's/^owner-guard: claimed: //p')"
+replaced="$(printf '%s\n' "$guard_out" | sed -n 's/^owner-guard: replaced: //p')"
+
+# owner_replace <expected> <new>: under the claim lock, only if unchanged.
+owner_replace() {
+    sh "$guard" --replace "$1" "$2"
+}
+
+if [ -n "$pending" ]; then
+    case "$replaced" in
+        released\ *)
+            owner_replace "$claim" "$replaced" \
+                && echo "$me: restored the owner line: $replaced" >&2
+            ;;
+        *) echo "$me: owner line left as: $claim" >&2 ;;
+    esac
+    exit 143
+fi
 
 utc_now() {
     date -u +%Y-%m-%dT%H:%M:%SZ
@@ -76,25 +110,8 @@ utc_now() {
 export CLICKHOUSE_WATCHDOG_ENABLE
 cd "$data_dir" || { echo "$me: cannot cd to $data_dir" >&2; exit 1; }
 data_dir="$(pwd)"
-owner_file="$data_dir/.owner"
 hb_file="$data_dir/.heartbeat-$side"
-
-# Install the traps before the server starts, so that a signal arriving during
-# startup is not lost: it is recorded and forwarded once the server exists.
-server_pid=""
-pending=""
-got_signal=0
-forward() {
-    got_signal=1
-    if [ -n "$server_pid" ]; then
-        echo "$me: received SIG$1, forwarding it to clickhouse-server (pid $server_pid)" >&2
-        kill -s "$1" "$server_pid" 2>/dev/null
-    else
-        pending="$1"
-    fi
-}
-trap 'forward TERM' TERM
-trap 'forward INT' INT
+hb_tmp="$hb_file.tmp.$$"
 
 # 2. The server, then the heartbeat loop. A background command in a
 # non-interactive shell starts with SIGINT ignored; clickhouse-server installs
@@ -103,17 +120,22 @@ clickhouse-server --config-file=/etc/clickhouse-server/config.xml "$@" &
 server_pid=$!
 echo "$me: $side started clickhouse-server (pid $server_pid) as $side $ident" >&2
 if [ -n "$pending" ]; then
+    # Arrived in the instant between the check above and the start.
     forward "$pending"
 fi
 
 (
-    # Traps are reset in this subshell. It is stopped with SIGTERM by the
-    # wrapper when the server exits, and stops by itself if the server
-    # disappears while the wrapper is gone.
+    # Stopped with SIGTERM by the wrapper when the server exits; the trap
+    # runs only after a write in progress has finished, so no write follows
+    # the wrapper's cleanup. Stops by itself if the server disappears while
+    # the wrapper is gone.
+    trap 'exit 0' TERM
     while kill -0 "$server_pid" 2>/dev/null; do
-        write_atomic "$hb_file" "$(utc_now)" \
-            || echo "$me: could not write heartbeat $hb_file" >&2
-        sleep "$heartbeat"
+        if ! { printf '%s\n' "$(utc_now)" >"$hb_tmp" && mv -f "$hb_tmp" "$hb_file"; }; then
+            echo "$me: could not write heartbeat $hb_file" >&2
+        fi
+        sleep "$heartbeat" &
+        wait $!
     done
 ) &
 hb_pid=$!
@@ -141,17 +163,19 @@ done
 # The heartbeat stops with the server.
 kill -s TERM "$hb_pid" 2>/dev/null
 wait "$hb_pid" 2>/dev/null
-rm -f "$hb_file" "$hb_file.tmp.$$"
+rm -f "$hb_file" "$hb_tmp"
+sleep 1
+rm -f "$hb_file" "$hb_tmp"
 
 # 4. Release on a clean exit only.
 if [ "$rc" = 0 ]; then
-    if write_atomic "$owner_file" "released $side/$ident $(utc_now)"; then
+    if owner_replace "$claim" "released $side/$ident $(utc_now)"; then
         echo "$me: clickhouse-server exited cleanly; wrote released $side/$ident" >&2
     else
-        echo "$me: clickhouse-server exited cleanly, but writing $owner_file failed" >&2
+        echo "$me: clickhouse-server exited cleanly, but the owner line was not released (see above)" >&2
     fi
 else
-    echo "$me: clickhouse-server exited with status $rc; owner line left as $side $ident" >&2
+    echo "$me: clickhouse-server exited with status $rc; owner line left as $claim" >&2
 fi
 
 # 5.

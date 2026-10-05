@@ -106,15 +106,25 @@ else
     record "render_test.py" $?
 fi
 
-# Fake /ping endpoints: a local HTTP server whose /ping answers "Ok.", any
-# other path 404, and a port with nothing listening.
+# Fake /ping endpoints: a local HTTP server whose /ping answers "Ok.", /auth
+# answers 401, any other path 404 (including a proxied absolute URL), and a
+# port with nothing listening.
 free_port() {
     python3 -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1", 0)); print(s.getsockname()[1])'
 }
-mkdir -p "$TMP/www"
-printf 'Ok.\n' >"$TMP/www/ping"
 http_port=$(free_port)
-(cd "$TMP/www" && exec timeout 3600 python3 -m http.server --bind 127.0.0.1 "$http_port" >/dev/null 2>&1) &
+timeout 3600 python3 - "$http_port" >/dev/null 2>&1 <<'PY' &
+import http.server, sys
+class H(http.server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        code, body = {"/ping": (200, b"Ok.\n"), "/auth": (401, b"no\n")}.get(
+            self.path, (404, b"not found\n"))
+        self.send_response(code)
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+http.server.ThreadingHTTPServer(("127.0.0.1", int(sys.argv[1])), H).serve_forever()
+PY
 http_pid=$!
 closed_port=$(free_port)
 for _ in $(seq 50); do
@@ -123,6 +133,7 @@ for _ in $(seq 50); do
 done
 export PING_OK_URL="http://127.0.0.1:$http_port/ping"
 export PING_ERR_URL="http://127.0.0.1:$http_port/no-such-path"
+export PING_AUTH_URL="http://127.0.0.1:$http_port/auth"
 export PING_CLOSED_URL="http://127.0.0.1:$closed_port/ping"
 export PROXY_URL="http://127.0.0.1:$http_port/"
 
