@@ -17,11 +17,6 @@ config:
     - "jonathansick"
   keeperSync:
     enabled: true
-    # Short slice budget for the lsst-sqre/docverse#765 dev QA so a
-    # mid-size project refresh runs as a chain of several continuation
-    # jobs. Remove once lsst-sqre/docverse#774 is done so dev derives the
-    # budget like prod.
-    sliceBudgetSeconds: 300
   maintenance:
     enabled: true
     gitRefAuditEnabled: true
