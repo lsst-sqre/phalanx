@@ -21,3 +21,6 @@
 .idea/
 *.tmproj
 .vscode/
+# Failover script tests, run by hand (see failover-tests/run-tests.sh); not
+# part of the chart
+failover-tests/

@@ -191,3 +191,56 @@ including strings, fractions, zero and negative numbers.
 {{- end -}}
 {{- printf "%.0f" (float64 $v) -}}
 {{- end }}
+
+{{/*
+ClickHouse: the backend, `pod` or `external`. Fails rendering on anything else.
+*/}}
+{{- define "river-next.clickhouse.backend" -}}
+{{- $b := .Values.clickhouse.backend -}}
+{{- if not (has $b (list "pod" "external")) -}}
+{{- fail (printf "clickhouse.backend must be \"pod\" or \"external\", not %q" (toString $b)) -}}
+{{- end -}}
+{{- $b -}}
+{{- end }}
+
+{{/*
+ClickHouse: the failover host's fully qualified name, clickhouse.external.host.
+Required, because the pod's owner guard pings it in `pod` mode and the front
+end uses it in `external` mode.
+*/}}
+{{- define "river-next.clickhouse.externalHost" -}}
+{{- $h := .Values.clickhouse.external.host -}}
+{{- if not $h -}}
+{{- fail "clickhouse.external.host must be set to the failover host's name" -}}
+{{- end -}}
+{{- toString $h -}}
+{{- end }}
+
+{{/*
+ClickHouse: the failover host's short name (the first label of
+clickhouse.external.host), which is how the owner file and heartbeat names
+refer to that side.
+*/}}
+{{- define "river-next.clickhouse.externalSide" -}}
+{{- include "river-next.clickhouse.externalHost" . | splitList "." | first -}}
+{{- end }}
+
+{{/*
+ClickHouse: the environment of the pod's failover owner guard and server
+wrapper, the only inputs the two scripts take. The heartbeat interval and
+staleness threshold are left at the scripts' defaults (30 s and 120 s).
+*/}}
+{{- define "river-next.clickhouse.failoverEnv" -}}
+- name: "RNF_SIDE"
+  value: "pod"
+- name: "RNF_IDENT"
+  valueFrom:
+    fieldRef:
+      fieldPath: "metadata.name"
+- name: "RNF_OTHER_SIDE"
+  value: {{ include "river-next.clickhouse.externalSide" . | quote }}
+- name: "RNF_OTHER_PING_URL"
+  value: {{ printf "http://%s:8123/ping" (include "river-next.clickhouse.externalHost" .) | quote }}
+- name: "RNF_DATA_DIR"
+  value: "/var/lib/clickhouse"
+{{- end }}

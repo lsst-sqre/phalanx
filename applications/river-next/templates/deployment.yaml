@@ -49,10 +49,19 @@ spec:
               value: {{ .Values.config.configPath | quote }}
             - name: "MPPDB_ENGINE"
               value: {{ .Values.config.engine | quote }}
+            {{- if eq (include "river-next.clickhouse.backend" .) "external" }}
+            # clickhouse.backend is external: the server runs on the failover
+            # host, on ClickHouse's default HTTP port.
+            - name: "MPPDB_CLICKHOUSE_HOST"
+              value: {{ include "river-next.clickhouse.externalHost" . | quote }}
+            - name: "MPPDB_CLICKHOUSE_PORT"
+              value: "8123"
+            {{- else }}
             - name: "MPPDB_CLICKHOUSE_HOST"
               value: {{ .Values.config.clickhouse.host | quote }}
             - name: "MPPDB_CLICKHOUSE_PORT"
               value: {{ .Values.config.clickhouse.port | quote }}
+            {{- end }}
             {{- with .Values.config.tokenPageUrl }}
             - name: "MPPDB_TOKEN_PAGE_URL"
               value: {{ . | quote }}
