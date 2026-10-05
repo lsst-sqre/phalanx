@@ -32,6 +32,17 @@ expect() {
     if "$@"; then ok "$_d"; else bad "$_d"; fi
 }
 
+# wait_for <tenths> <command...>: poll until the command succeeds.
+wait_for() {
+    _n="$1"; shift
+    while [ "$_n" -gt 0 ]; do
+        "$@" && return 0
+        sleep 0.1
+        _n=$((_n - 1))
+    done
+    return 1
+}
+
 D="$WORK/data"
 reset() {
     rm -rf "$D"
@@ -215,11 +226,23 @@ chmod 600 "$D/.owner"
 expect "lock: an unreadable owner file refuses (rule 1)" refused "rule 1 (owner)"
 expect "lock: released after an error inside the lock" no_lock
 
+set_pod; reset; mkdir "$D/.owner.lock"; echo "pod river-next-clickhouse-0 2026-10-05T00:00:00Z" >"$D/.owner.lock/holder"
+touch -d '-200 seconds' "$D/.owner.lock"; guard
+expect "lock: this side's lock older than 120 s is removed and the claim proceeds" passed
+expect "lock: ... with a message naming the old holder" grep -q "removing this side's claim lock older than 120s (holder: pod river-next-clickhouse-0" "$WORK/err"
+expect "lock: ... and the stale lock is gone afterwards" no_lock
+expect "lock: ... and nothing left aside" sh -c '[ -z "$(find "$1" -maxdepth 1 -name ".owner.lock.stale.*")" ]' _ "$D"
+
 set_pod; reset; mkdir "$D/.owner.lock"; echo "sdfiana032 99 2026-10-05T00:00:00Z" >"$D/.owner.lock/holder"
 touch -d '-200 seconds' "$D/.owner.lock"; guard
-expect "lock: a lock older than 120 s is removed and the claim proceeds" passed
-expect "lock: ... with a message naming the old holder" grep -q "removing a claim lock older than 120s (holder: sdfiana032 99" "$WORK/err"
-expect "lock: ... and the stale lock is gone afterwards" no_lock
+expect "lock: the other side's stale lock refuses, pointing at the runbook" \
+    refused "held by the other side (sdfiana032 99 .*); remove .owner.lock only after confirming the other side is gone (runbook)"
+expect "lock: ... and is left in place" sh -c '[ "$(cat "$1")" = "sdfiana032 99 2026-10-05T00:00:00Z" ]' _ "$D/.owner.lock/holder"
+expect "lock: ... nothing written" test ! -e "$D/.owner"
+
+set_pod; reset; mkdir "$D/.owner.lock"; touch -d '-200 seconds' "$D/.owner.lock"; guard
+expect "lock: a stale lock with no holder refuses" refused "no readable holder; remove .owner.lock only after"
+expect "lock: ... and is left in place" test -d "$D/.owner.lock"
 
 set_pod; reset; mkdir "$D/.owner.lock"; echo "sdfiana032 99 2026-10-05T00:00:00Z" >"$D/.owner.lock/holder"
 t0=$(date +%s); guard; t1=$(date +%s)
@@ -233,12 +256,90 @@ guard --replace "released sdfiana032/1 2026-10-05T00:00:00Z" "pod new 2026-10-05
 expect "--replace: swaps an exactly matching line" sh -c '[ "$(cat "$1")" = "pod new 2026-10-05T00:00:01Z" ]' _ "$D/.owner"
 expect "--replace: releases the lock" no_lock
 guard --replace "released sdfiana032/1 2026-10-05T00:00:00Z" "pod other 2026-10-05T00:00:02Z"
-expect "--replace: refuses when the line differs" refused "replace: owner line is"
+expect "--replace: refuses when the line differs" refused "owner-guard: --replace refused: replace: owner line is"
 expect "--replace: ... and leaves it" sh -c '[ "$(cat "$1")" = "pod new 2026-10-05T00:00:01Z" ]' _ "$D/.owner"
 expect "--replace: releases the lock after refusing" no_lock
 reset; guard --replace - "pod first 2026-10-05T00:00:00Z"
 expect "--replace -: writes when the file is missing" owner_is "pod first"
 expect "claim: side-qualified temp names leave nothing behind" no_tmp
+
+# The review's lock race: guard A (pod) holds the lock and has passed rules
+# 1-2 when it stalls in its ping (SIGSTOP stands in for an NFS hang); the lock
+# goes stale (backdated, instead of waiting 120 s); then B tries.
+# start_stalled: A in the background, stopped mid-ping. Sets apid.
+start_stalled() {
+    (set_pod; RNF_IDENT=podA; RNF_OTHER_PING_URL="http://192.0.2.1:8123/ping"
+        exec sh "$GUARD" >"$WORK/a.out" 2>"$WORK/a.err") &
+    apid=$!
+    wait_for 30 test -s "$D/.owner.lock/holder"
+    sleep 0.5
+    kill -STOP "$apid"
+    touch -d '-200 seconds' "$D/.owner.lock"
+}
+resume_stalled() {
+    kill -CONT "$apid"
+    wait "$apid"
+    arc=$?
+}
+claims() {
+    # claims: how many of A and B exited 0.
+    _c=0
+    [ "$arc" = 0 ] && _c=$((_c + 1))
+    [ "$rc" = 0 ] && _c=$((_c + 1))
+    echo "$_c"
+}
+# B is the other side: it must refuse the stale lock, and A's claim stands.
+set_pod; reset; echo "released pod/old 2026-10-05T00:00:00Z" >"$D/.owner"
+start_stalled
+set_ana; RNF_IDENT=anaB; export RNF_IDENT; guard
+expect "lock race (other side): B refuses A's stale lock" refused "held by the other side (pod podA"
+resume_stalled
+expect "lock race (other side): exactly one claim, A's ($(claims) claims; A rc=$arc)" \
+    sh -c '[ "$1" = 1 ] && [ "$2" = 0 ]' _ "$(claims)" "$arc"
+expect "lock race (other side): owner is pod podA" owner_is "pod podA"
+expect "lock race (other side): lock released" no_lock
+# B is the same side: it may remove the stale lock and claim; A, resuming,
+# must find the lock no longer its own and refuse before writing.
+set_pod; reset; echo "released sdfiana032/old 2026-10-05T00:00:00Z" >"$D/.owner"
+start_stalled
+set_pod; RNF_IDENT=podB; guard
+expect "lock race (same side): B removes the stale lock and claims" passed
+resume_stalled
+expect "lock race (same side): A refuses, the lock no longer being its own (rc=$arc)" \
+    sh -c '[ "$1" = 1 ] && grep -q "claim lock is no longer ours" "$2"' _ "$arc" "$WORK/a.err"
+expect "lock race (same side): exactly one claim, B's ($(claims) claims)" test "$(claims)" = 1
+expect "lock race (same side): owner is pod podB" owner_is "pod podB"
+expect "lock race (same side): lock released" no_lock
+
+# A guard whose lock is replaced under it (someone else's holder) refuses and
+# does not delete that lock on exit.
+set_pod; reset; echo "released sdfiana032/old 2026-10-05T00:00:00Z" >"$D/.owner"
+start_stalled
+echo "sdfiana032 77 2026-10-05T00:00:00Z" >"$D/.owner.lock/holder"
+resume_stalled
+expect "foreign holder: A refuses (rc=$arc)" sh -c '[ "$1" = 1 ] && grep -q "no longer ours" "$2"' _ "$arc" "$WORK/a.err"
+expect "foreign holder: the other holder's lock is left alone" \
+    sh -c '[ "$(cat "$1")" = "sdfiana032 77 2026-10-05T00:00:00Z" ]' _ "$D/.owner.lock/holder"
+expect "foreign holder: owner line untouched" owner_is "released sdfiana032/old"
+rm -rf "$D/.owner.lock"
+
+# A signal to the guard itself after its write (during the 2 s verify), as
+# for the init container: the previous line is put back under the lock.
+guard_bg() {
+    (exec perl -e '$SIG{INT} = $SIG{TERM} = "DEFAULT"; exec @ARGV or die' \
+        sh "$GUARD" >"$WORK/g.out" 2>"$WORK/g.err") &
+    gpid=$!
+}
+claimed_now() { case "$(owner)" in "pod river-next-clickhouse-0 "*) return 0 ;; esac; return 1; }
+set_pod; reset; echo "released sdfiana032/5 2026-10-05T00:00:00Z" >"$D/.owner"
+guard_bg; wait_for 50 claimed_now; kill -TERM "$gpid"; wait "$gpid"; grc=$?
+expect "guard signalled during verify: exit 143 (got $grc)" test "$grc" = 143
+expect "guard signalled during verify: the previous released line is back" owner_is "released sdfiana032/5"
+expect "guard signalled during verify: lock released" no_lock
+set_pod; reset; echo "pod river-next-clickhouse-0 2026-10-05T00:00:00Z" >"$D/.owner"
+guard_bg; sleep 0.3; wait_for 50 sh -c '! grep -q "T00:00:00Z" "$1"' _ "$D/.owner"; kill -TERM "$gpid"; wait "$gpid"; grc=$?
+expect "guard signalled during verify: a same-side previous line is put back verbatim" \
+    sh -c '[ "$2" = 143 ] && [ "$(cat "$1")" = "pod river-next-clickhouse-0 2026-10-05T00:00:00Z" ]' _ "$D/.owner" "$grc"
 
 # Concurrent claims: both sides at once on a released directory; exactly one
 # may win, every time.
@@ -294,16 +395,6 @@ start_wrapper() {
     STUB_MODE="$_mode" perl -e '$SIG{INT} = $SIG{TERM} = "DEFAULT"; exec @ARGV or die' \
         sh "$WRAPPER" "$@" >"$WORK/wout" 2>"$WORK/werr" &
     wpid=$!
-}
-# wait_for <tenths> <command...>: poll until the command succeeds.
-wait_for() {
-    _n="$1"; shift
-    while [ "$_n" -gt 0 ]; do
-        "$@" && return 0
-        sleep 0.1
-        _n=$((_n - 1))
-    done
-    return 1
 }
 started() { grep -q '^started' "$LOG"; }
 wrapper_done() { ! kill -0 "$wpid" 2>/dev/null; }
@@ -427,8 +518,15 @@ RNF_OTHER_PING_URL="http://192.0.2.1:8123/ping"
 start_wrapper term0
 sleep 1; kill -INT "$wpid"; finish
 expect "signal during guard (SIGINT): exit 143 (got $wrc)" test "$wrc" = 143
-expect "signal during guard: a non-released line is left as claimed" owner_is "pod river-next-clickhouse-0"
+expect "signal during guard: a same-side line (the init container's claim) becomes released" owner_is "released pod/river-next-clickhouse-0"
 expect "signal during guard (SIGINT): server never started" test ! -s "$LOG"
+
+set_pod; reset
+RNF_OTHER_PING_URL="http://192.0.2.1:8123/ping"
+start_wrapper term0
+sleep 1; kill -TERM "$wpid"; finish
+expect "signal during guard, no owner file before: exit 143 (got $wrc)" test "$wrc" = 143
+expect "signal during guard, no owner file before: the claim is left (same as missing)" owner_is "pod river-next-clickhouse-0"
 
 # The same as PID 1 in a PID namespace, as in the pod, where a signal with no
 # handler would be dropped. unshare -f forks the wrapper as PID 1; signals

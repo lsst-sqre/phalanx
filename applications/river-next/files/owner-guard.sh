@@ -20,7 +20,12 @@
 # Rules 1-3 and the owner write are one critical section under the claim lock,
 # the directory .owner.lock (mkdir is atomic on the shared filesystem). After
 # the write, the guard waits 2 s and re-reads the owner file, and requires the
-# exact line it wrote.
+# exact line it wrote. The lock's holder file must still name this guard just
+# before the write and after the re-read. A stale lock (older than 120 s) is
+# removed automatically only if its holder is this same side; the other
+# side's stale lock, or one with no holder, refuses (the other side may only
+# be stalled, as in an NFS hang): remove it by hand once the other side is
+# confirmed gone. A signal after the write puts the previous line back.
 #
 # Usage:
 #   owner-guard.sh               apply the rules; on success claim and exit 0,
@@ -82,7 +87,11 @@ data_dir="${RNF_DATA_DIR:-/var/lib/clickhouse}"
 stale="${RNF_STALE_SECONDS:-120}"
 
 refuse() {
-    echo "$me: refusing to start ${side:-?}: $*" >&2
+    if [ "$mode" = replace ]; then
+        echo "$me: --replace refused: $*" >&2
+    else
+        echo "$me: refusing to start ${side:-?}: $*" >&2
+    fi
     exit 1
 }
 
@@ -95,43 +104,99 @@ utc_now() {
 
 owner_file="$data_dir/.owner"
 lock_dir="$data_dir/.owner.lock"
+holder_file="$lock_dir/holder"
 tmp="$owner_file.tmp.$side.$$"
+runbook="remove .owner.lock only after confirming the other side is gone (runbook)"
 
-# The claim lock. Released on every exit path once taken.
-have_lock=0
-release_lock() {
-    if [ "$have_lock" = 1 ]; then
-        rm -rf "$lock_dir"
-        have_lock=0
+# The claim lock: the directory .owner.lock, whose holder file names who
+# holds it as "<side> <ident> <UTC time>". It is only ever removed by whoever
+# its holder file names (or, once stale, by the same side), never blindly.
+#
+# On NFSv3 a retransmitted MKDIR can report EEXIST for a directory this very
+# call created. That fails closed: the lock then looks held (by nobody, or by
+# an unreadable holder) and the guard waits and refuses; it never proceeds
+# without the lock.
+my_holder="$side $ident $(utc_now)"
+made_lock=0       # set just before mkdir, so a signal cannot slip between
+holder_is_mine() {
+    _h=""
+    { IFS= read -r _h <"$holder_file"; } 2>/dev/null
+    [ -n "$_h" ] && [ "$_h" = "$my_holder" ]
+}
+
+# Signals: once this guard's claim is in the owner file but before it has
+# exited 0, put the previous line back (under the lock it still holds), so
+# that an interrupted claim leaves no trace. A claim over a missing file is
+# left in place: "pod <name>" and a missing file mean the same.
+claim=""
+prev_line=""
+on_signal() {
+    if [ -n "$claim" ] && [ -n "$prev_line" ] && holder_is_mine; then
+        _cur=""
+        { IFS= read -r _cur <"$owner_file"; } 2>/dev/null
+        if [ "$_cur" = "$claim" ] \
+            && printf '%s\n' "$prev_line" >"$tmp" && mv -f -T "$tmp" "$owner_file"; then
+            echo "$me: interrupted after claiming; restored the owner line: $prev_line" >&2
+        fi
     fi
-    rm -f "$tmp"
+    exit "$1"
+}
+
+release_lock() {
+    if holder_is_mine; then
+        rm -rf "$lock_dir"
+    elif [ "$made_lock" = 1 ] && [ ! -e "$holder_file" ]; then
+        # Interrupted between our mkdir and writing the holder: the empty
+        # directory is ours. rmdir removes it only if it is still empty.
+        rmdir "$lock_dir" 2>/dev/null
+    fi
+    rm -f "$tmp" "$holder_file.tmp.$side.$$"
 }
 trap 'release_lock' EXIT
-trap 'exit 143' TERM
-trap 'exit 130' INT
+trap 'on_signal 143' TERM
+trap 'on_signal 130' INT
 
 take_lock() {
     deadline=$(($(date +%s) + lock_wait))
     while :; do
+        made_lock=1
         if mkdir "$lock_dir" 2>/dev/null; then
-            have_lock=1
-            printf '%s %s %s\n' "$side" "$ident" "$(utc_now)" >"$lock_dir/holder" \
-                || refuse "lock: cannot write $lock_dir/holder"
+            if ! printf '%s\n' "$my_holder" >"$holder_file.tmp.$side.$$" \
+                || ! mv -f -T "$holder_file.tmp.$side.$$" "$holder_file"; then
+                refuse "lock: cannot write $holder_file"
+            fi
             return 0
         fi
+        made_lock=0
         [ -d "$lock_dir" ] || refuse "lock: cannot create $lock_dir"
+        holder=""
+        { IFS= read -r holder <"$holder_file"; } 2>/dev/null
         lmtime="$(stat -c %Y "$lock_dir" 2>/dev/null)"
         if [ -n "$lmtime" ] && [ $(($(date +%s) - lmtime)) -gt "$lock_stale" ]; then
-            holder="$(cat "$lock_dir/holder" 2>/dev/null)"
-            echo "$me: removing a claim lock older than ${lock_stale}s (holder: ${holder:-unknown})" >&2
-            # Rename first, so that of several removers only one succeeds.
-            if mv "$lock_dir" "$lock_dir.stale.$side.$$" 2>/dev/null; then
-                rm -rf "$lock_dir.stale.$side.$$"
+            # Stale. Only this side's own stale lock may be removed
+            # automatically; the other side's holder may only be stalled.
+            if [ -z "$holder" ]; then
+                refuse "lock: $lock_dir is older than ${lock_stale}s and has no readable holder; $runbook"
+            fi
+            if [ "${holder%% *}" != "$side" ]; then
+                refuse "lock: $lock_dir is older than ${lock_stale}s but held by the other side ($holder); $runbook"
+            fi
+            echo "$me: removing this side's claim lock older than ${lock_stale}s (holder: $holder)" >&2
+            # Rename to a unique name, then make sure what was renamed is the
+            # lock judged stale and not a fresh one taken meanwhile.
+            aside="$lock_dir.stale.$side.$$"
+            if mv -T "$lock_dir" "$aside" 2>/dev/null; then
+                moved=""
+                { IFS= read -r moved <"$aside/holder"; } 2>/dev/null
+                if [ "$moved" = "$holder" ]; then
+                    rm -rf "$aside"
+                elif ! mv -T "$aside" "$lock_dir" 2>/dev/null; then
+                    refuse "lock: renamed a live lock ($moved) aside to $aside and could not put it back; $runbook"
+                fi
             fi
             continue
         fi
         if [ "$(date +%s)" -ge "$deadline" ]; then
-            holder="$(cat "$lock_dir/holder" 2>/dev/null)"
             refuse "lock: $lock_dir still held after ${lock_wait}s (holder: ${holder:-unknown})"
         fi
         sleep 1
@@ -152,15 +217,19 @@ read_owner() {
 }
 
 write_owner() {
-    # write_owner <line>: atomically, temp file in the same directory and
-    # rename; then wait and re-read, requiring exactly that line.
-    if ! printf '%s\n' "$1" >"$tmp" || ! mv -f "$tmp" "$owner_file"; then
-        refuse "claim: could not write $owner_file"
-    fi
-    sleep "$verify_delay"
+    # write_owner <line>: atomically (temp file in the same directory, then
+    # rename), only while the lock is still ours; then wait, re-read, and
+    # require exactly that line, and the lock still ours.
+    printf '%s\n' "$1" >"$tmp" || refuse "claim: could not write $tmp"
+    holder_is_mine || refuse "claim: the claim lock is no longer ours (holder: $(cat "$holder_file" 2>/dev/null)); nothing written"
+    claim="$1"
+    mv -f -T "$tmp" "$owner_file" || refuse "claim: could not rename $tmp to $owner_file"
+    sleep "$verify_delay" &
+    wait $!
     read_owner || refuse "claim: could not re-read $owner_file"
     [ "$owner_line" = "$1" ] \
         || refuse "claim: $owner_file changed under us after the write (now: $owner_line)"
+    holder_is_mine || refuse "claim: the claim lock was taken over during the verify (holder: $(cat "$holder_file" 2>/dev/null))"
 }
 
 if [ "$mode" = replace ]; then
@@ -172,6 +241,7 @@ if [ "$mode" = replace ]; then
         [ "$owner_present" = 1 ] && [ "$owner_line" = "$expected" ] \
             || refuse "replace: owner line is '${owner_line:-(missing)}', expected '$expected'"
     fi
+    [ "$expected" = "-" ] || prev_line="$expected"
     write_owner "$new_line"
     echo "$me: replaced owner line with: $new_line"
     exit 0
@@ -249,9 +319,10 @@ fi
 
 # Claim. (write_owner re-reads the file, so keep what it replaced first.)
 replaced_present="$owner_present"
-claim="$side $ident $(utc_now)"
-write_owner "$claim"
-echo "$me: claimed: $claim"
+[ "$owner_present" = 1 ] && prev_line="$owner_line"
+line="$side $ident $(utc_now)"
+write_owner "$line"
+echo "$me: claimed: $line"
 if [ "$replaced_present" = 1 ]; then
     echo "$me: replaced: $shown"
 fi

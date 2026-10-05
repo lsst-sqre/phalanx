@@ -13,7 +13,8 @@
 #      under the claim lock and writes the owner line "<side> <ident>". Exit
 #      with its status if it refuses, without starting the server. If a signal
 #      arrived meanwhile, don't start the server either: put back the
-#      "released" line the claim replaced, if it replaced one, and exit 143.
+#      "released" line the claim replaced, or write "released" if it replaced
+#      a line of this same side, and exit 143.
 #   2. Start clickhouse-server --config-file=/etc/clickhouse-server/config.xml
 #      (plus any arguments given to this script) as a child process, and a
 #      heartbeat loop beside it that writes .heartbeat-<side> every
@@ -90,10 +91,17 @@ owner_replace() {
 }
 
 if [ -n "$pending" ]; then
+    # No server of this side is running: undo the claim if it replaced a
+    # released line (put it back) or a line of this same side, such as the
+    # pod's own init-container claim (write released).
     case "$replaced" in
         released\ *)
             owner_replace "$claim" "$replaced" \
                 && echo "$me: restored the owner line: $replaced" >&2
+            ;;
+        "$side "*)
+            owner_replace "$claim" "released $side/$ident $(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+                && echo "$me: released this side's claim" >&2
             ;;
         *) echo "$me: owner line left as: $claim" >&2 ;;
     esac
@@ -131,7 +139,7 @@ fi
     # the wrapper is gone.
     trap 'exit 0' TERM
     while kill -0 "$server_pid" 2>/dev/null; do
-        if ! { printf '%s\n' "$(utc_now)" >"$hb_tmp" && mv -f "$hb_tmp" "$hb_file"; }; then
+        if ! { printf '%s\n' "$(utc_now)" >"$hb_tmp" && mv -f -T "$hb_tmp" "$hb_file"; }; then
             echo "$me: could not write heartbeat $hb_file" >&2
         fi
         sleep "$heartbeat" &
