@@ -41,7 +41,13 @@ clickhouse:
   # Failover switch: "pod" (the StatefulSet) or "external" (the same server and
   # data directory run on clickhouse.external.host; see mppdb
   # deploy/k8s/failover/RUNBOOK.md).
-  backend: "external"
+  backend: "pod"
+
+  # A clean shutdown over NFS can take longer than 5 minutes when the server is
+  # still loading tables or scheduling merges (2026-10-05 rehearsal: >300 s,
+  # SIGKILLed). Only a clean exit writes `released`, so give it as long as the
+  # startup probe allows.
+  terminationGracePeriodSeconds: 1800
 
   # Empty for the first deployment; then set to the address MetalLB assigned
   # from the sdf-rubin-ingest pool, so it survives the service being recreated.
