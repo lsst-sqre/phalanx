@@ -28,14 +28,6 @@ cadc-tap:
         - "ppdb.current_identifications:`ppdb-dev-5c07.ppdb_public.current_identifications`"
         - "ppdb.mpc_orbits:`ppdb-dev-5c07.ppdb_public.mpc_orbits`"
         - "ppdb.numbered_identifications:`ppdb-dev-5c07.ppdb_public.numbered_identifications`"
-        - "dp2.DiaObject:`ppdb-dev-5c07.dp2.DiaObject`"
-        - "dp2.DiaSource:`ppdb-dev-5c07.dp2.DiaSource`"
-        - "dp2.ForcedSourceOnDiaObject:`ppdb-dev-5c07.dp2.ForcedSourceOnDiaObject`"
-        - "dp2.SSObject:`ppdb-dev-5c07.dp2.SSObject`"
-        - "dp2.SSSource:`ppdb-dev-5c07.dp2.SSSource`"
-        - "dp2.mpc_orbits:`ppdb-dev-5c07.dp2.mpc_orbits`"
-        - "dp2.current_identifications:`ppdb-dev-5c07.dp2.current_identifications`"
-        - "dp2.numbered_identifications:`ppdb-dev-5c07.dp2.numbered_identifications`"
 
   cloudsql:
     enabled: true

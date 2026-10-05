@@ -23,14 +23,14 @@ cadc-tap:
         - "ppdb.DiaObject:`ppdb-int-6c62.ppdb_public.DiaObject`"
         - "ppdb.DiaSource:`ppdb-int-6c62.ppdb_public.DiaSource`"
         - "ppdb.DiaForcedSource:`ppdb-int-6c62.ppdb_public.DiaForcedSource`"
-        - "dp2.DiaObject:`ppdb-int-6c62.dp2.DiaObject`"
-        - "dp2.DiaSource:`ppdb-int-6c62.dp2.DiaSource`"
-        - "dp2.ForcedSourceOnDiaObject:`ppdb-int-6c62.dp2.ForcedSourceOnDiaObject`"
-        - "dp2.SSObject:`ppdb-int-6c62.dp2.SSObject`"
-        - "dp2.SSSource:`ppdb-int-6c62.dp2.SSSource`"
-        - "dp2.mpc_orbits:`ppdb-int-6c62.dp2.mpc_orbits`"
-        - "dp2.current_identifications:`ppdb-int-6c62.dp2.current_identifications`"
-        - "dp2.numbered_identifications:`ppdb-int-6c62.dp2.numbered_identifications`"
+        - "dp2_prompt.DiaObject:`ppdb-int-6c62.dp2_prompt.DiaObject`"
+        - "dp2_prompt.DiaSource:`ppdb-int-6c62.dp2_prompt.DiaSource`"
+        - "dp2_prompt.ForcedSourceOnDiaObject:`ppdb-int-6c62.dp2_prompt.ForcedSourceOnDiaObject`"
+        - "dp2_prompt.SSObject:`ppdb-int-6c62.dp2_prompt.SSObject`"
+        - "dp2_prompt.SSSource:`ppdb-int-6c62.dp2_prompt.SSSource`"
+        - "dp2_prompt.mpc_orbits:`ppdb-int-6c62.dp2_prompt.mpc_orbits`"
+        - "dp2_prompt.current_identifications:`ppdb-int-6c62.dp2_prompt.current_identifications`"
+        - "dp2_prompt.numbered_identifications:`ppdb-int-6c62.dp2_prompt.numbered_identifications`"
 
   cloudsql:
     enabled: true
