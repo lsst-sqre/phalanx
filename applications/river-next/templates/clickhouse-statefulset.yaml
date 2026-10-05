@@ -38,11 +38,7 @@ spec:
   template:
     metadata:
       annotations:
-        {{- if $pod }}
         checksum/config: {{ print (include (print $.Template.BasePath "/clickhouse-configmap.yaml") .) (include (print $.Template.BasePath "/clickhouse-failover-configmap.yaml") .) | sha256sum }}
-        {{- else }}
-        checksum/config: {{ include (print $.Template.BasePath "/clickhouse-configmap.yaml") . | sha256sum }}
-        {{- end }}
         {{- with .Values.clickhouse.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -54,11 +50,12 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       automountServiceAccountToken: false
-      {{- if $pod }}
       initContainers:
         # Refuses to let the server start while the failover host owns the
         # data directory (owner file, heartbeat, or /ping), leaving the pod in
         # Init:Error; otherwise claims it for this pod. No kubectl involved.
+        # Rendered whatever clickhouse.backend says, so that a manual scale-up
+        # during a failover still meets the guard.
         - name: "owner-guard"
           image: {{ $image | quote }}
           imagePullPolicy: {{ .Values.clickhouse.image.pullPolicy | quote }}
@@ -84,23 +81,18 @@ spec:
             - name: "failover"
               mountPath: "/opt/river-failover"
               readOnly: true
-      {{- end }}
       containers:
         - name: "clickhouse"
           image: {{ $image | quote }}
           imagePullPolicy: {{ .Values.clickhouse.image.pullPolicy | quote }}
-          {{- if $pod }}
           # The server runs under the failover wrapper, which starts
           # clickhouse-server as the image's entrypoint would, heartbeats while
           # it runs, and releases the data directory on a clean shutdown.
           command:
             - "/bin/sh"
             - "/opt/river-failover/server-wrapper.sh"
-          {{- end }}
           env:
-            {{- if $pod }}
             {{- include "river-next.clickhouse.failoverEnv" . | nindent 12 }}
-            {{- end }}
             # Password hashes for the users in users.d, which reads them with
             # from_env. Referenced by name only; the values are never in the
             # chart or the ConfigMap. Environment variables are read when the
@@ -192,11 +184,9 @@ spec:
               readOnly: true
             - name: "tmp"
               mountPath: "/tmp"
-            {{- if $pod }}
             - name: "failover"
               mountPath: "/opt/river-failover"
               readOnly: true
-            {{- end }}
       {{- with .Values.clickhouse.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -240,8 +230,6 @@ spec:
                 path: "ssp_xmatch.xml"
         - name: "tmp"
           emptyDir: {}
-        {{- if $pod }}
         - name: "failover"
           configMap:
             name: "river-next-clickhouse-failover"
-        {{- end }}

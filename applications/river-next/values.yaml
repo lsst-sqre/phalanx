@@ -287,10 +287,11 @@ clickhouse:
   # StatefulSet) or `external` (the same server and data directory run on the
   # failover host, `clickhouse.external.host`). `external` scales the
   # StatefulSet to zero replicas, without deleting it or its claim, and points
-  # the front end at the failover host. In `pod` mode the server runs under an
-  # owner guard and wrapper (the `river-next-clickhouse-failover` ConfigMap)
-  # that refuse to start while the failover host owns the data directory.
-  # Any other value fails rendering.
+  # the front end at the failover host. In both modes the pod template runs
+  # the server under an owner guard and wrapper (the
+  # `river-next-clickhouse-failover` ConfigMap) that refuse to start while the
+  # failover host owns the data directory, so a manual scale-up during a
+  # failover still meets the guard. Any other value fails rendering.
   backend: "pod"
 
   external:

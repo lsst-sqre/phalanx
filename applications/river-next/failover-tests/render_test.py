@@ -3,7 +3,7 @@
 Run with the Python environment that holds the phalanx CLI (it imports
 phalanx to get the values Argo CD injects), from anywhere in the repository:
 
-    python applications/river-next/tests/render_test.py
+    python applications/river-next/failover-tests/render_test.py
 
 The default render comes from ``phalanx application template river-next
 usdfdev``. The CLI takes no extra values, so renders with overrides run
@@ -11,8 +11,9 @@ usdfdev``. The CLI takes no extra values, so renders with overrides run
 ``--set``), plus one more values file; the two are first checked to agree.
 """
 
-# Not a package: a standalone script run by applications/river-next/tests.
-# ruff: noqa: INP001
+# A standalone test script run by hand (not a package, and outside the tests/
+# trees that the shared Ruff configuration relaxes these rules for).
+# ruff: noqa: INP001, D103, SLF001
 
 from __future__ import annotations
 
@@ -147,28 +148,15 @@ def rnf_env(container: dict[str, Any]) -> dict[str, Any]:
 
 
 def strip_failover(d: Docs) -> Docs:
-    """Reset every backend-dependent field.
+    """Reset the only backend-dependent fields (contract 13.10).
 
-    What remains of the render must then be identical across backends.
+    These are the StatefulSet's replicas and the front end's ClickHouse host
+    and port. What remains of the render must be identical across backends.
     """
     d = copy.deepcopy(d)
-    s = sts(d)
-    s["spec"].pop("replicas")
-    t = s["spec"]["template"]
-    t["metadata"]["annotations"].pop("checksum/config")
-    t["spec"].pop("initContainers", None)
-    t["spec"]["volumes"] = [
-        v for v in t["spec"]["volumes"] if v["name"] != "failover"
-    ]
-    c = ch_container(d)
-    c.pop("command", None)
-    c["env"] = [e for e in c["env"] if not e["name"].startswith("RNF_")]
-    c["volumeMounts"] = [
-        m for m in c["volumeMounts"] if m["name"] != "failover"
-    ]
+    sts(d)["spec"].pop("replicas")
     fc = frontend(d)
     fc["env"] = [e for e in fc["env"] if e["name"] not in CH_ENV]
-    d.pop(("ConfigMap", "river-next-clickhouse-failover"), None)
     return d
 
 
@@ -195,29 +183,31 @@ def check_both(name: str, d: Docs) -> None:
     check(grace == 300, f"{name}: terminationGracePeriodSeconds is 300")
 
 
-def check_pod(pod: Docs) -> None:
+def check_guard(name: str, pod: Docs) -> None:
+    """Check the guard, which renders in both backends (contract 13.10)."""
     s = sts(pod)
     spec = s["spec"]["template"]["spec"]
     c = ch_container(pod)
-    check(s["spec"]["replicas"] == 1, "pod: StatefulSet replicas 1")
     inits = spec.get("initContainers", [])
     check(
         [i["name"] for i in inits] == ["owner-guard"],
-        "pod: one init container, owner-guard",
+        f"{name}: one init container, owner-guard",
     )
     g = inits[0] if inits else {}
-    check(g.get("command") == GUARD, "pod: owner-guard runs owner-guard.sh")
+    check(
+        g.get("command") == GUARD, f"{name}: owner-guard runs owner-guard.sh"
+    )
     check(
         g.get("image") == c["image"],
-        "pod: owner-guard uses the ClickHouse image",
+        f"{name}: owner-guard uses the ClickHouse image",
     )
     check(
         g.get("securityContext") == c["securityContext"],
-        "pod: owner-guard has the ClickHouse container's securityContext",
+        f"{name}: owner-guard has the ClickHouse container's securityContext",
     )
     check(
         g.get("resources") == c["resources"],
-        "pod: owner-guard has the ClickHouse container's resources"
+        f"{name}: owner-guard has the ClickHouse container's resources"
         " (QoS unchanged)",
     )
     data_mount = next(
@@ -225,11 +215,11 @@ def check_pod(pod: Docs) -> None:
     )
     check(
         data_mount in g.get("volumeMounts", []),
-        "pod: owner-guard mounts the data volume at /var/lib/clickhouse",
+        f"{name}: owner-guard mounts the data volume at /var/lib/clickhouse",
     )
     check(
         c.get("command") == WRAPPER,
-        "pod: ClickHouse container runs server-wrapper.sh",
+        f"{name}: ClickHouse container runs server-wrapper.sh",
     )
     want_env = {
         "RNF_SIDE": "pod",
@@ -238,21 +228,15 @@ def check_pod(pod: Docs) -> None:
         "RNF_OTHER_PING_URL": f"http://{FAILOVER_HOST}:8123/ping",
         "RNF_DATA_DIR": "/var/lib/clickhouse",
     }
-    check(rnf_env(c) == want_env, "pod: wrapper environment per 13.8")
-    check(rnf_env(g) == want_env, "pod: guard environment per 13.8")
+    check(rnf_env(c) == want_env, f"{name}: wrapper environment per 13.8")
+    check(rnf_env(g) == want_env, f"{name}: guard environment per 13.8")
     check(
         any(
             v["name"] == "failover"
             and v["configMap"]["name"] == "river-next-clickhouse-failover"
             for v in spec["volumes"]
         ),
-        "pod: scripts volume from the failover ConfigMap",
-    )
-    fe = frontend_env(pod)
-    check(
-        fe["MPPDB_CLICKHOUSE_HOST"] == SERVICE_HOST
-        and fe["MPPDB_CLICKHOUSE_PORT"] == "8123",
-        "pod: front end uses the in-cluster Service",
+        f"{name}: scripts volume from the failover ConfigMap",
     )
 
 
@@ -261,12 +245,18 @@ def check_external(pod: Docs, ext: Docs) -> None:
     spec = s["spec"]["template"]["spec"]
     c = ch_container(ext)
     check(s["spec"]["replicas"] == 0, "external: StatefulSet kept, replicas 0")
-    check("initContainers" not in spec, "external: no init container")
     check(
-        "command" not in c,
-        "external: ClickHouse container uses the image entrypoint",
+        [i["name"] for i in spec.get("initContainers", [])] == ["owner-guard"]
+        and c.get("command") == WRAPPER,
+        "external: guard and wrapper still in the pod template",
     )
-    check(rnf_env(c) == {}, "external: no failover environment")
+    check(sts(pod)["spec"]["replicas"] == 1, "pod: StatefulSet replicas 1")
+    fe = frontend_env(pod)
+    check(
+        fe["MPPDB_CLICKHOUSE_HOST"] == SERVICE_HOST
+        and fe["MPPDB_CLICKHOUSE_PORT"] == "8123",
+        "pod: front end uses the in-cluster Service",
+    )
     fe = frontend_env(ext)
     check(
         fe["MPPDB_CLICKHOUSE_HOST"] == FAILOVER_HOST
@@ -275,8 +265,8 @@ def check_external(pod: Docs, ext: Docs) -> None:
     )
     check(
         strip_failover(pod) == strip_failover(ext),
-        "pod vs external: nothing else differs (Services, LoadBalancer,"
-        " NetworkPolicy, claims, ...)",
+        "pod vs external: only replicas and the front-end host/port differ"
+        " (guard, Services, LoadBalancer, NetworkPolicy, claims, ...)",
     )
     check(set(pod) == set(ext), "pod vs external: same set of objects")
 
@@ -335,7 +325,8 @@ def main() -> int:
 
     check_both("pod", pod)
     check_both("external", ext)
-    check_pod(pod)
+    check_guard("pod", pod)
+    check_guard("external", ext)
     check_external(pod, ext)
     check_overrides()
 

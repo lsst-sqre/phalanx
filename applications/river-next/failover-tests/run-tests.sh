@@ -1,7 +1,11 @@
 #!/bin/bash
 # Tests for river-next's ClickHouse failover support. One command:
 #
-#     applications/river-next/tests/run-tests.sh
+#     applications/river-next/failover-tests/run-tests.sh
+#
+# These run by hand, not in CI: they need Apptainer and the pinned image, and
+# they are not helm-unittest suites (this directory is deliberately not named
+# tests/, and .helmignore keeps it out of the chart package).
 #
 # 1. sh -n (and ShellCheck, if installed) on the two failover scripts.
 # 2. render_test.py: both clickhouse.backend renders. Needs helm, and a Python
