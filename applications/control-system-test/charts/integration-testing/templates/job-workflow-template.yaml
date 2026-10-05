@@ -16,6 +16,17 @@ spec:
   - name: testreports
     persistentVolumeClaim:
       claimName: {{ .Values.persistentVolume.claimName }}
+  {{- if .Values.efdCredentials }}
+  - name: efd-credentials-raw
+    secret:
+      secretName: control-system-test
+      items:
+      - key: {{ .Values.efdCredentials.secretFilename }}
+        path: {{ .Values.efdCredentials.secretFilename }}
+      defaultMode: 0440
+  - name: efd-credentials
+    emptyDir: {}
+  {{- end }}
   templates:
   - name: inttest-template
     inputs:
@@ -41,6 +52,23 @@ spec:
       runAsUser: 73006
       runAsGroup: 73006
       fsGroup: 73006
+    {{- if .Values.efdCredentials }}
+    initContainers:
+    - name: efd-credentials-fixer
+      image: "alpine:latest"
+      command:
+      - "/bin/ash"
+      - "-c"
+      - |
+        cp /secrets-raw/{{ .Values.efdCredentials.secretFilename }} /secrets/
+        chmod 0600 /secrets/{{ .Values.efdCredentials.secretFilename }}
+      volumeMounts:
+      - name: efd-credentials-raw
+        mountPath: /secrets-raw
+        readOnly: true
+      - name: efd-credentials
+        mountPath: /secrets
+    {{- end }}
     container:
       command: [/home/saluser/.startup.sh]
       name: test-{{ printf "{{inputs.parameters.jobname}}" }}
@@ -60,6 +88,10 @@ spec:
           secretKeyRef:
             name: control-system-test
             key: ts-salkafka-password
+      {{- if .Values.efdCredentials }}
+      - name: EFDAUTH
+        value: "{{ .Values.efdCredentials.containerPath }}/{{ .Values.efdCredentials.secretFilename }}"
+      {{- end }}
       resources:
         limits:
           cpu: 4
@@ -71,3 +103,9 @@ spec:
       - name: testreports
         mountPath: {{ .Values.reportLocation }}
         readOnly: false
+      {{- if .Values.efdCredentials }}
+      - name: efd-credentials
+        mountPath: {{ .Values.efdCredentials.containerPath }}/{{ .Values.efdCredentials.secretFilename }}
+        subPath: {{ .Values.efdCredentials.secretFilename }}
+        readOnly: true
+      {{- end }}
