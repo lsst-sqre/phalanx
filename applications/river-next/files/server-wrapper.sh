@@ -55,9 +55,6 @@ here="$(dirname "$0")"
 # identity is fixed here so that the owner line and the released line agree.
 RNF_IDENT="$ident" sh "$here/owner-guard.sh" || exit $?
 
-owner_file="$data_dir/.owner"
-hb_file="$data_dir/.heartbeat-$side"
-
 write_atomic() {
     # write_atomic <file> <content>: temp file in the same directory, then
     # rename.
@@ -78,6 +75,9 @@ utc_now() {
 : "${CLICKHOUSE_WATCHDOG_ENABLE:=0}"
 export CLICKHOUSE_WATCHDOG_ENABLE
 cd "$data_dir" || { echo "$me: cannot cd to $data_dir" >&2; exit 1; }
+data_dir="$(pwd)"
+owner_file="$data_dir/.owner"
+hb_file="$data_dir/.heartbeat-$side"
 
 # Install the traps before the server starts, so that a signal arriving during
 # startup is not lost: it is recorded and forwarded once the server exists.

@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+# Stand-in for clickhouse-server in the failover wrapper's behaviour test.
+# Like the real server, it installs its own SIGTERM and SIGINT handlers, so it
+# sees SIGINT even though a background job of a non-interactive shell starts
+# with SIGINT ignored. STUB_MODE picks what it does; STUB_LOG records what it
+# saw.
+use strict;
+use warnings;
+use Cwd;
+
+my $mode = $ENV{STUB_MODE} // "term0";
+my $log = $ENV{STUB_LOG} // "/dev/null";
+open(my $fh, ">>", $log) or die "cannot open $log: $!";
+$fh->autoflush(1);
+print $fh "started pid=$$\n";
+print $fh "args=@ARGV\n";
+print $fh "cwd=" . getcwd() . "\n";
+print $fh "watchdog=" . ($ENV{CLICKHOUSE_WATCHDOG_ENABLE} // "unset") . "\n";
+
+my $got = "";
+$SIG{TERM} = sub { $got = "TERM" };
+$SIG{INT} = sub { $got = "INT" };
+
+if ($mode eq "crash7") { sleep 2; print $fh "exit 7\n"; exit 7; }
+if ($mode eq "exit0") { sleep 2; print $fh "exit 0\n"; exit 0; }
+if ($mode eq "kill9") { sleep 2; print $fh "kill 9\n"; kill "KILL", $$; }
+
+# term0 / term3: run until signalled.
+for (my $i = 0; $i < 600 && $got eq ""; $i++) { select(undef, undef, undef, 0.1); }
+print $fh "signal $got\n";
+my $rc = $mode eq "term3" ? 3 : 0;
+print $fh "exit $rc\n";
+exit $rc;
