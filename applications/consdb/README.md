@@ -44,9 +44,11 @@ Consolidated Database of Image Metadata
 | lfa.s3EndpointUrl | string | `""` | url |
 | nodeSelector | object | `{}` | Node selection rules for the consdb deployment pod |
 | podAnnotations | object | `{}` | Annotations for the consdb deployment pod |
+| pq.allowedWriters | list | `["bot-rapid-analysis"]` | Gafaelfawr usernames allowed to use the insert endpoints when `writeAuthEnabled` is true |
 | pq.image.pullPolicy | string | `"Always"` | Pull policy for the consdb-hinfo image |
 | pq.image.repository | string | `"ghcr.io/lsst-dm/consdb-pq"` | Image to use in the consdb-pq deployment |
 | pq.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | pq.replicaCount | int | `2` | Number of consdb-pqserver deployment pods to start |
+| pq.writeAuthEnabled | bool | `false` | Require a Gafaelfawr token from one of `allowedWriters` to use the insert endpoints. Enable only once those writers are sending their tokens. |
 | resources | object | `{}` | Resource limits and requests for the consdb deployment pod |
 | tolerations | list | `[]` | Tolerations for the consdb deployment pod |
