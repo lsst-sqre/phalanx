@@ -29,14 +29,6 @@ config:
     # dev runs, all recorded on lsst-sqre/docverse#751.
     enabled: true
 
-syncWorker:
-  # lsst-sqre/docverse#760 result (dev run 4 on lsst-sqre/docverse#751):
-  # halves the resident memory the Keeper-sync worker keeps after a
-  # burst. Kept here until it becomes the chart default.
-  extraEnv:
-    - name: "MALLOC_ARENA_MAX"
-      value: "2"
-
 cloudsql:
   enabled: true
   instanceConnectionName: "roundtable-dev-abe2:us-central1:roundtable-dev-572a252e"
