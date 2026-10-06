@@ -11,6 +11,7 @@ config:
       - {{ .Values.ingress.timesSquareScope | quote }}
   delegate:
     internal:
+      service: "squareone"
       scopes:
         {{- toYaml (required "ingress.delegateScopes must be a non-empty list" .Values.ingress.delegateScopes) | nindent 8 }}
   service: "squareone"
