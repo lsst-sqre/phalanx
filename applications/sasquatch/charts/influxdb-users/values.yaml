@@ -1,0 +1,56 @@
+# Default values for influxdb-users.
+
+# -- Whether to manage the configured InfluxDB users
+enabled: false
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources
+fullnameOverride: ""
+
+image:
+  # -- Docker repository for the InfluxDB Enterprise image
+  repository: "influxdb"
+
+  # -- InfluxDB image tag, without the `-data` suffix
+  # @default -- `appVersion` from `Chart.yaml`
+  tag: ""
+
+  # -- Pull policy for the InfluxDB image
+  pullPolicy: "IfNotPresent"
+
+# -- List of pull secrets needed for the InfluxDB image
+imagePullSecrets: []
+
+# -- Number of times Kubernetes retries a failed user-management Job
+backoffLimit: 10
+
+# -- Maximum number of seconds a user-management Job may run
+activeDeadlineSeconds: 300
+
+# -- Kubernetes resource requests and limits for user-management containers
+resources:
+  requests:
+    cpu: 100m
+    memory: 50Mi
+  limits:
+    cpu: 100m
+    memory: 50Mi
+
+# -- InfluxDB targets and users to manage. Passwords must not contain single
+# quotes or backslashes.
+targets: []
+# targets:
+#   - name: primary
+#     hostname: sasquatch-influxdb
+#     adminSecret:
+#       name: sasquatch
+#     users:
+#       - username: grafana-reader
+#         passwordSecretRef:
+#           name: sasquatch
+#           key: influxdb-grafana-password
+#         databases:
+#           - name: efd
+#             privilege: READ

@@ -53,6 +53,36 @@ customInfluxDBIngress:
   enabled: true
   hostname: data-dev.lsst.cloud
 
+influxdb-users:
+  enabled: true
+  image:
+    tag: 1.12.4
+  targets:
+    - name: influxdb
+      hostname: sasquatch-influxdb
+      adminSecret:
+        name: sasquatch
+      users:
+        - username: sasquatch
+          passwordSecretRef:
+            name: sasquatch
+            key: influxdb-sasquatch-password
+          databases:
+            - name: lsst.square.metrics
+              privilege: READ
+    - name: influxdb-enterprise
+      hostname: sasquatch-influxdb-enterprise-data
+      adminSecret:
+        name: sasquatch
+      users:
+        - username: sasquatch
+          passwordSecretRef:
+            name: sasquatch
+            key: influxdb-sasquatch-password
+          databases:
+            - name: lsst.square.metrics
+              privilege: READ
+
 influxdb-enterprise:
   enabled: true
   image:

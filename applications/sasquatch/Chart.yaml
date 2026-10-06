@@ -29,6 +29,9 @@ dependencies:
     alias: influxdb-enterprise-active
     condition: influxdb-enterprise-active.enabled
     version: 1.0.0
+  - name: influxdb-users
+    condition: influxdb-users.enabled
+    version: 1.0.0
   - name: kafka-connect-manager
     alias: kafka-connect-manager
     condition: kafka-connect-manager.enabled

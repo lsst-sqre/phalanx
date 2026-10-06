@@ -1,0 +1,125 @@
+{{- if .Values.enabled }}
+{{- $root := . }}
+{{- if eq (len .Values.targets) 0 }}
+{{- fail "influxdb-users is enabled but no targets are configured" }}
+{{- end }}
+{{- $targetNames := dict }}
+{{- range $target := .Values.targets }}
+{{- if hasKey $targetNames $target.name }}
+{{- fail (printf "influxdb-users target name %q is duplicated" $target.name) }}
+{{- end }}
+{{- $_ := set $targetNames $target.name true }}
+{{- $userNames := dict }}
+{{- range $user := $target.users }}
+{{- if hasKey $userNames $user.username }}
+{{- fail (printf "influxdb-users username %q is duplicated in target %q" $user.username $target.name) }}
+{{- end }}
+{{- $_ := set $userNames $user.username true }}
+{{- $databaseNames := dict }}
+{{- range $database := $user.databases }}
+{{- if hasKey $databaseNames $database.name }}
+{{- fail (printf "influxdb-users database %q is duplicated for user %q in target %q" $database.name $user.username $target.name) }}
+{{- end }}
+{{- $_ := set $databaseNames $database.name true }}
+{{- end }}
+{{- end }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "%s-%s" (include "influxdb-users.fullname" $root) $target.name | trunc 63 | trimSuffix "-" }}
+  labels:
+    {{- include "influxdb-users.labels" $root | nindent 4 }}
+    app.kubernetes.io/component: user-management
+  annotations:
+    helm.sh/hook: "post-install,post-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
+    helm.sh/hook-weight: "10"
+spec:
+  activeDeadlineSeconds: {{ $root.Values.activeDeadlineSeconds }}
+  backoffLimit: {{ $root.Values.backoffLimit }}
+  template:
+    metadata:
+      labels:
+        {{- include "influxdb-users.selectorLabels" $root | nindent 8 }}
+        app.kubernetes.io/component: user-management
+        influxdb-users.lsst.io/target: {{ $target.name | quote }}
+    spec:
+      automountServiceAccountToken: false
+      restartPolicy: OnFailure
+      {{- with $root.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        {{- range $userIndex, $user := $target.users }}
+        - name: user-{{ $userIndex }}-create
+          image: {{ include "influxdb-users.image" $root | quote }}
+          imagePullPolicy: {{ $root.Values.image.pullPolicy | quote }}
+          command:
+            - influx
+          args:
+            - -host
+            - {{ $target.hostname | quote }}
+            - -execute
+            - CREATE USER "$(USERNAME)" WITH PASSWORD '$(PASSWORD)'
+          env:
+            - name: INFLUX_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $target.adminSecret.name | quote }}
+                  key: influxdb-user
+            - name: INFLUX_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $target.adminSecret.name | quote }}
+                  key: influxdb-password
+            - name: USERNAME
+              value: {{ $user.username | quote }}
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $user.passwordSecretRef.name | quote }}
+                  key: {{ $user.passwordSecretRef.key | quote }}
+          resources:
+            {{- toYaml $root.Values.resources | nindent 12 }}
+          {{- range $databaseIndex, $database := $user.databases }}
+        - name: user-{{ $userIndex }}-grant-{{ $databaseIndex }}
+          image: {{ include "influxdb-users.image" $root | quote }}
+          imagePullPolicy: {{ $root.Values.image.pullPolicy | quote }}
+          command:
+            - influx
+          args:
+            - -host
+            - {{ $target.hostname | quote }}
+            - -execute
+            - GRANT {{ $database.privilege }} ON "{{ $database.name }}" TO "$(USERNAME)"
+          env:
+            - name: INFLUX_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $target.adminSecret.name | quote }}
+                  key: influxdb-user
+            - name: INFLUX_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $target.adminSecret.name | quote }}
+                  key: influxdb-password
+            - name: USERNAME
+              value: {{ $user.username | quote }}
+          resources:
+            {{- toYaml $root.Values.resources | nindent 12 }}
+          {{- end }}
+        {{- end }}
+      containers:
+        - name: success
+          image: {{ include "influxdb-users.image" $root | quote }}
+          imagePullPolicy: {{ $root.Values.image.pullPolicy | quote }}
+          command:
+            - echo
+          args:
+            - User management succeeded for target {{ $target.name }}
+          resources:
+            {{- toYaml $root.Values.resources | nindent 12 }}
+{{- end }}
+{{- end }}
