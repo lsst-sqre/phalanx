@@ -41,6 +41,7 @@ Publish versioned docs
 | config.maintenance.purgatoryCleanupCronMinute | int | `23` | UTC minute of `purgatoryCleanupCronHour` at which the daily purgatory_cleanup dispatcher cron runs. |
 | config.maintenance.purgatoryCleanupEnabled | bool | `true` | Whether to run the daily purgatory_cleanup sweep that permanently deletes the object-store content (unpacked tree and staging tarball) of soft-deleted builds once the organization's purgatory retention has elapsed and stamps `date_purged` on the row. The cron is registered either way, so flipping this does not require a worker restart. |
 | config.maintenance.purgatoryCleanupMaxBuildsPerJob | int | `500` | Cap on the builds a single per-org purgatory_cleanup job reclaims per daily tick, oldest deletion first; anything past the cap is picked up by the next tick. |
+| config.mallocArenaMax | string | `"2"` | Value of `MALLOC_ARENA_MAX` for every Docverse process. Capping glibc malloc arenas at 2 halved the resident memory the Keeper-sync worker keeps after a burst of build copies (lsst-sqre/docverse#760, dev run 4 on lsst-sqre/docverse#751) at no visible cost. Set to the empty string to leave glibc's default. |
 | config.memoryDiagnostics.enabled | bool | `false` | Enable the in-process memory sampler in every Docverse process (API, worker, Keeper-sync worker, maintenance worker). When on, each process logs one `Memory sample` line per interval carrying its resident size, resident high-water mark, and garbage-collector counts, so a pod's memory growth can be read from its logs without attaching a profiler (the pods run on a read-only root filesystem with every capability dropped, so nothing can be attached). |
 | config.memoryDiagnostics.intervalSeconds | int | `60` | Seconds between memory samples. |
 | config.memoryDiagnostics.topN | int | `10` | Number of allocation sites, ranked by growth since the previous sample, included in each sample when `tracemallocEnabled` is on. |
@@ -95,7 +96,7 @@ Publish versioned docs
 | resources | object | See `values.yaml` | Resource limits and requests for the docverse deployment pod |
 | resources.requests.cpu | string | `"50m"` | GKE Autopilot requires a minimum CPU request of 50m |
 | syncWorker.affinity | object | `{}` | Affinity rules for the Keeper-sync worker pod |
-| syncWorker.extraEnv | list | `[]` | Additional environment variables for the Keeper-sync worker container, as a list of `name`/`value` pairs. Meant for runtime experiments that need no chart change, such as `MALLOC_ARENA_MAX` set to `"2"` to cap glibc malloc arenas when the memory sampler shows resident size far above the traced Python heap (lsst-sqre/docverse#753). |
+| syncWorker.extraEnv | list | `[]` | Additional environment variables for the Keeper-sync worker container, as a list of `name`/`value` pairs. Meant for runtime experiments that need no chart change (lsst-sqre/docverse#753). |
 | syncWorker.nodeSelector | object | `{}` | Node selection rules for the Keeper-sync worker pod |
 | syncWorker.podAnnotations | object | `{}` | Annotations for the Keeper-sync worker pod |
 | syncWorker.replicaCount | int | `1` | Number of Keeper-sync worker pods to start |

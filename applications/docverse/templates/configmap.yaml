@@ -30,6 +30,9 @@ data:
   DOCVERSE_EDITION_RECONCILE_ENABLED: {{ .Values.config.maintenance.editionReconcileEnabled | quote }}
   DOCVERSE_EDITION_RECONCILE_MAX_ACTIONS_PER_JOB: {{ .Values.config.maintenance.editionReconcileMaxActionsPerJob | quote }}
   DOCVERSE_CDN_PURGE_ENABLED: {{ .Values.config.cdnPurgeEnabled | quote }}
+  {{- with .Values.config.mallocArenaMax }}
+  MALLOC_ARENA_MAX: {{ . | quote }}
+  {{- end }}
   DOCVERSE_MEMORY_DIAGNOSTICS_ENABLED: {{ .Values.config.memoryDiagnostics.enabled | quote }}
   DOCVERSE_MEMORY_DIAGNOSTICS_INTERVAL_SECONDS: {{ .Values.config.memoryDiagnostics.intervalSeconds | quote }}
   DOCVERSE_MEMORY_DIAGNOSTICS_TRACEMALLOC_ENABLED: {{ .Values.config.memoryDiagnostics.tracemallocEnabled | quote }}

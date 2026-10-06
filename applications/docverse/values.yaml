@@ -228,6 +228,13 @@ config:
   # Re-enabling is tracked in lsst-sqre/docverse#683.
   cdnPurgeEnabled: false
 
+  # -- Value of `MALLOC_ARENA_MAX` for every Docverse process. Capping
+  # glibc malloc arenas at 2 halved the resident memory the Keeper-sync
+  # worker keeps after a burst of build copies (lsst-sqre/docverse#760,
+  # dev run 4 on lsst-sqre/docverse#751) at no visible cost. Set to the
+  # empty string to leave glibc's default.
+  mallocArenaMax: "2"
+
   # -- Set true during a credential-encryption (Fernet) key rotation to deliver
   # the retired key (DOCVERSE_CREDENTIAL_ENCRYPTION_KEY_RETIRED) to all pods so
   # existing credentials can still be decrypted. Set back to false and remove the
@@ -314,10 +321,7 @@ syncWorker:
 
   # -- Additional environment variables for the Keeper-sync worker
   # container, as a list of `name`/`value` pairs. Meant for runtime
-  # experiments that need no chart change, such as `MALLOC_ARENA_MAX`
-  # set to `"2"` to cap glibc malloc arenas when the memory sampler
-  # shows resident size far above the traced Python heap
-  # (lsst-sqre/docverse#753).
+  # experiments that need no chart change (lsst-sqre/docverse#753).
   extraEnv: []
 
   # -- Resource limits and requests for the Keeper-sync worker pod
