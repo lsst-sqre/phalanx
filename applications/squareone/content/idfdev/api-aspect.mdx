@@ -10,6 +10,34 @@ See our guide [Creating user tokens](https://rsp.lsst.io/guides/auth/creating-us
 
 <ApiEndpoints />
 
+## Table Access Protocol
+
+You can access catalog data using the Table Access Protocol (TAP)
+service with popular tools such as
+[TOPCAT](http://www.star.bris.ac.uk/~mbt/topcat) (GUI) and
+[pyvo](https://pyvo.readthedocs.io/en/latest/index.html)
+(Python package).
+
+For example, this Python code queries the TAP service with pyvo,
+using an access token stored in the `RSP_TOKEN` environment variable:
+
+```python
+import os
+
+import pyvo
+import requests
+
+session = requests.Session()
+session.headers["Authorization"] = f"Bearer {os.environ['RSP_TOKEN']}"
+
+tap = pyvo.dal.TAPService("https://data-dev.lsst.cloud/api/tap", session=session)
+results = tap.search("SELECT TOP 10 * FROM dp1.Object")
+print(results.to_table())
+```
+
+See our tutorial [Authenticating from TOPCat outside the Science Platform](https://rsp.lsst.io/guides/auth/using-topcat-outside-rsp.html)
+to learn more about accessing TAP datasets from your own computer.
+
 ## Documentation
 
 Learn more about the APIs in the [Rubin Science Platform API Aspect guide](https://rsp.lsst.io/guides/api/).
