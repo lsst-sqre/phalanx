@@ -4,7 +4,7 @@
 
 image:
   # -- Image to run, built by the `lsst-gen-ephemcache` repository
-  repository: "ghcr.io/mjuric/lsst-gen-ephemcache"
+  repository: "ghcr.io/lsst-dm/gen-ephemcache"
 
   # -- Tag of the image to run
   tag: "u-mjuric-ephemcache"

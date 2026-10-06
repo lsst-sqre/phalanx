@@ -17,7 +17,7 @@ Nightly ephemerides cache generator for mpsky
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the image. Use `Always` where the tag is mutable, such as a branch name. |
-| image.repository | string | `"ghcr.io/mjuric/lsst-gen-ephemcache"` | Image to run, built by the `lsst-gen-ephemcache` repository |
+| image.repository | string | `"ghcr.io/lsst-dm/gen-ephemcache"` | Image to run, built by the `lsst-gen-ephemcache` repository |
 | image.tag | string | `"u-mjuric-ephemcache"` | Tag of the image to run |
 | logToFile | bool | `false` | Whether to also write each run's log to a file under the output directory. Logs always go to stdout; this is a durable second copy that outlives the pod. |
 | ncores | string | `""` | Value of `NCORES`, which bounds sorcha's parallelism. Must match `resources.limits.cpu`: the scripts otherwise default it to `nproc`, which reports the node's core count rather than the pod's limit. |
