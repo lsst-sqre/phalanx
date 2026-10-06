@@ -9,6 +9,10 @@ config:
   scopes:
     any:
       {{- toYaml (required "ingress.adminScopes must be a non-empty list" .Values.ingress.adminScopes) | nindent 6 }}
+  delegate:
+    internal:
+      scopes:
+        {{- toYaml (required "ingress.delegateScopes must be a non-empty list" .Values.ingress.delegateScopes) | nindent 8 }}
   service: "squareone"
 template:
   metadata:

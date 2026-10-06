@@ -9,7 +9,11 @@ config:
   scopes:
     all:
       - {{ .Values.ingress.timesSquareScope | quote }}
-  service: "times-square"
+  delegate:
+    internal:
+      scopes:
+        {{- toYaml (required "ingress.delegateScopes must be a non-empty list" .Values.ingress.delegateScopes) | nindent 8 }}
+  service: "squareone"
 template:
   metadata:
     name: {{ template "squareone.fullname" . }}-times-square

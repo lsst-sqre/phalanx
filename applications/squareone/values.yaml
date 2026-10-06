@@ -42,6 +42,38 @@ ingress:
     - "admin:token"
     - "admin:oidc"
 
+  # -- Scopes requested for the internal token Gafaelfawr delegates to
+  # Squareone on the /times-square and /admin ingresses
+  # (`config.delegate.internal.scopes`). Gafaelfawr strips its session cookie
+  # from requests crossing a `GafaelfawrIngress`, so Squareone's server-side
+  # prefetch of the signed-in user's scopes reads them back from this token
+  # instead. A delegated token only carries the requested scopes the user
+  # actually holds, so this list must cover every scope the UI gates on:
+  # it defaults to Gafaelfawr's full known-scope list, and an environment
+  # that defines extra scopes in its Gafaelfawr `config.knownScopes` should
+  # add them here. (A Gafaelfawr request header carrying the user's scopes
+  # would make this list unnecessary; that has not been requested.)
+  # @default -- Gafaelfawr's default known scopes; see `values.yaml`
+  delegateScopes:
+    - "admin:jupyterlab"
+    - "admin:notifications"
+    - "admin:oidc"
+    - "admin:token"
+    - "admin:userinfo"
+    - "exec:admin"
+    - "exec:internal-tools"
+    - "exec:notebook"
+    - "exec:portal"
+    - "exec:portal-admin"
+    - "read:image"
+    - "read:sasquatch"
+    - "read:tap"
+    - "user:token"
+    - "write:files"
+    - "write:notifications"
+    - "write:obsforge"
+    - "write:sasquatch"
+
 # -- Resource requests and limits for Squareone pods
 # @default -- see `values.yaml`
 resources:

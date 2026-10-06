@@ -55,6 +55,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | image.tag | string | Chart's appVersion | Overrides the image tag. |
 | ingress.adminScopes | list | `["exec:admin","admin:notifications","admin:token","admin:oidc"]` | Scopes that grant access to the /admin UI. Holding any one of them is sufficient; which admin pages each scope reveals is decided by Squareone's own `adminPageScopes` configuration. |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
+| ingress.delegateScopes | list | Gafaelfawr's default known scopes; see `values.yaml` | Scopes requested for the internal token Gafaelfawr delegates to Squareone on the /times-square and /admin ingresses (`config.delegate.internal.scopes`). Gafaelfawr strips its session cookie from requests crossing a `GafaelfawrIngress`, so Squareone's server-side prefetch of the signed-in user's scopes reads them back from this token instead. A delegated token only carries the requested scopes the user actually holds, so this list must cover every scope the UI gates on: it defaults to Gafaelfawr's full known-scope list, and an environment that defines extra scopes in its Gafaelfawr `config.knownScopes` should add them here. (A Gafaelfawr request header carrying the user's scopes would make this list unnecessary; that has not been requested.) |
 | ingress.enabled | bool | `true` | Enable ingress |
 | ingress.timesSquareScope | string | `"exec:notebook"` | Scope required for /times-square UI |
 | nameOverride | string | `""` | Overrides the base name for resources |
