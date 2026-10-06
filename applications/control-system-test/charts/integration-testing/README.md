@@ -6,6 +6,7 @@ Helm chart for Integration Testing Workflows.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| efdCredentials | object | `{}` | EFD credentials file to mount into the test container. |
 | envEfd | string | `nil` | The Name of the EFD instance. |
 | image.tag | string | `nil` | The image tag for the Integration Test runner container |
 | jobLabelName | string | `"control-system-test"` | Label for jobs to get them to appear in application |

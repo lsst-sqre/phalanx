@@ -18,3 +18,5 @@ persistentVolume:
   storage: 1Gi
 # -- Label for jobs to get them to appear in application
 jobLabelName: control-system-test
+# -- EFD credentials file to mount into the test container.
+efdCredentials: {}

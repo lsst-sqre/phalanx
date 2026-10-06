@@ -19,6 +19,7 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | integration-testing.enabled | bool | `false` | Enable the integration testing system |
 | kafka-rw-broker-test.enabled | bool | `false` | Enable Kafka read/write broker test. |
 | rumba.enabled | bool | `false` | Enable cronjob to clean up inactivate Kafka consumers. |
+| integration-testing.efdCredentials | object | `{}` | EFD credentials file to mount into the test container. |
 | integration-testing.envEfd | string | `nil` | The Name of the EFD instance. |
 | integration-testing.image.tag | string | `nil` | The image tag for the Integration Test runner container |
 | integration-testing.jobLabelName | string | `"control-system-test"` | Label for jobs to get them to appear in application |
