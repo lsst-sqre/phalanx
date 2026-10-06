@@ -46,6 +46,7 @@ spec:
                   gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
                   gcloud config set project {{ .Values.producer.gcpProjectId }} --quiet
                   gcloud storage rsync /tmp/static_output gs://{{ .Values.producer.gcpBucketName }}/api --recursive --content-type="application/json"
+                  sleep 1800
               env:
                 {{- with .Values.producer.env }}
                 {{- toYaml . | nindent 16 }}
