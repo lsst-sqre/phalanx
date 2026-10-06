@@ -104,6 +104,34 @@ schema-registry:
 influxdb:
   enabled: false
 
+influxdb-users:
+  enabled: true
+  targets:
+    - name: influxdb-enterprise
+      hostname: sasquatch-influxdb-enterprise-data
+      adminSecret:
+        name: sasquatch
+      users:
+        - username: sasquatch
+          passwordSecretRef:
+            name: sasquatch
+            key: influxdb-sasquatch-password
+          databases:
+            - name: efd
+              privilege: READ
+    - name: influxdb-enterprise-standby
+      hostname: sasquatch-influxdb-enterprise-standby-data
+      adminSecret:
+        name: sasquatch
+      users:
+        - username: sasquatch
+          passwordSecretRef:
+            name: sasquatch
+            key: influxdb-sasquatch-password
+          databases:
+            - name: efd
+              privilege: READ
+
 influxdb-enterprise:
   enabled: true
   license:

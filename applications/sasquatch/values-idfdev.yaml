@@ -70,6 +70,8 @@ influxdb-users:
           databases:
             - name: lsst.square.metrics
               privilege: READ
+            - name: efd
+              privilege: READ
     - name: influxdb-enterprise
       hostname: sasquatch-influxdb-enterprise-data
       adminSecret:
@@ -81,6 +83,8 @@ influxdb-users:
             key: influxdb-sasquatch-password
           databases:
             - name: lsst.square.metrics
+              privilege: READ
+            - name: efd
               privilege: READ
 
 influxdb-enterprise:

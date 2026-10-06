@@ -121,6 +121,22 @@ customInfluxDBIngress:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
 
+influxdb-users:
+  enabled: true
+  targets:
+    - name: influxdb
+      hostname: sasquatch-influxdb
+      adminSecret:
+        name: sasquatch
+      users:
+        - username: sasquatch
+          passwordSecretRef:
+            name: sasquatch
+            key: influxdb-sasquatch-password
+          databases:
+            - name: efd
+              privilege: READ
+
 telegraf-local:
   enabled: true
   kafkaConsumers:
