@@ -1,6 +1,6 @@
 image:
   pullPolicy: Always
-  tag: "tickets-DM-56206-code-block"
+  tag: "tickets-DM-56206-admin-overview"
 
 ingress:
   timesSquareScope: "exec:admin"
