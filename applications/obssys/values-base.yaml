@@ -12,7 +12,7 @@ x-butler-lfa-combo: &butler-lfa-combo
 x-efd-auth: &efd-auth
   efdCredentials:
     containerPath: *secret-file-path
-    secretFilename: &ec-fn .efdauth.json
+    secretFilename: &efd-credentials-filename .efdauth.json
 
 atqueue:
   classifier: scriptqueue2
@@ -76,7 +76,7 @@ atscheduler:
   secretFixup:
     containerPath: *secret-file-path
     filenames:
-    - *ec-fn
+    - *efd-credentials-filename
   nfsMountpoint:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
@@ -165,7 +165,7 @@ mtscheduler:
   secretFixup:
     containerPath: *secret-file-path
     filenames:
-    - *ec-fn
+    - *efd-credentials-filename
   nfsMountpoint:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
@@ -254,7 +254,7 @@ ocsscheduler:
   secretFixup:
     containerPath: *secret-file-path
     filenames:
-    - *ec-fn
+    - *efd-credentials-filename
   nfsMountpoint:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
