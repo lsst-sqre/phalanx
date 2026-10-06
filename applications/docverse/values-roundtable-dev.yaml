@@ -1,13 +1,3 @@
-image:
-  # Temporary override for the dev QA of lsst-sqre/docverse#765 (keeper-sync
-  # slice budget and cancellation, lsst-sqre/docverse#774) and the remaining
-  # memory runs of lsst-sqre/docverse#753: the tickets/DM-56095-sync-slices
-  # branch (PR #775, stacked on #763 and #762) carries the slice chain, the
-  # memory sampler, and the shared aiobotocore session. Revert to the chart
-  # appVersion once the server release carrying that work ships.
-  tag: "tickets-DM-56095-sync-slices"
-  pullPolicy: "Always"
-
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://docverse@localhost/docverse"
