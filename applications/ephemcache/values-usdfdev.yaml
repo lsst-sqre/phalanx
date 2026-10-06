@@ -1,9 +1,13 @@
 image:
   pullPolicy: "Always"
+  tag: "tickets-DM-56208"
 
 suspend: false
 
 command: "run"
+
+database:
+  url: postgresql+psycopg2://mpcorb-db.slac.stanford.edu/mpc_sbn
 
 # uid 18728 has write access to the output directory through an explicit ACL, so
 # changing it silently breaks writes.
