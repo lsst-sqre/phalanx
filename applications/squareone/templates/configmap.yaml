@@ -6,23 +6,21 @@ metadata:
     {{- include "squareone.labels" . | nindent 4 }}
 data:
   squareone.config.yaml: |
-    siteName: {{ .Values.config.siteName | quote }}
+    {{- with .Values.config.siteName }}
+    siteName: {{ . | quote }}
+    {{- end }}
+    {{- if not .Values.config.useDiscoveryDefaults }}
     baseUrl: {{ .Values.global.baseUrl | quote }}
     environmentName: {{ .Values.global.environmentName | quote }}
+    {{- end }}
     siteDescription: {{ .Values.config.siteDescription | quote }}
     docsBaseUrl: {{ .Values.config.docsBaseUrl | quote }}
     showPreview: {{ .Values.config.showPreview }}
     repertoireUrl: {{ .Values.global.repertoireUrl | quote }}
-    {{- if .Values.config.semaphoreUrl }}
-    semaphoreUrl: {{ .Values.config.semaphoreUrl | quote }}
-    {{- end}}
     enableUserNotifications: {{ .Values.config.enableUserNotifications }}
     userNotificationsPollIntervalSeconds: {{ .Values.config.userNotificationsPollIntervalSeconds }}
     {{- if .Values.config.timesSquareUrl }}
     timesSquareUrl: {{ .Values.config.timesSquareUrl | quote }}
-    {{- end}}
-    {{- if .Values.config.coManageRegistryUrl }}
-    coManageRegistryUrl: {{ .Values.config.coManageRegistryUrl | quote }}
     {{- end}}
     {{- if .Values.config.plausibleDomain }}
     plausibleDomain: {{ .Values.config.plausibleDomain | quote }}

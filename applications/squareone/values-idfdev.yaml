@@ -5,26 +5,15 @@ ingress:
   timesSquareScope: "exec:admin"
 
 config:
-  siteName: "Rubin Science Platform @ data-dev"
   docsBaseUrl: "https://rsp.lsst.io/v/idfdev"
-  semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
   enableUserNotifications: true
   timesSquareUrl: "https://data-dev.lsst.cloud/times-square/api"
-  coManageRegistryUrl: "https://id-dev.lsst.cloud"
   plausibleDomain: "data-dev.lsst.cloud"
   headerLogoFile: "demo-logo.png"
   headerLogoHeight: 50
   headerLogoWidth: 240
-  headerLogoMimeType: "image/png"
 
   enableSentry: true
   sentryTracesSampleRate: 1.0
   sentryReplaysOnErrorSampleRate: 1.0
   enableAppsMenu: true
-  appLinks:
-    - label: "Times Square"
-      href: "/times-square/"
-      internal: true
-    - label: "Argo CD"
-      href: "/argo-cd/"
-      internal: false
