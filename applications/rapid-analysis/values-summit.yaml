@@ -325,6 +325,21 @@ lsstcamAosWorkerSet:
     limits:
       cpu: 4.2
       memory: 8G
+lsstcamAosBlitzWorkerSet:
+  name: LSSTCam/runAosBlitzWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 2
+  env:
+    LIMITS_CPU: 8
+  resources:
+    requests:
+      cpu: 8.2
+      memory: 8G
+    limits:
+      cpu: 8.2
+      memory: 24G
 lsstcamGather1bSet:
   name: LSSTCam/runStep1bWorker.py
   mounts:
