@@ -76,8 +76,9 @@ nightlydigest-backend:
   producer:
     enabled: true
     schedule: "0 * * * *"
-    gcpProjectId: snd-dev-42c8
-    gcpBucketName: snd-api-dev
+    gcpProjectId: snd-prod-8bb0
+    gcpBucketName: snd-api-prod
+    lookbackDays: 30
   replicas: 4
   uid: 73006
   gid: 4085
