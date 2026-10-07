@@ -62,22 +62,5 @@ resources:
     cpu: 1.0
     memory: 2.5G
 redis:
-  enabled: true
+  enabled: false
   port: 6379
-  env:
-    MASTER: true
-  serviceAnnotations:
-    metallb.universe.tf/address-pool: sdf-services
-  envSecrets:
-  - name: REDIS_PASSWORD
-    secretName: rapid-analysis-secrets
-    secretKey: redis-password
-  storage:
-    request: 10Gi
-  resources:
-    requests:
-      cpu: 100m
-      memory: 1Gi
-    limits:
-      cpu: 1
-      memory: 50Gi
