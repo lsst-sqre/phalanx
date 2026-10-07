@@ -32,7 +32,7 @@ config:
     usdfdev_efd:
       url: "https://usdf-rsp-dev.slac.stanford.edu/influxdb/"
       database: "efd"
-      username: "efdreader"
+      username: "sasquatch"
       passwordKey: "usdfdev_efd-password"
       schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
       local: true

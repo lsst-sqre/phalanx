@@ -104,6 +104,22 @@ customInfluxDBIngress:
   enabled: true
   hostname: tucson-teststand.lsst.codes
 
+influxdb-users:
+  enabled: true
+  targets:
+    - name: influxdb
+      hostname: sasquatch-influxdb
+      adminSecret:
+        name: sasquatch
+      users:
+        - username: sasquatch
+          passwordSecretRef:
+            name: sasquatch
+            key: influxdb-sasquatch-password
+          databases:
+            - name: efd
+              privilege: READ
+
 telegraf:
   enabled: true
   kafkaVersion: "4.1.0"
