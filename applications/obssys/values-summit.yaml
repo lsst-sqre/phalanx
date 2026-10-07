@@ -76,7 +76,7 @@ atqueue:
 atscheduler:
   classifier: scheduler2
   image:
-    revision: 9
+    revision: 14
     repository: ts-dockerhub.lsst.org/scheduler
   env:
     INDEX: 2
@@ -199,7 +199,7 @@ mtqueue:
 mtscheduler:
   classifier: scheduler1
   image:
-    revision: 9
+    revision: 14
     repository: ts-dockerhub.lsst.org/scheduler
   env:
     INDEX: 1
@@ -301,7 +301,7 @@ ocsqueue:
 ocsscheduler:
   classifier: scheduler3
   image:
-    revision: 9
+    revision: 14
     repository: ts-dockerhub.lsst.org/scheduler
   env:
     INDEX: 3
