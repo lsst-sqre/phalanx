@@ -1,3 +1,6 @@
+image:
+  pullPolicy: "Always"
+  tag: "tickets-DM-56139"
 config:
   metrics:
     enabled: true
@@ -54,7 +57,7 @@ config:
           image:
             image_class: "latest-weekly"
           repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
-          repo_ref: "main"
+          repo_ref: "tickets/DM-56103"
           execution_idle_time: 0
           idle_time: 300
         restart: true
@@ -80,7 +83,7 @@ config:
             image_class: "by-tag"
             tag: "r30_0_10_rsp2991"
           repo_url: "https://github.com/lsst-sqre/phalanx-test.git"
-          repo_ref: "main"
+          repo_ref: "tickets/DM-56103"
           execution_idle_time: 0
           idle_time: 300
         restart: true
@@ -106,8 +109,8 @@ config:
       business:
         type: "SIAQuerySetRunner"
         options:
-          dataset: "dp02"
-          query_set: "dp02"
+          dataset: "dp2"
+          query_set: "dp2"
         restart: true
     - name: "tap"
       count: 1
@@ -117,7 +120,7 @@ config:
       business:
         type: "TAPQuerySetRunner"
         options:
-          dataset: "dp02"
-          query_set: "dp0.2"
+          dataset: "dp2"
+          query_set: "dp2"
           sync: false
         restart: true
