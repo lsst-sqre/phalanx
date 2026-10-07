@@ -1,0 +1,21 @@
+argo-cd:
+  configs:
+    cm:
+      url: "https://ruka.lsst.codes/argo-cd"
+      oidc.config: |
+        name: Keycloak
+        issuer: https://keycloak.ls.lsst.org/realms/master
+        clientID: argocd-ruka
+        clientSecret: $dex.clientSecret
+        requestedScopes: ["openid", "profile", "email", "groups"]
+      ui.bannercontent: "ruka-dev"
+    rbac:
+      policy.csv: |
+        g, k8s-yagan-admins, role:admin
+        g, sqre, role:admin
+
+        g, rsp-summit, role:readonly
+
+  server:
+    ingress:
+      hostname: "ruka.lsst.codes"
