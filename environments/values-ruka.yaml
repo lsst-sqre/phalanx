@@ -1,0 +1,24 @@
+name: "ruka"
+fqdn: "ruka-dev.lsst.codes"
+title: "Rubin Ruka dev environment (CP)"
+titleLong: "Rubin Ruka dev data facility on Cerro Pachón"
+description: >-
+  The Ruka development environment for the Rubin Science Platform at the
+  Vera C. Rubin   Observatory site on Cerro Pachón.
+  It is used for observatory operations at the summit site.
+
+appOfAppsName: "science-platform"
+onepassword:
+  connectUrl: "https://roundtable.lsst.cloud/1password"
+  vaultTitle: "RSP ruka.lsst.codes"
+vaultPathPrefix: "secret/phalanx/ruka"
+
+applications:
+  mobu: true
+  nublado: true
+  portal: true
+  squareone: true
+
+namespaceLabels:
+  gafaelfawr:
+    k8up-enabled: "true"

@@ -1,0 +1,66 @@
+controller:
+  config:
+    images:
+      prepullTimeout: "20m"
+      source:
+        type: "docker"
+        registry: "ts-dockerhub.lsst.org"
+        repository: "sal-sciplat-lab"
+      numReleases: 0
+      numWeeklies: 3
+      numDailies: 2
+      cycle: 44
+      recommendedTag: "recommended_c0044"
+    lab:
+      defaultSize: "small"
+      env:
+        AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+        AWS_SHARED_CREDENTIALS_FILE: "/etc/nublado/secrets/aws-credentials.ini"
+        DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
+        LSST_SITE: "ruka"
+        PGPASSFILE: "/etc/nublado/secrets/postgres-credentials.txt"
+        PGUSER: "oods"
+        RSP_SITE_TYPE: "telescope"
+        S3_ENDPOINT_URL: "https://s3-butler.ls.lsst.org"
+      pullSecret: "pull-secret"
+      secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "aws-credentials.ini"
+        - secretName: "nublado-lab-secret"
+          secretKey: "postgres-credentials.txt"
+      volumes:
+        - name: "home"
+          source:
+            type: "nfs"
+            serverPath: "/rsphome-ruka"
+            server: "nfs-rsphome.ls.lsst.org"
+        - name: "project"
+          source:
+            type: "nfs"
+            serverPath: "/project-ruka"
+            server: "nfs-project.ls.lsst.org"
+        - name: "scratch"
+          source:
+            type: "nfs"
+            serverPath: "/scratch-ruka"
+            server: "nfs-scratch.ls.lsst.org"
+        - name: "datasets"
+          source:
+            type: "nfs"
+            serverPath: "/lsstdata-ruka"
+            server: "nfs-lsstdata.ls.lsst.org"
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
+        - containerPath: "/project"
+          volumeName: "project"
+        - containerPath: "/scratch"
+          volumeName: "scratch"
+        - containerPath: "/datasets"
+          volumeName: "datasets"
+
+jupyterhub:
+  hub:
+    db:
+      upgrade: true
+      url: "postgresql://nublado@postgresdb01-ruka.lsst.codes/nublado"
