@@ -31,7 +31,7 @@ spec:
                 - -c
                 - |
                   source /home/saluser/.setup_sal_env.sh
-                  python scripts/generate_static_files.py --backend-url http://{{ include "nightlydigest-backend.name" . }}-service:8080/nightlydigest/api --output-dir /tmp/static_output
+                  python scripts/generate_static_files.py --backend-url http://{{ include "nightlydigest-backend.name" . }}-service:8080/nightlydigest/api --output-dir /tmp/static_output --max-days {{ .Values.producer.lookbackDays }} --max-combo-size {{ .Values.producer.lookbackDays }}
               volumeMounts:
                 - name: backend-producer-pvc
                   mountPath: /tmp/static_output
