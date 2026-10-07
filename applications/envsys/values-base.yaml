@@ -1,7 +1,7 @@
 x-efd-auth: &efd-auth
   efdCredentials:
     containerPath: &secret-file-path /home/saluser/.lsst
-    secretFilename: &ec-fn .efdauth.json
+    secretFilename: &efd-credentials-filename .efdauth.json
 
 aurora-cloud-sensor-ess307-sim:
   enabled: false
@@ -226,7 +226,7 @@ eas-sim:
   secretFixup:
     containerPath: *secret-file-path
     filenames:
-    - *ec-fn
+    - *efd-credentials-filename
   resources:
     limits:
       cpu: 750m
@@ -711,7 +711,7 @@ weatherforecast:
   secretFixup:
     containerPath: *secret-file-path
     filenames:
-    - *ec-fn
+    - *efd-credentials-filename
   resources:
     requests:
       cpu: 100m

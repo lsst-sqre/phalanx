@@ -1,3 +1,8 @@
+x-efd-auth: &efd-auth
+  efdCredentials:
+    containerPath: &secret-file-path /home/saluser/.lsst
+    secretFilename: &efd-credentials-filename .efdauth.json
+
 automatic-transfer-switch-ess309:
   enabled: true
   classifier: ess309
@@ -197,6 +202,11 @@ eas:
   image:
     revision: 9
     repository: ts-dockerhub.lsst.org/eas
+  <<: *efd-auth
+  secretFixup:
+    containerPath: *secret-file-path
+    filenames:
+    - *efd-credentials-filename
   resources:
     requests:
       cpu: 120m
@@ -713,6 +723,11 @@ weatherforecast:
   envSecrets:
   - name: METEOBLUE_API_KEY
     key: meteoblue-api-key
+  <<: *efd-auth
+  secretFixup:
+    containerPath: *secret-file-path
+    filenames:
+    - *efd-credentials-filename
   resources:
     requests:
       cpu: 100m
