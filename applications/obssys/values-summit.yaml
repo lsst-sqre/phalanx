@@ -1,15 +1,18 @@
+x-secret-file-path: &secret-file-path /home/saluser/.lsst
+
 x-butler-lfa-combo: &butler-lfa-combo
   s3Credentials:
   - lfa-credentials.ini
   - butler-credentials.ini
   butlerSecret:
-    containerPath: &bs-cp /home/saluser/.lsst
+    containerPath: *secret-file-path
     dbUser: oods
     secretFilename: &bs-fn postgres-credentials.txt
-  secretFixup:
-    containerPath: *bs-cp
-    filenames:
-    - *bs-fn
+
+x-efd-auth: &efd-auth
+  efdCredentials:
+    containerPath: *secret-file-path
+    secretFilename: &efd-credentials-filename .efdauth.json
 
 atqueue:
   classifier: scriptqueue2
@@ -25,6 +28,10 @@ atqueue:
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
   <<: *butler-lfa-combo
+  secretFixup:
+    containerPath: *secret-file-path
+    filenames:
+    - *bs-fn
   nfsMountpoint:
   - name: auxtel-gen3-data
     containerPath: /repo/LATISS
@@ -79,6 +86,11 @@ atscheduler:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  <<: *efd-auth
+  secretFixup:
+    containerPath: *secret-file-path
+    filenames:
+    - *efd-credentials-filename
   nfsMountpoint:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
@@ -139,6 +151,10 @@ mtqueue:
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
   <<: *butler-lfa-combo
+  secretFixup:
+    containerPath: *secret-file-path
+    filenames:
+    - *bs-fn
   nfsMountpoint:
   - name: auxtel-gen3-data
     containerPath: /repo/LATISS
@@ -193,6 +209,11 @@ mtscheduler:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  <<: *efd-auth
+  secretFixup:
+    containerPath: *secret-file-path
+    filenames:
+    - *efd-credentials-filename
   nfsMountpoint:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
@@ -232,6 +253,10 @@ ocsqueue:
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
   <<: *butler-lfa-combo
+  secretFixup:
+    containerPath: *secret-file-path
+    filenames:
+    - *bs-fn
   nfsMountpoint:
   - name: auxtel-gen3-data
     containerPath: /repo/LATISS
@@ -286,6 +311,11 @@ ocsscheduler:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  <<: *efd-auth
+  secretFixup:
+    containerPath: *secret-file-path
+    filenames:
+    - *efd-credentials-filename
   nfsMountpoint:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
