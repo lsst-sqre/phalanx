@@ -15,6 +15,7 @@ env:
   SQUID_PROXY: http://sdfproxy.sdf.slac.stanford.edu:3128
   NO_PROXY: .slac.stanford.edu
   DEPLOY_BRANCH: deploy-usdf
+  EFDAUTH: /sdf/scratch/rubin/rapid-analysis/auth/efdauth.json
   S3_ENDPOINT_URL: https://s3dfrgw.slac.stanford.edu
   SASQUATCH_EXTRAS: dataset_tag=LSSTCam/rapid_analysis
   LSST_RESOURCES_S3_PROFILE_embargo: https://sdfembs3.sdf.slac.stanford.edu
