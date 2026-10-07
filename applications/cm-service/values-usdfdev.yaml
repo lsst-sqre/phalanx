@@ -15,8 +15,8 @@ config:
   logProfile: "development"
   rootPath: ""
   # deprecated, should use rootPath instead with a rewriting ingress
-  docsPrefix: "/docs"
-  routePrefix: "/cm"
+  docsPrefix: "/cm-docs"
+  routePrefix: "/cm-api"
   db:
     hostname: "rsp-db-rw.postgres-db"
     echo: false
@@ -72,9 +72,6 @@ image:
   tag: "0.9.0-rc1"
   pullPolicy: Always
 
-ingress:
-  docsPath: "/cm-docs"
-
 daemon:
   security:
     uid: 17951
@@ -98,4 +95,4 @@ web:
   image:
     tag: "0.9.0-rc1"
     pullPolicy: Always
-  rootPath: "/cm"
+  rootPath: "/cm-gui"

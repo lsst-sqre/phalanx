@@ -84,7 +84,6 @@ Campaign Management for Rubin Data Release Production
 | image.repository | string | `"ghcr.io/lsst-dm/cm-service"` | Image to use for frontend containers |
 | image.tag | string | The appVersion of the chart | Tag of frontend image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
-| ingress.docsPath | string | `"/docs"` | Path for docs page |
 | internalDB | bool | `false` | Whether to use the internal (phalanx) database |
 | web.affinity | object | `{}` | Affinity rules for the web pods |
 | web.grafana.campaignHistoryDashboard | string | `"d/abcdef/campaign-history"` | Campaign History Dashboard path |
