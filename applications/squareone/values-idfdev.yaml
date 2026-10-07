@@ -1,26 +1,19 @@
 image:
   pullPolicy: Always
-  tag: "tickets-DM-56206-admin-overview"
 
 ingress:
   timesSquareScope: "exec:admin"
 
 config:
-  useDiscoveryDefaults: true
   docsBaseUrl: "https://rsp.lsst.io/v/idfdev"
-  semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
   enableUserNotifications: true
   timesSquareUrl: "https://data-dev.lsst.cloud/times-square/api"
   plausibleDomain: "data-dev.lsst.cloud"
   headerLogoFile: "demo-logo.png"
   headerLogoHeight: 50
   headerLogoWidth: 240
-  headerLogoMimeType: "image/png"
 
   enableSentry: true
   sentryTracesSampleRate: 1.0
   sentryReplaysOnErrorSampleRate: 1.0
-  # The Apps menu lists Times Square and the admin tools (Argo CD, Chronograf,
-  # Kafdrop, WebDAV) from service discovery, filtered by the user's scopes.
   enableAppsMenu: true
-  appLinks: []

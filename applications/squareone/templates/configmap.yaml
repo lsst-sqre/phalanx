@@ -17,16 +17,10 @@ data:
     docsBaseUrl: {{ .Values.config.docsBaseUrl | quote }}
     showPreview: {{ .Values.config.showPreview }}
     repertoireUrl: {{ .Values.global.repertoireUrl | quote }}
-    {{- if .Values.config.semaphoreUrl }}
-    semaphoreUrl: {{ .Values.config.semaphoreUrl | quote }}
-    {{- end}}
     enableUserNotifications: {{ .Values.config.enableUserNotifications }}
     userNotificationsPollIntervalSeconds: {{ .Values.config.userNotificationsPollIntervalSeconds }}
     {{- if .Values.config.timesSquareUrl }}
     timesSquareUrl: {{ .Values.config.timesSquareUrl | quote }}
-    {{- end}}
-    {{- if .Values.config.coManageRegistryUrl }}
-    coManageRegistryUrl: {{ .Values.config.coManageRegistryUrl | quote }}
     {{- end}}
     {{- if .Values.config.plausibleDomain }}
     plausibleDomain: {{ .Values.config.plausibleDomain | quote }}

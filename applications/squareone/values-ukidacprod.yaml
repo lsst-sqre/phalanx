@@ -1,6 +1,0 @@
-config:
-  siteName: "UK IDAC Rubin Science Platform"
-  semaphoreUrl: "https://rsp.lsst.ac.uk/semaphore"
-
-ingress:
-  tls: false

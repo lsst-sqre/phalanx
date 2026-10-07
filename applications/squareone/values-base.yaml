@@ -1,7 +1,7 @@
 config:
-  siteName: "Rubin Science Platform @ Base"
   docsBaseUrl: "https://rsp.lsst.io/v/base"
-  applinks:
+  enableAppsMenu: true
+  appLinks:
     - label: "Nightly Digest"
       href: "/nightlydigest/"
       internal: false

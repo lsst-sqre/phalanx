@@ -109,16 +109,17 @@ affinity: {}
 
 # Squareone app configuration
 config:
-  # -- Name of the site, used in the title and meta tags.
+  # -- Name of the site, used in the title and meta tags. Set this only to
+  # override the environment's title from Repertoire service discovery.
   # @default -- The environment title from Repertoire service discovery, else "Rubin Science Platform"
   siteName: null
 
-  # -- Omit `baseUrl` and `environmentName` (otherwise taken from
-  # `global.baseUrl` and `global.environmentName`) from the Squareone
-  # configuration so that Squareone derives them from Repertoire service
-  # discovery (the `squareone` UI service URL and `environment.label`).
-  # Requires Repertoire 3.0 or later.
-  useDiscoveryDefaults: false
+  # -- Omit `baseUrl` and `environmentName` from the Squareone configuration
+  # so that Squareone derives them from Repertoire service discovery (the
+  # `squareone` UI service URL and `environment.label`). Requires Repertoire
+  # 3.0 or later. Set to `false` to render them from `global.baseUrl` and
+  # `global.environmentName` instead.
+  useDiscoveryDefaults: true
 
   # -- Site description, used in meta tags
   # @default -- See `values.yaml`
@@ -131,13 +132,10 @@ config:
   # -- Show a "preview" badge in the homepage
   showPreview: true
 
-  # -- URL to the Semaphore (user notifications) API service.
-  # @default -- null disables the Semaphore integration
-  semaphoreUrl: null
-
   # -- Enable the user-facing notifications UI: the unread badge in the header
-  # user menu and the /notifications inbox and detail pages. Requires
-  # semaphoreUrl to be set for the underlying Semaphore API.
+  # user menu and the /notifications inbox and detail pages. Squareone finds
+  # the Semaphore API through Repertoire service discovery, so the
+  # `semaphore` application must be enabled in the environment.
   enableUserNotifications: false
 
   # -- Background polling cadence, in seconds, for the unread notification count
@@ -147,11 +145,6 @@ config:
   # -- URL to the Times Square (parameterized notebooks) API service.
   # @default -- null disables the Times Square integration
   timesSquareUrl: null
-
-  # -- URL to the COmanage registry, if the environment uses COmanage for
-  # identity.
-  # @default -- null disables the COmanage integration
-  coManageRegistryUrl: null
 
   # -- Plausible tracking domain. For example, `data.lsst.cloud`.
   # @default -- null disables Plausible tracking
@@ -187,14 +180,17 @@ config:
     oidcClients: ["admin:oidc"]
     sentry: ["exec:admin"]
 
-  # -- Enable the App menu
+  # -- Enable the Apps menu in the header. Its items come from Repertoire
+  # service discovery: Times Square when that application is enabled, and the
+  # Argo CD, Chronograf, Kafdrop, and WebDAV UI services, each shown only to
+  # users with the scopes the service requires.
   enableAppsMenu: false
 
-  # -- App menu items
-  appLinks:
-    - label: "Argo CD"
-      href: "/argo-cd/"
-      internal: false
+  # -- Additional Apps menu items for applications that service discovery
+  # does not describe. Each item has a `label`, an `href`, and `internal`
+  # (true for a Squareone route, false for another application). Items whose
+  # `href` duplicates a discovered service are dropped.
+  appLinks: []
 
   # -- URL to an external header logo image (HTTPS only). Takes priority over
   # headerLogoFile and headerLogoData.
