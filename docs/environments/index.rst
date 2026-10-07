@@ -30,6 +30,7 @@ To learn more about operating a Phalanx environment, see the :doc:`/admin/index`
    usdf-alert/index
    usdf-cm/index
    usdf-cm-dev/index
+   usdf-lsstsci/index
    usdfdev/index
    usdfint/index
    usdfprod/index
