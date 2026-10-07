@@ -42,6 +42,7 @@ applications:
   portal: true
   ppdb-replication: true
   qserv-kafka: true
+  rapid-analysis: true
   river: true
   river-next: true
   rubin-rag: true
