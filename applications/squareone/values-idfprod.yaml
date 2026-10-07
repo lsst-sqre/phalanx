@@ -4,6 +4,9 @@ ingress:
   timesSquareScope: "exec:admin"
 
 config:
+  # The environment title in discovery is "US Rubin Science Platform";
+  # keep the production site name as it has always read.
+  siteName: "Rubin Science Platform"
   docsBaseUrl: "https://rsp.lsst.io"
   timesSquareUrl: "https://data.lsst.cloud/times-square/api"
   plausibleDomain: "data.lsst.cloud"
