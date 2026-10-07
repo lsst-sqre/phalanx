@@ -4,7 +4,6 @@
 # submission node.
 ---
 internalDB: false
-
 config:
   aws:
     defaultS3EndpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
@@ -13,10 +12,6 @@ config:
         endpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
   logLevel: "DEBUG"
   logProfile: "development"
-  rootPath: ""
-  # deprecated, should use rootPath instead with a rewriting ingress
-  docsPrefix: "/cm-docs"
-  routePrefix: "/cm-api"
   db:
     hostname: "rsp-db-rw.postgres-db"
     echo: false
@@ -35,7 +30,6 @@ config:
     MOCK_BUTLER: 0
     MOCK_BPS: 0
 
-  fqdnUrl: https://usdf-rsp-dev.slac.stanford.edu
   outputVolume:
     storageClassName: "sdf-data-rubin"
     subPath: "shared/campaigns/users/usdf-cm-dev"
@@ -68,9 +62,16 @@ config:
     verifyHost: "1"
     useNativeHttplib: "1"
 
-image:
-  tag: "0.9.0-rc1"
-  pullPolicy: Always
+frontend:
+  prefix: "/api"
+  docsPath: "/docs"
+  image:
+    tag: "0.9.0-rc2"
+    pullPolicy: Always
+
+ingress:
+  fqdnUrl: "https://usdf-rsp-dev.slac.stanford.edu"
+  prefix: "/cm"
 
 daemon:
   security:
@@ -78,7 +79,7 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.9.0-rc1"
+    tag: "0.9.0-rc2"
     pullPolicy: Always
   resources:
     limits:
@@ -89,10 +90,11 @@ daemon:
       memory: "4Gi"
 
 web:
+  image:
+    tag: "0.9.0-rc2"
+    pullPolicy: Always
+  prefix: "/gui"
+  tokenPath: "/settings/tokens"
   grafana:
     url: https://grafana.slac.stanford.edu
     campaignHistoryDashboard: d/af2z9b83w83k0d/campaign-history
-  image:
-    tag: "0.9.0-rc1"
-    pullPolicy: Always
-  rootPath: "/cm-gui"

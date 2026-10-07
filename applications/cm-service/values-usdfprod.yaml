@@ -4,7 +4,6 @@
 # submission node.
 ---
 internalDB: false
-
 config:
   aws:
     defaultS3EndpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
@@ -13,10 +12,6 @@ config:
         endpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
   logLevel: "INFO"
   logProfile: "production"
-  rootPath: ""
-  # deprecated, should use rootPath instead with a rewriting ingress
-  docsPrefix: "/docs"
-  routePrefix: "/cm"
   db:
     hostname: "rsp-db-rw.postgres-db"
     echo: false
@@ -35,7 +30,6 @@ config:
     MOCK_BUTLER: 0
     MOCK_BPS: 0
 
-  fqdnUrl: https://usdf-rsp.slac.stanford.edu
   outputVolume:
     storageClassName: "sdf-data-rubin"
     subPath: "shared/campaigns/users/usdf-cm"
@@ -54,7 +48,6 @@ config:
       "/repo/embargo": "s3://embargo@rubin-summit-users/butler.yaml"
       "/repo/embargo+sasquatch_dev": "s3://embargo@rubin-summit-users/butler+sasquatch_dev.yaml"
   htcondor:
-    sbatchDuration: "2-0:0:0"
     scheddHost: sdfiana012.sdf.slac.stanford.edu
     collectorHost: sdfiana012.sdf.slac.stanford.edu
     fsRemoteDir:
@@ -69,12 +62,16 @@ config:
     verifyHost: "1"
     useNativeHttplib: "1"
 
-image:
-  tag: "0.9.0-rc1"
-  pullPolicy: IfNotPresent
+frontend:
+  prefix: "/api"
+  docsPath: "/docs"
+  image:
+    tag: "0.9.0-rc2"
+    pullPolicy: IfNotPresent
 
 ingress:
-  docsPath: "/cm-docs"
+  fqdnUrl: https://usdf-rsp.slac.stanford.edu
+  prefix: "/cm"
 
 daemon:
   security:
@@ -82,14 +79,15 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.9.0-rc1"
+    tag: "0.9.0-rc2"
     pullPolicy: IfNotPresent
 
 web:
+  image:
+    tag: "0.9.0-rc2"
+    pullPolicy: IfNotPresent
+  prefix: "/gui"
+  tokenPath: "/settings/tokens"
   grafana:
     url: https://grafana.slac.stanford.edu
     campaignHistoryDashboard: d/af2z9b83w83k0d/campaign-history
-  image:
-    tag: "0.9.0-rc1"
-    pullPolicy: IfNotPresent
-  rootPath: "/cm"
