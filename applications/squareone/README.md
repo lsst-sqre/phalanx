@@ -39,7 +39,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | config.showPreview | bool | `true` | Show a "preview" badge in the homepage |
 | config.siteDescription | string | See `values.yaml` | Site description, used in meta tags |
 | config.siteName | string | The environment title from Repertoire service discovery, else "Rubin Science Platform" | Name of the site, used in the title and meta tags. Set this only to override the environment's title from Repertoire service discovery. |
-| config.timesSquareUrl | string | null disables the Times Square integration | URL to the Times Square (parameterized notebooks) API service. |
+| config.timesSquareUrl | string | null, resolved from service discovery | URL to the Times Square (parameterized notebooks) API service. When unset, Squareone defaults it from Repertoire service discovery (`services.internal.times-square.url`), which lists Times Square only in environments that deploy it. The `/times-square/` pages are disabled when neither this value nor discovery provides a URL. |
 | config.useDiscoveryDefaults | bool | `true` | Omit `baseUrl` and `environmentName` from the Squareone configuration so that Squareone derives them from Repertoire service discovery (the `squareone` UI service URL and `environment.label`). Requires Repertoire 3.0 or later. Set to `false` to render them from `global.baseUrl` and `global.environmentName` instead. |
 | config.userNotificationsPollIntervalSeconds | int | `300` | Background polling cadence, in seconds, for the unread notification count in the header user menu. Only relevant when enableUserNotifications is true. |
 | fullnameOverride | string | `""` | Overrides the full name for resources (includes the release name) |

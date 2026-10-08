@@ -7,7 +7,6 @@ ingress:
 config:
   docsBaseUrl: "https://rsp.lsst.io/v/idfdev"
   enableUserNotifications: true
-  timesSquareUrl: "https://data-dev.lsst.cloud/times-square/api"
   plausibleDomain: "data-dev.lsst.cloud"
   headerLogoFile: "demo-logo.png"
   headerLogoHeight: 50

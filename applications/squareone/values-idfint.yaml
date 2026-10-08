@@ -3,7 +3,6 @@ ingress:
 
 config:
   docsBaseUrl: "https://rsp.lsst.io/v/idfint"
-  timesSquareUrl: "https://data-int.lsst.cloud/times-square/api"
   enableSentry: true
   sentryTracesSampleRate: 1.0
   sentryReplaysOnErrorSampleRate: 1.0
