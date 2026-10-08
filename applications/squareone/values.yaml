@@ -143,7 +143,11 @@ config:
   userNotificationsPollIntervalSeconds: 300
 
   # -- URL to the Times Square (parameterized notebooks) API service.
-  # @default -- null disables the Times Square integration
+  # When unset, Squareone defaults it from Repertoire service discovery
+  # (`services.internal.times-square.url`), which lists Times Square only
+  # in environments that deploy it. The `/times-square/` pages are
+  # disabled when neither this value nor discovery provides a URL.
+  # @default -- null, resolved from service discovery
   timesSquareUrl: null
 
   # -- Plausible tracking domain. For example, `data.lsst.cloud`.
