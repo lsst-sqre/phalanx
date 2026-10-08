@@ -9,7 +9,7 @@ description: >-
 
 appOfAppsName: "science-platform"
 onepassword:
-  connectUrl: "https://roundtable.lsst.cloud/1password"
+  connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP ruka.lsst.codes"
 vaultPathPrefix: "secret/phalanx/ruka"
 
