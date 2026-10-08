@@ -336,10 +336,10 @@ lsstcamAosBlitzWorkerSet:
   resources:
     requests:
       cpu: 8.2
-      memory: 8G
+      memory: 16G
     limits:
       cpu: 8.2
-      memory: 24G
+      memory: 32G
 lsstcamGather1bSet:
   name: LSSTCam/runStep1bWorker.py
   mounts:
