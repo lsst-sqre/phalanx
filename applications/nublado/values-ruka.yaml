@@ -32,32 +32,11 @@ controller:
         - name: "home"
           source:
             type: "nfs"
-            serverPath: "/rsphome-ruka"
-            server: "nfs-rsphome.ls.lsst.org"
-        - name: "project"
-          source:
-            type: "nfs"
-            serverPath: "/project-ruka"
-            server: "nfs-project.ls.lsst.org"
-        - name: "scratch"
-          source:
-            type: "nfs"
-            serverPath: "/scratch-ruka"
-            server: "nfs-scratch.ls.lsst.org"
-        - name: "datasets"
-          source:
-            type: "nfs"
-            serverPath: "/lsstdata-ruka"
-            server: "nfs-lsstdata.ls.lsst.org"
+            serverPath: "/rsphome"
+            server: "nfs-rsphome.dev.lsst.org"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
-        - containerPath: "/project"
-          volumeName: "project"
-        - containerPath: "/scratch"
-          volumeName: "scratch"
-        - containerPath: "/datasets"
-          volumeName: "datasets"
 
 jupyterhub:
   hub:
