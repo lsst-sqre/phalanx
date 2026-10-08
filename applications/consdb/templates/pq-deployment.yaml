@@ -56,6 +56,12 @@ spec:
               value: "{{ .Values.db.database }}"
             - name: "LOG_CONFIG"
               value: "DEBUG"
+            - name: "WRITE_AUTH_ENABLED"
+              value: {{ .Values.pq.writeAuthEnabled | quote }}
+            - name: "ALLOWED_WRITERS"
+              value: {{ .Values.pq.allowedWriters | toJson | quote }}
+            - name: "GAFAELFAWR_URL"
+              value: "https://{{ required "global.host must be set" .Values.global.host }}"
           volumeMounts:
             - mountPath: /tmp
               name: temp

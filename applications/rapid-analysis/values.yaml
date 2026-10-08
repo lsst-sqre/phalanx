@@ -29,6 +29,12 @@ env:
 # _secretName_ (The name of the vault store reference. Uses the _namespace_ attribute to construct the full name),
 # _secretKey_ (The key in the vault store containing the necessary secret)
 envSecrets: []
+gafaelfawrToken:
+  # -- Whether to create a Gafaelfawr service token for `bot-rapid-analysis` in
+  # the `rapid-analysis-gafaelfawr-token` secret, used to authenticate writes to
+  # ConsDB. Requires Gafaelfawr in the environment. Expose it to the pods by
+  # adding an `envSecrets` entry for it.
+  enabled: false
 # -- The Vault prefix path
 vaultPrefixPath: ""
 # The key for the pull secrets including any sub-paths.

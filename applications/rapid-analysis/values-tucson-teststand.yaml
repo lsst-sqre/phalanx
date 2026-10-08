@@ -9,6 +9,12 @@ env:
   EFDAUTH: /project/rubintv/auth/efdauth.json
   LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.tu.lsst.org
   AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+envSecrets:
+- name: ACCESS_TOKEN
+  secretName: rapid-analysis-gafaelfawr-token
+  secretKey: token
+gafaelfawrToken:
+  enabled: true
 securityContext:
   uid: 73006
   gid: 73006
