@@ -1,6 +1,5 @@
 image:
   pullPolicy: Always
-  tag: "tickets-DM-56206-times-square-url-default"
 
 ingress:
   timesSquareScope: "exec:admin"
