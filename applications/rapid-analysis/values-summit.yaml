@@ -261,10 +261,10 @@ scripts:
   resources:
     requests:
       cpu: 8.2
-      memory: 8G
+      memory: 16G
     limits:
       cpu: 8.2
-      memory: 24G
+      memory: 32G
 - name: LSSTCam/runGuiderAnalysis.py
   mounts:
   - lsstcam-data
