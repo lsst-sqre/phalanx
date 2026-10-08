@@ -22,10 +22,6 @@ config:
         enabled: true
         databaseUrl: "postgresql://tap_schema_admin_ssotap@rsp-db-rw.postgres-db:5432/ssotap"
         databasePasswordKey: "ssotap-schema-admin-password"
-      livetap:
-        enabled: true
-        databaseUrl: "postgresql://tap_schema_admin_livetap@rsp-db-rw.postgres-db:5432/livetap"
-        databasePasswordKey: "livetap-schema-admin-password"
       consdbtap:
         enabled: true
         databaseUrl: "postgresql://tap_schema_admin_consdbtap@rsp-db-rw.postgres-db:5432/consdbtap"
