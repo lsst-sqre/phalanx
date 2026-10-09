@@ -1,0 +1,13 @@
+replicaCount: 1
+
+nodeSelector:
+  edu.stanford.slac.sdf.project/lsstsci: "true"
+
+
+redis:
+  persistence:
+    enabled: true
+    size: "10Gi"
+    storageClass: "wekafs--sdf-k8s01"
+  nodeSelector:
+    edu.stanford.slac.sdf.project/lsstsci: "true"
