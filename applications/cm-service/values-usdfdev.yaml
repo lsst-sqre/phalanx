@@ -1,19 +1,19 @@
 # service writes artifacts that eventually resolve to the path
-#   /sdf/group/rubin/shared/campaigns/users/usdf-cm/<production>/<campaign>/
+#   /sdf/group/rubin/shared/campaigns/users/usdf-cm-dev/<production>/<campaign>/
 # this path must be the same relative to the pod and any batch (htcondor)
 # submission node.
 ---
-internalDB: true
+internalDB: false
 config:
   aws:
     defaultS3EndpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
     profiles:
       embargo:
         endpointUrl: "https://sdfembs3.sdf.slac.stanford.edu"
-  logLevel: "INFO"
-  logProfile: "production"
+  logLevel: "DEBUG"
+  logProfile: "development"
   db:
-    hostname: "postgres.postgres"
+    hostname: "rsp-db-rw.postgres-db"
     echo: false
   features:
     API_V1: 0
@@ -24,15 +24,16 @@ config:
     DAEMON_CAMPAIGNS: 1
     DAEMON_NODES: 1
     SCHEDULER: 1
-    NOTIFIER: 0
+    NOTIFIER: 1
     STORE_FSM: 1
     ALLOW_TASK_UPSERT: 1
     MOCK_BUTLER: 0
     MOCK_BPS: 0
+
   outputVolume:
     storageClassName: "sdf-data-rubin"
-    subPath: "shared/campaigns/users/usdf-cm"
-    mountPath: "/sdf/group/rubin/shared/campaigns/users/usdf-cm"
+    subPath: "shared/campaigns/users/usdf-cm-dev"
+    mountPath: "/sdf/group/rubin/shared/campaigns/users/usdf-cm-dev"
   butler:
     dbAuth:
       secretName: "cm-service"
@@ -47,7 +48,6 @@ config:
       "/repo/embargo": "s3://embargo@rubin-summit-users/butler.yaml"
       "/repo/embargo+sasquatch_dev": "s3://embargo@rubin-summit-users/butler+sasquatch_dev.yaml"
   htcondor:
-    sbatchDuration: "2-0:0:0"
     scheddHost: sdfiana012.sdf.slac.stanford.edu
     collectorHost: sdfiana012.sdf.slac.stanford.edu
     fsRemoteDir:
@@ -62,14 +62,16 @@ config:
     verifyHost: "1"
     useNativeHttplib: "1"
 
-
-ingress:
-  fqdnUrl: https://usdf-cm.slac.stanford.edu
-
 frontend:
+  prefix: "/api"
+  docsPath: "/docs"
   image:
     tag: "0.9.0-rc2"
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
+
+ingress:
+  fqdnUrl: "https://usdf-rsp-dev.slac.stanford.edu"
+  prefix: "/cm"
 
 daemon:
   security:
@@ -78,12 +80,21 @@ daemon:
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
     tag: "0.9.0-rc2"
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: "1"
+      memory: "8Gi"
+    requests:
+      cpu: "0.1"
+      memory: "4Gi"
 
 web:
+  image:
+    tag: "0.9.0-rc2"
+    pullPolicy: Always
+  prefix: "/gui"
+  tokenPath: "/settings/tokens"
   grafana:
     url: https://grafana.slac.stanford.edu
     campaignHistoryDashboard: d/af2z9b83w83k0d/campaign-history
-  image:
-    tag: "0.9.0-rc2"
-    pullPolicy: IfNotPresent

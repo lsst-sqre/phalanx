@@ -18,5 +18,5 @@ applications:
   cert-manager: false
   ingress-nginx: false
 
-  cm-service: true
+  cm-service: false
   postgres: true
