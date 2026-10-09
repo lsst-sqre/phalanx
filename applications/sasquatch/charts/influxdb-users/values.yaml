@@ -44,8 +44,6 @@ targets: []
 # targets:
 #   - name: primary
 #     hostname: sasquatch-influxdb
-#     adminSecret:
-#       name: sasquatch
 #     users:
 #       - username: grafana-reader
 #         passwordSecretRef:

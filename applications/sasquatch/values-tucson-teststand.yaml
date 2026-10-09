@@ -109,8 +109,6 @@ influxdb-users:
   targets:
     - name: influxdb
       hostname: sasquatch-influxdb
-      adminSecret:
-        name: sasquatch
       users:
         - username: sasquatch
           passwordSecretRef:

@@ -124,8 +124,6 @@ influxdb-users:
   targets:
     - name: influxdb
       hostname: sasquatch-influxdb-enterprise-active-data
-      adminSecret:
-        name: sasquatch
       users:
         - username: sasquatch
           passwordSecretRef:

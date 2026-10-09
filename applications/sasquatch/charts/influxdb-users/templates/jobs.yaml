@@ -67,12 +67,12 @@ spec:
             - name: INFLUX_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ $target.adminSecret.name | quote }}
+                  name: sasquatch
                   key: influxdb-user
             - name: INFLUX_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ $target.adminSecret.name | quote }}
+                  name: sasquatch
                   key: influxdb-password
             - name: USERNAME
               value: {{ $user.username | quote }}
@@ -98,12 +98,12 @@ spec:
             - name: INFLUX_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ $target.adminSecret.name | quote }}
+                  name: sasquatch
                   key: influxdb-user
             - name: INFLUX_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ $target.adminSecret.name | quote }}
+                  name: sasquatch
                   key: influxdb-password
             - name: USERNAME
               value: {{ $user.username | quote }}

@@ -60,8 +60,6 @@ influxdb-users:
   targets:
     - name: influxdb
       hostname: sasquatch-influxdb
-      adminSecret:
-        name: sasquatch
       users:
         - username: sasquatch
           passwordSecretRef:
@@ -74,8 +72,6 @@ influxdb-users:
               privilege: READ
     - name: influxdb-enterprise
       hostname: sasquatch-influxdb-enterprise-data
-      adminSecret:
-        name: sasquatch
       users:
         - username: sasquatch
           passwordSecretRef:
