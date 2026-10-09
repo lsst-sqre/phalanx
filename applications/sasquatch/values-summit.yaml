@@ -117,6 +117,13 @@ influxdb-users:
           databases:
             - name: efd
               privilege: READ
+        - username: metrics-reader
+          passwordSecretRef:
+            name: sasquatch
+            key: influxdb-metrics-reader-password
+          databases:
+            - name: lsst.square.metrics
+              privilege: READ
     - name: influxdb-enterprise-standby
       hostname: sasquatch-influxdb-enterprise-standby-data
       users:
