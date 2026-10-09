@@ -556,6 +556,17 @@ telegraf:
         - "visit"
         - "run"
         - "pipeline"
+    scimma:
+      enabled: true
+      database: "lsst.scimma"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.scimma"
+        excludePrefixes: []
+        refreshInterval: "300s"
 
 telegraf-standby:
   enabled: false
