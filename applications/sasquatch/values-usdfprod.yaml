@@ -45,7 +45,7 @@ strimzi-kafka:
     source:
       alias: "summit"
       bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
-      topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*, lsst.backpack.*, lsst.ATCamera.*, lsst.CCCamera.*, lsst.MTCamera.*, lsst.obsenv.*, lsst.cp.*"
+      topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*, lsst.backpack.*, lsst.ATCamera.*, lsst.CCCamera.*, lsst.MTCamera.*, lsst.obsenv.*, lsst.cp.*, lsst.scimma.*"
     replication:
       policy:
         separator: "."
@@ -556,6 +556,17 @@ telegraf:
         - "visit"
         - "run"
         - "pipeline"
+    scimma:
+      enabled: true
+      database: "lsst.scimma"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.scimma"
+        excludePrefixes: []
+        refreshInterval: "300s"
 
 telegraf-standby:
   enabled: false
