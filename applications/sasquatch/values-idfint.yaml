@@ -47,6 +47,20 @@ customInfluxDBIngress:
   enabled: true
   hostname: data-int.lsst.cloud
 
+influxdb-users:
+  enabled: true
+  targets:
+    - name: influxdb
+      hostname: sasquatch-influxdb
+      users:
+        - username: metrics-reader
+          passwordSecretRef:
+            name: sasquatch
+            key: influxdb-metrics-reader-password
+          databases:
+            - name: lsst.square.metrics
+              privilege: READ
+
 telegraf:
   enabled: true
   kafkaConsumers:
