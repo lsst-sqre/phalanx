@@ -16,10 +16,11 @@ Helm chart for the Nightlydigest FastAPI web server.
 | image.tag | int | `nil` | The cycle revision to add to the image tag. |
 | namespace | string | `"nightlydigest"` | The overall namespace for the application. |
 | nodeSelector | object | `{}` | Node selection rules applied to the pod. |
-| producer | object | `{"enabled":false,"gcpBucketName":"default","gcpProjectId":"default","restartPolicy":"Never","schedule":"0 * * * *"}` | Configuration for the Nightly Digest Producer component. |
+| producer | object | `{"enabled":false,"gcpBucketName":"default","gcpProjectId":"default","lookbackDays":7,"restartPolicy":"Never","schedule":"0 * * * *"}` | Configuration for the Nightly Digest Producer component. |
 | producer.enabled | bool | `false` | If the Nightly Digest Producer component should be enabled. |
 | producer.gcpBucketName | string | `"default"` | GCP bucket name for the Nightly Digest Producer component. |
 | producer.gcpProjectId | string | `"default"` | GCP project ID for the Nightly Digest Producer component. |
+| producer.lookbackDays | int | `7` | The amount of days to include in the lookback window |
 | producer.restartPolicy | string | `"Never"` | The cron job restart policy type |
 | producer.schedule | string | `"0 * * * *"` | The cron job schedule in cron format |
 | replicas | int | `1` | The number of replicas for the backend deployment. |

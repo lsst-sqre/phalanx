@@ -25,6 +25,8 @@ producer:
   gcpProjectId: default
   # -- GCP bucket name for the Nightly Digest Producer component.
   gcpBucketName: default
+  # -- The amount of days to include in the lookback window
+  lookbackDays: 7
 # -- List of Kubernetes environment variable specifiers.
 env: []
 # -- List of environment variables that should come from secrets.
