@@ -289,7 +289,7 @@ clickhouse:
 
     # -- Tag of the ClickHouse image. 26.8 is an LTS line. Once this server has
     # written data, moving to an older release is not possible.
-    tag: "26.8.16.41"
+    tag: "26.9.15.5"
 
     # -- Digest the tag is pinned to, so the image cannot change under the tag
     digest: "sha256:bca86231e6f8e8969f442135843e44105d54fa61babd84b71f6f7c146f207a8e"
