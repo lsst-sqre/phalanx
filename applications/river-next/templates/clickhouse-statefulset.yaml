@@ -233,6 +233,8 @@ spec:
                 path: "mppdb_ro.xml"
               - key: "users.d-ssp_xmatch.xml"
                 path: "ssp_xmatch.xml"
+              - key: "users.d-writer.xml"
+                path: "writer.xml"
         - name: "tmp"
           emptyDir: {}
         - name: "failover"

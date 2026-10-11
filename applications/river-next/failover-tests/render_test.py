@@ -168,6 +168,19 @@ def check_both(name: str, d: Docs) -> None:
         for k in ("owner-guard.sh", "server-wrapper.sh")
     }
     cm = d[("ConfigMap", "river-next-clickhouse")]
+    vols = {
+        v["name"]: v for v in sts(d)["spec"]["template"]["spec"]["volumes"]
+    }
+    for vol, prefix in (("config-d", "config.d-"), ("users-d", "users.d-")):
+        mounted = {i["key"] for i in vols[vol]["configMap"].get("items", [])}
+        unmounted = sorted(
+            k for k in cm["data"] if k.startswith(prefix) and k not in mounted
+        )
+        check(
+            not unmounted,
+            f"{name}: every {prefix}* ConfigMap key is mounted by volume {vol}"
+            + (f" (missing: {unmounted})" if unmounted else ""),
+        )
     check(
         cm["data"] == golden,
         f"{name}: river-next-clickhouse config.d/users.d data"
