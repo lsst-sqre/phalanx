@@ -4,15 +4,22 @@
 river-next — River with its own ClickHouse server
 #####################################################
 
-river-next is the successor to :px-app:`river`. It runs the same mppdb IVOA
-TAP front-end as river, but alongside it the application also runs the
-ClickHouse server that the front-end queries, instead of relying on a
-ClickHouse server outside the Kubernetes cluster.
+river-next serves River, an mppdb IVOA TAP service for Rubin catalogs, at
+``/river``. It replaced the earlier ``river`` application, which used a
+ClickHouse server outside the Kubernetes cluster. river-next brings its own
+ClickHouse server: as a StatefulSet in the cluster, or on an external host
+reached through the native Weka client.
 
-At ``usdfdev`` it took over river's path, ``/river``, at cutover. The path is a
-single value, ``ingress.pathPrefix``, whose chart default ``/river-next`` keeps
-it from colliding with river where both are deployed. river stays registered
-only for rollback until it is decommissioned.
+``clickhouse.backend`` selects which. With ``pod``, the StatefulSet runs the
+server, and the front-end queries it through the in-cluster Service. With
+``external``, the StatefulSet is scaled to zero, and the front-end queries
+``clickhouse.external.host`` instead. That host runs the same server image and
+configuration on the same data directory. A guard (an init container, plus a
+wrapper around the server process) makes sure only one side ever runs on that
+directory. At ``usdfdev`` the server runs on the external host.
+
+The URL path is a single value, ``ingress.pathPrefix``, whose chart default is
+``/river-next``.
 
 The front-end keeps its own state: the SQLite job and state database and the
 snapshot manifests on one persistent volume, and the async result spool on

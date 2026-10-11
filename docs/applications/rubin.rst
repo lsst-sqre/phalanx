@@ -27,7 +27,6 @@ Argo CD project: ``rubin``
    ppdb-replication/index
    production-tools/index
    rapid-analysis/index
-   river/index
    river-next/index
    rubintv/index
    rubintv-dev/index

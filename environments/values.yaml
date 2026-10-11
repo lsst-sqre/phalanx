@@ -171,8 +171,6 @@ applications:
   # many other Phalanx applications, all of which assume that it is running.
   repertoire: true
 
-  # -- Enable the river application
-  river: false
 
   # -- Enable the river-next application
   river-next: false
