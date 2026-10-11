@@ -1,3 +1,2 @@
 config:
-  siteName: "Rubin Science Platform @ Tucson"
   docsBaseUrl: "https://rsp.lsst.io/v/tucson-teststand"

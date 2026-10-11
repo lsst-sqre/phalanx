@@ -6,11 +6,31 @@ config:
     - "efd"
   hips:
     datasets: {}
+  tap:
+    schemaVersion: "w.2026.36"
+    schemaSourceTemplate: "https://github.com/lsst/sdm_schemas/archive/refs/tags/{version}.tar.gz"
+    servers:
+      tap:
+        enabled: true
+        schemas:
+          - "dp1"
+          - "ivoa_obscore"
+          - "dp02_dc2"
+        databaseUrl: "postgresql://tap_schema_admin_tap@rsp-db-rw.postgres-db:5432/tap"
+        databasePasswordKey: "tap-schema-admin-password"
+      ssotap:
+        enabled: true
+        databaseUrl: "postgresql://tap_schema_admin_ssotap@rsp-db-rw.postgres-db:5432/ssotap"
+        databasePasswordKey: "ssotap-schema-admin-password"
+      consdbtap:
+        enabled: true
+        databaseUrl: "postgresql://tap_schema_admin_consdbtap@rsp-db-rw.postgres-db:5432/consdbtap"
+        databasePasswordKey: "consdbtap-schema-admin-password"
   influxdbDatabases:
     usdf_efd:
       url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
       database: "efd"
-      username: "efdreader"
+      username: "sasquatch"
       passwordKey: "usdf_efd-password"
       schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
       local: true

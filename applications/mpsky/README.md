@@ -14,8 +14,8 @@ Solar System Ephemerides
 | datastoreUrl | string | `"https://epyc.astro.washington.edu/~mjuric/mpsky-data"` | Base URL of the datastore holding the nightly caches. Must follow the layout produced by the cache builder: `caches/` and `catalogs/` beneath it. |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| image.pullPolicy | string | `"Always"` |  |
-| image.repository | string | `"ghcr.io/mjuric/mpsky-daily"` | Image to use in the mpsky deployment  repository: "ghcr.io/lsst-sqre/mpsky" |
+| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the mpsky image |
+| image.repository | string | `"ghcr.io/lsst-dm/mpsky"` | Image to use in the mpsky deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use tag: null |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the mpsky deployment pod |

@@ -3,7 +3,7 @@ config:
     base_efd:
       url: "https://base-lsp.lsst.codes/influxdb/"
       database: "efd"
-      username: "efdreader"
+      username: "sasquatch"
       passwordKey: "base_efd-password"
       schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
       local: true

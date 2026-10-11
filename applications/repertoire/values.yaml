@@ -81,6 +81,7 @@ config:
         Embarboged data at the United States Data Facility hosted by SLAC.
     prompt:
       description: "Prompt products."
+      docsUrl: "https://prompt-products.lsst.io/"
 
   hips:
     # -- Known HiPS datasets. Each should be a mapping of a label to an object
@@ -637,7 +638,7 @@ config:
       ppdbtap:
         enabled: false
         schemas:
-          - ppdb
+          - "ppdb"
         databaseUrl: "postgresql://ppdbtap@127.0.0.1:5432/ppdbtap"
         databasePasswordKey: "ppdbtap-database-password"
       ssotap:

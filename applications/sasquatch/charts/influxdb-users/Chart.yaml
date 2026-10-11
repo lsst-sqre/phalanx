@@ -1,0 +1,7 @@
+apiVersion: v2
+name: influxdb-users
+version: 1.0.0
+description: Manage InfluxDB 1.x users and database privileges
+sources:
+  - https://github.com/influxdata/influxdb
+appVersion: 1.12.4

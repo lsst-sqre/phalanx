@@ -70,6 +70,13 @@ love-commander:
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
     key: aws-secret-access-key
+  efdCredentials:
+    containerPath: &efd-credentials-path /home/saluser/.lsst
+    secretFilename: &efd-credentials-filename .efdauth.json
+  secretFixup:
+    containerPath: *efd-credentials-path
+    filenames:
+    - *efd-credentials-filename
   service:
     enabled: true
     port: 5000

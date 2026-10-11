@@ -12,7 +12,7 @@ config:
     idfdev_efd:
       url: "https://data-dev.lsst.cloud/influxdb/"
       database: "efd"
-      username: "efdreader"
+      username: "sasquatch"
       passwordKey: "idfdev_efd-password"
       schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
       local: true

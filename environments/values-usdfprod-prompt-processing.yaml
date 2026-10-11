@@ -20,6 +20,7 @@ applications:
   butler-writer-service: true
   gafaelfawr: true
   keda: true
+  mpsky: true
   next-visit-fan-out: true
   prompt-kafka: true
   prompt-keda-latiss: false

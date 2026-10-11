@@ -87,6 +87,18 @@ spec:
               path: {{ printf "%s/api/health" .Values.ingress.path | quote }}
               port: "http"
             timeoutSeconds: 5
+          livenessProbe:
+            # Readiness alone never restarts the container, and some health
+            # failures only a new container fixes: a hostPath volume set up
+            # before the node mounted its network filesystem stays bound to
+            # the empty local directory until the container is recreated.
+            # Five minutes of failure rides out a brief storage stall.
+            httpGet:
+              path: {{ printf "%s/api/health" .Values.ingress.path | quote }}
+              port: "http"
+            timeoutSeconds: 5
+            periodSeconds: 30
+            failureThreshold: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           securityContext:
