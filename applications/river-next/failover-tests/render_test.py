@@ -180,7 +180,8 @@ def check_both(name: str, d: Docs) -> None:
         " and server-wrapper.sh verbatim",
     )
     grace = sts(d)["spec"]["template"]["spec"]["terminationGracePeriodSeconds"]
-    check(grace == 300, f"{name}: terminationGracePeriodSeconds is 300")
+    want = expected_grace()
+    check(grace == want, f"{name}: terminationGracePeriodSeconds is {want}")
 
 
 def check_guard(name: str, pod: Docs) -> None:
@@ -309,15 +310,35 @@ def check_overrides() -> None:
     )
 
 
+def expected_grace() -> int:
+    """Return the grace period the environment configures, else the default.
+
+    usdfdev raises it to 1800 s: a clean ClickHouse shutdown over the pod's
+    NFS mount took 586 s in the 2026-10-05 rehearsal, and only a clean exit
+    writes ``released``.
+    """
+    for f in (f"values-{ENV}.yaml", "values.yaml"):
+        v = (yaml.safe_load((CHART / f).read_text()) or {}).get(
+            "clickhouse", {}
+        )
+        if "terminationGracePeriodSeconds" in v:
+            return int(v["terminationGracePeriodSeconds"])
+    return 300
+
+
 def main() -> int:
-    # The phalanx CLI render is the default (pod) backend.
+    # The phalanx CLI render is whatever backend the environment selects;
+    # helm with the same inputs must reproduce it exactly.
     cli_text = render_phalanx()
     mirror = render_helm(None)
     check(
         mirror.returncode == 0 and mirror.stdout == cli_text,
         "helm template as phalanx runs it reproduces the phalanx CLI render",
     )
-    pod = docs(cli_text)
+
+    pod_run = render_helm({"clickhouse": {"backend": "pod"}})
+    check(pod_run.returncode == 0, "pod backend renders")
+    pod = docs(pod_run.stdout)
 
     ext_run = render_helm({"clickhouse": {"backend": "external"}})
     check(ext_run.returncode == 0, "external backend renders")

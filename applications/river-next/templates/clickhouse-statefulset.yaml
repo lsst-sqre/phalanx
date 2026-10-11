@@ -113,6 +113,11 @@ spec:
                 secretKeyRef:
                   name: "river-next-clickhouse"
                   key: "SSP_XMATCH_SHA256"
+            - name: "WRITER_SHA256"
+              valueFrom:
+                secretKeyRef:
+                  name: "river-next-clickhouse"
+                  key: "WRITER_SHA256"
             # Users are fully defined in users.d; stop the image's entrypoint
             # from writing its own default-user.xml there.
             - name: "CLICKHOUSE_SKIP_USER_SETUP"
