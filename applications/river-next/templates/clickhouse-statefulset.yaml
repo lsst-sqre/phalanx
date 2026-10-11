@@ -17,6 +17,8 @@
 {{- if not (has $probe.check (list "ping" "data")) -}}
 {{- fail (printf "clickhouse.livenessProbe.check must be \"ping\" or \"data\", not %q" (toString $probe.check)) -}}
 {{- end -}}
+{{- $pod := eq (include "river-next.clickhouse.backend" .) "pod" -}}
+{{- $image := printf "%s:%s@%s" .Values.clickhouse.image.repository .Values.clickhouse.image.tag .Values.clickhouse.image.digest -}}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -25,8 +27,10 @@ metadata:
     {{- include "river-next.clickhouse.labels" . | nindent 4 }}
 spec:
   # One server, deliberately not configurable: this is a single-node
-  # ClickHouse that owns its data directory.
-  replicas: 1
+  # ClickHouse that owns its data directory. Zero when clickhouse.backend is
+  # external and the same server runs on the failover host instead; the
+  # StatefulSet and its claim stay.
+  replicas: {{ if $pod }}1{{ else }}0{{ end }}
   serviceName: "river-next-clickhouse"
   selector:
     matchLabels:
@@ -34,7 +38,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/clickhouse-configmap.yaml") . | sha256sum }}
+        checksum/config: {{ print (include (print $.Template.BasePath "/clickhouse-configmap.yaml") .) (include (print $.Template.BasePath "/clickhouse-failover-configmap.yaml") .) | sha256sum }}
         {{- with .Values.clickhouse.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -46,11 +50,49 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       automountServiceAccountToken: false
+      initContainers:
+        # Refuses to let the server start while the failover host owns the
+        # data directory (owner file, heartbeat, or /ping), leaving the pod in
+        # Init:Error; otherwise claims it for this pod. No kubectl involved.
+        # Rendered whatever clickhouse.backend says, so that a manual scale-up
+        # during a failover still meets the guard.
+        - name: "owner-guard"
+          image: {{ $image | quote }}
+          imagePullPolicy: {{ .Values.clickhouse.image.pullPolicy | quote }}
+          command:
+            - "/bin/sh"
+            - "/opt/river-failover/owner-guard.sh"
+          env:
+            {{- include "river-next.clickhouse.failoverEnv" . | nindent 12 }}
+          # The same as the server's, so the pod keeps its QoS class and its
+          # scheduling footprint.
+          resources:
+            {{- toYaml .Values.clickhouse.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "sdf-data-rubin"
+              mountPath: "/var/lib/clickhouse"
+              subPath: {{ .Values.clickhouse.dataSubPath | quote }}
+            - name: "failover"
+              mountPath: "/opt/river-failover"
+              readOnly: true
       containers:
         - name: "clickhouse"
-          image: "{{ .Values.clickhouse.image.repository }}:{{ .Values.clickhouse.image.tag }}@{{ .Values.clickhouse.image.digest }}"
+          image: {{ $image | quote }}
           imagePullPolicy: {{ .Values.clickhouse.image.pullPolicy | quote }}
+          # The server runs under the failover wrapper, which starts
+          # clickhouse-server as the image's entrypoint would, heartbeats while
+          # it runs, and releases the data directory on a clean shutdown.
+          command:
+            - "/bin/sh"
+            - "/opt/river-failover/server-wrapper.sh"
           env:
+            {{- include "river-next.clickhouse.failoverEnv" . | nindent 12 }}
             # Password hashes for the users in users.d, which reads them with
             # from_env. Referenced by name only; the values are never in the
             # chart or the ConfigMap. Environment variables are read when the
@@ -142,6 +184,9 @@ spec:
               readOnly: true
             - name: "tmp"
               mountPath: "/tmp"
+            - name: "failover"
+              mountPath: "/opt/river-failover"
+              readOnly: true
       {{- with .Values.clickhouse.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -185,3 +230,6 @@ spec:
                 path: "ssp_xmatch.xml"
         - name: "tmp"
           emptyDir: {}
+        - name: "failover"
+          configMap:
+            name: "river-next-clickhouse-failover"

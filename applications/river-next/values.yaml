@@ -283,6 +283,24 @@ global:
 # the front end queries in-cluster, and that ingest and direct clients on SDF
 # hosts reach through a MetalLB LoadBalancer.
 clickhouse:
+  # -- Where the front end's ClickHouse server runs: `pod` (this chart's
+  # StatefulSet) or `external` (the same server and data directory run on the
+  # failover host, `clickhouse.external.host`). `external` scales the
+  # StatefulSet to zero replicas, without deleting it or its claim, and points
+  # the front end at the failover host. In both modes the pod template runs
+  # the server under an owner guard and wrapper (the
+  # `river-next-clickhouse-failover` ConfigMap) that refuse to start while the
+  # failover host owns the data directory, so a manual scale-up during a
+  # failover still meets the guard. Any other value fails rendering.
+  backend: "pod"
+
+  external:
+    # -- Fully qualified name of the failover host. In `external` mode the
+    # front end connects to it on port 8123; in `pod` mode the owner guard
+    # refuses to start while it answers `/ping`. Its first label is the name
+    # the owner file and heartbeat use for that side. Required.
+    host: "sdfiana032.sdf.slac.stanford.edu"
+
   image:
     # -- ClickHouse server image
     repository: "clickhouse/clickhouse-server"
