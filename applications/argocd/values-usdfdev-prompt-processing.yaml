@@ -51,6 +51,9 @@ argo-cd:
         g, smart@slac.stanford.edu, role:admin
         g, alank@slac.stanford.edu, role:admin
         g, tobyj@slac.stanford.edu, role:admin
+
+        g, mjuric@slac.stanford.edu, role:developer
+        g, jkurla@slac.stanford.edu, role:developer
       scopes: "[email]"
 
   server:
