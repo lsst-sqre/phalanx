@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Service that provides temperature based on prediction model.
+name: weathernbeats
+sources:
+- https://github.com/lsst-ts/ts_weathernbeats
+type: application
+version: 1.0.0

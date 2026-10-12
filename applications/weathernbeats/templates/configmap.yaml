@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "weathernbeats"
+  labels:
+    {{- include "weathernbeats.labels" . | nindent 4 }}
+data:
+  WEATHERNBEATS_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  WEATHERNBEATS_LOG_PROFILE: {{ .Values.config.logProfile | quote }}
+  WEATHERNBEATS_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}

@@ -37,3 +37,4 @@ Argo CD project: ``rubin``
    skyviewer/index
    so-evening-tailgate/index
    weatherbroadcaster/index
+   weathernbeats/index
