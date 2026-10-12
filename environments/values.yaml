@@ -202,9 +202,6 @@ applications:
   # -- Enable the keda application
   keda: false
 
-  # -- Enable the livetap application
-  livetap: false
-
   # -- Enable the love control system application
   love: false
 

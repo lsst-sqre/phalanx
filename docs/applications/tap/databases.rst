@@ -190,7 +190,7 @@ The way ``TAP_SCHEMA`` metadata is populated depends on the the selected backend
 The cadc-tap shared chart
 =========================
 
-All TAP applications (``tap``, ``ssotap``, ``livetap``, ``consdbtap``) use the shared ``cadc-tap`` Helm chart in :file:`charts/cadc-tap`.
+All TAP applications (``tap``, ``ssotap``, ``consdbtap``, etc.) use the shared ``cadc-tap`` Helm chart in :file:`charts/cadc-tap`.
 Each TAP application is a thin wrapper that sets application-specific defaults (e.g. backend type, service name) and references the shared chart as a dependency.
 
 The shared chart handles:

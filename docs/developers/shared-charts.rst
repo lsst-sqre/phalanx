@@ -3,7 +3,7 @@ Sharing subcharts between applications
 ######################################
 
 In some cases, you may want to instantiate multiple Phalanx applications from mostly the same Helm chart.
-For example, Phalanx contains multiple TAP server applications (:px-app:`tap`, :px-app:`ssotap`, and :px-app:`livetap`) that are all deployments of the CADC TAP server.
+For example, Phalanx contains multiple TAP server applications (:px-app:`tap`, :px-app:`ssotap`, and more) that are all deployments of the CADC TAP server.
 The Helm template resources should be shared among those applications to avoid code duplication, unnecessary maintenance overhead, and unintentional inconsistencies.
 
 There are two options for how to handle cases like this:
