@@ -79,11 +79,9 @@ config:
   # -- Search path for FITS files
   visualizeFitsSearchPath: "/datasets"
 
-  # -- Endpoint under `/api/` for the DP0.3 SSO TAP service on the instance, if present
+  # -- Endpoint under `/api/` for the DP0.3 SSO TAP service on the instance,
+  # if present
   ssotap: ""
-
-  # -- Endpoint under `/api/` for the live TAP service on the instance, if present
-  livetap: ""
 
   # -- Maximum number of recent TAP queries to show in history
   tapHistoryLimit: "1000"

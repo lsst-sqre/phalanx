@@ -19,7 +19,6 @@ Argo CD project: ``rsp``
    hips/index
    hoverdrive/index
    jira-data-proxy/index
-   livetap/index
    noteburst/index
    nublado/index
    obsforge/index
