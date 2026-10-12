@@ -716,7 +716,7 @@ ups-server-room2-ess311:
 
 weatherforecast:
   image:
-    revision: 3
+    revision: 14
     repository: ts-dockerhub.lsst.org/weatherforecast
   env:
     RUN_ARG: --state enabled
