@@ -311,8 +311,9 @@ workerResources:
     # 4 h reaper runs, so leave headroom for a full burst.
     memory: "1Gi"
   requests:
-    # -- GKE Autopilot requires a minimum CPU request of 50m
-    cpu: "50m"
+    # -- GKE Autopilot requires a minimum CPU request of 75m for this memory
+    # allocation
+    cpu: "75m"
     memory: "256Mi"
 
 syncWorker:
