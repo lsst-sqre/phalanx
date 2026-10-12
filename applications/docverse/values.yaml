@@ -311,9 +311,8 @@ workerResources:
     # 4 h reaper runs, so leave headroom for a full burst.
     memory: "1Gi"
   requests:
-    # -- GKE Autopilot requires a minimum CPU request of 75m for this memory
-    # allocation
-    cpu: "75m"
+    # -- GKE Autopilot requires a minimum CPU request of 50m
+    cpu: "50m"
     memory: "256Mi"
 
 syncWorker:
@@ -337,7 +336,7 @@ syncWorker:
       # 1Gi limit left almost no room for the next wave.
       memory: "2Gi"
     requests:
-      cpu: "50m"
+      cpu: "75m"
       memory: "512Mi"
 
   # -- Affinity rules for the Keeper-sync worker pod

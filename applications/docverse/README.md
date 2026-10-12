@@ -106,4 +106,4 @@ Publish versioned docs
 | tolerations | list | `[]` | Tolerations for the docverse deployment pod |
 | workerResources | object | See `values.yaml` | Resource limits and requests for the docverse worker pod |
 | workerResources.limits.memory | string | `"1Gi"` | The worker idles at roughly 480Mi after a keeper-sync backfill and was OOM-killed at 512Mi while running ten concurrent publish_edition and dashboard_build jobs (roundtable-prod, 2026-09-23). A killed worker strands in-flight publishes until the 4 h reaper runs, so leave headroom for a full burst. |
-| workerResources.requests.cpu | string | `"75m"` | GKE Autopilot requires a minimum CPU request of 75m for this memory allocation |
+| workerResources.requests.cpu | string | `"50m"` | GKE Autopilot requires a minimum CPU request of 50m |
