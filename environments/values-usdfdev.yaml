@@ -19,6 +19,7 @@ applications:
   ingress-nginx: false
 
   butler: true
+  cm-service: true
   consdbtap: true
   consdb: true
   datalinker: true

@@ -8,10 +8,10 @@ data:
   AWS_CONFIG_FILE: /etc/aws/config
   AWS_SHARED_CREDENTIALS_FILE: /etc/aws/credentials
   AWS_ENDPOINT_URL_S3: {{ .Values.config.aws.defaultS3EndpointUrl }}
-  ASGI__DOCS_PREFIX: {{ .Values.config.docsPrefix | quote }}
-  ASGI__ROUTE_PREFIX: {{ .Values.config.routePrefix | quote }}
-  ASGI__ROOT_PATH: {{ .Values.config.rootPath | quote }}
-  ASGI__FQDN: {{ .Values.config.fqdnUrl | quote }}
+  ASGI__DOCS_PREFIX: {{ .Values.ingress.prefix }}{{ .Values.frontend.docsPath }}
+  ASGI__ROUTE_PREFIX: {{ .Values.frontend.prefix | quote }}
+  ASGI__ROOT_PATH: {{ .Values.ingress.prefix | quote }}
+  ASGI__FQDN: {{ .Values.ingress.fqdnUrl | quote }}
   BPS__ARTIFACT_PATH: {{ .Values.config.outputVolume.mountPath }}
 {{- with .Values.config.db }}
   DB__URL: "postgresql://{{ .username }}@{{ .hostname }}:{{ .port }}/{{ .name }}"
@@ -108,10 +108,11 @@ metadata:
   labels:
     {{- include "application.labels" . | nindent 4 }}
 data:
-  CM_ENDPOINT: "http://{{ .Chart.Name }}:8080{{ .Values.config.routePrefix }}"
+  CM_ENDPOINT: "http://{{ .Chart.Name }}:8080{{ .Values.frontend.prefix }}"
   CM_API_VERSION: v2
   CM_SERVER_PORT: "8080"
-  CM_ROOT_PATH: "{{ .Values.web.rootPath }}"
+  CM_ROOT_PATH: "{{ .Values.ingress.prefix }}{{ .Values.web.prefix }}"
   CM_PRODUCTION: "1"
   CM_grafana_base_url: "{{ .Values.web.grafana.url }}"
   CM_grafana_campaign_history: "{{ .Values.web.grafana.campaignHistoryDashboard }}"
+  CM_TOKEN_PATH: "{{ .Values.web.tokenPath }}"

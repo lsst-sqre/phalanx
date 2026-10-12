@@ -71,18 +71,6 @@ config:
     # -- If specified, sub-path within bound PV to be mounted at service output area
     subPath: null
 
-  # -- URL path prefix for apidocs
-  docsPrefix: "/docs"
-
-  # -- URL path prefix (deprecated)
-  routePrefix: "/cm-service"
-
-  # -- URL root path
-  rootPath: "/cm-service"
-
-  # -- URL FQDN, used to write absolute URLs in notifications
-  fqdnUrl: null
-
   butler:
 
     dbAuth:
@@ -166,37 +154,32 @@ config:
     # -- Key used to decrypt Notification secrets
     fernetSecretKey: "notifications-fernet-key"
 
-image:
-  # -- Image to use for frontend containers
-  repository: "ghcr.io/lsst-dm/cm-service"
-
-  # -- Pull policy for the frontend image
-  pullPolicy: "IfNotPresent"
-
-  # -- Tag of frontend image to use
-  # @default -- The appVersion of the chart
-  tag: null
-
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
 
+  # -- URL FQDN, used to write absolute URLs in notifications
+  fqdnUrl: null
+
+  # -- Path prefix used on the ingress
+  prefix: null
+
 frontend:
-  # -- Number of frontend pods to start
+  # -- Number of backend api pods to start
   replicaCount: 1
 
   image:
-    # -- Image to use for frontend containers
+    # -- Image to use for backend containers
     repository: "ghcr.io/lsst-dm/cm-service"
 
-    # -- Pull policy for the frontend image
+    # -- Pull policy for the backend image
     pullPolicy: "IfNotPresent"
 
-    # -- Tag of frontend image to use
+    # -- Tag of backend image to use
     # @default -- The appVersion of the chart
     tag: null
 
-  # -- Resource limits and requests for the frontend pods
+  # -- Resource limits and requests for the backend pods
   # @default -- See `values.yaml`
   resources:
     limits:
@@ -206,17 +189,23 @@ frontend:
       cpu: "0.1"
       memory: "230Mi"
 
-  # -- Affinity rules for the frontend pods
+  # -- Affinity rules for the backend pods
   affinity: {}
 
-  # -- Node selector rules for the frontend pods
+  # -- Node selector rules for the backend pods
   nodeSelector: {}
 
-  # -- Annotations for the frontend pods
+  # -- Annotations for the backend pods
   podAnnotations: {}
 
-  # -- Tolerations for the frontend pods
+  # -- Tolerations for the backend pods
   tolerations: []
+
+  # -- Path prefix on which the api is availble
+  prefix: "/api"
+
+  # -- URL path prefix for apidocs
+  docsPath: "/docs"
 
 daemon:
   # -- Number of daemon pods to start
@@ -267,7 +256,10 @@ web:
   replicaCount: 1
 
   # -- ASGI Root path for application
-  rootPath: "/gui"
+  prefix: "/gui"
+
+  # -- Path to gafaelfawr token management
+  tokenPath: "/settings/tokens"
 
   grafana:
     # -- Grafana base url

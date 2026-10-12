@@ -44,8 +44,8 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.config.notifications.secretName }}
                   key: {{ .Values.config.notifications.fernetSecretKey }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
           ports:
             - name: "http"
               containerPort: 8080
