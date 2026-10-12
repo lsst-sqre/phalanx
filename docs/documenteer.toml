@@ -84,7 +84,6 @@ ignore = [
     "^https://usdf-rsp-dev.slac.stanford.edu",
     "^https://usdf-rsp-int.slac.stanford.edu",
     "^https://usdf-rsp.slac.stanford.edu",
-    "^https://usdf-tel-rsp.slac.stanford.edu",
     # Other URLs protected by authentication.
     "^https://id-dev.lsst.cloud/",
     "^https://id-int.lsst.cloud/",
