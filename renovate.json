@@ -19,6 +19,12 @@
       "allowedVersions": "<10"
     },
     {
+      "description": "ClickHouse for river-next: LTS releases (YY.3 and YY.8) only. An upgrade cannot be rolled back once the server writes data.",
+      "matchFileNames": ["applications/river-next/**"],
+      "matchPackageNames": ["clickhouse/clickhouse-server"],
+      "allowedVersions": "/^[0-9]+\\.(3|8)\\./"
+    },
+    {
       "matchPackageNames": ["weaviate"],
       "assignees": ["jhu-s", "emanehab99"],
       "reviewers": ["jhu-s", "emanehab99"]
