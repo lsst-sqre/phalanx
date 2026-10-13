@@ -30,7 +30,6 @@ applications:
   grafana: true
   jira-data-proxy: true
   mobu: true
-  mpsky: true
   narrativelog: true
   nightlydigest: true
   nightreport: true
