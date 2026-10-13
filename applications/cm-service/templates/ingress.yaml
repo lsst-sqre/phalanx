@@ -22,7 +22,7 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: "{{ .Values.ingress.prefix }}{{ .Values.frontend.docsPath }}"
+            - path: "{{ .Values.ingress.prefix }}{{ .Values.backend.docsPath }}"
               pathType: Prefix
               backend:
                 service:
@@ -58,7 +58,7 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: "{{ .Values.ingress.prefix }}({{ .Values.frontend.prefix }})(/|$)(.*)"
+            - path: "{{ .Values.ingress.prefix }}({{ .Values.backend.prefix }})(/|$)(.*)"
               pathType: ImplementationSpecific
               backend:
                 service:

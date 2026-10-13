@@ -8,8 +8,8 @@ data:
   AWS_CONFIG_FILE: /etc/aws/config
   AWS_SHARED_CREDENTIALS_FILE: /etc/aws/credentials
   AWS_ENDPOINT_URL_S3: {{ .Values.config.aws.defaultS3EndpointUrl }}
-  ASGI__DOCS_PREFIX: {{ .Values.ingress.prefix }}{{ .Values.frontend.docsPath }}
-  ASGI__ROUTE_PREFIX: {{ .Values.frontend.prefix | quote }}
+  ASGI__DOCS_PREFIX: {{ .Values.ingress.prefix }}{{ .Values.backend.docsPath }}
+  ASGI__ROUTE_PREFIX: {{ .Values.backend.prefix | quote }}
   ASGI__ROOT_PATH: {{ .Values.ingress.prefix | quote }}
   ASGI__FQDN: {{ .Values.ingress.fqdnUrl | quote }}
   BPS__ARTIFACT_PATH: {{ .Values.config.outputVolume.mountPath }}
@@ -110,7 +110,7 @@ metadata:
   labels:
     {{- include "application.labels" . | nindent 4 }}
 data:
-  CM_ENDPOINT: "http://{{ .Chart.Name }}:8080{{ .Values.frontend.prefix }}"
+  CM_ENDPOINT: "http://{{ .Chart.Name }}:8080{{ .Values.backend.prefix }}"
   CM_API_VERSION: v2
   CM_SERVER_PORT: "8080"
   CM_ROOT_PATH: "{{ .Values.ingress.prefix }}{{ .Values.web.prefix }}"

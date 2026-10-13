@@ -33,7 +33,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: "{{ .Chart.Name }}-daemon"
-          image: "{{ .Values.daemon.image.repository }}:{{ .Values.daemon.image.tag | default .Values.frontend.image.tag }}"
+          image: "{{ .Values.daemon.image.repository }}:{{ .Values.daemon.image.tag | default .Values.backend.image.tag }}"
           imagePullPolicy: {{ .Values.daemon.image.pullPolicy }}
           ports:
             - name: "http"
@@ -84,18 +84,6 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.config.notifications.secretName }}
                   key: {{ .Values.config.notifications.fernetSecretKey }}
-# {{- with .Values.config.aws }}
-#             - name: AWS_ACCESS_KEY_ID
-#               valueFrom:
-#                 secretKeyRef:
-#                   name: {{ .secretName }}
-#                   key: {{ .defaultAccessKeyIdSecretKey }}
-#             - name: AWS_SECRET_ACCESS_KEY
-#               valueFrom:
-#                 secretKeyRef:
-#                   name: {{ .secretName }}
-#                   key: {{ .defaultSecretAccessKeySecretKey }}
-# {{- end }}
           resources:
             {{- toYaml .Values.daemon.resources | nindent 12 }}
           securityContext:
