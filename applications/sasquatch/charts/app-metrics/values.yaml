@@ -35,6 +35,7 @@ globalAppConfig:
       - "authenticated"
       - "event_type"
       - "outcome"
+      - "enqueued"
   gafaelfawr:
     influxTags:
       - "service"

@@ -1,11 +1,3 @@
-image:
-  # Temporary: lsst-sqre/docverse#811 (DM-56619 keeper-sync push hot path;
-  # the branch is rebased on main so it also carries the merged #812 GitHub
-  # id resolution). Drop this override and go back to the chart appVersion
-  # once #811 is merged and released.
-  tag: "tickets-DM-56619-push-hot-path"
-  pullPolicy: "Always"
-
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://docverse@localhost/docverse"
@@ -15,6 +7,7 @@ config:
     - "jonathansick"
   keeperSync:
     enabled: true
+    pushHotPathEnabled: true
   maintenance:
     enabled: true
     gitRefAuditEnabled: true
