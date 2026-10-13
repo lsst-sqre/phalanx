@@ -15,6 +15,14 @@ config:
   slackAlerts: true
   updateSchema: true
 
+  database:
+    type: "cloudsql"
+    project: "science-platform-demo-9e05"
+    region: "us-central1"
+    instance: "science-platform-demo-a4dbbf96"
+    database: "gafaelfawr"
+    serviceAccount: "gafaelfawr@science-platform-demo-9e05.iam.gserviceaccount.com"
+
   github:
     clientId: "9dd2d9bdad89973c503a"
 
@@ -151,13 +159,6 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "friends"
-
-cloudsql:
-  enabled: true
-  instanceConnectionName: "science-platform-demo-9e05:us-central1:science-platform-demo-a4dbbf96"
-  serviceAccount: "gafaelfawr@science-platform-demo-9e05.iam.gserviceaccount.com"
-  nodeSelector:
-    node_pool: "arm-core-pool"
 
 maintenance:
   nodeSelector:

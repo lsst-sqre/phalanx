@@ -5,6 +5,8 @@ redis:
 
 config:
   logLevel: "DEBUG"
+  database:
+    url: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
   internalDatabase: true
   updateSchema: true
 

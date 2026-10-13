@@ -23,7 +23,7 @@ spec:
         gafaelfawr-redis-client: "true"
         gafaelfawr-redis-ephemeral-client: "true"
     spec:
-      {{- if .Values.cloudsql.enabled }}
+      {{- if eq .Values.config.database.type "cloudsql" }}
       serviceAccountName: "gafaelfawr"
       {{- else }}
       automountServiceAccountToken: false
@@ -73,10 +73,8 @@ spec:
               readOnly: true
               subPath: "ssl.keystore.key"
             {{- end }}
-      {{- if .Values.cloudsql.enabled }}
-      initContainers:
-        {{- include "gafaelfawr.cloudsqlSidecar" . | nindent 8 }}
-      {{- end }}
+            - name: "tmp"
+              mountPath: "/tmp"
       restartPolicy: "Never"
       securityContext:
         runAsNonRoot: true
@@ -91,6 +89,9 @@ spec:
           secret:
             secretName: "gafaelfawr-kafka"
         {{- end }}
+        - name: "tmp"
+          emptyDir:
+            medium: "Memory"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

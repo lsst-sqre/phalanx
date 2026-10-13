@@ -24,35 +24,6 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Cloud SQL Auth Proxy sidecar container
-*/}}
-{{- define "gafaelfawr.cloudsqlSidecar" -}}
-- name: "cloud-sql-proxy"
-  command:
-    - "/cloud_sql_proxy"
-    - "-ip_address_types=PRIVATE"
-    - "-log_debug_stdout=true"
-    - "-structured_logs=true"
-    - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
-  image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
-  imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
-  {{- with .Values.cloudsql.resources }}
-  resources:
-    {{- toYaml . | nindent 12 }}
-  {{- end }}
-  restartPolicy: "Always"
-  securityContext:
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - "all"
-    readOnlyRootFilesystem: true
-    runAsNonRoot: true
-    runAsUser: 65532
-    runAsGroup: 65532
-{{- end }}
-
-{{/*
 Common environment variables
 */}}
 {{- define "gafaelfawr.envVars" -}}
@@ -78,18 +49,16 @@ Common environment variables
       name: "gafaelfawr"
       key: "cilogon-client-secret"
 {{- end }}
+{{- if eq .Values.config.database.type "external" }}
 - name: "GAFAELFAWR_DATABASE_PASSWORD"
   valueFrom:
     secretKeyRef:
       name: "gafaelfawr"
       key: "database-password"
-{{- if (or .Values.cloudsql.enabled .Values.config.internalDatabase) }}
+{{- end }}
+{{- if .Values.config.internalDatabase }}
 - name: "GAFAELFAWR_DATABASE_URL"
-  {{- if .Values.cloudsql.enabled }}
-  value: "postgresql://gafaelfawr@localhost/gafaelfawr"
-  {{- else if .Values.config.internalDatabase }}
   value: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
-  {{- end }}
 {{- end }}
 {{- if .Values.config.github.clientId }}
 - name: "GAFAELFAWR_GITHUB_CLIENT_SECRET"
