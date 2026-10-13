@@ -6,7 +6,8 @@ sources:
   - https://github.com/lsst/suit
   - https://github.com/Caltech-IPAC/firefly
 #appVersion: "portal-2026.3.1"
-appVersion: "portal-2026.3-test1"
+#appVersion: "portal-2026.3-test1"
+appVersion: "portal-2026.2.1"
 
 dependencies:
   - name: redis
