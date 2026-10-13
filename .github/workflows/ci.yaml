@@ -189,7 +189,7 @@ jobs:
           --force-noninteractive
           --vault-role-id=${{ secrets.MINIKUBE_VAULT_ROLE_ID }}
           --vault-secret-id=${{ secrets.MINIKUBE_VAULT_SECRET_ID }}
-          minikube
+          minikube || for pod in $(kubectl get pods -n gafaelfawr | awk '{ print $1 }' | grep -v NAME); do kubectl logs -n gafaelfawr $pod; done
 
       - name: Get final list of resources
         run: |
