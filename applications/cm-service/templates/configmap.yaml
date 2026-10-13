@@ -19,6 +19,8 @@ data:
 {{- end }}
   LOGGING__PROFILE: {{ .Values.config.logProfile | quote }}
   LOGGING__LEVEL: {{ .Values.config.logLevel | quote }}
+  BUTLER__authentication_file: {{ .Values.config.butler.authentication_file }}
+  BUTLER__repository_index: {{ .Values.config.butler.repository_index }}
 ---
 apiVersion: v1
 kind: ConfigMap

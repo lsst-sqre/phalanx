@@ -93,6 +93,12 @@ config:
     # -- A mapping of butler repository names to their URIs that will be known to the service.
     repositories: {}
 
+    # -- The path to a butler repository index file (e.g., data_repos.yaml)
+    repository_index: null
+
+    # -- The path to a butler database authentication file (e.g., db-auth.yaml)
+    authentication_file: null
+
   htcondor:
 
     # -- Name of an htcondor collector host
