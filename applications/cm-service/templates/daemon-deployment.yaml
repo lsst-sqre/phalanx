@@ -33,7 +33,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: "{{ .Chart.Name }}-daemon"
-          image: "{{ .Values.daemon.image.repository }}:{{ .Values.daemon.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.daemon.image.repository }}:{{ .Values.daemon.image.tag | default .Values.frontend.image.tag }}"
           imagePullPolicy: {{ .Values.daemon.image.pullPolicy }}
           ports:
             - name: "http"
