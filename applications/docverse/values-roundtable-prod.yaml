@@ -1,3 +1,13 @@
+image:
+  # Temporary: lsst-sqre/docverse#820 (DM-56619 skip tokenless projects in
+  # every GitHub ref read; the branch is forked from main after 1.0.0b10 so
+  # the image also carries the push hot path). Deployed here to watch the
+  # overnight git_ref_audit and keeper-sync crons over the full project set.
+  # Drop this override and go back to the chart appVersion once #820 is
+  # merged and released.
+  tag: "tickets-DM-56619-anonymous-reads"
+  pullPolicy: "Always"
+
 config:
   databaseUrl: "postgresql://docverse@localhost/docverse"
   githubAppId: "4990754"
