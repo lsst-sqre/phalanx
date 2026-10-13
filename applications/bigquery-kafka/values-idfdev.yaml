@@ -1,3 +1,7 @@
+image:
+  pullPolicy: "Always"
+  tag: "tickets-DM-56642"
+
 config:
   logLevel: "DEBUG"
   bigqueryProject: "ppdb-dev-5c07"
