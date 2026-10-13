@@ -1,3 +1,10 @@
+image:
+  # Temporary: lsst-sqre/docverse#812 (DM-56619 GitHub id resolution on
+  # keeper-sync and in the daily git_ref_audit). Drop this override and go
+  # back to the chart appVersion once #812 is merged and released.
+  tag: "tickets-DM-56619-github-ids"
+  pullPolicy: "Always"
+
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://docverse@localhost/docverse"
