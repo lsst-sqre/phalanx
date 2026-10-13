@@ -7,6 +7,11 @@ config:
   # can process simultaneously
   arqFastMaxJobs: 50
 
+  # -- Queries that complete immediately with more result cells (rows times
+  # columns) than this are processed by the slow workers instead of the fast.
+  # @default -- 1000000
+  arqFastMaxResultCells: 1000000
+
   # -- Maximum number of jobs each slow worker (used for results processing)
   # can process simultaneously
   arqSlowMaxJobs: 2
