@@ -1,3 +1,7 @@
+image:
+  tag: "t-DM-56495"
+  pullPolicy: "Always"
+
 config:
   allowSubdomains: true
   logLevel: "DEBUG"
