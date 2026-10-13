@@ -32,7 +32,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: "{{ .Chart.Name }}-web"
-          image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag | default .Values.frontend.image.tag }}"
+          image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag | default .Values.backend.image.tag }}"
           imagePullPolicy: {{ .Values.web.image.pullPolicy }}
           ports:
             - name: "http"

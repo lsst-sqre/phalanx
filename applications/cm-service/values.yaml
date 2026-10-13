@@ -46,7 +46,7 @@ config:
     secretName: "cm-service"
 
     # -- Key within db authn secret with db password
-    secretKey: "internalDatabasePassword"
+    secretKey: "postgres-password"
 
   # see lsst.cmservice.common.flags for available features
   # -- Enabled features as a mapping of feature to "1" (enabled) or "0" (disabled)
@@ -170,7 +170,7 @@ ingress:
   # -- Path prefix used on the ingress
   prefix: null
 
-frontend:
+backend:
   # -- Number of backend api pods to start
   replicaCount: 1
 
