@@ -23,6 +23,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import tomllib
 from pathlib import Path
 from typing import Any
 
@@ -197,6 +198,32 @@ def check_both(name: str, d: Docs) -> None:
     check(grace == want, f"{name}: terminationGracePeriodSeconds is {want}")
 
 
+def check_catalog_indexes(name: str, d: Docs) -> None:
+    """Check the declared indexes reach the front end's mppdb.toml unchanged.
+
+    The service serves them in /catalog's ``indexes`` block, and the ssp
+    crossmatch reads its time-bucket expression from there. The chart once
+    rendered ``[databases.*]`` without them, and /catalog went empty silently.
+    """
+    values = yaml.safe_load((CHART / "values-usdfdev.yaml").read_text())
+    want = {
+        db: spec["indexes"]
+        for db, spec in values.get("config", {}).get("databases", {}).items()
+        if spec.get("indexes")
+    }
+    toml = tomllib.loads(d[("ConfigMap", "river-next")]["data"]["mppdb.toml"])
+    got = {
+        db: spec["indexes"]
+        for db, spec in toml["databases"].items()
+        if spec.get("indexes")
+    }
+    check(
+        bool(want.get("ssp")) and got == want,
+        f"{name}: mppdb.toml declares the {sum(map(len, want.values()))}"
+        " values-usdfdev.yaml indexes verbatim",
+    )
+
+
 def check_guard(name: str, pod: Docs) -> None:
     """Check the guard, which renders in both backends (contract 13.10)."""
     s = sts(pod)
@@ -363,6 +390,8 @@ def main() -> int:
     check_guard("external", ext)
     check_external(pod, ext)
     check_overrides()
+    check_catalog_indexes("pod", pod)
+    check_catalog_indexes("external", ext)
 
     out("")
     if failures:

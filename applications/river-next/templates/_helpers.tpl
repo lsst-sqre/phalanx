@@ -76,6 +76,15 @@ lake_dir = {{ . | quote }}
 {{- with $db.registry }}
 registry = {{ printf "%s/%s" (trimSuffix "/" $.Values.config.registryDir) . | quote }}
 {{- end }}
+{{- range $i, $idx := $db.indexes }}
+
+[[databases.{{ $name }}.indexes]]
+table = {{ required (printf "config.databases.%s.indexes[%d].table must be set" $name $i) $idx.table | quote }}
+name = {{ required (printf "config.databases.%s.indexes[%d].name must be set" $name $i) $idx.name | quote }}
+expr = {{ required (printf "config.databases.%s.indexes[%d].expr must be set" $name $i) $idx.expr | quote }}
+type = {{ required (printf "config.databases.%s.indexes[%d].type must be set" $name $i) $idx.type | quote }}
+granularity = {{ required (printf "config.databases.%s.indexes[%d].granularity must be set" $name $i) $idx.granularity | int }}
+{{- end }}
 {{- end }}
 {{- with .Values.config.branding }}
 

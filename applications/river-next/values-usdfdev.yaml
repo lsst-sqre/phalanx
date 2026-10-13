@@ -30,6 +30,156 @@ config:
   # (which the https console blocks under connect-src 'self').
   advertiseRequestBase: false
 
+  # The ssp data-skipping index declarations, copied from mppdb
+  # deploy/usdf/mppdb.toml (main 577ed60); the primary front-end served the
+  # same set. The service only publishes them in /catalog (`indexes`), where
+  # the ssp crossmatch reads its time-bucket expression. When ssp adds or
+  # replaces a table, update both files. `expr` must match
+  # system.data_skipping_indices byte-for-byte.
+  databases:
+    ssp:
+      indexes:
+        - table: "dia_source_prompt"
+          name: "idx_mjd"
+          expr: "midpointMjdTai"
+          type: "minmax"
+          granularity: 4
+        - table: "dia_source_prompt"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(midpointMjdTai * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "dia_source_prompt_20250501"
+          name: "idx_mjd"
+          expr: "midpointMjdTai"
+          type: "minmax"
+          granularity: 4
+        - table: "dia_source_prompt_20250501"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(midpointMjdTai * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "dia_source_prompt_20250905"
+          name: "idx_mjd"
+          expr: "midpointMjdTai"
+          type: "minmax"
+          granularity: 4
+        - table: "dia_source_prompt_20250905"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(midpointMjdTai * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "dia_source_prompt_20260708"
+          name: "idx_mjd"
+          expr: "midpointMjdTai"
+          type: "minmax"
+          granularity: 4
+        - table: "dia_source_prompt_20260708"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(midpointMjdTai * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "dia_source_dp2"
+          name: "idx_mjd"
+          expr: "midpointMjdTai"
+          type: "minmax"
+          granularity: 4
+        - table: "dia_source_dp2"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(midpointMjdTai * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "dia_source_dp2_v30_0_0"
+          name: "idx_mjd"
+          expr: "midpointMjdTai"
+          type: "minmax"
+          granularity: 4
+        - table: "dia_source_dp2_v30_0_0"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(midpointMjdTai * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "dia_source_rfl"
+          name: "idx_mjd"
+          expr: "midpointMjdTai"
+          type: "minmax"
+          granularity: 4
+        - table: "dia_source_rfl"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(midpointMjdTai * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "dia_source_dp1"
+          name: "idx_mjd"
+          expr: "midpointMjdTai"
+          type: "minmax"
+          granularity: 4
+        - table: "dia_source_dp1"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(midpointMjdTai * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "dia_source_dp1_48666"
+          name: "idx_mjd"
+          expr: "midpointMjdTai"
+          type: "minmax"
+          granularity: 4
+        - table: "dia_source_dp1_48666"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(midpointMjdTai * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "dia_source_2025lost"
+          name: "idx_mjd"
+          expr: "midpointMjdTai"
+          type: "minmax"
+          granularity: 4
+        - table: "dia_source_2025lost"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(midpointMjdTai * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "source_daytime"
+          name: "idx_mjd"
+          expr: "mjd"
+          type: "minmax"
+          granularity: 4
+        - table: "source_daytime"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(mjd * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "source_dp2"
+          name: "idx_mjd"
+          expr: "mjd"
+          type: "minmax"
+          granularity: 4
+        - table: "source_dp2"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(mjd * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "source_nv"
+          name: "idx_mjd"
+          expr: "mjd"
+          type: "minmax"
+          granularity: 4
+        - table: "source_nv"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(mjd * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "source_nv_orphaned"
+          name: "idx_mjd"
+          expr: "mjd"
+          type: "minmax"
+          granularity: 4
+        - table: "source_nv_orphaned"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(mjd * 1440))"
+          type: "set(512)"
+          granularity: 4
+
 image:
   pullSecrets: ["river-next-pull"]
   # sha- tag of the u/mjuric/mppdb merge that contains both the OCI build and
