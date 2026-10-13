@@ -1,8 +1,9 @@
 image:
-  # Temporary: lsst-sqre/docverse#812 (DM-56619 GitHub id resolution on
-  # keeper-sync and in the daily git_ref_audit). Drop this override and go
-  # back to the chart appVersion once #812 is merged and released.
-  tag: "tickets-DM-56619-github-ids"
+  # Temporary: lsst-sqre/docverse#811 (DM-56619 keeper-sync push hot path;
+  # the branch is rebased on main so it also carries the merged #812 GitHub
+  # id resolution). Drop this override and go back to the chart appVersion
+  # once #811 is merged and released.
+  tag: "tickets-DM-56619-push-hot-path"
   pullPolicy: "Always"
 
 config:
