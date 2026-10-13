@@ -29,8 +29,8 @@ config:
     groupBaseDn: "cn=groups,cn=accounts,dc=lsst,dc=cloud"
 
   # Support OpenID Connect clients like Chronograf.
-  oidcServer:
-    enabled: false
+  # oidcServer:
+  #   enabled: false
 
   # Allow access by GitHub team.
   groupMapping:
