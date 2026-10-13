@@ -47,6 +47,8 @@ config:
       "/repo/main+sasquatch_dev": "/sdf/group/rubin/repo/main/butler+sasquatch_dev.yaml"
       "/repo/embargo": "s3://embargo@rubin-summit-users/butler.yaml"
       "/repo/embargo+sasquatch_dev": "s3://embargo@rubin-summit-users/butler+sasquatch_dev.yaml"
+    repository_index: "/sdf/home/l/lsstsvc1/.lsst/data-repos.cmservice.yaml"
+    authentication_file: "/sdf/home/l/lsstsvc1/.lsst/db-auth.cmservice.yaml"
   htcondor:
     scheddHost: sdfiana012.sdf.slac.stanford.edu
     collectorHost: sdfiana012.sdf.slac.stanford.edu

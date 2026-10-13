@@ -16,9 +16,11 @@ Campaign Management for Rubin Data Release Production
 | config.aws.defaultSecretAccessKeySecretKey | string | `"aws-secret-access-key"` | Key within the AWS secret with the SECRET_ACCESS_KEY for the default profile |
 | config.aws.profiles | object | `{}` | Named profiles to include in service's AWS config file |
 | config.aws.secretName | string | `"cm-service"` | Name of a secret with AWS authn details |
+| config.butler.authentication_file | string | `nil` | The path to a butler database authentication file (e.g., db-auth.yaml) |
 | config.butler.dbAuth.secretKey | string | `""` | The keyname within the secret data dictionary with the dbAuth payload |
 | config.butler.dbAuth.secretName | string | `""` | The name of a secret with Butler a dbAuth payload |
 | config.butler.repositories | object | `{}` | A mapping of butler repository names to their URIs that will be known to the service. |
+| config.butler.repository_index | string | `nil` | The path to a butler repository index file (e.g., data_repos.yaml) |
 | config.butler.storage | string | `"1Gi"` | Minimum storage requested in the butler remote area PVC |
 | config.butler.storageClassName | string | `nil` | If specified, name of storage class requested in butler remote area PVC |
 | config.butler.subPath | string | `nil` | If specified, sub-path within bound PV to be mounted as butler remote area |
