@@ -170,7 +170,7 @@ ingress:
   # -- Path prefix used on the ingress
   prefix: null
 
-frontend:
+backend:
   # -- Number of backend api pods to start
   replicaCount: 1
 

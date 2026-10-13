@@ -15,7 +15,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: db-alembic-migration
-          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
           command: ["alembic"]
           args: ["upgrade", "head"]
 {{- with .Values.config.db }}

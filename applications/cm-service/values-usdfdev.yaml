@@ -64,11 +64,11 @@ config:
     verifyHost: "1"
     useNativeHttplib: "1"
 
-frontend:
+backend:
   prefix: "/api"
   docsPath: "/docs"
   image:
-    tag: "tickets-DM-56461"
+    tag: "tickets-DM-56682"
     pullPolicy: Always
 
 ingress:

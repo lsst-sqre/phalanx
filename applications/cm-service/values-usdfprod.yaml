@@ -64,7 +64,7 @@ config:
     verifyHost: "1"
     useNativeHttplib: "1"
 
-frontend:
+backend:
   prefix: "/api"
   docsPath: "/docs"
   image:

@@ -10,6 +10,17 @@ Campaign Management for Rubin Data Release Production
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| backend.affinity | object | `{}` | Affinity rules for the backend pods |
+| backend.docsPath | string | `"/docs"` | URL path prefix for apidocs |
+| backend.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the backend image |
+| backend.image.repository | string | `"ghcr.io/lsst-dm/cm-service"` | Image to use for backend containers |
+| backend.image.tag | string | The appVersion of the chart | Tag of backend image to use |
+| backend.nodeSelector | object | `{}` | Node selector rules for the backend pods |
+| backend.podAnnotations | object | `{}` | Annotations for the backend pods |
+| backend.prefix | string | `"/api"` | Path prefix on which the api is availble |
+| backend.replicaCount | int | `1` | Number of backend api pods to start |
+| backend.resources | object | See `values.yaml` | Resource limits and requests for the backend pods |
+| backend.tolerations | list | `[]` | Tolerations for the backend pods |
 | config.aws.credentialsFileSecretKey | string | `"aws-credentials-file"` | Key within the AWS secret with the contents of an AWS credentials file |
 | config.aws.defaultAccessKeyIdSecretKey | string | `"aws-access-key-id"` | Key within the AWS secret with the ACCESS_KEY_ID for the default profile |
 | config.aws.defaultS3EndpointUrl | string | `nil` | URL to use as an S3 (Object Store) Endpoint |
@@ -67,17 +78,6 @@ Campaign Management for Rubin Data Release Production
 | daemon.security.gid | int | `0` | Effective GID for daemon user |
 | daemon.security.uid | int | `0` | Effective UID for daemon user |
 | daemon.tolerations | list | `[]` | Tolerations for the daemon pods |
-| frontend.affinity | object | `{}` | Affinity rules for the backend pods |
-| frontend.docsPath | string | `"/docs"` | URL path prefix for apidocs |
-| frontend.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the backend image |
-| frontend.image.repository | string | `"ghcr.io/lsst-dm/cm-service"` | Image to use for backend containers |
-| frontend.image.tag | string | The appVersion of the chart | Tag of backend image to use |
-| frontend.nodeSelector | object | `{}` | Node selector rules for the backend pods |
-| frontend.podAnnotations | object | `{}` | Annotations for the backend pods |
-| frontend.prefix | string | `"/api"` | Path prefix on which the api is availble |
-| frontend.replicaCount | int | `1` | Number of backend api pods to start |
-| frontend.resources | object | See `values.yaml` | Resource limits and requests for the backend pods |
-| frontend.tolerations | list | `[]` | Tolerations for the backend pods |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
