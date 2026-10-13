@@ -144,6 +144,26 @@ config:
     # the edition as before.
     copyRetryDelaySeconds: 30.0
 
+    # -- Whether a GitHub `push` delivery puts the keeper-synced projects
+    # bound to the pushed repository on keeper-sync's fast polling path
+    # (lsst-sqre/docverse#803). On, the webhook stamps the pushed branch or
+    # tag onto each project's sync state and `keeper_sync_tier_main`
+    # checks that ref on LTD Keeper every tick for `pushWindowSeconds`,
+    # publishing a `keeper_sync_push_check` event per visit. Off, the
+    # webhook stamps nothing and keeper-sync polls on its ordinary cohort
+    # cadence. Needs the GitHub App installed on the pushed repository's
+    # organization, or the delivery never reaches Docverse.
+    pushHotPathEnabled: true
+
+    # -- How long, in seconds, a pushed ref stays on keeper-sync's fast
+    # polling path after its latest push. The push only hints that LTD
+    # Keeper is about to change, since the repository's CI builds and
+    # uploads the docs afterwards, so the window has to cover a CI run. A
+    # ref whose window closes without an LTD rebuild drops back to the
+    # project's ordinary cadence; a repeated push restarts its window.
+    # Only read while `pushHotPathEnabled` is on.
+    pushWindowSeconds: 3600
+
   memoryDiagnostics:
     # -- Enable the in-process memory sampler in every Docverse process
     # (API, worker, Keeper-sync worker, maintenance worker). When on, each

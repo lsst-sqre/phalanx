@@ -6,6 +6,7 @@ config:
     - "jonathansick"
   keeperSync:
     enabled: true
+    pushHotPathEnabled: true
   maintenance:
     enabled: true
     gitRefAuditEnabled: true
