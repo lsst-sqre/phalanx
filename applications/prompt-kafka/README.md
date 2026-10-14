@@ -20,6 +20,7 @@ Kafka environment for Prompt Processing
 | strimzi-registry-operator.clusterNamespace | string | `"prompt-kafka"` | Namespace where the Strimzi Kafka cluster is deployed |
 | strimzi-registry-operator.operatorNamespace | string | `"prompt-kafka"` | Namespace where the strimzi-registry-operator is deployed |
 | butler-writer.cluster.name | string | `"prompt-kafka"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Prompt Kafka chart. |
+| cmservice.cluster.name | string | `"prompt-kafka"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Prompt Kafka chart. |
 | kafdrop.affinity | object | `{}` | Affinity configuration |
 | kafdrop.cluster.name | string | `"prompt-kafka"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | kafdrop.cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |

@@ -1,0 +1,43 @@
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaUser
+metadata:
+  name: cmservice
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: prompt-kafka
+          key: cmservice-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operations:
+        - All
+{{- range $topic := .Values.topics }}
+      - resource:
+          type: topic
+          name: {{ $topic.name }}
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+        - All
+{{- end }}
+{{- range $tid := .Values.transactionalIds }}
+      - resource:
+          type: transactionalId
+          name: {{ $tid.name }}
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+        - All
+{{- end }}
