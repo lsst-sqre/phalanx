@@ -17,8 +17,8 @@ Nightly ephemerides cache generator for mpsky
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the image. Use `Always` where the tag is mutable, such as a branch name. |
-| image.repository | string | `"ghcr.io/mjuric/lsst-gen-ephemcache"` | Image to run, built by the `lsst-gen-ephemcache` repository |
-| image.tag | string | `"u-mjuric-ephemcache"` | Tag of the image to run |
+| image.repository | string | `"ghcr.io/lsst-dm/gen-ephemcache"` | Image to run, built by the `lsst-gen-ephemcache` repository |
+| image.tag | string | `"sha-e94a8746f4e7786e5de7841706fe440b2d1f87e7"` | Tag of the image to run |
 | logToFile | bool | `false` | Whether to also write each run's log to a file under the output directory. Logs always go to stdout; this is a durable second copy that outlives the pod. |
 | ncores | string | `""` | Value of `NCORES`, which bounds sorcha's parallelism. Must match `resources.limits.cpu`: the scripts otherwise default it to `nproc`, which reports the node's core count rather than the pod's limit. |
 | nodeSelector | object | `{}` | Node selector rules for the pod |
@@ -26,6 +26,7 @@ Nightly ephemerides cache generator for mpsky
 | outputDirMount.enabled | bool | `false` | Whether to mount the shared filesystem that output is published to. When disabled, output goes to an emptyDir and is discarded with the pod. |
 | outputDirMount.storageClassName | string | `"sdf-group-rubin"` | Storage class backing the claim |
 | outputDirMount.subPath | string | `"web_data/mpsky-data/test"` | Path within that filesystem to expose. Only this subtree is visible to the container, so widening it is a deliberate change. |
+| podAnnotations | object | `{}` | Annotations for the pod |
 | podSecurityContext | object | `{}` | Security context for the pod |
 | resources | object | `{"limits":{"cpu":"1","memory":"2Gi"},"requests":{"cpu":"1","memory":"2Gi"}}` | Resource requests and limits. Sized for `selftest`; a real `run` needs far more, and must be raised together with `ncores`. |
 | schedule | string | `"0 */3 * * *"` | Cron schedule for the cache build. Runs are idempotent and skip when the cache for the current observing night already exists, so this only has to be frequent enough to catch the night. |
