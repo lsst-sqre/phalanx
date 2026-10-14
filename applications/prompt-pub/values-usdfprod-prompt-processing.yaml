@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: "ghcr.io/lsst-dm/prompt_publication_service"
-  tag: "1.0.1"
+  tag: "2.0.0"
 
 publication:
   stateDB: "postgresql://prompt_pub@usdf-butler-prompt-publication-db-tx.sdf.slac.stanford.edu/promptpub"
