@@ -1,0 +1,5 @@
+apiVersion: v2
+name: cmservice
+version: 1.0.0
+description: Prompt Kafka configuration for CM Service
+type: application

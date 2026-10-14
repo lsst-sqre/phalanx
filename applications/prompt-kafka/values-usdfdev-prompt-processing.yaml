@@ -4,6 +4,8 @@ strimzi-kafka:
       enabled: true
     kafdrop:
       enabled: true
+    cmservice:
+      enabled: true
   kraft:
     enabled: true
   kafkaController:
@@ -57,3 +59,17 @@ kafdrop:
 
 prompt-publication:
   enabled: true
+
+cmservice:
+  enabled: true
+  topics:
+    - name: cmservice-notifications
+      partitions: 1
+      replicas: 3
+      retention: 1209600000  # milliseconds, = 2 weeks
+    - name: ap-daytime-notifications
+      partitions: 1
+      replicas: 3
+      retention: 1209600000  # milliseconds, = 2 weeks
+  transactionalIds:
+    - name: cmservice-output
