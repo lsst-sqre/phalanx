@@ -5,7 +5,7 @@ image:
   tag: "1.0.1"
 
 publication:
-  stateDB: "postgresql+asyncpg://prompt_pub@usdf-butler-prompt-publication-db-tx.sdf.slac.stanford.edu/promptpub"
+  stateDB: "postgresql://prompt_pub@usdf-butler-prompt-publication-db-tx.sdf.slac.stanford.edu/promptpub"
   repos:
     embargo: "s3://embargo@rubin-summit-users/butler.yaml"
     main: "/sdf/data/rubin/repo/main/butler.yaml"
