@@ -1,5 +1,5 @@
 name: "ruka"
-fqdn: "ruka-dev.lsst.codes"
+fqdn: "ruka.lsst.codes"
 title: "Rubin Ruka dev environment (CP)"
 titleLong: "Rubin Ruka dev data facility on Cerro Pachón"
 description: >-
