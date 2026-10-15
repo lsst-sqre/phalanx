@@ -13,7 +13,11 @@ Object classification tool for postage stamp images
 | affinity | object | `{}` | Affinity rules for the octavius deployment pod |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
+| config.mongo.authDb | string | `"admin"` | Database MongoDB authenticates users against |
+| config.mongo.database | string | `"OCTAVIUS"` | Application database name |
+| config.mongo.rootUsername | string | `"admin"` | MongoDB root username |
 | config.pathPrefix | string | `"/octavius"` | URL path prefix |
+| config.publicUsername | string | `"octavius@public.lsst"` | Username of the public demo account (must match the user in the seed database and the PUBLIC_USERNAME build arg of the UI image) |
 | config.slackAlerts | bool | `true` | Whether to send Slack alerts for unexpected failures |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.repertoireUrl | string | Set by Argo CD | Base URL for Repertoire discovery API |
@@ -28,7 +32,7 @@ Object classification tool for postage stamp images
 | imageDB.tag | string | The appVersion of the chart | Tag of image to use |
 | imageSetup.pullPolicy | string | `"IfNotPresent"` |  |
 | imageSetup.repository | string | `"ghcr.io/furciferi/mongo-setup"` | Image to use for the MongoDB setup job |
-| imageSetup.tag | string | `"lsst.v1.1.4"` |  |
+| imageSetup.tag | string | `"lsst.v2.0.0"` |  |
 | imageUI.pullPolicy | string | `"IfNotPresent"` | Pull policy for the octavius image |
 | imageUI.repository | string | `"ghcr.io/furciferi/octavius-ui"` | Image to use in the octavius deployment |
 | imageUI.tag | string | The appVersion of the chart | Tag of image to use |

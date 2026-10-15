@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "octavius-seed-merge"
+  labels:
+    {{- include "octavius.labels" . | nindent 4 }}
+data:
+  # Keep in sync with docker/mongo-setup/seed-merge.js in the octavius repo
+  seed-merge.js: |
+    {{- .Files.Get "files/seed-merge.js" | nindent 4 }}

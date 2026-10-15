@@ -11,13 +11,13 @@ spec:
   policyTypes:
     - Ingress
   ingress:
-    # Allow only frontend to call API
+    # Allow only the frontend (nginx /octavius/api proxy) to call the API
     - from:
         - podSelector:
             matchLabels:
               {{- $labels := include "octavius.selectorLabels" . | fromYaml }}
-              {{- $_ := set $labels "component" "ui" }}
-              {{- toYaml $labels | nindent 12 }}
+              {{- $_ := set $labels "component" "frontend" }}
+              {{- toYaml $labels | nindent 14 }}
       ports:
         - protocol: "TCP"
           port: 8443

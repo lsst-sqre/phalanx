@@ -10,8 +10,13 @@ metadata:
 spec:
   backoffLimit: 0
   template:
+    metadata:
+      labels:
+        # Matched by the database NetworkPolicy
+        component: "mongo-setup"
     spec:
       restartPolicy: Never
+      automountServiceAccountToken: false
       containers:
         - name: mongo-setup
           image: "{{ .Values.imageSetup.repository }}:{{ .Values.imageSetup.tag | default .Chart.AppVersion }}"
@@ -20,30 +25,31 @@ spec:
             - /bin/bash
             - -c
             - |
-              echo "Waiting for MongoDB pods to be ready..."
+              set -e
+              AUTH=(-u "$MONGO_INITDB_ROOT_USERNAME" -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase "$AUTH_DB")
 
+              echo "Waiting for MongoDB pods to be ready..."
               for host in octavius-db-0.octavius-db octavius-db-1.octavius-db octavius-db-2.octavius-db; do
-                until mongosh --host "$host" -u "$MONGO_INITDB_ROOT_USERNAME" -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase "$AUTH_DB" --eval "db.runCommand({ ping: 1 })" >/dev/null 2>&1; do
+                until mongosh --host "$host" "${AUTH[@]}" --eval "db.runCommand({ ping: 1 })" >/dev/null 2>&1; do
                   echo "Waiting for $host..."
                   sleep 2
                 done
               done
 
               echo "Checking replica set status..."
-              RS_OK=$(mongosh --quiet --host octavius-db-0.octavius-db -u "$MONGO_INITDB_ROOT_USERNAME" -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase "$AUTH_DB" --eval "rs.status().ok" 2>/dev/null || echo 0)
+              RS_OK=$(mongosh --quiet --host octavius-db-0.octavius-db "${AUTH[@]}" --eval "rs.status().ok" 2>/dev/null || echo 0)
 
               if [ "$RS_OK" != "1" ]; then
                 echo "Initializing replica set..."
-                mongosh --host octavius-db-0.octavius-db -u "$MONGO_INITDB_ROOT_USERNAME" -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase "$AUTH_DB" <<EOF
-              rs.initiate({
-                _id: "rs0",
-                members: [
-                  { _id: 0, host: "octavius-db-0.octavius-db:27017" },
-                  { _id: 1, host: "octavius-db-1.octavius-db:27017" },
-                  { _id: 2, host: "octavius-db-2.octavius-db:27017" }
-                ]
-              })
-              EOF
+                mongosh --host octavius-db-0.octavius-db "${AUTH[@]}" --eval '
+                  rs.initiate({
+                    _id: "rs0",
+                    members: [
+                      { _id: 0, host: "octavius-db-0.octavius-db:27017" },
+                      { _id: 1, host: "octavius-db-1.octavius-db:27017" },
+                      { _id: 2, host: "octavius-db-2.octavius-db:27017" }
+                    ]
+                  })'
               else
                 echo "Replica set already initialized."
               fi
@@ -51,26 +57,28 @@ spec:
               echo "Waiting for PRIMARY..."
               PRIMARY=""
               while [ -z "$PRIMARY" ]; do
-                PRIMARY=$(mongosh --quiet --host octavius-db-0.octavius-db -u "$MONGO_INITDB_ROOT_USERNAME" -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase "$AUTH_DB" --eval "db.hello().primary" | tr -d '"')
-                [ -z "$PRIMARY" ] && sleep 2
+                PRIMARY=$(mongosh --quiet --host octavius-db-0.octavius-db "${AUTH[@]}" --eval "db.hello().primary" 2>/dev/null | tr -d '"' || true)
+                [ -z "$PRIMARY" ] && sleep 2 || true
               done
+              echo "PRIMARY is $PRIMARY"
 
-              echo "PRIMARY is $PRIMARY — starting restore..."
+              echo "Fetching seed dump from Azure blob"
+              wget -q "$AZURE_DB_ZIP" -O /tmp/dump.zip
+              unzip -q /tmp/dump.zip -d /tmp/dump
 
-              echo "Fetching init state from azure blob"
-
-              wget $AZURE_DB_ZIP -O /tmp/dump.zip
-              unzip /tmp/dump.zip -d /tmp/dump
-
-              mongorestore \
-                --host "$PRIMARY" \
-                -u "$MONGO_INITDB_ROOT_USERNAME" \
-                -p "$MONGO_INITDB_ROOT_PASSWORD" \
-                --authenticationDatabase "$AUTH_DB" \
+              # Restore into a staging DB, then merge only what is missing
+              # into the live DB, so existing deployments pick up seed changes
+              # (new admin pages, public user, new fields) without losing data.
+              echo "Restoring seed into staging database..."
+              mongorestore --host "$PRIMARY" "${AUTH[@]}" --drop \
+                --nsInclude "${MONGO_DATABASE}.*" \
+                --nsFrom "${MONGO_DATABASE}.*" --nsTo "${MONGO_DATABASE}_seed.*" \
                 /tmp/dump/octavius-db
 
-              echo "Restore complete."
+              echo "Merging missing seed data..."
+              mongosh --quiet --host "$PRIMARY" "${AUTH[@]}" /scripts/seed-merge.js
 
+              echo "Seed merge complete."
           env:
             - name: AZURE_DB_ZIP
               valueFrom:
@@ -78,17 +86,23 @@ spec:
                   name: octavius-secrets
                   key: azure-db-url
             - name: MONGO_INITDB_ROOT_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: octavius-secrets
-                  key: mongo-root-username
+              value: {{ .Values.config.mongo.rootUsername | quote }}
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: octavius-secrets
                   key: mongo-root-password
             - name: AUTH_DB
-              valueFrom:
-                secretKeyRef:
-                  name: octavius-secrets
-                  key: mongo-auth-db
+              value: {{ .Values.config.mongo.authDb | quote }}
+            # seed-merge.js merges OCTAVIUS_seed into OCTAVIUS; keep these
+            # names in step if config.mongo.database is changed
+            - name: MONGO_DATABASE
+              value: {{ .Values.config.mongo.database | quote }}
+          volumeMounts:
+            - name: seed-merge
+              mountPath: /scripts
+              readOnly: true
+      volumes:
+        - name: seed-merge
+          configMap:
+            name: "octavius-seed-merge"

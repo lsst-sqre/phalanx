@@ -25,36 +25,9 @@ spec:
       {{- end }}
       automountServiceAccountToken: false
       containers:
+        # nginx serving the static build; the API proxy target and public
+        # account are baked into the image, so no runtime env is needed
         - name: {{ .Chart.Name }}-ui
-          env:
-            {{- if .Values.config.slackAlerts }}
-            - name: "OCTAVIUS_SLACK_WEBHOOK"
-              valueFrom:
-                secretKeyRef:
-                  name: "octavius-secrets"
-                  key: "slack-webhook"
-            {{- end }}
-            # Uvicorn keepalive timeout, in seconds. This should be longer
-            # than any keepalive timeouts on any downstream proxies. The
-            # keepalive timeout for ingress-nginx connections is 60s.
-            - name: "UVICORN_TIMEOUT_KEEP_ALIVE"
-              value: "61"
-            - name: "API_HOST"
-              value: "octavius-api"
-            - name: "REACT_APP_API_URL"
-              value: "https://octavius-api:8443"
-            - name: "API_URL"
-              value: "https://octavius-api:8443"
-            - name: "AZURE_STORAGE_ACCOUNT_NAME"
-              valueFrom:
-                secretKeyRef:
-                  name: octavius-secrets
-                  key: "az-storage-ac-name"
-            - name: "AZURE_STORAGE_ACCOUNT_KEY"
-              valueFrom:
-                secretKeyRef:
-                  name: octavius-secrets
-                  key: "az-storage-ac-key"
           image: "{{ .Values.imageUI.repository }}:{{ .Values.imageUI.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imageUI.pullPolicy }}
           lifecycle:
@@ -69,10 +42,10 @@ spec:
             httpGet:
               path: "/octavius/"
               port: "http"
-              initialDelaySeconds: 30
-              periodSeconds: 5
-              timeoutSeconds: 2
-              failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           securityContext:

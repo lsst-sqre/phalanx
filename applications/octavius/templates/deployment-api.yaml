@@ -41,11 +41,28 @@ spec:
               value: "61"
             - name: "API_PORT"
               value: "8443"
-            - name: "MONGO_URL"
+            - name: "MONGO_USER"
+              value: {{ .Values.config.mongo.rootUsername | quote }}
+            - name: "MONGO_PASSWORD"
               valueFrom:
                 secretKeyRef:
                   name: octavius-secrets
-                  key: "api-mongo-url"
+                  key: "mongo-root-password"
+            # Built from the vars above; they must be declared first
+            - name: "MONGO_URL"
+              value: "mongodb://$(MONGO_USER):$(MONGO_PASSWORD)@octavius-db-0.octavius-db:27017,octavius-db-1.octavius-db:27017,octavius-db-2.octavius-db:27017/{{ .Values.config.mongo.database }}?authSource={{ .Values.config.mongo.authDb }}&replicaSet=rs0"
+            - name: "PUBLIC_USERNAME"
+              value: {{ .Values.config.publicUsername | quote }}
+            - name: "AZURE_STORAGE_ACCOUNT_NAME"
+              valueFrom:
+                secretKeyRef:
+                  name: octavius-secrets
+                  key: "az-storage-ac-name"
+            - name: "AZURE_STORAGE_ACCOUNT_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: octavius-secrets
+                  key: "az-storage-ac-key"
           image: "{{ .Values.imageAPI.repository }}:{{ .Values.imageAPI.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imageAPI.pullPolicy }}
           lifecycle:

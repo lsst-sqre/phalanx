@@ -6,13 +6,14 @@ spec:
   podSelector:
     matchLabels:
       {{- $labels := include "octavius.selectorLabels" . | fromYaml }}
-      {{- $_ := set $labels "component" "ui" }}
+      {{- $_ := set $labels "component" "frontend" }}
       {{- toYaml $labels | nindent 6 }}
   policyTypes:
     - "Ingress"
   ingress:
     # Allow inbound access from pods (in any namespace) labeled
-    # gafaelfawr.lsst.io/ingress: true.
+    # gafaelfawr.lsst.io/ingress: true. Policies match the pod's port
+    # (nginx on 80), not the service port (8080).
     - from:
         - namespaceSelector: {}
           podSelector:
@@ -20,14 +21,4 @@ spec:
               gafaelfawr.lsst.io/ingress: "true"
       ports:
         - protocol: "TCP"
-          port: 8080
-    - from:
-      - podSelector:
-          matchLabels:
-            {{- $labels := include "octavius.selectorLabels" . | fromYaml }}
-            {{- $_ := set $labels "component" "api" }}
-            {{- toYaml $labels | nindent 12 }}
-      ports:
-        - protocol: TCP
-          port: 8080
-
+          port: 80

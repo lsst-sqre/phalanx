@@ -6,18 +6,28 @@ spec:
   podSelector:
     matchLabels:
       {{- $labels := include "octavius.selectorLabels" . | fromYaml }}
-      {{- $_ := set $labels "component" "db" }}
+      {{- $_ := set $labels "component" "database" }}
       {{- toYaml $labels | nindent 6 }}
   policyTypes:
     - Ingress
   ingress:
-    # Allow only API to connect to MongoDB
     - from:
+        # The API
         - podSelector:
             matchLabels:
               {{- $labels := include "octavius.selectorLabels" . | fromYaml }}
               {{- $_ := set $labels "component" "api" }}
-              {{- toYaml $labels | nindent 12 }}
+              {{- toYaml $labels | nindent 14 }}
+        # Other replica set members
+        - podSelector:
+            matchLabels:
+              {{- $labels := include "octavius.selectorLabels" . | fromYaml }}
+              {{- $_ := set $labels "component" "database" }}
+              {{- toYaml $labels | nindent 14 }}
+        # The mongo-setup job (replica set init and seed merge)
+        - podSelector:
+            matchLabels:
+              component: "mongo-setup"
       ports:
         - protocol: "TCP"
           port: 27017

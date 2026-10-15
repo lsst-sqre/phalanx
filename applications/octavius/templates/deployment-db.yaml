@@ -63,25 +63,16 @@ spec:
             - name: UVICORN_TIMEOUT_KEEP_ALIVE
               value: "61"
             - name: MONGO_INITDB_ROOT_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: octavius-secrets
-                  key: mongo-root-username
+              value: {{ .Values.config.mongo.rootUsername | quote }}
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: octavius-secrets
                   key: mongo-root-password
             - name: MONGO_INITDB_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: octavius-secrets
-                  key: mongo-init-db
+              value: {{ .Values.config.mongo.database | quote }}
             - name: AUTH_DB
-              valueFrom:
-                secretKeyRef:
-                  name: octavius-secrets
-                  key: mongo-auth-db
+              value: {{ .Values.config.mongo.authDb | quote }}
 
           lifecycle:
             preStop:
