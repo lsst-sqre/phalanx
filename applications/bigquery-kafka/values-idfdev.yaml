@@ -1,7 +1,11 @@
+image:
+  tag: "tickets-DM-56593"
+  pullPolicy: "Always"
 config:
   logLevel: "DEBUG"
   bigqueryProject: "ppdb-dev-5c07"
   bigqueryLocation: "US"
+  bigqueryUploadProject: "science-platform-dev-7696"
   gcpServiceAccount: "bigquery-kafka@science-platform-dev-7696.iam.gserviceaccount.com"
   metrics:
     enabled: true

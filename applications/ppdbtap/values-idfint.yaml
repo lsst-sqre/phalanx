@@ -14,10 +14,16 @@ cadc-tap:
       enabled: true
       rules: "ivoa.ObsCore:access_url"
 
+    gcsUploadBucket: "rubin-tap-uploads-int-us"
+    gcsUploadWorkloadIdentity: true
+
     bigquery:
       project: "ppdb-int-6c62"
       dataset: "ppdb_public"
       schema: "ppdb"
+
+      upload:
+        project: "science-platform-int-dc5d"
 
       tableMappings:
         - "ppdb.DiaObject:`ppdb-int-6c62.ppdb_public.DiaObject`"
