@@ -18,6 +18,7 @@ applications:
 
   apdb-backups-gcp: true
   butler-writer-service: true
+  ephemcache: true
   gafaelfawr: true
   keda: true
   mpsky: true

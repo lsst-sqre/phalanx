@@ -16,6 +16,10 @@ spec:
       activeDeadlineSeconds: {{ .Values.activeDeadlineSeconds }}
       template:
         metadata:
+          annotations:
+            {{- with .Values.podAnnotations }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           labels:
             {{- include "ephemcache.selectorLabels" . | nindent 12 }}
         spec:
@@ -62,7 +66,7 @@ spec:
                     secretKeyRef:
                       name: "ephemcache"
                       key: {{ . | quote }}
-                      optional: true
+                      optional: false
                 {{- end }}
                 {{- with .Values.database.passwordSecretKey }}
                 - name: "PGPASSWORD"
@@ -70,7 +74,7 @@ spec:
                     secretKeyRef:
                       name: "ephemcache"
                       key: {{ . | quote }}
-                      optional: true
+                      optional: false
                 {{- end }}
               resources:
                 {{- toYaml .Values.resources | nindent 16 }}
