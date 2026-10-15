@@ -112,6 +112,22 @@ config:
     #      repo_ref: "main"
     #      max_executions: 1
     #    restart: true
+    - name: "weka-test"
+      count: 2
+      user_spec:
+        username_prefix: "bot-mobu-weka"
+        uid_start: 100500
+        gid_start: 100500
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      business:
+        type: "NotebookRunnerCounting"
+        options:
+          repo_url: "https://github.com/lsst-sqre/weka-s3-benchmark.git"
+          repo_ref: "main"
     - name: "tap"
       count: 1
       users:
