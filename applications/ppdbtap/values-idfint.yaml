@@ -14,10 +14,27 @@ cadc-tap:
       enabled: true
       rules: "ivoa.ObsCore:access_url"
 
+    gcsUploadBucket: "rubin-tap-uploads-int-us"
+    gcsUploadWorkloadIdentity: true
+
     bigquery:
+      image:
+        tag: "tickets-DM-56592"
+        pullPolicy: "Always"
       project: "ppdb-int-6c62"
       dataset: "ppdb_public"
       schema: "ppdb"
+
+      upload:
+        project: "science-platform-int-dc5d"
+
+      geoPointTables:
+        - "ppdb.DiaObject"
+        - "ppdb.DiaSource"
+        - "ppdb.DiaForcedSource"
+        - "dp2_prompt.DiaObject"
+        - "dp2_prompt.DiaSource"
+        - "dp2_prompt.ForcedSourceOnDiaObject"
 
       tableMappings:
         - "ppdb.DiaObject:`ppdb-int-6c62.ppdb_public.DiaObject`"

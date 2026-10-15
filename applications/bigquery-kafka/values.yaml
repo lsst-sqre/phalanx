@@ -37,6 +37,17 @@ config:
   # @default -- None, must be set
   bigqueryProject: null
 
+  # -- BigQuery dataset that uploaded tables are loaded into
+  bigqueryUploadDataset: "tap_uploads"
+
+  # -- GCP project ID containing the dataset for uploaded tables.
+  # @default -- None, table uploads are rejected
+  bigqueryUploadProject: null
+
+  # -- How long to wait for BigQuery to load an uploaded table in Safir
+  # `parse_timedelta` format
+  bigqueryUploadTimeout: "5m"
+
   # -- Kafka consumer group ID
   consumerGroupId: "bigquery"
 

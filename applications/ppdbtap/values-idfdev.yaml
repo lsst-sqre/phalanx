@@ -14,10 +14,19 @@ cadc-tap:
       enabled: true
       rules: "ivoa.ObsCore:access_url"
 
+    gcsUploadBucket: "rubin-tap-uploads-dev-us"
+    gcsUploadWorkloadIdentity: true
+
     bigquery:
+      image:
+        tag: "tickets-DM-56592"
+        pullPolicy: "Always"
       project: "ppdb-dev-5c07"
       dataset: "ppdb_public"
       schema: "ppdb"
+
+      upload:
+        project: "science-platform-dev-7696"
 
       tableMappings:
         - "ppdb.DiaObject:`ppdb-dev-5c07.ppdb_public.DiaObject`"
