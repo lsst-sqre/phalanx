@@ -11,10 +11,10 @@ argo-cd:
       ui.bannercontent: "ruka-dev"
     rbac:
       policy.csv: |
-        g, k8s-yagan-admins, role:admin
+        g, k8s-manke-admins, role:admin
         g, sqre, role:admin
 
-        g, rsp-summit, role:readonly
+        g, rsp-bts, role:readonly
 
   server:
     ingress:
