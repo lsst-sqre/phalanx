@@ -9,3 +9,7 @@ config:
     namespace: "rapid-analysis"
     lokiAddr: "https://loki-query.ls.lsst.org"
     consdbUrl: "http://consdb-pq.consdb.svc.cluster.local:8080/consdb/query"
+
+image:
+  # Pinned per site, so each one moves to a new release on its own.
+  tag: "v0.2.0"
