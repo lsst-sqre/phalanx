@@ -12,7 +12,7 @@ database:
 # changing it silently breaks writes.
 podSecurityContext:
   runAsNonRoot: true
-  runAsUser: 18728
+  runAsUser: 48516
   runAsGroup: 4085
   supplementalGroupsPolicy: Strict
 
