@@ -208,6 +208,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
+    # pull-requests: write lets the Docverse upload step post (and update
+    # in place) a comment on ticket-branch pull requests linking to the
+    # edition preview. Without it the action skips the comment with a
+    # warning.
+    permissions:
+      contents: read
+      pull-requests: write
+
     needs: changes
     if: >-
       (needs.changes.outputs.docs == 'true')
@@ -233,13 +241,20 @@ jobs:
       # - on pushes to main if *any* documentation content might have changed
       # - on workflow dispatches if any documentation content might have changed
       # - on pushes to tickets/ branches if docs/ directory content changed
-      - name: Upload to LSST the Docs
-        uses: lsst-sqre/ltd-upload@v1
+      #
+      # Fork and dependabot pull requests are excluded by the branch-name
+      # checks since they cannot read the DOCVERSE_TOKEN secret.
+      - name: Upload to Docverse
+        # Pinned to the pre-release head of lsst-sqre/docverse-upload; switch
+        # to a version tag once the action has an official release.
+        uses: lsst-sqre/docverse-upload@05c6698b00482673da2d1bcd93b367ebe74a98d0
         with:
-          project: "phalanx"
-          dir: "docs/_build/html"
-          username: ${{ secrets.LTD_USERNAME }}
-          password: ${{ secrets.LTD_PASSWORD }}
+          org: rubin
+          project: phalanx
+          dir: docs/_build/html
+          token: ${{ secrets.DOCVERSE_TOKEN }}
+          github-token: ${{ github.token }}
+          comment-on-pr: "true"
         if: >-
           (github.event_name == 'push' && github.ref_name == 'main')
           || (github.event_name == 'workflow_dispatch')
