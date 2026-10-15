@@ -126,7 +126,7 @@ config:
       business:
         type: "NotebookRunnerCounting"
         options:
-          cell_execution_timeout: "3600s"
+          cell_execution_timeout: "1h"
           repo_url: "https://github.com/lsst-sqre/weka-s3-benchmark.git"
           repo_ref: "main"
         restart: true
