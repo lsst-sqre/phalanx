@@ -74,6 +74,8 @@ spec:
               value: {{ .Values.config.livePollS | quote }}
             - name: "RA_LOG_EXPLORER_LIVE_LAG_S"
               value: {{ .Values.config.liveLagS | quote }}
+            - name: "RA_LOG_EXPLORER_LOG_LEVEL"
+              value: {{ .Values.config.logLevel | quote }}
             - name: "LOKI_USERNAME"
               value: {{ .Values.config.lokiUsername | quote }}
             # The application takes no configuration from the browser at

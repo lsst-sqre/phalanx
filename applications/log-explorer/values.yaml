@@ -75,6 +75,13 @@ config:
   # verification pass reports pods needing refetches.
   liveLagS: 60
 
+  # -- Level of the application's own log: `DEBUG`, `INFO`, `WARNING` or
+  # `ERROR`. INFO is a few lines per fetch and one per live poll, plus a
+  # startup check of what Loki shows the configured credentials. DEBUG adds
+  # every `logcli` invocation and the HTTP access log, for when a fetch
+  # comes back wrong and the INFO lines don't say why.
+  logLevel: "INFO"
+
   # -- The one site this deployment serves. A *site* pairs a Loki cluster
   # (where the logs live) with the ConsDB endpoint that owns shutter-close
   # truth for that cluster's data; the two must match or a dataId resolves

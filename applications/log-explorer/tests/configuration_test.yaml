@@ -57,6 +57,11 @@ tests:
       - contains:
           path: "spec.template.spec.containers[0].env"
           content:
+            name: "RA_LOG_EXPLORER_LOG_LEVEL"
+            value: "INFO"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
             name: "LOKI_USERNAME"
             value: "omega"
 
