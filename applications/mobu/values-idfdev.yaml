@@ -125,6 +125,7 @@ config:
         options:
           repo_url: "https://github.com/lsst-sqre/weka-s3-benchmark.git"
           repo_ref: "main"
+        restart: true
     - name: "tap"
       count: 1
       users:
