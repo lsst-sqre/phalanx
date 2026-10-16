@@ -2,10 +2,6 @@
 
 Slack bot to post daily reminders of the evening tailgate.
 
-## Source Code
-
-* <https://github.com/lsst-sqre/so-evening-tailgate>
-
 ## Values
 
 | Key | Type | Default | Description |

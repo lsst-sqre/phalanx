@@ -2,10 +2,6 @@
 
 OpenSearch Cluster
 
-## Source Code
-
-* <https://github.com/lsst-sqre/opensearch-cluster>
-
 ## Values
 
 | Key | Type | Default | Description |
