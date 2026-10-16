@@ -42,6 +42,13 @@ pq:
     repository: "ghcr.io/lsst-dm/consdb-pq"
     # -- Overrides the image tag whose default is the chart appVersion.
     tag: ""
+  # -- Require a Gafaelfawr token from one of `allowedWriters` to use the
+  # insert endpoints. Enable only once those writers are sending their tokens.
+  writeAuthEnabled: false
+  # -- Gafaelfawr usernames allowed to use the insert endpoints when
+  # `writeAuthEnabled` is true
+  allowedWriters:
+    - "bot-rapid-analysis"
 
 kafka:
   # -- Kafka bootstrap server

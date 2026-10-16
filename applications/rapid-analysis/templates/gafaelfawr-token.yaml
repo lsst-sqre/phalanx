@@ -1,0 +1,12 @@
+{{- if .Values.gafaelfawrToken.enabled }}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: rapid-analysis-gafaelfawr-token
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "rapid-analysis.name" . }}
+spec:
+  service: "bot-rapid-analysis"
+  scopes: []
+{{- end }}
