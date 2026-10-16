@@ -21,6 +21,7 @@ To learn more about operating a Phalanx environment, see the :doc:`/admin/index`
    minikube/index
    roundtable-dev/index
    roundtable-prod/index
+   ruka/index
    summit/index
    tacc-spherex/index
    tacc-spherex-dev/index
