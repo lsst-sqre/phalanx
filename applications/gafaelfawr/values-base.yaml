@@ -32,6 +32,11 @@ config:
   oidcServer:
     enabled: true
 
+  # Add some additional scopes.
+  knownScopes:
+    "write:consdb": >-
+      Write access to the ConsDB API
+
   # Allow access by GitHub team.
   groupMapping:
     "admin:jupyterlab":
@@ -64,6 +69,8 @@ config:
     "read:sasquatch":
       - "rsp-bts"
     "read:tap":
+      - "rsp-bts"
+    "write:consdb":
       - "rsp-bts"
     "write:sasquatch":
       - "k8s-manke-admins"
