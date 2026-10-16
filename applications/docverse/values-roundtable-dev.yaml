@@ -1,3 +1,14 @@
+image:
+  # Temporary: lsst-sqre/docverse#824 (DM-56619 treat an empty GitHub
+  # repository's 409 as a clean skip in git_ref_audit, keeper-sync and the
+  # resolve worker). The branch is forked from main after docverse#820
+  # merged, so the image also carries the tokenless-project skip and the
+  # push hot path. Deployed here to watch the overnight git_ref_audit and
+  # keeper-sync crons over the full project set. Drop this override and go
+  # back to the chart appVersion once #824 is merged and released.
+  tag: "tickets-DM-56619-empty-repos"
+  pullPolicy: "Always"
+
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://docverse@localhost/docverse"
