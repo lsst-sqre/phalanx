@@ -19,6 +19,8 @@ rubintv:
       value: &s3E "https://sdfembs3.sdf.slac.stanford.edu"
     - name: RAPID_ANALYSIS_LOCATION
       value: "USDF"
+    - name: RUBINTV_INSTANCE_ENV
+      value: "dev"
     - name: DDV_DEPLOY_BRANCH
       value: "main"
     - name: DDV_BASE_HREF
