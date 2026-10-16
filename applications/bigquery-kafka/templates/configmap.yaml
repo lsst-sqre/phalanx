@@ -9,6 +9,7 @@ data:
   METRICS_ENABLED: {{ .Values.config.metrics.enabled | quote }}
   METRICS_EVENTS_TOPIC_PREFIX: {{ .Values.config.metrics.events.topicPrefix | quote }}
   QSERV_KAFKA_ARQ_FAST_MAX_JOBS: {{ .Values.config.arqFastMaxJobs | quote }}
+  QSERV_KAFKA_ARQ_FAST_MAX_RESULT_CELLS: {{ int64 .Values.config.arqFastMaxResultCells | quote }}
   QSERV_KAFKA_ARQ_SLOW_MAX_JOBS: {{ .Values.config.arqSlowMaxJobs | quote }}
   QSERV_KAFKA_BACKEND: "BigQuery"
   QSERV_KAFKA_BACKEND_API_TIMEOUT: {{ .Values.config.backendApiTimeout | quote }}
