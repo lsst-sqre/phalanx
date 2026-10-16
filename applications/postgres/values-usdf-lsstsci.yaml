@@ -1,0 +1,9 @@
+nublado3_db:
+  user: "nublado3"
+  db: "nublado3"
+gafaelfawr_db:
+  user: "gafaelfawr"
+  db: "gafaelfawr"
+
+postgresVolumeSize: "10Gi"
+postgresStorageClass: "wekafs--sdf-k8s01"
