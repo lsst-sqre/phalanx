@@ -32,6 +32,11 @@ config:
   oidcServer:
     enabled: true
 
+  # Add some additional scopes.
+  knownScopes:
+    "write:consdb": >-
+      Write access to the ConsDB API
+
   groupMapping:
     "admin:jupyterlab":
       - "k8s-yagan-admins"
@@ -62,6 +67,8 @@ config:
     "read:sasquatch":
       - "rsp-summit"
     "read:tap":
+      - "rsp-summit"
+    "write:consdb":
       - "rsp-summit"
     "write:sasquatch":
       - "k8s-yagan-admins"

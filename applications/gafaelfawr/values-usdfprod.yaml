@@ -47,6 +47,11 @@ config:
     gidAttr: gidNumber
     nameAttr: gecos
 
+  # Add some additional scopes.
+  knownScopes:
+    "write:consdb": >-
+      Write access to the ConsDB API
+
   groupMapping:
     "admin:oidc":
       - "rubinmgr"

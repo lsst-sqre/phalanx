@@ -14,6 +14,11 @@ config:
   oidcServer:
     enabled: true
 
+  # Add some additional scopes.
+  knownScopes:
+    "write:consdb": >-
+      Write access to the ConsDB API
+
   # Allow access by GitHub team.
   groupMapping:
     "admin:jupyterlab":
@@ -115,6 +120,16 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "friends"
+      - github:
+          organization: "lsst-ts"
+          team: "tts-access"
+      - github:
+          organization: "rubin-summit"
+          team: "rsp-access"
+    "write:consdb":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
       - github:
           organization: "lsst-ts"
           team: "tts-access"
