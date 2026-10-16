@@ -2,10 +2,6 @@
 
 SQL and TAP database of Rubin catalog products, with its own ClickHouse server
 
-## Source Code
-
-* <https://github.com/mjuric/mppdb>
-
 ## Values
 
 | Key | Type | Default | Description |
