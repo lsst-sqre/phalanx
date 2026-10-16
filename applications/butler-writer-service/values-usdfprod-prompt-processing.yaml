@@ -2,7 +2,7 @@ image:
   pullPolicy: IfNotPresent
   tag: 3.2.0
 
-outputRepo: s3://embargo@rubin-summit-users/
+outputRepo: s3://embargo@rubin-summit-users/butler_future.yaml
 
 kafka:
   clusterAddress: prompt-kafka-kafka-bootstrap.prompt-kafka:9092

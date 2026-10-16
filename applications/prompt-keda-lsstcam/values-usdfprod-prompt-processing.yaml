@@ -1,7 +1,7 @@
 prompt-keda:
   image:
     pullPolicy: IfNotPresent
-    tag: 15.3.0
+    tag: 16.0.0
 
   alerts:
     username: prompt-alert
@@ -62,9 +62,9 @@ prompt-keda:
         # Don't preprocess anything unknown
         - {pipelines: []}
     preloadPadding: 50.1
-    centralRepo: s3://rubin-summit-users
-    readRepo: s3://rubin-summit-users/butler-readonly.yaml
-    localRepoConfig: s3://rubin-summit-users/config/prompt_processing.yaml
+    centralRepo: s3://rubin-summit-users/butler_future.yaml
+    readRepo: s3://rubin-summit-users/butler_readonly_future.yaml
+    localRepoConfig: s3://rubin-summit-users/config/prompt_processing_future.yaml
     exportTypes: |-
       - ".*_(config|metadata|log)"
       - "packages"
