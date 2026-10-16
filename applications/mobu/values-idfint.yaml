@@ -113,7 +113,7 @@ config:
     #      max_executions: 1
     #    restart: true
     - name: "weka-test"
-      count: 20
+      count: 50
       user_spec:
         username_prefix: "bot-mobu-weka"
         uid_start: 100500
