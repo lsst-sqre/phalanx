@@ -1,0 +1,40 @@
+api:
+  enabled: false
+
+image:
+  pullPolicy: "Always"
+  tag: tickets-DM-55990
+
+config:
+  databaseUrl: "postgresql://obsforge@obsforge-db-dev.slac.stanford.edu:5432/obsdb"
+  updateSchema: false
+  kafkaBrokerAddress: "sasquatch-usdf-dev-kafka-bootstrap.lsst.cloud:9094"
+  kafkaSecurityProtocol: "sasl_ssl"
+  kafkaUsername: "obsforge"
+  schemaRegistryUrl: "https://usdf-rsp-dev.slac.stanford.edu/schema-registry-remote"
+  logLevel: "DEBUG"
+  logProfile: "development"
+
+worker:
+  enabled: false
+
+streamWorkers:
+  enabled: true
+  pipelines:
+    scheduler-observatory-state:
+      affinity: {}
+      configPath: "/app/config/streams/scheduler-observatory-state.yaml"
+      nodeSelector: {}
+      podAnnotations: {}
+      replicaCount: 1
+      resources:
+        limits:
+          cpu: "1"
+          memory: "1Gi"
+        requests:
+          cpu: "100m"
+          memory: "256Mi"
+      tolerations: []
+
+redis:
+  enabled: false
