@@ -11,6 +11,7 @@ IVOA DataLink image matadata and location service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the datalinker deployment pod |
+| config.downloadPathPrefix | string | `"/download"` | URL path prefix for the download service |
 | config.linksLifetime | string | `"1h"` | Lifetime of the `{links}` reply. Should be set to match the lifetime of links returned by the Butler server |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.metrics.application | string | `"datalinker"` | Name under which to log metrics. Generally there is no reason to change this. |

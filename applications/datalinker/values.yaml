@@ -20,6 +20,9 @@ ingress:
   annotations: {}
 
 config:
+  # -- URL path prefix for the download service
+  downloadPathPrefix: "/download"
+
   # -- Lifetime of the `{links}` reply. Should be set to match the lifetime of
   # links returned by the Butler server
   linksLifetime: "1h"
