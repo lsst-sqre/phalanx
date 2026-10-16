@@ -7,7 +7,7 @@ rubintv:
   frontend:
     debug: true
     image:
-      repository: ghcr.io/lsst-ts/rubintv
+      repository: ghcr.io/lsst-ts/rubintv-v3
       tag: deploy
       pullPolicy: Always
     env:
@@ -15,12 +15,12 @@ rubintv:
       value: &s3E "https://s3.cp.lsst.org"
     - name: RAPID_ANALYSIS_LOCATION
       value: "SUMMIT"
+    - name: RUBINTV_PATH_PREFIX
+      value: "/rubintv-dev"
+    - name: RUBINTV_INSTANCE_ENV
+      value: "dev"
     - name: DDV_DEPLOY_BRANCH
-      value: &dbE "deploy-summit"
-    - name: DDV_BASE_HREF
-      value: "/rubintv-dev/ddv/"
-    - name: DDV_CLIENT_WS_ADDRESS
-      value: "rubintv-dev/ws/ddv"
+      value: "main"
     - name: RA_REDIS_HOST
       value: "redis-service.rapid-analysis.svc.cluster.local"
     envSecrets:
@@ -52,7 +52,7 @@ rubintv:
     uid: 73006
     gid: 73006
     scriptsLocation: /repos/rubintv_analysis_service/scripts
-    script: rubintv_worker.py -a rubintv-dev -p 8080 -l summit
+    script: rubintv_worker.py -a rubintv-dev -p 8080 -l summit --path /rubintv-dev/internal/ddv/worker
     env:
     - name: RA_PULL_DIRECTORIES
       value: "rubintv_analysis_service"
@@ -65,7 +65,7 @@ rubintv:
     - name: PGUSER
       value: "oods"
     - name: DEPLOY_BRANCH
-      value: *dbE
+      value: "deploy-summit"
     nfsMountpoint:
     - name: project-shared
       containerPath: /project
