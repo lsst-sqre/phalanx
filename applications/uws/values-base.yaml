@@ -19,6 +19,15 @@ uws-api-server:
     claimName: uws-server-pvc
     mountPath: "/uws"
     subPath: "uws"
+  jobResources:
+    lsstcam:
+      resources:
+        limits:
+          cpu: 32
+          memory: 128Gi
+        requests:
+          cpu: 8
+          memory: 32Gi
   volumes:
   - name: project
     server: nfs-project.ls.lsst.org
