@@ -27,6 +27,21 @@ spec:
           value: {{- toYaml .Values.instrument.exportTypes | nindent 12 }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
+        {{- if .Values.butler_writer.enabled }}
+        - name: USE_KAFKA_BUTLER_WRITER
+          value: "1"
+        - name: BUTLER_WRITER_KAFKA_CLUSTER
+          value: {{ .Values.butler_writer.kafka_cluster }}
+        - name: BUTLER_WRITER_KAFKA_USERNAME
+          value: {{ .Values.butler_writer.kafka_username }}
+        - name: BUTLER_WRITER_KAFKA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "prompt-keda.fullname" . }}-secret
+              key: butler-writer-password
+        - name: BUTLER_WRITER_KAFKA_TOPIC
+          value: {{ .Values.butler_writer.kafka_topic }}
+        {{- end}}
         - name: CENTRAL_REPO
           value: {{ .Values.instrument.centralRepo }}
         - name: LSST_RESOURCES_NUM_WORKERS
