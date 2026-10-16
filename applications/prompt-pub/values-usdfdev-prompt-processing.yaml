@@ -7,9 +7,9 @@ image:
 publication:
   stateDB: "postgresql://promptpub@usdf-butler-promptpub-dev-db-tx.sdf.slac.stanford.edu:5432/promptpub"
   repos:
-    embargo: "s3://prompt-processing-dev@rubin-pp-dev-users/central_repo_2/butler.yaml"
-    main: "/sdf/data/rubin/repo/dev/main/butler.yaml"
-    promptPrep: "/sdf/data/rubin/repo/dev/prompt_prep/butler.yaml"
+    embargo: "s3://prompt-processing-dev@rubin-pp-dev-users/central_repo_2/butler_future.yaml"
+    main: "/sdf/data/rubin/repo/dev/main/butler_future.yaml"
+    promptPrep: "/sdf/data/rubin/repo/dev/prompt_prep/butler_future.yaml"
   embargoBatchFileDir: "s3://prompt-processing-dev@rubin-pp-dev-users/central_repo_2/publication/prompt_processing/"
 
 middleware:

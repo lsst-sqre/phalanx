@@ -20,9 +20,9 @@ prompt-keda:
       preprocessing: |-
         - survey: SURVEY
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml']
-    centralRepo: s3://rubin-pp-dev-users/central_repo_2
+    centralRepo: s3://rubin-pp-dev-users/central_repo_2/butler_future.yaml
     repoWait: 5
-    localRepoConfig: s3://rubin-pp-dev-users/central_repo_2/config/compression.yaml
+    localRepoConfig: s3://rubin-pp-dev-users/central_repo_2/config/compression_future.yaml
     exportTypes: |-
       - ".*_(config|metadata|log)"
       - "packages"
