@@ -16,6 +16,9 @@ integration-testing:
   enabled: true
   envEfd: tucson_teststand_efd
   s3Bucket: rubinobs-lfa-tuc
+  efdCredentials:
+    containerPath: /home/saluser/.lsst
+    secretFilename: .efdauth.json
 
 rumba:
   enabled: true
