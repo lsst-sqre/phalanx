@@ -130,6 +130,20 @@ config:
     # Example: ["ppdb.mpc_orbits:`ppdb-dev-5c07.ppdb_public.mpc_orbits`"]
     tableMappings: []
 
+    # -- TAP names of the tables that have a `geo_point` column. Spatial
+    # queries on these tables use `geo_point` so that BigQuery can use the
+    # clustering on it. Other tables build the point from their own columns.
+    # @default -- The DiaObject table in `config.bigquery.schema`
+    geoPointTables: []
+
+    upload:
+      # -- GCP project holding the dataset for uploaded tables.
+      # @default -- None, table uploads are rejected
+      project: ""
+
+      # -- BigQuery dataset that uploaded tables are loaded into
+      dataset: "tap_uploads"
+
     image:
       # -- TAP image to use
       repository: "ghcr.io/lsst-sqre/lsst-tap-service"
@@ -154,6 +168,16 @@ config:
 
   # -- GCS bucket type (GCS or S3)
   gcsBucketType: "GCS"
+
+  # -- Name of the bucket in which to store uploaded tables. Must be the same
+  # type as `gcsBucket`.
+  # @default -- Same as `gcsBucket`
+  gcsUploadBucket: ""
+
+  # -- Access the upload bucket as the pod's Workload Identity
+  # (`cloudsql.serviceAccount`) instead of the `google_creds.json`.
+  # Requires `cloudsql.enabled` and a separate `gcsUploadBucket`.
+  gcsUploadWorkloadIdentity: false
 
   # -- Data Database name
   database: "dp2"
