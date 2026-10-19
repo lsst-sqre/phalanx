@@ -4,8 +4,8 @@ image:
   # bulk/get began answering about half of all calls in ~5.4 s, just past
   # the shared HTTP client's 5 s default, so edition_reconcile failed 4 of
   # 5 ticks for the rubin org with httpx.ReadTimeout (docverse#825, Sentry
-  # DOCVERSE-3K). The branch is forked from main after docverse#820 merged;
-  # it does not carry the unmerged empty-repository skip from docverse#824.
+  # DOCVERSE-3K). The branch is rebased onto main after docverse#824 merged,
+  # so the image also carries the empty-repository skip and the push hot path.
   # Drop this override and go back to the chart appVersion once #826 is
   # merged and released.
   tag: "tickets-DM-56095-kv-timeout"
