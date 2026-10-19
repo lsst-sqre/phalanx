@@ -24,11 +24,18 @@ config:
   # human-friendly)
   logProfile: "production"
 
+  # -- Site used to select the EFD instance (`test` uses mock telemetry)
+  lsstSite: "test"
+
   # -- URL path prefix
   pathPrefix: "/weathernbeats"
 
   # -- Whether to send Slack alerts for unexpected failures
   slackAlerts: false
+
+# -- EFD credentials file configuration; when enabled, set `containerPath` and
+# `secretFilename`
+efdCredentials: {}
 
 ingress:
   # -- Additional annotations for the ingress rule

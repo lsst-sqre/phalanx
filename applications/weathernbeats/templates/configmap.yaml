@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "weathernbeats.labels" . | nindent 4 }}
 data:
+  LSST_SITE: {{ .Values.config.lsstSite | quote }}
   WEATHERNBEATS_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
   WEATHERNBEATS_LOG_PROFILE: {{ .Values.config.logProfile | quote }}
   WEATHERNBEATS_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
