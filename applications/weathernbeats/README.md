@@ -13,8 +13,10 @@ Service that provides temperature based on prediction model.
 | affinity | object | `{}` | Affinity rules for the weathernbeats deployment pod |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
+| config.lsstSite | string | `"test"` | Site used to select the EFD instance (`test` uses mock telemetry) |
 | config.pathPrefix | string | `"/weathernbeats"` | URL path prefix |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
+| efdCredentials | object | `{}` | EFD credentials file configuration; when enabled, set `containerPath` and `secretFilename` |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.repertoireUrl | string | Set by Argo CD | Base URL for Repertoire discovery API |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

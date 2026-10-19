@@ -27,6 +27,10 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+            {{- if .Values.efdCredentials }}
+            - name: "EFDAUTH"
+              value: {{ printf "%s/%s" .Values.efdCredentials.containerPath .Values.efdCredentials.secretFilename | quote }}
+            {{- end }}
             {{- if .Values.config.slackAlerts }}
             - name: "WEATHERNBEATS_SLACK_WEBHOOK"
               valueFrom:
@@ -80,6 +84,41 @@ spec:
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"
+            {{- if .Values.efdCredentials }}
+            - name: "efd-credentials"
+              mountPath: {{ .Values.efdCredentials.containerPath | quote }}
+              readOnly: true
+            {{- end }}
+      {{- if .Values.efdCredentials }}
+      initContainers:
+        # EFD authentication requires a credential file owned by the app user.
+        - name: "fix-efd-credentials-permissions"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - "python"
+            - "-c"
+            - |
+              import os
+              import shutil
+              import sys
+              shutil.copyfile(sys.argv[1], sys.argv[2])
+              os.chmod(sys.argv[2], 0o600)
+            - {{ printf "/secrets-raw/%s" .Values.efdCredentials.secretFilename | quote }}
+            - {{ printf "/secrets/%s" .Values.efdCredentials.secretFilename | quote }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "efd-credentials-raw"
+              mountPath: "/secrets-raw"
+              readOnly: true
+            - name: "efd-credentials"
+              mountPath: "/secrets"
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -94,6 +133,18 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
       volumes:
+        {{- if .Values.efdCredentials }}
+        - name: "efd-credentials-raw"
+          secret:
+            secretName: "weathernbeats"
+            defaultMode: 0440
+            items:
+              - key: {{ .Values.efdCredentials.secretFilename | quote }}
+                path: {{ .Values.efdCredentials.secretFilename | quote }}
+        - name: "efd-credentials"
+          emptyDir:
+            medium: "Memory"
+        {{- end }}
         - name: "tmp"
           emptyDir:
             medium: "Memory"
