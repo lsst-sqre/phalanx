@@ -1,0 +1,33 @@
+suite: Stream worker ConfigMap settings
+templates:
+  - configmap.yaml
+tests:
+  - it: Omits stream settings when streaming is disabled
+    asserts:
+      - isNull:
+          path: data.OBSFORGE_KAFKA_BROKER_ADDRESS
+      - isNull:
+          path: data.OBSFORGE_SCHEMA_REGISTRY_URL
+
+  - it: Configures external stream services when streaming is enabled
+    set:
+      config:
+        kafkaBrokerAddress: "kafka.example.com:9094"
+        kafkaSecurityProtocol: "sasl_ssl"
+        kafkaUsername: "obsforge"
+        schemaRegistryUrl: "https://example.com/schema-registry"
+      streamWorkers:
+        enabled: true
+    asserts:
+      - equal:
+          path: data.OBSFORGE_KAFKA_BROKER_ADDRESS
+          value: "kafka.example.com:9094"
+      - equal:
+          path: data.OBSFORGE_KAFKA_SECURITY_PROTOCOL
+          value: "sasl_ssl"
+      - equal:
+          path: data.OBSFORGE_KAFKA_USERNAME
+          value: "obsforge"
+      - equal:
+          path: data.OBSFORGE_SCHEMA_REGISTRY_URL
+          value: "https://example.com/schema-registry"
