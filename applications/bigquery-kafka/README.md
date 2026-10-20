@@ -19,6 +19,7 @@ BigQuery Kafka bridge
 | config.bigqueryLocation | string | `"US"` | BigQuery processing location |
 | config.bigqueryMaxBytesBilled | int | 1 GB | Maximum bytes that can be billed for a single BigQuery query. Queries exceeding this will fail. Set to null for no limit. |
 | config.bigqueryProject | string | None, must be set | GCP project ID containing the BigQuery datasets to query |
+| config.bigqueryReadMaxStreams | int | `1` | Maximum number of parallel BigQuery Storage streams used to download a query result. |
 | config.consumerGroupId | string | `"bigquery"` | Kafka consumer group ID |
 | config.gcpServiceAccount | string | None, must be set | GCP service account email for Workload Identity. Format: {name}@{project-id}.iam.gserviceaccount.com |
 | config.jobCancelTopic | string | `"lsst.ppdbtap.job-delete"` | Kafka topic for query cancellation requests |

@@ -37,6 +37,10 @@ config:
   # @default -- None, must be set
   bigqueryProject: null
 
+  # -- Maximum number of parallel BigQuery Storage streams used to download
+  # a query result.
+  bigqueryReadMaxStreams: 1
+
   # -- Kafka consumer group ID
   consumerGroupId: "bigquery"
 

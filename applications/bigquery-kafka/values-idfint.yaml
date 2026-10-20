@@ -1,3 +1,6 @@
+image:
+  pullPolicy: "Always"
+  tag: "tickets-DM-56753"
 config:
   logLevel: "DEBUG"
   bigqueryProject: "ppdb-int-6c62"
@@ -10,3 +13,8 @@ config:
   slack:
     enabled: false
   bigqueryMaxBytesBilled: 1000000000000
+  arqSlowMaxJobs: 1
+slowWorker:
+  autoscaling:
+    maxReplicas: 50
+
