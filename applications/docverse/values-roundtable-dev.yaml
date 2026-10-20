@@ -1,16 +1,3 @@
-image:
-  # Temporary: lsst-sqre/docverse#826 (DM-56095 give Cloudflare KV requests
-  # their own 30 s per-request timeout). On 2026-10-19 Cloudflare's KV
-  # bulk/get began answering about half of all calls in ~5.4 s, just past
-  # the shared HTTP client's 5 s default, so edition_reconcile failed 4 of
-  # 5 ticks for the rubin org with httpx.ReadTimeout (docverse#825, Sentry
-  # DOCVERSE-3K). The branch is rebased onto main after docverse#824 merged,
-  # so the image also carries the empty-repository skip and the push hot path.
-  # Drop this override and go back to the chart appVersion once #826 is
-  # merged and released.
-  tag: "tickets-DM-56095-kv-timeout"
-  pullPolicy: "Always"
-
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://docverse@localhost/docverse"
