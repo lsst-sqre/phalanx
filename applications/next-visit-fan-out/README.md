@@ -21,11 +21,18 @@ Poll next visit events from Kafka, duplicate them, and send them to all applicat
 | kafka.saslMechamism | string | `"SCRAM-SHA-512"` |  |
 | kafka.securityProtocol | string | `"SASL_SSL"` |  |
 | kafka.summitSasquatchAuth | bool | `false` | Enable secret for authenticating to the Summit.  Only should be enabled for prod. |
+| keda.redisConnectTimeout | int | `5` | Redis connect to socket timeout |
 | keda.redisHealthCheckInterval | int | `3` | Redis health check interval in seconds. |
 | keda.redisHost | string | See `values.yaml`. | Redis cluster host. |
+| keda.redisMaxConcurrency | int | `450` | Maximum concurrent xadd operations (semaphore throttle) |
+| keda.redisMaxConnections | int | `500` | Redis connection pool size. Must be >= REDIS_MAX_CONCURRENCY with headroom so concurrent sends never starve for a connection. |
 | keda.redisRetryCount | int | `3` | Redis max retry count |
 | keda.redisRetryDelayCap | int | `5` | Maximum delay time for Redis retries in seconds. |
 | keda.redisRetryInitialDelay | int | `1` | Initial delay for first Redis retry in seconds. |
+| keda.redisSendAttempts | int | `6` | Maximum application-level send attempts per message |
+| keda.redisSendBaseDelay | int | `1` | Initial backoff delay (seconds) between application-level retries to Redis |
+| keda.redisSendMaxDelay | int | `8` | Maximum backoff delay (seconds) between application-level retries to Redis |
+| keda.redisSocketTimeout | int | `5` | Redis socket timeout |
 | keda.redisStreams | object | See `values.yaml`. | A mapping of instrument to that instrument's Keda Scaled Job. |
 | knative.maxMessages | string | None, must be set. | The maximum number of messages that can be forwarded to all Knative instances combined. |
 | nameOverride | string | `""` |  |
