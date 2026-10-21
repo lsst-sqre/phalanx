@@ -1,6 +1,7 @@
 config:
   logLevel: "DEBUG"
   bigqueryProject: "ppdb-int-6c62"
+  bigqueryJobProject: "science-platform-int-dc5d"
   bigqueryLocation: "US"
   gcpServiceAccount: "bigquery-kafka@science-platform-int-dc5d.iam.gserviceaccount.com"
   metrics:

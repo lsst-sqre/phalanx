@@ -16,6 +16,7 @@ BigQuery Kafka bridge
 | config.backendPollInterval | string | `"1s"` | Interval at which the backend is polled for query status in Safir `parse_timedelta` format |
 | config.backendRetryCount | int | `3` | How many times to retry after a backend API network failure |
 | config.backendRetryDelay | string | `"1s"` | How long to wait between retries after a backend API network failure in Safir `parse_timedelta` format |
+| config.bigqueryJobProject | string | Same as `bigqueryProject` | GCP project ID in which BigQuery jobs run |
 | config.bigqueryLocation | string | `"US"` | BigQuery processing location |
 | config.bigqueryMaxBytesBilled | int | 1 GB | Maximum bytes that can be billed for a single BigQuery query. Queries exceeding this will fail. Set to null for no limit. |
 | config.bigqueryProject | string | None, must be set | GCP project ID containing the BigQuery datasets to query |
