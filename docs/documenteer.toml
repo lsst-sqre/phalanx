@@ -77,8 +77,6 @@ ignore = [
     "^https://tacc-spherex.lsst.cloud",
     "^https://tacc-spherex-dev.lsst.cloud",
     "^https://tucson-teststand.lsst.codes",
-    "^https://usdf-cm-dev.slac.stanford.edu",
-    "^https://usdf-cm.slac.stanford.edu",
     "^https://usdfdev-prompt-processing.slac.stanford.edu",
     "^https://usdfprod-prompt-processing.slac.stanford.edu",
     "^https://usdf-rapid-analysis.slac.stanford.edu",
