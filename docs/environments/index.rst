@@ -28,8 +28,6 @@ To learn more about operating a Phalanx environment, see the :doc:`/admin/index`
    tucson-teststand/index
    ukidacdev/index
    ukidacprod/index
-   usdf-cm/index
-   usdf-cm-dev/index
    usdfdev/index
    usdfint/index
    usdfprod/index
