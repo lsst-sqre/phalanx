@@ -14,7 +14,7 @@ Rubin Science Platform Portal Aspect
 | affinity | object | `{}` | Affinity rules for the Portal pod |
 | cleanup.affinity | object | `{}` | Affinity rules for the cleanup cronjob(s). |
 | cleanup.enabled | bool | `false` | Whether to enable automated cleanup of shared workarea. |
-| cleanup.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Firefly cleanup image |
+| cleanup.image.pullPolicy | string | `"Always"` | Pull policy for the Firefly cleanup image |
 | cleanup.image.repository | string | `"ghcr.io/lsst-sqre/firefly-cleanup"` | Firefly cleanup image to use |
 | cleanup.image.tag | string | The appVersion of the chart | Tag of Portal image to use |
 | cleanup.mountpoint | string | `"/mnt/cleanup"` | Mountpoint |
