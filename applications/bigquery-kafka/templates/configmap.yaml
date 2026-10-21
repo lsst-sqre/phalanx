@@ -15,6 +15,9 @@ data:
   QSERV_KAFKA_BACKEND_POLL_INTERVAL: {{ .Values.config.backendPollInterval | quote }}
   QSERV_KAFKA_BACKEND_RETRY_COUNT: {{ .Values.config.backendRetryCount | quote }}
   QSERV_KAFKA_BACKEND_RETRY_DELAY: {{ .Values.config.backendRetryDelay | quote }}
+  {{- if .Values.config.bigqueryJobProject }}
+  QSERV_KAFKA_BIGQUERY_JOB_PROJECT: {{ .Values.config.bigqueryJobProject | quote }}
+  {{- end }}
   QSERV_KAFKA_BIGQUERY_LOCATION: {{ .Values.config.bigqueryLocation | quote }}
   {{- if .Values.config.bigqueryMaxBytesBilled }}
   QSERV_KAFKA_BIGQUERY_MAX_BYTES_BILLED: {{ int64 .Values.config.bigqueryMaxBytesBilled | quote }}
