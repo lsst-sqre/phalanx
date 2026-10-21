@@ -29,3 +29,9 @@ redis:
 resources:
   limits:
     memory: "2Gi"
+
+cleanup:
+  image:
+    pullPolicy: "Always"
+  enabled: true
+  schedule: "* * * * *"
