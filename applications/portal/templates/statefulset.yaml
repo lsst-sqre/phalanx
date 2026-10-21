@@ -41,6 +41,8 @@ spec:
                 secretKeyRef:
                   name: {{ include "portal.fullname" . }}-secret
                   key: "ADMIN_PASSWORD"
+            - name: "CLEANUP_SHARED_MAX"
+              value: {{ .Values.config.cleanupSharedMax | default "" | quote }}
             - name: "PROPS_redis__host"
               value: {{ include "portal.fullname" . }}-redis
             - name: "PROPS_sso__req__auth__hosts"
