@@ -23,7 +23,7 @@ spec:
           {{- end }}
           containers:
           - name: "{{ .Chart.Name }}-cleanup"
-            command: [ "/cleanup" ]
+            command: [ "/app/cleanup" ]
             env:
               - name: "DEBUG"
                 value: "{{ .Values.config.debug }}"
