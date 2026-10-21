@@ -32,7 +32,7 @@ spec:
               - name: "CLEANUP_THRESHOLD"
                 value: "{{ .Values.cleanup.threshold }}"
             image: "{{ .Values.cleanup.image.repository }}:{{ .Values.cleanup.image.tag }}"
-            imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+            imagePullPolicy: "{{ .Values.cleanup.image.pullPolicy }}"
             {{- with .Values.cleanup.resources }}
             resources:
               {{- toYaml . | nindent 14 }}
