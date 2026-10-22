@@ -128,7 +128,7 @@ config:
         options:
           cell_execution_timeout: "1h"
           repo_url: "https://github.com/lsst-sqre/weka-s3-benchmark.git"
-          repo_ref: "main"
+          repo_ref: "mobu"
         restart: true
     - name: "tap"
       count: 1
