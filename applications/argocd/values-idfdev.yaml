@@ -53,6 +53,7 @@ argo-cd:
         g, dirving@lsst.cloud, role:developer
         g, fritzm@lsst.cloud, role:developer
         g, gpdf@lsst.cloud, role:developer
+        g, hchiang@lsst.cloud, role:developer
         g, loi@lsst.cloud, role:developer
         g, roby@lsst.cloud, role:developer
         g, salnikov@lsst.cloud, role:developer
