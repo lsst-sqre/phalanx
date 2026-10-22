@@ -77,6 +77,20 @@ spec:
               value: {{ .Values.keda.redisRetryCount | toString | quote }}
             - name: REDIS_HEALTH_CHECK_INTERVAL
               value: {{ .Values.keda.redisHealthCheckInterval | toString | quote }}
+            - name: REDIS_CONNECT_TIMEOUT
+              value: {{ .Values.keda.redisConnectTimeout | toString | quote }}
+            - name: REDIS_SOCKET_TIMEOUT
+              value: {{ .Values.keda.redisSocketTimeout | toString | quote }}
+            - name: REDIS_MAX_CONNECTIONS
+              value: {{ .Values.keda.redisMaxConnections | toString | quote }}
+            - name: REDIS_MAX_CONCURRENCY
+              value: {{ .Values.keda.redisMaxConcurrency | toString | quote }}
+            - name: REDIS_SEND_ATTEMPTS
+              value: {{ .Values.keda.redisSendAttempts | toString | quote }}
+            - name: REDIS_SEND_BASE_DELAY
+              value: {{ .Values.keda.redisSendBaseDelay | toString | quote }}
+            - name: REDIS_SEND_MAX_DELAY
+              value: {{ .Values.keda.redisSendMaxDelay | toString | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

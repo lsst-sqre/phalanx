@@ -20,6 +20,21 @@ keda:
   redisRetryCount: 3
   # -- Redis health check interval in seconds.
   redisHealthCheckInterval: 3
+  # -- Redis connect to socket timeout
+  redisConnectTimeout: 5
+  # -- Redis socket timeout
+  redisSocketTimeout: 5
+  # -- Redis connection pool size. Must be >= REDIS_MAX_CONCURRENCY with headroom so concurrent sends never starve for a connection.
+  redisMaxConnections: 500
+  # -- Maximum concurrent xadd operations (semaphore throttle)
+  redisMaxConcurrency: 450
+  # -- Maximum application-level send attempts per message
+  redisSendAttempts: 6
+  # -- Initial backoff delay (seconds) between application-level retries to Redis
+  redisSendBaseDelay: 1
+  # -- Maximum backoff delay (seconds) between application-level retries to Redis
+  redisSendMaxDelay: 8
+
   # -- A mapping of instrument to that instrument's Keda Scaled Job.
   # @default -- See `values.yaml`.
   redisStreams:
