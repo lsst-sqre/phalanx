@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-so/rubintv_production
-  tag: tickets-DM-52067
+  tag: tickets-DM-56797
   pullPolicy: Always
 location: BTS
 env:
