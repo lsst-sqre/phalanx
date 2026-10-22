@@ -34,8 +34,9 @@ BigQuery Kafka bridge
 | config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
-| config.parquetBatchCells | int | `250000` | Target number of cells (rows times columns) to accumulate before converting to an Arrow record batch when encoding Parquet. The per-result batch size in rows is this value divided by the column count. |
-| config.parquetRowGroupCells | int | `5000000` | Target number of cells (rows times columns) per Parquet row group. The per-result row group size in rows is this value divided by the column count, and never smaller than the batch size. |
+| config.parquetBatchBytes | int | 32MiB | Approximate size in bytes of a VOParquet batch before it is converted to Arrow |
+| config.parquetBatchCells | int | `250000` | Maximum number of cells (rows times columns) in a VOParquet batch |
+| config.parquetRowGroupBytes | int | 64MiB | Target size in bytes of a VOParquet row group |
 | config.redisMaxConnections | int | `55` | Size of the Redis connection pool. This should be set to `jobRunBatchSize` plus some extra connections for the monitor, cancel jobs. |
 | config.resultTimeout | int | 3600 (1 hour) | How long to wait for result processing (retrieval and upload) before timing out, in seconds. This doubles as the timeout forcibly terminating result worker pods. |
 | config.sentry.enabled | bool | `false` | Set to true to enable the Sentry integration. |

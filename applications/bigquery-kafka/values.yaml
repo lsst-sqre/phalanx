@@ -97,15 +97,17 @@ config:
       # for experimentation during development.
       suffix: ""
 
-  # -- Target number of cells (rows times columns) to accumulate before
-  # converting to an Arrow record batch when encoding Parquet. The per-result
-  # batch size in rows is this value divided by the column count.
+  # -- Approximate size in bytes of a VOParquet batch before it is converted
+  # to Arrow
+  # @default -- 32MiB
+  parquetBatchBytes: 33554432
+
+  # -- Maximum number of cells (rows times columns) in a VOParquet batch
   parquetBatchCells: 250000
 
-  # -- Target number of cells (rows times columns) per Parquet row group. The
-  # per-result row group size in rows is this value divided by the column
-  # count, and never smaller than the batch size.
-  parquetRowGroupCells: 5000000
+  # -- Target size in bytes of a VOParquet row group
+  # @default -- 64MiB
+  parquetRowGroupBytes: 67108864
 
   # -- Size of the Redis connection pool. This should be set to
   # `jobRunBatchSize` plus some extra connections for the monitor, cancel
@@ -279,10 +281,10 @@ slowWorker:
   resources:
     limits:
       cpu: "1"
-      memory: "1Gi"
+      memory: "2Gi"
     requests:
       cpu: "1"
-      memory: "160Mi"
+      memory: "512Mi"
 
   # -- Tolerations for the bigquery-kafka slow worker pods
   # @default -- Tolerate GKE arm64 taint
