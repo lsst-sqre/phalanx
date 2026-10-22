@@ -61,6 +61,10 @@ config:
   # -- How long results should be retained before being deleted
   cleanupInterval: "36h"
 
+  # -- If set, how big (SI units) the shared workarea is allowed to get
+  #
+  cleanupSharedMax: null
+
   # -- URL for master list of Rubin-featured HiPS datasets
   # @default -- `/api/hips/list` in the local Science Platform
   hipsListUrl: ""
