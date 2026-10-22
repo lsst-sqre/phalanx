@@ -1,3 +1,10 @@
+image:
+  # Branch image from lsst-sqre/docverse#838 (DM-56771: revive
+  # lifecycle-deleted editions) for dev validation. Remove once the
+  # change ships in a release and appVersion is bumped.
+  tag: "tickets-DM-56771-lifecycle-revive"
+  pullPolicy: "Always"
+
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://docverse@localhost/docverse"
