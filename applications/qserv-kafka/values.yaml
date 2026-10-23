@@ -81,15 +81,21 @@ config:
       # for experimentation during development.
       suffix: ""
 
+  # -- Approximate size in bytes of the row data to accumulate before
+  # converting it to an Arrow record batch when encoding VOParquet. Python
+  # object overhead is not included. Batches are also limited by
+  # `parquetBatchCells`.
+  parquetBatchBytes: 33554432
+
   # -- Target number of cells (rows times columns) to accumulate before
   # converting to an Arrow record batch when encoding Parquet. The per-result
   # batch size in rows is this value divided by the column count.
   parquetBatchCells: 250000
 
-  # -- Target number of cells (rows times columns) per Parquet row group. The
-  # per-result row group size in rows is this value divided by the column
-  # count, and never smaller than the batch size.
-  parquetRowGroupCells: 5000000
+  # -- Target size in bytes of the uncompressed Arrow data in each Parquet row
+  # group. A whole row group is held in memory while it is written, so peak
+  # encoder memory is a few times this value.
+  parquetRowGroupBytes: 134217728
 
   sentry:
     # -- Set to true to enable the Sentry integration.

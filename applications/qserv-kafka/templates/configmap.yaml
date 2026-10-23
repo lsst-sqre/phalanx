@@ -25,8 +25,9 @@ data:
   {{- if .Values.config.maxResultBytes }}
   QSERV_KAFKA_MAX_RESULT_BYTES: {{ int64 .Values.config.maxResultBytes | quote }}
   {{- end }}
+  QSERV_KAFKA_PARQUET_BATCH_BYTES: {{ int64 .Values.config.parquetBatchBytes | quote }}
   QSERV_KAFKA_PARQUET_BATCH_CELLS: {{ int64 .Values.config.parquetBatchCells | quote }}
-  QSERV_KAFKA_PARQUET_ROW_GROUP_CELLS: {{ int64 .Values.config.parquetRowGroupCells | quote }}
+  QSERV_KAFKA_PARQUET_ROW_GROUP_BYTES: {{ int64 .Values.config.parquetRowGroupBytes | quote }}
   QSERV_KAFKA_QSERV_DATABASE_CONNECT_TIMEOUT: {{ .Values.config.qservDatabaseConnectTimeout | quote }}
   QSERV_KAFKA_QSERV_DATABASE_READ_TIMEOUT: {{ .Values.config.qservDatabaseReadTimeout | quote }}
   QSERV_KAFKA_QSERV_DATABASE_OVERFLOW: {{ .Values.config.qservDatabaseOverflow | quote }}
