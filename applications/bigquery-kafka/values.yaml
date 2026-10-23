@@ -7,6 +7,11 @@ config:
   # can process simultaneously
   arqFastMaxJobs: 50
 
+  # -- Queries that complete immediately with more result cells (rows times
+  # columns) than this are processed by the slow workers instead of the fast.
+  # @default -- 1000000
+  arqFastMaxResultCells: 1000000
+
   # -- Maximum number of jobs each slow worker (used for results processing)
   # can process simultaneously
   arqSlowMaxJobs: 2
@@ -25,6 +30,10 @@ config:
   # Safir `parse_timedelta` format
   backendRetryDelay: "1s"
 
+  # -- GCP project ID in which BigQuery jobs run
+  # @default -- Same as `bigqueryProject`
+  bigqueryJobProject: null
+
   # -- BigQuery processing location
   bigqueryLocation: "US"
 
@@ -36,6 +45,21 @@ config:
   # -- GCP project ID containing the BigQuery datasets to query
   # @default -- None, must be set
   bigqueryProject: null
+
+  # -- Maximum number of parallel BigQuery Storage API streams used to
+  # download a query result
+  bigqueryReadMaxStreams: 1
+
+  # -- BigQuery dataset that holds temporary table uploads.
+  bigqueryUploadDataset: "tap_uploads"
+
+  # -- BigQuery project to which temporary tables should be uploaded.
+  # @default -- None, uploads disabled
+  bigqueryUploadProject: null
+
+  # -- BigQuery temporary table upload timeout in Safir `parse_timedelta`
+  # format.
+  bigqueryUploadTimeout: "5m"
 
   # -- Kafka consumer group ID
   consumerGroupId: "bigquery"
@@ -96,6 +120,12 @@ config:
       # -- Suffix to add to all registered subjects. This is sometimes useful
       # for experimentation during development.
       suffix: ""
+
+  # -- Approximate size in bytes of the row data to accumulate before
+  # converting it to an Arrow record batch when encoding VOParquet. Python
+  # object overhead is not included. Batches are also limited by
+  # `parquetBatchCells`.
+  parquetBatchBytes: 33554432
 
   # -- Target number of cells (rows times columns) to accumulate before
   # converting to an Arrow record batch when encoding Parquet. The per-result

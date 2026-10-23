@@ -11,14 +11,20 @@ BigQuery Kafka bridge
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | config.arqFastMaxJobs | int | `50` | Maximum number of jobs each fast worker (used for I/O-intensive tasks) can process simultaneously |
+| config.arqFastMaxResultCells | int | 1000000 | Queries that complete immediately with more result cells (rows times columns) than this are processed by the slow workers instead of the fast. |
 | config.arqSlowMaxJobs | int | `2` | Maximum number of jobs each slow worker (used for results processing) can process simultaneously |
 | config.backendApiTimeout | string | `"30s"` | Timeout for backend API calls in `parse_timedelta` format. |
 | config.backendPollInterval | string | `"1s"` | Interval at which the backend is polled for query status in Safir `parse_timedelta` format |
 | config.backendRetryCount | int | `3` | How many times to retry after a backend API network failure |
 | config.backendRetryDelay | string | `"1s"` | How long to wait between retries after a backend API network failure in Safir `parse_timedelta` format |
+| config.bigqueryJobProject | string | Same as `bigqueryProject` | GCP project ID in which BigQuery jobs run |
 | config.bigqueryLocation | string | `"US"` | BigQuery processing location |
 | config.bigqueryMaxBytesBilled | int | 1 GB | Maximum bytes that can be billed for a single BigQuery query. Queries exceeding this will fail. Set to null for no limit. |
 | config.bigqueryProject | string | None, must be set | GCP project ID containing the BigQuery datasets to query |
+| config.bigqueryReadMaxStreams | int | `1` | Maximum number of parallel BigQuery Storage API streams used to download a query result |
+| config.bigqueryUploadDataset | string | `"tap_uploads"` | BigQuery dataset that holds temporary table uploads. |
+| config.bigqueryUploadProject | string | None, uploads disabled | BigQuery project to which temporary tables should be uploaded. |
+| config.bigqueryUploadTimeout | string | `"5m"` | BigQuery temporary table upload timeout in Safir `parse_timedelta` format. |
 | config.consumerGroupId | string | `"bigquery"` | Kafka consumer group ID |
 | config.gcpServiceAccount | string | None, must be set | GCP service account email for Workload Identity. Format: {name}@{project-id}.iam.gserviceaccount.com |
 | config.jobCancelTopic | string | `"lsst.ppdbtap.job-delete"` | Kafka topic for query cancellation requests |
@@ -34,6 +40,7 @@ BigQuery Kafka bridge
 | config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
+| config.parquetBatchBytes | int | `33554432` | Approximate size in bytes of the row data to accumulate before converting it to an Arrow record batch when encoding VOParquet. Python object overhead is not included. Batches are also limited by `parquetBatchCells`. |
 | config.parquetBatchCells | int | `250000` | Target number of cells (rows times columns) to accumulate before converting to an Arrow record batch when encoding Parquet. The per-result batch size in rows is this value divided by the column count. |
 | config.parquetRowGroupCells | int | `5000000` | Target number of cells (rows times columns) per Parquet row group. The per-result row group size in rows is this value divided by the column count, and never smaller than the batch size. |
 | config.redisMaxConnections | int | `55` | Size of the Redis connection pool. This should be set to `jobRunBatchSize` plus some extra connections for the monitor, cancel jobs. |
