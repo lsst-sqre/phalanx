@@ -1,0 +1,68 @@
+{{if .Values.cleanup.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cleanup
+spec:
+  schedule: {{ .Values.cleanup.schedule | quote }}
+  successfulJobsHistoryLimit: 1
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          {{- with .Values.cleanup.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.cleanup.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          containers:
+          - name: "{{ .Chart.Name }}-cleanup"
+            command: [ "/app/cleanup" ]
+            env:
+              - name: "DEBUG"
+                value: "{{ .Values.config.debug }}"
+              - name: "CLEANUP_MOUNTPOINT"
+                value: "{{ .Values.cleanup.mountpoint }}"
+              - name: "CLEANUP_THRESHOLD"
+                value: "{{ .Values.cleanup.threshold }}"
+            image: "{{ .Values.cleanup.image.repository }}:{{ .Values.cleanup.image.tag }}"
+            imagePullPolicy: "{{ .Values.cleanup.image.pullPolicy }}"
+            {{- with .Values.cleanup.resources }}
+            resources:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            securityContext:
+              runAsUser: {{ .Values.config.uid }}
+              runAsGroup: {{ .Values.config.gid }}
+              runAsNonRoot: true
+              readOnlyRootFilesystem: true
+            volumeMounts:
+            - mountPath: {{ .Values.cleanup.mountpoint }}
+              name: {{ .Values.cleanup.volumeName }}
+          volumes:
+          - name: {{ .Values.cleanup.volumeName }}
+          {{- if .Values.config.volumes.sharedWorkarea.hostPath }}
+            hostPath:
+              path: {{ .Values.config.volumes.sharedWorkarea.hostPath.path | quote }}
+              type: "Directory"
+            {{- else if .Values.config.volumes.sharedWorkarea.nfs }}
+            nfs:
+              path: {{ .Values.config.volumes.sharedWorkarea.nfs.path | quote }}
+              server: {{ .Values.config.volumes.sharedWorkarea.nfs.server | quote }}
+            {{- else if .Values.config.volumes.sharedWorkarea.pvc }}
+            persistentVolumeClaim:
+              accessModes:
+              - "ReadWriteMany"
+              claimName: "portal-sharedworkarea"
+              size: {{ .Values.config.volumes.sharedWorkarea.pvc.size | quote }}
+              storageClass: {{ .Values.config.volumes.sharedWorkarea.pvc.storageClass | quote }}
+            {{- else }}
+            emptyDir: {}
+            {{- end }}
+{{- end }}
