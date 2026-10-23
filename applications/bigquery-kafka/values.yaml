@@ -25,6 +25,10 @@ config:
   # Safir `parse_timedelta` format
   backendRetryDelay: "1s"
 
+  # -- GCP project ID in which BigQuery jobs run
+  # @default -- Same as `bigqueryProject`
+  bigqueryJobProject: null
+
   # -- BigQuery processing location
   bigqueryLocation: "US"
 
