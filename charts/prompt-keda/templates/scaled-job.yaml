@@ -225,7 +225,7 @@ spec:
   minReplicaCount: {{ .Values.keda.minReplicaCount}}
   maxReplicaCount: {{ .Values.keda.maxReplicaCount}}
   rollout:
-    strategy: immediate
+    strategy: gradual
     propagationPolicy: foreground
   scalingStrategy:
     strategy: {{ .Values.keda.scalingStrategy}}
