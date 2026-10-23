@@ -20,6 +20,11 @@ data:
   QSERV_KAFKA_BIGQUERY_MAX_BYTES_BILLED: {{ int64 .Values.config.bigqueryMaxBytesBilled | quote }}
   {{- end }}
   QSERV_KAFKA_BIGQUERY_PROJECT: {{ .Values.config.bigqueryProject | quote }}
+  QSERV_KAFKA_BIGQUERY_UPLOAD_DATASET: {{ .Values.config.bigqueryUploadDataset | quote }}
+  {{- with .Values.config.bigqueryUploadProject }}
+  QSERV_KAFKA_BIGQUERY_UPLOAD_PROJECT: {{ . | quote }}
+  {{- end }}
+  QSERV_KAFKA_BIGQUERY_UPLOAD_TIMEOUT: {{ .Values.config.bigqueryUploadTimeout | quote }}
   QSERV_KAFKA_CONSUMER_GROUP_ID: {{ .Values.config.consumerGroupId | quote }}
   QSERV_KAFKA_JOB_CANCEL_TOPIC: {{ .Values.config.jobCancelTopic | quote }}
   QSERV_KAFKA_JOB_RUN_BATCH_SIZE: {{ .Values.config.jobRunBatchSize | quote }}

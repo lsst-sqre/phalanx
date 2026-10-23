@@ -122,6 +122,79 @@ tests:
       - matchRegex:
           path: data["catalina.properties"]
           pattern: "tap.bigquery.dataset=my-dataset"
+      - notMatchRegex:
+          path: data["catalina.properties"]
+          pattern: "tap.bigquery.upload"
+      - notMatchRegex:
+          path: data["catalina.properties"]
+          pattern: "tap.bigquery.geoPointTables"
+
+  - it: bigquery -> uploads and geo_point tables
+    set:
+      config:
+        backend: "bigquery"
+        kafka: {enabled: true}
+        bigquery:
+          project: "my-project"
+          dataset: "my-dataset"
+          geoPointTables: ["ppdb.DiaObject", "dp2_prompt.DiaObject"]
+          upload: {project: "upload-project"}
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tap.bigquery.upload.project=upload-project"
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tap.bigquery.upload.dataset=tap_uploads"
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tap.bigquery.geoPointTables=ppdb.DiaObject,dp2_prompt.DiaObject"
+
+  - it: upload bucket is only set when configured
+    set:
+      config:
+        gcsUploadBucket: "rubin-tap-uploads-dev-us"
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "gcs_upload_bucket=rubin-tap-uploads-dev-us"
+
+  - it: upload bucket can use Workload Identity
+    set:
+      config:
+        gcsUploadBucket: "rubin-tap-uploads-dev-us"
+        gcsUploadWorkloadIdentity: true
+      cloudsql:
+        enabled: true
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "gcs_upload_workload_identity=true"
+
+  - it: upload bucket Workload Identity is off by default
+    asserts:
+      - notMatchRegex:
+          path: data["catalina.properties"]
+          pattern: "gcs_upload_workload_identity"
+
+  - it: upload bucket Workload Identity requires CloudSQL
+    set:
+      config:
+        gcsUploadBucket: "rubin-tap-uploads-dev-us"
+        gcsUploadWorkloadIdentity: true
+    asserts:
+      - failedTemplate:
+          errorMessage: config.gcsUploadWorkloadIdentity requires cloudsql.enabled
+
+  - it: upload bucket Workload Identity requires a separate upload bucket
+    set:
+      config:
+        gcsUploadWorkloadIdentity: true
+      cloudsql:
+        enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: config.gcsUploadWorkloadIdentity requires config.gcsUploadBucket
 
   - it: GCS / S3 result bucket configuration
     set:
