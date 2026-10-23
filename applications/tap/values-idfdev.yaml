@@ -1,4 +1,5 @@
 cadc-tap:
+  replicaCount: 4
   config:
     kafka:
       enabled: true

@@ -121,3 +121,26 @@ config:
           query_set: "dp0.2"
           sync: false
         restart: true
+    - name: "scale-test-tap-schema"
+      count: 50
+      user_spec:
+        username_prefix: "bot-mobu-scale-notebook"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      business:
+        type: "NotebookRunnerInfinite"
+        restart: true
+        options:
+          repo_url: "https://github.com/lsst-sqre/scaletest"
+          repo_ref: "u/stvoutsin/dp2-query"
+          delete_lab: false
+          notebook_idle_time: 0
+          idle_time: 0
+          execution_idle_time: 0
+          collection_rules:
+            - type: "intersect_union_of"
+              patterns:
+                - "TAP_DP2_TAP_SCHEMA_SYNC.ipynb"
