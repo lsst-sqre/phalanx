@@ -1,3 +1,7 @@
+image:
+  tag: "t-DM-56717"
+  pullPolicy: "Always"
+
 replicaCount: 2
 
 config:

@@ -1,3 +1,6 @@
+image:
+  tag: "t-DM-56717"
+  pullPolicy: "Always"
 config:
   buckets:
     dp02:
