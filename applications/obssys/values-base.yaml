@@ -187,10 +187,10 @@ mtscheduler:
   resources:
     limits:
       cpu: 3
-      memory: 7Gi
+      memory: 10Gi
     requests:
-      cpu: 300m
-      memory: 3.5Gi
+      cpu: 3
+      memory: 10Gi
 
 ocsqueue:
   classifier: scriptqueue3
