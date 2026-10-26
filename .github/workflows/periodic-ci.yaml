@@ -1,0 +1,70 @@
+name: Periodic CI
+
+env:
+  # Version of Argo CD to use for the installer.
+  ARGO_CD_VERSION: "3.5.6"
+
+  # Version of helm to use for linting.
+  HELM_VERSION: "v4.3.1"
+
+  # Version of Vault client to use for the installer.
+  VAULT_VERSION: "2.2.1"
+
+"on":
+  schedule:
+    - cron: "5 12 * * 1"
+  workflow_dispatch: {}
+
+jobs:
+  minikube:
+    name: Test deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v10.3.2
+
+      - name: Download installer dependencies
+        run: |
+          curl -sSL -o /tmp/vault.zip https://releases.hashicorp.com/vault/${{ env.VAULT_VERSION }}/vault_${{ env.VAULT_VERSION }}_linux_amd64.zip
+          unzip /tmp/vault.zip
+          sudo mv vault /usr/local/bin/vault
+          sudo chmod +x /usr/local/bin/vault
+          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v${{ env.ARGO_CD_VERSION }}/argocd-linux-amd64
+          sudo chmod +x /usr/local/bin/argocd
+          sudo apt-get install socat
+
+      - uses: medyagh/setup-minikube@latest
+        with:
+          cpus: max
+          memory: 13500m  # Linux virtual machines have 7GB of RAM
+
+      - uses: azure/setup-helm@v5
+        with:
+          version: ${{ env.HELM_VERSION }}
+
+      - name: Test interaction with the cluster
+        run: kubectl get nodes
+
+      - name: Run Phalanx installer
+        run: >
+          uv run --only-group=tox tox run -e install --
+          --force-noninteractive
+          --vault-role-id=${{ secrets.MINIKUBE_VAULT_ROLE_ID }}
+          --vault-secret-id=${{ secrets.MINIKUBE_VAULT_SECRET_ID }}
+          minikube
+
+      - name: Get final list of resources
+        run: |
+          kubectl get all -A
+          kubectl get ingress -A
+
+      - name: Wait for all applications to be healthy
+        timeout-minutes: 15
+        run: |
+          argocd app wait -l "argocd.argoproj.io/instance=science-platform" \
+            --port-forward \
+            --port-forward-namespace argocd \
+            --timeout 300
