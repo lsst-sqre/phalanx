@@ -95,6 +95,7 @@ argo-cd:
         g, youtsumi@slac.stanford.edu, role:developer
         g, eali@slac.stanford.edu, role:developer
         g, tobyj@slac.stanford.edu, role:developer
+        g, graha@slac.stanford.edu, role:developer
 
         g, tnoble@slac.stanford.edu, role:drp
       scopes: "[email]"
