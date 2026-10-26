@@ -16,9 +16,6 @@ tests:
           path: "data['config.yaml']"
           value: |
             autostart: []
-            gafaelfawrTimeout: null
-            githubCiApp: null
-            githubRefreshApp: null
             logLevel: INFO
             logProfile: production
             metrics:
