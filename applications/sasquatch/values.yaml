@@ -222,7 +222,7 @@ chronograf:
     repository: "docker.io/library/chronograf"
 
     # -- Docker tag to use for Chronograf
-    tag: 1.11.5
+    tag: 1.11.6
 
   updateStrategy:
     # -- Deployment strategy, use recreate with persistence enabled
