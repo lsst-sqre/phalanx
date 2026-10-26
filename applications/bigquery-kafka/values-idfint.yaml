@@ -11,3 +11,6 @@ config:
   slack:
     enabled: false
   bigqueryMaxBytesBilled: 1000000000000
+slowWorker:
+  autoscaling:
+    maxReplicas: 50

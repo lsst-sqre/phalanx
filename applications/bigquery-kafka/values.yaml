@@ -14,7 +14,7 @@ config:
 
   # -- Maximum number of jobs each slow worker (used for results processing)
   # can process simultaneously
-  arqSlowMaxJobs: 2
+  arqSlowMaxJobs: 1
 
   # -- Timeout for backend API calls in `parse_timedelta` format.
   backendApiTimeout: "30s"
