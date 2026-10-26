@@ -69,7 +69,7 @@ alloyDbProxy:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of image to use
-    tag: "1.17.1"
+    tag: "1.17.2"
 
   config:
     # -- Uri for Allow DB instance
