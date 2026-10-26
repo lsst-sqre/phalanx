@@ -214,7 +214,11 @@ jobs:
     # warning.
     permissions:
       contents: read
+      id-token: write
       pull-requests: write
+
+    env:
+      HAS_OOK_TOKEN: ${{ secrets.OOK_TOKEN != '' }}
 
     needs: changes
     if: >-
@@ -236,6 +240,14 @@ jobs:
 
       - name: Build documentation
         run: uv run --only-group=tox tox run -e docs
+        env:
+          OOK_TOKEN: ${{ secrets.OOK_TOKEN }}
+
+      - name: Check links
+        if: env.HAS_OOK_TOKEN == 'true'
+        run: uv run --only-group=tox tox run -e docs-linkcheck
+        env:
+          OOK_TOKEN: ${{ secrets.OOK_TOKEN }}
 
       # Upload docs:
       # - on pushes to main if *any* documentation content might have changed
@@ -245,9 +257,7 @@ jobs:
       # Fork and dependabot pull requests are excluded by the branch-name
       # checks since they cannot read the DOCVERSE_TOKEN secret.
       - name: Upload to Docverse
-        # Pinned to the pre-release head of lsst-sqre/docverse-upload; switch
-        # to a version tag once the action has an official release.
-        uses: lsst-sqre/docverse-upload@05c6698b00482673da2d1bcd93b367ebe74a98d0
+        uses: lsst-sqre/docverse-upload@v1
         with:
           org: rubin
           project: phalanx
