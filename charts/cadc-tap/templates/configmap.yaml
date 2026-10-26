@@ -87,6 +87,13 @@ data:
     {{- with .Values.config.bigquery.schema }}
     tap.bigquery.schema={{ . }}
     {{- end }}
+    {{- with .Values.config.bigquery.geoPointTables }}
+    tap.bigquery.geoPointTables={{ . | join "," }}
+    {{- end }}
+    {{- with .Values.config.bigquery.upload.project }}
+    tap.bigquery.upload.project={{ . }}
+    tap.bigquery.upload.dataset={{ $.Values.config.bigquery.upload.dataset }}
+    {{- end }}
     {{- end }}
     {{- with .Values.config.qserv.schemaMappings }}
     tap.schema.mappings={{ . }}
@@ -105,6 +112,18 @@ data:
     gcs_bucket={{ .Values.config.gcsBucket }}
     gcs_bucket_url={{ .Values.config.gcsBucketUrl }}
     gcs_bucket_type={{ .Values.config.gcsBucketType }}
+    {{- with .Values.config.gcsUploadBucket }}
+    gcs_upload_bucket={{ . }}
+    {{- end }}
+    {{- if .Values.config.gcsUploadWorkloadIdentity }}
+    {{- if not .Values.cloudsql.enabled }}
+    {{- fail "config.gcsUploadWorkloadIdentity requires cloudsql.enabled" }}
+    {{- end }}
+    {{- if not .Values.config.gcsUploadBucket }}
+    {{- fail "config.gcsUploadWorkloadIdentity requires config.gcsUploadBucket" }}
+    {{- end }}
+    gcs_upload_workload_identity=true
+    {{- end }}
     url.rewrite.enabled={{ .Values.config.urlRewrite.enabled | default true }}
     url.rewrite.rules={{ .Values.config.urlRewrite.rules | default (list "ivoa.ObsCore:access_url") | join "," }}
     {{- if .Values.config.kafka.enabled }}

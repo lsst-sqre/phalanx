@@ -23,17 +23,22 @@ IVOA TAP service
 | cloudsql.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `cadc-tap` Kubernetes service accounts and has the `cloudsql.client` role, access |
 | config.backend | string | None, must be set to `pg`, `qserv` or `bigquery` | What type of backend are we connecting to? |
 | config.bigquery.dataset | string | None, must be set if backend is `bigquery` | BigQuery dataset name |
+| config.bigquery.geoPointTables | list | DiaObject, DiaSource and DiaForcedSource in `config.bigquery.schema` | TAP names of the tables that have a `geo_point` column. Spatial queries on these tables use `geo_point` so that BigQuery can use the clustering on it. Other tables build the point from their own columns. |
 | config.bigquery.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.bigquery.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
-| config.bigquery.image.tag | string | `"3.28.0"` | Tag of TAP image to use |
+| config.bigquery.image.tag | string | `"3.29.0"` | Tag of TAP image to use |
 | config.bigquery.project | string | None, must be set if backend is `bigquery` | BigQuery project ID |
 | config.bigquery.schema | string | `""` | Schema name for table mappings (optional) |
 | config.bigquery.tableMappings | list | `[]` | Table name mappings for query rewriting (as visible:backend pairs). There is no built-in default mapping for any table, so every table queryable through this schema must have an entry here. Example: ["ppdb.mpc_orbits:`ppdb-dev-5c07.ppdb_public.mpc_orbits`"] |
+| config.bigquery.upload.dataset | string | `"tap_uploads"` | BigQuery dataset that uploaded tables are loaded into |
+| config.bigquery.upload.project | string | None, table uploads are rejected | GCP project holding the dataset for uploaded tables. |
 | config.database | string | `"dp2"` | Data Database name |
 | config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/w.2026.01/datalink-snippets.zip"` | Datalink payload URL |
 | config.gcsBucket | string | `"async-results.lsst.codes"` | Name of GCS bucket in which to store results |
 | config.gcsBucketType | string | `"GCS"` | GCS bucket type (GCS or S3) |
 | config.gcsBucketUrl | string | `"https://storage.googleapis.com"` | Base URL for results stored in GCS bucket |
+| config.gcsUploadBucket | string | Same as `gcsBucket` | Name of the bucket in which to store uploaded tables. Must be the same type as `gcsBucket`. |
+| config.gcsUploadWorkloadIdentity | bool | `false` | Access the upload bucket as the pod's Workload Identity (`cloudsql.serviceAccount`) instead of the `google_creds.json`. Requires `cloudsql.enabled` and a separate `gcsUploadBucket`. |
 | config.jvmMaxHeapSize | string | `"31G"` | Java heap size, which will set the maximum size of the heap. Otherwise Java would determine it based on how much memory is available and black maths. |
 | config.kafka | object | `{"consumerGroupId":"tap","enabled":false,"kafkaUserName":"tap","topics":{"jobDelete":"lsst.tap.job-delete","jobRun":"lsst.tap.job-run","jobStatus":"lsst.tap.job-status"}}` | Kafka configuration |
 | config.kafka.consumerGroupId | string | "tap" | Kafka consumer group ID. |
@@ -53,12 +58,12 @@ IVOA TAP service
 | config.pg.host | string | None, must be set if backend is `pg` | Host to connect to |
 | config.pg.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.pg.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
-| config.pg.image.tag | string | `"3.28.0"` | Tag of TAP image to use. |
+| config.pg.image.tag | string | `"3.29.0"` | Tag of TAP image to use. |
 | config.pg.username | string | None, must be set if backend is `pg` | Username to connect with |
 | config.qserv.host | string | `"mock-db:3306"` (the mock QServ) | QServ hostname:port to connect to |
 | config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.qserv.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
-| config.qserv.image.tag | string | `"3.28.0"` | Tag of TAP image to use |
+| config.qserv.image.tag | string | `"3.29.0"` | Tag of TAP image to use |
 | config.qserv.jdbcParams | string | `""` | Extra JDBC connection parameters |
 | config.qserv.passwordEnabled | bool | false | Whether the Qserv database is password protected. Only used for direct-to-Qserv execution (`config.kafka.enabled: false`). |
 | config.qserv.schemaMappings | string | `""` | Schema name mappings: comma-separated list of user_schema:internal_schema pairs. Example: "dp1:dp1_pilot" dp1 queries execute against dp1_pilot. |
