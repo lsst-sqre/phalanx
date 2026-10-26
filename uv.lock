@@ -698,12 +698,13 @@ wheels = [
 
 [[package]]
 name = "documenteer"
-version = "2.4.1"
+version = "2.5.0b4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
     { name = "docutils" },
     { name = "gitpython" },
+    { name = "packaging" },
     { name = "pybtex" },
     { name = "pydantic" },
     { name = "pylatexenc" },
@@ -714,9 +715,9 @@ dependencies = [
     { name = "tomlkit" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2b/de/c9ebd1c24a48532772152d19fd301d18111efb99b5aec2ed618694ea1150/documenteer-2.4.1.tar.gz", hash = "sha256:58268cf3c52b2dcbbc1347f45d20baadad96bd53ed2498a032eb2c40b5286751", size = 1412801, upload-time = "2026-07-27T20:23:13.912Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/2b/ff/91e1013d975046087d7cf2705d3b95852be90f9842a6b9fc79e1df86abeb/documenteer-2.5.0b4.tar.gz", hash = "sha256:60caba18aa3f7614f170996157cbff0c8665a510fb6bd5776c28a0d9ba43dc7f", size = 2108090, upload-time = "2026-10-26T16:43:12.837Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/79/93/34e1b4130e3e4d5af8232eb554dcc95475a45864f55ef9b9a71f39e6cc95/documenteer-2.4.1-py3-none-any.whl", hash = "sha256:4df74936dba45f5ce290ad06d6a057bb3b40c3e480a74784d3e782518bd7cebc", size = 717464, upload-time = "2026-07-27T20:23:12.345Z" },
+    { url = "https://files.pythonhosted.org/packages/b9/79/941f0760e378b5242a1812e109b05cd2ec075418928dd6824ae6f7c23845/documenteer-2.5.0b4-py3-none-any.whl", hash = "sha256:da03b17893b62bd1f8c0d6c4d7ca381767c45f50c75168a1033745947e3f4c17", size = 679731, upload-time = "2026-10-26T16:43:10.989Z" },
 ]
 
 [package.optional-dependencies]
@@ -1756,9 +1757,9 @@ dev = [
 ]
 docs = [
     { name = "autodoc-pydantic" },
+    { name = "diagrams" },
     { name = "documenteer", extra = ["guide"] },
     { name = "sphinx-click" },
-    { name = "sphinx-diagrams" },
     { name = "sphinx-jinja" },
 ]
 lint = [
@@ -1804,9 +1805,9 @@ dev = [
 ]
 docs = [
     { name = "autodoc-pydantic" },
-    { name = "documenteer", extras = ["guide"], specifier = ">=2" },
+    { name = "diagrams" },
+    { name = "documenteer", extras = ["guide"], specifier = "==2.5.0b4" },
     { name = "sphinx-click" },
-    { name = "sphinx-diagrams" },
     { name = "sphinx-jinja" },
 ]
 lint = [
@@ -2134,7 +2135,7 @@ wheels = [
 
 [[package]]
 name = "pydata-sphinx-theme"
-version = "0.16.1"
+version = "0.19.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "accessible-pygments" },
@@ -2145,9 +2146,9 @@ dependencies = [
     { name = "sphinx" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/00/20/bb50f9de3a6de69e6abd6b087b52fa2418a0418b19597601605f855ad044/pydata_sphinx_theme-0.16.1.tar.gz", hash = "sha256:a08b7f0b7f70387219dc659bff0893a7554d5eb39b59d3b8ef37b8401b7642d7", size = 2412693, upload-time = "2024-12-17T10:53:39.537Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/39/7e/e3defb93f30557ae825a3b3fbc2c6728301e5e9505a85e00d8503345c42c/pydata_sphinx_theme-0.19.0.tar.gz", hash = "sha256:148ba092bd6937b3321385dc482cc69a29ad2ede36547b4f010ade782bc6a062", size = 5004933, upload-time = "2026-06-15T09:31:02.268Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e2/0d/8ba33fa83a7dcde13eb3c1c2a0c1cc29950a048bfed6d9b0d8b6bd710b4c/pydata_sphinx_theme-0.16.1-py3-none-any.whl", hash = "sha256:225331e8ac4b32682c18fcac5a57a6f717c4e632cea5dd0e247b55155faeccde", size = 6723264, upload-time = "2024-12-17T10:53:35.645Z" },
+    { url = "https://files.pythonhosted.org/packages/54/77/bdb5a4c0e8e33c08f31fd175a5af0bc5e29f1b43ffa9e963f4c4f9bfbc97/pydata_sphinx_theme-0.19.0-py3-none-any.whl", hash = "sha256:5d7dfe3beb0facc88b5d78ff4a4c948f214cc0e03aae27e7fc58286e963b588b", size = 6201132, upload-time = "2026-06-15T09:30:59.966Z" },
 ]
 
 [[package]]
@@ -2709,18 +2710,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/13/7b/804f311da4663a4aecc6cf7abd83443f3d4ded970826d0c958edc77d4527/sphinx_design-0.7.0.tar.gz", hash = "sha256:d2a3f5b19c24b916adb52f97c5f00efab4009ca337812001109084a740ec9b7a", size = 2203582, upload-time = "2026-01-19T13:12:53.297Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/30/cf/45dd359f6ca0c3762ce0490f681da242f0530c49c81050c035c016bfdd3a/sphinx_design-0.7.0-py3-none-any.whl", hash = "sha256:f82bf179951d58f55dca78ab3706aeafa496b741a91b1911d371441127d64282", size = 2220350, upload-time = "2026-01-19T13:12:51.077Z" },
-]
-
-[[package]]
-name = "sphinx-diagrams"
-version = "0.4.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "diagrams" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/68/41/e5e874e12f09ea002eee1498cab5fccfd9c6a3348cd3bba82819310d8335/sphinx-diagrams-0.4.0.tar.gz", hash = "sha256:3cf2e0179bdd9ccdb28164fcfcae9b167999a1abe40e159e0c26a225490074d1", size = 5878, upload-time = "2021-08-17T21:00:46.363Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/8e/a3/22ae4cac618ed0b8d5447dcb67e833bd27a37c958be0540cce5fd34f42e2/sphinx_diagrams-0.4.0-py3-none-any.whl", hash = "sha256:4860291cb04d6361f898d20ba28dca7345f757cdc240caf144c8bf20c73067a0", size = 5961, upload-time = "2021-08-17T21:00:47.598Z" },
 ]
 
 [[package]]
