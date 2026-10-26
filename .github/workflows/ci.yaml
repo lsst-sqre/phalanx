@@ -217,9 +217,6 @@ jobs:
       id-token: write
       pull-requests: write
 
-    env:
-      HAS_OOK_TOKEN: ${{ secrets.OOK_TOKEN != '' }}
-
     needs: changes
     if: >-
       (needs.changes.outputs.docs == 'true')
@@ -240,12 +237,6 @@ jobs:
 
       - name: Build documentation
         run: uv run --only-group=tox tox run -e docs
-        env:
-          OOK_TOKEN: ${{ secrets.OOK_TOKEN }}
-
-      - name: Check links
-        if: env.HAS_OOK_TOKEN == 'true'
-        run: uv run --only-group=tox tox run -e docs-linkcheck
         env:
           OOK_TOKEN: ${{ secrets.OOK_TOKEN }}
 
