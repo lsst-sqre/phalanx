@@ -247,7 +247,7 @@ jobs:
       - name: Upload to Docverse
         # Pinned to the pre-release head of lsst-sqre/docverse-upload; switch
         # to a version tag once the action has an official release.
-        uses: lsst-sqre/docverse-upload@05c6698b00482673da2d1bcd93b367ebe74a98d0
+        uses: lsst-sqre/docverse-upload@ba4a9c8992fda311687eac8c5d1ea486739aa792
         with:
           org: rubin
           project: phalanx
