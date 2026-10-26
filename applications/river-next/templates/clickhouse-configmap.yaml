@@ -161,7 +161,7 @@ data:
           <quota>default</quota>
           <grants>
             <query>GRANT CREATE TEMPORARY TABLE ON *.*</query>
-            <query>GRANT SELECT ON ppdb.DiaSource</query>
+            <query>GRANT SELECT ON ppdb.*</query>
             <query>GRANT SELECT ON ssp.*</query>
             <query>GRANT dictGet ON ssp.visit_exposure_dict</query>
           </grants>
