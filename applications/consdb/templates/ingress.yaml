@@ -1,4 +1,4 @@
-# ingress for consdb-pq
+# read-only ingress for consdb-pq
 
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
@@ -9,7 +9,7 @@ metadata:
 config:
   scopes:
     all:
-      - "read:image"
+      - "read:tap"
   service: "consdb"
 template:
   metadata:
@@ -25,6 +25,54 @@ template:
         paths:
         - path: "/consdb"
           pathType: "Prefix"
+          backend:
+            service:
+              name: "consdb-pq"
+              port:
+                number: 8080
+---
+# read-write ingress for consdb-pq
+
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "consdb-pq-write"
+  labels:
+    {{- include "consdb.labels" . | nindent 4 }}
+config:
+  scopes:
+    all:
+      - "write:consdb"
+  service: "consdb"
+template:
+  metadata:
+    name: "consdb-pq-write"
+    annotations:
+      nginx.ingress.kubernetes.io/use-regex: "true"
+      {{- with .Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  spec:
+    rules:
+    - host: {{ required "global.host must be set" .Values.global.host | quote }}
+      http:
+        paths:
+        - path: "/consdb/insert/.*"
+          pathType: "ImplementationSpecific"
+          backend:
+            service:
+              name: "consdb-pq"
+              port:
+                number: 8080
+        - path: "/consdb/flex/.+/addkey/?$"
+          pathType: "ImplementationSpecific"
+          backend:
+            service:
+              name: "consdb-pq"
+              port:
+                number: 8080
+        - path: "/consdb/flex/.+/update/?$"
+          pathType: "ImplementationSpecific"
           backend:
             service:
               name: "consdb-pq"
