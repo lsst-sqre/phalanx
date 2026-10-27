@@ -40,6 +40,6 @@ jobs:
           sudo apt-get install -y graphviz
 
       - name: Check links
-        run: uv run --only-group=tox tox run -e docs-linkcheck
+        run: uv run --only-group=nox nox -s docs-linkcheck
         env:
           OOK_TOKEN: ${{ secrets.OOK_TOKEN }}

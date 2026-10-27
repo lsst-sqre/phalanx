@@ -47,7 +47,7 @@ jobs:
       - uses: astral-sh/setup-uv@v10.3.2
 
       - name: Run linters
-        run: uv run --only-group=tox tox run -e lint
+        run: uv run --only-group=nox nox -s lint
 
   test:
     runs-on: ubuntu-latest
@@ -68,7 +68,7 @@ jobs:
           python-version: ${{ matrix.python }}
 
       - name: Run Python tests
-        run: uv run --only-group=tox tox run -e typing,py,coverage-report
+        run: uv run --only-group=nox nox -s typing test coverage-report
 
   helm:
     runs-on: ubuntu-latest
@@ -100,7 +100,7 @@ jobs:
       - uses: astral-sh/setup-uv@v10.3.2
 
       - name: Run Phalanx Helm linter
-        run: uv run --only-group=tox tox run -e phalanx-lint
+        run: uv run --only-group=nox nox -s phalanx-lint
 
   changes:
     runs-on: ubuntu-latest
@@ -178,7 +178,7 @@ jobs:
           sudo apt-get install -y graphviz
 
       - name: Build documentation
-        run: uv run --only-group=tox tox run -e docs
+        run: uv run --only-group=nox nox -s docs
         env:
           OOK_TOKEN: ${{ secrets.OOK_TOKEN }}
 

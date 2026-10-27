@@ -58,6 +58,7 @@ dev = [
     "pytest-cov",
     "pytest-sugar",
     "pytest-mock",
+    "uv",
 ]
 docs = [
     "autodoc-pydantic",
@@ -67,13 +68,12 @@ docs = [
     "sphinx-jinja",
 ]
 lint = [
-    "prek!=0.4.2",  # https://github.com/j178/prek/issues/2127
+    "prek>0.4.2",
     "ruff>=0.15",
-    "uv",
 ]
-tox = [
-    "tox>=4.24",
-    "tox-uv-bare>=1.25",
+nox = [
+    "nox",
+    "nox-uv",
 ]
 typing = [
     "mypy",

@@ -50,7 +50,7 @@ jobs:
 
       - name: Run Phalanx installer
         run: >
-          uv run --only-group=tox tox run -e install --
+          uv run --only-group=nox nox -s install --
           --force-noninteractive
           --vault-role-id=${{ secrets.MINIKUBE_VAULT_ROLE_ID }}
           --vault-secret-id=${{ secrets.MINIKUBE_VAULT_SECRET_ID }}

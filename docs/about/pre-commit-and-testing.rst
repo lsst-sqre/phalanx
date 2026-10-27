@@ -4,7 +4,7 @@ Phalanx pre-commit and testing
 
 If you are using or making changes to Phalanx, you should start by :doc:`setting up a local development environment <local-environment-setup>`.
 
-Once that is set up, pre-commit will run for every commit, and you will be able to use tox to run tests.
+Once that is set up, pre-commit will run for every commit, and you will be able to use nox to run tests.
 This document describes how to use pre-commit and the Phalanx tests.
 
 What to expect when developing in Phalanx with pre-commit
@@ -29,7 +29,7 @@ To check all files (similar to how we run pre-commit in GitHub Actions):
 
 .. code-block:: sh
 
-   tox run -e lint
+   nox -s lint
 
 By-passing pre-commit
 =====================
@@ -52,7 +52,7 @@ To do this, run:
 
 .. code-block:: sh
 
-   tox run -e py
+   nox -s test
 
 If you make changes that affect the Phalanx documentation, such as adding new applications (see :doc:`/developers/helm-chart/add-application`) or adding new environments (see :doc:`/admin/installation`), you may want to build the documentation locally to see if there are any errors.
 Any such errors must be resolved before changes can be merged.
@@ -60,7 +60,7 @@ To do this, run:
 
 .. code-block:: sh
 
-   tox run -e docs
+   nox -s docs
 
 This also allows you to preview the new documentation, which will be generated in :file:`docs/_build/html`.
 
@@ -70,6 +70,6 @@ To regenerate the expected output, run:
 
 .. code-block:: sh
 
-   tox run -e py -- --update-test-data
+   nox -s test -- --update-test-data
 
 You can then use :command:`git diff tests/data` to check that the changes to the output match your expectations.
