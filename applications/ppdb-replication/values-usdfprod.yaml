@@ -7,8 +7,17 @@ config:
   # -- APDB config file resource
   apdbConfig: "s3://embargo@rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcam.yaml"
 
+  # -- CloudSQL Python Connector configuration
+  cloudSql:
+
+    # -- CloudSQL Connection Name
+    connectionName: "ppdb-prod-84a4:us-central1:ppdb-prod"
+
+    # -- Username in sa_name@project.iam format
+    user: "usdf-replication@ppdb-prod-84a4.iam"
+
   # -- PPDB config file resource
-  ppdbConfig: "/sdf/data/rubin/user/jeremym/ppdb-config/ppdb_lsstcam.yaml"
+  ppdbConfig: "gs://ppdb-prod-config/ppdb-prod_config.yaml"
 
   # -- Volumes specific to the environment
   volumes:
