@@ -344,7 +344,7 @@ ocsscheduler:
 
 watcher:
   image:
-    revision: 13
+    revision: 15
     repository: ts-dockerhub.lsst.org/watcher
   envSecrets:
   - name: ESCALATION_KEY
@@ -353,7 +353,7 @@ watcher:
     limits:
       cpu: 3000m
     requests:
-      cpu: 1000m
+      cpu: 1500m
       memory: 5Gi
   nfsMountpoint:
   - name: obs-env
