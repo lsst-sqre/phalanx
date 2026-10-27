@@ -163,3 +163,6 @@ tap:
 
 ppdbtap:
   enabled: true
+
+benchmark:
+  enabled: true

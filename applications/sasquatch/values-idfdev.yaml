@@ -282,3 +282,6 @@ trickster:
 
 redis:
   enabled: true
+
+benchmark:
+  enabled: true
