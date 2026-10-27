@@ -180,6 +180,12 @@ keda:
     # -- Maximum message age to process, in seconds.
     expiration: 3600
 
+  rollout:
+    # --  Which Rollout Strategy KEDA will use.
+    strategy: immediate
+    # -- Kubernetes propagation policy for cleaning up existing jobs during rollout.
+    propagationPolicy: foreground
+
 initializer:
   image:
     # -- Image to use for the PP initializer

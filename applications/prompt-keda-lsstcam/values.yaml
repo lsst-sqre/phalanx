@@ -167,6 +167,12 @@ prompt-keda:
     # -- How many failed jobs should be kept available in Kubernetes.
     failedJobsHistoryLimit: 5
 
+    rollout:
+      # --  Which Rollout Strategy KEDA will use.
+      strategy: immediate
+      # -- Kubernetes propagation policy for cleaning up existing jobs during rollout.
+      propagationPolicy: foreground
+
     redisStreams:
       # -- Address of Redis Streams Cluster
       host: prompt-redis.prompt-redis
