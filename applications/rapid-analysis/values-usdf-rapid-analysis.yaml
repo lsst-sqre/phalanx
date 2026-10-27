@@ -118,6 +118,20 @@ scripts:
   mounts:
   - sdf-scratch
   - config-repos
+- name: LSSTCam/runSummitSyncImporter.py
+  mounts:
+  - sdf-scratch
+  - config-repos
+  env:
+    # The download + import artifact copy are I/O-bound; parallelise them.
+    LSST_RESOURCES_NUM_WORKERS: 16
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 2.0
+      memory: 8G
 ###
 ### LSSTCam StatefulSets
 ###
