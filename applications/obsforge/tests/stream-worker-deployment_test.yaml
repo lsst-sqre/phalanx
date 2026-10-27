@@ -1,0 +1,110 @@
+suite: Stream worker Deployment
+templates:
+  - configmap.yaml
+  - stream-worker-deployment.yaml
+set:
+  config:
+    kafkaBrokerAddress: "kafka.example.com:9094"
+    kafkaUsername: "obsforge"
+    schemaRegistryUrl: "https://example.com/schema-registry"
+  streamWorkers:
+    enabled: true
+    pipelines:
+      first-stream:
+        affinity: {}
+        configPath: "/app/config/streams/first.yaml"
+        nodeSelector: {}
+        podAnnotations: {}
+        replicaCount: 1
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+        tolerations: []
+      second-stream:
+        affinity: {}
+        configPath: "/app/config/streams/second.yaml"
+        nodeSelector: {}
+        podAnnotations:
+          example.com/test: "true"
+        replicaCount: 2
+        resources:
+          limits:
+            cpu: "2"
+            memory: "2Gi"
+          requests:
+            cpu: "200m"
+            memory: "512Mi"
+        tolerations: []
+tests:
+  - it: Does not render workers when streaming is disabled
+    template: stream-worker-deployment.yaml
+    set:
+      streamWorkers:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Renders one Deployment per configured pipeline
+    template: stream-worker-deployment.yaml
+    asserts:
+      - hasDocuments:
+          count: 2
+
+  - it: Configures the first pipeline independently
+    template: stream-worker-deployment.yaml
+    documentSelector:
+      path: metadata.name
+      value: obsforge-stream-first-stream
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 1
+      - equal:
+          path: spec.selector.matchLabels["obsforge.lsst.io/stream"]
+          value: first-stream
+      - equal:
+          path: spec.template.spec.containers[0].command
+          value:
+            - obsforge
+            - process-stream
+            - --stream-config-path
+            - /app/config/streams/first.yaml
+      - equal:
+          path: spec.template.spec.containers[0].env[1].valueFrom.secretKeyRef.key
+          value: kafka-password
+      - equal:
+          path: spec.template.spec.containers[0].env[2].valueFrom.secretKeyRef.key
+          value: schema-registry-token
+      - equal:
+          path: spec.template.spec.containers[0].resources.requests.memory
+          value: 256Mi
+      - equal:
+          path: spec.template.spec.containers[0].volumeMounts[0].mountPath
+          value: /app/state
+      - equal:
+          path: spec.template.spec.volumes[0].emptyDir
+          value: {}
+
+  - it: Configures the second pipeline independently
+    template: stream-worker-deployment.yaml
+    documentSelector:
+      path: metadata.name
+      value: obsforge-stream-second-stream
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 2
+      - equal:
+          path: spec.template.metadata.annotations["example.com/test"]
+          value: "true"
+      - equal:
+          path: spec.template.spec.containers[0].command[3]
+          value: /app/config/streams/second.yaml
+      - equal:
+          path: spec.template.spec.containers[0].resources.limits.memory
+          value: 2Gi
