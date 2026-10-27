@@ -67,6 +67,8 @@ KEDA Prompt Processing instance for LSSTCam
 | prompt-keda.keda.redisStreams.pendingEntriesCount | string | `"1"` | Number of entries in the Pending Entries List for the specified consumer group in the Redis Stream |
 | prompt-keda.keda.redisStreams.retry | int | `30` | The time to wait (in seconds) before retrying a stream connection failure. |
 | prompt-keda.keda.redisStreams.streamName | string | `"instrument:lsstcam"` | Name of Redis Stream |
+| prompt-keda.keda.rollout.propagationPolicy | string | `"foreground"` | Kubernetes propagation policy for cleaning up existing jobs during rollout. |
+| prompt-keda.keda.rollout.strategy | string | `"immediate"` | Which Rollout Strategy KEDA will use. |
 | prompt-keda.keda.scalingStrategy | string | `"eager"` | Scaling algorithm |
 | prompt-keda.keda.successfulJobsHistoryLimit | int | `5` | How many completed jobs should be kept available in Kubernetes. |
 | prompt-keda.logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
