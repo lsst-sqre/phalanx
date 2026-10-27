@@ -10,16 +10,16 @@ Set up for documentation development
 ====================================
 
 Follow the steps at :doc:`local-environment-setup` to set up a Phalanx development environment.
-This installs tox_, the tooling for builds with isolated Python environments, and prek_, a tool for linting and formatting files.
+This installs nox_, the tooling for builds with isolated Python environments, and prek_, a tool for linting and formatting files.
 
 Compiling the documentation
 ===========================
 
-Use the tox_ ``docs`` environment for compiling the documentation:
+Use the nox_ ``docs`` session for compiling the documentation:
 
 .. prompt:: bash
 
-   tox run -e docs
+   nox -s docs
 
 The built documentation is located in the ``docs/_build/html`` directory.
 
@@ -27,7 +27,7 @@ Sphinx caches build products and in some cases you may need to delete the build 
 
 .. prompt:: bash
 
-   make clean
+   nox -s docs-clean
 
 Checking links
 ==============
@@ -36,7 +36,9 @@ Links in the documentation are validated in the GitHub Actions workflow, but you
 
 .. prompt:: bash
 
-   tox run -e docs-linkcheck
+   nox -s docs-linkcheck
+
+Be aware that Phalanx contains enough links to other sites that a link check is highly likely to encounter rate limits and therefore take a considerable length of time to run.
 
 Submitting a pull request and sharing documentation drafts
 ==========================================================

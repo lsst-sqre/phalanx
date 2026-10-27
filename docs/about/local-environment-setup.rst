@@ -64,7 +64,7 @@ From the ``phalanx`` directory, with the virtualenv from the previous step activ
 
    make init
 
-This step populates your virtual environment with Phalanx's dependencies, installs tox_ (used for testing and other build steps), and installs prek_ (used to check and sometimes reformat your changes before committing them).
+This step populates your virtual environment with Phalanx's dependencies, installs nox_ (used for testing and other build steps), and installs prek_ (used to check and sometimes reformat your changes before committing them).
 
 .. _about-helm-docs:
 
@@ -88,7 +88,7 @@ To see which binary is most appropriate for a Linux system, run :command:`uname 
    Alternately, find the binary release matching the desired version in the releases page and download that version.
 
    The required version of helm-docs will be updated periodically.
-   If :command:`tox run -e lint` creates lots of spurious changes to generated documentation, your version of helm-docs is probably out of date and should be updated to a matching version.
+   If :command:`nox -s lint` creates lots of spurious changes to generated documentation, your version of helm-docs is probably out of date and should be updated to a matching version.
 
 If you don't want to (or don't have access to) install helm-docs globally on your system, you can put the binary in the :file:`bin` directory of the virtual environment you created in :ref:`about-venv`.
 

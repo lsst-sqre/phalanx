@@ -36,6 +36,7 @@
 .. _Mend Renovate: https://www.mend.io/renovate/
 .. _multiprocessing: https://docs.python.org/3/library/multiprocessing.html
 .. _Namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+.. _nox: https://nox.thea.codes/en/stable/index.html
 .. _ObsTAP: https://www.ivoa.net/documents/ObsCore/
 .. _persistent volume: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 .. _Phalanx repository: https://github.com/lsst-sqre/phalanx
@@ -56,7 +57,6 @@
 .. _Squareone: https://squareone.lsst.io/
 .. _TAP: https://www.ivoa.net/documents/TAP/
 .. _Telegraf: https://www.influxdata.com/time-series-platform/telegraf/
-.. _tox: https://tox.wiki/en/latest/
 .. _uv: https://docs.astral.sh/uv/
 .. _UWS: https://www.ivoa.net/documents/UWS/
 .. _Uvicorn: https://uvicorn.dev/
