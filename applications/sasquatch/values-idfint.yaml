@@ -69,6 +69,27 @@ telegraf:
       timestamp_field: "timestamp"
       topicRegexps:
         - "lsst.backpack"
+    benchmark:
+      enabled: true
+      debug: true
+      database: "lsst.benchmark"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.benchmark"
+        excludePrefixes: []
+        refreshInterval: "30s"
+      timestamp_field: "start_time"
+      tags:
+        - "node"
+        - "user"
+        - "generation"
+        - "location"
+        - "butler_config"
+        - "butler_collections"
+        - "dataset_name"
+        - "display_name"
+        - "limit"
 
 kafdrop:
   ingress:
@@ -82,6 +103,7 @@ rest-proxy:
     topicPrefixes:
       - lsst.example
       - lsst.backpack
+      - lsst.benchmark
 
 chronograf:
   ingress:
