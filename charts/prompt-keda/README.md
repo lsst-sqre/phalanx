@@ -69,6 +69,8 @@ Event-driven processing of camera images
 | keda.redisStreams.pendingEntriesCount | string | `"1"` | Number of entries in the Pending Entries List for the specified consumer group in the Redis Stream |
 | keda.redisStreams.retry | int | `30` | The time to wait (in seconds) before retrying a stream connection failure. |
 | keda.redisStreams.streamName | string | `""` | Name of Redis Stream |
+| keda.rollout.propagationPolicy | string | `"foreground"` | Kubernetes propagation policy for cleaning up existing jobs during rollout. |
+| keda.rollout.strategy | string | `"immediate"` | Which Rollout Strategy KEDA will use. |
 | keda.scalingStrategy | string | `"eager"` | Scaling algorithm |
 | keda.successfulJobsHistoryLimit | int | `25` | How many completed jobs should be kept available in Kubernetes. |
 | logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
