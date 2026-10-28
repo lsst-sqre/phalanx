@@ -1,6 +1,8 @@
 image:
   tag: "sha-e94a8746f4e7786e5de7841706fe440b2d1f87e7"
 
+schedule: "0 12,15,18,21 * * *"
+
 suspend: false
 
 command: "run"
