@@ -47,6 +47,13 @@ config:
   # against how long a night-wide fetch takes.
   workers: 8
 
+  # -- Worker processes that parse pod logs. Parsing is CPU-bound and is
+  # kept out of the serving process so that a large parse (a summit night
+  # is ~540 pods and 20-35M lines) can't stall requests or live polling.
+  # Keep it below `resources.limits.cpu`, so the serving process and the
+  # live poller always have a core of their own.
+  parseWorkers: 3
+
   # -- Seconds before shutter close that a fetch window starts. This is the
   # *starting* value of an editable field, not a cap: widening a window to
   # catch a neighbouring exposure is a normal investigative move.

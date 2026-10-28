@@ -37,6 +37,11 @@ tests:
       - contains:
           path: "spec.template.spec.containers[0].env"
           content:
+            name: "RA_LOG_EXPLORER_PARSE_WORKERS"
+            value: "3"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
             name: "RA_LOG_EXPLORER_WINDOW_BEFORE_S"
             value: "5"
       - contains:
