@@ -1,5 +1,5 @@
 envEfd: base
 cycleBranch: main
 efdCredentials:
-  containerPath: /home/saluser/.lsst
+  containerPath: /home/appuser/.lsst
   secretFilename: .efdauth.json
