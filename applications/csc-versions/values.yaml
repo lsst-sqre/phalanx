@@ -65,4 +65,7 @@ global:
 envEfd:
 
 # -- The branch name for the current Cycle revision
-cyleBranch:
+cycleBranch:
+
+# -- EFD credentials file to mount into the csc-versions container.
+efdCredentials: {}

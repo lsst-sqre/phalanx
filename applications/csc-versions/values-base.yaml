@@ -1,2 +1,5 @@
 envEfd: base
-cycleBranch: tickets/OSW-1385
+cycleBranch: main
+efdCredentials:
+  containerPath: /home/saluser/.lsst
+  secretFilename: .efdauth.json
