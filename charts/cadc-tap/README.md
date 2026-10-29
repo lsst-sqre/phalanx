@@ -52,6 +52,7 @@ IVOA TAP service
 | config.maxExecutionDuration | string | `"43200"` | Maximum execution duration for TAP queries in seconds. Also used for sizing the signed result upload URL's expiration Leave empty to use the default (14400, 4 hours). |
 | config.maxQuote | string | `""` | Maximum UWS job quote in seconds. Leave empty to use the default (86400, 24 hours). |
 | config.maxRec | string | `""` | Maximum row limit (MAXREC) enforced server-side. Leave empty to use the default (100000000). |
+| config.maxUploadSize | string | `""` | Maximum size in bytes of an uploaded table (TAP_UPLOAD). Leave empty to use the default (33554432, 32 MiB). |
 | config.outputLimit | string | `""` | Output limit value for TAP queries advertised in capabilities. Leave empty to use the default (100000000). |
 | config.outputLimitUnit | string | `""` | Unit for the output limit: "byte" or "row". Leave empty to use the default ("row"). |
 | config.pg.database | string | None, must be set if backend is `pg` | Database to connect to |

@@ -244,6 +244,10 @@ config:
   # Leave empty to use the default (14400, 4 hours).
   maxExecutionDuration: "43200"
 
+  # -- Maximum size in bytes of an uploaded table (TAP_UPLOAD).
+  # Leave empty to use the default (33554432, 32 MiB).
+  maxUploadSize: ""
+
   # -- Maximum UWS job destruction time in seconds.
   # Leave empty to use the default (604800, 1 week).
   maxDestruction: ""
