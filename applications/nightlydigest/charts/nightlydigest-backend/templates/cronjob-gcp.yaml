@@ -24,7 +24,7 @@ spec:
         spec:
           initContainers:
             - name: {{ include "nightlydigest-backend.name" . }}-producer
-              image: rubincr.lsst.org/nightlydigest-backend:develop
+              image: rubincr.lsst.org/nightlydigest-backend:alpha
               imagePullPolicy: {{ .Values.image.pullPolicy }}
               command:
                 - /bin/sh
