@@ -28,7 +28,7 @@ Ingress controller
 | ingress-nginx.controller.image.image | string | `"lsst-sqre/ingress-nginx-controller"` |  |
 | ingress-nginx.controller.image.pullPolicy | string | `"IfNotPresent"` |  |
 | ingress-nginx.controller.image.registry | string | `"ghcr.io"` |  |
-| ingress-nginx.controller.image.tag | string | `"v1.15.6-lsstsqre-chainguard"` |  |
+| ingress-nginx.controller.image.tag | string | `"v1.15.8-lsstsqre-chainguard"` |  |
 | ingress-nginx.controller.metrics.enabled | bool | `true` | Enable metrics reporting via Prometheus |
 | ingress-nginx.controller.podLabels | object | See `values.yaml` | Add labels used by `NetworkPolicy` objects to restrict access to the ingress and thus ensure that auth subrequest handlers run |
 | ingress-nginx.controller.resources | object | See `values.yaml` | Resource requests and limits for ingress-nginx controller |
