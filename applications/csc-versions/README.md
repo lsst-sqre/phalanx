@@ -16,7 +16,7 @@ Dashboard for currently running versions of CSCs
 | config.pathPrefix | string | `"/csc-versions"` | URL path prefix |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
 | cycleBranch | string | `nil` | The branch name for the current Cycle revision |
-| efdCredentials | object | `{}` | EFD credentials file to mount into the csc-versions container. |
+| efdCredentials | object | `{"containerPath":"/home/appuser/.lsst","secretFilename":".efdauth.json"}` | EFD credentials file to mount into the csc-versions container. |
 | envEfd | string | `nil` | The Name of the EFD instance. |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

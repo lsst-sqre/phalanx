@@ -1,5 +1,2 @@
 envEfd: tucson_teststand
 cycleBranch: main
-efdCredentials:
-  containerPath: /home/appuser/.lsst
-  secretFilename: .efdauth.json

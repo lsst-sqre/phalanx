@@ -68,4 +68,6 @@ envEfd:
 cycleBranch:
 
 # -- EFD credentials file to mount into the csc-versions container.
-efdCredentials: {}
+efdCredentials:
+  containerPath: /home/appuser/.lsst
+  secretFilename: .efdauth.json
