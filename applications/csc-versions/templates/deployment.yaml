@@ -26,17 +26,21 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
-          {{- if .Values.config.slackAlerts }}
           env:
+          {{- if .Values.config.slackAlerts }}
             - name: "CSC_VERSIONS_SLACK_WEBHOOK"
               valueFrom:
                 secretKeyRef:
                   name: "csc-versions"
                   key: "slack-webhook"
+          {{- end }}
             - name: ENV_EFD
               value: {{ .Values.envEfd }}
             - name: CYCLE_BRANCH
               value: {{.Values.cycleBranch}}
+          {{- if .Values.efdCredentials }}
+            - name: EFDAUTH
+              value: "{{ .Values.efdCredentials.containerPath }}/{{ .Values.efdCredentials.secretFilename }}"
           {{- end }}
           envFrom:
             - configMapRef:
@@ -59,6 +63,48 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+          {{- if .Values.efdCredentials }}
+          volumeMounts:
+          - name: efd-credentials
+            mountPath: {{ .Values.efdCredentials.containerPath }}/{{ .Values.efdCredentials.secretFilename }}
+            subPath: {{ .Values.efdCredentials.secretFilename }}
+            readOnly: true
+          {{- end }}
+      {{- if .Values.efdCredentials }}
+      initContainers:
+        - name: "efd-credentials-fixer"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+          - "/bin/sh"
+          - "-c"
+          - |
+            cp /secrets-raw/{{ .Values.efdCredentials.secretFilename }} /secrets/
+            chmod 0600 /secrets/{{ .Values.efdCredentials.secretFilename }}
+          volumeMounts:
+          - name: efd-credentials-raw
+            mountPath: /secrets-raw
+            readOnly: true
+          - name: efd-credentials
+            mountPath: /secrets
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+      volumes:
+        - name: efd-credentials
+          emptyDir:
+            medium: "Memory"
+        - name: efd-credentials-raw
+          secret:
+            secretName: "csc-versions"
+            defaultMode: 0440
+            items:
+              - key: {{ .Values.efdCredentials.secretFilename | quote }}
+                path: {{ .Values.efdCredentials.secretFilename | quote }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -71,3 +117,4 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
+        fsGroup: 1000
