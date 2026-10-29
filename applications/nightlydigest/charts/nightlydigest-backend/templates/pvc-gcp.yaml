@@ -9,7 +9,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 40Gi
   storageClassName: wekafs--sdf-k8s01
 {{- end }}
 
