@@ -4,6 +4,14 @@ config:
   allowSubdomains: true
   slackAlerts: true
 
+  database:
+    type: "cloudsql"
+    project: "science-platform-int-dc5d"
+    region: "us-central1"
+    instance: "science-platform-int-8f439af2"
+    database: "gafaelfawr"
+    serviceAccount: "gafaelfawr@science-platform-int-dc5d.iam.gserviceaccount.com"
+
   metrics:
     enabled: true
 
@@ -85,11 +93,6 @@ config:
       - "g_admins"
     "write:obsforge":
       - "g_admins"
-
-cloudsql:
-  enabled: true
-  instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
-  serviceAccount: "gafaelfawr@science-platform-int-dc5d.iam.gserviceaccount.com"
 
 # Use the CSI storage class so that we can use snapshots.
 redis:

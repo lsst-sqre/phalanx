@@ -3,13 +3,16 @@ redis:
   persistence:
     storageClass: "standard-rwo"
 
-cloudsql:
-  enabled: true
-  instanceConnectionName: "roundtable-prod-f6fd:us-central1:roundtable-prod-f119ac3d"
-  serviceAccount: "gafaelfawr@roundtable-prod-f6fd.iam.gserviceaccount.com"
-
 config:
   slackAlerts: false
+
+  database:
+    type: "cloudsql"
+    project: "roundtable-prod-f6fd"
+    region: "us-central1"
+    instance: "roundtable-prod-f119ac3d"
+    database: "gafaelfawr"
+    serviceAccount: "gafaelfawr@roundtable-prod-f6fd.iam.gserviceaccount.com"
 
   sentry:
     enabled: true
