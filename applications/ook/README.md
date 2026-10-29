@@ -54,7 +54,7 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
-| image.pullPolicy | string | `"Always"` | Image pull policy |
+| image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"ghcr.io/lsst-sqre/ook"` | Squarebot image repository |
 | image.tag | string | The appVersion of the chart | Tag of the image |
 | imagePullSecrets | list | `[]` | Secret names to use for all Docker pulls |
