@@ -1,0 +1,5 @@
+apiVersion: v2
+name: benchmark
+version: 1.0.0
+description: Sasquatch configuration for benchmark metrics
+type: application

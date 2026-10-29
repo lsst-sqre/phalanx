@@ -504,6 +504,9 @@ redis:
   # -- Pod annotations for the ephemeral Redis pod
   podAnnotations: {}
 
+benchmark:
+  enabled: false
+
 global:
   # -- Host name for ingress
   # @default -- Set by Argo CD

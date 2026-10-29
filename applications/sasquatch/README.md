@@ -24,6 +24,7 @@ Rubin Observatory's telemetry service
 | app-metrics.enabled | bool | `false` | Enable the app-metrics subchart with topic, user, and telegraf configurations |
 | backpack.enabled | bool | `false` | Whether to enable the backpack subchart |
 | backup.enabled | bool | `false` | Whether to enable the backups subchart |
+| benchmark.enabled | bool | `false` |  |
 | chronograf.enabled | bool | `true` | Whether to enable Chronograf |
 | chronograf.env | object | See `values.yaml` | Additional environment variables for Chronograf |
 | chronograf.envFromSecret | string | `"sasquatch"` | Name of secret to use. The keys `generic_client_id`, `generic_client_secret`, and `token_secret` should be set. |
@@ -235,6 +236,7 @@ Rubin Observatory's telemetry service
 | backup.restore.enabled | bool | `false` | Whether to enable the restore deployment |
 | backup.schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
 | backup.tolerations | list | `[]` | Tolerations for the backups deployment pod |
+| benchmark.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | consdb.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | control-system.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | control-system.topics | list | `[]` | Create lsst.s3.* related topics for the ts-salkafka user. |

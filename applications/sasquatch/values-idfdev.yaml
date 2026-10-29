@@ -159,6 +159,27 @@ telegraf:
       timestamp_field: "timestamp"
       topicRegexps:
         - "lsst.backpack"
+    benchmark:
+      enabled: true
+      debug: true
+      database: "lsst.benchmark"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.benchmark"
+        excludePrefixes: []
+        refreshInterval: "30s"
+      timestamp_field: "start_time"
+      tags:
+        - "node"
+        - "user"
+        - "generation"
+        - "location"
+        - "butler_config"
+        - "butler_collections"
+        - "dataset_name"
+        - "display_name"
+        - "limit"
 
 kafdrop:
   cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=true --topic.createEnabled=true"
@@ -174,6 +195,7 @@ rest-proxy:
       - lsst.example
       - lsst.tap
       - lsst.backpack
+      - lsst.benchmark
 
 chronograf:
   ingress:
@@ -259,4 +281,7 @@ trickster:
       log_level: "debug"
 
 redis:
+  enabled: true
+
+benchmark:
   enabled: true
