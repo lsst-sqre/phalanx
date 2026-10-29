@@ -1,0 +1,6 @@
+config:
+  lsstSite: "summit"
+
+efdCredentials:
+  containerPath: "/etc/weathernbeats/efd"
+  secretFilename: ".efdauth.json"

@@ -43,6 +43,7 @@ applications:
   strimzi-access-operator: true
   strimzi-registry-operator: true
   uws: true
+  weathernbeats: true
 
 namespaceLabels:
   sasquatch:
