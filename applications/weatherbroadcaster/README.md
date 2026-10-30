@@ -13,6 +13,7 @@ Publish weather station data for MeteoBlue.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the weatherbroadcaster deployment pod |
+| config.efdName | string | `"usdf_efd"` | Repertoire EFD database label |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/weatherbroadcaster"` | URL path prefix |

@@ -1,4 +1,7 @@
 # USDF Prod config
+config:
+  efdName: "usdf_efd"
+
 ingress:
   auth:
     enabled: false

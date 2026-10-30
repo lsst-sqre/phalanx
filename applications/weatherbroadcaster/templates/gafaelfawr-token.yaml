@@ -1,0 +1,10 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: "weatherbroadcaster-token"
+  labels:
+    {{- include "weatherbroadcaster.labels" . | nindent 4 }}
+spec:
+  service: "bot-weatherbroadcaster"
+  scopes:
+    - "read:sasquatch"

@@ -1,4 +1,7 @@
 # USDF Dev config
+config:
+  efdName: "usdfdev_efd"
+
 ingress:
   auth:
     enabled: false
