@@ -1,6 +1,6 @@
 # USDF Dev config
 config:
-  efdName: "usdfdev_efd"
+  efdName: "usdf_efd"
 
 ingress:
   auth:
