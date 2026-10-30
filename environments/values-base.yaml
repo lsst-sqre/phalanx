@@ -53,7 +53,7 @@ namespaceLabels:
     k8up-enabled: "true"
 
 controlSystem:
-  imageTag: "c0044"
+  imageTag: "c0045"
   siteTag: "base"
   s3EndpointUrl: "https://s3.ls.lsst.org"
 
