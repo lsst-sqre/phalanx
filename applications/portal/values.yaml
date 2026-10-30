@@ -61,6 +61,9 @@ config:
   # -- How long results should be retained before being deleted
   cleanupInterval: "36h"
 
+  # -- What GID to run as; the standard image uses 91
+  gid: 91
+
   # -- URL for master list of Rubin-featured HiPS datasets
   # @default -- `/api/hips/list` in the local Science Platform
   hipsListUrl: ""
@@ -75,6 +78,9 @@ config:
 
   # -- Whether to show information about the logged-in user
   showUserInfo: "true"
+
+  # -- What UID to run as; the standard image uses 91
+  uid: 91
 
   # -- Search path for FITS files
   visualizeFitsSearchPath: "/datasets"
@@ -143,6 +149,55 @@ redis:
 
   # -- Affinity rules for the Redis pod
   affinity: {}
+
+cleanup:
+  # -- Whether to enable automated cleanup of shared workarea.
+  enabled: false
+
+  # -- Crontab entry for when to run.
+  schedule: "22 * * * *"
+
+  # -- Threshold percentage at which to run cleanup.
+  threshold: 80
+
+  # -- Mountpoint
+  mountpoint: "/mnt/cleanup"
+
+  # -- Volume name
+  volumeName: "firefly-shared-workarea"
+
+  image:
+    # -- Firefly cleanup image to use
+    repository: "ghcr.io/lsst-sqre/firefly-cleanup"
+
+    # -- Pull policy for the Firefly cleanup image
+    pullPolicy: "Always"
+
+    # -- Tag of Portal image to use
+    # @default -- The appVersion of the chart
+    tag: "latest"
+
+  # -- Affinity rules for the cleanup cronjob(s).
+  affinity: {}
+
+  # -- Resource limits and requests for the cleanup cronjob(s)
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "50m"
+      memory: "50Mi"
+
+  # -- Tolerations for the cleanup cronjob(s).
+  # @default -- Tolerate GKE arm64 taint
+  tolerations:
+    - key: "kubernetes.io/arch"
+      operator: "Equal"
+      value: "arm64"
+      effect: "NoSchedule"
+
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

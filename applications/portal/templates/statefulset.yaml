@@ -269,9 +269,9 @@ spec:
         - name: "pull-secret"
       securityContext:
         runAsNonRoot: true
-        runAsUser: 91
-        runAsGroup: 91
-        fsGroup: 91
+        runAsUser: {{ .Values.config.uid }}
+        runAsGroup: {{ .Values.config.gid }}
+        fsGroup: {{ .Values.config.gid }}
       volumes:
         - name: "alerts"
           configMap:

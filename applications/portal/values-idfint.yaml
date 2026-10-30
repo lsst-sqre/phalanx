@@ -27,3 +27,6 @@ redis:
 resources:
   limits:
     memory: "30Gi"
+
+cleanup:
+  enabled: true
