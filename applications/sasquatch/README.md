@@ -887,6 +887,7 @@ Rubin Observatory's telemetry service
 | telegraf.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
 | telegraf.kafkaConsumers.test.max_processing_time | string | "1s" | Maximum processing time for a single message. |
 | telegraf.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
+| telegraf.kafkaConsumers.test.measurementRenameRegex | list | `[]` | List of regular expression renames applied to measurement names before writing to InfluxDB. Each entry has a `pattern` and a `replacement`. |
 | telegraf.kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
 | telegraf.kafkaConsumers.test.metric_buffer_limit | int | 100000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
 | telegraf.kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
@@ -945,6 +946,7 @@ Rubin Observatory's telemetry service
 | telegraf-local.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
 | telegraf-local.kafkaConsumers.test.max_processing_time | string | "1s" | Maximum processing time for a single message. |
 | telegraf-local.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
+| telegraf-local.kafkaConsumers.test.measurementRenameRegex | list | `[]` | List of regular expression renames applied to measurement names before writing to InfluxDB. Each entry has a `pattern` and a `replacement`. |
 | telegraf-local.kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
 | telegraf-local.kafkaConsumers.test.metric_buffer_limit | int | 100000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
 | telegraf-local.kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
@@ -1003,6 +1005,7 @@ Rubin Observatory's telemetry service
 | telegraf-standby.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
 | telegraf-standby.kafkaConsumers.test.max_processing_time | string | "1s" | Maximum processing time for a single message. |
 | telegraf-standby.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
+| telegraf-standby.kafkaConsumers.test.measurementRenameRegex | list | `[]` | List of regular expression renames applied to measurement names before writing to InfluxDB. Each entry has a `pattern` and a `replacement`. |
 | telegraf-standby.kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
 | telegraf-standby.kafkaConsumers.test.metric_buffer_limit | int | 100000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
 | telegraf-standby.kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
