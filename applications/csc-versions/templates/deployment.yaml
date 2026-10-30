@@ -96,7 +96,7 @@ spec:
                 - "all"
             readOnlyRootFilesystem: true
       volumes:
-        - repo-cache:
+        - name: repo-cache
           emptyDir: {}
         - name: efd-credentials
           emptyDir:
