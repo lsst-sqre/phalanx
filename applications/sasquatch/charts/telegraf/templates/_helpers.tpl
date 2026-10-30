@@ -119,8 +119,8 @@ data:
       [[processors.regex.metric_rename]]
         pattern = {{ .pattern | squote }}
         replacement = {{ .replacement | squote }}
-        {{- end }}
       {{- end }}
+    {{- end }}
     {{- $database := .value.database }}
     {{- $timestampField := "private_efdStamp" }}
     {{- if hasKey .value "timestamp_field" }}
