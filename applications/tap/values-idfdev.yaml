@@ -7,6 +7,7 @@ cadc-tap:
       enabled: true
       rules:
         - "ivoa.ObsCore:access_url"
+    maxUploadSize: 157286400
 
   cloudsql:
     enabled: true
