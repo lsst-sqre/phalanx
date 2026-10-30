@@ -36,8 +36,8 @@ spec:
           {{- end }}
             - name: ENV_EFD
               value: {{ .Values.envEfd }}
-            - name: CYCLE_BRANCH
-              value: {{.Values.cycleBranch}}
+            - name: REPO_DIR
+              value: "/repo-cache/ts_cycle_build.git"
           {{- if .Values.efdCredentials }}
             - name: EFDAUTH
               value: "{{ .Values.efdCredentials.containerPath }}/{{ .Values.efdCredentials.secretFilename }}"
@@ -65,6 +65,8 @@ spec:
             readOnlyRootFilesystem: true
           {{- if .Values.efdCredentials }}
           volumeMounts:
+          - name: repo-cache
+            mountPath: /repo-cache
           - name: efd-credentials
             mountPath: {{ .Values.efdCredentials.containerPath }}/{{ .Values.efdCredentials.secretFilename }}
             subPath: {{ .Values.efdCredentials.secretFilename }}
@@ -94,6 +96,8 @@ spec:
                 - "all"
             readOnlyRootFilesystem: true
       volumes:
+        - name: repo-cache
+          emptyDir: {}
         - name: efd-credentials
           emptyDir:
             medium: "Memory"
