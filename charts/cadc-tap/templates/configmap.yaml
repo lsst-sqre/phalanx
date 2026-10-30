@@ -150,6 +150,9 @@ data:
     {{- with .Values.config.maxExecutionDuration }}
     tap.maxExecutionDuration={{ . }}
     {{- end }}
+    {{- with .Values.config.maxUploadSize }}
+    tap.maxUploadSize={{ . }}
+    {{- end }}
     {{- with .Values.config.maxDestruction }}
     tap.maxDestruction={{ . }}
     {{- end }}
