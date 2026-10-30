@@ -250,6 +250,8 @@ debug:
   exportOutputs: true
   # -- Whether `dax_apdb` should run in debug mode and log metrics.
   monitorDaxApdb: false
+  # -- Log per-file transfer details when slow or failing. 0 disables.
+  slowTransferLogSeconds: 0
 
 
 # -- Kubernetes resource requests and limits
