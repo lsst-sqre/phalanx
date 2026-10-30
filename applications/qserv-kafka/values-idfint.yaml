@@ -12,3 +12,6 @@ config:
 slowWorker:
   autoscaling:
     maxReplicas: 50
+  resources:
+    limits:
+      memory: "2Gi"
