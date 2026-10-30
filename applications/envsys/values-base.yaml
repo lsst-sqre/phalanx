@@ -259,10 +259,10 @@ epm-generator-ess305-sim:
     RUN_ARG: 305 --simulate
   resources:
     requests:
-      cpu: 50m
+      cpu: 100m
       memory: 160Mi
     limits:
-      cpu: 250m
+      cpu: 500m
       memory: 320Mi
 
 epm-generator-ess306-sim:
@@ -274,10 +274,10 @@ epm-generator-ess306-sim:
     RUN_ARG: 306 --simulate
   resources:
     requests:
-      cpu: 50m
+      cpu: 100m
       memory: 160Mi
     limits:
-      cpu: 250m
+      cpu: 500m
       memory: 320Mi
 
 hvac-sim:
@@ -717,5 +717,5 @@ weatherforecast:
       cpu: 100m
       memory: 250Mi
     limits:
-      cpu: 500m
+      cpu: 1
       memory: 512Mi
