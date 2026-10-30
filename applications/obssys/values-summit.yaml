@@ -27,11 +27,12 @@ atqueue:
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
-  <<: *butler-lfa-combo
+  <<: [*butler-lfa-combo, *efd-auth]
   secretFixup:
     containerPath: *secret-file-path
     filenames:
     - *bs-fn
+    - *efd-credentials-filename
   nfsMountpoint:
   - name: auxtel-gen3-data
     containerPath: /repo/LATISS
@@ -150,11 +151,12 @@ mtqueue:
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
-  <<: *butler-lfa-combo
+  <<: [*butler-lfa-combo, *efd-auth]
   secretFixup:
     containerPath: *secret-file-path
     filenames:
     - *bs-fn
+    - *efd-credentials-filename
   nfsMountpoint:
   - name: auxtel-gen3-data
     containerPath: /repo/LATISS
@@ -252,11 +254,12 @@ ocsqueue:
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
-  <<: *butler-lfa-combo
+  <<: [*butler-lfa-combo, *efd-auth]
   secretFixup:
     containerPath: *secret-file-path
     filenames:
     - *bs-fn
+    - *efd-credentials-filename
   nfsMountpoint:
   - name: auxtel-gen3-data
     containerPath: /repo/LATISS

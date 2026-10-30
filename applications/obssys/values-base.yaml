@@ -29,11 +29,12 @@ atqueue:
   envSecrets:
   - name: USER_USER_PASS
     key: user-user-pass
-  <<: *butler-lfa-combo
+  <<: [*butler-lfa-combo, *efd-auth]
   secretFixup:
     containerPath: *secret-file-path
     filenames:
     - *bs-fn
+    - *efd-credentials-filename
   nfsMountpoint:
   - name: project-shared
     containerPath: /project
@@ -118,11 +119,12 @@ mtqueue:
   envSecrets:
   - name: USER_USER_PASS
     key: user-user-pass
-  <<: *butler-lfa-combo
+  <<: [*butler-lfa-combo, *efd-auth]
   secretFixup:
     containerPath: *secret-file-path
     filenames:
     - *bs-fn
+    - *efd-credentials-filename
   nfsMountpoint:
   - name: project-shared
     containerPath: /project
@@ -207,11 +209,12 @@ ocsqueue:
   envSecrets:
   - name: USER_USER_PASS
     key: user-user-pass
-  <<: *butler-lfa-combo
+  <<: [*butler-lfa-combo, *efd-auth]
   secretFixup:
     containerPath: *secret-file-path
     filenames:
     - *bs-fn
+    - *efd-credentials-filename
   nfsMountpoint:
   - name: project-shared
     containerPath: /project
