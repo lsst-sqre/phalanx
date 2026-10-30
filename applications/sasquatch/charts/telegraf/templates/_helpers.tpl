@@ -112,8 +112,15 @@ data:
       omit_hostname = true
       skip_processors_after_aggregators = false
       logformat = "structured"
-
-
+    {{- with .value.measurementRenameRegex }}
+    [[processors.regex]]
+      namedrop = ["telegraf_*"]
+      {{- range . }}
+      [[processors.regex.metric_rename]]
+        pattern = {{ .pattern | squote }}
+        replacement = {{ .replacement | squote }}
+      {{- end }}
+    {{- end }}
     {{- $database := .value.database }}
     {{- $timestampField := "private_efdStamp" }}
     {{- if hasKey .value "timestamp_field" }}
