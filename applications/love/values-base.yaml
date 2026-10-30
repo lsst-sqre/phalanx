@@ -521,6 +521,10 @@ love-producer:
     csc: ESS:309 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
     <<: *love-producer-envsys-resources
+  - name: aurora-cloud-sensor-ess307
+    csc: ESS:307 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
+    <<: *love-producer-envsys-resources
   - name: auxteless201
     csc: ESS:201 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription

@@ -4,7 +4,7 @@ x-efd-auth: &efd-auth
     secretFilename: &efd-credentials-filename .efdauth.json
 
 aurora-cloud-sensor-ess307-sim:
-  enabled: false
+  enabled: true
   classifier: ess307
   image:
     repository: ts-dockerhub.lsst.org/ess
