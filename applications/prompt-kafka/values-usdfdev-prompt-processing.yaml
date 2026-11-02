@@ -51,15 +51,6 @@ butler-writer:
       replicas: 3
       retention: 1209600000  # milliseconds, = 2 weeks
 
-kafdrop:
-  enabled: true
-  ingress:
-    enabled: true
-    hostname: usdfdev-prompt-processing.slac.stanford.edu
-
-prompt-publication:
-  enabled: true
-
 cmservice:
   enabled: true
   topics:
@@ -73,3 +64,12 @@ cmservice:
       retention: 1209600000  # milliseconds, = 2 weeks
   transactionalIds:
     - name: cmservice-output
+
+kafdrop:
+  enabled: true
+  ingress:
+    enabled: true
+    hostname: usdfdev-prompt-processing.slac.stanford.edu
+
+prompt-publication:
+  enabled: true
