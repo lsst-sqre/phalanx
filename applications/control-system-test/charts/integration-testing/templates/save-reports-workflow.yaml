@@ -10,10 +10,7 @@ spec:
   artifactRepositoryRef:
     configMap: integration-test-controller-configmap
     key: artifactRepository
-  volumes:
-  - name: testreports
-    persistentVolumeClaim:
-      claimName: {{ .Values.persistentVolume.claimName }}
+  {{- include "integration-testing.volumes" . | nindent 2 }}
   podMetadata:
     labels:
       argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
