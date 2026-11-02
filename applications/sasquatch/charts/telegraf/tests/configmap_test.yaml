@@ -99,3 +99,23 @@ tests:
       - failedTemplate:
           errorMessage: >-
             kafkaConsumers.test.topicDiscovery.refreshInterval must be a positive duration ending in s, m, or h
+
+  - it: renders measurement regex renames
+    set:
+      kafkaConsumers.test.enabled: true
+      kafkaConsumers.test.measurementRenameRegex:
+        - pattern: '^lsst\.sal\.(.+)$'
+          replacement: 'lsst.${1}'
+    asserts:
+      - matchRegex:
+          path: data["telegraf.conf"]
+          pattern: |-
+            \Q[[processors.regex.metric_rename]]\E
+      - matchRegex:
+          path: data["telegraf.conf"]
+          pattern: |-
+            \Qpattern = '^lsst\.sal\.(.+)$'\E
+      - matchRegex:
+          path: data["telegraf.conf"]
+          pattern: |-
+            \Qreplacement = 'lsst.${1}'\E

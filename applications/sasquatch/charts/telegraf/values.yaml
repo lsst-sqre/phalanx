@@ -180,6 +180,11 @@ kafkaConsumers:
     # InfluxDB.
     tags: []
 
+    # -- List of regular expression renames applied to measurement names
+    # before writing to InfluxDB. Each entry has a `pattern` and a
+    # `replacement`.
+    measurementRenameRegex: []
+
     # -- List of regular expressions to specify the Kafka topics consumed by
     # this agent.
     topicRegexps:

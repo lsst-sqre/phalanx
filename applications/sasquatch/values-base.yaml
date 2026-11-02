@@ -228,7 +228,35 @@ telegraf:
         - "lsst.sal.ATHeaderService"
         - "lsst.sal.ATOODS"
         - "lsst.sal.ATSpectrograph"
-        - "lsst.sal.ATCamera"
+        - "lsst.sal.ATCamera.command"
+        - "lsst.sal.ATCamera.logevent"
+        - "lsst.sal.ATCamera.ackcmd"
+    latiss-telemetry:
+      enabled: true
+      database: "lsst.ATCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags:
+        - "Agent"
+        - "Aspic"
+        - "Buffer"
+        - "Location"
+        - "Raft"
+        - "Reb"
+        - "Sensor"
+        - "Source"
+        - "VersionType"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.sal.ATCamera."
+        excludePrefixes:
+          - "lsst.sal.ATCamera.command"
+          - "lsst.sal.ATCamera.logevent"
+          - "lsst.sal.ATCamera.ackcmd"
+      measurementRenameRegex:
+        - pattern: '^lsst\.sal\.ATCamera\.(.+)$'
+          replacement: 'lsst.ATCamera.${1}'
     m1m3:
       enabled: true
       database: "efd"
@@ -344,7 +372,52 @@ telegraf:
         - "lsst.sal.MTHeaderService"
         - "lsst.sal.MTOODS"
         - "lsst.sal.WFOODS"
-        - "lsst.sal.MTCamera"
+        - "lsst.sal.MTCamera.command"
+        - "lsst.sal.MTCamera.logevent"
+        - "lsst.sal.MTCamera.ackcmd"
+    lsstcam-telemetry:
+      enabled: true
+      database: "lsst.MTCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags:
+        - "Agent"
+        - "Aspic"
+        - "Axis"
+        - "Bay"
+        - "Buffer"
+        - "Canbus"
+        - "Cip"
+        - "Clamp"
+        - "Cold"
+        - "Controller"
+        - "Cryo"
+        - "Hardware"
+        - "Hip"
+        - "Hook"
+        - "Latch"
+        - "Location"
+        - "Ps"
+        - "RTD"
+        - "Raft"
+        - "Reb"
+        - "Segment"
+        - "Sensor"
+        - "Socket"
+        - "Source"
+        - "Truck"
+        - "VersionType"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.sal.MTCamera."
+        excludePrefixes:
+          - "lsst.sal.MTCamera.command"
+          - "lsst.sal.MTCamera.logevent"
+          - "lsst.sal.MTCamera.ackcmd"
+      measurementRenameRegex:
+        - pattern: '^lsst\.sal\.MTCamera\.(.+)$'
+          replacement: 'lsst.MTCamera.${1}'
     calsys:
       enabled: true
       database: "efd"
@@ -362,58 +435,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps:
         - "lsst.sal.MTVMS"
-    # CCS connectors (experimental) data is being written on separate databases for now
-    atcamera:
-      enabled: true
-      database: "lsst.ATCamera"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      tags:
-        - "Agent"
-        - "Aspic"
-        - "Location"
-        - "Raft"
-        - "Reb"
-        - "Sensor"
-        - "Source"
-        - "VersionType"
-      topicRegexps:
-        - "lsst.ATCamera"
-    mtcamera:
-      enabled: true
-      database: "lsst.MTCamera"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      tags:
-        - "Agent"
-        - "Aspic"
-        - "Axis"
-        - "Bay"
-        - "Buffer"
-        - "Canbus"
-        - "Cip"
-        - "Clamp"
-        - "Cold"
-        - "Controller"
-        - "Cryo"
-        - "Gateway"
-        - "Hardware"
-        - "Hip"
-        - "Hook"
-        - "Latch"
-        - "Location"
-        - "Ps"
-        - "RTD"
-        - "Raft"
-        - "Reb"
-        - "Segment"
-        - "Sensor"
-        - "Socket"
-        - "Source"
-        - "Truck"
-        - "VersionType"
-      topicRegexps:
-        - "lsst.MTCamera"
   resources:
     limits:
       cpu: "2"
