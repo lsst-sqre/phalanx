@@ -132,10 +132,10 @@ config:
   # batch size in rows is this value divided by the column count.
   parquetBatchCells: 250000
 
-  # -- Target number of cells (rows times columns) per Parquet row group. The
-  # per-result row group size in rows is this value divided by the column
-  # count, and never smaller than the batch size.
-  parquetRowGroupCells: 5000000
+  # -- Target size in bytes of the uncompressed Arrow data in each Parquet row
+  # group. A whole row group is held in memory while it is written, so peak
+  # encoder memory is a few times this value.
+  parquetRowGroupBytes: 33554432
 
   # -- Size of the Redis connection pool. This should be set to
   # `jobRunBatchSize` plus some extra connections for the monitor, cancel

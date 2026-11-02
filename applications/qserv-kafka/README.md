@@ -32,7 +32,7 @@ Qserv Kafka bridge
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.parquetBatchBytes | int | `33554432` | Approximate size in bytes of the row data to accumulate before converting it to an Arrow record batch when encoding VOParquet. Python object overhead is not included. Batches are also limited by `parquetBatchCells`. |
 | config.parquetBatchCells | int | `250000` | Target number of cells (rows times columns) to accumulate before converting to an Arrow record batch when encoding Parquet. The per-result batch size in rows is this value divided by the column count. |
-| config.parquetRowGroupBytes | int | `134217728` | Target size in bytes of the uncompressed Arrow data in each Parquet row group. A whole row group is held in memory while it is written, so peak encoder memory is a few times this value. |
+| config.parquetRowGroupBytes | int | `33554432` | Target size in bytes of the uncompressed Arrow data in each Parquet row group. A whole row group is held in memory while it is written, so peak encoder memory is a few times this value. |
 | config.qservDatabaseConnectTimeout | int | `10` | Timeout for connecting to the Qserv MySQL database in seconds |
 | config.qservDatabaseOverflow | int | `20` | Extra database connections that may be opened in excess of the pool size to handle surges in load. This is used primarily by the frontend for jobs that complete immediately. |
 | config.qservDatabasePoolSize | int | `10` | Database pool size. This is the number of MySQL connections that will be held open regardless of load. This should generally be set to the same as `maxWorkerJobs`. |
