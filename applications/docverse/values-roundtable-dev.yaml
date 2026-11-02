@@ -1,7 +1,3 @@
-image:
-  tag: "tickets-DM-56907-excluded-paths"
-  pullPolicy: "Always"
-
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://docverse@localhost/docverse"
