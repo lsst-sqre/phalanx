@@ -53,6 +53,7 @@ data:
   {{- end }}
   DOCVERSE_LIFECYCLE_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.lifecycleSeconds | quote }}
   DOCVERSE_PURGATORY_CLEANUP_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.purgatoryCleanupSeconds | quote }}
+  DOCVERSE_EXCLUDED_PATH_SCRUB_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.excludedPathScrubSeconds | quote }}
   DOCVERSE_DASHBOARD_BUILD_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.dashboardBuildSeconds | quote }}
   DOCVERSE_PUBLISH_EDITION_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.publishEditionSeconds | quote }}
   DOCVERSE_BUILD_PROCESSING_REAPER_THRESHOLD_SECONDS: {{ .Values.config.reaperThresholds.buildProcessingSeconds | quote }}
