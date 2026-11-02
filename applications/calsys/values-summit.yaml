@@ -1,7 +1,7 @@
 atmonochromator:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/atmonochromator
   resources:
     limits:
@@ -14,7 +14,7 @@ atmonochromator:
 atwhitelight:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/atwhitelight
   resources:
     limits:
@@ -27,7 +27,7 @@ atwhitelight:
 cbp:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/cbp
   resources:
     limits:
@@ -40,7 +40,7 @@ cbp:
 electrometer101:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/electrometer
   env:
     RUN_ARG: 101
@@ -61,7 +61,7 @@ electrometer101:
 electrometer102:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/electrometer
   env:
     RUN_ARG: 102
@@ -82,7 +82,7 @@ electrometer102:
 electrometer103:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/electrometer
   env:
     RUN_ARG: 103
@@ -103,7 +103,7 @@ electrometer103:
 electrometer201:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/electrometer
   env:
     RUN_ARG: 201
@@ -124,7 +124,7 @@ electrometer201:
 ledprojector:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/ledprojector
   resources:
     limits:
@@ -137,7 +137,7 @@ ledprojector:
 linearstage101:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/linearstage
   env:
     RUN_ARG: 101
@@ -152,7 +152,7 @@ linearstage101:
 linearstage102:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/linearstage
   env:
     RUN_ARG: 102
@@ -167,7 +167,7 @@ linearstage102:
 linearstage103:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/linearstage
   env:
     RUN_ARG: 103
@@ -182,7 +182,7 @@ linearstage103:
 linearstage104:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/linearstage
   env:
     RUN_ARG: 104
@@ -197,7 +197,7 @@ linearstage104:
 mtreflector:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/mtreflector
   resources:
     limits:
@@ -211,7 +211,7 @@ simulation-gencam:
   enabled: true
   classifier: genericcamera1
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/genericcamera
   env:
     RUN_ARG: 1
@@ -236,7 +236,7 @@ simulation-gencam:
 tunablelaser:
   enabled: true
   image:
-    revision: 13
+    revision: 15
     repository: ts-dockerhub.lsst.org/tunablelaser
   resources:
     limits:
