@@ -44,7 +44,7 @@ jobs:
         env:
           GOBIN: /usr/local/bin/
 
-      - uses: astral-sh/setup-uv@v10.3.2
+      - uses: astral-sh/setup-uv@v10.3.3
 
       - name: Run linters
         run: uv run --only-group=nox nox -s lint
@@ -63,7 +63,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: astral-sh/setup-uv@v10.3.2
+      - uses: astral-sh/setup-uv@v10.3.3
         with:
           python-version: ${{ matrix.python }}
 
@@ -97,7 +97,7 @@ jobs:
           https://github.com/stackrox/kube-linter/releases/download/v${{ env.KUBE_LINTER_VERSION }}/kube-linter-linux.tar.gz
           | sudo tar -xz -C /usr/local/bin kube-linter
 
-      - uses: astral-sh/setup-uv@v10.3.2
+      - uses: astral-sh/setup-uv@v10.3.3
 
       - name: Run Phalanx Helm linter
         run: uv run --only-group=nox nox -s phalanx-lint
@@ -170,7 +170,7 @@ jobs:
           # Ensure the documentation gets the right version.
           fetch-depth: 0
 
-      - uses: astral-sh/setup-uv@v10.3.2
+      - uses: astral-sh/setup-uv@v10.3.3
 
       - name: Install graphviz
         run: |
