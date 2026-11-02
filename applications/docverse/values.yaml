@@ -279,6 +279,9 @@ config:
     # -- Stuck-run reaper threshold, in seconds, for purgatory_cleanup jobs
     # (maintenance pool).
     purgatoryCleanupSeconds: 21600
+    # -- Stuck-run reaper threshold, in seconds, for excluded_path_scrub jobs
+    # (maintenance pool).
+    excludedPathScrubSeconds: 21600
     # -- Stuck-run reaper threshold, in seconds, for dashboard_build jobs.
     dashboardBuildSeconds: 1800
     # -- Stuck-run reaper threshold, in seconds, for publish_edition jobs.
