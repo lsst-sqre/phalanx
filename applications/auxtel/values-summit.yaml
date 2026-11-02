@@ -1,6 +1,6 @@
 ataos:
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/ataos
   resources:
     limits:
@@ -13,7 +13,7 @@ ataos:
 atbuilding:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/atbuilding
   resources:
     limits:
@@ -26,7 +26,7 @@ atbuilding:
 atdome:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/atdome
   resources:
     limits:
@@ -38,7 +38,7 @@ atdome:
 
 atdometrajectory:
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/atdometrajectory
   resources:
     limits:
@@ -72,7 +72,7 @@ atheaderservice:
 athexapod:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/athexapod
   resources:
     limits:
@@ -85,7 +85,7 @@ athexapod:
 atmcs:
   enabled: true
   image:
-    revision: 7
+    revision: 15
     repository: ts-dockerhub.lsst.org/atmcs
   resources:
     limits:
@@ -97,7 +97,7 @@ atmcs:
 
 atoods:
   image:
-    revision: 4
+    revision: 15
     repository: ts-dockerhub.lsst.org/atoods
   env:
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
@@ -176,7 +176,7 @@ atoods:
 atpneumatics:
   enabled: true
   image:
-    revision: 7
+    revision: 15
     repository: ts-dockerhub.lsst.org/at_pneumatics
   resources:
     limits:
@@ -188,7 +188,7 @@ atpneumatics:
 
 atptg:
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/ptkernel
   env:
     TELESCOPE: AT
@@ -204,7 +204,7 @@ atptg:
 atspectrograph:
   enabled: true
   image:
-    revision: 9
+    revision: 15
     repository: ts-dockerhub.lsst.org/atspec
   resources:
     limits:
@@ -217,7 +217,7 @@ atspectrograph:
 pmd1:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/pmd
   env:
     RUN_ARG: 1
