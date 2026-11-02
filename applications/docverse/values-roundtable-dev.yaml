@@ -19,10 +19,6 @@ config:
     enabled: true
   metrics:
     enabled: true
-  reaperThresholds:
-    # Temporary: drive the excluded_path_scrub reaper down for the
-    # lsst-sqre/docverse#861 SilentWorker check; revert before merge.
-    excludedPathScrubSeconds: 60
   memoryDiagnostics:
     # Sampler stays on; tracemalloc was only for the lsst-sqre/docverse#753
     # dev runs, all recorded on lsst-sqre/docverse#751.
