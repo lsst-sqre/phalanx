@@ -12,10 +12,7 @@ spec:
     key: artifactRepository
   ttlStrategy:
     secondsAfterCompletion: 1800
-  volumes:
-  - name: testreports
-    persistentVolumeClaim:
-      claimName: {{ .Values.persistentVolume.claimName }}
+  {{- include "integration-testing.volumes" . | nindent 2 }}
   podMetadata:
     labels:
       argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
