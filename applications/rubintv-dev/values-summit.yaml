@@ -27,6 +27,10 @@ rubintv:
     - name: RA_REDIS_PASSWORD
       secretName: rubintv-secrets
       secretKey: ra-redis-password
+    - name: RUBINTV_PATH_PREFIX
+      value: "/rubintv-dev"
+    - name: RUBINTV_INSTANCE_ENV
+      value: "dev"
     pvcMountpoint:
     - name: rubintv-scratch
       persistentVolumeClaim:
