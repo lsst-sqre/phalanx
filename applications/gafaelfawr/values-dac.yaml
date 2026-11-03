@@ -36,35 +36,48 @@ config:
   groupMapping:
     "admin:jupyterlab":
       - "k8s-bts-admins"
+      - "rsp-admin"
       - "sqre"
     "admin:oidc":
       - "k8s-bts-admins"
+      - "rsp-admin"
       - "sqre"
     "admin:token":
       - "k8s-bts-admins"
+      - "rsp-admin"
       - "sqre"
     "admin:userinfo":
       - "k8s-bts-admins"
+      - "rsp-admin"
       - "sqre"
     "exec:admin":
       - "integration-testers"
       - "k8s-bts-admins"
+      - "rsp-admin"
       - "sqre"
     "exec:internal-tools":
       - "k8s-bts-admins"
+      - "rsp-admin"
     "exec:notebook":
       - "k8s-bts-admins"
+      - "rsp-admin"
     "exec:portal":
       - "k8s-bts-admins"
+      - "rsp-admin"
     "exec:portal-admin":
       - "k8s-bts-admins"
+      - "rsp-admin"
       - "sqre"
     "read:image":
       - "k8s-bts-admins"
+      - "rsp-admin"
     "read:sasquatch":
       - "k8s-bts-admins"
+      - "rsp-admin"
     "read:tap":
       - "k8s-bts-admins"
+      - "rsp-admin"
     "write:sasquatch":
       - "k8s-bts-admins"
+      - "rsp-admin"
       - "sqre"
