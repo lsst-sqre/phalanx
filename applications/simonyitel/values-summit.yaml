@@ -320,7 +320,7 @@ mtcamhexapod-sim:
 mtdome:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtdome
   resources:
     limits:
@@ -333,7 +333,7 @@ mtdome:
 mtdome-sim:
   enabled: false
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtdome
   env:
     RUN_ARG: --simulate 1
