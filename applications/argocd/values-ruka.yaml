@@ -12,8 +12,7 @@ argo-cd:
     rbac:
       policy.csv: |
         g, k8s-manke-admins, role:admin
-        g, sqre, role:admin
-
+        g, k8s-squre, role:admin
         g, rsp-bts, role:readonly
 
   server:

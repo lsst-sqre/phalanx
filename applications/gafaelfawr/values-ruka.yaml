@@ -35,36 +35,36 @@ config:
   # Allow access by GitHub team.
   groupMapping:
     "admin:jupyterlab":
-      - "k8s-bts-admins"
-      - "sqre"
+      - "k8s-manke-admins"
+      - "k8s-squre"
     "admin:oidc":
-      - "k8s-bts-admins"
-      - "sqre"
+      - "k8s-manke-admins"
+      - "k8s-squre"
     "admin:token":
-      - "k8s-bts-admins"
-      - "sqre"
+      - "k8s-manke-admins"
+      - "k8s-squre"
     "admin:userinfo":
-      - "k8s-bts-admins"
-      - "sqre"
+      - "k8s-manke-admins"
+      - "k8s-squre"
     "exec:admin":
       - "integration-testers"
-      - "k8s-bts-admins"
-      - "sqre"
+      - "k8s-manke-admins"
+      - "k8s-squre"
     "exec:internal-tools":
-      - "k8s-bts-admins"
+      - "k8s-manke-admins"
     "exec:notebook":
-      - "k8s-bts-admins"
+      - "k8s-manke-admins"
     "exec:portal":
-      - "k8s-bts-admins"
+      - "k8s-manke-admins"
     "exec:portal-admin":
-      - "k8s-bts-admins"
-      - "sqre"
+      - "k8s-manke-admins"
+      - "k8s-squre"
     "read:image":
-      - "k8s-bts-admins"
+      - "k8s-manke-admins"
     "read:sasquatch":
-      - "k8s-bts-admins"
+      - "k8s-manke-admins"
     "read:tap":
-      - "k8s-bts-admins"
+      - "k8s-manke-admins"
     "write:sasquatch":
-      - "k8s-bts-admins"
-      - "sqre"
+      - "k8s-manke-admins"
+      - "k8s-squre"

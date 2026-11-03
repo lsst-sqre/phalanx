@@ -1,0 +1,24 @@
+name: "dac"
+fqdn: "dac-lsp.lsst.codes"
+title: "Rubin DAC environment (Base)"
+titleLong: "Rubin DAC data facility on La Serena Base"
+description: >-
+  The DAC environment for the Rubin Science Platform at the
+  Vera C. Rubin   Observatory site in La Serena Base.
+  It is used for observatory operations at the Base site.
+
+appOfAppsName: "science-platform"
+onepassword:
+  connectUrl: "https://roundtable.lsst.cloud/1password"
+  vaultTitle: "RSP dac-lsp.lsst.codes"
+vaultPathPrefix: "secret/phalanx/lonko"
+
+applications:
+  mobu: true
+  nublado: true
+  portal: true
+  squareone: true
+
+namespaceLabels:
+  gafaelfawr:
+    k8up-enabled: "true"

@@ -61,6 +61,7 @@ ignore = [
     "^http(s)*://ls.st",
     # URLs of Science Platform installations protected by authentication.
     "^https://base-lsp.lsst.codes",
+    "^https://dac-lsp.lsst.codes",
     "^https://data-dev.lsst.cloud",
     "^https://data-dev.lsst.eu",
     "^https://data-int.lsst.cloud",
