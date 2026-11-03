@@ -126,7 +126,7 @@ ccoods:
 gcheaderservice101:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/headerservice
   env:
     CAMERA: gc101
@@ -148,7 +148,7 @@ gcheaderservice101:
 gcheaderservice102:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/headerservice
   env:
     CAMERA: gc102
@@ -170,7 +170,7 @@ gcheaderservice102:
 gcheaderservice103:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/headerservice
   env:
     CAMERA: gc103
@@ -192,7 +192,7 @@ gcheaderservice103:
 lasertracker1:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/lasertracker
   env:
     RUN_ARG: 1
@@ -207,7 +207,7 @@ lasertracker1:
 mtaircompressor1:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/mtaircompressor
   env:
     RUN_ARG: 1 --state disabled
@@ -222,7 +222,7 @@ mtaircompressor1:
 mtaircompressor2:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/mtaircompressor
   env:
     RUN_ARG: 2 --state disabled
@@ -283,7 +283,7 @@ mtcamhexapod:
   enabled: true
   classifier: mthexapod1
   image:
-    revision: 1
+    revision: 15
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: 1
@@ -305,7 +305,7 @@ mtcamhexapod-sim:
   enabled: false
   classifier: mthexapod1
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: --simulate 1
@@ -320,7 +320,7 @@ mtcamhexapod-sim:
 mtdome:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/mtdome
   resources:
     limits:
@@ -333,7 +333,7 @@ mtdome:
 mtdome-sim:
   enabled: false
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/mtdome
   env:
     RUN_ARG: --simulate 1
@@ -347,7 +347,7 @@ mtdome-sim:
 
 mtdometrajectory:
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/mtdometrajectory
   resources:
     limits:
@@ -382,7 +382,7 @@ mtheaderservice:
 mtm1m3-sim:
   enabled: false
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/mtm1m3_sim
   env:
     LSST_KAFKA_TLM_FLUSH_MS: 0
@@ -397,7 +397,7 @@ mtm1m3-sim:
 mtm2:
   enabled: true
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/m2
   resources:
     limits:
@@ -410,7 +410,7 @@ mtm2:
 mtm2-sim:
   enabled: false
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/m2
   env:
     RUN_ARG: --simulate
@@ -426,7 +426,7 @@ mtm2hexapod:
   enabled: true
   classifier: mthexapod2
   image:
-    revision: 1
+    revision: 15
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: 2
@@ -448,7 +448,7 @@ mtm2hexapod-sim:
   enabled: false
   classifier: mthexapod2
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: --simulate 2
@@ -506,7 +506,7 @@ mtmount-sim:
 mtoods:
   enabled: true
   image:
-    revision: 4
+    revision: 15
     repository: ts-dockerhub.lsst.org/mtoods
   env:
     CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
@@ -573,7 +573,7 @@ mtoods:
 
 mtptg:
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/ptkernel
   env:
     TELESCOPE: MT
@@ -589,7 +589,7 @@ mtptg:
 mtrotator:
   enabled: true
   image:
-    revision: 1
+    revision: 15
     repository: ts-dockerhub.lsst.org/mtrotator
   resources:
     limits:
@@ -602,7 +602,7 @@ mtrotator:
 mtrotator-sim:
   enabled: false
   image:
-    revision: 0
+    revision: 15
     repository: ts-dockerhub.lsst.org/mtrotator
   env:
     RUN_ARG: --simulate
@@ -617,7 +617,7 @@ mtrotator-sim:
 wfoods:
   enabled: true
   image:
-    revision: 4
+    revision: 15
     repository: ts-dockerhub.lsst.org/wfoods
   env:
     CTRL_OODS_CONFIG_FILE: /etc/wfoods.yaml
