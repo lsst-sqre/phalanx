@@ -61,6 +61,9 @@ config:
   # -- How long results should be retained before being deleted
   cleanupInterval: "36h"
 
+  # -- The subdirectory under /firefly/workarea and /firefly/shared-workarea to cleanup
+  cleanupAppName: "suit"
+
   # -- If set, how big (SI units) the shared workarea is allowed to get
   #
   cleanupSharedMax: null

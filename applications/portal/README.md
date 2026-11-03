@@ -13,6 +13,7 @@ Rubin Science Platform Portal Aspect
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the Portal pod |
 | config.alertMessage | string | `nil` | If not null, display this alert to all users in a banner |
+| config.cleanupAppName | string | `"suit"` | The subdirectory under /firefly/workarea and /firefly/shared-workarea to cleanup |
 | config.cleanupInterval | string | `"36h"` | How long results should be retained before being deleted |
 | config.cleanupSharedMax | string | `nil` | If set, how big (SI units) the shared workarea is allowed to get  |
 | config.debug | string | `"FALSE"` | Set to `TRUE` to enable service debugging |
