@@ -13,6 +13,7 @@ ccheaderservice:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/headerservice
+    revision: 0
   env:
     URL_SPEC: --lfa_mode s3 --s3instance tuc
     TSTAND_HEADERSERVICE: TUCSON
@@ -132,6 +133,7 @@ mtaircompressor2-sim:
 mtaos:
   image:
     repository: ts-dockerhub.lsst.org/mtaos
+    revision: 2
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.tu.lsst.org
@@ -183,6 +185,7 @@ mtdome-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtdome
+    revision: 0
   env:
     RUN_ARG: --simulate 1
   resources:
@@ -265,6 +268,7 @@ mtmount-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtmount
+    revision: 0
   env:
     RUN_ARG: --simulate
   resources:
