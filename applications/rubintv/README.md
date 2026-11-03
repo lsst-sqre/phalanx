@@ -27,9 +27,9 @@ Real-time display front end
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | rubintv.frontend.affinity | object | `{}` | Affinity rules for the rubintv frontend pod |
 | rubintv.frontend.debug | bool | `false` | If set to true, enable more verbose logging. |
-| rubintv.frontend.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/lsst-ts/rubintv","tag":""}` | Settings for rubintv OCI image |
+| rubintv.frontend.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/lsst-ts/rubintv-v3","tag":""}` | Settings for rubintv OCI image |
 | rubintv.frontend.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the rubintv image |
-| rubintv.frontend.image.repository | string | `"ghcr.io/lsst-ts/rubintv"` | rubintv frontend image to use |
+| rubintv.frontend.image.repository | string | `"ghcr.io/lsst-ts/rubintv-v3"` | rubintv frontend image to use |
 | rubintv.frontend.image.tag | string | The appVersion of the chart | Tag of rubintv image to use |
 | rubintv.frontend.nodeSelector | object | `{}` | Node selector rules for the rubintv frontend pod |
 | rubintv.frontend.pathPrefix | string | `"/rubintv"` | Prefix for rubintv's frontend API routes. |

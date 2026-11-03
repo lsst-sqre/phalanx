@@ -13,7 +13,7 @@ rubintv:
     - name: S3_ENDPOINT_URL
       value: &s3E "https://s3.ls.lsst.org"
     - name: RUBINTV_ALLOW_ADMIN_WILDCARD
-      value: true
+      value: "true"
     - name: RAPID_ANALYSIS_LOCATION
       value: "BTS"
     - name: DDV_DEPLOY_BRANCH
