@@ -23,6 +23,10 @@ rubintv:
       value: "rubintv-dev/ws/ddv"
     - name: RA_REDIS_HOST
       value: "redis-service.rapid-analysis.svc.cluster.local"
+    - name: RUBINTV_PATH_PREFIX
+      value: "/rubintv-dev"
+    - name: RUBINTV_INSTANCE_ENV
+      value: "dev"
     envSecrets:
     - name: RA_REDIS_PASSWORD
       secretName: rubintv-secrets
