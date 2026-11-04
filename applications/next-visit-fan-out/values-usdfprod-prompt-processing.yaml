@@ -20,6 +20,10 @@ detectorConfig:
   LSSTCam:
     # Detectors turned off in early Commissioning
     120: False
+    # Not operative
+    81: False
+    82: False
+    83: False
     # Dead
     122: False
     # Heavily-vignetted detectors
