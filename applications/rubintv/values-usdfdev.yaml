@@ -31,6 +31,9 @@ rubintv:
       value: '["lsstcam","latiss"]'
     - name: RUBINTV_ZEPHYR_TOKEN_FILE
       value: /etc/secrets/zephyr-token
+    - name: RUBINTV_JIRA_TOKEN_FILE
+      value: /etc/secrets/jira-token
+
     pvcMountpoint:
     - name: rubintv-scratch
       persistentVolumeClaim:
