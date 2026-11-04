@@ -35,5 +35,6 @@ Argo CD project: ``rubin``
    schedview-static-pages/index
    skyviewer/index
    so-evening-tailgate/index
+   svab-slack-bot/index
    weatherbroadcaster/index
    weathernbeats/index

@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Bot to handle the SVAB slack notifications.
+name: svab-slack-bot
+sources:
+- https://github.com/lsst-sqre/svab-slack-bot
+type: application
+version: 1.0.0

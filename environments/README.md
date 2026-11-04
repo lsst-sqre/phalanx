@@ -95,6 +95,7 @@
 | applications.strimzi | bool | `false` | Enable the strimzi application |
 | applications.strimzi-access-operator | bool | `false` | Enable the strimzi-access-operator application |
 | applications.strimzi-registry-operator | bool | `false` | Enable the strimzi-registry-operator application |
+| applications.svab-slack-bot | bool | `false` | Enable the svab-slack-bot application |
 | applications.tap | bool | `false` | Enable the tap application |
 | applications.templatebot | bool | `false` | Enable the templatebot application |
 | applications.times-square | bool | `false` | Enable the times-square application |
