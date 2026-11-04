@@ -1,0 +1,11 @@
+image:
+  repository: "ghcr.io/lsst-rso/svab-slack-bot"
+  pullPolicy: "Always"
+  tag: 0.1.0
+resources:
+  requests:
+    cpu: 50m
+    memory: 50Mi
+  limits:
+    cpu: 500m
+    memory: 60Mi
