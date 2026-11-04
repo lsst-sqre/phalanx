@@ -1,0 +1,52 @@
+# Default values for Redis Stream Trim
+
+# -- Number of Redis Stream Trim pods to run in the deployment.
+replicaCount: 1
+
+image:
+  # -- Redis Stream Trim Docker image repository
+  repository: ghcr.io/lsst-dm/redis-streams-cleaner
+
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+  # -- Redis Stream Trim image version
+  tag: main
+
+# Cron Schedule
+cronSchedule: "0 19 * * *"
+
+# -- Enable debug logging if set to 'true'
+debugLogs: "false"
+
+# -- Idle time threshold in milliseconds
+idleThreshold: ""
+
+# -- Redis server hostname
+redisHost: "prompt-redis.prompt-redis"
+
+# -- Redis port
+redisPort: "6379"
+
+# -- Pipe-separated stream:consumer group pairs.  Format: "instrument:lsstcam=group|instrument:other:group"
+streams: "instrument:lsstcam=lsstcam_consumer_group"
+
+
+# -- Kubernetes requests and limits for Redis Exporter
+# @default -- See `values.yaml`
+resources:
+  requests:
+    memory: "16Mi"
+    cpu: "10Mi"
+  limits:
+    memory: "64Mi"
+    cpu: "100Mi"
+
+# -- Node selector configuration
+nodeSelector: {}
+
+# -- Tolerations configuration
+tolerations: []
+
+# -- Affinity configuration
+affinity: {}

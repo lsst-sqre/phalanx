@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "redis-streams-cleaner.name" . }}
+spec:
+  schedule: {{ .Values.cronSchedule| toString | quote }}
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 3600
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: redis-streams-cleaner
+            image:
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            env:
+            - name: REDIS_HOST
+              value: {{ .Values.redisHost }}
+            - name: REDIS_PORT
+              value: {{ .Values.redisPort | quote }}
+            - name: STREAMS
+              value: {{ .Values.streams }}
+            - name: IDLE_THRESHOLD
+              value: {{ .Values.idleThreshold | quote }}
+            - name: DEBUG_LOGS
+              value: {{ .Values.debugLogs | quote }}
+            command:
+              - python
+              - -m
+              - redis_streams_cleaner.main

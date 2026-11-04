@@ -58,8 +58,12 @@ redis-stream-exporter:
       cpu: "1"
       memory: "2Gi"
 
+redis-client-cleaner:
+  # -- Enable Redis Client Cleaner cronjob
+  enabled: true
+
 redis-stream-trim:
-  # -- Enabled Redis Stream trim cronjob
+  # -- Enable Redis Stream trim cronjob
   enabled: true
 
 # The following will be set by parameters injected by Argo CD and should not
