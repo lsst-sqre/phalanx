@@ -28,6 +28,21 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: "SVAB_BOT_WEBHOOK_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "svab-slack-bot"
+                  key: "svab_bot_webhook_secret"
+            - name: "SVAB_BOT_SLACK_BOT_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "svab-slack-bot"
+                  key: "svab_bot_slack_bot_token"
+            - name: "SVAB_BOT_JIRA_API_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "svab-slack-bot"
+                  key: "svab_bot_jira_api_token"
             {{- range $env_var, $env_value := .Values.env }}
             - name: {{ $env_var }}
               value: {{ $env_value | quote }}
