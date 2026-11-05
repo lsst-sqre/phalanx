@@ -29,3 +29,7 @@ redis:
 resources:
   limits:
     memory: "2Gi"
+
+cleanup:
+  enabled: true
+  schedule: "*/20 * * * *"
