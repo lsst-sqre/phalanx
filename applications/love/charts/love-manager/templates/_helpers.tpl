@@ -110,8 +110,10 @@ Handle environment parameters
 {{- define "helpers.envFromList" -}}
 {{- $secret := .secret }}
 {{- range $var, $value := .env }}
+{{- if not (kindIs "invalid" $value) }}
 {{- $item := dict "var" $var "value" $value "secret" $secret }}
 {{ include "helpers.envType" $item }}
+{{- end }}
 {{- end }}
 {{- end }}
 
