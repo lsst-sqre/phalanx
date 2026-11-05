@@ -48,6 +48,7 @@ applications:
   strimzi-access-operator: true
   strimzi-registry-operator: true
   strimzi: true
+  svab-slack-bot: true
   tap: true
   times-square: true
   weatherbroadcaster: true
