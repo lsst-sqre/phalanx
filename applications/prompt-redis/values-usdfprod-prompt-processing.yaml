@@ -15,6 +15,14 @@ redis-stream-exporter:
   enabled: true
   sleepInterval: 2
 
+  resources:
+    limits:
+      cpu: "1"
+      memory: "4Gi"
+    requests:
+      cpu: "1"
+      memory: "4Gi"
+
 redis-streams-cleaner:
   enabled: true
   image:
