@@ -64,9 +64,11 @@ config:
   # -- The subdirectory under /firefly/workarea and /firefly/shared-workarea to cleanup
   cleanupAppName: "suit"
 
-  # -- If set, how big (SI units) the shared workarea is allowed to get
-  #
+  # -- If set, how big (SI units) the shared workarea is allowed to get. <n>%: 1-99, percent of the work area's filesystem in use, as df's Use% reports it. Counts everything on that filesystem; best when the volume is dedicated. <size>: <n>K, <n>M, <n>G or <n>T, binary (1G = 1024M); Kubernetes' Ki/Mi/Gi/Ti also work. Measured with du of the work area. Use <n>% to keep the volume itself from filling.
   cleanupSharedMax: null
+
+  # -- If set, how big the per-node workarea is allowed to get. <n>%: 1-99, percent of the work area's filesystem in use, as df's Use% reports it. Counts everything on that filesystem; best when the volume is dedicated. <size>: <n>K, <n>M, <n>G or <n>T, binary (1G = 1024M); Kubernetes' Ki/Mi/Gi/Ti also work. Measured with du of the work area. Use <n>% to keep the volume itself from filling.
+  cleanupWorkareaMax: null
 
   # -- URL for master list of Rubin-featured HiPS datasets
   # @default -- `/api/hips/list` in the local Science Platform

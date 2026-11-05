@@ -45,6 +45,10 @@ spec:
             - name: "CLEANUP_SHARED_MAX"
               value: {{ .Values.config.cleanupSharedMax | quote }}
             {{- end }}
+            {{- if .Values.config.cleanupWorkareaMax }}
+            - name: "CLEANUP_WORKAREA_MAX"
+              value: {{ .Values.config.cleanupWorkareaMax | quote }}
+            {{- end }}
             - name: "PROPS_redis__host"
               value: {{ include "portal.fullname" . }}-redis
             - name: "PROPS_sso__req__auth__hosts"
