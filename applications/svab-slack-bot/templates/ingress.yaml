@@ -1,0 +1,30 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "svab-slack-bot"
+  labels:
+    {{- include "svab-slack-bot.labels" . | nindent 4 }}
+config:
+  scopes:
+    all:
+      - "read:image"
+  service: "svab-slack-bot"
+template:
+  metadata:
+    name: "svab-slack-bot"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/svab-slack-bot"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "svab-slack-bot"
+                  port:
+                    number: 8080
