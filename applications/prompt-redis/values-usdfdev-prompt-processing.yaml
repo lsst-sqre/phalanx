@@ -11,5 +11,13 @@ redis:
       cpu: "1"
       memory: "1Gi"
 
+redis-streams-cleaner:
+  enabled: true
+  image:
+    pullPolicy: Always
+    tag: main
+  streams: "instrument:lsstcam=lsstcam_consumer_group|instrument:latiss=latiss_consumer_group"
+  idleThreshold: "900000" # 15 minutes
+
 redis-stream-exporter:
   enabled: true

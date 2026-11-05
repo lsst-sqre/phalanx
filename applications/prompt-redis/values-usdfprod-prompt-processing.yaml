@@ -22,3 +22,18 @@ redis-stream-exporter:
     requests:
       cpu: "1"
       memory: "4Gi"
+
+redis-streams-cleaner:
+  enabled: true
+  image:
+    tag: main
+  streams: "instrument:lsstcam=lsstcam_consumer_group"
+  idleThreshold: "900000" # 15 minutes
+
+  resources:
+    limits:
+      cpu: "1"
+      memory: "4Gi"
+    requests:
+      cpu: "1"
+      memory: "4Gi"

@@ -8,9 +8,10 @@ Redis cluster for prompt processing
 |-----|------|---------|-------------|
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| redis-client-cleaner.enabled | bool | `true` | Enable Redis Client Cleaner cronjob |
 | redis-stream-exporter.resources | object | `{"limits":{"cpu":"1","memory":"2Gi"},"requests":{"cpu":"1","memory":"2Gi"}}` | Resource limits and requests for the Redis Stream Exporter |
 | redis-stream-exporter.sleepInterval | int | `5` | How long to sleep between redis stream exporter polling cycles |
-| redis-stream-trim.enabled | bool | `true` | Enabled Redis Stream trim cronjob |
+| redis-stream-trim.enabled | bool | `true` | Enable Redis Stream trim cronjob |
 | redis.affinity | object | `{}` | Affinity rules for the persistent Redis pod |
 | redis.nodeSelector | object | `{}` | Node selection rules for the persistent Redis pod |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
@@ -42,3 +43,17 @@ Redis cluster for prompt processing
 | redis-stream-trim.replicaCount | int | `1` | Number of Redis Stream Trim pods to run in the deployment. |
 | redis-stream-trim.resources | object | See `values.yaml` | Kubernetes requests and limits for Redis Exporter |
 | redis-stream-trim.tolerations | list | `[]` | Tolerations configuration |
+| redis-streams-cleaner.affinity | object | `{}` | Affinity configuration |
+| redis-streams-cleaner.cronSchedule | string | `"0 19 * * *"` |  |
+| redis-streams-cleaner.debugLogs | string | `"false"` | Enable debug logging if set to 'true' |
+| redis-streams-cleaner.idleThreshold | string | `""` | Idle time threshold in milliseconds |
+| redis-streams-cleaner.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| redis-streams-cleaner.image.repository | string | `"ghcr.io/lsst-dm/redis-streams-cleaner"` | Redis Stream Trim Docker image repository |
+| redis-streams-cleaner.image.tag | string | `"main"` | Redis Stream Trim image version |
+| redis-streams-cleaner.nodeSelector | object | `{}` | Node selector configuration |
+| redis-streams-cleaner.redisHost | string | `"prompt-redis.prompt-redis"` | Redis server hostname |
+| redis-streams-cleaner.redisPort | string | `"6379"` | Redis port |
+| redis-streams-cleaner.replicaCount | int | `1` | Number of Redis Stream Trim pods to run in the deployment. |
+| redis-streams-cleaner.resources | object | See `values.yaml` | Kubernetes requests and limits for Redis Exporter |
+| redis-streams-cleaner.streams | string | `"instrument:lsstcam=lsstcam_consumer_group"` | Pipe-separated stream:consumer group pairs.  Format: "instrument:lsstcam=group|instrument:other:group" |
+| redis-streams-cleaner.tolerations | list | `[]` | Tolerations configuration |

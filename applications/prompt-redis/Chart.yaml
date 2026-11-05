@@ -15,3 +15,6 @@ dependencies:
 - name: redis-stream-trim
   condition: redis-stream-trim.enabled
   version: 1.0.0
+- name: redis-streams-cleaner
+  condition: redis-streams-cleaner.enabled
+  version: 1.0.0
