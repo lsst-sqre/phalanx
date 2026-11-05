@@ -29,6 +29,18 @@ cloudsql:
   instanceConnectionName: "roundtable-dev-abe2:us-central1:roundtable-dev-572a252e"
   serviceAccount: "docverse-sa@roundtable-dev-abe2.iam.gserviceaccount.com"
 
+workerResources:
+  limits:
+    cpu: "1"
+    # Raised from the chart's 1Gi for the DM-56964 pipelines upload test
+    # (lsst-sqre/docverse#868): build_processing holds the whole staging
+    # tarball and every extracted file in memory before uploading, and a
+    # 390 MB pipelines weekly OOM-killed the worker at 1Gi on 2026-11-05.
+    memory: "2Gi"
+  requests:
+    cpu: "50m"
+    memory: "256Mi"
+
 image:
   # Branch image for lsst-sqre/docverse#875 (DM-56964 build_processing
   # timeout); drop once the server release carrying it is in Chart.yaml.
