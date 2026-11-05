@@ -181,7 +181,7 @@ config:
     rights: >-
       Restricted to authorized Rubin data rights holders. See
       https://www.lsst.org/content/data-rights
-    rightsUri: "https://www.lsst.org/content/data-rights"
+    rightsUri: "https://rubinobservatory.org/for-scientists/data-policy"
     shortName: "Rubin"
     subjects:
       - "surveys"
