@@ -247,8 +247,10 @@ spec:
               value: "/firefly/config"
             - name: "CLEANUP_INTERVAL"
               value: "{{ .Values.config.cleanupInterval }}"
+            {{- if .Values.config.cleanupAppName }}
             - name: "CLEANUP_APP_NAME"
               value: "{{ .Values.config.cleanupAppName }}"
+            {{- end }}
             - name: VISUALIZE_FITS_SEARCH_PATH
               value: "{{ .Values.config.visualizeFitsSearchPath }}"
             - name: DEBUG
