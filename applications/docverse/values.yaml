@@ -337,6 +337,13 @@ resources:
     cpu: "50m"
     memory: "100Mi"
 
+# -- Size limit of the disk-backed `emptyDir` mounted at `/tmp` in the
+# docverse worker pod. `build_processing` spools each staging tarball
+# there while unpacking it (the extracted files never touch disk), so
+# this must hold the largest tarball for every build_processing job
+# that can run at once, within the pod's ephemeral-storage limit.
+workerTmpSizeLimit: "512Mi"
+
 # -- Resource limits and requests for the docverse worker pod
 # @default -- See `values.yaml`
 workerResources:

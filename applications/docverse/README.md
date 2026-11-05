@@ -111,3 +111,4 @@ Publish versioned docs
 | workerResources | object | See `values.yaml` | Resource limits and requests for the docverse worker pod |
 | workerResources.limits.memory | string | `"1Gi"` | The worker idles at roughly 480Mi after a keeper-sync backfill and was OOM-killed at 512Mi while running ten concurrent publish_edition and dashboard_build jobs (roundtable-prod, 2026-09-23). A killed worker strands in-flight publishes until the 4 h reaper runs, so leave headroom for a full burst. |
 | workerResources.requests.cpu | string | `"50m"` | GKE Autopilot requires a minimum CPU request of 50m |
+| workerTmpSizeLimit | string | `"512Mi"` | Size limit of the disk-backed `emptyDir` mounted at `/tmp` in the docverse worker pod. `build_processing` spools each staging tarball there while unpacking it (the extracted files never touch disk), so this must hold the largest tarball for every build_processing job that can run at once, within the pod's ephemeral-storage limit. |
