@@ -10,6 +10,7 @@ metadata:
     {{- include "docverse.labels" . | nindent 4 }}
 data:
   DOCVERSE_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  DOCVERSE_BUILD_PROCESSING_JOB_TIMEOUT_SECONDS: {{ .Values.config.buildProcessing.jobTimeoutSeconds | quote }}
   DOCVERSE_LOG_PROFILE: {{ .Values.config.logProfile | quote }}
   DOCVERSE_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
   DOCVERSE_DATABASE_URL: {{ .Values.config.databaseUrl | quote }}
