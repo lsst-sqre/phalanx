@@ -43,7 +43,23 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.devSource.enabled }}
+          command:
+            - "ssp-vet"
+            - "--host"
+            - "0.0.0.0"
+            - "--port"
+            - "8080"
+            - "--no-token"
+            - "--reload"
+          {{- end }}
           env:
+            {{- if .Values.devSource.enabled }}
+            - name: "PYTHONPATH"
+              value: "/opt/ssp-vet-src"
+            - name: "PYTHONDONTWRITEBYTECODE"
+              value: "1"
+            {{- end }}
             - name: "SSP_VET_PATH_PREFIX"
               value: {{ .Values.ingress.pathPrefix | quote }}
             {{- range $name, $value := .Values.env }}
@@ -66,6 +82,7 @@ spec:
             httpGet:
               path: "/healthz"
               port: "http"
+          {{- if not .Values.devSource.enabled }}
           livenessProbe:
             httpGet:
               path: "/healthz"
@@ -73,6 +90,7 @@ spec:
             periodSeconds: 30
             timeoutSeconds: 10
             failureThreshold: 4
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           securityContext:
@@ -90,6 +108,12 @@ spec:
               mountPath: "/var/lib/ssp-vet"
             - name: "tmp"
               mountPath: "/tmp"
+            {{- if .Values.devSource.enabled }}
+            - name: "data"
+              mountPath: "/opt/ssp-vet-src"
+              subPath: {{ required "devSource.subPath must be set when devSource.enabled" .Values.devSource.subPath | quote }}
+              readOnly: true
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

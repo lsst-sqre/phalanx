@@ -53,6 +53,23 @@ persistence:
   # @default -- The cluster default
   storageClassName: null
 
+# Development mode: run the app from a source checkout instead of the code in
+# the image, reloading it whenever a file changes. The image then supplies only
+# Python and the dependencies.
+devSource:
+  # -- Whether to run from the checkout. Its `src/` is mounted read only from
+  # the data volume, put first on `PYTHONPATH`, and watched by uvicorn's
+  # polling reloader. The liveness probe is dropped in this mode, so a broken
+  # save only makes the pod unready until the next good save reloads it.
+  enabled: false
+
+  # -- Path of the checkout's `src/` directory within the data volume
+  # (`data.storageClassName`). Update the checkout in place (git pull or
+  # fast-forward); replacing the directory itself leaves the pod on the old
+  # one until it restarts.
+  # @default -- None, must be set when enabled
+  subPath: null
+
 # -- Extra environment variables for the app. The image's defaults already
 # match the mounts this chart makes (`SSP_VET_ROOT=/data`,
 # `SSP_VET_VAR=/var/lib/ssp-vet`).

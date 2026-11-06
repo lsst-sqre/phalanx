@@ -13,6 +13,8 @@ Web tool for vetting Solar System THOR linkages by eye
 | affinity | object | `{}` | Affinity rules for the ssp-vet deployment pod |
 | data.storageClassName | string | None, must be set | Storage class of the volume holding the input data. At USDF, `sdf-data-rubin` provisions a hostPath of the whole /sdf/data/rubin filesystem, of which the pod mounts only `data.subPath`. |
 | data.subPath | string | None, must be set | Path of the input data directory within that volume, mounted read only at `/data` (`SSP_VET_ROOT`). Its files must be readable by the pod's `runAsGroup`. |
+| devSource.enabled | bool | `false` | Whether to run from the checkout. Its `src/` is mounted read only from the data volume, put first on `PYTHONPATH`, and watched by uvicorn's polling reloader. The liveness probe is dropped in this mode, so a broken save only makes the pod unready until the next good save reloads it. |
+| devSource.subPath | string | None, must be set when enabled | Path of the checkout's `src/` directory within the data volume (`data.storageClassName`). Update the checkout in place (git pull or fast-forward); replacing the directory itself leaves the pod on the old one until it restarts. |
 | env | object | `{}` | Extra environment variables for the app. The image's defaults already match the mounts this chart makes (`SSP_VET_ROOT=/data`, `SSP_VET_VAR=/var/lib/ssp-vet`). |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

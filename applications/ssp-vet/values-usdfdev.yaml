@@ -14,3 +14,8 @@ podSecurityContext:
   runAsUser: 1000
   # rubin_users, which can read the input data.
   runAsGroup: 4085
+
+# Run from mjuric/ssp-vet's working checkout, reloading on change.
+devSource:
+  enabled: true
+  subPath: "user/mjuric/projects/github.com/mjuric/ssp-vet/src"
