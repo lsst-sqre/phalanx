@@ -22,6 +22,7 @@ prompt-keda:
         - survey: BLOCK-365
           pipelines: &std-main-pipelines
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/ApPipe-DECam-templates.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/SingleFrame.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam/Isr.yaml
         # FBS Pre-Operations Survey
