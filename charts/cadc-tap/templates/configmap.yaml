@@ -145,19 +145,19 @@ data:
     tap.outputLimitUnit={{ . }}
     {{- end }}
     {{- with .Values.config.maxRec }}
-    tap.maxRec={{ . }}
+    tap.maxRec={{ . | int64 }}
     {{- end }}
     {{- with .Values.config.maxExecutionDuration }}
-    tap.maxExecutionDuration={{ . }}
+    tap.maxExecutionDuration={{ . | int64 }}
     {{- end }}
     {{- with .Values.config.maxUploadSize }}
-    tap.maxUploadSize={{ . }}
+    tap.maxUploadSize={{ . | int64 }}
     {{- end }}
     {{- with .Values.config.maxDestruction }}
-    tap.maxDestruction={{ . }}
+    tap.maxDestruction={{ . | int64 }}
     {{- end }}
     {{- with .Values.config.maxQuote }}
-    tap.maxQuote={{ . }}
+    tap.maxQuote={{ . | int64 }}
     {{- end }}
     {{- if .Values.config.voParquet }}
     tap.enableVOParquet=true
