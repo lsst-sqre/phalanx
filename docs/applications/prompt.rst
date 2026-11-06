@@ -12,7 +12,6 @@ Argo CD project: ``prompt``
    apdb-backups-gcp/index
    butler-writer-service/index
    next-visit-fan-out/index
-   prompt-keda-hsc/index
    prompt-keda-latiss/index
    prompt-keda-lsstcam/index
    prompt-kafka/index
