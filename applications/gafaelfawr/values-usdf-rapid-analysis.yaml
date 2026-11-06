@@ -6,6 +6,8 @@ redis:
     storageClass: "wekafs--sdf-k8s01"
 
 config:
+  database:
+    url: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
   internalDatabase: true
   updateSchema: true
 

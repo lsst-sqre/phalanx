@@ -1,6 +1,14 @@
 config:
   slackAlerts: false
 
+  database:
+    type: "cloudsql"
+    project: "roundtable-dev-abe2"
+    region: "us-central1"
+    instance: "roundtable-dev-572a252e"
+    database: "gafaelfawr"
+    serviceAccount: "gafaelfawr@roundtable-dev-abe2.iam.gserviceaccount.com"
+
   metrics:
     enabled: true
 
@@ -90,11 +98,6 @@ ingress:
   additionalHosts:
     - "git-lfs-dev.lsst.cloud"
     - "git-lfs-dev-rw.lsst.cloud"
-
-cloudsql:
-  enabled: true
-  instanceConnectionName: "roundtable-dev-abe2:us-central1:roundtable-dev-572a252e"
-  serviceAccount: "gafaelfawr@roundtable-dev-abe2.iam.gserviceaccount.com"
 
 # Use the CSI storage class so that we can use snapshots.
 redis:
