@@ -1,7 +1,7 @@
 image:
-  repository: "ghcr.io/lsst-rso/svab-slack-bot"
+  repository: "ghcr.io/tribeiro/svab-slack-bot"
   pullPolicy: "Always"
-  tag: 0.1.0
+  tag: "jira-basic-credentials"
 resources:
   requests:
     cpu: 50m
@@ -15,3 +15,6 @@ env:
   SVAB_BOT_SLACK_CHANNEL_ID: C0C81KEFTG8
   SVAB_BOT_SLACK_MAIN_GROUP_ID: S0CCL2ABGV9
   SVAB_BOT_ANNOUNCE_SINCE: "2026-11-05T00:00:00Z"
+  SVAB_BOT_PATH_PREFIX: /svab-slack-bot
+  SVAB_BOT_RECONCILE_INTERVAL_MINUTES: 1
+  SVAB_BOT_RECONCILE_LOOKBACK_HOURS: 24
