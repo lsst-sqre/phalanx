@@ -124,6 +124,8 @@ prompt-keda:
 
   debug:
     monitorDaxApdb: true
+    # -- Log per-file transfer details when slow or failing. 0 disables.
+    slowTransferLogSeconds: 0
 
   keda:
     minReplicaCount: 3

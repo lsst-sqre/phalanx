@@ -151,6 +151,10 @@ spec:
               - name: DAX_APDB_MONITOR_CONFIG
                 value: 'logging:lsst.dax.apdb.monitor'
               {{- end }}
+              {{- if .Values.debug.slowTransferLogSeconds }}
+              - name: TRANSFER_SLOW_LOG_SECONDS
+                value: {{ .Values.debug.slowTransferLogSeconds | toString | quote }}
+              {{- end }}
               - name: REDIS_STREAM_HOST
                 value: {{ .Values.keda.redisStreams.host}}
               - name: REDIS_STREAM_NAME
