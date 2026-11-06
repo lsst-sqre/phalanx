@@ -53,6 +53,7 @@ class KubeLinterStorage:
         try:
             self._kube_linter.capture(
                 "lint",
+                "--fail-on-invalid-resource",
                 "--config",
                 str(self._config_path),
                 "-",

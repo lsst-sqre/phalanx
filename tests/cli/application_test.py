@@ -19,7 +19,7 @@ from ..support.command import MockCommand
 from ..support.data import PhalanxData
 from ..support.helm import MockHelmCommand
 
-KUBE_LINTER_ARGS = ("lint", "--config", ANY, "-")
+KUBE_LINTER_ARGS = ("lint", "--fail-on-invalid-resource", "--config", ANY, "-")
 """Expected arguments of each kube-linter invocation."""
 
 
