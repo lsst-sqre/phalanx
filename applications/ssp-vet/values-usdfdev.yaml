@@ -1,4 +1,5 @@
 image:
+  tag: "a857549"
   pullSecrets: ["ssp-vet-pull"]
 
 data:
