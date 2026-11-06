@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/lsst-so/rubintv_production
-  tag: tickets-DM-52067
+  tag: tickets-DM-56183
   pullPolicy: Always
 location: BTS
 env:
@@ -185,6 +185,20 @@ scripts:
     limits:
       cpu: 1.0
       memory: 6G
+- name: LSSTCam/runAosBlitzWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 1
+  env:
+    LIMITS_CPU: 8
+  resources:
+    requests:
+      cpu: 8.2
+      memory: 16G
+    limits:
+      cpu: 8.2
+      memory: 32G
 - name: LSSTCam/runGuiderAnalysis.py
   mounts:
   - lsstcam-data
