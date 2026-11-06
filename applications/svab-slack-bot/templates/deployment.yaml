@@ -38,7 +38,7 @@ spec:
                 secretKeyRef:
                   name: "svab-slack-bot"
                   key: "svab_bot_slack_bot_token"
-            - name: "SVAB_BOT_JIRA_API_TOKEN"
+            - name: "SVAB_BOT_JIRA_BASIC_CREDENTIALS"
               valueFrom:
                 secretKeyRef:
                   name: "svab-slack-bot"
