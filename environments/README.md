@@ -66,7 +66,6 @@
 | applications.ppdbtap | bool | `false` | Enable the ppdbtap application |
 | applications.production-tools | bool | `false` | Enable the production-tools application |
 | applications.prompt-kafka | bool | `false` | Enable the prompt-kafka application |
-| applications.prompt-keda-hsc | bool | `false` | Enable the prompt-keda-hsc application |
 | applications.prompt-keda-latiss | bool | `false` | Enable the prompt-keda-latiss application |
 | applications.prompt-keda-lsstcam | bool | `false` | Enable the prompt-keda-lsstcam application |
 | applications.prompt-pub | bool | `false` | Enable the prompt-pub application |

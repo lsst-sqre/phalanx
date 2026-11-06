@@ -23,7 +23,6 @@ applications:
   mpsky: true
   next-visit-fan-out: true
   prompt-kafka: true
-  prompt-keda-hsc: true
   prompt-keda-latiss: true
   prompt-keda-lsstcam: true
   prompt-pub: true
