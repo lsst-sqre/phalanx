@@ -1,0 +1,112 @@
+{{- $psc := .Values.podSecurityContext | default dict -}}
+{{- range $key := list "fsGroup" "fsGroupChangePolicy" -}}
+{{- if hasKey $psc $key -}}
+{{- fail (printf "podSecurityContext must not set %s: the data volume is a hostPath of existing files that must never be chowned" $key) -}}
+{{- end -}}
+{{- end -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "ssp-vet"
+  labels:
+    {{- include "ssp-vet.labels" . | nindent 4 }}
+spec:
+  # One replica, replaced rather than rolled: SQLite on a ReadWriteOnce volume
+  # takes a single writer.
+  replicas: 1
+  strategy:
+    type: "Recreate"
+  selector:
+    matchLabels:
+      {{- include "ssp-vet.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "ssp-vet.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      {{- with .Values.image.pullSecrets }}
+      imagePullSecrets:
+        {{- range . }}
+        - name: {{ . | quote }}
+        {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: "SSP_VET_PATH_PREFIX"
+              value: {{ .Values.ingress.pathPrefix | quote }}
+            {{- range $name, $value := .Values.env }}
+            - name: {{ $name | quote }}
+              value: {{ $value | quote }}
+            {{- end }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          # The catalog loads before the server binds, which takes up to a
+          # minute or so on a cold filesystem.
+          startupProbe:
+            httpGet:
+              path: "/healthz"
+              port: "http"
+            periodSeconds: 5
+            failureThreshold: 60
+          readinessProbe:
+            httpGet:
+              path: "/healthz"
+              port: "http"
+          livenessProbe:
+            httpGet:
+              path: "/healthz"
+              port: "http"
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 4
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "data"
+              mountPath: "/data"
+              subPath: {{ required "data.subPath must be set" .Values.data.subPath | quote }}
+              readOnly: true
+            - name: "state"
+              mountPath: "/var/lib/ssp-vet"
+            - name: "tmp"
+              mountPath: "/tmp"
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml $psc | nindent 8 }}
+      volumes:
+        - name: "data"
+          persistentVolumeClaim:
+            claimName: "ssp-vet-data"
+            readOnly: true
+        - name: "state"
+          persistentVolumeClaim:
+            claimName: "ssp-vet-state"
+        - name: "tmp"
+          emptyDir: {}

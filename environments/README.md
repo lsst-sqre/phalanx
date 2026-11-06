@@ -92,6 +92,7 @@
 | applications.squarebot | bool | `false` | Enable the squarebot application |
 | applications.squareone | bool | `false` | Enable the squareone application |
 | applications.ssotap | bool | `false` | Enable the ssotap application |
+| applications.ssp-vet | bool | `false` | Enable the ssp-vet application |
 | applications.strimzi | bool | `false` | Enable the strimzi application |
 | applications.strimzi-access-operator | bool | `false` | Enable the strimzi-access-operator application |
 | applications.strimzi-registry-operator | bool | `false` | Enable the strimzi-registry-operator application |

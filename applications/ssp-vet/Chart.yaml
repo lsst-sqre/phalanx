@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Web tool for vetting Solar System THOR linkages by eye
+name: ssp-vet
+sources:
+- https://github.com/mjuric/ssp-vet
+type: application
+version: 1.0.0

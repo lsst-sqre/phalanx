@@ -322,6 +322,9 @@ applications:
   # -- Enable the squareone application
   squareone: false
 
+  # -- Enable the ssp-vet application
+  ssp-vet: false
+
   # -- Enable the strimzi application
   strimzi: false
 

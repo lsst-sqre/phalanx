@@ -1,0 +1,100 @@
+# Default values for ssp-vet.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  # -- Image to use in the ssp-vet deployment
+  repository: "ghcr.io/mjuric/ssp-vet"
+
+  # -- Pull policy for the ssp-vet image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+  # -- Names of image pull secrets in the app's namespace, for a private
+  # registry. `ghcr.io/mjuric/ssp-vet` is private, so pulling it requires one.
+  pullSecrets: []
+
+ingress:
+  # -- URL path prefix the app is served under. The ingress passes it through
+  # and the app strips it itself (`SSP_VET_PATH_PREFIX`).
+  pathPrefix: "/ssp-vet"
+
+  # -- Gafaelfawr scope required to use the app. The reviewer name the app
+  # records comes from the `X-Auth-Request-User` header Gafaelfawr sets.
+  scope: "exec:portal"
+
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# Input data: the linkages being vetted, read only, from a subdirectory of an
+# existing filesystem.
+data:
+  # -- Storage class of the volume holding the input data. At USDF,
+  # `sdf-data-rubin` provisions a hostPath of the whole /sdf/data/rubin
+  # filesystem, of which the pod mounts only `data.subPath`.
+  # @default -- None, must be set
+  storageClassName: null
+
+  # -- Path of the input data directory within that volume, mounted read only
+  # at `/data` (`SSP_VET_ROOT`). Its files must be readable by the pod's
+  # `runAsGroup`.
+  # @default -- None, must be set
+  subPath: null
+
+# The app's own state: a SQLite database of reviewers' scores, in WAL mode.
+persistence:
+  # -- Size of the state volume
+  size: "1Gi"
+
+  # -- Storage class of the state volume
+  # @default -- The cluster default
+  storageClassName: null
+
+# -- Extra environment variables for the app. The image's defaults already
+# match the mounts this chart makes (`SSP_VET_ROOT=/data`,
+# `SSP_VET_VAR=/var/lib/ssp-vet`).
+env: {}
+
+# -- Resource limits and requests for the ssp-vet deployment pod
+# @default -- See `values.yaml`
+resources:
+  requests:
+    cpu: "1"
+    memory: "2Gi"
+  limits:
+    cpu: "2"
+    memory: "4Gi"
+
+# -- Security context for the pod. `runAsGroup` must be able to read the input
+# data. `fsGroup` is not allowed: the data volume is a hostPath of existing
+# files that must never be chowned.
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+
+# -- Affinity rules for the ssp-vet deployment pod
+affinity: {}
+
+# -- Node selection rules for the ssp-vet deployment pod
+nodeSelector: {}
+
+# -- Annotations for the ssp-vet deployment pod
+podAnnotations: {}
+
+# -- Tolerations for the ssp-vet deployment pod
+tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

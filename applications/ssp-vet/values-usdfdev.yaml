@@ -1,0 +1,15 @@
+image:
+  pullSecrets: ["ssp-vet-pull"]
+
+data:
+  storageClassName: "sdf-data-rubin"
+  subPath: "user/mjuric/neo-vetting-2026-11-03/thor-unknowns"
+
+persistence:
+  storageClassName: "wekafs--sdf-k8s01"
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  # rubin_users, which can read the input data.
+  runAsGroup: 4085
