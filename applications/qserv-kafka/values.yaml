@@ -95,7 +95,7 @@ config:
   # -- Target size in bytes of the uncompressed Arrow data in each Parquet row
   # group. A whole row group is held in memory while it is written, so peak
   # encoder memory is a few times this value.
-  parquetRowGroupBytes: 134217728
+  parquetRowGroupBytes: 33554432
 
   sentry:
     # -- Set to true to enable the Sentry integration.
@@ -318,7 +318,7 @@ slowWorker:
   resources:
     limits:
       cpu: "1"
-      memory: "500Mi"
+      memory: "1Gi"
     requests:
       cpu: "1"
       memory: "200Mi"
