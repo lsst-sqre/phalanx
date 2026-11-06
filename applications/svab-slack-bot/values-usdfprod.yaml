@@ -1,7 +1,7 @@
 image:
-  repository: "ghcr.io/lsst-rso/svab-slack-bot"
+  repository: "ghcr.io/tribeiro/svab-slack-bot"
   pullPolicy: "Always"
-  tag: 0.1.0
+  tag: "jira-basic-credentials"
 resources:
   requests:
     cpu: 50m
