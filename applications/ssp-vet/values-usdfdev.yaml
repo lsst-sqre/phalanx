@@ -19,3 +19,7 @@ podSecurityContext:
 devSource:
   enabled: true
   subPath: "user/mjuric/projects/github.com/mjuric/ssp-vet/src"
+
+env:
+  # The 20-exposure epoch stamps, alongside the original 6-exposure set.
+  SSP_VET_EPOCHS: "/data/vet_all/epochs20"
