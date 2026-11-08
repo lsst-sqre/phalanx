@@ -1,0 +1,23 @@
+{{- if .Values.epochs.enabled -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "ssp-vet-epochs"
+  labels:
+    {{- include "ssp-vet.labels" . | nindent 4 }}
+  annotations:
+    # At USDF this storage class provisions PVs whose source path is the whole
+    # /sdf/group/rubin filesystem, with reclaimPolicy Delete. The bound PV must
+    # be patched to Retain before the claim may be deleted, so neither Argo
+    # CD's pruning nor a Helm uninstall is allowed to delete it.
+    argocd.argoproj.io/sync-options: Prune=false
+    helm.sh/resource-policy: keep
+spec:
+  storageClassName: {{ required "epochs.storageClassName must be set when epochs.enabled" .Values.epochs.storageClassName | quote }}
+  accessModes:
+    - "ReadWriteMany"
+  resources:
+    requests:
+      # Nominal: the volume is a hostPath, and the pod sees only its subPath.
+      storage: "1Gi"
+{{- end }}
