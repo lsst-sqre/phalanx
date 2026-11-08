@@ -16,9 +16,6 @@ Web tool for vetting Solar System THOR linkages by eye
 | devSource.enabled | bool | `false` | Whether to run from the checkout. Its `src/` is mounted read only from the data volume, put first on `PYTHONPATH`, and watched by uvicorn's polling reloader. The liveness probe is dropped in this mode, so a broken save only makes the pod unready until the next good save reloads it. |
 | devSource.subPath | string | None, must be set when enabled | Path of the checkout's `src/` directory within the data volume (`data.storageClassName`). Update the checkout in place (git pull or fast-forward); replacing the directory itself leaves the pod on the old one until it restarts. |
 | env | object | `{}` | Extra environment variables for the app. The image's defaults already match the mounts this chart makes (`SSP_VET_ROOT=/data`, `SSP_VET_VAR=/var/lib/ssp-vet`). |
-| epochs.enabled | bool | `false` | Whether to mount the epoch stamps separately. When enabled, the directory is mounted read only at `/epochs` and `SSP_VET_EPOCHS` points there; otherwise the app reads them from inside the input data. |
-| epochs.storageClassName | string | None, must be set when enabled | Storage class of the volume holding the epoch stamps. At USDF, `sdf-group-rubin` provisions a hostPath of the whole /sdf/group/rubin filesystem, of which the pod mounts only `epochs.subPath`. |
-| epochs.subPath | string | None, must be set when enabled | Path within that volume of the directory holding the per-chunk `.json` and `.npz` stamp files. They must be readable by the pod's `runAsGroup`. |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the ssp-vet image |

@@ -60,10 +60,6 @@ spec:
             - name: "PYTHONDONTWRITEBYTECODE"
               value: "1"
             {{- end }}
-            {{- if .Values.epochs.enabled }}
-            - name: "SSP_VET_EPOCHS"
-              value: "/epochs"
-            {{- end }}
             - name: "SSP_VET_PATH_PREFIX"
               value: {{ .Values.ingress.pathPrefix | quote }}
             {{- range $name, $value := .Values.env }}
@@ -118,12 +114,6 @@ spec:
               subPath: {{ required "devSource.subPath must be set when devSource.enabled" .Values.devSource.subPath | quote }}
               readOnly: true
             {{- end }}
-            {{- if .Values.epochs.enabled }}
-            - name: "epochs"
-              mountPath: "/epochs"
-              subPath: {{ required "epochs.subPath must be set when epochs.enabled" .Values.epochs.subPath | quote }}
-              readOnly: true
-            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -144,9 +134,3 @@ spec:
             claimName: "ssp-vet-state"
         - name: "tmp"
           emptyDir: {}
-        {{- if .Values.epochs.enabled }}
-        - name: "epochs"
-          persistentVolumeClaim:
-            claimName: "ssp-vet-epochs"
-            readOnly: true
-        {{- end }}

@@ -4,7 +4,7 @@ image:
 
 data:
   storageClassName: "sdf-data-rubin"
-  subPath: "user/mjuric/neo-vetting-2026-11-03/thor-unknowns"
+  subPath: "repo/dp2_prep/u/mjuric/neo-vetting-2026-11-03/thor-unknowns"
 
 persistence:
   storageClassName: "wekafs--sdf-k8s01"
