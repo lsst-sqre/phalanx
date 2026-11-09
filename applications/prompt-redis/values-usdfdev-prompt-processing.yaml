@@ -11,6 +11,11 @@ redis:
       cpu: "1"
       memory: "1Gi"
 
+redis-exporter:
+  enabled: true
+  streams:
+    checkSingle: "instrument:latiss,instrument:lsstcam"
+
 redis-streams-cleaner:
   enabled: true
   image:
