@@ -58,8 +58,8 @@ config:
   # -- Set to `TRUE` to enable service debugging
   debug: "FALSE"
 
-  # -- How long results should be retained before being deleted
-  cleanupInterval: "36h"
+  # -- How often the Firefly cleanup sweep runs over the work areas
+  cleanupInterval: "1h"
 
   # -- The subdirectory under /firefly/workarea and /firefly/shared-workarea to cleanup
   cleanupAppName: "suit"

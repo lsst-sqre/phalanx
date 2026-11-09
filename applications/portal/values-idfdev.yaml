@@ -5,7 +5,6 @@ config:
     This is a test alert message.
     It should be shown to all users.
   volumes:
-    cleanupInterval: "1h"
     sharedWorkarea:
       nfs:
         path: "/home-tiered-share/_reloc/firefly/shared-workarea"

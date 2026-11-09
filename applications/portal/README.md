@@ -14,7 +14,7 @@ Rubin Science Platform Portal Aspect
 | affinity | object | `{}` | Affinity rules for the Portal pod |
 | config.alertMessage | string | `nil` | If not null, display this alert to all users in a banner |
 | config.cleanupAppName | string | `"suit"` | The subdirectory under /firefly/workarea and /firefly/shared-workarea to cleanup |
-| config.cleanupInterval | string | `"36h"` | How long results should be retained before being deleted |
+| config.cleanupInterval | string | `"1h"` | How often the Firefly cleanup sweep runs over the work areas |
 | config.cleanupSharedMax | string | `nil` | If set, how big (SI units) the shared workarea is allowed to get. <n>%: 1-99, percent of the work area's filesystem in use, as df's Use% reports it. Counts everything on that filesystem; best when the volume is dedicated. <size>: <n>K, <n>M, <n>G or <n>T, binary (1G = 1024M); Kubernetes' Ki/Mi/Gi/Ti also work. Measured with du of the work area. Use <n>% to keep the volume itself from filling. |
 | config.cleanupWorkareaMax | string | `nil` | If set, how big the per-node workarea is allowed to get. <n>%: 1-99, percent of the work area's filesystem in use, as df's Use% reports it. Counts everything on that filesystem; best when the volume is dedicated. <size>: <n>K, <n>M, <n>G or <n>T, binary (1G = 1024M); Kubernetes' Ki/Mi/Gi/Ti also work. Measured with du of the work area. Use <n>% to keep the volume itself from filling. |
 | config.debug | string | `"FALSE"` | Set to `TRUE` to enable service debugging |
