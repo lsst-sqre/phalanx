@@ -33,9 +33,9 @@ spec:
         - name: REDIS_ADDR
           value: redis://prompt-redis.prompt-redis:6379
         - name: REDIS_EXPORTER_CHECK_SINGLE_STREAMS
-          value: {{ .Values.checkSingleStreams | toString | quote }}
+          value: {{ .Values.streams.checkSingle | toString | quote }}
         - name: REDIS_EXPORTER_STREAMS_EXCLUDE_CONSUMER_METRICS
-          value: {{ .Values.streamsExcludeConsumerMetrics | toString | quote }}
+          value: {{ .Values.streams.excludeConsumerMetrics | toString | quote }}
         - name: REDIS_EXPORTER_WEB_LISTEN_ADDRESS
           value: {{ .Values.webListenAddress | toString | quote }}
         {{- if .Values.auth.enabled }}
