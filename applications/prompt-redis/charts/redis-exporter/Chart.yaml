@@ -1,0 +1,5 @@
+apiVersion: v2
+name: redis-exporter
+version: 1.0.0
+description: A subchart to deploy redis exporter
+appVersion: 1.0.0

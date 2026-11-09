@@ -1,0 +1,52 @@
+# Default values for Redis Exporter
+
+# -- Number of Redis Exporter pods to run in the deployment.
+replicaCount: 1
+
+image:
+  # -- Redis Exporter Docker image repository
+  repository: oliver006/redis_exporter
+
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+  # -- Redis Exporter image version
+  tag: v1.97.0
+
+# -- Redis authentication settings
+auth:
+  enabled: false
+
+streams:
+  # -- Comma separated list of streams to export info about streams, groups and consumers.
+  checkSingle: ""
+
+  # -- Don't collect per consumer metrics for streams (decreases amount of metrics and cardinality).
+  excludeConsumerMetrics: "true"
+
+# -- Address to listen on for web interface and telemetry, defaults to 0.0.0.0:9121.
+webListenAddress: "0.0.0.0:8000"
+
+# -- Kubernetes requests and limits for Redis Exporter
+# @default -- See `values.yaml`
+resources:
+  requests:
+    memory: "16Mi"
+    cpu: "10Mi"
+  limits:
+    memory: "64Mi"
+    cpu: "100Mi"
+
+# -- Node selector configuration
+nodeSelector: {}
+
+# -- Tolerations configuration
+tolerations: []
+
+# -- Affinity configuration
+affinity: {}
+
+# -- Pod annotations
+podAnnotations:
+  prometheus.io/port: "8000"
+  prometheus.io/scrape: "true"

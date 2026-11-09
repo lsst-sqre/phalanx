@@ -44,6 +44,10 @@ redis:
   # -- Tolerations for the persistent Redis pod
   tolerations: []
 
+redis-exporter:
+  # -- Enable Redis Exporter
+  enabled: true
+
 redis-stream-exporter:
 
   # -- How long to sleep between redis stream exporter polling cycles
