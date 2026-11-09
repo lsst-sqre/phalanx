@@ -91,7 +91,7 @@ spec:
           emptyDir: {}
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
+        runAsUser: 1001
         runAsGroup: 1000
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -199,7 +199,7 @@ spec:
           emptyDir: {}
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
+        runAsUser: 1001
         runAsGroup: 1000
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -307,7 +307,7 @@ spec:
           emptyDir: {}
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
+        runAsUser: 1001
         runAsGroup: 1000
       {{- with .Values.nodeSelector }}
       nodeSelector:
