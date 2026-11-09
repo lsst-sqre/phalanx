@@ -12,9 +12,10 @@ config:
     enabled: true
     gitRefAuditEnabled: true
   buildProcessing:
-    # Raised for the DM-56964 pipelines weekly/daily upload measurement
-    # (lsst-sqre/docverse#864 §7); the prod value is sized from that test.
-    jobTimeoutSeconds: 3600
+    # Sized from the DM-56964 pipelines upload test (lsst-sqre/docverse#868):
+    # a 390 MB / 8,600-object weekly processes in 105–127 s, so 600 s is
+    # about twice the measured wall clock with room for retries and growth.
+    jobTimeoutSeconds: 600
   sentry:
     enabled: true
   metrics:
@@ -28,23 +29,3 @@ cloudsql:
   enabled: true
   instanceConnectionName: "roundtable-dev-abe2:us-central1:roundtable-dev-572a252e"
   serviceAccount: "docverse-sa@roundtable-dev-abe2.iam.gserviceaccount.com"
-
-workerResources:
-  limits:
-    cpu: "1"
-    # Raised from the chart's 1Gi for the DM-56964 pipelines upload test
-    # (lsst-sqre/docverse#868): build_processing holds the whole staging
-    # tarball and every extracted file in memory before uploading, and a
-    # 390 MB pipelines weekly OOM-killed the worker at 1Gi on 2026-11-05.
-    memory: "2Gi"
-  requests:
-    cpu: "50m"
-    memory: "256Mi"
-
-image:
-  # Branch image for the full DM-56964 stack (lsst-sqre/docverse#875,
-  # #876 and #881: build_processing sizing, switcher template, eups_release
-  # mode and per-ref editions); drop once the server release carrying it
-  # is in Chart.yaml.
-  tag: "tickets-DM-56964"
-  pullPolicy: "Always"
