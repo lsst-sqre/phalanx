@@ -59,7 +59,7 @@ config:
   debug: "FALSE"
 
   # -- How often the Firefly cleanup sweep runs over the work areas
-  cleanupInterval: "36h"
+  cleanupInterval: "1h"
 
   # -- The subdirectory under /firefly/workarea and /firefly/shared-workarea to cleanup
   cleanupAppName: "suit"

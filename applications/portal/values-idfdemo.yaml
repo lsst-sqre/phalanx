@@ -13,7 +13,6 @@ nodeSelector:
   node_pool: "arm-core-pool"
 
 config:
-  cleanupInterval: "1h"
   alertMessage: |
     This is a test alert message.
     It should be shown to all users.
