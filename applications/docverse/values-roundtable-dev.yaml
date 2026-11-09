@@ -11,6 +11,11 @@ config:
   maintenance:
     enabled: true
     gitRefAuditEnabled: true
+  buildProcessing:
+    # Sized from the DM-56964 pipelines upload test (lsst-sqre/docverse#868):
+    # a 390 MB / 8,600-object weekly processes in 105–127 s, so 600 s is
+    # about twice the measured wall clock with room for retries and growth.
+    jobTimeoutSeconds: 600
   sentry:
     enabled: true
   metrics:

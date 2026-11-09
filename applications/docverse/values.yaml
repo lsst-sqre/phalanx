@@ -239,6 +239,21 @@ config:
     # purgatory_cleanup dispatcher cron runs.
     purgatoryCleanupCronMinute: 23
 
+  buildProcessing:
+    # -- Per-job timeout, in seconds, for `build_processing` jobs on the
+    # default pool: arq cancels a job that runs past it, failing its
+    # `queue_jobs` row and its build with reason `job_timeout`. One job
+    # downloads the uploaded tarball, unpacks every file into the
+    # organization's object store, registers the build, and enqueues its
+    # edition publishes, so its wall clock grows with the size of the build.
+    # The default is arq's own implicit 300 s, which the job ran under
+    # before it was a setting; size it from a measured upload of the largest
+    # build the deployment takes, at about twice that wall clock. It must sit
+    # at least 1800 s below `config.reaperThresholds.buildProcessingSeconds`
+    # (so at most 27000 at the stock 8 h threshold) or the server refuses to
+    # start, since the reaper must never fail a job arq is still running.
+    jobTimeoutSeconds: 300
+
   # -- Whether a long-profile edition publish is followed by a purge of the
   # project's hostname from the Cloudflare edge cache. Leave this off until
   # the Docverse Worker edge-caches edition responses: today a purge
@@ -321,6 +336,13 @@ resources:
     # -- GKE Autopilot requires a minimum CPU request of 50m
     cpu: "50m"
     memory: "100Mi"
+
+# -- Size limit of the disk-backed `emptyDir` mounted at `/tmp` in the
+# docverse worker pod. `build_processing` spools each staging tarball
+# there while unpacking it (the extracted files never touch disk), so
+# this must hold the largest tarball for every build_processing job
+# that can run at once, within the pod's ephemeral-storage limit.
+workerTmpSizeLimit: "512Mi"
 
 # -- Resource limits and requests for the docverse worker pod
 # @default -- See `values.yaml`

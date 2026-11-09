@@ -55,10 +55,15 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
-          {{- if .Values.config.metrics.enabled }}
           volumeMounts:
+            # build_processing spools each staging tarball to a temporary
+            # file under /tmp while it unpacks it; the root filesystem is
+            # read-only, so /tmp has to be a writable, disk-backed volume.
+            - name: "tmp"
+              mountPath: "/tmp"
+            {{- if .Values.config.metrics.enabled }}
             {{- include "docverse.kafkaVolumeMounts" . | nindent 12 }}
-          {{- end }}
+            {{- end }}
       {{- if .Values.cloudsql.enabled }}
       initContainers:
         {{- include "docverse.cloudsqlSidecar" . | nindent 8 }}
@@ -75,7 +80,13 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
-      {{- if .Values.config.metrics.enabled }}
       volumes:
+        # Disk-backed on purpose: a `medium: Memory` emptyDir is a tmpfs
+        # whose contents count against the memory limit, which would put
+        # the whole tarball back in memory.
+        - name: "tmp"
+          emptyDir:
+            sizeLimit: {{ .Values.workerTmpSizeLimit | quote }}
+        {{- if .Values.config.metrics.enabled }}
         {{- include "docverse.kafkaVolume" . | nindent 8 }}
-      {{- end }}
+        {{- end }}
