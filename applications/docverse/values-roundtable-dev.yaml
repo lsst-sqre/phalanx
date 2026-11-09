@@ -42,7 +42,9 @@ workerResources:
     memory: "256Mi"
 
 image:
-  # Branch image for lsst-sqre/docverse#875 (DM-56964 build_processing
-  # timeout); drop once the server release carrying it is in Chart.yaml.
-  tag: "tickets-DM-56964-build-timeout"
+  # Branch image for the full DM-56964 stack (lsst-sqre/docverse#875,
+  # #876 and #881: build_processing sizing, switcher template, eups_release
+  # mode and per-ref editions); drop once the server release carrying it
+  # is in Chart.yaml.
+  tag: "tickets-DM-56964"
   pullPolicy: "Always"
