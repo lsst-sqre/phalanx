@@ -48,7 +48,6 @@ applications:
   rubintv: true
   s3proxy: true
   sasquatch: true
-  schedview-snapshot: true
   semaphore: true
   sia: true
   skyviewer: true
