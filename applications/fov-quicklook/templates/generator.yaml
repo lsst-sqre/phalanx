@@ -56,6 +56,7 @@ spec:
             - name: QUICKLOOK_generator_max_concurrent_ccds_per_job
               value: {{ .Values.generator.concurrency | quote }}
             {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
+            {{- include "fov-quicklook.env.cache" . | nindent 12 }}
             {{- include "fov-quicklook.env.log-level" . | nindent 12 }}
             {{- include "fov-quicklook.env.ccd_data_types" . | nindent 12 }}
             {{- include "fov-quicklook.butler-settings.env" . | nindent 12 }}
