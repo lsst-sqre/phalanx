@@ -26,7 +26,8 @@ spec:
           containers:
             - name: {{ include "love-manager.view-backup.fullname" . }}
               {{- $imageTag := .Values.viewBackup.image.tag | default $.Values.global.controlSystem.imageTag }}
-              image: "{{ .Values.viewBackup.image.repository }}:{{ $imageTag }}"
+              {{- $image := dict "repo" $.Values.viewBackup.image.repository "tag" $imageTag "rev" $.Values.viewBackup.image.revision }}
+              image: {{ include "helpers.makeImage" $image }}
               imagePullPolicy: {{ .Values.viewBackup.image.pullPolicy }}
               env:
                 - name: PGHOST

@@ -126,7 +126,7 @@ ccoods:
 gcheaderservice101:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/headerservice
   env:
     CAMERA: gc101
@@ -148,7 +148,7 @@ gcheaderservice101:
 gcheaderservice102:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/headerservice
   env:
     CAMERA: gc102
@@ -170,7 +170,7 @@ gcheaderservice102:
 gcheaderservice103:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/headerservice
   env:
     CAMERA: gc103
@@ -192,7 +192,7 @@ gcheaderservice103:
 lasertracker1:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/lasertracker
   env:
     RUN_ARG: 1
@@ -207,7 +207,7 @@ lasertracker1:
 mtaircompressor1:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtaircompressor
   env:
     RUN_ARG: 1 --state disabled
@@ -216,13 +216,13 @@ mtaircompressor1:
       cpu: 100m
       memory: 360Mi
     requests:
-      cpu: 16m
+      cpu: 20m
       memory: 180Mi
 
 mtaircompressor2:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtaircompressor
   env:
     RUN_ARG: 2 --state disabled
@@ -231,12 +231,12 @@ mtaircompressor2:
       cpu: 100m
       memory: 360Mi
     requests:
-      cpu: 13m
+      cpu: 20m
       memory: 180Mi
 
 mtaos:
   image:
-    revision: 2
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtaos
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
@@ -273,17 +273,17 @@ mtaos:
     serverPath: /obs-env
   resources:
     limits:
-      cpu: 12000m
-      memory: 10000Mi
+      cpu: 14
+      memory: 12Gi
     requests:
-      cpu: 12000m
-      memory: 9500Mi
+      cpu: 12
+      memory: 10Gi
 
 mtcamhexapod:
   enabled: true
   classifier: mthexapod1
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: 1
@@ -305,7 +305,7 @@ mtcamhexapod-sim:
   enabled: false
   classifier: mthexapod1
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: --simulate 1
@@ -320,7 +320,7 @@ mtcamhexapod-sim:
 mtdome:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtdome
   resources:
     limits:
@@ -333,7 +333,7 @@ mtdome:
 mtdome-sim:
   enabled: false
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtdome
   env:
     RUN_ARG: --simulate 1
@@ -347,7 +347,7 @@ mtdome-sim:
 
 mtdometrajectory:
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtdometrajectory
   resources:
     limits:
@@ -382,7 +382,7 @@ mtheaderservice:
 mtm1m3-sim:
   enabled: false
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtm1m3_sim
   env:
     LSST_KAFKA_TLM_FLUSH_MS: 0
@@ -397,20 +397,20 @@ mtm1m3-sim:
 mtm2:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/m2
   resources:
     limits:
-      cpu: 850m
+      cpu: 1
       memory: 1500Mi
     requests:
-      cpu: 280m
+      cpu: 500m
       memory: 420Mi
 
 mtm2-sim:
   enabled: false
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/m2
   env:
     RUN_ARG: --simulate
@@ -426,7 +426,7 @@ mtm2hexapod:
   enabled: true
   classifier: mthexapod2
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: 2
@@ -438,17 +438,17 @@ mtm2hexapod:
     serverPath: /obs-env
   resources:
     limits:
-      cpu: 400m
+      cpu: 500m
       memory: 1400Mi
     requests:
-      cpu: 200m
+      cpu: 250m
       memory: 700Mi
 
 mtm2hexapod-sim:
   enabled: false
   classifier: mthexapod2
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: --simulate 2
@@ -463,14 +463,14 @@ mtm2hexapod-sim:
 mtmount:
   enabled: true
   image:
-    revision: 6
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtmount
   resources:
     limits:
-      cpu: 2
+      cpu: 3
       memory: 1000Mi
     requests:
-      cpu: 1900m
+      cpu: 2
       memory: 425Mi
 
 mtmount-ccw-only:
@@ -482,10 +482,10 @@ mtmount-ccw-only:
     CCW_ONLY: yes
   resources:
     limits:
-      cpu: 2
+      cpu: 3
       memory: 1000Mi
     requests:
-      cpu: 1900m
+      cpu: 2
       memory: 425Mi
 
 mtmount-sim:
@@ -506,7 +506,7 @@ mtmount-sim:
 mtoods:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtoods
   env:
     CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
@@ -519,10 +519,10 @@ mtoods:
   <<: *butler-secret
   resources:
     limits:
-      cpu: 1500m
+      cpu: 2
       memory: 8Gi
     requests:
-      cpu: 500m
+      cpu: 1
       memory: 2Gi
   configfile:
     path: /etc
@@ -573,7 +573,7 @@ mtoods:
 
 mtptg:
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/ptkernel
   env:
     TELESCOPE: MT
@@ -589,20 +589,20 @@ mtptg:
 mtrotator:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtrotator
   resources:
     limits:
       cpu: 1
       memory: 900Mi
     requests:
-      cpu: 400m
+      cpu: 500m
       memory: 300Mi
 
 mtrotator-sim:
   enabled: false
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtrotator
   env:
     RUN_ARG: --simulate
@@ -617,7 +617,7 @@ mtrotator-sim:
 wfoods:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/wfoods
   env:
     CTRL_OODS_CONFIG_FILE: /etc/wfoods.yaml

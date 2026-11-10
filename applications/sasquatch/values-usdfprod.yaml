@@ -422,9 +422,55 @@ telegraf:
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps:
-        - "summit.lsst.sal.MTCamera"
+        - "lsst.sal.MTCamera.command"
+        - "lsst.sal.MTCamera.logevent"
+        - "lsst.sal.MTCamera.ackcmd"
         - "summit.lsst.sal.MTHeaderService"
         - "summit.lsst.sal.MTOODS"
+        - "summit.lsst.sal.WFOODS"
+    lsstcam-telemetry:
+      enabled: true
+      database: "lsst.MTCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags:
+        - "Agent"
+        - "Aspic"
+        - "Axis"
+        - "Bay"
+        - "Buffer"
+        - "Canbus"
+        - "Cip"
+        - "Clamp"
+        - "Cold"
+        - "Controller"
+        - "Cryo"
+        - "Hardware"
+        - "Hip"
+        - "Hook"
+        - "Latch"
+        - "Location"
+        - "Ps"
+        - "RTD"
+        - "Raft"
+        - "Reb"
+        - "Segment"
+        - "Sensor"
+        - "Socket"
+        - "Source"
+        - "Truck"
+        - "VersionType"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.sal.MTCamera."
+        excludePrefixes:
+          - "lsst.sal.MTCamera.command"
+          - "lsst.sal.MTCamera.logevent"
+          - "lsst.sal.MTCamera.ackcmd"
+      measurementRenameRegex:
+        - pattern: '^lsst\.sal\.MTCamera\.(.+)$'
+          replacement: 'lsst.MTCamera.${1}'
     auxtel:
       enabled: true
       repair: false
@@ -445,10 +491,38 @@ telegraf:
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps:
-        - "summit.lsst.sal.ATCamera"
+        - "lsst.sal.ATCamera.command"
+        - "lsst.sal.ATCamera.logevent"
+        - "lsst.sal.ATCamera.ackcmd"
         - "summit.lsst.sal.ATHeaderService"
         - "summit.lsst.sal.ATOODS"
         - "summit.lsst.sal.ATSpectrograph"
+    latiss-telemetry:
+      enabled: true
+      database: "lsst.ATCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags:
+        - "Agent"
+        - "Aspic"
+        - "Buffer"
+        - "Location"
+        - "Raft"
+        - "Reb"
+        - "Sensor"
+        - "Source"
+        - "VersionType"
+      topicDiscovery:
+        enabled: true
+        includePrefixes:
+          - "lsst.sal.ATCamera."
+        excludePrefixes:
+          - "lsst.sal.ATCamera.command"
+          - "lsst.sal.ATCamera.logevent"
+          - "lsst.sal.ATCamera.ackcmd"
+      measurementRenameRegex:
+        - pattern: '^lsst\.sal\.ATCamera\.(.+)$'
+          replacement: 'lsst.ATCamera.${1}'
     test:
       enabled: true
       repair: false
@@ -463,79 +537,6 @@ telegraf:
       timestamp_field: "private_efdStamp"
       topicRegexps:
         - "summit.lsst.sal.LaserTracker"
-    # CCS connectors (experimental) data is being written on separate databases for now
-    atcamera:
-      enabled: true
-      database: "lsst.ATCamera"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      tags:
-        - "Agent"
-        - "Aspic"
-        - "Location"
-        - "Raft"
-        - "Reb"
-        - "Sensor"
-        - "Source"
-        - "VersionType"
-      topicRegexps:
-        - "summit.lsst.ATCamera"
-    cccamera:
-      enabled: true
-      database: "lsst.CCCamera"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      tags:
-        - "Agent"
-        - "Aspic"
-        - "Cold"
-        - "Cryo"
-        - "Hardware"
-        - "Location"
-        - "Ps"
-        - "RTD"
-        - "Raft"
-        - "Reb"
-        - "Segment"
-        - "Sensor"
-        - "Source"
-        - "VersionType"
-      topicRegexps:
-        - "summit.lsst.CCCamera"
-    mtcamera:
-      enabled: true
-      database: "lsst.MTCamera"
-      timestamp_format: "unix_ms"
-      timestamp_field: "timestamp"
-      tags:
-        - "Agent"
-        - "Aspic"
-        - "Axis"
-        - "Bay"
-        - "Canbus"
-        - "Cip"
-        - "Clamp"
-        - "Cold"
-        - "Controller"
-        - "Cryo"
-        - "Gateway"
-        - "Hardware"
-        - "Hip"
-        - "Hook"
-        - "Latch"
-        - "Location"
-        - "Ps"
-        - "RTD"
-        - "Raft"
-        - "Reb"
-        - "Segment"
-        - "Sensor"
-        - "Socket"
-        - "Source"
-        - "Truck"
-        - "VersionType"
-      topicRegexps:
-        - "summit.lsst.MTCamera"
     obsenv:
       enabled: true
       database: "lsst.obsenv"

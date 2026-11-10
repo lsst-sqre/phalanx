@@ -1,7 +1,7 @@
 atmonochromator:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/atmonochromator
   resources:
     limits:
@@ -14,7 +14,7 @@ atmonochromator:
 atwhitelight:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/atwhitelight
   resources:
     limits:
@@ -27,7 +27,7 @@ atwhitelight:
 cbp:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/cbp
   resources:
     limits:
@@ -40,7 +40,7 @@ cbp:
 electrometer101:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/electrometer
   env:
     RUN_ARG: 101
@@ -61,7 +61,7 @@ electrometer101:
 electrometer102:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/electrometer
   env:
     RUN_ARG: 102
@@ -82,7 +82,7 @@ electrometer102:
 electrometer103:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/electrometer
   env:
     RUN_ARG: 103
@@ -103,7 +103,7 @@ electrometer103:
 electrometer201:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/electrometer
   env:
     RUN_ARG: 201
@@ -124,20 +124,20 @@ electrometer201:
 ledprojector:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/ledprojector
   resources:
     limits:
       cpu: 120m
       memory: 360Mi
     requests:
-      cpu: 19m
+      cpu: 30m
       memory: 180Mi
 
 linearstage101:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/linearstage
   env:
     RUN_ARG: 101
@@ -146,13 +146,13 @@ linearstage101:
       cpu: 190m
       memory: 512Mi
     requests:
-      cpu: 19m
+      cpu: 30m
       memory: 256Mi
 
 linearstage102:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/linearstage
   env:
     RUN_ARG: 102
@@ -161,13 +161,13 @@ linearstage102:
       cpu: 190m
       memory: 512Mi
     requests:
-      cpu: 19m
+      cpu: 30m
       memory: 256Mi
 
 linearstage103:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/linearstage
   env:
     RUN_ARG: 103
@@ -176,13 +176,13 @@ linearstage103:
       cpu: 190m
       memory: 512Mi
     requests:
-      cpu: 19m
+      cpu: 30m
       memory: 256Mi
 
 linearstage104:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/linearstage
   env:
     RUN_ARG: 104
@@ -191,27 +191,27 @@ linearstage104:
       cpu: 190m
       memory: 400Mi
     requests:
-      cpu: 19m
+      cpu: 30m
       memory: 200Mi
 
 mtreflector:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/mtreflector
   resources:
     limits:
       cpu: 200m
       memory: 512Mi
     requests:
-      cpu: 20m
+      cpu: 30m
       memory: 256Mi
 
 simulation-gencam:
   enabled: true
   classifier: genericcamera1
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/genericcamera
   env:
     RUN_ARG: 1
@@ -230,18 +230,18 @@ simulation-gencam:
       cpu: 120m
       memory: 512Mi
     requests:
-      cpu: 25m
+      cpu: 50m
       memory: 256Mi
 
 tunablelaser:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/tunablelaser
   resources:
     limits:
       cpu: 120m
       memory: 350Mi
     requests:
-      cpu: 15m
+      cpu: 30m
       memory: 170Mi

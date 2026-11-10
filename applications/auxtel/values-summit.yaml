@@ -1,51 +1,51 @@
 ataos:
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/ataos
   resources:
     limits:
       cpu: 450m
       memory: 1024Mi
     requests:
-      cpu: 80m
+      cpu: 150m
       memory: 512Mi
 
 atbuilding:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/atbuilding
   resources:
     limits:
       cpu: 120m
       memory: 500Mi
     requests:
-      cpu: 12m
+      cpu: 20m
       memory: 250Mi
 
 atdome:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/atdome
   resources:
     limits:
       cpu: 170m
       memory: 512Mi
     requests:
-      cpu: 17m
+      cpu: 30m
       memory: 256Mi
 
 atdometrajectory:
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/atdometrajectory
   resources:
     limits:
       cpu: 350m
       memory: 768Mi
     requests:
-      cpu: 35m
+      cpu: 70m
       memory: 256Mi
 
 atheaderservice:
@@ -72,7 +72,7 @@ atheaderservice:
 athexapod:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/athexapod
   resources:
     limits:
@@ -85,7 +85,7 @@ athexapod:
 atmcs:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/atmcs
   resources:
     limits:
@@ -97,7 +97,7 @@ atmcs:
 
 atoods:
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/atoods
   env:
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
@@ -176,19 +176,19 @@ atoods:
 atpneumatics:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/at_pneumatics
   resources:
     limits:
       cpu: 200m
       memory: 320Mi
     requests:
-      cpu: 20m
+      cpu: 30m
       memory: 160Mi
 
 atptg:
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/ptkernel
   env:
     TELESCOPE: AT
@@ -204,20 +204,20 @@ atptg:
 atspectrograph:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/atspec
   resources:
     limits:
       cpu: 150m
       memory: 512Mi
     requests:
-      cpu: 15m
+      cpu: 30m
       memory: 256Mi
 
 pmd1:
   enabled: true
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/pmd
   env:
     RUN_ARG: 1

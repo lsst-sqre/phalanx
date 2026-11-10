@@ -26,6 +26,7 @@ audio-broadcaster:
   image:
     repository: ts-dockerhub.lsst.org/audio_broadcaster
     pullPolicy: Always
+    revision: 0
   ingress:
     hostname: summit-lsp.lsst.codes
     httpPath: /audio-broadcaster
@@ -60,7 +61,7 @@ audio-broadcaster:
 
 love-commander:
   image:
-    revision: 3
+    revision: 0
     repository: ts-dockerhub.lsst.org/love-commander
     pullPolicy: Always
   env:
@@ -83,16 +84,16 @@ love-commander:
     type: ClusterIP
   resources:
     requests:
-      cpu: 500m
+      cpu: 1
       memory: 1500Mi
     limits:
-      cpu: 1000m
+      cpu: 2
       memory: 2Gi
 
 x-manager-producer:
   &base-manager-producer
   image:
-    revision: 7
+    revision: 0
     repository: ts-dockerhub.lsst.org/love-manager
     pullPolicy: Always
   env:
@@ -129,10 +130,10 @@ x-manager-producer:
   <<: *topology-spread
   resources:
     requests:
-      cpu: 150m
+      cpu: 500m
       memory: 200Mi
     limits:
-      cpu: 1000m
+      cpu: 1
       memory: 1500Mi
   readinessProbe:
     tcpSocket:
@@ -146,7 +147,7 @@ love-manager:
   manager:
     frontend:
       image:
-        revision: 7
+        revision: 0
         repository: ts-dockerhub.lsst.org/love-manager
         pullPolicy: Always
       env:
@@ -244,6 +245,7 @@ love-manager:
     enabled: true
     image:
       repository: ts-dockerhub.lsst.org/love-view-backup
+      revision: 0
       pullPolicy: Always
     schedule: 0 12 * * *
     resources:
@@ -267,7 +269,7 @@ love-nginx:
   initContainers:
     frontend:
       image:
-        revision: 7
+        revision: 0
         repository: ts-dockerhub.lsst.org/love-frontend-k8s
         pullPolicy: Always
     manager:
@@ -287,10 +289,10 @@ love-nginx:
   resources:
     requests:
       cpu: 120m
-      memory: 140Mi
+      memory: 200Mi
     limits:
       cpu: 500m
-      memory: 300Mi
+      memory: 500Mi
   nginxConfig: |
     server {
       listen 80;
@@ -520,7 +522,7 @@ x-love-producer-vms-resources:
 
 love-producer:
   image:
-    revision: 3
+    revision: 0
     repository: ts-dockerhub.lsst.org/love-producer
     pullPolicy: Always
   <<: *topology-spread
@@ -541,6 +543,13 @@ love-producer:
   - name: atcamera
     csc: ATCamera:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 1
+        memory: 600Mi
   - name: atdome
     csc: ATDome:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/atcs/ws/subscription
@@ -1082,16 +1091,15 @@ love-producer:
     csc: ESS:311 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-2/ws/subscription
     <<: *love-producer-envsys-resources
-
   - name: watcher
     csc: Watcher:0
     WEBSOCKET_HOST: love-nginx-service/love/manager/obssys/ws/subscription
     resources:
       requests:
-        cpu: 50m
+        cpu: 100m
         memory: 150Mi
       limits:
-        cpu: 500m
+        cpu: 1
         memory: 300Mi
   - name: weatherforecast
     csc: WeatherForecast:0

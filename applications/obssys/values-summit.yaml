@@ -17,7 +17,7 @@ x-efd-auth: &efd-auth
 atqueue:
   classifier: scriptqueue2
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/scriptqueue
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
@@ -77,7 +77,7 @@ atqueue:
 atscheduler:
   classifier: scheduler2
   image:
-    revision: 14
+    revision: 0
     repository: ts-dockerhub.lsst.org/scheduler
   env:
     INDEX: 2
@@ -121,7 +121,7 @@ atscheduler:
 gis:
   enabled: true
   image:
-    revision: 2
+    revision: 0
     repository: ts-dockerhub.lsst.org/gis
   secretFixup:
     containerPath: /home/saluser/.store
@@ -141,7 +141,7 @@ gis:
 mtqueue:
   classifier: scriptqueue1
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/scriptqueue
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
@@ -196,12 +196,12 @@ mtqueue:
       memory: 48Gi
     requests:
       cpu: 8
-      memory: 8Gi
+      memory: 10Gi
 
 mtscheduler:
   classifier: scheduler1
   image:
-    revision: 14
+    revision: 0
     repository: ts-dockerhub.lsst.org/scheduler
   env:
     INDEX: 1
@@ -245,7 +245,7 @@ mtscheduler:
 ocsqueue:
   classifier: scriptqueue3
   image:
-    revision: 4
+    revision: 0
     repository: ts-dockerhub.lsst.org/scriptqueue
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
@@ -295,16 +295,16 @@ ocsqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 5
+      cpu: 8
       memory: 10Gi
     requests:
-      cpu: 1
+      cpu: 2
       memory: 2Gi
 
 ocsscheduler:
   classifier: scheduler3
   image:
-    revision: 14
+    revision: 0
     repository: ts-dockerhub.lsst.org/scheduler
   env:
     INDEX: 3
@@ -347,16 +347,16 @@ ocsscheduler:
 
 watcher:
   image:
-    revision: 15
+    revision: 0
     repository: ts-dockerhub.lsst.org/watcher
   envSecrets:
   - name: ESCALATION_KEY
     key: squadcast-escalation-key
   resources:
     limits:
-      cpu: 3000m
+      cpu: 4
     requests:
-      cpu: 1500m
+      cpu: 2
       memory: 5Gi
   nfsMountpoint:
   - name: obs-env
