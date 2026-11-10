@@ -285,9 +285,6 @@ applications:
   # -- Enable the sasquatch-backpack application
   sasquatch-backpack: false
 
-  # -- Enable the schedview-snapshot application
-  schedview-snapshot: false
-
   # -- Enable the schedview-static-pages application
   schedview-static-pages: false
 
