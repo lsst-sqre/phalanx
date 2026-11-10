@@ -5,7 +5,6 @@ rubintv:
   - name: pull-secret
 
   frontend:
-    debug: true
     image:
       repository: ghcr.io/lsst-ts/rubintv-v3
       tag: deploy
@@ -25,6 +24,8 @@ rubintv:
       value: "/rubintv/ddv/"
     - name: DDV_CLIENT_WS_ADDRESS
       value: "rubintv/ws/ddv"
+    - name: RUBINTV_LOG_LEVEL
+      value: "DEBUG"
     - name: RUBINTV_CONSDB_URL
       value: "http://consdb-pq.consdb:8080/consdb/query"
     - name: RUBINTV_GUIDE_INSTRUMENTS
