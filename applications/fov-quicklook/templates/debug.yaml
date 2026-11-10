@@ -37,6 +37,9 @@ spec:
         - name: secret-volume
           mountPath: /secret
           readOnly: true
+        - name: database-credentials
+          mountPath: /run/secrets/fov-quicklook-db
+          readOnly: true
         - name: empty
           mountPath: /empty
       volumes:
@@ -44,6 +47,19 @@ spec:
       - name: secret-volume
         secret:
           secretName: fov-quicklook
+      - name: database-credentials
+        secret:
+          secretName: fov-quicklook-db
+          defaultMode: 0444
+          items:
+            - key: db-name
+              path: db-name
+            - key: db-url
+              path: db-url
+            - key: db-user
+              path: db-user
+            - key: password
+              path: password
       - name: empty
         emptyDir: {}
 ---

@@ -19,6 +19,8 @@ config:
   pathPrefix: /fov-quicklook
   # -- path prefix for object storage for tiles
   s3_tile_path_prefix: "fov-quicklook/prod"
+  # -- Tile cache schema version
+  tile_cache_schema_version: 3
   # -- Maximum allowed storage usage for object storage in bytes
   max_object_storage_usage: 100_000_000_000
 
@@ -27,9 +29,6 @@ s3_tile:
   endpoint: sdfembs3.sdf.slac.stanford.edu:443
   secure: true
   bucket: fov-quicklook-tile
-
-# -- Storage class to use for the database
-db_storage_class: null
 
 coordinator:
   resources:
@@ -53,17 +52,6 @@ frontend:
     limits:
       cpu: 8000m
       memory: 512Mi
-
-db:
-  resources:
-    # -- Resource requests for the database
-    requests:
-      cpu: 100m
-      memory: 256Mi
-    # -- Resource limits for the database
-    limits:
-      cpu: 2000m
-      memory: 256Mi
 
 generator:
   resources:

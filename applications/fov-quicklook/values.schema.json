@@ -15,13 +15,6 @@
     "use_gafaelfawr": {
       "type": "boolean"
     },
-    "db_storage_class": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "default": null
-    },
     "log_level": {
       "type": "string",
       "enum": [
@@ -102,17 +95,6 @@
         "resources"
       ]
     },
-    "db": {
-      "type": "object",
-      "properties": {
-        "resources": {
-          "$ref": "#/definitions/resources"
-        }
-      },
-      "required": [
-        "resources"
-      ]
-    },
     "generator": {
       "type": "object",
       "properties": {
@@ -167,7 +149,6 @@
     "use_gafaelfawr",
     "coordinator",
     "frontend",
-    "db",
     "generator",
     "context_menu_templates"
   ],
@@ -201,7 +182,9 @@
           "items": {
             "type": "string"
           },
-          "default": ["-exposure"],
+          "default": [
+            "-exposure"
+          ],
           "description": "Order by clauses for queries"
         },
         "partial": {
@@ -220,7 +203,11 @@
           "description": "Butler instrument name"
         }
       },
-      "required": ["data_type", "display_name", "collections"],
+      "required": [
+        "data_type",
+        "display_name",
+        "collections"
+      ],
       "additionalProperties": false
     },
     "image_config": {
@@ -254,6 +241,10 @@
         "max_object_storage_usage": {
           "type": "number",
           "$comment": "Maximum allowed storage usage for object storage in bytes"
+        },
+        "tile_cache_schema_version": {
+          "type": "integer",
+          "minimum": 1
         }
       },
       "required": [

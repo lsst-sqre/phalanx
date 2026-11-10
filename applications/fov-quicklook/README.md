@@ -21,12 +21,10 @@ Full focal plane viewer
 | config.max_object_storage_usage | int | `100000000000` | Maximum allowed storage usage for object storage in bytes |
 | config.pathPrefix | string | `"/fov-quicklook"` | URL path prefix |
 | config.s3_tile_path_prefix | string | `"fov-quicklook/prod"` | path prefix for object storage for tiles |
+| config.tile_cache_schema_version | int | `3` | Tile cache schema version |
 | context_menu_templates | list | `[]` | Context menu templates for the frontend |
 | coordinator.resources.limits | object | `{"cpu":"4000m","memory":"512Mi"}` | Resource limits for the coordinator |
 | coordinator.resources.requests | object | `{"cpu":"100m","memory":"512Mi"}` | Resource requests for the coordinator |
-| db.resources.limits | object | `{"cpu":"2000m","memory":"256Mi"}` | Resource limits for the database |
-| db.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | Resource requests for the database |
-| db_storage_class | string | `nil` | Storage class to use for the database |
 | frontend.replicas | int | `2` |  |
 | frontend.resources.limits | object | `{"cpu":"8000m","memory":"512Mi"}` | Resource limits for the frontend |
 | frontend.resources.requests | object | `{"cpu":"100m","memory":"512Mi"}` | Resource requests for the frontend |
