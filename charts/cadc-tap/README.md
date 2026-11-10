@@ -26,7 +26,7 @@ IVOA TAP service
 | config.bigquery.geoPointTables | list | DiaObject, DiaSource and DiaForcedSource in `config.bigquery.schema` | TAP names of the tables that have a `geo_point` column. Spatial queries on these tables use `geo_point` so that BigQuery can use the clustering on it. Other tables build the point from their own columns. |
 | config.bigquery.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.bigquery.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
-| config.bigquery.image.tag | string | `"3.31.0"` | Tag of TAP image to use |
+| config.bigquery.image.tag | string | `"3.32.0"` | Tag of TAP image to use |
 | config.bigquery.project | string | None, must be set if backend is `bigquery` | BigQuery project ID |
 | config.bigquery.schema | string | `""` | Schema name for table mappings (optional) |
 | config.bigquery.tableMappings | list | `[]` | Table name mappings for query rewriting (as visible:backend pairs). There is no built-in default mapping for any table, so every table queryable through this schema must have an entry here. Example: ["ppdb.mpc_orbits:`ppdb-dev-5c07.ppdb_public.mpc_orbits`"] |
@@ -59,12 +59,12 @@ IVOA TAP service
 | config.pg.host | string | None, must be set if backend is `pg` | Host to connect to |
 | config.pg.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.pg.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
-| config.pg.image.tag | string | `"3.31.0"` | Tag of TAP image to use. |
+| config.pg.image.tag | string | `"3.32.0"` | Tag of TAP image to use. |
 | config.pg.username | string | None, must be set if backend is `pg` | Username to connect with |
 | config.qserv.host | string | `"mock-db:3306"` (the mock QServ) | QServ hostname:port to connect to |
 | config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.qserv.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
-| config.qserv.image.tag | string | `"3.31.0"` | Tag of TAP image to use |
+| config.qserv.image.tag | string | `"3.32.0"` | Tag of TAP image to use |
 | config.qserv.jdbcParams | string | `""` | Extra JDBC connection parameters |
 | config.qserv.passwordEnabled | bool | false | Whether the Qserv database is password protected. Only used for direct-to-Qserv execution (`config.kafka.enabled: false`). |
 | config.qserv.schemaMappings | string | `""` | Schema name mappings: comma-separated list of user_schema:internal_schema pairs. Example: "dp1:dp1_pilot" dp1 queries execute against dp1_pilot. |
