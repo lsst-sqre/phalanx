@@ -422,9 +422,9 @@ telegraf:
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps:
-        - "lsst.sal.MTCamera.command"
-        - "lsst.sal.MTCamera.logevent"
-        - "lsst.sal.MTCamera.ackcmd"
+        - "summit.lsst.sal.MTCamera.command"
+        - "summit.lsst.sal.MTCamera.logevent"
+        - "summit.lsst.sal.MTCamera.ackcmd"
         - "summit.lsst.sal.MTHeaderService"
         - "summit.lsst.sal.MTOODS"
         - "summit.lsst.sal.WFOODS"
@@ -463,11 +463,11 @@ telegraf:
       topicDiscovery:
         enabled: true
         includePrefixes:
-          - "lsst.sal.MTCamera."
+          - "summit.lsst.sal.MTCamera."
         excludePrefixes:
-          - "lsst.sal.MTCamera.command"
-          - "lsst.sal.MTCamera.logevent"
-          - "lsst.sal.MTCamera.ackcmd"
+          - "summit.lsst.sal.MTCamera.command"
+          - "summit.lsst.sal.MTCamera.logevent"
+          - "summit.lsst.sal.MTCamera.ackcmd"
       measurementRenameRegex:
         - pattern: '^lsst\.sal\.MTCamera\.(.+)$'
           replacement: 'lsst.MTCamera.${1}'
@@ -491,9 +491,9 @@ telegraf:
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps:
-        - "lsst.sal.ATCamera.command"
-        - "lsst.sal.ATCamera.logevent"
-        - "lsst.sal.ATCamera.ackcmd"
+        - "summit.lsst.sal.ATCamera.command"
+        - "summit.lsst.sal.ATCamera.logevent"
+        - "summit.lsst.sal.ATCamera.ackcmd"
         - "summit.lsst.sal.ATHeaderService"
         - "summit.lsst.sal.ATOODS"
         - "summit.lsst.sal.ATSpectrograph"
@@ -515,11 +515,11 @@ telegraf:
       topicDiscovery:
         enabled: true
         includePrefixes:
-          - "lsst.sal.ATCamera."
+          - "summit.lsst.sal.ATCamera."
         excludePrefixes:
-          - "lsst.sal.ATCamera.command"
-          - "lsst.sal.ATCamera.logevent"
-          - "lsst.sal.ATCamera.ackcmd"
+          - "summit.lsst.sal.ATCamera.command"
+          - "summit.lsst.sal.ATCamera.logevent"
+          - "summit.lsst.sal.ATCamera.ackcmd"
       measurementRenameRegex:
         - pattern: '^lsst\.sal\.ATCamera\.(.+)$'
           replacement: 'lsst.ATCamera.${1}'
@@ -572,7 +572,7 @@ telegraf:
       topicDiscovery:
         enabled: true
         includePrefixes:
-          - "lsst.scimma"
+          - "summit.lsst.scimma"
         excludePrefixes: []
         refreshInterval: "300s"
 
