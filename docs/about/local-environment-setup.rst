@@ -118,6 +118,18 @@ Download the binary for your platform from the `kube-linter releases page <https
 To see what version is used by GitHub Actions, look for ``KUBE_LINTER_VERSION`` in :file:`.github/workflows/ci.yaml`.
 The checks that are run are configured in :file:`.kube-linter.yaml` at the top level of the Phalanx repository.
 
+.. _about-kubeconform:
+
+Install kubeconform
+===================
+
+:command:`phalanx application lint` also validates the rendered Kubernetes resources of a chart against the Kubernetes API schemas with kubeconform_, so kubeconform must be available on your PATH as well.
+Install it with Homebrew (``brew install kubeconform``), or download the binary for your platform from the `kubeconform releases page <https://github.com/yannh/kubeconform/releases>`__ and put it on your PATH (or in the :file:`bin` directory of your virtual environment).
+To see what version is used by GitHub Actions, look for ``KUBECONFORM_VERSION`` in :file:`.github/workflows/ci.yaml`.
+
+kubeconform downloads the schemas it needs the first time it sees each kind of resource and caches them in :file:`phalanx/kubeconform` under ``XDG_CACHE_HOME`` (:file:`~/.cache/phalanx/kubeconform` by default).
+Linting therefore needs network access the first time, but not once the cache holds every kind that Phalanx charts use.
+
 Next steps
 ==========
 
