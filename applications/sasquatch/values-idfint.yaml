@@ -99,11 +99,11 @@ telegraf:
         - "user"
         - "generation"
         - "location"
+        - "transport"
         - "butler_config"
         - "butler_collections"
         - "dataset_name"
         - "display_name"
-        - "limit"
 
 kafdrop:
   ingress:
