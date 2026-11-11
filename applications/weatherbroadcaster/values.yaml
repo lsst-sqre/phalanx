@@ -20,6 +20,9 @@ config:
   # -- Repertoire EFD database label
   efdName: "usdf_efd"
 
+  # -- Base URL for Repertoire discovery API
+  repertoireBaseUrl: null
+
   # -- Logging level
   logLevel: "INFO"
 

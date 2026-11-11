@@ -11,4 +11,4 @@ data:
   WEATHERBROADCASTER_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
   WEATHERBROADCASTER_WEATHER_DATA_FILE_PATH: {{ .Values.config.weatherDataFilePath | quote }}
   WEATHERBROADCASTER_WEATHER_UPDATE_INTERVAL: {{ .Values.updateWeather.intervalSeconds | quote }}
-  REPERTOIRE_BASE_URL: {{ .Values.global.repertoireUrl | quote }}
+  WEATHERBROADCASTER_REPERTOIRE_BASE_URL: {{ .Values.config.repertoireBaseUrl | default .Values.global.repertoireUrl | quote }}

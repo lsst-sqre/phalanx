@@ -17,6 +17,7 @@ Publish weather station data for MeteoBlue.
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/weatherbroadcaster"` | URL path prefix |
+| config.repertoireBaseUrl | string | `nil` | Base URL for Repertoire discovery API |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
 | config.weatherDataFilePath | string | `"/data/weather.json"` | Path to the cached weather data file inside the container |
 | global.host | string | Set by Argo CD | Host name for ingress |
