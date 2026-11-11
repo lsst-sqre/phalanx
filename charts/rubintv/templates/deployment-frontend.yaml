@@ -6,6 +6,10 @@ metadata:
     {{- include "rubintv.labels" . | nindent 4 }}
 spec:
   replicas: 1
+  # The scratch PVC is ReadWriteOnce at some sites, so a rolling update's
+  # new pod can't attach it while the old pod still holds it.
+  strategy:
+    type: "Recreate"
   selector:
     matchLabels:
       {{- include "rubintv.selectorLabels" . | nindent 6 }}
