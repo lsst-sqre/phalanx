@@ -6,6 +6,10 @@
 # are deliberately disabled because most of them are style opinions that
 # Phalanx charts do not follow. Add a check here to enable it for every
 # application. See https://docs.kubelinter.io/#/generated/checks for the list.
+#
+# Independent of these checks, phalanx application lint runs kube-linter with
+# --fail-on-invalid-resource, so any resource kube-linter cannot load, such as
+# one with an unquoted true as an environment variable value, is an error.
 checks:
   doNotAutoAddDefaults: true
   include:
