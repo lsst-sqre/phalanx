@@ -25,6 +25,10 @@ For example, two environment variables with the same name in one container is va
 To catch problems like this, :command:`phalanx application lint` also expands the chart with :command:`helm template` for each environment and checks the resulting Kubernetes resources with kube-linter_, which must therefore be installed (see :ref:`about-kube-linter`).
 The checks that are run are listed in :file:`.kube-linter.yaml` at the top level of the Phalanx repository.
 
+Any rendered resource that kube-linter cannot load is also reported as an error.
+The most common cause is a value of the wrong type, such as an unquoted ``true`` or number as the ``value`` of an environment variable.
+Kubernetes requires environment variable values to be strings, so quote them (``value: "true"``) in the values file or with ``| quote`` in the template.
+
 GitHub Actions runs this lint check for every application and environment, not only the ones changed by a PR, so a PR cannot be merged while any chart in the repository fails it.
 
 You can also ask for the fully-expanded Kubernetes resources that would be installed in the cluster when the chart is installed.

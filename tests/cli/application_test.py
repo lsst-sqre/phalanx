@@ -346,14 +346,26 @@ def test_lint_kube_linter_error(
             returncode=0, args=command, stdout=output, stderr=None
         )
 
-    # A failing kube-linter check reports its output and fails the lint.
+    # A failing kube-linter check reports its output and fails the lint. The
+    # warning that --fail-on-invalid-resource is deprecated is not shown.
     mock_helm.set_capture_callback(callback)
-    failed_args = ("lint", "--config", ".kube-linter.yaml", "-")
+    failed_args = (
+        "lint",
+        "--fail-on-invalid-resource",
+        "--config",
+        ".kube-linter.yaml",
+        "-",
+    )
     exc = subprocess.CalledProcessError(
         returncode=1,
         cmd=["kube-linter", *failed_args],
         output='Duplicate environment variable FOO in container "bar"\n',
-        stderr="Error: found 1 lint errors\n",
+        stderr=(
+            "Flag --fail-on-invalid-resource has been deprecated, Use"
+            " 'schema-validation' builtin check or kubeconform template for"
+            " better schema validation.\n"
+            "Error: found 1 lint errors\n"
+        ),
     )
     mock_kube_linter.expect_capture(
         args=KUBE_LINTER_ARGS,
@@ -368,6 +380,52 @@ def test_lint_kube_linter_error(
         " kube-linter errors\n"
     )
     assert result.exit_code == 1
+
+
+def test_lint_empty_documents(
+    mock_helm: MockHelmCommand, mock_kube_linter: MockCommand
+) -> None:
+    config_map = (
+        "---\n"
+        "# Source: gafaelfawr/templates/configmap.yaml\n"
+        "apiVersion: v1\n"
+        "kind: ConfigMap\n"
+        "metadata:\n"
+        "  name: gafaelfawr\n"
+        "data:\n"
+        "  script: |\n"
+        "    # A comment inside a block scalar is content.\n"
+    )
+    template = (
+        "---\n"
+        "# Source: gafaelfawr/templates/disabled.yaml\n"
+        "# A comment outside a conditional that is false.\n"
+        f"{config_map}"
+        "---\n"
+        "# Source: gafaelfawr/templates/empty.yaml\n"
+        "\n"
+    )
+
+    def callback(*command: str) -> subprocess.CompletedProcess:
+        output = None
+        if command[0] == "lint":
+            output = "==> Linting .\n\n1 chart(s) linted, 0 chart(s) failed\n"
+        elif command[0] == "template":
+            output = template
+        return subprocess.CompletedProcess(
+            returncode=0, args=command, stdout=output, stderr=None
+        )
+
+    # Documents containing only comments or whitespace are not passed to
+    # kube-linter, which cannot load them, but everything else is unchanged.
+    mock_helm.set_capture_callback(callback)
+    expect_kube_linter(mock_kube_linter, 1)
+    result = run_cli("application", "lint", "gafaelfawr", "-e", "idfdev")
+    assert result.output == "==> Linting gafaelfawr (environment idfdev)\n"
+    assert result.exit_code == 0
+    assert mock_kube_linter.mock.capture.call_args_list == [
+        call(*KUBE_LINTER_ARGS, stdin=config_map)
+    ]
 
 
 def test_lint_no_repos(
