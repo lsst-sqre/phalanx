@@ -860,10 +860,10 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/mtcs/ws/subscription
     resources:
       requests:
-        cpu: 100m
+        cpu: 500m
         memory: 300Mi
       limits:
-        cpu: 1
+        cpu: 2
         memory: 600Mi
   - name: mtdome
     csc: MTDome:0
