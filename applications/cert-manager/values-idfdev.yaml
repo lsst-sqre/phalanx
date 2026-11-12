@@ -1,4 +1,4 @@
 config:
   route53:
-    awsAccessKeyId: "AKIAQSJOS2SFBYIKASIL"
+    roleArn: "arn:aws:iam::039289279626:role/phalanx-cert-manager-tls-lsst-codes"
     hostedZone: "Z0567328105IEHEMIXLCO"
