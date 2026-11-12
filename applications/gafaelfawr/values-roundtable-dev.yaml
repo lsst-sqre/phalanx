@@ -1,5 +1,21 @@
+# Temporary: test the admin token listing route from the Gafaelfawr
+# t/DM-57253-token-listing branch (lsst-sqre/gafaelfawr#1540). The branch
+# also contains the unreleased GitHub Actions token exchange.
+image:
+  tag: "t-DM-57253-token-listing"
+  pullPolicy: "Always"
+
 config:
   slackAlerts: false
+
+  # The branch adds schema migrations for the token exchange and the
+  # service token listing index.
+  updateSchema: true
+
+  # Allow GitHub Actions workflows to exchange ID tokens for Gafaelfawr
+  # tokens.
+  githubTokenExchange:
+    enabled: true
 
   metrics:
     enabled: true
@@ -15,6 +31,8 @@ config:
     enabled: true
 
   knownScopes:
+    "admin:github-oidc-provision": >-
+      Can provision GitHub Actions token exchange projects from templates
     "exec:docverse": >-
       Can access Docverse's as a user in an organization
     "exec:internal-tools": >-
