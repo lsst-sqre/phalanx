@@ -16,6 +16,13 @@ spec:
           s3-access-key: s3.client.default.access_key
           s3-secret-key: s3.client.default.secret_key
     {{- end }}
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
+    securityContext:
+      allowPrivilegeEscalation: false
+      privileged: false
   dashboards:
     enable: {{ .Values.dashboards.enable }}
     version: {{ .Values.version }}
