@@ -1,0 +1,68 @@
+suite: API components
+templates:
+  - configmap.yaml
+  - deployment.yaml
+  - ingress.yaml
+  - networkpolicy.yaml
+  - service.yaml
+set:
+  global.host: "example.com"
+tests:
+  - it: Renders the API Deployment by default
+    template: deployment.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: "OBSFORGE_DATABASE_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: "obsforge"
+                key: "database-password"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: "OBSFORGE_ARQ_QUEUE_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: "obsforge"
+                key: "redis-password"
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          any: true
+          content:
+            name: "OBSFORGE_BUTLER_ACCESS_TOKEN"
+
+  - it: Omits the API Deployment when the API is disabled
+    template: deployment.yaml
+    set:
+      api.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Omits the ingress when the API is disabled
+    template: ingress.yaml
+    set:
+      api.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Omits the NetworkPolicy when the API is disabled
+    template: networkpolicy.yaml
+    set:
+      api.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Omits the Service when the API is disabled
+    template: service.yaml
+    set:
+      api.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
