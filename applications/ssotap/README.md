@@ -12,6 +12,7 @@ IVOA TAP service for Solar System Objects
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | cadc-tap.config.backend | string | `"pg"` | What type of backend? |
+| cadc-tap.config.googleCredentialsEnabled | bool | `true` | Whether to mount google_creds.json (false for S3 environments) |
 | cadc-tap.config.pg.database | string | `"dp03_catalogs"` | Postgres database to connect to |
 | cadc-tap.config.pg.host | string | `"usdf-pg-catalogs.slac.stanford.edu:5432"` | Postgres hostname:port to connect to |
 | cadc-tap.config.pg.username | string | `"dp03"` | Postgres username to use to connect |

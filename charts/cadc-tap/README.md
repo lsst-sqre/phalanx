@@ -39,6 +39,7 @@ IVOA TAP service
 | config.gcsBucketUrl | string | `"https://storage.googleapis.com"` | Base URL for results stored in GCS bucket |
 | config.gcsUploadBucket | string | Same as `gcsBucket` | Name of the bucket in which to store uploaded tables. Must be the same type as `gcsBucket`. |
 | config.gcsUploadWorkloadIdentity | bool | `false` | Access the upload bucket as the pod's Workload Identity (`cloudsql.serviceAccount`) instead of the `google_creds.json`. Requires `cloudsql.enabled` and a separate `gcsUploadBucket`. |
+| config.googleCredentialsEnabled | bool | `true` | Whether to mount the `google_creds.json` service account credentials. Only needed when `gcsBucketType` is GCS. |
 | config.jvmMaxHeapSize | string | `"31G"` | Java heap size, which will set the maximum size of the heap. Otherwise Java would determine it based on how much memory is available and black maths. |
 | config.kafka | object | `{"consumerGroupId":"tap","enabled":false,"kafkaUserName":"tap","topics":{"jobDelete":"lsst.tap.job-delete","jobRun":"lsst.tap.job-run","jobStatus":"lsst.tap.job-status"}}` | Kafka configuration |
 | config.kafka.consumerGroupId | string | "tap" | Kafka consumer group ID. |

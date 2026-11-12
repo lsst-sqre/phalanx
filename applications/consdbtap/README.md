@@ -12,6 +12,7 @@ IVOA TAP service for the Consolidated Database (ConsDB)
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | cadc-tap.config.backend | string | `"pg"` | What type of backend? |
+| cadc-tap.config.googleCredentialsEnabled | bool | `true` | Whether to mount google_creds.json (false for S3 environments) |
 | cadc-tap.config.pg.database | string | `"exposurelog"` | Postgres database to connect to |
 | cadc-tap.config.pg.host | string | `"usdf-summitdb-logical-replica-svc.sdf.slac.stanford.edu"` | Postgres hostname:port to connect to |
 | cadc-tap.config.pg.username | string | `"usdf"` | Postgres username to use to connect |

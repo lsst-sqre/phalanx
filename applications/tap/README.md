@@ -12,6 +12,7 @@ IVOA TAP service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | cadc-tap.config.backend | string | `"qserv"` | What type of backend? |
+| cadc-tap.config.googleCredentialsEnabled | bool | `true` | Whether to mount google_creds.json (false for S3 environments) |
 | cadc-tap.config.outputLimit | string | `"3221225472"` | 3GB byte limit for Qserv |
 | cadc-tap.config.outputLimitUnit | string | `"byte"` |  |
 | cadc-tap.config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |

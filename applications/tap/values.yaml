@@ -10,6 +10,9 @@ cadc-tap:
     # -- Vault secret name: the final key in the vault path
     vaultSecretName: "tap"
 
+    # -- Whether to mount google_creds.json (false for S3 environments)
+    googleCredentialsEnabled: true
+
     # -- Name of the service from Gafaelfawr's perspective
     serviceName: "tap"
 
