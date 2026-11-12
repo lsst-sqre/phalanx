@@ -14,3 +14,8 @@ cadc-tap:
     useVaultPassword: true
     external:
       host: "rsp-db-rw.postgres-db"
+
+  config:
+    gcsBucket: "rubin:rubin-qserv"
+    gcsBucketUrl: "https://s3dfrgw.slac.stanford.edu"
+    gcsBucketType: "S3"
