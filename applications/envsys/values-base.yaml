@@ -414,6 +414,51 @@ m1m3-ess117-sim:
       cpu: 190m
       memory: 480Mi
 
+m1m3-flowmeter-ess130-sim:
+  enabled: true
+  classifier: ess130
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+  env:
+    RUN_ARG: 130 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 160Mi
+    limits:
+      cpu: 190m
+      memory: 480Mi
+
+m1m3-flowmeter-ess131-sim:
+  enabled: true
+  classifier: ess131
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+  env:
+    RUN_ARG: 131 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 160Mi
+    limits:
+      cpu: 190m
+      memory: 480Mi
+
+m1m3-thermal-gradients-ess132-sim:
+  enabled: true
+  classifier: ess132
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+  env:
+    RUN_ARG: 132 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 160Mi
+    limits:
+      cpu: 190m
+      memory: 480Mi
+
 m2-ess106-sim:
   enabled: true
   classifier: ess106
