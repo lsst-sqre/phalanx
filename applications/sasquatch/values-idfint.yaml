@@ -97,6 +97,7 @@ telegraf:
       tags:
         - "node"
         - "user"
+        - "concurrency"
         - "generation"
         - "location"
         - "transport"
