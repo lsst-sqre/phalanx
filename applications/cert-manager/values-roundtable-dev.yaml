@@ -1,4 +1,5 @@
 config:
   route53:  # for lsst.cloud
-    awsAccessKeyId: "AKIAQSJOS2SFL5I4TYND"
+    # TODO: Replace with the IAM role trusting this cluster's OIDC provider.
+    roleArn: "arn:aws:iam::123456789012:role/REPLACE-ME-cert-manager"
     hostedZone: "Z0567328105IEHEMIXLCO"

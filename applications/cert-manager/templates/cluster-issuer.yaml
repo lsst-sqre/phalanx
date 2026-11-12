@@ -16,9 +16,17 @@ spec:
           cnameStrategy: "Follow"
           route53:
             region: "us-east-1"
+            {{- if .Values.config.route53.roleArn }}
+            role: {{ .Values.config.route53.roleArn | quote }}
+            auth:
+              kubernetes:
+                serviceAccountRef:
+                  name: "cert-manager-route53"
+            {{- else }}
             accessKeyID: {{ required "config.route53.awsAccessKeyId must be set" .Values.config.route53.awsAccessKeyId | quote }}
-            hostedZoneID: {{ required "config.route53.hostedZone must be set" .Values.config.route53.hostedZone | quote }}
             secretAccessKeySecretRef:
               name: "cert-manager"
               key: "aws-secret-access-key"
+            {{- end }}
+            hostedZoneID: {{ required "config.route53.hostedZone must be set" .Values.config.route53.hostedZone | quote }}
 {{- end }}
