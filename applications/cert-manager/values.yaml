@@ -9,9 +9,14 @@ config:
   # Currently, DNS with Route 53 is the only supported solver mechanism
   route53:
     # -- AWS access key ID for Route 53 (must match `aws-secret-access-key` in
-    # Vault secret referenced by `config.vaultSecretPath`)
-    # @default -- None, must be set if `createIssuer` is true
+    # the cert-manager Vault secret); unused when `roleArn` is set
+    # @default -- None, required for static credentials when `createIssuer` is true
     awsAccessKeyId: ""
+
+    # -- IAM role ARN for dedicated ServiceAccount authentication. When set,
+    # replaces static AWS credentials. Requires an AWS OIDC provider and role
+    # trust policy for the cluster and the cert-manager-route53 ServiceAccount.
+    roleArn: ""
 
     # -- Route 53 hosted zone in which to create challenge records
     # @default -- None, must be set if `createIssuer` is true

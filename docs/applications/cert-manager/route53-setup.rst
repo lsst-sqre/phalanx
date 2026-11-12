@@ -58,3 +58,24 @@ You can now follow the instructions in :px-app-bootstrap:`cert-manager` to set u
 
 The above instructions only have to be done once per domain.
 After that, any new clusters in the same domain will only need the addition of a CNAME and some Vault and Argo CD configuration, as described in :px-app-bootstrap:`cert-manager`.
+
+Dedicated ServiceAccount authentication on GKE
+==============================================
+
+The ``idfdev``, ``idfprod``, ``idfint``, ``roundtable-dev``, and ``roundtable-prod`` environments use dedicated Kubernetes ServiceAccount authentication instead of static AWS credentials.
+Their ``config.route53.roleArn`` values are placeholders and must be replaced before deployment.
+The AWS region is ``us-east-1`` for both authentication methods.
+
+Register the GKE cluster's OIDC issuer as an AWS IAM OIDC provider with the audience ``sts.amazonaws.com``.
+Create an IAM role with the Route 53 permissions shown above and a trust policy permitting ``sts:AssumeRoleWithWebIdentity`` from that provider.
+Restrict the trust policy to the subject ``system:serviceaccount:cert-manager:cert-manager-route53`` and audience ``sts.amazonaws.com``.
+If deploying into another namespace, adjust the subject accordingly.
+See the `dedicated ServiceAccount documentation <https://cert-manager.io/docs/configuration/acme/dns01/route53/#iam-role-with-dedicated-kubernetes-serviceaccount>`__ for details.
+
+Set ``config.route53.roleArn`` to the role ARN and remove ``config.route53.awsAccessKeyId`` from the environment values.
+The chart creates the ``cert-manager-route53`` ServiceAccount and grants the cert-manager controller permission to request tokens only for that account.
+For a ClusterIssuer, this account must be in cert-manager's cluster resource namespace, which defaults to the controller namespace.
+The chart places it in the release namespace; keep the cluster resource namespace at that default.
+No AWS credentials need to be stored in Vault for this mode.
+
+To use static credentials instead, leave ``config.route53.roleArn`` empty, set ``config.route53.awsAccessKeyId``, and provision ``aws-secret-access-key`` as described above.
