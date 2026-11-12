@@ -24,6 +24,8 @@ rubintv:
       value: "/rubintv/ddv/"
     - name: DDV_CLIENT_WS_ADDRESS
       value: "rubintv/ws/ddv"
+    - name: RUBINTV_INSTANCE_ENV
+      value: "dev"
     - name: RUBINTV_LOG_LEVEL
       value: "DEBUG"
     - name: RUBINTV_CONSDB_URL
