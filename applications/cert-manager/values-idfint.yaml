@@ -1,4 +1,4 @@
 config:
   route53:
-    awsAccessKeyId: "AKIAQSJOS2SFL5I4TYND"
+    awsAccessKeyId: "AKIAQSJOS2SFPBQPLKN4"
     hostedZone: "Z0567328105IEHEMIXLCO"

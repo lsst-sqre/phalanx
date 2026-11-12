@@ -1,4 +1,4 @@
 config:
-  route53:  # for lsst.cloud
-    awsAccessKeyId: "AKIAQSJOS2SFL5I4TYND"
+  route53: # for lsst.cloud
+    awsAccessKeyId: "AKIAQSJOS2SFJN43ZYVO"
     hostedZone: "Z0567328105IEHEMIXLCO"
