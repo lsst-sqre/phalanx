@@ -46,7 +46,7 @@ config:
     secretName: "cm-service"
 
     # -- Key within db authn secret with db password
-    secretKey: "internalDatabasePassword"
+    secretKey: "postgres-password"
 
   # see lsst.cmservice.common.flags for available features
   # -- Enabled features as a mapping of feature to "1" (enabled) or "0" (disabled)
@@ -92,6 +92,12 @@ config:
 
     # -- A mapping of butler repository names to their URIs that will be known to the service.
     repositories: {}
+
+    # -- The path to a butler repository index file (e.g., data_repos.yaml)
+    repository_index: null
+
+    # -- The path to a butler database authentication file (e.g., db-auth.yaml)
+    authentication_file: null
 
   htcondor:
 
@@ -164,7 +170,7 @@ ingress:
   # -- Path prefix used on the ingress
   prefix: null
 
-frontend:
+backend:
   # -- Number of backend api pods to start
   replicaCount: 1
 

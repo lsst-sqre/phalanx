@@ -10,15 +10,28 @@ Campaign Management for Rubin Data Release Production
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| backend.affinity | object | `{}` | Affinity rules for the backend pods |
+| backend.docsPath | string | `"/docs"` | URL path prefix for apidocs |
+| backend.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the backend image |
+| backend.image.repository | string | `"ghcr.io/lsst-dm/cm-service"` | Image to use for backend containers |
+| backend.image.tag | string | The appVersion of the chart | Tag of backend image to use |
+| backend.nodeSelector | object | `{}` | Node selector rules for the backend pods |
+| backend.podAnnotations | object | `{}` | Annotations for the backend pods |
+| backend.prefix | string | `"/api"` | Path prefix on which the api is availble |
+| backend.replicaCount | int | `1` | Number of backend api pods to start |
+| backend.resources | object | See `values.yaml` | Resource limits and requests for the backend pods |
+| backend.tolerations | list | `[]` | Tolerations for the backend pods |
 | config.aws.credentialsFileSecretKey | string | `"aws-credentials-file"` | Key within the AWS secret with the contents of an AWS credentials file |
 | config.aws.defaultAccessKeyIdSecretKey | string | `"aws-access-key-id"` | Key within the AWS secret with the ACCESS_KEY_ID for the default profile |
 | config.aws.defaultS3EndpointUrl | string | `nil` | URL to use as an S3 (Object Store) Endpoint |
 | config.aws.defaultSecretAccessKeySecretKey | string | `"aws-secret-access-key"` | Key within the AWS secret with the SECRET_ACCESS_KEY for the default profile |
 | config.aws.profiles | object | `{}` | Named profiles to include in service's AWS config file |
 | config.aws.secretName | string | `"cm-service"` | Name of a secret with AWS authn details |
+| config.butler.authentication_file | string | `nil` | The path to a butler database authentication file (e.g., db-auth.yaml) |
 | config.butler.dbAuth.secretKey | string | `""` | The keyname within the secret data dictionary with the dbAuth payload |
 | config.butler.dbAuth.secretName | string | `""` | The name of a secret with Butler a dbAuth payload |
 | config.butler.repositories | object | `{}` | A mapping of butler repository names to their URIs that will be known to the service. |
+| config.butler.repository_index | string | `nil` | The path to a butler repository index file (e.g., data_repos.yaml) |
 | config.butler.storage | string | `"1Gi"` | Minimum storage requested in the butler remote area PVC |
 | config.butler.storageClassName | string | `nil` | If specified, name of storage class requested in butler remote area PVC |
 | config.butler.subPath | string | `nil` | If specified, sub-path within bound PV to be mounted as butler remote area |
@@ -26,7 +39,7 @@ Campaign Management for Rubin Data Release Production
 | config.db.hostname | string | `""` | Name of the database host |
 | config.db.name | string | `"cmservice"` | Name of the database to use for the application |
 | config.db.port | int | `5432` | Port number of the database host |
-| config.db.secretKey | string | `"internalDatabasePassword"` | Key within db authn secret with db password |
+| config.db.secretKey | string | `"postgres-password"` | Key within db authn secret with db password |
 | config.db.secretName | string | `"cm-service"` | Name of a secret with db authn details |
 | config.db.username | string | `"cmservice"` | Name of the database user to use for the application |
 | config.features | object | `{}` | Enabled features as a mapping of feature to "1" (enabled) or "0" (disabled) |
@@ -65,17 +78,6 @@ Campaign Management for Rubin Data Release Production
 | daemon.security.gid | int | `0` | Effective GID for daemon user |
 | daemon.security.uid | int | `0` | Effective UID for daemon user |
 | daemon.tolerations | list | `[]` | Tolerations for the daemon pods |
-| frontend.affinity | object | `{}` | Affinity rules for the backend pods |
-| frontend.docsPath | string | `"/docs"` | URL path prefix for apidocs |
-| frontend.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the backend image |
-| frontend.image.repository | string | `"ghcr.io/lsst-dm/cm-service"` | Image to use for backend containers |
-| frontend.image.tag | string | The appVersion of the chart | Tag of backend image to use |
-| frontend.nodeSelector | object | `{}` | Node selector rules for the backend pods |
-| frontend.podAnnotations | object | `{}` | Annotations for the backend pods |
-| frontend.prefix | string | `"/api"` | Path prefix on which the api is availble |
-| frontend.replicaCount | int | `1` | Number of backend api pods to start |
-| frontend.resources | object | See `values.yaml` | Resource limits and requests for the backend pods |
-| frontend.tolerations | list | `[]` | Tolerations for the backend pods |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |

@@ -47,6 +47,8 @@ config:
       "/repo/main+sasquatch_dev": "/sdf/group/rubin/repo/main/butler+sasquatch_dev.yaml"
       "/repo/embargo": "s3://embargo@rubin-summit-users/butler.yaml"
       "/repo/embargo+sasquatch_dev": "s3://embargo@rubin-summit-users/butler+sasquatch_dev.yaml"
+    repository_index: "/sdf/home/l/lsstsvc1/.lsst/data-repos.cmservice-dev.yaml"
+    authentication_file: "/sdf/home/l/lsstsvc1/.lsst/db-auth.cmservice-dev.yaml"
   htcondor:
     scheddHost: sdfiana012.sdf.slac.stanford.edu
     collectorHost: sdfiana012.sdf.slac.stanford.edu
@@ -62,11 +64,11 @@ config:
     verifyHost: "1"
     useNativeHttplib: "1"
 
-frontend:
+backend:
   prefix: "/api"
   docsPath: "/docs"
   image:
-    tag: "0.9.0-rc2"
+    tag: "0.9.3"
     pullPolicy: Always
 
 ingress:
@@ -79,7 +81,6 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.9.0-rc2"
     pullPolicy: Always
   resources:
     limits:
@@ -91,7 +92,6 @@ daemon:
 
 web:
   image:
-    tag: "0.9.0-rc2"
     pullPolicy: Always
   prefix: "/gui"
   tokenPath: "/settings/tokens"

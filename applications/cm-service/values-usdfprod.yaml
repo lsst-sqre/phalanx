@@ -24,7 +24,7 @@ config:
     DAEMON_CAMPAIGNS: 1
     DAEMON_NODES: 1
     SCHEDULER: 1
-    NOTIFIER: 0
+    NOTIFIER: 1
     STORE_FSM: 1
     ALLOW_TASK_UPSERT: 1
     MOCK_BUTLER: 0
@@ -47,6 +47,8 @@ config:
       "/repo/main+sasquatch_dev": "/sdf/group/rubin/repo/main/butler+sasquatch_dev.yaml"
       "/repo/embargo": "s3://embargo@rubin-summit-users/butler.yaml"
       "/repo/embargo+sasquatch_dev": "s3://embargo@rubin-summit-users/butler+sasquatch_dev.yaml"
+    repository_index: "/sdf/home/l/lsstsvc1/.lsst/data-repos.cmservice.yaml"
+    authentication_file: "/sdf/home/l/lsstsvc1/.lsst/db-auth.cmservice.yaml"
   htcondor:
     scheddHost: sdfiana012.sdf.slac.stanford.edu
     collectorHost: sdfiana012.sdf.slac.stanford.edu
@@ -62,11 +64,11 @@ config:
     verifyHost: "1"
     useNativeHttplib: "1"
 
-frontend:
+backend:
   prefix: "/api"
   docsPath: "/docs"
   image:
-    tag: "0.9.0-rc2"
+    tag: "0.9.3"
     pullPolicy: IfNotPresent
 
 ingress:
@@ -79,12 +81,17 @@ daemon:
     gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.9.0-rc2"
     pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: "1"
+      memory: "8Gi"
+    requests:
+      cpu: "0.1"
+      memory: "4Gi"
 
 web:
   image:
-    tag: "0.9.0-rc2"
     pullPolicy: IfNotPresent
   prefix: "/gui"
   tokenPath: "/settings/tokens"
