@@ -30,7 +30,6 @@ applications:
   ppdb-replication: true
   qserv-kafka: true
   sasquatch: true
-  schedview-static-pages: true
   semaphore: true
   squareone: true
   ssotap: true

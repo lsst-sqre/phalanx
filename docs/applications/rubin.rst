@@ -31,7 +31,6 @@ Argo CD project: ``rubin``
    rubintv/index
    rubintv-dev/index
    s3proxy/index
-   schedview-static-pages/index
    skyviewer/index
    so-evening-tailgate/index
    svab-slack-bot/index
