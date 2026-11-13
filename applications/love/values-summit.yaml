@@ -806,6 +806,19 @@ love-producer:
     csc: ESS:117
     WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
     <<: *love-producer-envsys-resources
+  - name: m1m3essflowmeter130
+    csc: ESS:130 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
+    <<: *love-producer-envsys-resources
+  - name: m1m3essflowmeter131
+    csc: ESS:131 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
+    <<: *love-producer-envsys-resources
+  - name: m1m3essthermalgradients132
+    csc: ESS:132 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/envsys-1/ws/subscription
+    <<: *love-producer-envsys-resources
+
   - name: m1m3mtvms1
     csc: MTVMS:1
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription

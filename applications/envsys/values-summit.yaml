@@ -406,6 +406,51 @@ m1m3-ess117:
       cpu: 190m
       memory: 540Mi
 
+m1m3-flowmeter-ess130:
+  enabled: true
+  classifier: ess130
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+  env:
+    RUN_ARG: 130
+  resources:
+    requests:
+      cpu: 19m
+      memory: 160Mi
+    limits:
+      cpu: 190m
+      memory: 480Mi
+
+m1m3-flowmeter-ess131:
+  enabled: true
+  classifier: ess131
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+  env:
+    RUN_ARG: 131
+  resources:
+    requests:
+      cpu: 19m
+      memory: 160Mi
+    limits:
+      cpu: 190m
+      memory: 480Mi
+
+m1m3-thermal-gradients-ess132:
+  enabled: true
+  classifier: ess132
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+  env:
+    RUN_ARG: 132
+  resources:
+    requests:
+      cpu: 19m
+      memory: 160Mi
+    limits:
+      cpu: 190m
+      memory: 480Mi
+
 m2-ess106:
   enabled: true
   classifier: ess106
