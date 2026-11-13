@@ -68,7 +68,7 @@ backend:
   prefix: "/api"
   docsPath: "/docs"
   image:
-    tag: "0.9.3"
+    tag: "0.9.4"
     pullPolicy: Always
 
 ingress:
