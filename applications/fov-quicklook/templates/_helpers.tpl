@@ -26,23 +26,23 @@
 - name: DB_NAME
   valueFrom:
     secretKeyRef:
-      name: fov-quicklook-db
+      name: fov-quicklook
       key: db-name
 - name: DB_HOST
   valueFrom:
     secretKeyRef:
-      name: fov-quicklook-db
+      name: fov-quicklook
       key: db-url
 - name: DB_USER
   valueFrom:
     secretKeyRef:
-      name: fov-quicklook-db
+      name: fov-quicklook
       key: db-user
 - name: DB_PASSWORD
   valueFrom:
     secretKeyRef:
-      name: fov-quicklook-db
-      key: password
+      name: fov-quicklook
+      key: db-password
 - name: QUICKLOOK_db_url
   value: postgresql+asyncpg://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):5432/$(DB_NAME)
 {{- end }}
