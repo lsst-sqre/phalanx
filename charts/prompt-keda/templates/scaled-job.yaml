@@ -141,6 +141,8 @@ spec:
                 value: {{ .Values.alerts.topic}}
               - name: LOCAL_REPOS
                 value: /tmp-butler
+              - name: LSST_RESOURCES_TMPDIR
+                value: /tmp-butler
               - name: SERVICE_LOG_LEVELS
                 value: {{ .Values.logLevel }}
               - name: LOCAL_REPO_CACHE_SIZE
