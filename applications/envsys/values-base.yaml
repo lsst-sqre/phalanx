@@ -450,7 +450,7 @@ m1m3-thermal-gradients-ess132-sim:
   image:
     repository: ts-dockerhub.lsst.org/ess
   env:
-    RUN_ARG: 132 --simulate
+    RUN_ARG: 132
   resources:
     requests:
       cpu: 19m
