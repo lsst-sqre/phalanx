@@ -49,7 +49,7 @@ spec:
           secretName: fov-quicklook
       - name: database-credentials
         secret:
-          secretName: fov-quicklook-db
+          secretName: fov-quicklook
           defaultMode: 0444
           items:
             - key: db-name
@@ -58,7 +58,7 @@ spec:
               path: db-url
             - key: db-user
               path: db-user
-            - key: password
+            - key: db-password
               path: password
       - name: empty
         emptyDir: {}
