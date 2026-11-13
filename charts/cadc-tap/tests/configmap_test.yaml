@@ -196,7 +196,16 @@ tests:
       - failedTemplate:
           errorMessage: config.gcsUploadWorkloadIdentity requires config.gcsUploadBucket
 
-  - it: upload size limit is only set when configured
+  - it: upload size limit defaults to 100 MiB
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "tap.maxUploadSize=104857600"
+
+  - it: upload size limit is omitted when empty
+    set:
+      config:
+        maxUploadSize: ""
     asserts:
       - notMatchRegex:
           path: data["catalina.properties"]
@@ -205,11 +214,11 @@ tests:
   - it: upload size limit can be overridden
     set:
       config:
-        maxUploadSize: "104857600"
+        maxUploadSize: "268435456"
     asserts:
       - matchRegex:
           path: data["catalina.properties"]
-          pattern: "tap.maxUploadSize=104857600"
+          pattern: "tap.maxUploadSize=268435456"
 
   - it: GCS / S3 result bucket configuration
     set:
