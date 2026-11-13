@@ -285,10 +285,6 @@ applications:
   # -- Enable the sasquatch-backpack application
   sasquatch-backpack: false
 
-  # -- Enable the schedview-static-pages application
-  schedview-static-pages: false
-
-
   # -- Enable the sia over butler application
   sia: false
 
