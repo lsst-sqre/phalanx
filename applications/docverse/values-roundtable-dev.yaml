@@ -1,9 +1,3 @@
-image:
-  # Branch build of lsst-sqre/docverse#887 for dev validation; remove
-  # once the fix is released.
-  tag: "tickets-DM-56095-reconcile-tombstone-race"
-  pullPolicy: "Always"
-
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://docverse@localhost/docverse"
