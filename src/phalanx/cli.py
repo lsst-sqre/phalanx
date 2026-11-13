@@ -642,6 +642,7 @@ def secrets() -> None:
 
 @secrets.command("audit")
 @click.argument("environment")
+@click.option("--application", help="Only audit secrets for this application.")
 @click.option(
     "-c",
     "--config",
@@ -666,6 +667,7 @@ def secrets() -> None:
 def secrets_audit(
     environment: str,
     *,
+    application: str | None,
     config: Path | None,
     exclude: list[str],
     secrets: Path | None,
@@ -685,12 +687,18 @@ def secrets_audit(
     permission denied errors, so if the Vault token doesn't have write access
     or if the path doesn't exist, all secrets will be reported as missing.
     """
+    if application is not None and exclude:
+        raise click.UsageError(
+            "--application and --exclude are mutually exclusive"
+        )
     if not config:
         config = _find_config()
     static_secrets = StaticSecrets.from_path(secrets) if secrets else None
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
-    report = secrets_service.audit(environment, set(exclude), static_secrets)
+    report = secrets_service.audit(
+        environment, set(exclude), static_secrets, application=application
+    )
     if report:
         sys.stdout.write(report)
         sys.exit(1)
@@ -698,6 +706,7 @@ def secrets_audit(
 
 @secrets.command("list")
 @click.argument("environment")
+@click.option("--application", help="Only list secrets for this application.")
 @click.option(
     "-c",
     "--config",
@@ -706,13 +715,17 @@ def secrets_audit(
     help="Path to root of Phalanx configuration.",
 )
 @_report_usage_errors
-def secrets_list(environment: str, *, config: Path | None) -> None:
+def secrets_list(
+    environment: str, *, application: str | None, config: Path | None
+) -> None:
     """List all secrets required for a given environment."""
     if not config:
         config = _find_config()
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
-    secrets = secrets_service.list_secrets(environment)
+    secrets = secrets_service.list_secrets(
+        environment, application=application
+    )
     for secret in secrets:
         print(secret.application, secret.key)
 
@@ -831,6 +844,7 @@ def secrets_static_template(environment: str, *, config: Path | None) -> None:
 
 @secrets.command("sync")
 @click.argument("environment")
+@click.option("--application", help="Only sync secrets for this application.")
 @click.option(
     "-c",
     "--config",
@@ -867,6 +881,7 @@ def secrets_static_template(environment: str, *, config: Path | None) -> None:
 def secrets_sync(
     environment: str,
     *,
+    application: str | None,
     config: Path | None,
     delete: bool,
     exclude: list[str],
@@ -888,6 +903,10 @@ def secrets_sync(
     1Password Connect token for that environment if the Vault write token is
     stored in the 1Password vault.
     """
+    if application is not None and exclude:
+        raise click.UsageError(
+            "--application and --exclude are mutually exclusive"
+        )
     if not config:
         config = _find_config()
     static_secrets = StaticSecrets.from_path(secrets) if secrets else None
@@ -897,6 +916,7 @@ def secrets_sync(
         environment,
         set(exclude),
         static_secrets,
+        application=application,
         regenerate=regenerate,
         delete=delete,
     )
