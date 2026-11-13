@@ -463,7 +463,7 @@ mtm2hexapod-sim:
 mtmount:
   enabled: true
   image:
-    revision: 0
+    revision: 1
     repository: ts-dockerhub.lsst.org/mtmount
   resources:
     limits:
@@ -476,7 +476,7 @@ mtmount:
 mtmount-ccw-only:
   enabled: false
   image:
-    revision: 0
+    revision: 1
     repository: ts-dockerhub.lsst.org/mtmount
   env:
     CCW_ONLY: yes
