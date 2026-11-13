@@ -6,16 +6,16 @@ db:
 hinfo:
   latiss:
     enable: false
-    tag: "25.11.2"
+    tag: "26.11.2"
   lsstcomcam:
     enable: false
-    tag: "25.11.2"
+    tag: "26.11.2"
   lsstcam:
     enable: false
-    tag: "25.11.2"
+    tag: "26.11.2"
 pq:
   image:
-    tag: "26.6.1"
+    tag: "26.11.2"
 
 resources:
   requests:
