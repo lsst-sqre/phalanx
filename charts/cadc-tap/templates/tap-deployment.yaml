@@ -179,8 +179,10 @@ spec:
                   name: "cadc-tap"
                   key: "uws-db-password"
             {{- end }}
+            {{- if .Values.config.googleCredentialsEnabled }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/etc/creds/google_creds.json"
+            {{- end }}
             {{- if eq .Values.config.gcsBucketType "S3" }}
             - name: "AWS_SECRET_ACCESS_KEY"
               valueFrom:
@@ -238,9 +240,11 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
+            {{- if .Values.config.googleCredentialsEnabled }}
             - name: "google-creds"
               mountPath: "/etc/creds"
               readOnly: true
+            {{- end }}
             - name: "tmp"
               mountPath: "/tmp"
             - name: "config-volume"
@@ -281,9 +285,11 @@ spec:
             successThreshold: 1
             timeoutSeconds: 5
       volumes:
+        {{- if .Values.config.googleCredentialsEnabled }}
         - name: "google-creds"
           secret:
             secretName: "cadc-tap"
+        {{- end }}
         - name: "tmp"
           emptyDir:
             sizeLimit: 1Gi

@@ -17,3 +17,8 @@ cadc-tap:
 
   config:
     datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/w.2026.18/datalink-snippets.zip"
+
+    gcsBucket: "rubin:rubin-qserv"
+    gcsBucketUrl: "https://s3dfrgw.slac.stanford.edu"
+    gcsBucketType: "S3"
+    googleCredentialsEnabled: false

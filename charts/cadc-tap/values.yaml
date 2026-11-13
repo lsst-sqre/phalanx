@@ -169,6 +169,10 @@ config:
   # -- GCS bucket type (GCS or S3)
   gcsBucketType: "GCS"
 
+  # -- Whether to mount the `google_creds.json` service account credentials.
+  # Only needed when `gcsBucketType` is GCS.
+  googleCredentialsEnabled: true
+
   # -- Name of the bucket in which to store uploaded tables. Must be the same
   # type as `gcsBucket`.
   # @default -- Same as `gcsBucket`

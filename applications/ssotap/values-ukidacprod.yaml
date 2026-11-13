@@ -18,6 +18,7 @@ cadc-tap:
     gcsBucket: "async"
     gcsBucketUrl: "https://somerville.ed.ac.uk:6780"
     gcsBucketType: "S3"
+    googleCredentialsEnabled: false
 
     pg:
       host: "192.41.122.118:5432"
