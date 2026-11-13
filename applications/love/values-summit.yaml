@@ -147,7 +147,7 @@ love-manager:
   manager:
     frontend:
       image:
-        revision: 0
+        revision: 1
         repository: ts-dockerhub.lsst.org/love-manager
         pullPolicy: Always
       env:
