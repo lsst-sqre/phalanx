@@ -283,7 +283,7 @@ mtcamhexapod:
   enabled: true
   classifier: mthexapod1
   image:
-    revision: 0
+    revision: 1
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: 1
@@ -305,7 +305,7 @@ mtcamhexapod-sim:
   enabled: false
   classifier: mthexapod1
   image:
-    revision: 0
+    revision: 1
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: --simulate 1
@@ -426,7 +426,7 @@ mtm2hexapod:
   enabled: true
   classifier: mthexapod2
   image:
-    revision: 0
+    revision: 1
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: 2
@@ -448,7 +448,7 @@ mtm2hexapod-sim:
   enabled: false
   classifier: mthexapod2
   image:
-    revision: 0
+    revision: 1
     repository: ts-dockerhub.lsst.org/mthexapod
   env:
     RUN_ARG: --simulate 2
