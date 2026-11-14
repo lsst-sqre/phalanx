@@ -10,6 +10,7 @@ __all__ = [
     "GOOGLE_CLOUD_CERT_MANAGER_FIREWALL_RULE",
     "GOOGLE_CLOUD_RUN_ID_LABEL",
     "HELM_DOCLINK_ANNOTATION",
+    "KUBECONFORM_KUBERNETES_VERSION",
     "ONEPASSWORD_ENCODED_WARNING",
     "PREVIOUS_EXTERNAL_TRAFFIC_POLICY_ANNOTATION",
     "PREVIOUS_LOAD_BALANCER_IP_ANNOTATION",
@@ -23,6 +24,15 @@ __all__ = [
 
 HELM_DOCLINK_ANNOTATION = "phalanx.lsst.io/docs"
 """Annotation in :file:`Chart.yaml` for application documentation links."""
+
+KUBECONFORM_KUBERNETES_VERSION = "1.37.2"
+"""Kubernetes version whose schemas kubeconform validates resources against.
+
+Phalanx supports a range of Kubernetes versions. This should be the newest
+Kubernetes release, so that linting catches uses of APIs that newer clusters
+have removed. Update it along with the tool versions pinned in
+:file:`.github/workflows/ci.yaml`.
+"""
 
 ONEPASSWORD_ENCODED_WARNING = (
     "If you store this secret in a 1Password item, encode it with base64"

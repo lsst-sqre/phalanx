@@ -15,6 +15,7 @@ from ..models.helm import HelmStarter
 from ..storage.config import ConfigStorage
 from ..storage.helm import HelmStorage
 from ..storage.kube_linter import KubeLinterStorage
+from ..storage.kubeconform import KubeconformStorage
 
 __all__ = ["ApplicationService"]
 
@@ -30,6 +31,10 @@ class ApplicationService:
         Storage object for the Phalanx configuration.
     helm_storage
         Interface to Helm actions.
+    kube_linter_storage
+        Interface to kube-linter, used when linting.
+    kubeconform_storage
+        Interface to kubeconform, used when linting.
     """
 
     def __init__(
@@ -38,11 +43,13 @@ class ApplicationService:
         config_storage: ConfigStorage,
         helm_storage: HelmStorage,
         kube_linter_storage: KubeLinterStorage,
+        kubeconform_storage: KubeconformStorage,
     ) -> None:
         self._path = path
         self._config = config_storage
         self._helm = helm_storage
         self._kube_linter = kube_linter_storage
+        self._kubeconform = kubeconform_storage
         self._templates = jinja2.Environment(
             loader=jinja2.PackageLoader("phalanx", "data"),
             undefined=jinja2.StrictUndefined,
@@ -416,8 +423,10 @@ class ApplicationService:
     ) -> bool:
         """Lint one application chart for one environment.
 
-        Runs :command:`helm lint` and, if that passes, :command:`kube-linter`
-        on the rendered Kubernetes resources.
+        Runs :command:`helm lint` and, if that passes, both
+        :command:`kube-linter` and :command:`kubeconform` on the rendered
+        Kubernetes resources. Both are always run so that all problems are
+        reported at once.
 
         Parameters
         ----------
@@ -436,9 +445,13 @@ class ApplicationService:
         if not self._helm.lint_application(app_name, env_name, values):
             return False
         resources = self._helm.template_application(app_name, env_name, values)
-        return self._kube_linter.lint_application(
+        lint_ok = self._kube_linter.lint_application(
             app_name, env_name, resources
         )
+        validate_ok = self._kubeconform.validate_application(
+            app_name, env_name, resources
+        )
+        return lint_ok and validate_ok
 
 
 def _json_and_base64_encode(obj: Any) -> str:

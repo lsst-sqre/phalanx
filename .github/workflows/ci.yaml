@@ -16,6 +16,11 @@ env:
   # Version of kube-linter to use for linting rendered resources.
   KUBE_LINTER_VERSION: "0.8.3"
 
+  # Version of kubeconform to use for validating rendered resources. The
+  # Kubernetes version whose schemas it uses is KUBECONFORM_KUBERNETES_VERSION
+  # in src/phalanx/constants.py.
+  KUBECONFORM_VERSION: "0.8.0"
+
   # Version of Vault client to use for the installer.
   VAULT_VERSION: "2.2.1"
 
@@ -96,6 +101,22 @@ jobs:
           curl -sSL
           https://github.com/stackrox/kube-linter/releases/download/v${{ env.KUBE_LINTER_VERSION }}/kube-linter-linux.tar.gz
           | sudo tar -xz -C /usr/local/bin kube-linter
+
+      - name: Install kubeconform
+        run: >
+          curl -sSL
+          https://github.com/yannh/kubeconform/releases/download/v${{ env.KUBECONFORM_VERSION }}/kubeconform-linux-amd64.tar.gz
+          | sudo tar -xz -C /usr/local/bin kubeconform
+
+      # kubeconform downloads the schema for each kind of resource it
+      # validates. Keep them between runs so that linting does not depend on
+      # downloading them. The key changes with the Kubernetes version, which
+      # is set in constants.py.
+      - name: Cache kubeconform schemas
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/phalanx/kubeconform
+          key: kubeconform-schemas-${{ hashFiles('src/phalanx/constants.py') }}
 
       - uses: astral-sh/setup-uv@v10.3.3
 

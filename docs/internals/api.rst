@@ -94,6 +94,9 @@ This API is only intended for use within the Phalanx code itself.
 .. automodapi:: phalanx.storage.kube_linter
    :include-all-objects:
 
+.. automodapi:: phalanx.storage.kubeconform
+   :include-all-objects:
+
 .. automodapi:: phalanx.storage.kubernetes
    :include-all-objects:
 
