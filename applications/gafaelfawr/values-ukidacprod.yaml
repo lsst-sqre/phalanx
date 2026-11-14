@@ -3,6 +3,8 @@ redis:
     enabled: false
 
 config:
+  database:
+    url: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
   internalDatabase: true
 
   oidcServer:

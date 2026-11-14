@@ -24,35 +24,6 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Cloud SQL Auth Proxy sidecar container
-*/}}
-{{- define "gafaelfawr.cloudsqlSidecar" -}}
-- name: "cloud-sql-proxy"
-  command:
-    - "/cloud_sql_proxy"
-    - "-ip_address_types=PRIVATE"
-    - "-log_debug_stdout=true"
-    - "-structured_logs=true"
-    - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
-  image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
-  imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
-  {{- with .Values.cloudsql.resources }}
-  resources:
-    {{- toYaml . | nindent 12 }}
-  {{- end }}
-  restartPolicy: "Always"
-  securityContext:
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - "all"
-    readOnlyRootFilesystem: true
-    runAsNonRoot: true
-    runAsUser: 65532
-    runAsGroup: 65532
-{{- end }}
-
-{{/*
 Common environment variables
 */}}
 {{- define "gafaelfawr.envVars" -}}
@@ -72,66 +43,66 @@ Common environment variables
       name: "gafaelfawr"
       key: "bootstrap-token"
 {{- if .Values.config.cilogon.clientId }}
-- name: "GAFAELFAWR_CILOGON_CLIENT_SECRET"
+- name: "GAFAELFAWR_CILOGON__CLIENT_SECRET"
   valueFrom:
     secretKeyRef:
       name: "gafaelfawr"
       key: "cilogon-client-secret"
 {{- end }}
-- name: "GAFAELFAWR_DATABASE_PASSWORD"
+- name: "GAFAELFAWR_CILOGON__REDIRECT_URL"
+  value: "{{ .Values.global.baseUrl }}/login"
+{{- if eq .Values.config.database.type "external" }}
+- name: "GAFAELFAWR_DATABASE__PASSWORD"
   valueFrom:
     secretKeyRef:
       name: "gafaelfawr"
       key: "database-password"
-{{- if (or .Values.cloudsql.enabled .Values.config.internalDatabase) }}
-- name: "GAFAELFAWR_DATABASE_URL"
-  {{- if .Values.cloudsql.enabled }}
-  value: "postgresql://gafaelfawr@localhost/gafaelfawr"
-  {{- else if .Values.config.internalDatabase }}
+{{- end }}
+{{- if .Values.config.internalDatabase }}
+- name: "GAFAELFAWR_DATABASE__URL"
   value: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
-  {{- end }}
 {{- end }}
 {{- if .Values.config.github.clientId }}
-- name: "GAFAELFAWR_GITHUB_CLIENT_SECRET"
+- name: "GAFAELFAWR_GITHUB__CLIENT_SECRET"
   valueFrom:
     secretKeyRef:
       name: "gafaelfawr"
       key: "github-client-secret"
 {{- end }}
 {{- if .Values.config.ldap.userDn }}
-- name: "GAFAELFAWR_LDAP_PASSWORD"
+- name: "GAFAELFAWR_LDAP__PASSWORD"
   valueFrom:
     secretKeyRef:
       name: "gafaelfawr"
       key: "ldap-password"
 {{- end }}
 {{- if .Values.config.oidc.clientId }}
-- name: "GAFAELFAWR_OIDC_CLIENT_SECRET"
+- name: "GAFAELFAWR_OIDC__CLIENT_SECRET"
   valueFrom:
     secretKeyRef:
       name: "gafaelfawr"
       key: "oidc-client-secret"
 {{- end }}
+- name: "GAFAELFAWR_OIDC__REDIRECT_URL"
+  value: "{{ .Values.global.baseUrl }}/login"
 {{- if .Values.config.oidcServer.enabled }}
-- name: "GAFAELFAWR_OIDC_SERVER_CLIENTS"
+- name: "GAFAELFAWR_OIDC_SERVER__CLIENTS"
   valueFrom:
     secretKeyRef:
       name: "gafaelfawr"
       key: "oidc-server-secrets"
 {{- if (not .Values.config.oidcServer.issuer) }}
-- name: "GAFAELFAWR_OIDC_SERVER_CLIENT_SUFFIX"
+- name: "GAFAELFAWR_OIDC_SERVER__CLIENT_SUFFIX"
   value: ".clients.{{ .Values.global.host }}"
-- name: "GAFAELFAWR_OIDC_SERVER_ISSUER"
+- name: "GAFAELFAWR_OIDC_SERVER__ISSUER"
   value: {{ .Values.global.baseUrl | quote }}
 {{- end }}
-- name: "GAFAELFAWR_OIDC_SERVER_KEY"
+- name: "GAFAELFAWR_OIDC_SERVER__KEY"
   valueFrom:
     secretKeyRef:
       name: "gafaelfawr"
       key: "signing-key"
 {{- end }}
-- name: "GAFAELFAWR_REDIRECT_URL"
-  value: "{{ .Values.global.baseUrl }}/login"
 - name: "GAFAELFAWR_REDIS_PASSWORD"
   valueFrom:
     secretKeyRef:
