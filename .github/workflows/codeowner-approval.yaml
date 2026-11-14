@@ -1,0 +1,39 @@
+name: CODEOWNERS Approval Check
+
+"on":
+  pull_request:
+    types: [opened, reopened, synchronize]
+  pull_request_review:
+    types: [submitted, dismissed]
+
+permissions:
+  contents: read
+
+jobs:
+  codeowner-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      # The GitHub App must be configured with these permissions:
+      #   Organization: Members (read)
+      #   Repository: Commit statuses (read & write)
+      #   Repository: Pull requests (read)
+      - uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ vars.CODEOWNER_APP_ID }}
+          private-key: ${{ secrets.CODEOWNER_APP_PRIVATE_KEY }}
+
+      - uses: astral-sh/setup-uv@v7
+
+      - name: Check CODEOWNERS approval
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: uv run .github/scripts/codeowner_check.py
