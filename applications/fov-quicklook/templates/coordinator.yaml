@@ -30,6 +30,7 @@ spec:
               exec python -m quicklook.coordinator.api
           env:
             {{- include "fov-quicklook.env.db" . | nindent 12 }}
+            {{- include "fov-quicklook.env.cache" . | nindent 12 }}
             {{- include "fov-quicklook.env.log-level" . | nindent 12 }}
             {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
             {{- include "fov-quicklook.env.ccd_data_types" . | nindent 12 }}
