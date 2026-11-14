@@ -61,6 +61,10 @@ spec:
               value: "/etc/ra-log-explorer/sites.toml"
             - name: "RA_LOG_EXPLORER_WORKERS"
               value: {{ .Values.config.workers | quote }}
+            - name: "RA_LOG_EXPLORER_PARSE_WORKERS"
+              value: {{ .Values.config.parseWorkers | quote }}
+            - name: "RA_LOG_EXPLORER_MAX_LOADED_BYTES"
+              value: {{ mul .Values.config.maxLoadedGi 1073741824 | quote }}
             - name: "RA_LOG_EXPLORER_WINDOW_BEFORE_S"
               value: {{ .Values.config.windowBeforeS | quote }}
             - name: "RA_LOG_EXPLORER_WINDOW_AFTER_S"

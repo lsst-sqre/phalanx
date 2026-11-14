@@ -1,3 +1,6 @@
+# Sized for two or three people using it at once. A summit night is
+# ~540 pods and 20-35M lines: ~6-9 GiB on disk, ~1-1.5 GiB in memory
+# once parsed, and about a minute of parsing on six workers.
 config:
   # Summit: logs come from the yagan cluster and shutter-close truth
   # from the ConsDB running alongside them on this same cluster. Reached at
@@ -9,6 +12,27 @@ config:
     namespace: "rapid-analysis"
     lokiAddr: "https://loki-query.ls.lsst.org"
     consdbUrl: "http://consdb-pq.consdb.svc.cluster.local:8080/consdb/query"
+
+  # Six parse workers, leaving two of the eight cores for the serving
+  # process, the live poller and the previous night's re-pull.
+  parseWorkers: 6
+
+  # Room for each of three people to hold a summit night or two alongside
+  # their exposures; half the memory limit.
+  maxLoadedGi: 8
+
+cache:
+  # Tonight and last night (the poller keeps both) plus a couple of weeks of
+  # older nights and the day's slices, at up to ~9 GiB a night.
+  sizeGi: 200
+
+resources:
+  requests:
+    cpu: 2
+    memory: "8Gi"
+  limits:
+    cpu: 8
+    memory: "16Gi"
 
 image:
   # Pinned per site, so each one moves to a new release on its own.
