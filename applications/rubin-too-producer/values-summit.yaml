@@ -18,29 +18,36 @@ envSecrets:
   secretKey: password
 myConfigFile: |
   # Ignore alerts marked by the sender(s) as tests
-  allow-tests: True
-
-  # # Read alerts from .avro files
-  # input-type: "files"
+  allow-tests: False # We may want this to be true, but have the scheduler be false. Worth discussion.
 
   # Read alerts from Kafka topic
   input-type: "kafka"
   input-options:
-    url: "kafka://sean.macbride-1251e6a1@kafka.scimma.org/rubin-too-dev.lvk-test-alerts"
+    url: "kafka://sean.macbride-1251e6a1@kafka.scimma.org/rubin-too-dev.lvk-test-alerts,igwn.gwalert,rubin-too-dev.rubin-too-dev.neutrino-test-alerts,gcn.notices.icecube.gold_bronze_track_alerts,rubin-too-dev.pha-test-alerts,gcn.notices.superk.sn_alert,rubin-too-dev.galactic_sn-test-alerts"
+    group_id: sean.macbride-1251e6a1-summit-env
 
-  # # Output to stdout (you can change to kafka or confluent_rest later)
-  # output-type: "stdout"
-  # output-options: {}
-
-  # Output to EFD testing topic (base_efd)
+  # Output to EFD testing topic (summit_efd)
   output-type: "confluent_rest"
   output-options:
-    url: "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/topics/lsst.scimma.tooAlertTest"
+    url: "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/topics/lsst.scimma.too.alert"
 
-  # Use the LVK gravitational wave filter for all topics (we'll simulate "all" for files)
+  # Filters
+  treat_cache_miss_as_not_found: True
+  filter-settings:
+    lvk_gw:
+      alert_type: "INITIAL"
+    icecube_nu:
+      alert_type: "update" # We need to confirm this with our IceCube colleagues
+    superk_sn:
+      alert_type: "initial"
+    # Eventually we will add the PHAs here.
+
   filters:
-    group1.topicA: lvk_gw
     igwn.gwalert: lvk_gw
-    ligo-demo-partners: lvk_gw
     rubin-too-dev.lvk-test-alerts: lvk_gw
-    all: lvk_gw
+    gcn.notices.icecube.gold_bronze_track_alerts: icecube_nu
+    rubin-too-dev.rubin-too-dev.neutrino-test-alerts: icecube_nu
+    gcn.notices.superk.sn_alert: superk_sn
+    rubin-too-dev.galactic_sn-test-alerts: superk_sn
+    # Eventually we will add the PHA's here too.
+    # rubin-too-dev.pha-test-alerts
