@@ -1,3 +1,4 @@
+{{- if .Values.api.enabled }}
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
@@ -28,3 +29,4 @@ template:
                   name: "obsforge"
                   port:
                     number: 8080
+{{- end }}
