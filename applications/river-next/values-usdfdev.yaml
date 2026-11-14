@@ -79,6 +79,36 @@ config:
           expr: "toInt64(floor(midpointMjdTai * 1440))"
           type: "set(512)"
           granularity: 4
+        - table: "dia_source_prompt_20261110"
+          name: "idx_mjd"
+          expr: "midpointMjdTai"
+          type: "minmax"
+          granularity: 4
+        - table: "dia_source_prompt_20261110"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(midpointMjdTai * 1440))"
+          type: "set(512)"
+          granularity: 4
+        - table: "dia_source_ppdb_rel2"
+          name: "idx_mjd"
+          expr: "midpointMjdTai"
+          type: "minmax"
+          granularity: 1
+        - table: "dia_source_ppdb_rel2"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(midpointMjdTai * 1440))"
+          type: "set(512)"
+          granularity: 1
+        - table: "dia_source_ppdb_sup"
+          name: "idx_mjd"
+          expr: "midpointMjdTai"
+          type: "minmax"
+          granularity: 1
+        - table: "dia_source_ppdb_sup"
+          name: "idx_mjd_min"
+          expr: "toInt64(floor(midpointMjdTai * 1440))"
+          type: "set(512)"
+          granularity: 1
         - table: "dia_source_dp2"
           name: "idx_mjd"
           expr: "midpointMjdTai"
