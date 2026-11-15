@@ -145,6 +145,7 @@ data:
             <query>GRANT dictGet ON ssp.visit_exposure_dict</query>
             <query>GRANT SELECT ON system.one</query>
             <query>GRANT SELECT ON system.parts</query>
+            <query>GRANT SELECT ON system.data_skipping_indices</query>
           </grants>
         </mppdb_ro>
       </users>
