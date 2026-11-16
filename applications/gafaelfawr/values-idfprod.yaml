@@ -9,6 +9,14 @@ config:
   allowSubdomains: true
   slackAlerts: true
 
+  database:
+    type: "cloudsql"
+    project: "science-platform-stable-6994"
+    region: "us-central1"
+    instance: "science-platform-stable-0c29612b"
+    database: "gafaelfawr"
+    serviceAccount: "gafaelfawr@science-platform-stable-6994.iam.gserviceaccount.com"
+
   sentry:
     enabled: true
 
@@ -114,8 +122,3 @@ config:
   errorFooter: |
     To report problems or ask for help, see the instructions at
     <a href="https://rsp.lsst.io/support/index.html">Getting Help</a>.
-
-cloudsql:
-  enabled: true
-  instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
-  serviceAccount: "gafaelfawr@science-platform-stable-6994.iam.gserviceaccount.com"

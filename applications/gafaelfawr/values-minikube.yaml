@@ -1,3 +1,7 @@
+image:
+  tag: "t-DM-56495"
+  pullPolicy: "Always"
+
 # Reset token storage on every Redis restart.
 redis:
   persistence:
@@ -7,6 +11,8 @@ redis:
 resources: {}
 
 config:
+  database:
+    url: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
   internalDatabase: true
   updateSchema: true
 

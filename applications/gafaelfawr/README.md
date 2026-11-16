@@ -13,17 +13,6 @@ Authentication and identity system
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the Gafaelfawr frontend pod |
-| cloudsql.affinity | object | `{}` | Affinity rules for the standalone Cloud SQL Proxy pod |
-| cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as a separate service (behind a `NetworkPolicy`) for other, lower-traffic services. |
-| cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
-| cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.38.4"` | Cloud SQL Auth Proxy tag to use |
-| cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a Cloud SQL PostgreSQL instance |
-| cloudsql.nodeSelector | object | `{}` | Node selection rules for the standalone Cloud SQL Proxy pod |
-| cloudsql.podAnnotations | object | `{}` | Annotations for the standalone Cloud SQL Proxy pod |
-| cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
-| cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
-| cloudsql.tolerations | list | Tolerate GKE amd64 and arm64 taints | Tolerations for the standalone Cloud SQL Proxy pod |
 | config.afterLogoutUrl | string | Top-level page of this Phalanx environment | Where to send the user after they log out |
 | config.allowSubdomains | bool | `false` | Whether to expose cookies to subdomains. DO NOT SET TO TRUE unless all subdomains of the environment base URL are guaranteed to only reference services protected by Gafaelfawr. |
 | config.baseInternalUrl | string | FQDN under `svc.cluster.local` | URL for direct connections to the Gafaelfawr service, bypassing the Ingress. Must use a service name of `gafaelfawr` and port 8080. |
@@ -32,7 +21,18 @@ Authentication and identity system
 | config.cilogon.loginParams | object | `{"skin":"LSST"}` | Additional parameters to add |
 | config.cilogon.test | bool | `false` | Whether to use the test instance of CILogon |
 | config.cilogon.usernameClaim | string | `"username"` | Claim from which to get the username |
-| config.databaseUrl | string | None, must be set if neither `cloudsql.enabled` nor | URL for the PostgreSQL database `config.internalDatabase` are true |
+| config.database.database | string | None, must be set to use Cloud SQL | Name of the Cloud SQL database |
+| config.database.instance | string | None, must be set to use Cloud SQL | Cloud SQL instance name |
+| config.database.maxOverflow | string | SQLAlchemy default | Maximum connections over the pool size for surge traffic |
+| config.database.poolPrePing | string | `nil` | Whether to check a connection is alive before returning it to a session. Set this to true for deployments with low traffic. |
+| config.database.poolRecycle | string | `nil` | Discard any idle connection open for longer than this number of seconds. If the connection idle timeout for the database is known, set this to slightly less. |
+| config.database.poolSize | string | SQLAlchemy default | Connection pool size |
+| config.database.poolTimeout | string | SQLAlchemy default | How long to wait for a connection from the connection pool in seconds |
+| config.database.project | string | None, must be set to use Cloud SQL | Cloud SQL project |
+| config.database.region | string | None, must be set to use Cloud SQL | Cloud SQL region |
+| config.database.serviceAccount | string | None, must be set to use Cloud SQL | Google service account for authentication. Must have the `cloudsql.client` and `cloudsql.instanceUser` roles. |
+| config.database.type | string | `"external"` | Type of database connection (`cloudsql` or `external`) |
+| config.database.url | string | None, must be set if CloudSQL is not configured and | URL for the PostgreSQL database `config.internalDatabase` is not true |
 | config.errorFooter | string | `nil` | HTML footer to add to any login error page (will be enclosed in a <p> tag). |
 | config.firestore.project | string | Firestore support is disabled | If set, assign UIDs and GIDs using Google Firestore in the given project. Cloud SQL must be enabled and the Cloud SQL service account must have read/write access to that Firestore instance. |
 | config.github.clientId | string | `nil` | GitHub client ID. One and only one of this, `config.cilogon.clientId`, or `config.oidc.clientId` must be set. |
