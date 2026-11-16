@@ -15,7 +15,6 @@ applications:
   # despite that configuration not being officially supported by Phalanx.
   cert-manager: false
   ingress-nginx: false
-  vault-secrets-operator: false
 
   apdb-backups-gcp: true
   butler-writer-service: true
