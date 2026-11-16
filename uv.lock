@@ -731,7 +731,7 @@ wheels = [
 
 [[package]]
 name = "documenteer"
-version = "2.5.0b4"
+version = "2.5.0b5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -748,9 +748,9 @@ dependencies = [
     { name = "tomlkit" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2b/ff/91e1013d975046087d7cf2705d3b95852be90f9842a6b9fc79e1df86abeb/documenteer-2.5.0b4.tar.gz", hash = "sha256:60caba18aa3f7614f170996157cbff0c8665a510fb6bd5776c28a0d9ba43dc7f", size = 2108090, upload-time = "2026-10-26T16:43:12.837Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e5/b1/ea3c37fdebe09701e3142d86020bd910730102340d6e3f97fe59f51d6d71/documenteer-2.5.0b5.tar.gz", hash = "sha256:f6b73704a623e758e67860a7339ea3c779edf31e22e455b9effe3039aaf29cdc", size = 2147993, upload-time = "2026-11-10T20:57:03.527Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b9/79/941f0760e378b5242a1812e109b05cd2ec075418928dd6824ae6f7c23845/documenteer-2.5.0b4-py3-none-any.whl", hash = "sha256:da03b17893b62bd1f8c0d6c4d7ca381767c45f50c75168a1033745947e3f4c17", size = 679731, upload-time = "2026-10-26T16:43:10.989Z" },
+    { url = "https://files.pythonhosted.org/packages/da/c9/e5597e1c0c3776e2704575c012a645046d9b8f2502bf52159237725a319b/documenteer-2.5.0b5-py3-none-any.whl", hash = "sha256:020762554f08d0162ef1cf571a5c854445d53ad529c364a977c2dfbdecaaf257", size = 681238, upload-time = "2026-11-10T20:57:01.597Z" },
 ]
 
 [package.optional-dependencies]
@@ -1882,7 +1882,7 @@ dev = [
 docs = [
     { name = "autodoc-pydantic" },
     { name = "diagrams" },
-    { name = "documenteer", extras = ["guide"], specifier = "==2.5.0b4" },
+    { name = "documenteer", extras = ["guide"], specifier = "==2.5.0b5" },
     { name = "sphinx-click" },
     { name = "sphinx-jinja" },
 ]
