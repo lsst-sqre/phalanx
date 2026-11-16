@@ -199,28 +199,20 @@ def check_both(name: str, d: Docs) -> None:
 
 
 def check_catalog_indexes(name: str, d: Docs) -> None:
-    """Check the declared indexes reach the front end's mppdb.toml unchanged.
+    """Check the front end's mppdb.toml declares no data-skipping indexes.
 
-    The service serves them in /catalog's ``indexes`` block, and the ssp
-    crossmatch reads its time-bucket expression from there. The chart once
-    rendered ``[databases.*]`` without them, and /catalog went empty silently.
+    Since mppdb v0.2.0, /catalog's ``indexes`` block is read from
+    system.data_skipping_indices, and the declarations are read only by
+    ingests, which this deployment does not run. A copy here would only
+    drift from the live tables unnoticed.
     """
-    values = yaml.safe_load((CHART / "values-usdfdev.yaml").read_text())
-    want = {
-        db: spec["indexes"]
-        for db, spec in values.get("config", {}).get("databases", {}).items()
-        if spec.get("indexes")
-    }
     toml = tomllib.loads(d[("ConfigMap", "river-next")]["data"]["mppdb.toml"])
-    got = {
-        db: spec["indexes"]
-        for db, spec in toml["databases"].items()
-        if spec.get("indexes")
-    }
+    declared = sorted(
+        db for db, spec in toml["databases"].items() if spec.get("indexes")
+    )
     check(
-        bool(want.get("ssp")) and got == want,
-        f"{name}: mppdb.toml declares the {sum(map(len, want.values()))}"
-        " values-usdfdev.yaml indexes verbatim",
+        not declared,
+        f"{name}: mppdb.toml declares no indexes (got {declared})",
     )
 
 

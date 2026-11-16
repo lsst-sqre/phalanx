@@ -141,13 +141,11 @@ config:
   # resolved against `config.registryDir`, but it is **ignored under
   # `MPPDB_ENGINE=clickhouse`**, which this deployment uses: the catalog comes
   # from `TAP_SCHEMA.registries` in the store. Do not set it here. An optional
-  # `indexes` list of `{table, name, expr, type, granularity}` declares the
-  # data-skipping indexes, rendered as `[[databases.<db>.indexes]]`; the service
-  # publishes them in the `indexes` block of `/catalog`, which clients such as
-  # the ssp crossmatch read so that their predicates match the index
-  # expressions. `expr` is copied byte-for-byte from
-  # `system.data_skipping_indices`; the service does not check it against the
-  # live tables.
+  # `indexes` list of `{table, name, expr, type, granularity}` is still
+  # rendered as `[[databases.<db>.indexes]]`, but do not set it either: those
+  # declarations are read only by mppdb ingests, which this deployment does not
+  # run, and since mppdb v0.2.0 the `indexes` block of `/catalog` is read from
+  # `system.data_skipping_indices` instead.
   # @default -- `dp2`, `ppdb`, and `ssp`; see `values.yaml`
   databases:
     dp2:
