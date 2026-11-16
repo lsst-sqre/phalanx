@@ -9,3 +9,4 @@ spec:
   scopes:
     - "read:image"
     - "exec:internal-tools"
+    - "read:sasquatch"
