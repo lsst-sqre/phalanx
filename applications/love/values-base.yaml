@@ -220,9 +220,7 @@ love-nginx:
         repository: ts-dockerhub.lsst.org/love-manager-static
         pullPolicy: Always
       command:
-      - /bin/sh
-      - -c
-      - mkdir -p /usr/src/love-manager; cp -Rv /usr/src/love/manager/media /usr/src/love-manager; cp -Rv /usr/src/love/manager/static /usr/src/love-manager
+      - /home/saluser/.startup.sh
   staticStore:
     name: love-nginx-static
     storageClass: rook-ceph-block
