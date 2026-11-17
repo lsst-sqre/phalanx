@@ -1,0 +1,58 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "love-manager-init.fullname" . }}
+  namespace: {{ $.Values.global.controlSystem.appNamespace }}
+  labels:
+    {{- include "love-manager-init.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  completions: 1
+  template:
+    metadata:
+      labels:
+        {{- include "love-manager-init.labels" . | nindent 8 }}
+      {{- with .Values.annotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: {{ include "love-manager-init.fullname" . }}
+          {{- $imageTag := .Values.manager.init.image.tag | default $.Values.global.controlSystem.imageTag }}
+          {{- $image := dict "repo" $.Values.manager.init.image.repository "tag" $imageTag "rev" $.Values.manager.init.image.revision }}
+          image: {{ include "helpers.makeImage" $image }}
+          imagePullPolicy: {{ .Values.manager.init.image.pullPolicy }}
+          command:
+          - /home/saluser/.init-db.sh
+          env:
+          {{- range $env_var, $env_value := .Values.manager.init.env }}
+          - name: {{ $env_var }}
+            value: {{ $env_value | quote }}
+          {{- end }}
+          {{- if .Values.manager.init.envSecrets }}
+          {{- $data := dict "secret" true "env" .Values.manager.init.envSecrets }}
+          {{- include "helpers.envFromList" $data | indent 10 }}
+          {{- end }}
+          {{- with $.Values.manager.init.resources }}
+          resources:
+            {{- toYaml $.Values.manager.init.resources | nindent 16 }}
+          {{- end }}
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: pull-secret
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $ | nindent 12 }}
+      {{- end }}
+      {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml $ | nindent 12 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml $ | nindent 12 }}
+      {{- end }}

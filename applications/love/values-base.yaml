@@ -40,42 +40,56 @@ love-commander:
       cpu: 900m
       memory: 2Gi
 
+x-manager-db-env:
+  &base-manager-db-env
+  LOVE_SITE: base
+  DB_HOST: postgresdb01.ls.lsst.org
+  DB_ENGINE: postgresql
+  DB_NAME: love
+  DB_PORT: 5432
+  DB_USER: love
+
+x-manager-db-secret-env:
+  &base-manager-db-secret-env
+  ADMIN_USER_PASS: admin-user-pass
+  USER_USER_PASS: user-user-pass
+  CMD_USER_PASS: cmd-user-pass
+  DB_PASS: db-pass
+
+x-manager-server-env:
+  &base-manager-server-env
+  SERVER_URL: base-lsp.lsst.codes
+  REMOTE_STORAGE: true
+  URL_SUBPATH: /love
+  OLE_API_HOSTNAME: base-lsp.lsst.codes
+  AUTH_LDAP_1_SERVER_URI: ldap://ipa1.ls.lsst.org
+  AUTH_LDAP_2_SERVER_URI: ldap://ipa2.ls.lsst.org
+  AUTH_LDAP_3_SERVER_URI: ldap://ipa3.ls.lsst.org
+  COMMANDER_HOSTNAME: love-commander-service
+  COMMANDER_PORT: 5000
+  JIRA_API_HOSTNAME: rubinobs.atlassian.net
+  JIRA_PROJECT_ID: 10063
+  REDIS_CONFIG_CAPACITY: 500
+  REDIS_CONFIG_EXPIRY: 5
+  REDIS_HOST: love-manager-redis-service
+
+x-manager-server-secret-env:
+  &base-manager-server-secret-env
+  SECRET_KEY: manager-secret-key
+  PROCESS_CONNECTION_PASS: process-connection-pass
+  AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
+  REDIS_PASS: redis-pass
+
 x-manager-producer:
   &base-manager-producer
   image:
     repository: ts-dockerhub.lsst.org/love-manager
     pullPolicy: Always
   env:
-    LOVE_SITE: base
-    SERVER_URL: base-lsp.lsst.codes
-    OLE_API_HOSTNAME: base-lsp.lsst.codes
-    AUTH_LDAP_1_SERVER_URI: ldap://ipa1.ls.lsst.org
-    AUTH_LDAP_2_SERVER_URI: ldap://ipa2.ls.lsst.org
-    AUTH_LDAP_3_SERVER_URI: ldap://ipa3.ls.lsst.org
-    COMMANDER_HOSTNAME: love-commander-service
-    COMMANDER_PORT: 5000
-    DB_HOST: postgresdb01.ls.lsst.org
-    DB_ENGINE: postgresql
-    DB_NAME: love
-    DB_PORT: 5432
-    DB_USER: love
+    <<: *base-manager-server-env
     HEARTBEAT_QUERY_COMMANDER: false
-    JIRA_API_HOSTNAME: rubinobs.atlassian.net
-    JIRA_PROJECT_ID: 10063
-    REDIS_CONFIG_CAPACITY: 500
-    REDIS_CONFIG_EXPIRY: 5
-    REDIS_HOST: love-manager-redis-service
-    REMOTE_STORAGE: true
-    URL_SUBPATH: /love
   envSecrets:
-    SECRET_KEY: manager-secret-key
-    PROCESS_CONNECTION_PASS: process-connection-pass
-    ADMIN_USER_PASS: admin-user-pass
-    USER_USER_PASS: user-user-pass
-    CMD_USER_PASS: cmd-user-pass
-    AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
-    DB_PASS: db-pass
-    REDIS_PASS: redis-pass
+    <<: *base-manager-server-secret-env
   <<: *topology-spread
   resources:
     requests:
@@ -94,20 +108,34 @@ x-manager-producer:
 
 love-manager:
   manager:
+    init:
+      image:
+        repository: ts-dockerhub.lsst.org/love-manager
+        pullPolicy: Always
+      env:
+        <<: *base-manager-db-env
+        REMOTE_STORAGE: true
+      envSecrets:
+        <<: *base-manager-db-secret-env
+      resources:
+        requests:
+          cpu: 150m
+          memory: 200Mi
+        limits:
+          cpu: 1000m
+          memory: 1500Mi
     frontend:
       image:
         repository: ts-dockerhub.lsst.org/love-manager
         pullPolicy: Always
       env:
-        SERVER_URL: base-lsp.lsst.codes
-        OLE_API_HOSTNAME: base-lsp.lsst.codes
-        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.ls.lsst.org
-        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.ls.lsst.org
-        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.ls.lsst.org
-        DB_HOST: postgresdb01.ls.lsst.org
-        LOVE_SITE: base
+        <<: *base-manager-db-env
+        <<: *base-manager-server-env
         NIGHTREPORT_MAIL_ADDRESS: sebastian.aranda@noirlab.edu
         SHOW_TRACE_TIMESTAMPS: "true"
+      envSecrets:
+        <<: *base-manager-db-secret-env
+        <<: *base-manager-server-secret-env
       autoscaling:
         enabled: true
         minReplicas: 2
