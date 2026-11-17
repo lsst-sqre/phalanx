@@ -8,6 +8,7 @@ redis:
 config:
   sentry:
     enabled: true
+  slackAlerts: true
 
   databaseUrl: postgresql://gafaelfawr@rsp-db-rw.postgres-db:5432/gafaelfawr
 
@@ -44,7 +45,6 @@ config:
   knownScopes:
     "write:consdb": >-
       Write access to the ConsDB API
-
   groupMapping:
     "admin:oidc":
       - "rubinmgr"
