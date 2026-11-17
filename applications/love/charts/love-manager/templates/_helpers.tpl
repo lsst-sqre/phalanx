@@ -50,6 +50,13 @@ Manager producers fullname
 {{- end }}
 
 {{/*
+Manager init fullname
+*/}}
+{{- define "love-manager-init.fullname" -}}
+{{ include "love-manager.fullname" . }}-init
+{{- end }}
+
+{{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "love-manager.chart" -}}
@@ -81,6 +88,14 @@ helm.sh/chart: {{ include "love-manager.chart" . }}
 {{- end }}
 
 {{/*
+Manager Init Common labels
+*/}}
+{{- define "love-manager-init.labels" -}}
+helm.sh/chart: {{ include "love-manager.chart" . }}
+{{ include "love-manager-init.selectorLabels" . }}
+{{- end }}
+
+{{/*
 Common Selector labels
 */}}
 {{- define "love-manager.selectorLabels" -}}
@@ -102,6 +117,14 @@ Manager Producers Selector labels
 {{- define "love-manager-producer.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "love-manager.name" . }}
 app.kubernetes.io/instance: {{ include "love-manager.name" . }}-producer
+{{- end }}
+
+{{/*
+Manager Init Selector labels
+*/}}
+{{- define "love-manager-init.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "love-manager.name" . }}
+app.kubernetes.io/instance: {{ include "love-manager.name" . }}-init
 {{- end }}
 
 {{/*

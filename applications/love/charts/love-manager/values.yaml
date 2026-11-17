@@ -17,6 +17,57 @@ namespace: love
 # frontend, but in a list). These defines services that the LOVE-producers
 # connect to, to feed data from the control system.
 manager:
+  init:
+    image:
+      # -- The LOVE manager init image to use
+      repository: lsstts/love-manager
+      # -- (int) The cycle revision to add to the image tag
+      revision:
+      # -- The pull policy on the LOVE manager init image
+      pullPolicy: IfNotPresent
+      # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled
+      nexus3: ""
+    env:
+      # -- The site tag where LOVE is being run
+      LOVE_SITE: local
+      # -- The type of database engine being used for the LOVE manager init
+      DB_ENGINE: postgresql
+      # -- The name of the database being used for the LOVE manager init
+      DB_NAME: love
+      # -- The database user needed for access from the LOVE manager init
+      DB_USER: love
+      # -- The name of the database service
+      DB_HOST: love-manager-database-service
+      # -- The port for the database service
+      DB_PORT: 5432
+    envSecrets:
+      # -- The LOVE manager init admin user password secret key name
+      ADMIN_USER_PASS: admin-user-pass
+      # -- The LOVE manager init user user password secret key name
+      USER_USER_PASS: user-user-pass
+      # -- The LOVE manager init cmd_user user password secret key name
+      CMD_USER_PASS: cmd-user-pass
+      # -- The LOVE manager init base_control_room user password secret key name
+      REMOTE_BASE_USER_PASS: null
+      # -- The LOVE manager init tucson_control_room user password secret key name
+      REMOTE_TUCSON_USER_PASS: null
+      # -- The LOVE manager init slac_control_room user password secret key name
+      REMOTE_SLAC_USER_PASS: null
+      # -- The database password secret key name.
+      # Must match `database.envSecrets.POSTGRES_PASSWORD`
+      DB_PASS: db-pass
+    # -- Set the default number of LOVE manager init pod replicas
+    replicas: 1
+    # -- Resource specifications for the LOVE manager frontend pods
+    resources: {}
+    # -- Node selection rules for the LOVE manager frontend pods
+    nodeSelector: {}
+    # -- Toleration specifications for the LOVE manager frontend pods
+    tolerations: []
+    # -- Affinity rules for the LOVE manager frontend pods
+    affinity: {}
+    # -- Configuration for the LOVE manager frontend pods readiness probe
+    readinessProbe: {}
   frontend:
     image:
       # -- The LOVE manager frontend image to use
