@@ -124,7 +124,7 @@ electrometer201:
 ledprojector:
   enabled: true
   image:
-    revision: 0
+    revision: 2
     repository: ts-dockerhub.lsst.org/ledprojector
   resources:
     limits:
