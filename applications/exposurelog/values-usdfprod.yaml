@@ -7,6 +7,8 @@ db:
 env:
   - name: AWS_SHARED_CREDENTIALS_FILE
     value: "/var/secrets/butler/aws-credentials.ini"
+  - name: AWS_CA_BUNDLE
+    value: "/etc/ssl/certs/ca-certificates.crt"
   - name: DAF_BUTLER_REPOSITORY_INDEX
     value: "/project/data-repos.yaml"
   - name: S3_ENDPOINT_URL
