@@ -43,7 +43,7 @@ config:
     servers:
       ppdbtap:
         enabled: true
-        schemaVersion: "releases/w.2026.38"
+        schemaVersion: "tickets/DM-55375"
       ssotap:
         enabled: true
       tap:
