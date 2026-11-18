@@ -347,16 +347,17 @@ ocsscheduler:
 
 watcher:
   image:
-    revision: 0
+    revision: 2
     repository: ts-dockerhub.lsst.org/watcher
   envSecrets:
   - name: ESCALATION_KEY
     key: squadcast-escalation-key
   resources:
     limits:
-      cpu: 4
+      cpu: 5
+      memory: 6Gi
     requests:
-      cpu: 2
+      cpu: 4
       memory: 5Gi
   nfsMountpoint:
   - name: obs-env

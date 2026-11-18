@@ -289,11 +289,11 @@ watcher:
     repository: ts-dockerhub.lsst.org/watcher
   resources:
     limits:
-      cpu: 3
-      memory: 3Gi
+      cpu: 5
+      memory: 6Gi
     requests:
-      cpu: 800m
-      memory: 2Gi
+      cpu: 4
+      memory: 5Gi
   nfsMountpoint:
   - name: obs-env
     containerPath: /net/obs-env
