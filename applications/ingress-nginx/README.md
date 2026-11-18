@@ -23,6 +23,7 @@ Ingress controller
 | ingress-nginx.controller.config.server-snippet | string | See `values.yaml` | Add additional per-server configuration used by Gafaelfawr to report errors from the authorization layer |
 | ingress-nginx.controller.config.ssl-redirect | string | `"true"` | Redirect all non-SSL access to SSL |
 | ingress-nginx.controller.config.use-forwarded-headers | string | `"true"` | Enable the `X-Forwarded-For` processing |
+| ingress-nginx.controller.config.use-http2 | string | `"false"` | Disable HTTP/2 to mitigate CVE-2026-123633 and CVE-2026-123007 |
 | ingress-nginx.controller.image.digest | string | `"sha256:6c23471044041335807bcfb0cec22049ceb2d66f1cacf37033a42e3e75ad0f99"` |  |
 | ingress-nginx.controller.image.digestChroot | string | `"sha256:ab9e75bd5aa26b383c4382b27a6957220e060974073c90cd0e1f8ff93bfbbc94"` |  |
 | ingress-nginx.controller.image.image | string | `"lsst-sqre/ingress-nginx-controller"` |  |
