@@ -27,6 +27,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: "JAVA_OPTS"
+              value: "-XX:-UseBASE64Intrinsics"
             - name: "MANAGER"
               value: "TRUE"
             - name: "ADMIN_PASSWORD"
