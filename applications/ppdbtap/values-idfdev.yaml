@@ -29,10 +29,11 @@ cadc-tap:
         - "ppdb.DiaObject:`ppdb-dev-5c07.ppdb_public.DiaObject`"
         - "ppdb.DiaSource:`ppdb-dev-5c07.ppdb_public.DiaSource`"
         - "ppdb.DiaForcedSource:`ppdb-dev-5c07.ppdb_public.DiaForcedSource`"
+        - "ppdb.SSObservation:`ppdb-dev-5c07.ppdb_public.SSObservation`"
+        - "ppdb.NearbySSO:`ppdb-dev-5c07.ppdb_public.NearbySSO`"
         - "ppdb.SSObject:`ppdb-dev-5c07.ppdb_public.SSObject`"
-        - "ppdb.SSSource:`ppdb-dev-5c07.ppdb_public.SSSource`"
-        - "ppdb.current_identifications:`ppdb-dev-5c07.ppdb_public.current_identifications`"
         - "ppdb.mpc_orbits:`ppdb-dev-5c07.ppdb_public.mpc_orbits`"
+        - "ppdb.current_identifications:`ppdb-dev-5c07.ppdb_public.current_identifications`"
         - "ppdb.numbered_identifications:`ppdb-dev-5c07.ppdb_public.numbered_identifications`"
 
   cloudsql:
