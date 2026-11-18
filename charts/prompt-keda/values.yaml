@@ -39,6 +39,9 @@ instrument:
     preprocessing: ""
   # -- Skymap to use with the instrument
   skymap: ""
+  # -- The collection in the central repo to load templates from.
+  # @default -- "{instrument}/templates"
+  templateCollection: ""
   # -- Number of arcseconds to pad the spatial region in preloading.
   preloadPadding: 30
   # -- URI to the shared repo used for pipeline inputs and outputs.
