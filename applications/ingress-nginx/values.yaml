@@ -40,6 +40,9 @@ ingress-nginx:
       # -- Enable the `X-Forwarded-For` processing
       use-forwarded-headers: "true"
 
+      # -- Disable HTTP/2 to mitigate CVE-2026-123633 and CVE-2026-123007
+      use-http2: "false"
+
       # -- Add additional per-server configuration used by Gafaelfawr to
       # report errors from the authorization layer
       # @default -- See `values.yaml`
