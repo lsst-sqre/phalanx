@@ -133,6 +133,7 @@ love-manager:
         <<: *base-manager-server-env
         NIGHTREPORT_MAIL_ADDRESS: sebastian.aranda@noirlab.edu
         SHOW_TRACE_TIMESTAMPS: "true"
+        NO_DEBUG: ""
       envSecrets:
         <<: *base-manager-db-secret-env
         <<: *base-manager-server-secret-env
