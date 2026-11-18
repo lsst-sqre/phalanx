@@ -24,12 +24,12 @@ Ingress controller
 | ingress-nginx.controller.config.ssl-redirect | string | `"true"` | Redirect all non-SSL access to SSL |
 | ingress-nginx.controller.config.use-forwarded-headers | string | `"true"` | Enable the `X-Forwarded-For` processing |
 | ingress-nginx.controller.config.use-http2 | string | `"false"` | Disable HTTP/2 to mitigate CVE-2026-123633 and CVE-2026-123007 |
-| ingress-nginx.controller.image.digest | string | `"sha256:6c23471044041335807bcfb0cec22049ceb2d66f1cacf37033a42e3e75ad0f99"` |  |
-| ingress-nginx.controller.image.digestChroot | string | `"sha256:ab9e75bd5aa26b383c4382b27a6957220e060974073c90cd0e1f8ff93bfbbc94"` |  |
+| ingress-nginx.controller.image.digest | string | `"sha256:e026f52ee5ed2b90def28591972e7bbfc64bceb52c2d059d7a5bc36b7c94639c"` |  |
+| ingress-nginx.controller.image.digestChroot | string | `"sha256:943785844831cbe0176215cd880b9855085f7824d77c4f26d2c5b56c5b399494"` |  |
 | ingress-nginx.controller.image.image | string | `"lsst-sqre/ingress-nginx-controller"` |  |
 | ingress-nginx.controller.image.pullPolicy | string | `"IfNotPresent"` |  |
 | ingress-nginx.controller.image.registry | string | `"ghcr.io"` |  |
-| ingress-nginx.controller.image.tag | string | `"v1.15.8-lsstsqre-chainguard"` |  |
+| ingress-nginx.controller.image.tag | string | `"v1.15.15-lsstsqre-chainguard"` |  |
 | ingress-nginx.controller.metrics.enabled | bool | `true` | Enable metrics reporting via Prometheus |
 | ingress-nginx.controller.podLabels | object | See `values.yaml` | Add labels used by `NetworkPolicy` objects to restrict access to the ingress and thus ensure that auth subrequest handlers run |
 | ingress-nginx.controller.resources | object | See `values.yaml` | Resource requests and limits for ingress-nginx controller |
