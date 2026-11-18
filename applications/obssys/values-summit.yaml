@@ -354,9 +354,10 @@ watcher:
     key: squadcast-escalation-key
   resources:
     limits:
-      cpu: 4
+      cpu: 5
+      memory: 6Gi
     requests:
-      cpu: 2
+      cpu: 4
       memory: 5Gi
   nfsMountpoint:
   - name: obs-env
