@@ -27,6 +27,9 @@ producer:
   gcpBucketName: default
   # -- The amount of days to include in the lookback window
   lookbackDays: 7
+# -- If EPO access should be enabled for the backend.
+# -- If true a Gafaelfawr service token for EPO access will be created.
+epoAccessEnabled: false
 # -- List of Kubernetes environment variable specifiers.
 env: []
 # -- List of environment variables that should come from secrets.

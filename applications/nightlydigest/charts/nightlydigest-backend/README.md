@@ -10,6 +10,7 @@ Helm chart for the Nightlydigest FastAPI web server.
 | annotations | object | `{}` | This allows for the specification of pod annotations. |
 | env | list | `[]` | List of Kubernetes environment variable specifiers. |
 | envSecrets | list | `[]` | List of environment variables that should come from secrets. |
+| epoAccessEnabled | bool | `false` | If true a Gafaelfawr service token for EPO access will be created. |
 | gid | int | `73006` | The group ID to run the backend container as. Match runAsGroup in securityContext for mounted volumes. |
 | image.pullPolicy | string | `"IfNotPresent"` | The pull policy on the Nightlydigest backend image. |
 | image.repository | string | `"lsstts/nightlydigest-backend"` | The Nightlydigest backend image to use. |

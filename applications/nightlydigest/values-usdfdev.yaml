@@ -80,6 +80,7 @@ nightlydigest-backend:
     gcpProjectId: snd-dev-42c8
     gcpBucketName: snd-api-dev
     lookbackDays: 7
+  epoAccessEnabled: true
   replicas: 4
   uid: 73006
   gid: 4085

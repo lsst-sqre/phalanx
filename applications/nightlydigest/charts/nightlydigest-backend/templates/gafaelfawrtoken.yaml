@@ -10,3 +10,18 @@ spec:
     - "read:image"
     - "exec:internal-tools"
     - "read:sasquatch"
+{{- if .Values.epoAccessEnabled }}
+---
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: {{ include "nightlydigest-backend.name" . }}-gafaelfawr-epo-token
+  labels:
+    {{- include "nightlydigest-backend.labels" . | nindent 4 }}
+spec:
+  service: "bot-epo-nightlydigest-backend"
+  scopes:
+    - "read:image"
+    - "exec:internal-tools"
+    - "read:sasquatch"
+{{- end }}
