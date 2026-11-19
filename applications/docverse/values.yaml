@@ -451,7 +451,7 @@ cloudsql:
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "100m"
+      cpu: "1"
       memory: "30Mi"
     requests:
       cpu: "5m"
