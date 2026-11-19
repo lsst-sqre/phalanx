@@ -23,6 +23,7 @@ TLS certificate manager
 | cert-manager.webhook.tolerations | list | Tolerate GKE amd64 and arm64 taints | Tolerations for the cert-manager webhook pod |
 | config.createIssuer | bool | `true` | Whether to create a Let's Encrypt DNS-based cluster issuer |
 | config.email | string | sqre-admin | Contact email address registered with Let's Encrypt |
-| config.route53.awsAccessKeyId | string | None, must be set if `createIssuer` is true | AWS access key ID for Route 53 (must match `aws-secret-access-key` in Vault secret referenced by `config.vaultSecretPath`) |
+| config.route53.awsAccessKeyId | string | None, required for static credentials when `createIssuer` is true | AWS access key ID for Route 53 (must match `aws-secret-access-key` in the cert-manager Vault secret); unused when `roleArn` is set |
 | config.route53.hostedZone | string | None, must be set if `createIssuer` is true | Route 53 hosted zone in which to create challenge records |
+| config.route53.roleArn | string | `""` | IAM role ARN for dedicated ServiceAccount authentication. When set, replaces static AWS credentials. Requires an AWS OIDC provider and role trust policy for the cluster and the cert-manager-route53 ServiceAccount. |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
