@@ -106,6 +106,7 @@ Publish versioned docs
 | syncWorker.replicaCount | int | `1` | Number of Keeper-sync worker pods to start |
 | syncWorker.resources | object | See `values.yaml` | Resource limits and requests for the Keeper-sync worker pod |
 | syncWorker.resources.limits.memory | string | `"4Gi"` | Higher than the other workers because keeper-sync buffers whole LTD objects in memory while copying builds, across several concurrent jobs. Measured idle RSS after a 477-project backfill is about 840Mi (roundtable-prod, 2026-09-23). The 2Gi limit was OOM-killed twice (2026-10-30) while importing T&S builds that ship Sphinx `.doctrees/` caches with a 119 MB `environment.pickle` per build. |
+| syncWorker.resources.requests.cpu | string | `"250m"` | The hourly `keeper_sync_tier_other` pass runs at 0.6-0.7 cores for five to six minutes, and the worker averaged 113% of the earlier 75m request (roundtable-prod, 2026-11-18, docverse 1.0.0b17). 250m covers the hourly average with room for the pass to grow; the bursts still run above it, under the limit. |
 | syncWorker.tolerations | list | `[]` | Tolerations for the Keeper-sync worker pod |
 | tolerations | list | `[]` | Tolerations for the docverse deployment pod |
 | workerResources | object | See `values.yaml` | Resource limits and requests for the docverse worker pod |

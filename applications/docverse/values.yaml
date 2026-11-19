@@ -383,7 +383,12 @@ syncWorker:
       # `environment.pickle` per build.
       memory: "4Gi"
     requests:
-      cpu: "75m"
+      # -- The hourly `keeper_sync_tier_other` pass runs at 0.6-0.7 cores
+      # for five to six minutes, and the worker averaged 113% of the
+      # earlier 75m request (roundtable-prod, 2026-11-18, docverse
+      # 1.0.0b17). 250m covers the hourly average with room for the pass
+      # to grow; the bursts still run above it, under the limit.
+      cpu: "250m"
       memory: "512Mi"
 
   # -- Affinity rules for the Keeper-sync worker pod
