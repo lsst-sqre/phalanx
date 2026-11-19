@@ -5,11 +5,12 @@ metadata:
   labels:
     {{- include "consdb.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
+  {{- if not .Values.pq.autoscaling.enabled }}
   replicas: {{ .Values.pq.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
+      component: pq
       {{- include "consdb.selectorLabels" . | nindent 6 }}
   template:
     metadata:
