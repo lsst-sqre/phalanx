@@ -11,7 +11,7 @@ nightlydigest-nginx:
     frontend:
       image:
         repository: ts-dockerhub.lsst.org/nightlydigest-frontend
-        tag: c0045.000
+        tag: c0045.002
         pullPolicy: Always
   staticStore:
     name: nightlydigest-nginx-static
@@ -84,7 +84,7 @@ nightlydigest-backend:
   gid: 4085
   image:
     repository: ts-dockerhub.lsst.org/nightlydigest-backend
-    tag: c0045.000
+    tag: c0045.002
     pullPolicy: Always
   env:
     - name: JIRA_API_HOSTNAME
