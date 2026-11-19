@@ -664,9 +664,6 @@ backup:
 prompt-processing:
   enabled: true
 
-consdb:
-  enabled: true
-
 data-transfer-monitoring:
   enabled: true
 
