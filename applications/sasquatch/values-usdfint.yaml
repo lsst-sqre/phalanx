@@ -191,8 +191,5 @@ backup:
       enabled: true
       retentionDays: 7
 
-consdb:
-  enabled: true
-
 tap:
   enabled: true
