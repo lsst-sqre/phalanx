@@ -123,11 +123,12 @@ spec:
                 Service and database configuration lives in the
                 catalina.properties key of the cadc-tap-config ConfigMap, which
                 the entrypoint appends to Tomcat's catalina.properties so every
-                entry becomes a system property. Only the JVM heap size and the
+                entry becomes a system property. Only JVM flags and the
                 database passwords stay here.
               */}}
               value: >-
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
+                -XX:-UseBASE64Intrinsics
                 -Dtapschemauser.password=$TAP_SCHEMA_PASSWORD
                 {{- if or (eq .Values.uws.type "cloudsql") (eq .Values.uws.type "external") }}
                 -Duws.password=$UWS_DB_PASSWORD
