@@ -1,5 +1,19 @@
+# Temporary: test the GitHub Actions token exchange from the Gafaelfawr
+# t/DM-56862f branch (lsst-sqre/gafaelfawr#1532).
+image:
+  tag: "t-DM-56862f"
+  pullPolicy: "Always"
+
 config:
   slackAlerts: false
+
+  # The branch adds a schema migration for the token exchange.
+  updateSchema: true
+
+  # Allow GitHub Actions workflows to exchange ID tokens for Gafaelfawr
+  # tokens.
+  githubTokenExchange:
+    enabled: true
 
   metrics:
     enabled: true
@@ -15,6 +29,8 @@ config:
     enabled: true
 
   knownScopes:
+    "admin:github-oidc-provision": >-
+      Can provision GitHub Actions token exchange projects from templates
     "exec:docverse": >-
       Can access Docverse's as a user in an organization
     "exec:internal-tools": >-
