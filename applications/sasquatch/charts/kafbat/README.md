@@ -10,7 +10,7 @@ Sasquatch configuration for Kafbat.  Kafbat is a Kafka management UI.
 | cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"ghcr.io/kafbat/kafka-ui"` | kafbat Docker image repository |
-| image.tag | string | `"v1.5.0"` | kafbat image version |
+| image.tag | string | `"v1.5.1"` | kafbat image version |
 | ingress.annotations | object | `{}` | Additional ingress annotations |
 | ingress.enabled | bool | `false` | Whether to enable the ingress |
 | ingress.path | string | `"/kafbat"` | Ingress path |

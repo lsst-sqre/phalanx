@@ -562,7 +562,7 @@ Rubin Observatory's telemetry service
 | kafbat.cluster.name | string | `"sasquatch"` | Name of the Strimzi cluster. Synchronize this with the cluster name in the parent Sasquatch chart. |
 | kafbat.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | kafbat.image.repository | string | `"ghcr.io/kafbat/kafka-ui"` | kafbat Docker image repository |
-| kafbat.image.tag | string | `"v1.5.0"` | kafbat image version |
+| kafbat.image.tag | string | `"v1.5.1"` | kafbat image version |
 | kafbat.ingress.annotations | object | `{}` | Additional ingress annotations |
 | kafbat.ingress.enabled | bool | `false` | Whether to enable the ingress |
 | kafbat.ingress.path | string | `"/kafbat"` | Ingress path |
