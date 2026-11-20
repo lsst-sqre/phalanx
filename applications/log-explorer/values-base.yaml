@@ -12,4 +12,7 @@ config:
 
 image:
   # Pinned per site, so each one moves to a new release on its own.
-  tag: "v0.2.0"
+  # Testing the DM-56855 branch build: revert to a release tag, and drop
+  # Always, before merging. A branch tag is overwritten on every push.
+  tag: "tickets-DM-56855"
+  pullPolicy: "Always"
