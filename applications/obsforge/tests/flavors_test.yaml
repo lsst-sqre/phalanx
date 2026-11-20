@@ -1,0 +1,129 @@
+suite: Deployment flavors
+templates:
+  - configmap.yaml
+  - schema-update-job.yaml
+set:
+  global.host: "example.com"
+tests:
+  - it: Includes API and worker configuration by default
+    template: configmap.yaml
+    asserts:
+      - equal:
+          path: data.OBSFORGE_PATH_PREFIX
+          value: "/obsforge"
+      - equal:
+          path: data.OBSFORGE_ARQ_MODE
+          value: "production"
+      - equal:
+          path: data.OBSFORGE_ARQ_QUEUE_NAME
+          value: "arq:queue"
+      - equal:
+          path: data.OBSFORGE_BUTLER_LABEL
+          value: "prompt"
+
+  - it: Includes only API runtime configuration for API-only deployments
+    template: configmap.yaml
+    set:
+      worker.enabled: false
+    asserts:
+      - equal:
+          path: data.OBSFORGE_PATH_PREFIX
+          value: "/obsforge"
+      - equal:
+          path: data.OBSFORGE_ARQ_MODE
+          value: "production"
+      - equal:
+          path: data.OBSFORGE_ARQ_QUEUE_NAME
+          value: "arq:queue"
+      - isNull:
+          path: data.OBSFORGE_BUTLER_REPOSITORY
+      - isNull:
+          path: data.OBSFORGE_OBSCORE_CONFIG
+      - isNull:
+          path: data.REPERTOIRE_BASE_URL
+
+  - it: Includes only worker runtime configuration for worker-only deployments
+    template: configmap.yaml
+    set:
+      api.enabled: false
+    asserts:
+      - equal:
+          path: data.OBSFORGE_ARQ_QUEUE_NAME
+          value: "arq:queue"
+      - equal:
+          path: data.OBSFORGE_BUTLER_LABEL
+          value: "prompt"
+      - equal:
+          path: data.OBSFORGE_ENRICHMENT_MAX_TRIES
+          value: "5"
+      - isNull:
+          path: data.OBSFORGE_ARQ_MODE
+      - isNull:
+          path: data.OBSFORGE_PATH_PREFIX
+
+  - it: Includes only common and stream configuration for stream-only deployments
+    template: configmap.yaml
+    set:
+      api.enabled: false
+      worker.enabled: false
+      redis.enabled: false
+      config:
+        kafkaBrokerAddress: "kafka.example.com:9094"
+        kafkaUsername: "obsforge"
+        schemaRegistryUrl: "https://example.com/schema-registry"
+      streamWorkers.enabled: true
+    asserts:
+      - equal:
+          path: data.OBSFORGE_DATABASE_URL
+          value: null
+      - equal:
+          path: data.OBSFORGE_KAFKA_BROKER_ADDRESS
+          value: "kafka.example.com:9094"
+      - equal:
+          path: data.OBSFORGE_SCHEMA_REGISTRY_URL
+          value: "https://example.com/schema-registry"
+      - isNull:
+          path: data.OBSFORGE_ARQ_QUEUE_URL
+      - isNull:
+          path: data.OBSFORGE_BUTLER_REPOSITORY
+      - isNull:
+          path: data.OBSFORGE_PATH_PREFIX
+
+  - it: Gives the schema-only job only the database secret
+    template: schema-update-job.yaml
+    set:
+      api.enabled: false
+      worker.enabled: false
+      redis.enabled: false
+      config.updateSchema: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env
+          value:
+            - name: "OBSFORGE_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "obsforge"
+                  key: "database-password"
+      - isNull:
+          path: spec.template.metadata.labels["obsforge-redis-client"]
+
+  - it: Rejects API deployments without Redis
+    template: configmap.yaml
+    set:
+      redis.enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            redis.enabled must be true when api.enabled or worker.enabled is
+            true
+  - it: Rejects worker deployments without Redis
+    template: configmap.yaml
+    set:
+      api.enabled: false
+      redis.enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            redis.enabled must be true when api.enabled or worker.enabled is
+            true

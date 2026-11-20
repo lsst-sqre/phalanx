@@ -31,3 +31,10 @@ spec:
         operations:
           - Read
           - Describe
+          - DescribeConfigs
+      - resource:
+          type: cluster
+        type: allow
+        host: "*"
+        operations:
+          - IdempotentWrite
