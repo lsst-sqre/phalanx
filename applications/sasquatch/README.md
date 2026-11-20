@@ -596,7 +596,7 @@ Rubin Observatory's telemetry service
 | kafdrop.ingress.enabled | bool | `false` | Whether to enable the ingress |
 | kafdrop.ingress.path | string | `"/kafdrop"` | Ingress path |
 | kafdrop.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
-| kafdrop.jvm.opts | string | `""` | JVM options |
+| kafdrop.jvm.opts | string | `"-XX:-UseBASE64Intrinsics"` | JVM options |
 | kafdrop.kafka.broker | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Bootstrap list of Kafka host/port pairs |
 | kafdrop.kafka.topicPrefixes | list | ["lsst"] | Kafka topic prefixes to filter topics by |
 | kafdrop.kafka.user | string | kafdrop | Kafdrop Kafka user |
@@ -627,7 +627,7 @@ Rubin Observatory's telemetry service
 | kafdrop-remote.ingress.enabled | bool | `false` | Whether to enable the ingress |
 | kafdrop-remote.ingress.path | string | `"/kafdrop"` | Ingress path |
 | kafdrop-remote.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
-| kafdrop-remote.jvm.opts | string | `""` | JVM options |
+| kafdrop-remote.jvm.opts | string | `"-XX:-UseBASE64Intrinsics"` | JVM options |
 | kafdrop-remote.kafka.broker | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Bootstrap list of Kafka host/port pairs |
 | kafdrop-remote.kafka.topicPrefixes | list | ["lsst"] | Kafka topic prefixes to filter topics by |
 | kafdrop-remote.kafka.user | string | kafdrop | Kafdrop Kafka user |

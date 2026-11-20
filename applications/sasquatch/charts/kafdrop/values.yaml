@@ -33,7 +33,7 @@ kafka:
 
 jvm:
   # -- JVM options
-  opts: ""
+  opts: "-XX:-UseBASE64Intrinsics"
 
 # -- The hostname to report for the RMI registry (used for JMX)
 host: localhost
