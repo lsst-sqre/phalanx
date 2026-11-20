@@ -23,7 +23,7 @@ A subchart to deploy the Kafdrop UI.
 | ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
 | ingress.path | string | `"/kafdrop"` | Ingress path |
 | jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
-| jvm.opts | string | `""` | JVM options |
+| jvm.opts | string | `"-XX:-UseBASE64Intrinsics"` | JVM options |
 | kafdrop.broker | string | `"prompt-kafka-kafka-bootstrap:9092"` | Kafka service with port. |
 | kafka.broker | string | `""` | Bootstrap list of Kafka host/port pairs |
 | nodeSelector | object | `{}` | Node selector configuration |

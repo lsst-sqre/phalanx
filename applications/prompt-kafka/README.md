@@ -34,7 +34,7 @@ Kafka environment for Prompt Processing
 | kafdrop.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
 | kafdrop.ingress.path | string | `"/kafdrop"` | Ingress path |
 | kafdrop.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
-| kafdrop.jvm.opts | string | `""` | JVM options |
+| kafdrop.jvm.opts | string | `"-XX:-UseBASE64Intrinsics"` | JVM options |
 | kafdrop.kafdrop.broker | string | `"prompt-kafka-kafka-bootstrap:9092"` | Kafka service with port. |
 | kafdrop.kafka.broker | string | `""` | Bootstrap list of Kafka host/port pairs |
 | kafdrop.nodeSelector | object | `{}` | Node selector configuration |

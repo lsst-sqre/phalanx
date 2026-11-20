@@ -22,7 +22,7 @@ A subchart to deploy the Kafdrop UI for Sasquatch.
 | ingress.enabled | bool | `false` | Whether to enable the ingress |
 | ingress.path | string | `"/kafdrop"` | Ingress path |
 | jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
-| jvm.opts | string | `""` | JVM options |
+| jvm.opts | string | `"-XX:-UseBASE64Intrinsics"` | JVM options |
 | kafka.broker | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Bootstrap list of Kafka host/port pairs |
 | kafka.topicPrefixes | list | ["lsst"] | Kafka topic prefixes to filter topics by |
 | kafka.user | string | kafdrop | Kafdrop Kafka user |
