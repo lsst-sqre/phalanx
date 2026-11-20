@@ -16,6 +16,8 @@ hinfo:
 pq:
   image:
     tag: "26.11.2"
+  autoscaling:
+    enabled: true
 
 resources:
   requests:
