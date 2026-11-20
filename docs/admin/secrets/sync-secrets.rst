@@ -45,6 +45,14 @@ To populate Vault with all of the necessary secrets for an environment named ``<
 Only secrets for the named environment will be affected.
 No changes will be made outside of the configured secrets path for that environment.
 
+To sync only one application, add ``--application <application>``.
+This option cannot be combined with ``--exclude``.
+For example, ``phalanx secrets sync <environment> --application gafaelfawr`` updates only Gafaelfawr's secrets.
+Secrets copied from other applications are still resolved and updated in the selected application, but other applications are left unchanged.
+When combined with ``--delete`` or ``--regenerate``, only the selected application's secrets are deleted or regenerated.
+
+The same option is available for listing required secrets: ``phalanx secrets list <environment> --application gafaelfawr``.
+
 Deleting secrets
 ================
 

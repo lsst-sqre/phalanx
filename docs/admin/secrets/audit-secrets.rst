@@ -28,3 +28,8 @@ To check that all of the necessary secrets for an environment named ``<environme
 
 The output of the command will be a report of any inconsistencies or problems found in the Vault secrets for this environment.
 No output indicates no problems.
+
+To audit only one application, add ``--application <application>``.
+This option cannot be combined with ``--exclude``.
+For example, ``phalanx secrets audit <environment> --application gafaelfawr`` audits only Gafaelfawr's secrets.
+Secrets copied from other applications are still resolved, but only problems with the selected application's secrets are reported.
