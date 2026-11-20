@@ -35,6 +35,8 @@ prompt-keda:
       preprocessing: ""
     # -- Skymap to use with the instrument
     skymap: lsst_cells_v2
+    # -- The collection in the central repo to load templates from.
+    templateCollection: Prompt/templates
     # -- Number of arcseconds to pad the spatial region in preloading.
     preloadPadding: 50
     # -- URI to the shared repo used for pipeline inputs and outputs.

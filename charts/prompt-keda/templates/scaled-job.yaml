@@ -42,6 +42,8 @@ spec:
                   {{- .Values.instrument.pipelines.main | nindent 18 }}
               - name: SKYMAP
                 value: {{ .Values.instrument.skymap }}
+              - name: TEMPLATE_COLLECTION
+                value: {{ .Values.instrument.templateCollection }}
               - name: MESSAGE_EXPIRATION
                 value: {{ .Values.keda.redisStreams.expiration | toString | quote }}
               - name: PRELOAD_PADDING
