@@ -1,4 +1,8 @@
 # USDF Prod config
+config:
+  efdName: "usdf_efd"
+  repertoireBaseUrl: "https://usdf-rsp.slac.stanford.edu/repertoire"
+
 ingress:
   auth:
     enabled: false
