@@ -42,6 +42,16 @@ pq:
     repository: "ghcr.io/lsst-dm/consdb-pq"
     # -- Overrides the image tag whose default is the chart appVersion.
     tag: ""
+  autoscaling:
+    # -- Enable horizontal autoscaling of the consdb-pq deployment based on
+    # CPU utilization. Requires `resources.requests.cpu` to be set.
+    enabled: false
+    # -- Minimum number of consdb-pq pods
+    minReplicas: 2
+    # -- Maximum number of consdb-pq pods
+    maxReplicas: 10
+    # -- Target average CPU utilization (percent of request) of consdb-pq pods
+    targetCPUUtilizationPercentage: 80
 
 kafka:
   # -- Kafka bootstrap server
@@ -71,20 +81,6 @@ lfa:
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
-
-autoscaling:
-  # -- Enable autoscaling of consdb deployment
-  enabled: false
-
-  # -- Minimum number of consdb deployment pods
-  minReplicas: 1
-
-  # -- Maximum number of consdb deployment pods
-  maxReplicas: 10
-
-  # -- Target CPU utilization of consdb deployment pods
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 # -- Annotations for the consdb deployment pod
 podAnnotations: {}

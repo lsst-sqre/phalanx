@@ -7,9 +7,7 @@ metadata:
   labels:
     {{- include "consdb.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.hinfo.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "consdb.selectorLabels" . | nindent 6 }}
@@ -115,9 +113,7 @@ metadata:
   labels:
     {{- include "consdb.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.hinfo.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "consdb.selectorLabels" . | nindent 6 }}
@@ -223,9 +219,7 @@ metadata:
   labels:
     {{- include "consdb.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.hinfo.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "consdb.selectorLabels" . | nindent 6 }}
