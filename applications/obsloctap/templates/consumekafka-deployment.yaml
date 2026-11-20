@@ -33,20 +33,11 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
             - name: "database"
-              valueFrom:
-                secretKeyRef:
-                  name: obsloctap
-                  key: "database"
+              value: {{ .Values.config.database_name | quote }}
             - name: "database_user"
-              valueFrom:
-                secretKeyRef:
-                  name: obsloctap
-                  key: "username"
+              value: {{ .Values.config.database_username | quote }}
             - name: "database_url"
-              valueFrom:
-                secretKeyRef:
-                  name: obsloctap
-                  key: "url"
+              value: {{ .Values.config.database_url | quote }}
             - name: "database_password"
               valueFrom:
                 secretKeyRef:
@@ -90,20 +81,11 @@ spec:
             - name: "MPLCONFIGDIR"
               value: "/tmp/.config/matplotlib"
             - name: "consdb_database"
-              valueFrom:
-                secretKeyRef:
-                  name: obsloctap
-                  key: "consdb-database"
+              value: {{ .Values.config.consdb_database | quote }}
             - name: "consdb_username"
-              valueFrom:
-                secretKeyRef:
-                  name: obsloctap
-                  key: "consdb-username"
+              value: {{ .Values.config.consdb_username | quote }}
             - name: "consdb_url"
-              valueFrom:
-                secretKeyRef:
-                  name: obsloctap
-                  key: "consdb-url"
+              value: {{ .Values.config.consdb_url | quote }}
             - name: "consdb_password"
               valueFrom:
                 secretKeyRef:

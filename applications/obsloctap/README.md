@@ -10,6 +10,12 @@ Publish observing schedule
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| config.consdb_database | string | `""` | PostgreSQL database name for the consdb database |
+| config.consdb_url | string | `""` | PostgreSQL connection server:port for the consdb database |
+| config.consdb_username | string | `""` | PostgreSQL user name for the consdb database |
+| config.database_name | string | `""` | PostgreSQL database name for the Butler database |
+| config.database_url | string | `""` | PostgreSQL connection server:port for the Butler database |
+| config.database_username | string | `""` | PostgreSQL user name for the Butler database |
 | config.obsplanLimit | int | `1000` | limit for obsplan query |
 | config.obsplanTimeSpan | int | `24` | time span, if a time is provided in the query how man hours to look back |
 | config.persistentVolumeClaims | list | `[]` | PersistentVolumeClaims to create. |

@@ -3,6 +3,12 @@ environment:
 config:
   database_schema: "obsloctap_dev"
   separateSecrets: false
+  database_url: "usdf-butler-main-db-tx.sdf.slac.stanford.edu:5432"
+  database_name: "lsstdb1"
+  database_username: "obsloctap"
+  consdb_url: "usdf-summitdb-logical-replica-svc.sdf.slac.stanford.edu:5432"
+  consdb_database: "obsloctap"
+  consdb_username: "usdf"
 
 image:
   pullPolicy: Always
