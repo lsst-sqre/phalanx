@@ -10,6 +10,7 @@ import yaml
 from git.repo import Repo
 from git.util import Actor
 
+from phalanx.constants import KUBECONFORM_KUBERNETES_VERSION
 from phalanx.exceptions import CommandFailedError
 from phalanx.factory import Factory
 from phalanx.models.applications import Project
@@ -23,12 +24,29 @@ KUBE_LINTER_ARGS = ("lint", "--config", ANY, "-")
 """Expected arguments of each kube-linter invocation."""
 
 
+KUBECONFORM_ARGS = (
+    "-ignore-missing-schemas",
+    "-kubernetes-version",
+    ANY,
+    "-cache",
+    ANY,
+    "-",
+)
+"""Expected arguments of a kubeconform invocation with no custom resources."""
+
+
 def expect_kube_linter(mock_kube_linter: MockCommand, count: int) -> None:
     """Expect a given number of passing kube-linter runs."""
     for _ in range(count):
         mock_kube_linter.expect_capture(
             args=KUBE_LINTER_ARGS, response="No lint errors found!\n"
         )
+
+
+def expect_kubeconform(mock_kubeconform: MockCommand, count: int) -> None:
+    """Expect a given number of passing kubeconform runs."""
+    for _ in range(count):
+        mock_kubeconform.expect_capture(args=KUBECONFORM_ARGS, response="")
 
 
 @pytest.fixture
@@ -261,6 +279,7 @@ def test_lint(
     data: PhalanxData,
     mock_helm: MockHelmCommand,
     mock_kube_linter: MockCommand,
+    mock_kubeconform: MockCommand,
 ) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
@@ -282,9 +301,11 @@ def test_lint(
 
     # Lint a single application that will succeed, and check that the icon
     # line is filtered out of the output. The chart is then expanded and the
-    # result fed to kube-linter, which adds no output when it passes.
+    # result fed to kube-linter and kubeconform, which add no output when
+    # they pass.
     mock_helm.set_capture_callback(callback)
     expect_kube_linter(mock_kube_linter, 1)
+    expect_kubeconform(mock_kubeconform, 1)
     result = run_cli("application", "lint", "gafaelfawr", "-e", "idfdev")
     expected = "==> Linting gafaelfawr (environment idfdev)\n"
     assert result.output == expected
@@ -295,13 +316,18 @@ def test_lint(
     assert mock_kube_linter.mock.capture.call_args_list == [
         call(*KUBE_LINTER_ARGS, stdin="this is some template\n")
     ]
+    assert mock_kubeconform.mock.capture.call_args_list == [
+        call(*KUBECONFORM_ARGS, stdin="this is some template\n")
+    ]
 
     # Lint both gafaelfawr and portal for all configured environmments. We
     # won't bother to check the --set flag again. The important part is that
     # we call helm lint twice, but all of the setup is only called once.
     mock_helm.reset_mock()
     mock_kube_linter.mock.capture.reset_mock()
+    mock_kubeconform.mock.capture.reset_mock()
     expect_kube_linter(mock_kube_linter, 3)
+    expect_kubeconform(mock_kubeconform, 3)
     result = run_cli("application", "lint", "gafaelfawr", "portal")
     expected += (
         "==> Linting gafaelfawr (environment minikube)\n"
@@ -321,7 +347,7 @@ def test_lint(
             stderr="Some error\n",
         )
 
-    # kube-linter is not run when helm lint fails.
+    # Neither kube-linter nor kubeconform is run when helm lint fails.
     mock_helm.reset_mock()
     mock_helm.set_capture_callback(callback_error)
     result = run_cli("application", "lint", "gafaelfawr", "--env", "idfdev")
@@ -331,10 +357,13 @@ def test_lint(
     )
     assert result.exit_code == 1
     assert mock_kube_linter.mock.capture.call_count == 3
+    assert mock_kubeconform.mock.capture.call_count == 3
 
 
 def test_lint_kube_linter_error(
-    mock_helm: MockHelmCommand, mock_kube_linter: MockCommand
+    mock_helm: MockHelmCommand,
+    mock_kube_linter: MockCommand,
+    mock_kubeconform: MockCommand,
 ) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
@@ -347,7 +376,9 @@ def test_lint_kube_linter_error(
         )
 
     # A failing kube-linter check reports its output and fails the lint.
+    # kubeconform is still run so that all problems are reported at once.
     mock_helm.set_capture_callback(callback)
+    expect_kubeconform(mock_kubeconform, 1)
     failed_args = ("lint", "--config", ".kube-linter.yaml", "-")
     exc = subprocess.CalledProcessError(
         returncode=1,
@@ -368,12 +399,134 @@ def test_lint_kube_linter_error(
         " kube-linter errors\n"
     )
     assert result.exit_code == 1
+    assert mock_kubeconform.mock.capture.call_count == 1
+
+
+def test_lint_kubeconform_error(
+    mock_helm: MockHelmCommand,
+    mock_kube_linter: MockCommand,
+    mock_kubeconform: MockCommand,
+) -> None:
+    def callback(*command: str) -> subprocess.CompletedProcess:
+        output = None
+        if command[0] == "lint":
+            output = "==> Linting .\n\n1 chart(s) linted, 0 chart(s) failed\n"
+        elif command[0] == "template":
+            output = "this is some template\n"
+        return subprocess.CompletedProcess(
+            returncode=0, args=command, stdout=output, stderr=None
+        )
+
+    # A failing kubeconform check reports its output and fails the lint.
+    mock_helm.set_capture_callback(callback)
+    expect_kube_linter(mock_kube_linter, 1)
+    failed_args = ("-ignore-missing-schemas", "-")
+    message = (
+        "stdin - Deployment gafaelfawr is invalid: problem validating schema."
+        " - at '/spec/template/spec/containers/0/env/0/value': got boolean,"
+        " want null or string\n"
+    )
+    exc = subprocess.CalledProcessError(
+        returncode=1,
+        cmd=["kubeconform", *failed_args],
+        output=message,
+        stderr="",
+    )
+    mock_kubeconform.expect_capture(
+        args=KUBECONFORM_ARGS,
+        response=CommandFailedError("kubeconform", failed_args, exc),
+    )
+    result = run_cli("application", "lint", "gafaelfawr", "-e", "idfdev")
+    assert result.output == (
+        "==> Linting gafaelfawr (environment idfdev)\n"
+        f"{message}"
+        "Error: Application gafaelfawr in environment idfdev has"
+        " kubeconform errors\n"
+    )
+    assert result.exit_code == 1
+
+
+def test_lint_kubeconform_custom_resources(
+    tmp_path: Path,
+    mock_helm: MockHelmCommand,
+    mock_kube_linter: MockCommand,
+    mock_kubeconform: MockCommand,
+) -> None:
+    template = (
+        "---\n"
+        "# Source: gafaelfawr/templates/disabled.yaml\n"
+        "# A comment outside a conditional that is false.\n"
+        "---\n"
+        "apiVersion: v1\n"
+        "kind: ConfigMap\n"
+        "metadata:\n"
+        "  name: gafaelfawr\n"
+        "---\n"
+        "apiVersion: networking.k8s.io/v1\n"
+        "kind: NetworkPolicy\n"
+        "metadata:\n"
+        "  name: gafaelfawr\n"
+        "---\n"
+        "apiVersion: ricoberger.de/v1alpha1\n"
+        "kind: VaultSecret\n"
+        "metadata:\n"
+        "  name: gafaelfawr\n"
+        "---\n"
+        "apiVersion: gafaelfawr.lsst.io/v1alpha1\n"
+        "kind: GafaelfawrIngress\n"
+        "metadata:\n"
+        "  name: gafaelfawr\n"
+        "---\n"
+        "apiVersion: ricoberger.de/v1alpha1\n"
+        "kind: VaultSecret\n"
+        "metadata:\n"
+        "  name: gafaelfawr-other\n"
+    )
+
+    def callback(*command: str) -> subprocess.CompletedProcess:
+        output = None
+        if command[0] == "lint":
+            output = "==> Linting .\n\n1 chart(s) linted, 0 chart(s) failed\n"
+        elif command[0] == "template":
+            output = template
+        return subprocess.CompletedProcess(
+            returncode=0, args=command, stdout=output, stderr=None
+        )
+
+    # Custom resources, and only custom resources, are skipped, each type
+    # listed once. The schema cache is created under XDG_CACHE_HOME, which
+    # the fixture points at the temporary directory.
+    mock_helm.set_capture_callback(callback)
+    expect_kube_linter(mock_kube_linter, 1)
+    cache_path = tmp_path / "cache" / "phalanx" / "kubeconform"
+    args = (
+        "-ignore-missing-schemas",
+        "-kubernetes-version",
+        KUBECONFORM_KUBERNETES_VERSION,
+        "-cache",
+        str(cache_path),
+        "-skip",
+        (
+            "gafaelfawr.lsst.io/v1alpha1/GafaelfawrIngress,"
+            "ricoberger.de/v1alpha1/VaultSecret"
+        ),
+        "-",
+    )
+    mock_kubeconform.expect_capture(args=args, response="")
+    result = run_cli("application", "lint", "gafaelfawr", "-e", "idfdev")
+    assert result.output == "==> Linting gafaelfawr (environment idfdev)\n"
+    assert result.exit_code == 0
+    assert mock_kubeconform.mock.capture.call_args_list == [
+        call(*args, stdin=template)
+    ]
+    assert cache_path.is_dir()
 
 
 def test_lint_no_repos(
     data: PhalanxData,
     mock_helm: MockHelmCommand,
     mock_kube_linter: MockCommand,
+    mock_kubeconform: MockCommand,
 ) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
@@ -390,6 +543,7 @@ def test_lint_no_repos(
     # we don't try to run repo update, which may fail.
     mock_helm.set_capture_callback(callback)
     expect_kube_linter(mock_kube_linter, 1)
+    expect_kubeconform(mock_kubeconform, 1)
     result = run_cli("application", "lint", "postgres", "-e", "idfdev")
     expected = "==> Linting postgres (environment idfdev)\n"
     assert result.output == expected
@@ -403,8 +557,10 @@ def test_lint_all(
     data: PhalanxData,
     mock_helm: MockHelmCommand,
     mock_kube_linter: MockCommand,
+    mock_kubeconform: MockCommand,
 ) -> None:
     expect_kube_linter(mock_kube_linter, 9)
+    expect_kubeconform(mock_kubeconform, 9)
     result = run_cli("application", "lint-all")
     assert result.output == ""
     assert result.exit_code == 0
@@ -416,6 +572,7 @@ def test_lint_all_git(
     tmp_path: Path,
     mock_helm: MockHelmCommand,
     mock_kube_linter: MockCommand,
+    mock_kubeconform: MockCommand,
 ) -> None:
     upstream_path = tmp_path / "upstream"
     shutil.copytree(str(data.path("input")), str(upstream_path))
@@ -450,6 +607,7 @@ def test_lint_all_git(
     # Okay, now we can run the lint and check the helm commands that were run
     # against the expected output.
     expect_kube_linter(mock_kube_linter, 4)
+    expect_kubeconform(mock_kubeconform, 4)
     result = run_cli(
         "application",
         "lint-all",

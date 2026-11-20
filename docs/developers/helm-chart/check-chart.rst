@@ -25,6 +25,12 @@ For example, two environment variables with the same name in one container is va
 To catch problems like this, :command:`phalanx application lint` also expands the chart with :command:`helm template` for each environment and checks the resulting Kubernetes resources with kube-linter_, which must therefore be installed (see :ref:`about-kube-linter`).
 The checks that are run are listed in :file:`.kube-linter.yaml` at the top level of the Phalanx repository.
 
+The rendered resources are also validated against the Kubernetes API schemas with kubeconform_, which must also be installed (see :ref:`about-kubeconform`).
+This catches values of the wrong type and missing required fields, which Kubernetes rejects when Argo CD syncs the resource.
+The most common example is an unquoted ``true`` or number as the ``value`` of an environment variable.
+Kubernetes requires environment variable values to be strings, so quote them (``value: "true"``) in the values file or with ``| quote`` in the template.
+Custom resources, such as ``VaultSecret`` and ``GafaelfawrIngress``, are not validated, since kubeconform does not have their schemas.
+
 GitHub Actions runs this lint check for every application and environment, not only the ones changed by a PR, so a PR cannot be merged while any chart in the repository fails it.
 
 You can also ask for the fully-expanded Kubernetes resources that would be installed in the cluster when the chart is installed.

@@ -1,8 +1,12 @@
 """Factory for Phalanx support code components."""
 
+import os
 from pathlib import Path
 
-from .constants import GOOGLE_CLOUD_RUN_ID_LABEL
+from .constants import (
+    GOOGLE_CLOUD_RUN_ID_LABEL,
+    KUBECONFORM_KUBERNETES_VERSION,
+)
 from .models.vault import VaultCredentials
 from .services.application import ApplicationService
 from .services.cluster import GKEPhalanxClusterService
@@ -17,6 +21,7 @@ from .storage.config import ConfigStorage
 from .storage.google_cloud_api import GoogleCloudAPIStorage
 from .storage.helm import HelmStorage
 from .storage.kube_linter import KubeLinterStorage
+from .storage.kubeconform import KubeconformStorage
 from .storage.kubernetes import KubernetesStorage
 from .storage.onepassword import OnepasswordStorage
 from .storage.vault import VaultStorage
@@ -49,8 +54,16 @@ class Factory:
         kube_linter_storage = KubeLinterStorage(
             config_storage.get_kube_linter_config_path()
         )
+        kubeconform_storage = KubeconformStorage(
+            self._get_cache_path() / "kubeconform",
+            KUBECONFORM_KUBERNETES_VERSION,
+        )
         return ApplicationService(
-            self._path, config_storage, helm_storage, kube_linter_storage
+            self._path,
+            config_storage,
+            helm_storage,
+            kube_linter_storage,
+            kubeconform_storage,
         )
 
     def create_config_storage(self) -> ConfigStorage:
@@ -261,3 +274,15 @@ class Factory:
         config_storage = self.create_config_storage()
         vault_storage = VaultStorage()
         return VaultService(config_storage, vault_storage)
+
+    def _get_cache_path(self) -> Path:
+        """Determine the directory for files Phalanx caches between runs.
+
+        Returns
+        -------
+        pathlib.Path
+            The :file:`phalanx` directory under ``XDG_CACHE_HOME``, or under
+            :file:`~/.cache` if that is not set.
+        """
+        cache_home = os.getenv("XDG_CACHE_HOME") or Path.home() / ".cache"
+        return Path(cache_home) / "phalanx"
