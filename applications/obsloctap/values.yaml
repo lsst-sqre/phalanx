@@ -62,6 +62,24 @@ config:
   # -- time span, if a time is provided in the query how man hours to look back
   obsplanTimeSpan: 24
 
+  # -- PostgreSQL connection server:port for the Butler database
+  database_url: ""
+
+  # -- PostgreSQL database name for the Butler database
+  database_name: ""
+
+  # -- PostgreSQL user name for the Butler database
+  database_username: ""
+
+  # -- PostgreSQL connection server:port for the consdb database
+  consdb_url: ""
+
+  # -- PostgreSQL database name for the consdb database
+  consdb_database: ""
+
+  # -- PostgreSQL user name for the consdb database
+  consdb_username: ""
+
 
 kafka:
   # -- Kafka bootstrap server
