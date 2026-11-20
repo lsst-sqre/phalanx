@@ -25,7 +25,7 @@ Kafka Cluster to receive S3 File Notifications
 | kafdrop.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
 | kafdrop.ingress.path | string | `"/kafdrop-s3"` | Ingress path |
 | kafdrop.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
-| kafdrop.jvm.opts | string | `""` | JVM options |
+| kafdrop.jvm.opts | string | `"-XX:-UseBASE64Intrinsics"` | JVM options |
 | kafdrop.kafdrop.broker | string | `"s3-file-notifications-kafka-external-bootstrap:9094"` | Kafka service with port. |
 | kafdrop.kafka.broker | string | `""` | Bootstrap list of Kafka host/port pairs |
 | kafdrop.nodeSelector | object | `{}` | Node selector configuration |
