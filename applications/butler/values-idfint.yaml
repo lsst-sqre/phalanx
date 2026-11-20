@@ -4,7 +4,7 @@ config:
   dp02PostgresUri: postgresql://butler@alloydb-dp.rsp-sql-int.internal:5432/dp02
   dp1PostgresUri: postgresql://butler@alloydb-dp.rsp-sql-int.internal:5432/dp1
   dp2PostgresUri: postgresql://butler@alloydb-dp.rsp-sql-int.internal:5432/dp2
-  dp2PostgresSchema: dp2_dm_56064
+  dp2PostgresSchema: dp2_dm_56064_usdf_only
   promptPostgresUri: postgresql://butler@alloydb-butler-prompt.rsp-sql-int.internal:5432/prompt
   promptDatastoreRoot: "s3://slac@rubin-prompt/"
   promptDatastoreRaw: "s3://slac@rubin-lsstcam-raw/"
