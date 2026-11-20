@@ -152,6 +152,17 @@ controller:
             resources:
               requests:
                 storage: "1Gi"
+        # Node-local ZFS scratch. RWO + lab pod fsGroup (Nublado) make the
+        # volume writable without a privileged init; keep NFS /scratch too.
+        - name: "lscratch"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "zfs-lscratch-storage"
+            accessModes:
+              - "ReadWriteOnce"
+            resources:
+              requests:
+                storage: "10Gi"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "sdf-home"
@@ -164,6 +175,8 @@ controller:
           volumeName: "sdf-data-rubin"
         - containerPath: "/scratch"
           volumeName: "sdf-scratch"
+        - containerPath: "/lscratch"
+          volumeName: "lscratch"
 
 proxy:
   ingress:
