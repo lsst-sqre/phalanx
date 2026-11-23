@@ -1,6 +1,7 @@
 image:
 
-  tag: main
+  # -- Image tag for the Docker image to use
+  tag: tickets-DM-56864
 
 config:
 
