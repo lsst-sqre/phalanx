@@ -1,3 +1,6 @@
+image:
+  tag: "tickets-DM-56905-ingest-404"
+  pullPolicy: "Always"
 config:
   databaseUrl: "postgresql://ook@localhost/ook"
   algolia:
