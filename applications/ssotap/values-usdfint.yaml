@@ -20,3 +20,5 @@ cadc-tap:
     gcsBucketUrl: "https://s3dfrgw.slac.stanford.edu"
     gcsBucketType: "S3"
     googleCredentialsEnabled: false
+    pg:
+      username: "ssotap_int"
