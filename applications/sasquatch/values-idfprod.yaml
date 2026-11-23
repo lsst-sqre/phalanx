@@ -98,6 +98,7 @@ chronograf:
 app-metrics:
   enabled: true
   apps:
+    - bigquerykafka
     - datalinker
     - gafaelfawr
     - herald
@@ -127,4 +128,7 @@ backup:
       retentionDays: 3
 
 tap:
+  enabled: true
+
+ppdbtap:
   enabled: true
