@@ -637,6 +637,7 @@ config:
         databasePasswordKey: "obsforgetap-database-password"
       ppdbtap:
         enabled: false
+        schemaVersion: "w.2026.48"
         schemas:
           - "ppdb"
         databaseUrl: "postgresql://ppdbtap@127.0.0.1:5432/ppdbtap"
