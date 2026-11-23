@@ -29,9 +29,83 @@ config:
         databaseUrl: "postgresql://tap_schema_admin_tap@rsp-db-rw.postgres-db:5432/tap"
         databasePasswordKey: "tap-schema-admin-password"
   influxdbDatabases:
+    usdf_efd:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "efd"
+      description: >-
+        Engineering and Facility Database at the USDF production environment (replicated from the Summit).
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "https://usdf-rsp.slac.stanford.edu/schema-registry-remote/"
+    usdf_prompt:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.prompt"
+      description: >-
+        Prompt Processing pipeline metrics at the USDF production environment.
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "https://usdf-rsp.slac.stanford.edu/schema-registry/"
+    usdf_dm:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.dm"
+      description: >-
+        DRP pipeline metrics at the USDF production environment.
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "https://usdf-rsp.slac.stanford.edu/schema-registry/"
+    usdf_verify:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.verify"
+      description: >-
+        CI pipeline metrics at the USDF production environment.
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "https://usdf-rsp.slac.stanford.edu/schema-registry/"
+    usdf_cp:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.cp"
+      description: >-
+        Calibration pipeline metrics at the USDF production environment (replicated from the Summit).
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "https://usdf-rsp.slac.stanford.edu/schema-registry-remote/"
+    usdf_obsenv:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.obsenv"
+      description: >-
+        Observatory Software Environment database at the USDF production environment (replicated from the Summit).
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "https://usdf-rsp.slac.stanford.edu/schema-registry-remote/"
+    usdf_scimma:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.scimma"
+      description: >-
+        Alert database for target-of-opportunity observations at the USDF production environment (replicated from the Summit).
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "https://usdf-rsp.slac.stanford.edu/schema-registry-remote/"
+    usdf_mtcamera:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.MTCamera"
+      description: >-
+        LSST Camera telemetry database at the USDF production environment (replicated from the Summit).
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "https://usdf-rsp.slac.stanford.edu/schema-registry-remote/"
+    usdf_atcamera:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.ATCamera"
+      description: >-
+        AuxTel Camera telemetry database at the USDF production environment (replicated from the Summit).
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "https://usdf-rsp.slac.stanford.edu/schema-registry-remote/"
     usdfdev_efd:
       url: "https://usdf-rsp-dev.slac.stanford.edu/influxdb/"
       database: "efd"
+      description: >-
+        Engineering and Facility Database at the USDF development environment. It contains a subset of the telemetry replicated from the Summit and is used for development purposes.
       username: "sasquatch"
       passwordKey: "usdfdev_efd-password"
       schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
