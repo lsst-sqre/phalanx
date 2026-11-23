@@ -10,10 +10,6 @@ cadc-tap:
         jobStatus: "lsst.ppdbtap.job-status"
         jobDelete: "lsst.ppdbtap.job-delete"
 
-    urlRewrite:
-      enabled: true
-      rules: "ivoa.ObsCore:access_url"
-
     gcsUploadBucket: "rubin-tap-uploads-dev-us"
     gcsUploadWorkloadIdentity: true
 
