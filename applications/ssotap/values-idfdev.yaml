@@ -9,6 +9,8 @@ cadc-tap:
 
   config:
     jvmMaxHeapSize: 7G
+    pg:
+      username: "ssotap_idfdev"
 
   cloudsql:
     enabled: true
