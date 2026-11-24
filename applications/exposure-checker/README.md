@@ -11,11 +11,13 @@ An interface for visually identifying artifacts in Rubin images.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | config.butler_collection | string | `nil` | Default collection in the butler |
+| config.butler_instrument | string | `nil` | Default instrument for butler queries |
 | config.butler_repo | string | `nil` | Butler path or alias to use |
 | config.db.db_name | string | `"expchecker"` | Name of database |
 | config.db.hostname | string | `nil` | Database configuration |
 | config.db.username | string | `"expchecker"` | Username for DB connection |
 | config.persistentVolumeClaims | list | `[]` | PersistentVolumeClaims to create. |
+| config.s3_bucket_name | string | `nil` | Object store bucket name |
 | config.s3_endpoint_url | string | `nil` | Object store URL |
 | config.s3_profile_name | string | `nil` | Profile to use for object store bucket. |
 | config.separateSecrets | bool | `true` | Whether to use the new secrets management scheme |
