@@ -453,11 +453,11 @@ m1m3-thermal-gradients-ess132-sim:
     RUN_ARG: 132
   resources:
     requests:
-      cpu: 19m
-      memory: 160Mi
+      cpu: 100m
+      memory: 300Mi
     limits:
-      cpu: 190m
-      memory: 480Mi
+      cpu: 200m
+      memory: 600Mi
 
 m2-ess106-sim:
   enabled: true
