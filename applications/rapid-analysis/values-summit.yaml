@@ -251,6 +251,20 @@ scripts:
     limits:
       cpu: 1.0
       memory: 6G
+- name: LSSTCam/runAosBlitzWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 2
+  env:
+    LIMITS_CPU: 8
+  resources:
+    requests:
+      cpu: 8.2
+      memory: 16G
+    limits:
+      cpu: 8.2
+      memory: 32G
 - name: LSSTCam/runGuiderAnalysis.py
   mounts:
   - lsstcam-data
