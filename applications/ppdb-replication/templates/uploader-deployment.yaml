@@ -61,8 +61,6 @@ spec:
           env:
             - name: AWS_SHARED_CREDENTIALS_FILE
               value: "/app/secrets/aws-credentials.ini"
-            - name: PGPASSFILE
-              value: "/app/secrets/postgres-credentials.txt"
             - name: LSST_DB_AUTH
               value: "/app/secrets/db-auth.yaml"
             - name: S3_ENDPOINT_URL
