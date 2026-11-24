@@ -31,9 +31,83 @@ config:
     usdf_efd:
       url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
       database: "efd"
+      description: >-
+        Engineering and Facility Database at the USDF production environment (replicated from the Summit).
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "http://sasquatch-schema-registry-remote.sasquatch:8081"
+      local: true
+    usdf_prompt:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.prompt"
+      description: >-
+        Prompt Processing pipeline metrics at the USDF production environment.
       username: "sasquatch"
       passwordKey: "usdf_efd-password"
       schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
+      local: true
+    usdf_dm:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.dm"
+      description: >-
+        DRP pipeline metrics at the USDF production environment.
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
+      local: true
+    usdf_verify:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.verify"
+      description: >-
+        CI pipeline metrics at the USDF production environment.
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "http://sasquatch-schema-registry.sasquatch:8081"
+      local: true
+    usdf_cp:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.cp"
+      description: >-
+        Calibration pipeline metrics at the USDF production environment (replicated from the Summit).
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "http://sasquatch-schema-registry-remote.sasquatch:8081"
+      local: true
+    usdf_obsenv:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.obsenv"
+      description: >-
+        Observatory Software Environment database at the USDF production environment (replicated from the Summit).
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "http://sasquatch-schema-registry-remote.sasquatch:8081"
+      local: true
+    usdf_scimma:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.scimma"
+      description: >-
+        Alert database for target-of-opportunity observations at the USDF production environment (replicated from the Summit).
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "http://sasquatch-schema-registry-remote.sasquatch:8081"
+      local: true
+    usdf_mtcamera:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.MTCamera"
+      description: >-
+        LSST Camera telemetry database at the USDF production environment (replicated from the Summit).
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "http://sasquatch-schema-registry-remote.sasquatch:8081"
+      local: true
+    usdf_atcamera:
+      url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
+      database: "lsst.ATCamera"
+      description: >-
+        AuxTel Camera telemetry database at the USDF production environment (replicated from the Summit).
+      username: "sasquatch"
+      passwordKey: "usdf_efd-password"
+      schemaRegistry: "http://sasquatch-schema-registry-remote.sasquatch:8081"
       local: true
     usdfprod_metrics:
       url: "https://usdf-rsp.slac.stanford.edu/influxdb-enterprise-data/"
