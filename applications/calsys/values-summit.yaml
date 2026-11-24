@@ -40,7 +40,7 @@ cbp:
 electrometer101:
   enabled: true
   image:
-    revision: 0
+    revision: 2
     repository: ts-dockerhub.lsst.org/electrometer
   env:
     RUN_ARG: 101
@@ -61,7 +61,7 @@ electrometer101:
 electrometer102:
   enabled: true
   image:
-    revision: 0
+    revision: 2
     repository: ts-dockerhub.lsst.org/electrometer
   env:
     RUN_ARG: 102
@@ -82,7 +82,7 @@ electrometer102:
 electrometer103:
   enabled: true
   image:
-    revision: 0
+    revision: 2
     repository: ts-dockerhub.lsst.org/electrometer
   env:
     RUN_ARG: 103
@@ -103,7 +103,7 @@ electrometer103:
 electrometer201:
   enabled: true
   image:
-    revision: 0
+    revision: 2
     repository: ts-dockerhub.lsst.org/electrometer
   env:
     RUN_ARG: 201
