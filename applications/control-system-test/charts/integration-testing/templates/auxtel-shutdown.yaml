@@ -29,8 +29,21 @@ spec:
         templateRef:
           name: cleanup-reports-workflow
           template: cleanup-reports
-      - name: auxtel-stop
+      - name: auxtel-position-limits
         depends: call-cleanup-reports
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AT_PositionLimits.list"
+          - name: jobname
+            value: auxtel-position-limits
+          - name: reportname
+            value: at_pos-limits.xml
+      - name: auxtel-stop
+        depends: auxtel-position-limits
         templateRef:
           name: integration-test-job-template
           template: inttest-template
