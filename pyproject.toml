@@ -62,7 +62,7 @@ dev = [
 ]
 docs = [
     "autodoc-pydantic",
-    "documenteer[guide]==2.5.0b4",
+    "documenteer[guide]==2.5.0b5",
     "sphinx-click",
     "diagrams",
     "sphinx-jinja",
