@@ -11,7 +11,7 @@ from git import Repo
 from pytest_mock.plugin import MockerFixture
 
 from phalanx.factory import Factory
-from phalanx.storage import argocd, kube_linter, kubernetes
+from phalanx.storage import argocd, kube_linter, kubeconform, kubernetes
 
 from .support.command import MockCommand
 from .support.data import PhalanxData
@@ -94,6 +94,31 @@ def mock_kube_linter() -> Iterator[MockCommand]:
 
     with patch.object(shutil, "which", side_effect=mock_which):
         yield from mock_command.patch_command_class(kube_linter)
+
+
+@pytest.fixture
+def mock_kubeconform(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> Iterator[MockCommand]:
+    """Mock the kubeconform Command in the kubeconform storage.
+
+    Also pretend that kubeconform is on the PATH so that the CLI check for its
+    presence passes, and put the schema cache in a temporary directory rather
+    than the user's home directory. Any other command lookups are passed
+    through.
+    """
+    monkeypatch.setenv("XDG_CACHE_HOME", str(tmp_path / "cache"))
+    mock_command = MockCommand()
+    which = shutil.which
+
+    def mock_which(command: str) -> str | None:
+        if command == "kubeconform":
+            return "/usr/local/bin/kubeconform"
+        else:
+            return which(command)
+
+    with patch.object(shutil, "which", side_effect=mock_which):
+        yield from mock_command.patch_command_class(kubeconform)
 
 
 @pytest.fixture

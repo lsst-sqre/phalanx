@@ -80,10 +80,15 @@ class MockHelmCommand:
                     stderr=result.stderr,
                 )
                 raise CommandFailedError("helm", args, exc)
+
+            # Command.capture always captures output as text, so standard
+            # output is a string even if the command printed nothing.
+            if result.stdout is None:
+                result.stdout = ""
             return result
         else:
             return subprocess.CompletedProcess(
-                args=["helm", *args], returncode=0, stdout=None, stderr=None
+                args=["helm", *args], returncode=0, stdout="", stderr=None
             )
 
     def reset_mock(self) -> None:

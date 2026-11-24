@@ -311,11 +311,13 @@ def application_lint(
 
     Update and download any third-party dependency charts, lint the Helm
     chart for the given applications, and check the resulting Kubernetes
-    resources with kube-linter. If no environment is specified, each chart
-    is linted for all environments for which it has a configuration.
+    resources with kube-linter and kubeconform. If no environment is
+    specified, each chart is linted for all environments for which it has a
+    configuration.
     """
     _require_command("helm")
     _require_command("kube-linter")
+    _require_command("kubeconform")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -358,10 +360,11 @@ def application_lint_all(
 
     Update and download any third-party dependency charts, lint the Helm
     chart for each application and environment combination, and check the
-    resulting Kubernetes resources with kube-linter.
+    resulting Kubernetes resources with kube-linter and kubeconform.
     """
     _require_command("helm")
     _require_command("kube-linter")
+    _require_command("kubeconform")
     if not config:
         config = _find_config()
     factory = Factory(config)

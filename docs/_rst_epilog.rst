@@ -31,6 +31,7 @@
 .. _InfluxDB: https://www.influxdata.com/
 .. _IVOA: https://ivoa.net/documents/
 .. _kube-linter: https://github.com/stackrox/kube-linter
+.. _kubeconform: https://github.com/yannh/kubeconform
 .. _Kubernetes: https://kubernetes.io/
 .. _LSST Vault Utilites: https://github.com/lsst-sqre/lsstvaultutils/
 .. _Mend Renovate: https://www.mend.io/renovate/
