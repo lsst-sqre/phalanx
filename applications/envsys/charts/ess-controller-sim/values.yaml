@@ -1,5 +1,5 @@
 # -- This is the namespace in which the ess-controller simulator will be placed
-namespace: {{.Values.namespace}}
+namespace: envsys
 # -- This section holds the configuration of the container image
 image:
   # -- The Docker registry name of the container image

@@ -99,7 +99,7 @@ Deployment for the Environmental Awareness Systems CSCs
 | ess-controller-sim.image.pullPolicy | string | `"Always"` | The policy to apply when pulling an image for deployment |
 | ess-controller-sim.image.repository | string | `"lsstts/ess-controller-x86_64"` | The Docker registry name of the container image |
 | ess-controller-sim.image.revision | string | `nil` | The revision of the container image |
-| ess-controller-sim.namespace | object | `{"":null}` | This is the namespace in which the ess-controller simulator will be placed |
+| ess-controller-sim.namespace | string | `"envsys"` | This is the namespace in which the ess-controller simulator will be placed |
 | ess-controller-sim.nodeSelector | object | `{}` | This allows the specification of using specific nodes to run the pod |
 | ess-controller-sim.resources | object | `{}` | This allows the specification of resources (CPU, memory) requires to run the container |
 | ess-controller-sim.tolerations | list | `[]` | This specifies the tolerations of the pod for any system taints |
