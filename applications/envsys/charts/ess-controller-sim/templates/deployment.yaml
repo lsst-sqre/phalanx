@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ess-controller-sim.name" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/instance: {{ include "ess-controller-sim.name" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "ess-controller-sim.name" . }}
+      app.kubernetes.io/instance: {{ include "ess-controller-sim.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "ess-controller-sim.name" . }}
+        app.kubernetes.io/instance: {{ include "ess-controller-sim.name" . }}
+    spec:
+      containers:
+        - name: {{ include "ess-controller-sim.name" . }}
+          {{- $image := dict "repo" .Values.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" .Values.image.revision }}
+          image: {{ include "helpers.makeImage" $image }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          stdin: true
+          tty: true
+          envFrom:
+          - configMapRef:
+              name: csc-env-config
+          env:
+            - name: LSST_KAFKA_SECURITY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.global.controlSystem.appNamespace }}
+                  key: ts-salkafka-password
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      imagePullSecrets:
+        - name: pull-secret
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

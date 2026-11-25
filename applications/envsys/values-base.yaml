@@ -764,3 +764,8 @@ weatherforecast:
     limits:
       cpu: 1
       memory: 512Mi
+
+ess-controller-sim:
+  enabled: true
+  image:
+    revision: 0

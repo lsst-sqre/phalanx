@@ -6,6 +6,16 @@ Deployment for the Environmental Awareness Systems CSCs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| global.controlSystem.appNamespace | string | Set by ArgoCD | Application namespace for the control system deployment |
+| global.controlSystem.imageTag | string | Set by ArgoCD | Image tag for the control system deployment |
+| global.controlSystem.kafkaBrokerAddress | string | Set by ArgoCD | Kafka broker address for the control system deployment |
+| global.controlSystem.kafkaTopicReplicationFactor | string | Set by ArgoCD | Kafka topic replication factor for control system topics |
+| global.controlSystem.s3EndpointUrl | string | Set by ArgoCD | S3 endpoint (LFA) for the control system deployment |
+| global.controlSystem.schemaRegistryUrl | string | Set by ArgoCD | Schema registry URL for the control system deployment |
+| global.controlSystem.siteTag | string | Set by ArgoCD | Site tag for the control system deployment |
+| global.controlSystem.topicName | string | Set by ArgoCD | Topic name tag for the control system deployment |
+| global.host | string | Set by Argo CD | Host name for ingress |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | auxtel-ess201-sim.enabled | bool | `false` | Enable the ESS:201 simulator CSC |
 | auxtel-ess201.enabled | bool | `false` | Enable the ESS:201 CSC |
 | auxtel-ess202-sim.enabled | bool | `false` | Enable the ESS:202 simulator CSC |
@@ -39,16 +49,7 @@ Deployment for the Environmental Awareness Systems CSCs
 | epm-generator-ess305.enabled | bool | `false` | Enable the ESS:305 CSC |
 | epm-generator-ess306-sim.enabled | bool | `false` | Enable the ESS:303 simulator CSC |
 | epm-generator-ess306.enabled | bool | `false` | Enable the ESS:306 CSC |
-| global.controlSystem.appNamespace | string | Set by ArgoCD | Application namespace for the control system deployment |
-| global.controlSystem.imageTag | string | Set by ArgoCD | Image tag for the control system deployment |
-| global.controlSystem.kafkaBrokerAddress | string | Set by ArgoCD | Kafka broker address for the control system deployment |
-| global.controlSystem.kafkaTopicReplicationFactor | string | Set by ArgoCD | Kafka topic replication factor for control system topics |
-| global.controlSystem.s3EndpointUrl | string | Set by ArgoCD | S3 endpoint (LFA) for the control system deployment |
-| global.controlSystem.schemaRegistryUrl | string | Set by ArgoCD | Schema registry URL for the control system deployment |
-| global.controlSystem.siteTag | string | Set by ArgoCD | Site tag for the control system deployment |
-| global.controlSystem.topicName | string | Set by ArgoCD | Topic name tag for the control system deployment |
-| global.host | string | Set by Argo CD | Host name for ingress |
-| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| ess-controller-sim.enabled | bool | `false` | Enable the ESS Controller Simulator |
 | hvac.enabled | bool | `false` | Enable the HVAC CSC |
 | louver-h1-ess441-sim.enabled | bool | `false` | Enable the ESS:441 simulator CSC |
 | louver-h1-ess441.enabled | bool | `false` | Enable the ESS:441 CSC |
@@ -93,3 +94,12 @@ Deployment for the Environmental Awareness Systems CSCs
 | tma-ess122-sim.enabled | bool | `false` | Enable the ESS:122 simulator CSC |
 | tma-ess122.enabled | bool | `false` | Enable the ESS:122 CSC |
 | weatherforecast.enabled | bool | `false` | Enable the WeatherForecast CSC |
+| ess-controller-sim.affinity | object | `{}` | This specifies the scheduling constraints of the pod |
+| ess-controller-sim.image | object | `{"pullPolicy":"Always","repository":"lsstts/ess-controller-x86_64","revision":null}` | This section holds the configuration of the container image |
+| ess-controller-sim.image.pullPolicy | string | `"Always"` | The policy to apply when pulling an image for deployment |
+| ess-controller-sim.image.repository | string | `"lsstts/ess-controller-x86_64"` | The Docker registry name of the container image |
+| ess-controller-sim.image.revision | string | `nil` | The revision of the container image |
+| ess-controller-sim.namespace | object | `{"":null}` | This is the namespace in which the ess-controller simulator will be placed |
+| ess-controller-sim.nodeSelector | object | `{}` | This allows the specification of using specific nodes to run the pod |
+| ess-controller-sim.resources | object | `{}` | This allows the specification of resources (CPU, memory) requires to run the container |
+| ess-controller-sim.tolerations | list | `[]` | This specifies the tolerations of the pod for any system taints |

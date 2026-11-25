@@ -306,6 +306,10 @@ weatherforecast:
   # -- Enable the WeatherForecast CSC
   enabled: false
 
+ess-controller-sim:
+  # -- Enable the ESS Controller Simulator
+  enabled: false
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
