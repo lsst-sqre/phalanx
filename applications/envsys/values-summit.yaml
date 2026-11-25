@@ -441,6 +441,7 @@ m1m3-thermal-gradients-ess132:
   classifier: ess132
   image:
     repository: ts-dockerhub.lsst.org/ess
+    revision: 2
   env:
     RUN_ARG: 132
   resources:
