@@ -105,6 +105,14 @@ spec:
               value: "95.04, -25.0 EQ_J2000"
             - name: PROPS_OP_dataServiceOptions_targetPanelExampleRow2_1
               value: "from simulated data: 62, -37 (DP0.2)"
+            - name: PROPS_OP_dataServiceOptions_RubinPPDBTAPID_targetPanelExampleRow1_0
+              value: "250.0 -20.0"
+            - name: PROPS_OP_dataServiceOptions_RubinPPDBTAPID_targetPanelExampleRow1_1
+              value: "148.51, 2.61"
+            - name: PROPS_OP_dataServiceOptions_RubinPPDBTAPID_targetPanelExampleRow2_0
+              value: "151.298, 2.387"
+            - name: PROPS_OP_dataServiceOptions_RubinPPDBTAPID_targetPanelExampleRow2_1
+              value: "149.628, 2.694"
             - name: PROPS_OP_dataServiceOptions_DP1ImagesSIAv2_targetPanelExampleRow1_0
               value: "NGC 1494"
             - name: PROPS_OP_dataServiceOptions_DP1ImagesSIAv2_targetPanelExampleRow1_1
@@ -220,6 +228,19 @@ spec:
                                "label": "Rubin TAP",
                                "serviceId": "RubinPrimaryTAPID",
                                "value": "{{ .Values.global.baseUrl }}/api/tap",
+                               {{- if .Values.config.hipsUrl }}
+                               "hipsUrl": "{{ .Values.config.hipsUrl }}",
+                               {{- else }}
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                               {{- end }}
+                               "centerWP": "62;-37;EQ_J2000",
+                               "fovDeg": 10
+                            }
+                            ,
+                            {
+                               "label": "Rubin PPDB",
+                               "serviceId": "RubinPPDBTAPID",
+                               "value": "{{ .Values.global.baseUrl }}/api/ppdbtap",
                                {{- if .Values.config.hipsUrl }}
                                "hipsUrl": "{{ .Values.config.hipsUrl }}",
                                {{- else }}
