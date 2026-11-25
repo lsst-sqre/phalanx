@@ -177,6 +177,21 @@ tests:
           path: data["catalina.properties"]
           pattern: "gcs_upload_workload_identity"
 
+  - it: signed result URLs can be turned on
+    set:
+      config:
+        gcsSignedResults: true
+    asserts:
+      - matchRegex:
+          path: data["catalina.properties"]
+          pattern: "gcs_signed_results=true"
+
+  - it: signed result URLs are off by default
+    asserts:
+      - notMatchRegex:
+          path: data["catalina.properties"]
+          pattern: "gcs_signed_results"
+
   - it: upload bucket Workload Identity requires CloudSQL
     set:
       config:

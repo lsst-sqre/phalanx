@@ -124,6 +124,9 @@ data:
     {{- end }}
     gcs_upload_workload_identity=true
     {{- end }}
+    {{- if .Values.config.gcsSignedResults }}
+    gcs_signed_results=true
+    {{- end }}
     url.rewrite.enabled={{ .Values.config.urlRewrite.enabled | default true }}
     url.rewrite.rules={{ .Values.config.urlRewrite.rules | default (list "ivoa.ObsCore:access_url") | join "," }}
     {{- if .Values.config.kafka.enabled }}

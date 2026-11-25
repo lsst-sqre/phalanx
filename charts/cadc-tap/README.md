@@ -37,6 +37,7 @@ IVOA TAP service
 | config.gcsBucket | string | `"async-results.lsst.codes"` | Name of GCS bucket in which to store results |
 | config.gcsBucketType | string | `"GCS"` | GCS bucket type (GCS or S3) |
 | config.gcsBucketUrl | string | `"https://storage.googleapis.com"` | Base URL for results stored in GCS bucket |
+| config.gcsSignedResults | bool | `false` | Hand out signed URLs for results and inline uploads instead of plain ones, so the result bucket doesn't need to be public. Without `google_creds.json` the URLs are signed as the pod's Workload Identity, which needs `roles/iam.serviceAccountTokenCreator` on itself. Only used when `gcsBucketType` is GCS. |
 | config.gcsUploadBucket | string | Same as `gcsBucket` | Name of the bucket in which to store uploaded tables. Must be the same type as `gcsBucket`. |
 | config.gcsUploadWorkloadIdentity | bool | `false` | Access the upload bucket as the pod's Workload Identity (`cloudsql.serviceAccount`) instead of the `google_creds.json`. Requires `cloudsql.enabled` and a separate `gcsUploadBucket`. |
 | config.googleCredentialsEnabled | bool | `true` | Whether to mount the `google_creds.json` service account credentials. Only needed when `gcsBucketType` is GCS. |

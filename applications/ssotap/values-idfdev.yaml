@@ -8,6 +8,9 @@ cadc-tap:
       memory: "8Gi"
 
   config:
+    gcsBucket: "rubin-tap-results-dev-us"
+    gcsSignedResults: true
+    googleCredentialsEnabled: false
     jvmMaxHeapSize: 7G
     pg:
       username: "ssotap_idfdev"

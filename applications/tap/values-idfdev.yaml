@@ -1,5 +1,9 @@
 cadc-tap:
   config:
+    gcsBucket: "rubin-tap-results-dev-us"
+    gcsSignedResults: true
+    googleCredentialsEnabled: false
+
     kafka:
       enabled: true
 

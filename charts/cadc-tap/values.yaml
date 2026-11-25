@@ -183,6 +183,13 @@ config:
   # Requires `cloudsql.enabled` and a separate `gcsUploadBucket`.
   gcsUploadWorkloadIdentity: false
 
+  # -- Hand out signed URLs for results and inline uploads instead of plain
+  # ones, so the result bucket doesn't need to be public. Without
+  # `google_creds.json` the URLs are signed as the pod's Workload Identity,
+  # which needs `roles/iam.serviceAccountTokenCreator` on itself. Only used
+  # when `gcsBucketType` is GCS.
+  gcsSignedResults: false
+
   # -- Data Database name
   database: "dp2"
 
