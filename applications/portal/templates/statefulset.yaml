@@ -232,7 +232,7 @@ spec:
                             {
                                "label": "Rubin PPDB",
                                "serviceId": "RubinPPDBTAPID",
-                               "value": "{{ .Values.global.baseUrl }}/api/tap/ppdbtap",
+                               "value": "{{ .Values.global.baseUrl }}/api/ppdbtap",
                                {{- if .Values.config.hipsUrl }}
                                "hipsUrl": "{{ .Values.config.hipsUrl }}",
                                {{- else }}
