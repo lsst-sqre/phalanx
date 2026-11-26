@@ -69,6 +69,9 @@ config:
         cpu: 4.0
         memory: 32
       tap:
+        ppdb:
+          concurrent: 12
+          bytesBilled: 107374182400
         qserv:
           concurrent: 12
 

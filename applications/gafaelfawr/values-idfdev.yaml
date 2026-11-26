@@ -45,6 +45,10 @@ config:
       notebook:
         cpu: 4.0
         memory: 16
+      tap:
+        ppdb:
+          concurrent: 12
+          bytesBilled: 1099511627776
 
   groupMapping:
     "admin:jupyterlab":

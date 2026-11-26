@@ -51,6 +51,10 @@ config:
       notebook:
         cpu: 15.0
         memory: 120
+      tap:
+        ppdb:
+          concurrent: 12
+          bytesBilled: 1099511627776
 
   # Allow access by GitHub team.
   groupMapping:
