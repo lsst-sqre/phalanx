@@ -18,6 +18,7 @@ data:
   {{- end }}
   SEMAPHORE_ENABLE_GITHUB_APP: {{ .Values.config.enableGithubApp | quote }}
   SEMAPHORE_GITHUB_APP_ID: {{ .Values.config.githubAppId | quote }}
+  SEMAPHORE_GITHUB_REPOS: {{ join "," .Values.config.githubRepos | quote }}
   SEMAPHORE_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
   SEMAPHORE_LOG_PROFILE: {{ .Values.config.logProfile | quote }}
   SEMAPHORE_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
