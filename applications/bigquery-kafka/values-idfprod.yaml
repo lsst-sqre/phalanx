@@ -1,0 +1,16 @@
+config:
+  bigqueryProject: "ppdb-prod"
+  bigqueryJobProject: "science-platform-stable-6994"
+  bigqueryUploadProject: "science-platform-stable-6994"
+  bigqueryLocation: "US"
+  gcpServiceAccount: "bigquery-kafka@science-platform-stable-6994.iam.gserviceaccount.com"
+  metrics:
+    enabled: true
+  sentry:
+    enabled: false
+  slack:
+    enabled: true
+  bigqueryMaxBytesBilled: 1000000000000
+slowWorker:
+  autoscaling:
+    maxReplicas: 50

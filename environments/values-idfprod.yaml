@@ -22,6 +22,7 @@ vaultPathPrefix: "secret/phalanx/idfprod"
 
 applications:
   herald: true
+  bigquery-kafka: true
   butler: true
   datalinker: true
   ghostwriter: true
@@ -31,6 +32,7 @@ applications:
   noteburst: true
   nublado: true
   portal: true
+  ppdbtap: true
   qserv-kafka: true
   sasquatch: true
   semaphore: true

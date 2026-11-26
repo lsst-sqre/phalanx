@@ -1,0 +1,45 @@
+cadc-tap:
+  replicaCount: 4
+  config:
+    backend: "bigquery"
+    kafka:
+      enabled: true
+      kafkaUserName: "ppdbtap"
+      consumerGroupId: "ppdbtap"
+      topics:
+        jobRun: "lsst.ppdbtap.job-run"
+        jobStatus: "lsst.ppdbtap.job-status"
+        jobDelete: "lsst.ppdbtap.job-delete"
+
+    gcsUploadBucket: "rubin-tap-uploads-stable-us"
+    gcsUploadWorkloadIdentity: true
+
+    bigquery:
+      project: "ppdb-prod"
+      dataset: "ppdb_public"
+      schema: "ppdb"
+
+      upload:
+        project: "science-platform-stable-6994"
+
+      geoPointTables:
+        - "ppdb.DiaObject"
+        - "ppdb.DiaSource"
+        - "ppdb.DiaForcedSource"
+
+      tableMappings:
+        - "ppdb.DiaObject:`ppdb-prod.ppdb_public.DiaObject`"
+        - "ppdb.DiaSource:`ppdb-prod.ppdb_public.DiaSource`"
+        - "ppdb.DiaForcedSource:`ppdb-prod.ppdb_public.DiaForcedSource`"
+        - "ppdb.SSObservation:`ppdb-prod.ppdb_public.SSObservation`"
+        - "ppdb.NearbySSO:`ppdb-prod.ppdb_public.NearbySSO`"
+        - "ppdb.SSObject:`ppdb-prod.ppdb_public.SSObject`"
+        - "ppdb.mpc_orbits:`ppdb-prod.ppdb_public.mpc_orbits`"
+        - "ppdb.current_identifications:`ppdb-prod.ppdb_public.current_identifications`"
+        - "ppdb.numbered_identifications:`ppdb-prod.ppdb_public.numbered_identifications`"
+
+  cloudsql:
+    enabled: true
+    instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
+    serviceAccount: "ppdbtap@science-platform-stable-6994.iam.gserviceaccount.com"
+    database: "ppdbtap"

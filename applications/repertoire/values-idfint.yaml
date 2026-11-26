@@ -38,7 +38,6 @@ config:
     servers:
       ppdbtap:
         enabled: true
-        schemaVersion: "tickets/DM-55375"
         schemas:
           - "ppdb"
           - "dp2_prompt"
