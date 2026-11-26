@@ -27,6 +27,8 @@ spec:
           value: {{- toYaml .Values.instrument.exportTypes | nindent 12 }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
+        - name: TEMPLATE_COLLECTION
+          value: {{ .Values.instrument.templateCollection }}
         - name: CENTRAL_REPO
           value: {{ .Values.instrument.centralRepo }}
         - name: LSST_RESOURCES_NUM_WORKERS
