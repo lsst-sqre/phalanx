@@ -24,6 +24,7 @@ Rapid analysis log explorer
 | config.windowAfterS | int | `300` | Seconds after shutter close that a fetch window ends. As above, a starting value rather than a cap. Worth raising where the pipeline runs slower than the exposure cadence. |
 | config.windowBeforeS | int | `5` | Seconds before shutter close that a fetch window starts. This is the *starting* value of an editable field, not a cap: widening a window to catch a neighbouring exposure is a normal investigative move. |
 | config.workers | int | `8` | Parallel log-download workers per fetch. Each is a `logcli` process streaming one pod's window, so this trades cluster load and pod CPU against how long a night-wide fetch takes. |
+| gafaelfawrToken.enabled | bool | `false` | Whether to create a Gafaelfawr service token for `bot-log-explorer` in the `log-explorer-gafaelfawr-token` secret and expose it to the pod as `ACCESS_TOKEN`. Requires Gafaelfawr in the environment. |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the log-explorer image |

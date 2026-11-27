@@ -97,6 +97,12 @@ config:
   # @default -- See the per-environment values files
   site: {}
 
+gafaelfawrToken:
+  # -- Whether to create a Gafaelfawr service token for `bot-log-explorer` in
+  # the `log-explorer-gafaelfawr-token` secret and expose it to the pod as
+  # `ACCESS_TOKEN`. Requires Gafaelfawr in the environment.
+  enabled: false
+
 # -- Persistent volume for the log cache. Fetching a night out of Loki takes
 # minutes, so the cache is what makes the tool usable a second time; an
 # emptyDir would throw it away on every pod restart.

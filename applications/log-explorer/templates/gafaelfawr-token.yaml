@@ -1,0 +1,12 @@
+{{- if .Values.gafaelfawrToken.enabled }}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: "log-explorer-gafaelfawr-token"
+  labels:
+    {{- include "log-explorer.labels" . | nindent 4 }}
+spec:
+  service: "bot-log-explorer"
+  scopes:
+    - "read:tap"
+{{- end }}

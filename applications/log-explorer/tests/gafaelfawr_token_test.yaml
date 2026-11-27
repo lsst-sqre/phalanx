@@ -1,0 +1,59 @@
+suite: Gafaelfawr service token
+# These tests set gafaelfawrToken.enabled themselves rather than relying on
+# which environments currently turn it on, so they keep passing when a site
+# changes its mind.
+set:
+  global:
+    host: "example.com"
+    vaultSecretsPath: "secret/phalanx/test"
+tests:
+  - it: "creates the service token when enabled"
+    template: "gafaelfawr-token.yaml"
+    set:
+      gafaelfawrToken:
+        enabled: true
+    asserts:
+      - isKind:
+          of: "GafaelfawrServiceToken"
+      - equal:
+          path: "metadata.name"
+          value: "log-explorer-gafaelfawr-token"
+      - equal:
+          path: "spec.service"
+          value: "bot-log-explorer"
+
+  - it: "exposes the token to the pod as ACCESS_TOKEN when enabled"
+    template: "deployment.yaml"
+    set:
+      gafaelfawrToken:
+        enabled: true
+    asserts:
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "ACCESS_TOKEN"
+            valueFrom:
+              secretKeyRef:
+                name: "log-explorer-gafaelfawr-token"
+                key: "token"
+
+  - it: "creates no token when disabled"
+    template: "gafaelfawr-token.yaml"
+    set:
+      gafaelfawrToken:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: "sets no ACCESS_TOKEN when disabled"
+    template: "deployment.yaml"
+    set:
+      gafaelfawrToken:
+        enabled: false
+    asserts:
+      - notContains:
+          path: "spec.template.spec.containers[0].env"
+          content:
+            name: "ACCESS_TOKEN"
+          any: true

@@ -95,6 +95,13 @@ spec:
                   # says so in the UI, so a missing secret surfaces as a
                   # legible error on the first fetch instead of wrong results.
                   optional: true
+            {{- if .Values.gafaelfawrToken.enabled }}
+            - name: "ACCESS_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "log-explorer-gafaelfawr-token"
+                  key: "token"
+            {{- end }}
           readinessProbe:
             httpGet:
               # answered under the base path, and deliberately touches no
