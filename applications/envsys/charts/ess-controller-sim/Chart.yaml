@@ -1,0 +1,4 @@
+apiVersion: v2
+description: Chart for the ess-controller simulator
+name: ess-controller-sim
+version: 1.0.0
