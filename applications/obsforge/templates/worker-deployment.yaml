@@ -50,6 +50,10 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+          volumeMounts:
+            # Butler stages remote dataset downloads in temporary files.
+            - name: "tmp"
+              mountPath: "/tmp"
       {{- with .Values.worker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -62,4 +66,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: "tmp"
+          emptyDir: {}
 {{- end }}

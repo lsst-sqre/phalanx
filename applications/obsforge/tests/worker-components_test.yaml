@@ -35,6 +35,23 @@ tests:
                 name: "obsforge"
                 key: "butler-access-token"
 
+  - it: Gives Butler writable temporary storage with a read-only root filesystem
+    template: worker-deployment.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: "tmp"
+            mountPath: "/tmp"
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: "tmp"
+            emptyDir: {}
+
   - it: Omits the worker Deployment when the worker is disabled
     template: worker-deployment.yaml
     set:
