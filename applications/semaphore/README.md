@@ -21,6 +21,7 @@ User notification and messaging service for the Rubin Science Platform.
 | config.databaseUrl | string | None, must be set if `cloudsql.enabled` is false | URL for the PostgreSQL database if Cloud SQL is not in use |
 | config.enableGithubApp | bool | `false` | Toggle to enable the GitHub App functionality |
 | config.githubAppId | string | `nil` | GitHub application ID |
+| config.githubRepos | list | `[]` | GitHub repositories that may publish broadcast messages, each written as `owner/repo`. The GitHub App is disabled if this list is empty. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/semaphore"` | URL path prefix |

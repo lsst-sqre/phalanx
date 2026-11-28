@@ -27,6 +27,10 @@ config:
   # -- GitHub application ID
   githubAppId: null
 
+  # -- GitHub repositories that may publish broadcast messages, each written
+  # as `owner/repo`. The GitHub App is disabled if this list is empty.
+  githubRepos: []
+
   # -- Logging level
   logLevel: "INFO"
 

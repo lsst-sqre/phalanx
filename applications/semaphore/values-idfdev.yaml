@@ -1,6 +1,11 @@
+image:
+  tag: "tickets-DM-57201"
+  pullPolicy: "Always"
 config:
   enableGithubApp: true
   githubAppId: "127943"
+  githubRepos:
+    - "lsst-sqre/rsp_broadcast"
   logLevel: "DEBUG"
   slackAlerts: true
 cloudsql:
